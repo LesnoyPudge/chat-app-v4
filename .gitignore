@@ -4,4 +4,4 @@ build
 package-lock.json
 .env
 env.d.ts
-srcipts/env.ts
+scripts/env.ts
