@@ -1,0 +1,32 @@
+{
+    "name": "chat-app-v4",
+    "author": "LesnoyPudge",
+    "type": "module",
+    "scripts": {
+        "prod": "npm run scripts:env && pm2",
+        "lint:check": "eslint .",
+        "lint:fix": "eslint . --fix",
+        "deploy": "git add . && git commit -m 'update' && git push && git status",
+        "client:install": "npm i --prefix packages/client",
+        "client:dev": "npm run dev --prefix packages/client",
+        "client:prod": "npm run prod --prefix packages/client",
+        "server:install": "npm i --prefix packages/server",
+        "server:dev": "npm run dev --prefix packages/server",
+        "server:prod": "npm run prod --prefix packages/server",
+        "shared:install": "npm i --prefix packages/shared",
+        "scripts:env": "npx tsx ./scripts/env.ts",
+        "": "node --experimental-strip-types"
+    },
+    "dependencies": {
+        "@lesnoypudge/eslint-config": "^2.0.0",
+        "@lesnoypudge/formatter-config": "^4.0.0",
+        "@lesnoypudge/types-global-base": "^4.0.0",
+        "@lesnoypudge/utils": "^14.0.0",
+        "@types/node": "^22.8.1",
+        "cross-env": "^7.0.3",
+        "del-cli": "^6.0.0",
+        "eslint": "^9.13.0",
+        "tsx": "^4.19.2",
+        "typescript": "^5.6.3"
+    }
+}

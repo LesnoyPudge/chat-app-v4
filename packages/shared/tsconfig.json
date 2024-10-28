@@ -1,0 +1,25 @@
+{
+    "include": ["**/*"],
+    "exclude": ["node_modules"],
+    "compilerOptions": {
+        "types": ["@lesnoypudge/types-global-base", "./src/shared.d.ts"],
+        "target": "ESNext",
+        "module": "ESNext",
+        "allowJs": true,
+        "checkJs": true,
+        // "verbatimModuleSyntax": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "moduleResolution": "Bundler",
+        "declaration": true,
+        "declarationMap": true,
+        "strict": true,
+        "allowUnreachableCode": true,
+        "outDir": "build",
+        "baseUrl": ".",
+        "paths": {
+            "@root": ["./src/index.ts"]
+        }
+    }
+}
