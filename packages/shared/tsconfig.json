@@ -1,25 +1,51 @@
 {
-    "include": ["**/*"],
-    "exclude": ["node_modules"],
+    "include": [
+        "./src/**/*",
+        "node_modules/@types"
+    ],
     "compilerOptions": {
-        "types": ["@lesnoypudge/types-global-base", "./src/shared.d.ts"],
-        "target": "ESNext",
-        "module": "ESNext",
-        "allowJs": true,
-        "checkJs": true,
-        // "verbatimModuleSyntax": true,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true,
-        "moduleResolution": "Bundler",
-        "declaration": true,
-        "declarationMap": true,
-        "strict": true,
-        "allowUnreachableCode": true,
-        "outDir": "build",
+        "pretty": true,
+        "explainFiles": false,
         "baseUrl": ".",
         "paths": {
-            "@root": ["./src/index.ts"]
-        }
+            "@root": ["src/index.ts"]
+        },
+
+        "types": [
+            "@lesnoypudge/types-global-base",
+            "../../env.d.ts"
+        ],
+
+        "jsx": "react-jsx",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "target": "ES2022",
+        "verbatimModuleSyntax": false,
+        "allowJs": true,
+        "checkJs": true,
+        "resolveJsonModule": true,
+        "moduleDetection": "auto",
+
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedSideEffectImports": true,
+
+        "noEmit": false,
+        "outDir": "build",
+        "sourceMap": true,
+        "declaration": true,
+
+        // "moduleResolution": "NodeNext",
+        // "module": "NodeNext",
+
+        "moduleResolution": "Bundler",
+        "module": "ESNext",
+
+        "lib": [
+            "ES2022",
+            // "DOM",
+            // "DOM.Iterable"
+        ],
     }
 }

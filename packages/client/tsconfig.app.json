@@ -1,25 +1,77 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
+    "include": [
+        "./src/**/*",
+        "node_modules/@types"
+    ],
+    "compilerOptions": {
+        "pretty": true,
+        "explainFiles": false,
+        "baseUrl": ".",
+        "paths": {
+            // "@root": ["src/index.ts"]
+        },
 
-    /* Bundler mode */
-    "moduleResolution": "Bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "jsx": "react-jsx",
+        "types": [
+            "@lesnoypudge/types-global-base",
+            "../../env.d.ts"
+        ],
 
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
-  },
-  "include": ["src"]
+        "jsx": "react-jsx",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "target": "ES2022",
+        "verbatimModuleSyntax": false,
+        "allowJs": true,
+        "checkJs": true,
+        "resolveJsonModule": true,
+        "moduleDetection": "auto",
+
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedSideEffectImports": true,
+
+        "noEmit": true,
+        "outDir": "build",
+        "sourceMap": true,
+        "declaration": true,
+
+        // "moduleResolution": "NodeNext",
+        // "module": "NodeNext",
+
+        "moduleResolution": "Bundler",
+        "module": "ESNext",
+
+        "lib": [
+            "ES2022",
+            "DOM",
+            "DOM.Iterable",
+        ],
+    }
 }
+
+// {
+//   "compilerOptions": {
+//     "target": "ES2020",
+//     "useDefineForClassFields": true,
+//     "lib": ["ES2020", "DOM", "DOM.Iterable"],
+//     "module": "ESNext",
+//     "skipLibCheck": true,
+
+//     /* Bundler mode */
+//     "moduleResolution": "Bundler",
+//     "allowImportingTsExtensions": true,
+//     "isolatedModules": true,
+//     "moduleDetection": "force",
+//     "noEmit": true,
+//     "jsx": "react-jsx",
+
+//     /* Linting */
+//     "strict": true,
+//     "noUnusedLocals": true,
+//     "noUnusedParameters": true,
+//     "noFallthroughCasesInSwitch": true,
+//     "noUncheckedSideEffectImports": true
+//   },
+//   "include": ["src"]
+// }

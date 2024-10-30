@@ -1,5 +1,5 @@
-import { T, C } from '@root';
-
+import { C } from '@root';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 const v1 = <_Value extends string>(path: _Value) => `/api/v1${path}` as const;
