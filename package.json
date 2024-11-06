@@ -25,7 +25,6 @@
         "@lesnoypudge/eslint-config": "^2.0.1",
         "@lesnoypudge/formatter-config": "^4.0.1",
         "@lesnoypudge/types-global-base": "^4.0.0",
-        "@lesnoypudge/utils": "^14.0.0",
         "@types/node": "^22.8.4",
         "cross-env": "^7.0.3",
         "del-cli": "^6.0.0",

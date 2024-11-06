@@ -3,6 +3,9 @@
         "./src/**/*",
         "node_modules/@types"
     ],
+    "exclude": [
+        "node_modules/@types/node"
+    ],
     "compilerOptions": {
         "pretty": true,
         "explainFiles": false,
@@ -13,6 +16,8 @@
 
         "types": [
             "@lesnoypudge/types-global-base",
+            "@lesnoypudge/types-global-web",
+            "@lesnoypudge/types-global-react",
             "../../env.d.ts"
         ],
 
