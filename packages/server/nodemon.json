@@ -5,5 +5,5 @@
         "../shared/build"
     ],
     "ext": "*",
-    "exec": "tsc --noEmit && tsx -r tsconfig-paths/register src/index.ts"
+    "exec": "tsc --noEmit && dotenvx run -f ../../.env -- tsx -r tsconfig-paths/register src/index.ts"
 }

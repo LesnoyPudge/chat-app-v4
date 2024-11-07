@@ -2,10 +2,11 @@
     "name": "shared",
     "type": "module",
     "scripts": {
-        "build": "builder",
+        "build": "builder --file tsconfig.node.build.json",
         "dev": "nodemon"
     },
     "devDependencies": {
+        "@lesnoypudge/types-global-node": "^1.0.0",
         "@lesnoypudge/types-utils-base": "^3.4.0"
     }
 }

@@ -9,17 +9,24 @@ export const createEnv = (
         envPath: string;
         typePath: string;
         publicPrefix?: string;
-        obj: Record<string, string>;
+        value: Record<string, string>;
     },
 ) => {
-    const envData = Object.keys(options.obj).map((key) => {
-        return `${key} = ${options.obj[key] ?? ''}`;
+    const {
+        value,
+        envPath,
+        typePath,
+        publicPrefix,
+    } = options;
+    const envData = Object.keys(value).map((key) => {
+        return `${key} = ${value[key] ?? ''}`;
     }).join('\n');
 
-    const pathToEnv = path.join(options.envPath, '/.env');
+    const pathToEnv = path.join(envPath, '/.env');
 
     catchError(() => fs.rmSync(pathToEnv));
 
+    fs.mkdirSync(envPath, { recursive: true });
     fs.writeFileSync(
         pathToEnv,
         envData,
@@ -27,8 +34,8 @@ export const createEnv = (
 
     const spaces = ' '.repeat(4);
 
-    const privateEnvTypeValues = Object.keys(options.obj).map((key) => {
-        return `${spaces}${key}: '${options.obj[key] ?? ''}';`;
+    const privateEnvTypeValues = Object.keys(value).map((key) => {
+        return `${spaces}${key}: '${value[key] ?? ''}';`;
     }).join('\n');
 
     const privateEnvType = [
@@ -37,12 +44,12 @@ export const createEnv = (
         '}',
     ].join('\n');
 
-    const publicEnvTypeValues = Object.keys(options.obj).filter((key) => {
-        if (!options.publicPrefix) return false;
+    const publicEnvTypeValues = Object.keys(value).filter((key) => {
+        if (!publicPrefix) return false;
 
-        return key.startsWith(options.publicPrefix);
+        return key.startsWith(publicPrefix);
     }).map((key) => {
-        return `${spaces}${key}: '${options.obj[key] ?? ''}';`;
+        return `${spaces}${key}: '${value[key] ?? ''}';`;
     }).join('\n');
 
     const publicEnvType = [
@@ -57,10 +64,11 @@ export const createEnv = (
         publicEnvType,
     ].join('\n\n');
 
-    const pathToEnvType = path.join(options.typePath, '/env.d.ts');
+    const pathToEnvType = path.join(typePath, '/env.d.ts');
 
     catchError(() => fs.rmSync(pathToEnvType));
 
+    fs.mkdirSync(typePath, { recursive: true });
     fs.writeFileSync(
         pathToEnvType,
         envTypeData,

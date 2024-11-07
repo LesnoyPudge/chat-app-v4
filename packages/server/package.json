@@ -3,13 +3,14 @@
     "type": "module",
     "scripts": {
         "dev": "cross-env NODE_ENV=development nodemon",
-        "prod": "cross-env NODE_ENV=production builder && node build/index.js",
+        "prod": "cross-env NODE_ENV=production nodemon",
         "": ""
     },
     "devDependencies": {
+        "@dotenvx/dotenvx": "^1.22.0",
         "@lesnoypudge/types-global-base": "^4.0.0",
+        "@lesnoypudge/types-global-node": "^1.0.0",
         "@lesnoypudge/types-utils-base": "^3.4.0",
-        "@types/node": "^22.8.1",
         "tsconfig-paths": "^4.2.0"
     },
     "dependencies": {

@@ -11,4 +11,5 @@ const qwe = {
 const zxc = Object.keys<typeof qwe>(qwe);
 //    ^?
 
-// console.log('in server!! yup', process.env.NODE_ENV);
+
+console.log('in server!! yup', process.env);

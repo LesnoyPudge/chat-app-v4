@@ -4,5 +4,5 @@
         "../../.env"
     ],
     "ext": "*",
-    "exec": "builder"
+    "exec": "builder --file tsconfig.node.build.json"
 }

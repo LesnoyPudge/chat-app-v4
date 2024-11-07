@@ -1,6 +1,7 @@
 {
     "extends": "./tsconfig.base.json",
     "include": [
+        "scripts/**/*",
         "node_modules/@types"
     ],
     "exclude": [],
