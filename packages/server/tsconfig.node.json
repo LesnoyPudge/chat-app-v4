@@ -9,6 +9,7 @@
         "types": [
             "@lesnoypudge/types-global-base",
             "@lesnoypudge/types-global-node",
+            "../shared/shared.d.ts"
         ]
     }
 }

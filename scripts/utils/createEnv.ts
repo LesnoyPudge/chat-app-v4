@@ -19,7 +19,7 @@ export const createEnv = (
         publicPrefix,
     } = options;
     const envData = Object.keys(value).map((key) => {
-        return `${key} = ${value[key] ?? ''}`;
+        return `${key} = ${String(value[key])}`;
     }).join('\n');
 
     const pathToEnv = path.join(envPath, '/.env');
@@ -33,14 +33,16 @@ export const createEnv = (
     );
 
     const spaces = ' '.repeat(4);
+    const nodeEnv = `${spaces}NODE_ENV: 'development' | 'production';`;
 
     const privateEnvTypeValues = Object.keys(value).map((key) => {
-        return `${spaces}${key}: '${value[key] ?? ''}';`;
+        return `${spaces}${key}: '${String(value[key])}';`;
     }).join('\n');
 
     const privateEnvType = [
         'interface Env {',
         privateEnvTypeValues,
+        nodeEnv,
         '}',
     ].join('\n');
 
@@ -49,12 +51,13 @@ export const createEnv = (
 
         return key.startsWith(publicPrefix);
     }).map((key) => {
-        return `${spaces}${key}: '${value[key] ?? ''}';`;
+        return `${spaces}${key}: '${String(value[key])}';`;
     }).join('\n');
 
     const publicEnvType = [
         'interface PublicEnv {',
         publicEnvTypeValues,
+        nodeEnv,
         '}',
     ].join('\n');
 
