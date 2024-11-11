@@ -1,5 +1,5 @@
 * {
-    outline: 1px solid orangered;
+    // outline: 1px solid orangered;
     font-family: monospace;
     font-size: 24px;
 }
@@ -24,16 +24,18 @@
         gap: 40px;
         justify-content: space-between;
 
-        &>* {
+        & > * {
             width: 100%;
         }
 
-        &__button {}
+        &__button {
+        }
 
         &__log {
             max-height: 500px;
             overflow-y: scroll;
             gap: 10px;
+            background-color: #35353e;
 
             .log-item {
                 display: flex;

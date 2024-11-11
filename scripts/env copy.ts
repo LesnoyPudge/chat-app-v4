@@ -28,7 +28,7 @@ class PrivateEnv {
 
 class PublicEnv {
     _PUBLIC_APP_NAME = 'ChatApp';
-    _PUBLIC_DEFAULT_LANG = 'en';
+    _PUBLIC_DEFAULT_LNG = 'ru';
     _PUBLIC_ACCESS_CODE_SIZE = '6';
     _PUBLIC_API_V1 = '/api/v1';
     _PUBLIC_PROTOCOL = 'http';

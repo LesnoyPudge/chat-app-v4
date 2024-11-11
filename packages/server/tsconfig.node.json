@@ -10,7 +10,8 @@
         "types": [
             "@lesnoypudge/types-global-base",
             "@lesnoypudge/types-global-node",
-            "../shared/shared.d.ts"
+            "../shared/shared.d.ts",
+            "./src/i18n/i18n.d.ts",
         ],
         "paths": {
             "@utils": [
@@ -18,6 +19,12 @@
             ],
             "@constants": [
                 "./src/constants"
+            ],
+            "@i18n": [
+                "./src/i18n"
+            ],
+            "@types": [
+                "./src/types"
             ],
         },
     }

@@ -5,5 +5,5 @@
         "../shared/build"
     ],
     "ext": "*",
-    "exec": "tsc -p tsconfig.node.build.json && builder --file=tsconfig.node.build.json && dotenvx run -f ../shared/generated/.env -- node build/server.js"
+    "exec": "tsc -p tsconfig.node.build.json && builder --file=tsconfig.node.build.json && dotenvx run -f ../shared/generated/.env -- node build/index.js"
 }
