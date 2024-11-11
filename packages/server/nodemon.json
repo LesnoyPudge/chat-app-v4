@@ -1,9 +1,9 @@
 {
     "watch": [
         "src",
-        "../../.env",
+        "../shared/generated",
         "../shared/build"
     ],
     "ext": "*",
-    "exec": "tsc --noEmit && dotenvx run -f ../../.env -- tsx -r tsconfig-paths/register src/index.ts"
+    "exec": "tsc -p tsconfig.node.build.json && builder --file=tsconfig.node.build.json && dotenvx run -f ../shared/generated/.env -- node build/server.js"
 }

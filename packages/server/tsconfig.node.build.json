@@ -1,0 +1,14 @@
+// tsc && cross-env TS_NODE_PROJECT=tsconfig.node.json dotenvx run -f ../shared/generated/.env -- tsx -r tsconfig-paths/register src/server.ts
+{
+    "extends": "./tsconfig.node.json",
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "src/**/*.test.*"
+    ],
+    "compilerOptions": {
+        "noEmit": false,
+        "declaration": false,
+    }
+}

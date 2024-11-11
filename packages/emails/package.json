@@ -1,0 +1,23 @@
+{
+    "name": "emails",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "build": "email build --dir src --outDir build",
+        "dev": "email dev --dir src --port 3000",
+        "start": "email start",
+        "export": "email export --dir src --outDir build"
+    },
+    "dependencies": {
+        "@react-email/components": "0.0.27",
+        "react": "18.3.1",
+        "react-dom": "18.3.1"
+    },
+    "devDependencies": {
+        "@lesnoypudge/eslint-config": "^6.0.5",
+        "@lesnoypudge/formatter-config": "^6.1.0",
+        "@lesnoypudge/types-global-base": "^4.0.0",
+        "@lesnoypudge/types-global-react": "^2.0.1",
+        "react-email": "3.0.2"
+    }
+}

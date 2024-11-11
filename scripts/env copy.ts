@@ -28,20 +28,20 @@ class PrivateEnv {
 
 class PublicEnv {
     _PUBLIC_APP_NAME = 'ChatApp';
-    _PUBLIC_DEFAULT_LNG = 'en';
+    _PUBLIC_DEFAULT_LANG = 'en';
     _PUBLIC_ACCESS_CODE_SIZE = '6';
     _PUBLIC_API_V1 = '/api/v1';
     _PUBLIC_PROTOCOL = 'http';
-    _PUBLIC_URL_BASENAME = 'localhost';
+    _PUBLIC_URL_HOSTNAME = 'localhost';
     _PUBLIC_CLIENT_PORT = '3000';
     _PUBLIC_SERVER_PORT = '5000';
     _PUBLIC_WS_PROTOCOL = 'ws';
-    _PUBLIC_WS_BASENAME = this._PUBLIC_URL_BASENAME;
+    _PUBLIC_WS_HOSTNAME = this._PUBLIC_URL_HOSTNAME;
     _PUBLIC_WS_PORT = this._PUBLIC_SERVER_PORT;
     _PUBLIC_CLIENT_URL = ''.concat(
         this._PUBLIC_PROTOCOL,
         '://',
-        this._PUBLIC_URL_BASENAME,
+        this._PUBLIC_URL_HOSTNAME,
         ':',
         this._PUBLIC_CLIENT_PORT,
     );
@@ -49,7 +49,7 @@ class PublicEnv {
     _PUBLIC_SERVER_URL = ''.concat(
         this._PUBLIC_PROTOCOL,
         '://',
-        this._PUBLIC_URL_BASENAME,
+        this._PUBLIC_URL_HOSTNAME,
         ':',
         this._PUBLIC_SERVER_PORT,
     );
@@ -57,7 +57,7 @@ class PublicEnv {
     _PUBLIC_WS_SERVER = ''.concat(
         this._PUBLIC_WS_PROTOCOL,
         '://',
-        this._PUBLIC_WS_BASENAME,
+        this._PUBLIC_WS_HOSTNAME,
         ':',
         this._PUBLIC_WS_PORT,
     );

@@ -40,7 +40,7 @@ export const createEnv = (
     }).join('\n');
 
     const privateEnvType = [
-        'interface Env {',
+        'type Env = {',
         privateEnvTypeValues,
         nodeEnv,
         '}',
@@ -55,9 +55,8 @@ export const createEnv = (
     }).join('\n');
 
     const publicEnvType = [
-        'interface PublicEnv {',
+        'type PublicEnv = {',
         publicEnvTypeValues,
-        nodeEnv,
         '}',
     ].join('\n');
 

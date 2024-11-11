@@ -4,7 +4,9 @@ import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import './styles.scss';
 
-fetch('https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css').then((v) => {
+void fetch(
+    'https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css',
+).then((v) => {
     return v.text();
 }).then((v) => {
     const style = document.createElement('style');
@@ -15,8 +17,4 @@ fetch('https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css').then((v) 
 const root = document.querySelector('#root');
 invariant(root);
 
-createRoot(root).render(
-    <StrictMode>
-        <App />
-    </StrictMode>,
-);
+createRoot(root).render(<StrictMode><App/></StrictMode>);
