@@ -2,7 +2,8 @@
     "watch": [
         "src",
         "../shared/generated",
-        "../shared/build"
+        "../shared/build",
+        "prisma"
     ],
     "ext": "*",
     "exec": "tsc -p tsconfig.node.build.json && builder --file=tsconfig.node.build.json && dotenvx run -f ../shared/generated/.env -- node build/index.js"

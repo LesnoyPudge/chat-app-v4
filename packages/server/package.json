@@ -4,16 +4,17 @@
     "scripts": {
         "dev": "cross-env NODE_ENV=development nodemon",
         "prod": "cross-env NODE_ENV=production nodemon",
-        "": ""
+        "prisma:migrate": "prisma migrate dev --name update",
+        "prisma:generate": "prisma generate"
     },
     "dependencies": {
         "@lesnoypudge/utils": "^16.1.0",
+        "@prisma/client": "^5.22.0",
         "express": "^5.0.1",
         "i18next": "^23.16.5",
         "i18next-http-middleware": "^3.6.0",
-        "mongoose": "^8.8.1",
-        "node-cache": "^5.1.2",
         "socket.io": "^4.8.1",
+        "uuid": "^11.0.3",
         "winston": "^3.17.0"
     },
     "devDependencies": {
@@ -23,6 +24,7 @@
         "@lesnoypudge/types-global-base": "^4.0.0",
         "@lesnoypudge/types-global-node": "^1.0.0",
         "@lesnoypudge/types-utils-base": "^3.4.1",
-        "@types/express": "^5.0.0"
+        "@types/express": "^5.0.0",
+        "prisma": "^5.22.0"
     }
 }

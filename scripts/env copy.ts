@@ -4,15 +4,14 @@ import { createEnv } from './utils/createEnv';
 
 
 class PrivateEnv {
-    _DB_LOGIN = '';
-    _DB_PASSWORD = '';
-    _DB_CONNECTION_URL = ''.concat(
-        'mongodb+srv://',
+    _DB_LOGIN = 'postgres';
+    _DB_PASSWORD = 'pass';
+    DATABASE_URL = ''.concat(
+        'postgresql://',
         this._DB_LOGIN,
         ':',
         this._DB_PASSWORD,
-        '@cluster0.gkkfpo5.mongodb.net/?retryWrites=true',
-        '&w=majority&appName=Cluster0',
+        '@localhost:5432/chatapp?schema=public',
     );
 
     _JWT_ACCESS_KEYWORD = '';

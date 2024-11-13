@@ -1,19 +1,23 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { Dispatch, FC, PropsWithChildren, SetStateAction, useState } from 'react';
+import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { renderFunction } from '@lesnoypudge/utils-react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 
 
 
-type Block = MergeAll<[
-    PropsWithChildren,
-    {
+type Block = (
+    RT.PropsWithRenderFunctionOrNode<[
+        setLog: Dispatch<SetStateAction<string[]>>,
+    ]>
+    & {
         title?: string;
         buttonText?: string;
         buttonAction?: (
             setLog: Dispatch<SetStateAction<string[]>>,
         ) => void;
         formatLog?: (item: string) => string;
-    },
-]>;
+    }
+);
 
 export const Block: FC<Block> = ({
     title = 'Untitled block',
@@ -25,23 +29,23 @@ export const Block: FC<Block> = ({
     const [log, setLog] = useState<string[]>([]);
 
     return (
-        <section className="block">
+        <section className='block'>
             <div>{title}</div>
 
-            <div className="action">
+            <div className='action'>
                 <button
-                    className="action__button"
+                    className='action__button'
                     onClick={() => buttonAction(setLog)}
                 >
                     {buttonText}
                 </button>
 
-                <div className="action__log">
+                <div className='action__log'>
                     {log.length > 0
                         ? log.map((item, i) => {
                             return (
                                 <div
-                                    className="log-item"
+                                    className='log-item'
                                     key={i}
                                 >
                                     {formatLog(item)}
@@ -51,7 +55,7 @@ export const Block: FC<Block> = ({
 
                     {
                         log.length === 0 ? (
-                            <div className="log-item">
+                            <div className='log-item'>
                                 <>Log is empty</>
                             </div>
                         ) : null
@@ -59,7 +63,7 @@ export const Block: FC<Block> = ({
                 </div>
             </div>
 
-            {children}
+            {renderFunction(children, setLog)}
         </section>
     );
 };

@@ -8,11 +8,13 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@lesnoypudge/types-utils-react": "^5.0.0",
         "@lesnoypudge/utils": "^16.0.0",
         "@lesnoypudge/utils-react": "^2.0.0",
         "howler": "^2.2.4",
         "react": "^18.3.1",
-        "react-dom": "^18.3.1"
+        "react-dom": "^18.3.1",
+        "socket.io-client": "^4.8.1"
     },
     "devDependencies": {
         "@lesnoypudge/eslint-config": "^6.0.5",
@@ -25,6 +27,7 @@
         "@types/howler": "^2.2.12",
         "@vitejs/plugin-react": "^4.3.3",
         "sass-embedded": "^1.80.6",
-        "vite": "^5.4.11"
+        "vite": "^5.4.11",
+        "vite-tsconfig-paths": "^5.1.2"
     }
 }

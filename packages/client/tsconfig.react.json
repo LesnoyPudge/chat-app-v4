@@ -9,8 +9,14 @@
         "types": [
             "@lesnoypudge/types-global-base",
             "@lesnoypudge/types-global-web",
-            "@lesnoypudge/types-global-react"
+            "@lesnoypudge/types-global-react",
+            "../shared/shared.d.ts",
         ],
+        "paths": {
+            "@constants": [
+                "./src/constants"
+            ],
+        },
         "jsx": "react-jsx",
         "lib": [
             "ES2023",

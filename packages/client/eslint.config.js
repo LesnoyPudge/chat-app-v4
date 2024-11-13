@@ -8,6 +8,11 @@ export default config.createConfig(
     config.configs.web,
     config.configs.disableTypeChecked,
     {
+        languageOptions: {
+            parserOptions: {
+                cacheLifetime: undefined, 
+            },
+        },
         rules: {
             'unicorn/prefer-top-level-await': 'off',
             '@stylistic/jsx-tag-spacing': ['warn', {
@@ -17,6 +22,8 @@ export default config.createConfig(
                 "beforeClosing": "never"
             }],
             '@stylistic/multiline-ternary': 'off',
+            '@stylistic/jsx-one-expression-per-line': 'off',
+            '@stylistic/jsx-quotes': ['warn', 'prefer-single']
         }
     }
 );

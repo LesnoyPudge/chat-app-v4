@@ -4,5 +4,13 @@
     "endOfLine": "lf",
     "insertFinalNewline": false,
     "singleQuote": true,
-    "printWidth": 80
+    "printWidth": 80,
+    "overrides": [
+        {
+            "files": "*.yml",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }
