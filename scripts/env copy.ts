@@ -27,7 +27,6 @@ class PrivateEnv {
 
 class PublicEnv {
     _PUBLIC_APP_NAME = 'ChatApp';
-    _PUBLIC_DEFAULT_LNG = 'ru';
     _PUBLIC_ACCESS_CODE_SIZE = '6';
     _PUBLIC_API_V1 = '/api/v1';
     _PUBLIC_PROTOCOL = 'http';
@@ -64,6 +63,18 @@ class PublicEnv {
     _PUBLIC_SERVER_API_V1_URL = ''.concat(
         this._PUBLIC_SERVER_URL,
         this._PUBLIC_API_V1,
+    );
+
+    _PUBLIC_DEFAULT_LNG_NS = 'common';
+    _PUBLIC_SUPPORTED_LNGS = JSON.stringify([
+        'ru',
+        'en',
+    ]);
+
+    _PUBLIC_DEFAULT_LNG = JSON.stringify(
+        (JSON.parse(
+            this._PUBLIC_SUPPORTED_LNGS,
+        ) as string[])[0],
     );
 }
 

@@ -1,10 +1,12 @@
 {
     "extends": "./tsconfig.base.json",
     "include": [
-        "src/**/*",
+        "**/*",
         "node_modules/@types"
     ],
-    "exclude": [],
+    "exclude": [
+        "**/generated.*"
+    ],
     "compilerOptions": {
         "jsx": "react-jsx",
         "types": [

@@ -16,6 +16,7 @@ export default config.createConfig(
             'n/no-unpublished-import': 'off',
             'import-x/no-named-as-default-member': 'off',
             '@typescript-eslint/no-misused-promises': 'off',
+            'unicorn/no-process-exit': 'off',
         }
     },
 );
