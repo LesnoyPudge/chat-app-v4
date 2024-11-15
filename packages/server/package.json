@@ -4,8 +4,7 @@
     "scripts": {
         "dev": "cross-env NODE_ENV=development nodemon",
         "prod": "cross-env NODE_ENV=production nodemon",
-        "prisma:migrate": "prisma migrate dev --name update",
-        "prisma:generate": "prisma generate",
+        "prisma:migrate": "dotenvx run -f ../shared/generated/.env -- prisma migrate dev --name update",
         "scripts:translate": "i18next -c i18next-parser.config.js && tsx scripts/translate.ts"
     },
     "dependencies": {

@@ -12,31 +12,189 @@ generator client {
 
 datasource db {
     provider = "postgresql"
-    url      = "file:../../shared/generated/.env"
+    url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    title     String   @db.VarChar(255)
-    content   String?
-    published Boolean  @default(false)
-    author    User     @relation(fields: [authorId], references: [id])
-    authorId  String
+model File {
+    id          String   @id @default(uuid())
+    isDeletable Boolean  @default(true)
+    name        String
+    base64      String
+    size        Int
+    type        String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    User        User?
 }
 
-model Profile {
-    id     Int     @id @default(autoincrement())
-    bio    String?
-    user   User    @relation(fields: [userId], references: [id])
-    userId String  @unique
+enum Theme {
+    AUTO
+    DARK
+    LIGHT
+}
+
+enum FontSize {
+    FONT_12
+    FONT_14
+    FONT_16
+    FONT_18
+    FONT_20
+}
+
+enum MessageGroupSpacing {
+    SPACING_16
+    SPACING_20
+}
+
+enum MessageDisplayMode {
+    COZY
+    COMPACT
+}
+
+model UserOptions {
+    id                  String              @id @default(uuid())
+    user                User?
+    theme               Theme               @default(AUTO)
+    fontSize            FontSize            @default(FONT_16)
+    messageGroupSpacing MessageGroupSpacing @default(SPACING_20)
+    messageDisplayMode  MessageDisplayMode  @default(COZY)
 }
 
 model User {
-    id      String   @id @default(uuid())
-    email   String?  @unique
-    name    String?
-    posts   Post[]
-    profile Profile?
+    id                  String      @id @default(uuid())
+    login               String      @unique
+    email               String?     @unique
+    password            String
+    username            String
+    avatar              File        @relation(fields: [avatarId], references: [id])
+    avatarId            String      @unique
+    refreshToken        String
+    options             UserOptions @relation(fields: [optionsId], references: [id])
+    optionsId           String      @unique
+    accessCode          String?
+    accessCodeExpiresAt DateTime?
 }
+
+// const user = {
+// isDeleted: { type: SchemaTypes.Boolean, default: false },
+// extraStatus: { type: SchemaTypes.String, default: 'default' },
+// channels: [{ type: SchemaTypes.String, ref: MODEL_NAMES.CHANNEL }],
+// privateChannels: [{
+// id: { type: SchemaTypes.String, ref: MODEL_NAMES.PRIVATE_CHANNEL },
+// hidden: { type: SchemaTypes.Boolean, default: false },
+// }],
+// friends: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
+// blocked: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
+// friendRequests: {
+// incoming: [{
+// from: { type: SchemaTypes.String, ref: MODEL_NAMES.USER },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }],
+// outgoing: [{
+// to: { type: SchemaTypes.String, ref: MODEL_NAMES.USER },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }],
+// },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }
+
+// const room = {
+// id: { type: SchemaTypes.String },
+// name: { type: SchemaTypes.String, required: true },
+// type: { type: SchemaTypes.String, default: 'text' },
+// isPrivate: { type: SchemaTypes.Boolean, default: false },
+// channel: { type: SchemaTypes.String, ref: MODEL_NAMES.CHANNEL, required: true },
+// chat: { type: SchemaTypes.String, ref: MODEL_NAMES.CHAT, required: true },
+// whiteList: {
+// users: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
+// roles: [{ type: SchemaTypes.String, ref: MODEL_NAMES.ROLE }],
+// },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }
+
+// const RoleSchema = new Schema<Entities.Role.Default>({
+// id: { type: SchemaTypes.String },
+// channel: { type: SchemaTypes.String, ref: MODEL_NAMES.CHANNEL, required: true },
+// image: { type: SchemaTypes.String, ref: MODEL_NAMES.FILE, default: null },
+// name: { type: SchemaTypes.String, required: true },
+// color: { type: SchemaTypes.String, default: '#99aab5' },
+// isDefault: { type: SchemaTypes.Boolean, default: false },
+// order: { type: SchemaTypes.Number, required: true },
+// users: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
+// permissions: {
+// channelControl: { type: SchemaTypes.Boolean, default: false },
+// roomControl: { type: SchemaTypes.Boolean, default: false },
+// createInvitation: { type: SchemaTypes.Boolean, default: true },
+// kickMember: { type: SchemaTypes.Boolean, default: false },
+// banMember: { type: SchemaTypes.Boolean, default: false },
+// isAdministrator: { type: SchemaTypes.Boolean, default: false },
+// },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }, getSchemaOptions());
+
+// const PrivateChannelSchema = new Schema<Entities.PrivateChannel.Default>({
+// id: { type: SchemaTypes.String },
+// members: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
+// chat: { type: SchemaTypes.String, ref: MODEL_NAMES.CHAT, required: true },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }, getSchemaOptions());
+
+// const MessageSchema = new Schema<Entities.Message.Default>({
+// id: { type: SchemaTypes.String },
+// chat: { type: SchemaTypes.String, required: true },
+// user: { type: SchemaTypes.String, ref: MODEL_NAMES.USER, required: true },
+// content: { type: SchemaTypes.String, default: '' },
+// isChanged: { type: SchemaTypes.Boolean, default: false },
+// isDeleted: { type: SchemaTypes.Boolean, default: false },
+// attachments: [{
+// id: {
+// type: SchemaTypes.String,
+// ref: MODEL_NAMES.FILE,
+// required: true,
+// },
+// name: {
+// type: SchemaTypes.String,
+// required: true,
+// },
+// type: {
+// type: SchemaTypes.String,
+// required: true,
+// },
+// size: {
+// type: SchemaTypes.Number,
+// required: true,
+// },
+// }],
+// updatedAt: { type: SchemaTypes.Number, default: Date.now },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }, getSchemaOptions());
+
+// const ChatSchema = new Schema<Entities.Chat.Default>({
+// id: { type: SchemaTypes.String },
+// ownerId: { type: SchemaTypes.String },
+// owner: { type: SchemaTypes.String, required: true },
+// messages: [{ type: SchemaTypes.String, ref: MODEL_NAMES.MESSAGE }],
+// }, getSchemaOptions());
+
+// const ChannelSchema = new Schema<Entities.Channel.Default>({
+// id: { type: SchemaTypes.String },
+// identifier: { type: SchemaTypes.String, required: true, unique: true, lowercase: true },
+// name: { type: SchemaTypes.String, required: true },
+// owner: { type: SchemaTypes.String, ref: MODEL_NAMES.USER, required: true },
+// avatar: { type: SchemaTypes.String, ref: MODEL_NAMES.FILE, default: null },
+// isPrivate: { type: SchemaTypes.Boolean, default: false },
+// members: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
+// roles: [{ type: SchemaTypes.String, ref: MODEL_NAMES.ROLE }],
+// rooms: [{ type: SchemaTypes.String, ref: MODEL_NAMES.ROOM }],
+// invitations: [{
+// creator: { type: SchemaTypes.String, ref: MODEL_NAMES.USER },
+// code: { type: SchemaTypes.String },
+// expiryTimestamp: { type: SchemaTypes.String, default: null },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }],
+// banned: [{
+// user: { type: SchemaTypes.String, ref: MODEL_NAMES.USER },
+// reason: { type: SchemaTypes.String, default: null },
+// }],
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }, getSchemaOptions());

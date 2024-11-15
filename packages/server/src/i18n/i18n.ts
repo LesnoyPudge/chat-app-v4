@@ -5,7 +5,6 @@ import { resources, namespaces } from './generated';
 import { App } from '@types';
 
 
-export { t } from 'i18next';
 
 export const setupI18n = async (app: App) => {
     await new Promise<void>((res, rej) => {

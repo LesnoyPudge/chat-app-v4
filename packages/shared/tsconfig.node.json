@@ -5,7 +5,9 @@
         "node_modules/@types",
         "shared.d.ts"
     ],
-    "exclude": [],
+    "exclude": [
+        "build"
+    ],
     "compilerOptions": {
         "types": [
             "@lesnoypudge/types-global-base",

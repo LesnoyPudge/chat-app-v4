@@ -9,5 +9,8 @@
         "@lesnoypudge/eslint-config": "^6.0.5",
         "@lesnoypudge/types-global-base": "^4.0.0",
         "@lesnoypudge/types-utils-base": "^3.4.1"
+    },
+    "dependencies": {
+        "@lesnoypudge/builder": "^2.0.1"
     }
 }
