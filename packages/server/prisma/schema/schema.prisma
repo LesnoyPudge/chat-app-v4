@@ -1,0 +1,22 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["driverAdapters", "prismaSchemaFolder"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// example of cascade deletion
+//  owner   User   @relation("OwnedServers", fields: [ownerId], references: [id], onDelete: Cascade)
+
+// const ChatSchema = new Schema<Entities.Chat.Default>({
+// id: { type: SchemaTypes.String },
+// ownerId: { type: SchemaTypes.String },
+// owner: { type: SchemaTypes.String, required: true },
+// messages: [{ type: SchemaTypes.String, ref: MODEL_NAMES.MESSAGE }],
+// }, getSchemaOptions());

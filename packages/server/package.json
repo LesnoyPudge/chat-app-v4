@@ -18,8 +18,8 @@
         "winston": "^3.17.0"
     },
     "devDependencies": {
-        "@dotenvx/dotenvx": "^1.22.0",
-        "@lesnoypudge/builder": "^2.0.1",
+        "@dotenvx/dotenvx": "^1.24.0",
+        "@lesnoypudge/builder": "^3.0.3",
         "@lesnoypudge/eslint-config": "^6.0.5",
         "@lesnoypudge/types-global-base": "^4.0.0",
         "@lesnoypudge/types-global-node": "^1.0.0",

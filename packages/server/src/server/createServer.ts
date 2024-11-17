@@ -4,11 +4,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { env, isDev } from '@constants';
 import { App, Server } from '@types';
+import { invariant } from '@lesnoypudge/utils';
 
 
 
-const keyPath = path.join(import.meta.dirname, './https/server.key');
-const certPath = path.join(import.meta.dirname, './https/server.crt');
+const keyPath = path.join(import.meta.dirname, '../../https/server.key');
+const certPath = path.join(import.meta.dirname, '../../https/server.key');
+
+invariant(fs.existsSync(keyPath));
+invariant(fs.existsSync(certPath));
 
 export const createServer = (app: App) => {
     const server = (

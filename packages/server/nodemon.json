@@ -6,5 +6,5 @@
         "prisma"
     ],
     "ext": "*",
-    "exec": "tsc -p tsconfig.node.build.json && builder --file=tsconfig.node.build.json && dotenvx run -f ../shared/generated/.env -- node build/index.js"
+    "exec": "tsc -p tsconfig.node.build.json && builder --configName=tsconfig.node.build.json && dotenvx run -f ../shared/generated/.env -- node build/index.js"
 }

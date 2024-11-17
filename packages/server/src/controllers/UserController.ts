@@ -1,5 +1,5 @@
 import { DB } from '@types';
-import { db } from '../index';
+// import { db } from '../index';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { BaseController } from './utils';
 

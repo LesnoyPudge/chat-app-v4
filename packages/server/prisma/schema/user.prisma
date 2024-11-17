@@ -1,0 +1,56 @@
+enum ExtraStatus {
+    DEFAULT
+    AFK
+    DND
+    INVISIBLE
+}
+
+model User {
+    id           String   @id @default(uuid())
+    name         String
+    ownedServers Server[] @relation("OwnedServers")
+    servers      Server[] @relation("MembershipServers")
+}
+
+// model User {
+//     id                  String      @id @default(uuid())
+//     login               String      @unique
+//     email               String?     @unique
+//     password            String
+//     username            String
+//     avatar              File        @relation(fields: [avatarId], references: [id])
+//     avatarId            String
+//     refreshToken        String
+//     options             UserOptions @relation(fields: [optionsId], references: [id])
+//     optionsId           String      @unique
+//     accessCode          String?
+//     accessCodeExpiresAt DateTime?
+//     isDeleted           Boolean     @default(false)
+//     extraStatus         ExtraStatus @default(DEFAULT)
+//     servers             String[]
+//     Servers             Server[]    @relation(name: "Servers")
+//     Server              Server?     @relation(fields: [serverId], references: [id])
+//     Server              Server[]
+//     serverId            String?
+// }
+
+// const user = {
+// channels: [{ type: SchemaTypes.String, ref: MODEL_NAMES.CHANNEL }],
+// privateChannels: [{
+// id: { type: SchemaTypes.String, ref: MODEL_NAMES.PRIVATE_CHANNEL },
+// hidden: { type: SchemaTypes.Boolean, default: false },
+// }],
+// friends: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
+// blocked: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
+// friendRequests: {
+// incoming: [{
+// from: { type: SchemaTypes.String, ref: MODEL_NAMES.USER },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }],
+// outgoing: [{
+// to: { type: SchemaTypes.String, ref: MODEL_NAMES.USER },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }],
+// },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }

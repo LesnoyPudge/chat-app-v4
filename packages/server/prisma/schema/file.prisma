@@ -1,0 +1,12 @@
+model File {
+    id          String   @id @default(uuid())
+    isDeletable Boolean  @default(true)
+    name        String
+    base64      String
+    size        Int
+    type        String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    // User        User[]
+    // Server      Server[]
+}

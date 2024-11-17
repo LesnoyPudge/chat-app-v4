@@ -1,0 +1,40 @@
+model Server {
+    id      String @id @default(uuid())
+    name    String
+    owner   User   @relation("OwnedServers", fields: [ownerId], references: [id])
+    ownerId String
+    members User[] @relation("MembershipServers")
+    // memberIds String[]
+}
+
+// model Server {
+//     id        String   @id @default(uuid())
+//     name      String
+//     owner     User     @relation(name: "owner", fields: [ownerId], references: [id])
+//     ownerId   String
+//     avatar    File     @relation(fields: [avatarId], references: [id])
+//     avatarId  String
+//     isPrivate Boolean
+//     members   String[]
+//     User      User[]
+//     User      User?    @relation(fields: [userId], references: [id])
+//     userId    String?
+// }
+
+// const ChannelSchema = new Schema<Entities.Channel.Default>({
+// isPrivate: { type: SchemaTypes.Boolean, default: false },
+// members: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
+// roles: [{ type: SchemaTypes.String, ref: MODEL_NAMES.ROLE }],
+// rooms: [{ type: SchemaTypes.String, ref: MODEL_NAMES.ROOM }],
+// invitations: [{
+// creator: { type: SchemaTypes.String, ref: MODEL_NAMES.USER },
+// code: { type: SchemaTypes.String },
+// expiryTimestamp: { type: SchemaTypes.String, default: null },
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }],
+// banned: [{
+// user: { type: SchemaTypes.String, ref: MODEL_NAMES.USER },
+// reason: { type: SchemaTypes.String, default: null },
+// }],
+// createdAt: { type: SchemaTypes.Number, default: Date.now },
+// }, getSchemaOptions());
