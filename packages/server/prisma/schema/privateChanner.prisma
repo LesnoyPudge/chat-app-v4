@@ -1,6 +1,8 @@
-// const PrivateChannelSchema = new Schema<Entities.PrivateChannel.Default>({
-// id: { type: SchemaTypes.String },
-// members: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
-// chat: { type: SchemaTypes.String, ref: MODEL_NAMES.CHAT, required: true },
-// createdAt: { type: SchemaTypes.Number, default: Date.now },
-// }, getSchemaOptions());
+model PrivateChannel {
+    id            String    @id @default(uuid())
+    users         User[]
+    hiddenByUsers User[]    @relation("HiddenPrivateChannels")
+    messages      Message[]
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+}

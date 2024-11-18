@@ -6,51 +6,76 @@ enum ExtraStatus {
 }
 
 model User {
-    id           String   @id @default(uuid())
-    name         String
-    ownedServers Server[] @relation("OwnedServers")
-    servers      Server[] @relation("MembershipServers")
+    id                     String           @id @default(uuid())
+    name                   String
+    login                  String           @unique
+    password               String
+    email                  String?
+    refreshToken           String
+    accessCode             String?
+    accessCodeCreatedAt    DateTime?
+    isDeleted              Boolean          @default(false)
+    extraStatus            ExtraStatus      @default(DEFAULT)
+    messages               Message[]
+    ownedServers           Server[]
+    membership             Member[]
+    privateChannels        PrivateChannel[]
+    banRecords             BanRecord[]
+    invitationsCreated     Invitation[]
+    hiddenPrivateChannels  PrivateChannel[] @relation("HiddenPrivateChannels")
+    preferences            Preferences?
+    avatarId               String?          @unique
+    avatar                 File?            @relation(fields: [avatarId], references: [id])
+    friends                User[]           @relation("UserFriends")
+    friendOf               User[]           @relation("UserFriends")
+    blocked                User[]           @relation("UserBlock")
+    blockedBy              User[]           @relation("UserBlock")
+    incomingFriendRequests FriendRequest[]  @relation("IncomingRequests")
+    outgoingFriendRequests FriendRequest[]  @relation("OutgoingRequests")
+    createdAt              DateTime         @default(now())
+    updatedAt              DateTime         @updatedAt
 }
 
-// model User {
-//     id                  String      @id @default(uuid())
-//     login               String      @unique
-//     email               String?     @unique
-//     password            String
-//     username            String
-//     avatar              File        @relation(fields: [avatarId], references: [id])
-//     avatarId            String
-//     refreshToken        String
-//     options             UserOptions @relation(fields: [optionsId], references: [id])
-//     optionsId           String      @unique
-//     accessCode          String?
-//     accessCodeExpiresAt DateTime?
-//     isDeleted           Boolean     @default(false)
-//     extraStatus         ExtraStatus @default(DEFAULT)
-//     servers             String[]
-//     Servers             Server[]    @relation(name: "Servers")
-//     Server              Server?     @relation(fields: [serverId], references: [id])
-//     Server              Server[]
-//     serverId            String?
-// }
+model FriendRequest {
+    id         String   @id @default(uuid())
+    fromUserId String
+    fromUser   User     @relation("IncomingRequests", fields: [fromUserId], references: [id])
+    toUserId   String
+    toUser     User     @relation("OutgoingRequests", fields: [toUserId], references: [id])
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+}
 
-// const user = {
-// channels: [{ type: SchemaTypes.String, ref: MODEL_NAMES.CHANNEL }],
-// privateChannels: [{
-// id: { type: SchemaTypes.String, ref: MODEL_NAMES.PRIVATE_CHANNEL },
-// hidden: { type: SchemaTypes.Boolean, default: false },
-// }],
-// friends: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
-// blocked: [{ type: SchemaTypes.String, ref: MODEL_NAMES.USER }],
-// friendRequests: {
-// incoming: [{
-// from: { type: SchemaTypes.String, ref: MODEL_NAMES.USER },
-// createdAt: { type: SchemaTypes.Number, default: Date.now },
-// }],
-// outgoing: [{
-// to: { type: SchemaTypes.String, ref: MODEL_NAMES.USER },
-// createdAt: { type: SchemaTypes.Number, default: Date.now },
-// }],
-// },
-// createdAt: { type: SchemaTypes.Number, default: Date.now },
-// }
+enum Theme {
+    AUTO
+    DARK
+    LIGHT
+}
+
+enum FontSize {
+    FONT_12
+    FONT_14
+    FONT_16
+    FONT_18
+    FONT_20
+}
+
+enum MessageGroupSpacing {
+    SPACING_16
+    SPACING_20
+}
+
+enum MessageDisplayMode {
+    COZY
+    COMPACT
+}
+
+model Preferences {
+    id                  String              @id @default(uuid())
+    userId              String              @unique
+    user                User                @relation(fields: [userId], references: [id])
+    theme               Theme               @default(AUTO)
+    fontSize            FontSize            @default(FONT_16)
+    messageGroupSpacing MessageGroupSpacing @default(SPACING_20)
+    messageDisplayMode  MessageDisplayMode  @default(COZY)
+}
