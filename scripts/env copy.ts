@@ -6,7 +6,7 @@ import { createEnv } from './utils/createEnv';
 class PrivateEnv {
     _DB_LOGIN = 'postgres';
     _DB_PASSWORD = 'pass';
-    DATABASE_URL = ''.concat(
+    _DATABASE_URL = ''.concat(
         'postgresql://',
         this._DB_LOGIN,
         ':',
@@ -26,7 +26,9 @@ class PrivateEnv {
 }
 
 class PublicEnv {
+    _PUBLIC_SAFE_ENV_PREFIX = '_PUBLIC';
     _PUBLIC_APP_NAME = 'ChatApp';
+    _PUBLIC_AUTHOR_NAME = 'LesnoyPudge';
     _PUBLIC_ACCESS_CODE_SIZE = '6';
     _PUBLIC_API_V1 = '/api/v1';
     _PUBLIC_PROTOCOL = 'http';
@@ -79,7 +81,7 @@ class PublicEnv {
 }
 
 createEnv({
-    publicPrefix: '_PUBLIC_',
+    publicPrefix: new PublicEnv()._PUBLIC_SAFE_ENV_PREFIX,
     envPath: 'packages/shared/generated',
     typePath: 'packages/shared/generated',
     value: {

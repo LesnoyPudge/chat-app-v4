@@ -12,6 +12,11 @@
         "types": [
             "@lesnoypudge/types-global-base",
             "./generated/env.d.ts",
-        ]
+        ],
+        "paths": {
+            "@DBTypes": [
+                "../server/node_modules/@prisma/client"
+            ]
+        }
     }
 }

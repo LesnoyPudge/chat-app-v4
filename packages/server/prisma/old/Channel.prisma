@@ -1,0 +1,11 @@
+model TextChannel {
+    id            String    @id @default(uuid())
+    name          String
+    isPrivate     Boolean
+    serverId      String
+    server        Server    @relation(fields: [serverId], references: [id])
+    messages      Message[]
+    roleWhitelist Role[]
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+}

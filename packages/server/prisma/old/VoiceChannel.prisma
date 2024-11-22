@@ -1,0 +1,11 @@
+model VoiceChannel {
+    id            String   @id @default(uuid())
+    name          String
+    // participants  User[]
+    isPrivate     Boolean
+    serverId      String
+    server        Server   @relation(fields: [serverId], references: [id])
+    roleWhitelist Role[]
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+}

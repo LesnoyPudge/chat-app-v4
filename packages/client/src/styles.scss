@@ -1,62 +1,26 @@
-* {
-    // outline: 1px solid orangered;
-    font-family: monospace;
-    font-size: 24px;
-}
+@use './fonts.scss';
 
-.main-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    height: 100dvh;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.tab-controls {
-    display: flex;
-}
+@layer base {
+    * {
+        // outline: 1px solid orangered;
+    }
 
-.tab-name {
-    font-weight: bold;
-    text-align: center;
-}
+    html {
+        background-color: black;
+        color: aliceblue;
+        font-family: 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 10px;
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+        font-stretch: normal;
+    }
 
-.tab-wrapper {
-    display: grid;
-    gap: 20px;
-    overflow-y: scroll;
-    height: 100%;
-}
-
-.block {
-    display: grid;
-    gap: 20px;
-    height: fit-content;
-    padding: 20px;
-    background-color: #202026;
-
-    .action {
-        display: flex;
-        gap: 40px;
-        justify-content: space-between;
-
-        & > * {
-            width: 100%;
-        }
-
-        &__button {
-        }
-
-        &__log {
-            max-height: 500px;
-            overflow-y: scroll;
-            gap: 10px;
-            background-color: #35353e;
-
-            .log-item {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
+    main {
+        font-size: 2.6rem;
     }
 }

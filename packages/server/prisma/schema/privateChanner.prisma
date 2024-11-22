@@ -1,8 +1,0 @@
-model PrivateChannel {
-    id            String    @id @default(uuid())
-    users         User[]
-    hiddenByUsers User[]    @relation("HiddenPrivateChannels")
-    messages      Message[]
-    createdAt     DateTime  @default(now())
-    updatedAt     DateTime  @updatedAt
-}

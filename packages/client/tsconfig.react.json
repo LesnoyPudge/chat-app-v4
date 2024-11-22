@@ -4,18 +4,33 @@
         "src/**/*",
         "node_modules/@types"
     ],
-    "exclude": [],
+    "exclude": [
+        "./src/generated/**/*"
+    ],
     "compilerOptions": {
         "types": [
             "@lesnoypudge/types-global-base",
             "@lesnoypudge/types-global-web",
             "@lesnoypudge/types-global-react",
             "../shared/shared.d.ts",
+            "./src/declarations/global.d.ts",
+            "./src/declarations/vite-env.d.ts",
+            "./src/generated/assetNames.d.ts",
+            "./src/generated/spriteNames.d.ts"
         ],
         "paths": {
-            "@constants": [
-                "./src/constants"
+            "@vars": [
+                "./src/vars"
             ],
+            "@utils": [
+                "./src/utils"
+            ],
+            "@generated/*": [
+                "./src/generated/*"
+            ],
+            "@i18n": [
+                "./src/i18n"
+            ]
         },
         "jsx": "react-jsx",
         "lib": [

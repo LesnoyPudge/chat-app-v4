@@ -4,5 +4,5 @@
         "./generated"
     ],
     "ext": "*",
-    "exec": "builder --file tsconfig.node.build.json"
+    "exec": "tsc -p tsconfig.node.build.json && builder --configName tsconfig.node.build.json || exit 1"
 }

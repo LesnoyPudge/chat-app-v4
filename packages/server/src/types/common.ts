@@ -8,7 +8,7 @@ import type {
 import type * as Ex from 'express';
 import { Send } from 'express-serve-static-core';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { TOKEN_NAME } from '@shared';
+import { TOKEN_NAME, Entity } from '@shared';
 
 
 
@@ -32,7 +32,7 @@ type WithAuthorization = {
         [TOKEN_NAME.REFRESH]?: string;
     };
     auth: {
-        // id: Entity.User.Id;
+        id: Entity.User.Id;
         [TOKEN_NAME.ACCESS]: string;
         [TOKEN_NAME.REFRESH]?: string;
     };
@@ -84,3 +84,10 @@ export type AuthorizedMiddleware<
     res: Response<ResponseBody>,
     next: Ex.NextFunction,
 ) => void;
+
+export type TokenData = Pick<
+    Entity.User.Model,
+    'id'
+    | 'login'
+    | 'password'
+>;

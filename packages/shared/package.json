@@ -2,15 +2,13 @@
     "name": "shared",
     "type": "module",
     "scripts": {
-        "build": "builder --file tsconfig.node.build.json",
+        "build": "builder --configName tsconfig.node.build.json",
         "dev": "nodemon"
     },
     "devDependencies": {
+        "@lesnoypudge/builder": "^3.0.3",
         "@lesnoypudge/eslint-config": "^6.0.5",
         "@lesnoypudge/types-global-base": "^4.0.0",
         "@lesnoypudge/types-utils-base": "^3.4.1"
-    },
-    "dependencies": {
-        "@lesnoypudge/builder": "^2.0.1"
     }
 }

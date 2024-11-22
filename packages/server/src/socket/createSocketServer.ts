@@ -13,7 +13,7 @@ export const createSocketServer = (server: Server): SocketServer => {
             methods: [HTTP_METHOD.POST, HTTP_METHOD.GET],
         },
         allowRequest: (req, next) => {
-            console.log('resived socket request');
+            console.log('received socket request');
             next(null, true);
             // (socket, next) => {
             //     const auth = socket.handshake.auth as Partial<SocketAuth>;
