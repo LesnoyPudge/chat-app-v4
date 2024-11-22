@@ -68,16 +68,11 @@ class PublicEnv {
     );
 
     _PUBLIC_DEFAULT_LNG_NS = 'common';
+    _PUBLIC_DEFAULT_LNG = 'ru';
     _PUBLIC_SUPPORTED_LNGS = JSON.stringify([
-        'ru',
+        this._PUBLIC_DEFAULT_LNG,
         'en',
     ]);
-
-    _PUBLIC_DEFAULT_LNG = JSON.stringify(
-        (JSON.parse(
-            this._PUBLIC_SUPPORTED_LNGS,
-        ) as string[])[0],
-    );
 }
 
 createEnv({

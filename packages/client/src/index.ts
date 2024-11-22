@@ -3,12 +3,12 @@ import { postInit } from './postInit';
 import { preInit } from './preInit';
 
 
-const main = () => {
-    preInit();
+const main = async () => {
+    await preInit();
 
     init();
 
     postInit();
 };
 
-main();
+void main();

@@ -16,7 +16,8 @@
             "./src/declarations/global.d.ts",
             "./src/declarations/vite-env.d.ts",
             "./src/generated/assetNames.d.ts",
-            "./src/generated/spriteNames.d.ts"
+            "./src/generated/spriteNames.d.ts",
+            "./src/i18n/i18n.d.ts",
         ],
         "paths": {
             "@vars": [
@@ -37,6 +38,7 @@
             "ES2023",
             "DOM",
             "DOM.Iterable"
-        ]
+        ],
+        "skipLibCheck": false,
     }
 }

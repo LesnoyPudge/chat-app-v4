@@ -2,22 +2,28 @@
     "name": "client",
     "type": "module",
     "scripts": {
-        "dev": "nodemon",
+        "dev": "concurrently \"nodemon --config nodemon.vite.json\" \"nodemon --config nodemon.i18n.json\"",
         "prod": "echo \"Not implemented\" && exit 1",
         "build": "tsc -p tsconfig.react.json && npm run scripts:assets && vite build",
         "preview": "npm run build && vite preview",
-        "scripts:assets": "tsx ./scripts/assets.ts"
+        "scripts:assets": "tsx ./scripts/assets.ts",
+        "scripts:i18n": "tsx ./scripts/i18n.ts"
     },
     "dependencies": {
         "@lesnoypudge/utils": "^16.2.0",
         "@lesnoypudge/utils-react": "^2.0.0",
         "@tanstack/react-form": "^0.36.2",
         "howler": "^2.2.4",
+        "i18next": "^23.16.8",
+        "i18next-browser-languagedetector": "^8.0.0",
+        "i18next-http-backend": "^3.0.1",
         "react": "^18.3.1",
-        "react-dom": "^18.3.1"
+        "react-dom": "^18.3.1",
+        "react-i18next": "^15.1.1"
     },
     "devDependencies": {
         "@babel/plugin-transform-react-jsx": "^7.25.9",
+        "@dotenvx/dotenvx": "^1.24.4",
         "@lesnoypudge/eslint-config": "^6.0.5",
         "@lesnoypudge/formatter-config": "^6.1.0",
         "@lesnoypudge/types-global-base": "^4.0.0",
@@ -30,6 +36,8 @@
         "@vitejs/plugin-react": "^4.3.3",
         "autoprefixer": "^10.4.20",
         "babel-plugin-jsx-control-statements": "^4.1.2",
+        "concurrently": "^9.1.0",
+        "i18next-parser": "^9.0.2",
         "postcss": "^8.4.49",
         "react-scan": "^0.0.13",
         "sass-embedded": "^1.81.0",

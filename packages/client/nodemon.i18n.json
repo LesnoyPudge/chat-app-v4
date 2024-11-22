@@ -1,0 +1,10 @@
+{
+    "watch": [
+        "./src"
+    ],
+    "ignore": [
+        "**/generated/**"
+    ],
+    "ext": "*",
+    "exec": "npm run scripts:i18n"
+}

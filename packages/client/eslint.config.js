@@ -12,6 +12,7 @@ const [custom] = config.createConfig({
         },
     },
     rules: {
+        'prefer-const': 'off',
         'unicorn/prefer-top-level-await': 'off',
         '@stylistic/jsx-tag-spacing': ['warn', {
             "closingSlash": "never",
@@ -22,7 +23,16 @@ const [custom] = config.createConfig({
         '@stylistic/multiline-ternary': 'off',
         '@stylistic/jsx-one-expression-per-line': 'off',
         '@stylistic/jsx-quotes': ['warn', 'prefer-single'],
-        '@typescript-eslint/consistent-type-definitions': 'off'
+        '@typescript-eslint/consistent-type-definitions': 'off',
+        'unicorn/numeric-separators-style': [
+            "warn", 
+            {
+                "number": {
+                    "minimumDigits": 0, 
+                    "groupLength": 3
+                }
+            }
+        ],
     }
 })
 
