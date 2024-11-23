@@ -14,9 +14,10 @@ const generatedDirPath = path.join(rootPath, 'src/generated');
 const i18nGeneratedPath = path.join(generatedDirPath, 'i18n.ts');
 const localesDirPath = path.join(rootPath, 'public/locales');
 
-if (!fs.existsSync(localesDirPath)) {
-    fs.mkdirSync(localesDirPath, { recursive: true });
-}
+invariant(
+    fs.existsSync(localesDirPath),
+    'locales in public not found',
+);
 
 const localeNames = fs.readdirSync(
     localesDirPath,

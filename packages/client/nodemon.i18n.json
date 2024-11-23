@@ -1,6 +1,6 @@
 {
     "watch": [
-        "./src"
+        "./src/**/*.{ts,tsx,js,jsx}"
     ],
     "ignore": [
         "**/generated/**"

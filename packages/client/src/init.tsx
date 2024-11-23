@@ -1,6 +1,6 @@
 import { invariant } from '@lesnoypudge/utils';
 import { createRoot } from 'react-dom/client';
-import './styles.scss';
+import './styles/index.scss';
 import { getAssetUrl } from './utils';
 import { FC, Suspense } from 'react';
 import { useTrans } from '@i18n';
@@ -21,6 +21,16 @@ const Root: FC = () => {
                 <If condition={false}>
                     babel-plugin-jsx-control-statements
                 </If>
+
+                <div
+                    className={`
+                        text-xl 
+                        mobile:bg-slate-400 
+                        max-mobile:bg-green-500
+                    `}
+                >
+                    should work
+                </div>
 
                 <video
                     src={getAssetUrl('DISCORD_ANIMATED_LOGO.webm')}

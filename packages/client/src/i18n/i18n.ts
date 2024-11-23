@@ -13,7 +13,7 @@ export const i18nInit = async () => {
         .use(LanguageDetector)
         .use(initReactI18next)
         .init<HttpBackendOptions>({
-            debug: true,
+            // debug: true,
             partialBundledLanguages: true,
             interpolation: {
                 escapeValue: false,

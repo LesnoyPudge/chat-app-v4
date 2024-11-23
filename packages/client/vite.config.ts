@@ -17,6 +17,26 @@ const config: UserConfigFn = ({ mode }) => {
     } as PublicEnv;
 
     return defineConfig({
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    api: 'modern-compiler',
+                },
+            },
+        },
+        server: {
+            port: Number.parseInt(env._PUBLIC_CLIENT_PORT),
+        },
+        preview: {
+            port: Number.parseInt(env._PUBLIC_CLIENT_PORT),
+        },
+        build: {
+            outDir: 'build',
+            emptyOutDir: true,
+        },
+        envPrefix: env._PUBLIC_SAFE_ENV_PREFIX,
+        envDir,
+        assetsInclude: ['generated/assets/**/*'],
         plugins: [
             react({
                 babel: {
@@ -65,19 +85,6 @@ const config: UserConfigFn = ({ mode }) => {
             //     },
             // }),
         ],
-        server: {
-            port: Number.parseInt(env._PUBLIC_CLIENT_PORT),
-        },
-        preview: {
-            port: Number.parseInt(env._PUBLIC_CLIENT_PORT),
-        },
-        build: {
-            outDir: 'build',
-            emptyOutDir: true,
-        },
-        envPrefix: env._PUBLIC_SAFE_ENV_PREFIX,
-        envDir,
-        assetsInclude: ['generated/assets/**/*'],
     });
 };
 

@@ -5,6 +5,7 @@
         "vite.config.ts",
         "node_modules/@types",
         "tailwind.config.ts",
+        "./twPlugins/**/*",
     ],
     "exclude": [],
     "compilerOptions": {
