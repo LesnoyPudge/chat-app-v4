@@ -96,19 +96,22 @@ const getNameParts = (fileName: string) => {
 
 const main = () => {
     fs.rmSync(
-        generatedDirPath,
+        generatedAssetsDirPath,
         { force: true, recursive: true },
     );
-    console.log('generated folder removed');
-
-    fs.mkdirSync(generatedDirPath);
-    console.log('generated folder created');
+    console.log('assets folder removed');
 
     fs.mkdirSync(
         generatedAssetsDirPath,
         { recursive: true },
     );
-    console.log('folder for assets created');
+    console.log('assets folder created');
+
+    fs.rmdirSync(
+        generatedSpritePreviewPath,
+        { recursive: true },
+    );
+    console.log('folder for sprites for preview removed');
 
     fs.mkdirSync(
         generatedSpritePreviewPath,
@@ -116,12 +119,12 @@ const main = () => {
     );
     console.log('folder for sprites for preview created');
 
-    fs.cpSync(
-        rawAssetsPath.font,
-        generatedAssetsDirPath,
-        { recursive: true, force: true },
-    );
-    console.log('fonts copied');
+    // fs.cpSync(
+    //     rawAssetsPath.font,
+    //     generatedAssetsDirPath,
+    //     { recursive: true, force: true },
+    // );
+    // console.log('fonts copied');
 
     const spriteImagePaths = fs.globSync([
         rawAssetsPath.images.sprite,

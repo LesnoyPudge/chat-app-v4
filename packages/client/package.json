@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "concurrently \"nodemon --config nodemon.i18n.json\" \"nodemon --config nodemon.vite.json\"",
         "prod": "echo \"Not implemented\" && exit 1",
-        "build": "tsc -p tsconfig.react.build.json && npm run scripts:assets && vite build",
+        "build": "tsc -p tsconfig.react.build.json && vite build",
         "preview": "npm run build && vite preview",
         "scripts:assets": "tsx ./scripts/assets.ts",
         "scripts:i18n": "tsx ./scripts/i18n.ts"

@@ -31,7 +31,7 @@ export const Root: FC = () => {
                 <div
                     className={styles.test}
                 >
-                    should work
+                    should workqwe
                 </div>
 
                 <video

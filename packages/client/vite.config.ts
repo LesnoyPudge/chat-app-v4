@@ -26,6 +26,9 @@ const config: UserConfigFn = ({ mode }) => {
         },
         server: {
             port: Number.parseInt(env._PUBLIC_CLIENT_PORT),
+            watch: {
+                ignored: ['**/generated/**'],
+            },
         },
         preview: {
             port: Number.parseInt(env._PUBLIC_CLIENT_PORT),
@@ -33,6 +36,7 @@ const config: UserConfigFn = ({ mode }) => {
         build: {
             outDir: 'build',
             emptyOutDir: true,
+            assetsInlineLimit: 0,
         },
         envPrefix: env._PUBLIC_SAFE_ENV_PREFIX,
         envDir,
