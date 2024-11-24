@@ -84,6 +84,16 @@ const getNameParts = (fileName: string) => {
     };
 };
 
+// const assetNamesSet = new Set<string>();
+
+// const checkDuplicates = (name: string) => {
+//     if (assetNamesSet.has(name)) {
+//         throw new Error(`Found duplicate asset name: ${name}`);
+//     }
+
+//     assetNamesSet.add(name);
+// };
+
 const main = () => {
     fs.rmSync(
         generatedDirPath,
@@ -229,8 +239,19 @@ const main = () => {
     ].map((name) => `${name}/**/*`)).map((filePath) => {
         const fileName = path.basename(filePath);
         const { ext, name } = getNameParts(fileName);
-        return `${name}.${ext}`;
+        const newName = `${name}.${ext}`;
+
+        const data = fs.readFileSync(filePath);
+
+        fs.writeFileSync(
+            path.join(generatedAssetsDirPath, newName),
+            data,
+            'utf8',
+        );
+
+        return newName;
     });
+    console.log('sounds and videos generated');
 
     const commonAssetNamesTypeData = [
         `// GENERATED IN ${import.meta.filename}\n`,

@@ -1,13 +1,33 @@
 import { i18nInit } from '@i18n';
-import { scan } from 'react-scan';
+import { isDev } from '@vars';
 
 
 
 export const preInit = async () => {
-    scan({
-        enabled: true,
-        log: true,
-    });
+    if (isDev) {
+        const { scan } = await import('react-scan');
+
+        const log = console.log;
+        const messageToIgnore = [
+            'Try Million Lint to automatically',
+            'optimize your app: https://million.dev',
+        ].join(' ');
+
+        console.log = (...args) => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            const messageArg = args[0];
+            if (messageArg === messageToIgnore) {
+                return;
+            }
+
+            log(...args);
+        };
+
+        scan({
+            enabled: true,
+            log: true,
+        });
+    }
 
     await i18nInit();
 };

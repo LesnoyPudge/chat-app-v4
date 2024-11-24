@@ -1,6 +1,6 @@
+import { preInit } from './preInit';
 import { init } from './init';
 import { postInit } from './postInit';
-import { preInit } from './preInit';
 
 
 const main = async () => {

@@ -1,7 +1,11 @@
+import { env } from '@vars';
 
 
 
 export const getAssetUrl = (fileName: CommonAssetNames) => {
-    // eslint-disable-next-line unicorn/relative-url-style
-    return new URL(`./generated/assets/${fileName}`, import.meta.url).href;
+    return new URL(
+        // eslint-disable-next-line unicorn/relative-url-style
+        `./src/generated/assets/${fileName}`,
+        env._PUBLIC_CLIENT_URL,
+    ).href;
 };

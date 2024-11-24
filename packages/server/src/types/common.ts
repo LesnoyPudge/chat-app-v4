@@ -1,4 +1,4 @@
-import type { PrismaClient } from '@prisma/client';
+import type { PrismaClient } from '@prisma/client/index-browser';
 import type http from 'node:http';
 import type https from 'node:https';
 import type {

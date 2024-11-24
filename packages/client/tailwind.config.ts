@@ -3,6 +3,7 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 import {
     animationDelay,
     leading,
+    getCustomClasses,
 } from './twPlugins';
 
 
@@ -18,6 +19,7 @@ export default {
 
     plugins: [
         animationDelay(),
+        getCustomClasses(),
         leading(),
     ],
 
@@ -137,7 +139,7 @@ export default {
             },
 
             animation: {
-                'loading-pulse': 'var(--loading-pulse-animation)',
+                'custom-pulse': 'var(--custom-pulse-animation)',
             },
         },
     },

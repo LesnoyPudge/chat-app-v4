@@ -48,7 +48,7 @@ const config: UserConfigFn = ({ mode }) => {
                         'jsx-control-statements',
                     ],
                 },
-            }),,
+            }),
             tsconfigPaths(),
             checker({ typescript: true }),
             // VitePWA({

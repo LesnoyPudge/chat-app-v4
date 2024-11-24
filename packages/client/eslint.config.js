@@ -33,6 +33,7 @@ const [custom] = config.createConfig({
                 }
             }
         ],
+        'jsx-control-statements/jsx-for-require-each': 'off',
     }
 })
 
