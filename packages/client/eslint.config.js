@@ -2,7 +2,7 @@ import { config } from "@lesnoypudge/eslint-config";
 
 
 
-const [custom] = config.createConfig({
+const configArr = config.createConfig({
     files: [
         './vite.config.ts'
     ],
@@ -42,7 +42,7 @@ const _config = config.createConfig(
         config.configs.base,
         config.configs.react,
         config.configs.web,
-        custom,
+        ...configArr,
     ),
     {
         ...config.configs.node,

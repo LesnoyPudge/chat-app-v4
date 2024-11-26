@@ -57,11 +57,11 @@ const main = async () => {
         `locales not found on path ${localesDirPath}`,
     );
 
-    fs.rmSync(
-        i18nGeneratedPath,
-        { force: true },
-    );
-    console.log('i18n vars deleted');
+    // fs.rmSync(
+    //     i18nGeneratedPath,
+    //     { force: true },
+    // );
+    // console.log('i18n vars deleted');
 
     for (const locale of localeNames) {
         const namespacesFolder = path.join(

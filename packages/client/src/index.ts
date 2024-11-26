@@ -1,6 +1,4 @@
-import { preInit } from './preInit';
-import { init } from './init';
-import { postInit } from './postInit';
+import { preInit, init, postInit } from './root';
 
 
 const main = async () => {
@@ -8,7 +6,7 @@ const main = async () => {
 
     init();
 
-    postInit();
+    void postInit();
 };
 
 void main();

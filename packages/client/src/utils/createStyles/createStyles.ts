@@ -37,9 +37,11 @@ type Processed<_Styles extends T.UnknownRecord> = {
 };
 
 type Return<_Styles extends T.UnknownRecord> = (
-    T.Writable<
-        T.Simplify<
-            Processed<_Styles>
+    T.Simplify<
+        Processed<
+            T.WritableDeep<
+                _Styles
+            >
         >
     >
 );

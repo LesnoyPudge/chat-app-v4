@@ -6,6 +6,7 @@
         "node_modules/@types",
         "tailwind.config.ts",
         "./twPlugins/**/*",
+        "eslint.config.js",
     ],
     "exclude": [],
     "compilerOptions": {
