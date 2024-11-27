@@ -54,7 +54,7 @@
     
         */
         /* Completeness */
-        "skipLibCheck": true,
+        "skipLibCheck": false,
         /*
         
         */

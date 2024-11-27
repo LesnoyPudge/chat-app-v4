@@ -1,20 +1,29 @@
-// import { Button, Image } from '@components';
-import { getAssetUrl } from '@utils';
+// import { Button, Image } from '@lesnoypudge/utils-react';
+import { createStyles, getAssetUrl } from '@utils';
 import { FC } from 'react';
 
 
 
-const styles = {
-    page: `page flex flex-col items-center justify-center text-center
-    overflow-y-auto bg-primary-300 text-color-base`,
+const styles = createStyles({
+    page: `
+        flex 
+        flex-col 
+        items-center 
+        justify-center 
+        overflow-y-auto 
+        bg-primary-300
+        text-center 
+        text-color-base
+        screen 
+    `,
     bg: 'image-bg-fullscreen',
-    image: 'w-[min(254px,100%)] aspect-[254/154]',
-    heading: 'text-xl text-color-primary mt-5 font-semibold',
-    text: 'text-color-muted mt-3',
-    button: 'font-semibold mt-6',
-};
+    image: 'aspect-[254/154] w-[min(254px,100%)]',
+    heading: 'mt-5 text-xl font-semibold text-color-primary',
+    text: 'mt-3 text-color-muted',
+    button: 'mt-6 font-semibold',
+});
 
-export const ErrorPage: FC = () => {
+export const ErrorScreen: FC = () => {
     return (
         <div className={styles.page}>
             <img

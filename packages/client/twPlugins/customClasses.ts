@@ -1,17 +1,8 @@
 import plugin from 'tailwindcss/plugin';
-
+import { toOneLine } from '../src/utils/toOneLine';
 
 
 const customClasses = {
-    // '.image-bg-fullscreen': {
-    //     '@apply fixed top-0 left-0 w-dvw h-dvh -z-[1] object-cover object-center': {},
-    // },
-
-    // '.overlay-item-wrapper': {
-    //     '@apply pointer-events-none fixed inset-0': {},
-    // },
-
-
     '.sr-input': {
         'position': 'absolute',
         'inset': '0',
@@ -29,32 +20,28 @@ const customClasses = {
         'outline-color': 'transparent',
     },
 
-    // '.message-font-size': {
-    //     'font-size': 'var(--message-font-size)',
-    //     'line-height': 'var(--message-line-height)',
-    // },
+    '.screen': {
+        [toOneLine(`
+            @apply 
+            h-full 
+            w-full 
+            isolate
+        `)]: {},
+    },
 
-    // '.message-y-padding': {
-    //     'padding-top': 'var(--message-y-padding)',
-    //     'padding-bottom': 'var(--message-y-padding)',
-    // },
-
-    // '.message-emoji-wrapper-size': {
-    //     'height': 'var(--message-emoji-wrapper-height)',
-    //     'width': 'var(--message-emoji-wrapper-width)',
-    // },
-
-    // '.message-emoji-font-size': {
-    //     'font-size': 'var(--message-emoji-font-size)',
-    // },
-
-    // '.message-emoji-bg-size': {
-    //     'background-size': 'var(--message-emoji-bg-size)',
-    // },
-
-    // '.message-group-head': {
-    //     'padding-top': 'var(--message-gap)',
-    // },
+    '.image-bg-fullscreen': {
+        [toOneLine(`
+            @apply 
+            fixed 
+            top-0 
+            left-0 
+            w-dvw 
+            h-dvh 
+            -z-10
+            object-cover 
+            object-center
+        `)]: {},
+    },
 };
 
 export const getCustomClasses = () => (

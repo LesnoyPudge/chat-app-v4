@@ -1,4 +1,20 @@
 @layer base {
+    * {
+        min-width: 0;
+        outline-width: 3px;
+        outline-style: solid;
+        outline-color: transparent;
+        color: inherit;
+
+        &:focus:not(:focus-visible) {
+            @apply focus-hidden;
+        }
+
+        &:focus-visible {
+            @apply focused;
+        }
+    }
+
     html {
         background-color: theme('backgroundColor.primary.500');
         color: theme('textColor.color.base');
@@ -30,22 +46,6 @@
         inset: 0;
         overflow: hidden;
         contain: strict;
-
-        * {
-            min-width: 0;
-            outline-width: 3px;
-            outline-style: solid;
-            outline-color: transparent;
-            color: inherit;
-
-            &:focus:not(:focus-visible) {
-                @apply focus-hidden;
-            }
-
-            &:focus-visible {
-                @apply outline focused;
-            }
-        }
     }
 
     #app-root {

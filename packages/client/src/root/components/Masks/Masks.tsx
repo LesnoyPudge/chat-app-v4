@@ -1,4 +1,5 @@
-import { Hidden } from '@components';
+import { Hidden } from '@lesnoypudge/utils-react';
+import { MASK_ID } from '@vars';
 import { FC } from 'react';
 
 
@@ -8,7 +9,7 @@ export const Masks: FC = () => {
         <Hidden>
             <svg viewBox='0 0 1 1'>
                 <mask
-                    id='avatar-with-status-mask'
+                    id={MASK_ID.AVATAR_WITH_STATUS_MASK}
                     maskContentUnits='objectBoundingBox'
                 >
                     <circle

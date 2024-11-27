@@ -1,4 +1,5 @@
 import { config } from "@lesnoypudge/eslint-config";
+import tailwind from "eslint-plugin-tailwindcss";
 
 
 
@@ -10,6 +11,11 @@ const configArr = config.createConfig({
         parserOptions: {
             cacheLifetime: undefined, 
         },
+    },
+    settings: {
+        tailwindcss: {
+            callees: ["styles", "createStyles"],
+        }
     },
     rules: {
         'prefer-const': 'off',
@@ -43,6 +49,7 @@ const _config = config.createConfig(
         config.configs.base,
         config.configs.react,
         config.configs.web,
+        ...tailwind.configs["flat/recommended"],
         ...configArr,
     ),
     {

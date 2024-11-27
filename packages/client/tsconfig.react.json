@@ -41,8 +41,11 @@
                 "./src/components"
             ],
             "@pages/*": [
-                "./src/pages/*"
+                "src/pages/*"
             ],
+            "@router/*": [
+                "./src/router/*"
+            ]
         },
         "jsx": "react-jsx",
         "lib": [
@@ -50,6 +53,5 @@
             "DOM",
             "DOM.Iterable"
         ],
-        "skipLibCheck": false,
     }
 }

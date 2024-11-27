@@ -1,6 +1,6 @@
-import '../styles/index.scss';
+import '@root/styles/index.scss';
 import { createRoot } from 'react-dom/client';
-import { Root } from '../Root';
+import { Root } from '@root/Root';
 import { getHTMLElement } from '@utils';
 
 

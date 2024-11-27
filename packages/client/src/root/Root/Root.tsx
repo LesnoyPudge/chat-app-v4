@@ -1,31 +1,34 @@
-import { Heading, VisuallyHidden } from '@lesnoypudge/utils-react';
+import {
+    Heading,
+    VisuallyHidden,
+    ErrorBoundary,
+} from '@lesnoypudge/utils-react';
 import { env } from '@vars';
 import { FC, StrictMode } from 'react';
 import { Masks, Sprite } from '@root/components';
-import { never } from '@lesnoypudge/utils';
-import { ErrorBoundary } from '@components';
-import { ErrorPage } from '@pages/ErrorPage';
+import { ErrorScreen } from '@pages/screens/ErrorScreen';
+import { Router } from '@router/Router';
 
-const ErrorComp: FC = () => {
-    never();
-};
+
 
 export const Root: FC = () => {
     return (
         <StrictMode>
-            <ErrorBoundary FallbackComponent={ErrorPage}>
-                <Heading.Provider>
-                    <VisuallyHidden>
-                        <Heading.Node>
-                            {env._PUBLIC_APP_NAME}
-                        </Heading.Node>
-                    </VisuallyHidden>
+            <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
+                <VisuallyHidden>
+                    <Heading.Node>
+                        {env._PUBLIC_APP_NAME}
+                    </Heading.Node>
+                </VisuallyHidden>
 
-                    <Masks/>
-                    <ErrorComp/>
-                    <Sprite/>
+                <Masks/>
+
+                <Sprite/>
+
+                <Heading.Provider>
+                    <Router/>
                 </Heading.Provider>
-            </ErrorBoundary>
+            </ErrorBoundary.Node>
         </StrictMode>
     );
 };

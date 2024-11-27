@@ -1,5 +1,5 @@
 import { SPRITE } from '@generated/sprite';
-import { Hidden } from '@components';
+import { Hidden } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 
 
