@@ -5,13 +5,14 @@
         outline-style: solid;
         outline-color: transparent;
         color: inherit;
+        // overflow: hidden;
 
         &:focus:not(:focus-visible) {
-            @apply focus-hidden;
+            @apply outline-transparent;
         }
 
         &:focus-visible {
-            @apply focused;
+            @apply outline-focus;
         }
     }
 

@@ -4,9 +4,8 @@ export const namespaces = ["common"] as const;
 
 export type NamespacesType = {
     "common": {
-        "qwe": "__NOT_TRANSLATED__",
-        "qwezxc2": "__NOT_TRANSLATED__",
-        "wow": "__NOT_TRANSLATED__",
-        "zxc": "зхц ру"
+        "ErrorScreen.button": "Перезагрузить",
+        "ErrorScreen.heading": "Как-то неловко получается",
+        "ErrorScreen.text": "В приложении возник неожиданный сбой.... Мы отследили ошибку и вскоре ей займёмся."
     }
 };

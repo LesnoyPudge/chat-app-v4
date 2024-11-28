@@ -45,6 +45,9 @@
             ],
             "@router/*": [
                 "./src/router/*"
+            ],
+            "@types": [
+                "./src/types"
             ]
         },
         "jsx": "react-jsx",

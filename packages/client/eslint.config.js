@@ -41,6 +41,7 @@ const configArr = config.createConfig({
         ],
         'jsx-control-statements/jsx-for-require-each': 'off',
         'no-console': 'error',
+        'tailwindcss/enforces-shorthand': 'off',
     }
 })
 

@@ -1,10 +1,6 @@
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
-import {
-    animationDelay,
-    leading,
-    getCustomClasses,
-} from './twPlugins';
+import { animationDelay, leading } from './twPlugins';
 
 
 const pxToRem = (px = 0, baseFontSize = 16) => {
@@ -19,7 +15,6 @@ export default {
 
     plugins: [
         animationDelay(),
-        getCustomClasses(),
         leading(),
     ],
 

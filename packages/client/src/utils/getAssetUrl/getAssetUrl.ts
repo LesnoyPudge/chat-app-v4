@@ -1,9 +1,20 @@
 
 
 
+const cache = new Map<string, string>();
+
 export const getAssetUrl = (fileName: CommonAssetNames) => {
-    return new URL(
+    const found = cache.get(fileName);
+    if (found) {
+        return found;
+    }
+
+    const { href } = new URL(
         `../../generated/assets/${fileName}`,
         import.meta.url,
-    ).href;
+    );
+
+    cache.set(fileName, href);
+
+    return href;
 };

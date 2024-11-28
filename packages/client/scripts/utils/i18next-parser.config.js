@@ -60,7 +60,7 @@ export default {
     // You may also specify an array of patterns: the keys from the catalog that are no long in the code but match one of the patterns will be kept.
     // The patterns are applied to the full key including the namespace, the parent keys and the separators.
 
-    keySeparator: '.',
+    keySeparator: false,
     // Key separator used in your translation keys
     // If you want to use plain english keys, separators such as `.` and `:` will conflict. You might want to set `keySeparator: false` and `namespaceSeparator: false`. That way, `t('Status: Loading...')` will not think that there are a namespace and three separator dots for instance.
 

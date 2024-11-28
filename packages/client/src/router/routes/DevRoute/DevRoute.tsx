@@ -1,5 +1,7 @@
 import { RouteObject } from 'react-router';
 import { ErrorScreen } from '@pages/screens/ErrorScreen';
+import { ErrorBoundary } from '@lesnoypudge/utils-react';
+import { ErrorThrower } from '@components';
 
 
 
@@ -12,7 +14,11 @@ export const DevRoute: RouteObject[] = [{
         },
         {
             path: 'error-screen',
-            element: <ErrorScreen/>,
+            element: (
+                <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
+                    <ErrorThrower/>
+                </ErrorBoundary.Node>
+            ),
         },
     ],
 }];
