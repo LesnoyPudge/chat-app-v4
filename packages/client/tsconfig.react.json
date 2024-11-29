@@ -3,7 +3,7 @@
     "include": [
         "src/**/*",
         "node_modules/@types",
-        "WIP/Polymorphic"
+        "src/WIP/Polymorphic"
     ],
     "exclude": [
         "./src/generated/**/*",

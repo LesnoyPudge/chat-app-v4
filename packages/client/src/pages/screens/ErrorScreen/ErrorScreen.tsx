@@ -1,9 +1,10 @@
 import { Button, Image, Scrollable } from '@components';
 import { useTrans } from '@i18n';
-import { ErrorBoundary, Heading, useFunction } from '@lesnoypudge/utils-react';
+import { Heading } from '@lesnoypudge/utils-react';
 import { createStyles, getAssetUrl } from '@utils';
 import { CUSTOM_STYLES } from '@vars';
-import { FC, useContext } from 'react';
+import { FC } from 'react';
+import { useErrorScreen } from './useErrorScreen';
 
 
 
@@ -27,22 +28,14 @@ const styles = createStyles({
     button: 'mt-6 font-semibold',
 });
 
-export const ErrorScreen: FC = () => {
-    const {
-        resetErrorBoundary,
-        counter,
-    } = useContext(ErrorBoundary.Context);
+export namespace ErrorScreenPure {
+    export type Props = ReturnType<typeof useErrorScreen>;
+}
+
+export const ErrorScreenPure: FC<ErrorScreenPure.Props> = ({
+    onClick,
+}) => {
     const { t } = useTrans();
-
-    const onClick = useFunction(() => {
-        if (counter.get() === 5) {
-            window.location.reload();
-            return;
-        }
-
-        counter.inc();
-        resetErrorBoundary();
-    });
 
     return (
         <Scrollable className={styles.page} withOppositeGutter>
@@ -75,5 +68,11 @@ export const ErrorScreen: FC = () => {
                 </Button>
             </div>
         </Scrollable>
+    );
+};
+
+export const ErrorScreen: FC = () => {
+    return (
+        <ErrorScreenPure {...useErrorScreen()}/>
     );
 };

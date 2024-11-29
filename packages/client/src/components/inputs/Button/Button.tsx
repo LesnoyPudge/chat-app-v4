@@ -38,10 +38,10 @@ export namespace Button {
             hidden?: boolean;
             onAnyClick?: (e?: React.MouseEvent | React.KeyboardEvent) => void;
             onLeftClick?: (e?: React.MouseEvent | React.KeyboardEvent) => void;
-            onMiddleClick?: (e?: React.MouseEvent) => void;
-            onRightClick?: (e?: React.MouseEvent) => void;
-            onMouseEnter?: (e?: React.MouseEvent) => void;
-            onFocus?: (e?: React.FocusEvent) => void;
+            onMiddleClick?: React.MouseEventHandler;
+            onRightClick?: React.MouseEventHandler;
+            onMouseEnter?: React.MouseEventHandler;
+            onFocus?: React.FocusEventHandler;
         }
     >;
 }
@@ -71,7 +71,7 @@ export const Button: FC<Button.Props> = ({
     onMouseEnter,
     onFocus,
 }) => {
-    const handleLeftClickWithKeyboard = (e: React.KeyboardEvent) => {
+    const handleLeftClickWithKeyboard: React.KeyboardEventHandler = (e) => {
         if (e.code !== 'Enter' && e.code !== 'Space') return;
 
         handleLeftClick(e);
@@ -86,7 +86,7 @@ export const Button: FC<Button.Props> = ({
         if (onAnyClick) return onAnyClick(e);
     };
 
-    const handleRightClick = (e: React.MouseEvent) => {
+    const handleRightClick: React.MouseEventHandler = (e) => {
         if (!onAnyClick && !onRightClick) return;
 
         e.preventDefault();
@@ -95,7 +95,7 @@ export const Button: FC<Button.Props> = ({
         if (onAnyClick) return onAnyClick(e);
     };
 
-    const handleMiddleClick = (e: React.MouseEvent) => {
+    const handleMiddleClick: React.MouseEventHandler = (e) => {
         if (!onAnyClick && !onMiddleClick) return;
         if (e.button !== 1) return;
 
@@ -105,7 +105,7 @@ export const Button: FC<Button.Props> = ({
         if (onAnyClick) return onAnyClick(e);
     };
 
-    const middleClickFix = (e: React.MouseEvent) => {
+    const middleClickFix: React.MouseEventHandler = (e) => {
         if (!onAnyClick && !onMiddleClick) return;
         if (e.button !== 1) return;
 

@@ -1,7 +1,7 @@
 import { RouteObject } from 'react-router';
-import { ErrorScreen } from '@pages/screens/ErrorScreen';
-import { ErrorBoundary } from '@lesnoypudge/utils-react';
-import { ErrorThrower } from '@components';
+import { ErrorScreenPure } from '@pages/screens/ErrorScreen';
+import { noop } from '@lesnoypudge/utils';
+import { InvitationScreenPure } from '@pages/screens/InvitationScreen';
 
 
 
@@ -14,11 +14,28 @@ export const DevRoute: RouteObject[] = [{
         },
         {
             path: 'error-screen',
+            element: <ErrorScreenPure onClick={noop}/>,
+        },
+        // {
+        //     path: 'auth-screen',
+        //     element: <AuthPage/>,
+        // },
+        {
+            path: 'invitation-screen',
             element: (
-                <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
-                    <ErrorThrower/>
-                </ErrorBoundary.Node>
+                <InvitationScreenPure
+                    channel={{
+                        membersCount: 2,
+                        name: 'fake channel',
+                        onlineCount: 1,
+                    }}
+                    acceptInvitation={noop}
+                />
             ),
         },
+        // {
+        //     path: 'global-loader-screen',
+        //     element: <GlobalLoader.Wrapper/>,
+        // },
     ],
 }];
