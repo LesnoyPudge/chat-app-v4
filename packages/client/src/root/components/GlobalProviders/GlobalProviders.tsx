@@ -4,10 +4,9 @@ import { FC, PropsWithChildren } from 'react';
 
 
 
-const loadDomAnimation = () => {
-    return import('./common/lazyDomAnimations').then((res) => {
-        return res.default;
-    });
+const loadDomAnimation = async () => {
+    const res = await import('./common/lazyDomAnimations');
+    return res.default;
 };
 
 export const GlobalProviders: FC<PropsWithChildren> = ({
