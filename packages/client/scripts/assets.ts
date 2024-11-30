@@ -20,7 +20,7 @@ const generatedCommonAssetNamesDeclarationPath = path.join(
 
 const generatedSpritePath = path.join(
     generatedDirPath,
-    'sprite.ts',
+    'spriteSheet.ts',
 );
 
 const generatedSpriteNamesTypePath = path.join(
@@ -107,7 +107,7 @@ const main = () => {
     );
     console.log('assets folder created');
 
-    fs.rmdirSync(
+    fs.rmSync(
         generatedSpritePreviewPath,
         { recursive: true },
     );
@@ -142,7 +142,7 @@ const main = () => {
 
         const newName = `${name}.${ext}`;
 
-        spriteNameArray.push(newName);
+        spriteNameArray.push(name);
 
         fileData = optimizeSVG({
             data: fileData,
@@ -165,7 +165,7 @@ const main = () => {
 
     const spriteData = [
         `// GENERATED IN ${import.meta.filename}\n`,
-        'export const SPRITE: string = `',
+        'export const SPRITE_SHEET: string = `',
         spriteArray.join(' \n'),
         '`;',
     ].join('');

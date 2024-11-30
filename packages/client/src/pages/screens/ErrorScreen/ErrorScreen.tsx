@@ -9,14 +9,14 @@ import { useErrorScreen } from './useErrorScreen';
 
 
 const styles = createStyles({
-    page: CUSTOM_STYLES.SCREEN,
+    screen: `${CUSTOM_STYLES.SCREEN} bg-primary-300`,
+    scrollable: 'h-full',
     content: `
         flex 
         min-h-full
         flex-col 
         items-center
         justify-center 
-        bg-primary-300
         py-5
         text-center
         text-color-base
@@ -38,36 +38,41 @@ export const ErrorScreenPure: FC<ErrorScreenPure.Props> = ({
     const { t } = useTrans();
 
     return (
-        <Scrollable className={styles.page} withOppositeGutter>
-            <div className={styles.content}>
-                <Image
-                    className={styles.bg}
-                    src={getAssetUrl('ERROR_BOUNDARY_BG.svg')}
-                />
+        <div className={styles.screen}>
+            <Image
+                className={styles.bg}
+                src={getAssetUrl('ERROR_BOUNDARY_BG.svg')}
+            />
 
-                <Image
-                    className={styles.image}
-                    src={getAssetUrl('ERROR_BOUNDARY_IMAGE.svg')}
-                />
+            <Scrollable
+                className={styles.scrollable}
+                withOppositeGutter
+            >
+                <div className={styles.content}>
+                    <Image
+                        className={styles.image}
+                        src={getAssetUrl('ERROR_BOUNDARY_IMAGE.svg')}
+                    />
 
-                <Heading.Node className={styles.heading}>
-                    {t('ErrorScreen.heading')}
-                </Heading.Node>
+                    <Heading.Node className={styles.heading}>
+                        {t('ErrorScreen.heading')}
+                    </Heading.Node>
 
-                <p className={styles.text}>
-                    {t('ErrorScreen.text')}
-                </p>
+                    <p className={styles.text}>
+                        {t('ErrorScreen.text')}
+                    </p>
 
-                <Button
-                    className={styles.button}
-                    size='big'
-                    stylingPreset='brand'
-                    onLeftClick={onClick}
-                >
-                    {t('ErrorScreen.button')}
-                </Button>
-            </div>
-        </Scrollable>
+                    <Button
+                        className={styles.button}
+                        size='big'
+                        stylingPreset='brand'
+                        onLeftClick={onClick}
+                    >
+                        {t('ErrorScreen.button')}
+                    </Button>
+                </div>
+            </Scrollable>
+        </div>
     );
 };
 

@@ -1,0 +1,92 @@
+https://www.youtube.com/shorts/PHXdLe2f9rs
+https://stackoverflow.com/questions/74350677/hover-or-focus-in-tailwind-css
+https://www.tailwind-variants.org/docs/getting-started
+https://fluid.tw/
+
+
+--client--
+-? сделать attachemts layout через grid-template-areas
+-? сделать управление отображаемыми частями лаяута в мобильном режиме
+в лаяутах из роутера
+-? Merge и MergeAll из type-spring доступны в приложении,
+убрать?
+- разобраться с страницами (page, subPage, layout)
+- вместо TabScroller сделать 
+export const Slideshow = ({ image }) => (
+  <AnimatePresence>
+    <motion.img
+      key={image.src}
+      src={image.src}
+      initial={{ x: 300, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: -300, opacity: 0 }}
+    />
+  </AnimatePresence>
+)
+- сделать анимацию на логинскрине через
+mode
+Default: "sync"
+Decides how AnimatePresence handles entering and exiting children.
+"wait": The entering child will wait until the exiting child has 
+animated out. Note: Currently only renders a single child at a time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- server ---
+https://feature-sliced.design/docs/get-started/overview
+
+4: добавить ретраи на транзакции
+const MAX_RETRIES = 5
+  let retries = 0
+
+  let result
+  while (retries < MAX_RETRIES) {
+    try {
+      result = await prisma.$transaction(
+        [
+          prisma.user.deleteMany({
+            where: {
+              /** args */
+            },
+          }),
+          prisma.post.createMany({
+            data: {
+              /** args */
+            },
+          }),
+        ],
+        {
+          isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+        }
+      )
+      break
+    } catch (error) {
+      if (error.code === 'P2034') {
+        retries++
+        continue
+      }
+      throw error
+    }
+
+5: избавится от подписок, сделать переодические рефетчи
+6: использовать сокет только для чата, онлайн статуса???,
+отображения того кто пишет сообщение, составления списка
+пользователей онлайн но не рассылка статусов
+7: сократить количество эндпоинтов, оставить только используемые
+8: на каждый запрос обновлять accessToken??

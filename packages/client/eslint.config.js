@@ -42,6 +42,7 @@ const configArr = config.createConfig({
         'jsx-control-statements/jsx-for-require-each': 'off',
         'no-console': 'error',
         'tailwindcss/enforces-shorthand': 'off',
+        'import-x/no-named-as-default-member': 'off',
     }
 })
 
@@ -56,6 +57,15 @@ const _config = config.createConfig(
     {
         ...config.configs.node,
         files: ['./scripts/**/*.ts']
+    },
+    {
+        files: ['**/*.tsx'],
+        rules: {
+            '@stylistic/max-len': ['warn', {
+                'code': 100,
+                'ignoreComments': true,
+            }],
+        }
     },
     config.configs.disableTypeChecked,
 );

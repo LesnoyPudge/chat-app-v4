@@ -20,16 +20,17 @@ const styles = createStyles({
     `,
 
     SCREEN: `
+        relative
         isolate
         h-full
         w-full
     `,
 
     IMAGE_BG_FULLSCREEN: `
-        fixed
+        absolute
         left-0
         top-0
-        -z-10
+        -z-50
         h-dvh
         w-dvw
         object-cover

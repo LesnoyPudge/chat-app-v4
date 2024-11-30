@@ -5,6 +5,5 @@ package-lock.json
 .env
 env.d.ts
 scripts/env.ts
-todo.txt
 server.key
 server.crt

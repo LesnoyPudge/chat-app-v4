@@ -1,2 +1,3 @@
+export * from './GlobalProviders';
 export * from './Masks';
-export * from './Sprite';
+export * from './SpriteSheet';

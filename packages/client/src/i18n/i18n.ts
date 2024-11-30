@@ -1,4 +1,4 @@
-import * as i18n from 'i18next';
+import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { env, isDev } from '@vars';
@@ -31,5 +31,10 @@ export const i18nInit = async () => {
 
     if (isDev) {
         await i18n.changeLanguage(env._PUBLIC_DEFAULT_LNG);
+
+        const translationCheck = await import('translation-check');
+        i18n.use(translationCheck.i18nextPlugin);
+
+        // translationCheck.showTranslations(i18n);
     }
 };

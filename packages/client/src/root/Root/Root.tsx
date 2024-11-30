@@ -5,7 +5,7 @@ import {
 } from '@lesnoypudge/utils-react';
 import { env } from '@vars';
 import { FC, StrictMode } from 'react';
-import { Masks, Sprite } from '@root/components';
+import { GlobalProviders, Masks, SpriteSheet } from '@root/components';
 import { ErrorScreen } from '@pages/screens/ErrorScreen';
 import { Router } from '@router/Router';
 
@@ -23,11 +23,11 @@ export const Root: FC = () => {
 
                 <Masks/>
 
-                <Sprite/>
+                <SpriteSheet/>
 
-                <Heading.Provider>
+                <GlobalProviders>
                     <Router/>
-                </Heading.Provider>
+                </GlobalProviders>
             </ErrorBoundary.Node>
         </StrictMode>
     );

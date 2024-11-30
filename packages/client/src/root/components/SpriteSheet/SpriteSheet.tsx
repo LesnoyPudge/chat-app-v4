@@ -1,14 +1,14 @@
-import { SPRITE } from '@generated/sprite';
+import { SPRITE_SHEET } from '@generated/spriteSheet';
 import { Hidden } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 
 
 
 const html = {
-    __html: SPRITE,
+    __html: SPRITE_SHEET,
 };
 
-export const Sprite: FC = () => {
+export const SpriteSheet: FC = () => {
     return (
         <Hidden>
             <svg

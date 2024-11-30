@@ -1,5 +1,13 @@
 {
     "ErrorScreen.button": "__NOT_TRANSLATED__",
     "ErrorScreen.heading": "__NOT_TRANSLATED__",
-    "ErrorScreen.text": "__NOT_TRANSLATED__"
+    "ErrorScreen.text": "__NOT_TRANSLATED__",
+    "GlobalLoaderScreen.problems": "__NOT_TRANSLATED__",
+    "GlobalLoaderScreen.statusLink": "__NOT_TRANSLATED__",
+    "GlobalLoaderScreen.textUsLink": "__NOT_TRANSLATED__",
+    "InvitationScreen.button": "__NOT_TRANSLATED__",
+    "InvitationScreen.onlineCount_one": "__NOT_TRANSLATED__",
+    "InvitationScreen.onlineCount_other": "__NOT_TRANSLATED__",
+    "InvitationScreen.totalCount_one": "__NOT_TRANSLATED__",
+    "InvitationScreen.totalCount_other": "__NOT_TRANSLATED__"
 }
