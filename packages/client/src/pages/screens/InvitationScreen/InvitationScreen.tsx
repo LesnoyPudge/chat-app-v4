@@ -62,6 +62,7 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
             <Scrollable
                 className={styles.scrollable}
                 withOppositeGutter
+                label='Invitation page'
             >
                 <div className={styles.inner}>
                     <div className={styles.contentWrapper}>

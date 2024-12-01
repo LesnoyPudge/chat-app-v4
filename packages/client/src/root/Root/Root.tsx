@@ -2,33 +2,44 @@ import {
     Heading,
     VisuallyHidden,
     ErrorBoundary,
+    MoveFocusInside,
+    useRefManager,
 } from '@lesnoypudge/utils-react';
 import { env } from '@vars';
-import { FC, StrictMode } from 'react';
+import { FC } from 'react';
 import { GlobalProviders, Masks, SpriteSheet } from '@root/components';
 import { ErrorScreen } from '@pages/screens/ErrorScreen';
-import { Router } from '@router/Router';
+import { Router } from '@root/router/Router';
+import { getHTMLElement } from '@utils';
 
 
+
+const appRoot = getHTMLElement.appRoot();
 
 export const Root: FC = () => {
+    const appRootRefManager = useRefManager(appRoot);
+
     return (
-        <StrictMode>
-            <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
-                <VisuallyHidden>
-                    <Heading.Node>
-                        {env._PUBLIC_APP_NAME}
-                    </Heading.Node>
-                </VisuallyHidden>
+        <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
+            <VisuallyHidden>
+                <Heading.Node>
+                    {env._PUBLIC_APP_NAME}
+                </Heading.Node>
+            </VisuallyHidden>
 
-                <Masks/>
+            <Masks/>
 
-                <SpriteSheet/>
+            <SpriteSheet/>
 
-                <GlobalProviders>
+            <GlobalProviders>
+                <MoveFocusInside
+                    enabled
+                    forced
+                    containerRef={appRootRefManager}
+                >
                     <Router/>
-                </GlobalProviders>
-            </ErrorBoundary.Node>
-        </StrictMode>
+                </MoveFocusInside>
+            </GlobalProviders>
+        </ErrorBoundary.Node>
     );
 };

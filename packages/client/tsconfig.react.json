@@ -15,8 +15,8 @@
             "@lesnoypudge/types-global-web",
             "@lesnoypudge/types-global-react",
             "../shared/shared.d.ts",
-            "./src/declarations/global.d.ts",
-            "./src/declarations/vite-env.d.ts",
+            "./src/root/declarations/global.d.ts",
+            "./src/root/declarations/vite-env.d.ts",
             "./src/generated/assetNames.d.ts",
             "./src/generated/spriteNames.d.ts",
             "./src/i18n/i18n.d.ts",
@@ -42,9 +42,6 @@
             ],
             "@pages/*": [
                 "src/pages/*"
-            ],
-            "@router/*": [
-                "./src/router/*"
             ],
             "@types": [
                 "./src/types"

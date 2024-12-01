@@ -1,17 +1,17 @@
 import { CUSTOM_STYLES } from '@vars';
 import { FC } from 'react';
-import { createStyles, getAssetUrl } from '@utils';
+import { cn, createStyles, getAssetUrl } from '@utils';
 import { useGlobalLoaderScreen } from './useGlobalLoaderScreen';
 import { m } from 'motion/react';
 import { ExternalLink, Scrollable, Sprite } from '@components';
 import { useTrans } from '@i18n';
+import { RT } from '@lesnoypudge/types-utils-react/namespace';
 
 
 
 const styles = createStyles({
     screen: `
-        ${CUSTOM_STYLES.SCREEN} 
-        pointer-events-auto 
+        ${CUSTOM_STYLES.SCREEN}
         bg-primary-400
     `,
     scrollable: 'h-full',
@@ -48,17 +48,25 @@ const styles = createStyles({
 });
 
 export namespace GlobalLoaderScreenPure {
-    export type Props = ReturnType<typeof useGlobalLoaderScreen>;
+    export type Props = (
+        GlobalLoaderScreen.Props
+        & ReturnType<typeof useGlobalLoaderScreen>
+    );
 }
 
 export const GlobalLoaderScreenPure: FC<GlobalLoaderScreenPure.Props> = ({
+    className = '',
     showProblemBlock,
 }) => {
     const { t } = useTrans();
 
     return (
-        <div className={styles.screen}>
-            <Scrollable className={styles.scrollable}>
+        <div className={cn(styles.screen, className)}>
+            <Scrollable
+                className={styles.scrollable}
+                withOppositeGutter
+                label='Loader'
+            >
                 <div className={styles.content}>
                     <video
                         className={styles.logo}
@@ -122,8 +130,15 @@ export const GlobalLoaderScreenPure: FC<GlobalLoaderScreenPure.Props> = ({
     );
 };
 
-export const GlobalLoaderScreen: FC = () => {
+export namespace GlobalLoaderScreen {
+    export type Props = RT.PropsWithClassName;
+}
+
+export const GlobalLoaderScreen: FC<GlobalLoaderScreen.Props> = (props) => {
     return (
-        <GlobalLoaderScreenPure {...useGlobalLoaderScreen()}/>
+        <GlobalLoaderScreenPure
+            {...props}
+            {...useGlobalLoaderScreen()}
+        />
     );
 };

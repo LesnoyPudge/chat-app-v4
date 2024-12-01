@@ -7,13 +7,13 @@ export const getHTMLElement = {
         const element = document.querySelector('#app-root');
         invariant(element, 'app-root not found');
 
-        return element;
+        return element as HTMLDivElement;
     },
 
     overlayRoot: () => {
         const element = document.querySelector('#overlay-root');
         invariant(element, 'overlay-root not found');
 
-        return element;
+        return element as HTMLDivElement;
     },
 };

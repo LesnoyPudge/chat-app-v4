@@ -47,6 +47,7 @@ export const ErrorScreenPure: FC<ErrorScreenPure.Props> = ({
             <Scrollable
                 className={styles.scrollable}
                 withOppositeGutter
+                label='Error page'
             >
                 <div className={styles.content}>
                     <Image

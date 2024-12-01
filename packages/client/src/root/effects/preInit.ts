@@ -14,17 +14,17 @@ export const preInit = async () => {
             'optimize your app: https://million.dev',
         ].join(' ');
 
-        // eslint-disable-next-line no-console
-        console.log = (...args) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            const messageArg = args[0];
-            if (messageArg === messageToIgnore) {
-                return;
-            }
 
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            log(...args);
-        };
+        // console.log = (...args) => {
+        //     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        //     const messageArg = args[0];
+        //     if (messageArg === messageToIgnore) {
+        //         return;
+        //     }
+
+        //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        //     log(...args);
+        // };
 
         scan({
             enabled: false,

@@ -11,7 +11,7 @@ const main = async () => {
 
         void postInit();
     } catch (error) {
-        logger.dev.error(error);
+        logger.error(error);
     }
 };
 

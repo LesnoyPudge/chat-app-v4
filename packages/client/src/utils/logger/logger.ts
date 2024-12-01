@@ -1,21 +1,17 @@
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { isProd } from '@vars';
 
 
 
-const consoleMethodNames = ['log', 'error', 'warn'] as const;
-type MethodName = T.ArrayValues<typeof consoleMethodNames>;
-
 export const logger = {
-    dev: (consoleMethodNames).reduce<
-        Pick<Console, MethodName>
-    >((acc, cur) => {
-        // eslint-disable-next-line no-console
-        const originalFn = console[cur];
-        acc[cur] = (...args: Parameters<typeof originalFn>) => {
+    ...Object.keys(console).reduce<Console>((acc, cur) => {
+        acc[cur as keyof Console] = (...data: unknown[]) => {
             if (isProd) return;
-            originalFn(...args);
+
+            // @ts-ignore
+            // eslint-disable-next-line no-console, @typescript-eslint/no-unsafe-call
+            console[cur](...data);
         };
+
         return acc;
     }, {}),
 

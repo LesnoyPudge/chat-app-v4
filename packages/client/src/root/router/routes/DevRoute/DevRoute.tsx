@@ -3,6 +3,8 @@ import { ErrorScreenPure } from '@pages/screens/ErrorScreen';
 import { noop } from '@lesnoypudge/utils';
 import { InvitationScreenPure } from '@pages/screens/InvitationScreen';
 import { GlobalLoaderScreen } from '@pages/screens/GlobalLoaderScreen';
+import { Playground } from '@root/Playground';
+import { AuthScreenPure } from '@pages/screens/AuthScreen';
 
 
 
@@ -11,16 +13,16 @@ export const DevRoute: RouteObject[] = [{
     children: [
         {
             index: true,
-            element: <>playground</>,
+            element: <Playground/>,
         },
         {
             path: 'error-screen',
             element: <ErrorScreenPure onClick={noop}/>,
         },
-        // {
-        //     path: 'auth-screen',
-        //     element: <AuthPage/>,
-        // },
+        {
+            path: 'auth-screen',
+            element: <AuthScreenPure/>,
+        },
         {
             path: 'invitation-screen',
             element: (
