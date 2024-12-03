@@ -43,7 +43,8 @@ const configArr = config.createConfig({
         'no-console': 'error',
         'tailwindcss/enforces-shorthand': 'off',
         'import-x/no-named-as-default-member': 'off',
-        'jsx-a11y/no-autofocus': 'off'
+        'jsx-a11y/no-autofocus': 'off',
+        '@typescript-eslint/no-invalid-void-type': 'off',
     }
 })
 

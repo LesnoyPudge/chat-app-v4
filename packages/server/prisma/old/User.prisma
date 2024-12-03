@@ -19,7 +19,7 @@ model User {
     messages               Message[]
     ownedServers           Server[]
     membership             Member[]
-    privateChannels        Conversation[]
+    conversations          Conversation[]
     banRecords             BanRecord[]
     invitationsCreated     Invitation[]
     hiddenConversations    Conversation[]  @relation("HiddenPrivateChannels")

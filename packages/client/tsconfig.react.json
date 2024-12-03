@@ -3,7 +3,8 @@
     "include": [
         "src/**/*",
         "node_modules/@types",
-        "src/WIP/Polymorphic"
+        "./fakeServer/**/*",
+        "./fakeShared/**/*"
     ],
     "exclude": [
         "./src/generated/**/*",
@@ -48,6 +49,12 @@
             ],
             "@hooks": [
                 "./src/hooks"
+            ],
+            "@fakeServer": [
+                "./fakeServer"
+            ],
+            "@fakeShared": [
+                "./fakeShared"
             ],
         },
         "jsx": "react-jsx",

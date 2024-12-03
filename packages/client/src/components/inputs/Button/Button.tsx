@@ -4,6 +4,7 @@ import { PropsWithInnerRef } from '@types';
 import { cn } from '@utils';
 import { FC } from 'react';
 import { styles } from './styles';
+import { useFunction } from '@lesnoypudge/utils-react';
 
 
 
@@ -71,47 +72,6 @@ export const Button: FC<Button.Props> = ({
     onMouseEnter,
     onFocus,
 }) => {
-    const handleLeftClickWithKeyboard: React.KeyboardEventHandler = (e) => {
-        if (e.code !== 'Enter' && e.code !== 'Space') return;
-
-        handleLeftClick(e);
-    };
-
-    const handleLeftClick = (e: React.MouseEvent | React.KeyboardEvent) => {
-        if (!onAnyClick && !onLeftClick) return;
-
-        e.preventDefault();
-
-        if (onLeftClick) return onLeftClick(e);
-        if (onAnyClick) return onAnyClick(e);
-    };
-
-    const handleRightClick: React.MouseEventHandler = (e) => {
-        if (!onAnyClick && !onRightClick) return;
-
-        e.preventDefault();
-
-        if (onRightClick) return onRightClick(e);
-        if (onAnyClick) return onAnyClick(e);
-    };
-
-    const handleMiddleClick: React.MouseEventHandler = (e) => {
-        if (!onAnyClick && !onMiddleClick) return;
-        if (e.button !== 1) return;
-
-        e.preventDefault();
-
-        if (onMiddleClick) return onMiddleClick(e);
-        if (onAnyClick) return onAnyClick(e);
-    };
-
-    const middleClickFix: React.MouseEventHandler = (e) => {
-        if (!onAnyClick && !onMiddleClick) return;
-        if (e.button !== 1) return;
-
-        e.preventDefault();
-    };
-
     const withExpanded = !!hasPopup;
     const withPressed = role === 'button';
     const withSelected = role === 'tab';
@@ -121,6 +81,50 @@ export const Button: FC<Button.Props> = ({
     const isSelected = withSelected && isActive;
     const validTabIndex = hidden ? -1 : tabIndex;
     const disabledState = isDisabled || isLoading;
+
+    const handleLeftClickWithKeyboard: React.KeyboardEventHandler = useFunction((e) => {
+        if (e.code !== 'Enter' && e.code !== 'Space') return;
+
+        handleLeftClick(e);
+    });
+
+    const handleLeftClick = useFunction((e: React.MouseEvent | React.KeyboardEvent) => {
+        if (!onAnyClick && !onLeftClick) return;
+
+        e.preventDefault();
+
+        if (disabledState) return;
+        if (onLeftClick) return onLeftClick(e);
+        if (onAnyClick) return onAnyClick(e);
+    });
+
+    const handleRightClick: React.MouseEventHandler = useFunction((e) => {
+        if (!onAnyClick && !onRightClick) return;
+
+        e.preventDefault();
+
+        if (disabledState) return;
+        if (onRightClick) return onRightClick(e);
+        if (onAnyClick) return onAnyClick(e);
+    });
+
+    const handleMiddleClick: React.MouseEventHandler = useFunction((e) => {
+        if (!onAnyClick && !onMiddleClick) return;
+        if (e.button !== 1) return;
+
+        e.preventDefault();
+
+        if (disabledState) return;
+        if (onMiddleClick) return onMiddleClick(e);
+        if (onAnyClick) return onAnyClick(e);
+    });
+
+    const middleClickFix: React.MouseEventHandler = useFunction((e) => {
+        if (!onAnyClick && !onMiddleClick) return;
+        if (e.button !== 1) return;
+
+        e.preventDefault();
+    });
 
     return (
         <button
@@ -137,7 +141,6 @@ export const Button: FC<Button.Props> = ({
             data-active={isActive}
             data-disabled={disabledState}
             data-loading={isLoading}
-            disabled={disabledState}
             tabIndex={validTabIndex}
             aria-label={label}
             aria-pressed={isPressed}

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useAuthScreen } from './useAuthScreen';
-import { createStyles, getAssetUrl } from '@utils';
+import { createStyles, createVariants, getAssetUrl } from '@utils';
 import { CUSTOM_STYLES } from '@vars';
 import { Image, Scrollable } from '@components';
 import { useBoolean, useInterval } from '@lesnoypudge/utils-react';
@@ -25,6 +25,19 @@ const styles = createStyles({
         p-8 
         shadow-elevation-high
     `,
+});
+
+const variants = createVariants({
+    hidden: {
+        opacity: 0,
+        translateY: '-8%',
+        scale: 1.02,
+    },
+    visible: {
+        opacity: 1,
+        translateY: 0,
+        scale: 1,
+    },
 });
 
 export const AuthScreenPure: FC = () => {
@@ -52,21 +65,10 @@ export const AuthScreenPure: FC = () => {
                             transition={{
                                 duration: 0.125,
                             }}
-                            initial={{
-                                opacity: 0,
-                                translateY: '-8%',
-                                scale: 1.02,
-                            }}
-                            animate={{
-                                opacity: 1,
-                                translateY: 0,
-                                scale: 1,
-                            }}
-                            exit={{
-                                opacity: 0,
-                                translateY: '-8%',
-                                scale: 1.02,
-                            }}
+                            variants={variants}
+                            initial={variants.hidden.key}
+                            animate={variants.visible.key}
+                            exit={variants.hidden.key}
                         >
                             <>wow: {String(state.value)}</>
                         </m.div>
