@@ -5,6 +5,7 @@ import { CUSTOM_STYLES } from '@vars';
 import { Image, Scrollable, Tab } from '@components';
 import { AnimatePresence, m } from 'motion/react';
 import { ContextConsumerProxy } from '@lesnoypudge/utils-react';
+import { LoginForm } from './components';
 
 
 
@@ -41,7 +42,7 @@ const variants = createVariants({
 });
 
 const tabs = {
-    login: <>login</>,
+    login: <LoginForm/>,
     registration: <>registration</>,
 } satisfies Tab.Provider.GenericTabs;
 
