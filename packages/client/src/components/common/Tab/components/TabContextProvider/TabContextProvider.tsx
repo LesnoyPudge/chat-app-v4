@@ -1,6 +1,6 @@
-import { useConst, useFunction, useUniqueState } from '@lesnoypudge/utils-react';
+import { ContextSelectable, useConst, useFunction, useUniqueState } from '@lesnoypudge/utils-react';
 import { PropsWithChildren, ReactNode, useMemo } from 'react';
-import { TabContext } from '../../context';
+import { createTabContext } from '../../utils';
 import { invariant } from '@lesnoypudge/utils';
 
 
@@ -27,8 +27,9 @@ export namespace TabContextProvider {
     export type Props<_Tabs extends GenericTabs> = (
         PropsWithChildren
         & {
+            context: ContextSelectable<createTabContext.Context<_Tabs>>;
             tabs: _Tabs;
-            initialTab?: keyof _Tabs;
+            initialTab: keyof _Tabs;
             onTabChange?: (prevent: () => void) => void;
         }
     );
@@ -37,6 +38,7 @@ export namespace TabContextProvider {
 export const TabContextProvider = <
     _Tabs extends TabContextProvider.GenericTabs,
 >({
+    context,
     tabs,
     initialTab,
     onTabChange,
@@ -56,7 +58,7 @@ export const TabContextProvider = <
     >(() => {
         invariant(tabsArray[0], 'Tabs not provided');
 
-        return getCurrentTab(initialTab?.toString() ?? tabsArray[0]);
+        return getCurrentTab(initialTab);
     });
 
     const changeTab = useConst(() => {
@@ -131,13 +133,15 @@ export const TabContextProvider = <
     });
 
     const contextValues = {
-        tabs: transformedTabs,
+        transformedTabs,
         currentTab,
         changeTab,
         isActive,
         tabProps,
         tabPanelProps,
-    } as TabContext<Record<string, ReactNode>>;
+    } as createTabContext.Context<_Tabs>;
+
+    const TabContext = context;
 
     return (
         <TabContext.Provider value={contextValues}>

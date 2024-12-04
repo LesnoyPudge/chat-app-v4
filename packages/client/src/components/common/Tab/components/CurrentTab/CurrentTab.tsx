@@ -1,10 +1,20 @@
 import { useContextSelector } from '@lesnoypudge/utils-react';
-import { FC } from 'react';
-import { TabContext } from '../../context';
+import { TabContextProvider } from '../TabContextProvider';
 
 
 
-export const CurrentTab: FC = () => {
+export namespace CurrentTab {
+    export type Props<
+        _Tabs extends TabContextProvider.GenericTabs,
+    > = Pick<
+        TabContextProvider.Props<_Tabs>,
+        'TabContext'
+    >;
+}
+
+export const CurrentTab = <
+    _Tabs extends TabContextProvider.GenericTabs,
+>({ TabContext }: CurrentTab.Props<_Tabs>) => {
     const currentTab = useContextSelector(TabContext, (v) => v.currentTab);
 
     return currentTab.tab;

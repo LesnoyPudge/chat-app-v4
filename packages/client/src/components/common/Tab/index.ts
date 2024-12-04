@@ -1,14 +1,10 @@
 import { CurrentTab, TabContextProvider } from './components';
-import { TabContext } from './context';
+import * as utils from './utils';
 
 
 
 export namespace Tab {
-    export const Context = TabContext;
-
-    export type Context<
-        _Tabs extends TabContextProvider.GenericTabs,
-    > = TabContext<_Tabs>;
+    export const createTabContext = utils.createTabContext;
 
     export const Current = CurrentTab;
 

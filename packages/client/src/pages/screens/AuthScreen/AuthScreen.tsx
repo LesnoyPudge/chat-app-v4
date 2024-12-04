@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { useAuthScreen } from './useAuthScreen';
 import { createStyles, createVariants, getAssetUrl } from '@utils';
 import { CUSTOM_STYLES } from '@vars';
-import { Image, Scrollable } from '@components';
-import { useBoolean, useInterval } from '@lesnoypudge/utils-react';
+import { Image, Scrollable, Tab } from '@components';
 import { AnimatePresence, m } from 'motion/react';
+import { ContextConsumerProxy } from '@lesnoypudge/utils-react';
 
 
 
@@ -40,11 +40,14 @@ const variants = createVariants({
     },
 });
 
+const tabs = {
+    login: <>login</>,
+    registration: <>registration</>,
+} satisfies Tab.Provider.GenericTabs;
+
+export const AuthTabContext = Tab.createTabContext<typeof tabs>();
+
 export const AuthScreenPure: FC = () => {
-    const state = useBoolean(true);
-
-    useInterval(state.toggle, 3_000);
-
     return (
         <div className={styles.screen}>
             <Image
@@ -59,19 +62,29 @@ export const AuthScreenPure: FC = () => {
             >
                 <div className={styles.content}>
                     <AnimatePresence mode='wait'>
-                        <m.div
-                            className={styles.itemWrapper}
-                            key={String(state.value)}
-                            transition={{
-                                duration: 0.125,
-                            }}
-                            variants={variants}
-                            initial={variants.hidden.key}
-                            animate={variants.visible.key}
-                            exit={variants.hidden.key}
+                        <Tab.Provider
+                            context={AuthTabContext}
+                            tabs={tabs}
+                            initialTab='login'
                         >
-                            <>wow: {String(state.value)}</>
-                        </m.div>
+                            <ContextConsumerProxy context={AuthTabContext}>
+                                {({ currentTab }) => (
+                                    <m.div
+                                        className={styles.itemWrapper}
+                                        key={currentTab.identifier}
+                                        transition={{
+                                            duration: 0.125,
+                                        }}
+                                        variants={variants}
+                                        initial={variants.hidden.key}
+                                        animate={variants.visible.key}
+                                        exit={variants.hidden.key}
+                                    >
+                                        {currentTab.tab}
+                                    </m.div>
+                                )}
+                            </ContextConsumerProxy>
+                        </Tab.Provider>
                     </AnimatePresence>
                 </div>
             </Scrollable>
