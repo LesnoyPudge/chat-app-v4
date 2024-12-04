@@ -8,7 +8,7 @@ import { isDev } from '@vars';
 
 const LazyPage = lazy(async () => {
     if (isDev) {
-        await sleep(3_000);
+        await sleep(20_000);
         // await sleep(inRange(300, 500));
     }
 
@@ -30,6 +30,10 @@ export const ProdRoute: RouteObject[] = [{
         {
             path: 'nested/some',
             element: <>nested page</>,
+        },
+        {
+            path: 'lazy',
+            element: <LazyPage/>,
         },
     ],
 }];

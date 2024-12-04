@@ -45,6 +45,8 @@ const configArr = config.createConfig({
         'import-x/no-named-as-default-member': 'off',
         'jsx-a11y/no-autofocus': 'off',
         '@typescript-eslint/no-invalid-void-type': 'off',
+        'unicorn/prefer-export-from': 'off',
+        '@typescript-eslint/no-unnecessary-type-assertion': 'off',
     }
 })
 

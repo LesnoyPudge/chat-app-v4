@@ -7,8 +7,6 @@ import { Ref } from 'react';
 
 
 export type OverlayContext = {
-    blocking: boolean;
-    focused: boolean;
     isOverlayExist: boolean;
     closingThrottleRef: Ref<boolean>;
     wrapperRefManager: useRefManager.RefManager<HTMLDivElement>;

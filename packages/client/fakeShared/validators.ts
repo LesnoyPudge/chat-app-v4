@@ -20,11 +20,11 @@ class SharedValidators {
     commonString = v.pipe(
         v.string(),
         v.trim(),
+        v.nonEmpty(),
     );
 
     id = v.pipe(
         this.commonString,
-        v.nonEmpty(),
         v.uuid(),
     );
 }
@@ -38,11 +38,19 @@ export namespace Validators {
 
             export const {
                 login,
+                registration,
             } = {
                 [User.Login.ActionName]: (
                     schema<User.Login.RequestBody>(v.object({
-                        login: v.string(),
-                        password: v.string(),
+                        login: sv.commonString,
+                        password: sv.commonString,
+                    }))
+                ),
+                [User.Registration.ActionName]: (
+                    schema<User.Registration.RequestBody>(v.object({
+                        name: sv.commonString,
+                        login: sv.commonString,
+                        password: sv.commonString,
                     }))
                 ),
             };

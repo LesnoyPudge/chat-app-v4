@@ -8,6 +8,8 @@ export namespace ClientEntities {
 
         export type Base = {
             id: Id;
+            login: string;
+            password: string;
             name: string;
             defaultAvatar: 1 | 2 | 3 | 4;
             avatar: File.Id | null;

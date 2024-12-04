@@ -68,12 +68,10 @@ export namespace Endpoints {
 
                 export const Method = HTTP_METHOD.POST;
 
-                export type RequestBody = {
-                    login: string;
-                    username: string;
-                    password: string;
-                    email?: string;
-                };
+                export type RequestBody = Pick<
+                    Entities.User.Base,
+                    'login' | 'password' | 'name'
+                >;
 
                 export type Response = Entities.User.Base;
             }
@@ -90,10 +88,10 @@ export namespace Endpoints {
 
                 export const Method = HTTP_METHOD.POST;
 
-                export type RequestBody = {
-                    login: string;
-                    password: string;
-                };
+                export type RequestBody = Pick<
+                    Entities.User.Base,
+                    'login' | 'password'
+                >;
 
                 export type Response = Entities.User.Base;
             }

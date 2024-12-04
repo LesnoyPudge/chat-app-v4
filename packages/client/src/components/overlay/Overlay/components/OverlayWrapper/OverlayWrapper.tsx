@@ -1,10 +1,7 @@
-import { FC } from 'react';
-import ReactFocusLock from 'react-focus-lock';
-import { OverlayContext } from '../../context';
-import { OverlayPortal } from './components';
-import { cn, createStyles } from '@utils';
+import { FC, PropsWithChildren } from 'react';
+import { cn, createStyles, getHTMLElement } from '@utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { useContextProxy } from '@lesnoypudge/utils-react';
+import { createPortal } from 'react-dom';
 
 
 
@@ -14,8 +11,13 @@ const styles = createStyles({
         fixed
         inset-0
     `,
-    inner: 'size-full',
 });
+
+const overlayRoot = getHTMLElement.overlayRoot();
+
+const OverlayPortal: FC<PropsWithChildren> = ({ children }) => {
+    return createPortal(children, overlayRoot);
+};
 
 export namespace OverlayWrapper {
     export type Props = RT.PropsWithChildrenAndClassName;
@@ -25,21 +27,10 @@ export const OverlayWrapper: FC<OverlayWrapper.Props> = ({
     className = '',
     children,
 }) => {
-    const { focused, isOverlayExist } = useContextProxy(OverlayContext);
-
-    const isLockDisabled = !focused || !isOverlayExist;
-
     return (
         <OverlayPortal>
             <div className={cn(styles.wrapper, className)}>
-                <ReactFocusLock
-                    className={styles.inner}
-                    returnFocus
-                    autoFocus={focused}
-                    disabled={isLockDisabled}
-                >
-                    {children}
-                </ReactFocusLock>
+                {children}
             </div>
         </OverlayPortal>
     );
