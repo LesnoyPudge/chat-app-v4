@@ -5,21 +5,21 @@ import { GenericSchema } from 'valibot';
 
 
 
-type Options<_Shape extends T.UnknownRecord> = (
-    FormOptions<_Shape, ReturnType<typeof valibotValidator>>
-    & {
-        validator?: GenericSchema<_Shape>;
-    }
-);
+export namespace createForm {
+    export type Options<_Shape extends T.UnknownRecord> = (
+        FormOptions<_Shape, ReturnType<typeof valibotValidator>>
+        & {
+            validator?: GenericSchema<_Shape>;
+        }
+    );
+}
 
 export const createForm = <
     _Shape extends T.UnknownRecord,
->(
-    {
-        validator,
-        ...options
-    }: Options<_Shape>,
-) => {
+>({
+    validator,
+    ...options
+}: createForm.Options<_Shape>) => {
     return formOptions({
         validators: validator ? {
             onBlur: validator,

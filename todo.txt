@@ -23,14 +23,20 @@ export const Slideshow = ({ image }) => (
     />
   </AnimatePresence>
 )
-- сделать анимацию на логинскрине через
-mode
-Default: "sync"
-Decides how AnimatePresence handles entering and exiting children.
-"wait": The entering child will wait until the exiting child has 
-animated out. Note: Currently only renders a single child at a time.
 
+- rawdog zustand вместо redux
+import { createStore } from 'zustand/vanilla'
 
+const store = createStore((set) => ...)
+const { getState, setState, subscribe, getInitialState } = store
+
+export default store
+You can use a vanilla store with useStore hook available since v4.
+
+import { useStore } from 'zustand'
+import { vanillaStore } from './vanillaStore'
+
+const useBoundStore = (selector) => useStore(vanillaStore, selector)
 
 
 

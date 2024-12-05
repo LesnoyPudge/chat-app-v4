@@ -7,3 +7,4 @@ env.d.ts
 scripts/env.ts
 server.key
 server.crt
+test

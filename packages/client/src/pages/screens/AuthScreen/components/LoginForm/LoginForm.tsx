@@ -1,12 +1,10 @@
 import { Form } from '@components';
 import { Endpoints, Validators } from '@fakeShared';
-import { useForm } from '@tanstack/react-form';
-import { createForm } from '@utils';
 import { FC } from 'react';
 
 
 
-const LoginFormOptions = createForm<Endpoints.V1.User.Login.RequestBody>({
+const LoginFormOptions = Form.createForm<Endpoints.V1.User.Login.RequestBody>({
     validator: Validators.V1.User.login,
     defaultValues: {
         login: '',
@@ -14,12 +12,23 @@ const LoginFormOptions = createForm<Endpoints.V1.User.Login.RequestBody>({
     },
 });
 
+const LoginFormContext = Form.createFormContext<
+    Endpoints.V1.User.Login.RequestBody
+>();
+
 export const LoginForm: FC = () => {
-    const FormApi = useForm(LoginFormOptions);
+    const FormApi = Form.useForm({
+        ...LoginFormOptions,
+        onSubmit: ({ value }) => {
+            value.login.toString();
+        },
+    });
 
     return (
-        <Form onSubmit={FormApi.handleSubmit}>
-            <>qwe</>
-        </Form>
+        <LoginFormContext.Provider value={FormApi}>
+            <Form.Node onSubmit={FormApi.handleSubmit}>
+                <>qwe</>
+            </Form.Node>
+        </LoginFormContext.Provider>
     );
 };
