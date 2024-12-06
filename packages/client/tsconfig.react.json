@@ -59,6 +59,18 @@
             "@fakeShared": [
                 "./fakeShared"
             ],
+            "@redux/features": [
+                "./src/redux/features"
+            ],
+            "@redux/store": [
+                "./src/redux/store"
+            ],
+            "@redux/hooks": [
+                "./src/redux/hooks"
+            ],
+            "@redux/utils": [
+                "./src/redux/utils"
+            ],
         },
         "jsx": "react-jsx",
         "lib": [

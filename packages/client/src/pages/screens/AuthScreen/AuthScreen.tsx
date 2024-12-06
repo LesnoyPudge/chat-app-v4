@@ -33,11 +33,17 @@ const variants = createVariants({
         opacity: 0,
         translateY: '-8%',
         scale: 1.02,
+        transition: {
+            duration: 0.125,
+        },
     },
     visible: {
         opacity: 1,
         translateY: 0,
         scale: 1,
+        transition: {
+            duration: 0.125,
+        },
     },
 });
 
@@ -73,9 +79,6 @@ export const AuthScreenPure: FC = () => {
                                     <m.div
                                         className={styles.itemWrapper}
                                         key={currentTab.identifier}
-                                        transition={{
-                                            duration: 0.125,
-                                        }}
                                         variants={variants}
                                         initial={variants.hidden.key}
                                         animate={variants.visible.key}
