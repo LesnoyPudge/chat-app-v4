@@ -1,109 +1,86 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { capitalize, isCallable } from '@lesnoypudge/utils';
 import {
-    ActionCreatorWithPayload,
     asyncThunkCreator,
     buildCreateSlice,
     CaseReducer,
     CreateSliceOptions,
+    Draft,
     PayloadAction,
     ReducerCreators,
-    Slice,
     SliceCaseReducers,
     SliceSelectors,
 } from '@reduxjs/toolkit';
 
 
-
-type createCustomSlice = <
-    State,
-    CaseReducers extends SliceCaseReducers<State>,
-    Name extends string,
-    Selectors extends SliceSelectors<State>,
-    ReducerPath extends string = Name,
->(
-    options: CreateSliceOptions<
-        State,
-        CaseReducers,
-        Name,
-        ReducerPath,
-        Selectors
-    >
-) => Slice<
-    State,
-    CaseReducers,
-    Name,
-    ReducerPath,
-    Selectors
->;
-
 type Setters<
     _State extends T.UnknownRecord,
-> = {
+> = T.UnionToIntersection<{
+
     [_Key in keyof _State]: _Key extends string
-        // ? Record<`set${Capitalize<_Key>}`, ActionCreatorWithPayload<
-        //     _State[_Key],
-        //     `${_Name}/${_Key}`
-        // >>
         ? Record<
             `set${Capitalize<_Key>}`,
-            CaseReducer<
-                _State,
-                PayloadAction<_State[_Key]>
-            >
+            CaseReducer<_State, PayloadAction<_State[_Key]>>
         >
-        /// / eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
-        // ? {
-        //         [_K in `set${Capitalize<_Key>}`]: ReducerCreators<
-        //             _State
-        //         >['reducer'];
-        //     }
         : never
-}[keyof _State];
-
-// type qwe = Setters<{
-//     some: string;
-// }, 'SomeSlice'>;
+}[keyof _State]>;
 
 const createSetters = <
     _State extends T.UnknownRecord,
->(initialState: _State) => {
+>(
+    initialState: _State,
+    create: ReducerCreators<_State>,
+): Setters<_State> => {
     return (
         Object.keys<_State>(initialState)
             .reduce<Setters<_State>>((acc, cur) => {
+                const name = `set${capitalize(cur)}`;
+
                 // @ts-expect-error
-                acc[`set${capitalize(cur)}`] = (state, action) => {
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+                acc[name] = create.reducer<
+                    Draft<_State>[typeof cur]
+                >((
+                    state,
+                    action,
+                ) => {
                     state[cur] = action.payload;
-                };
+                });
 
                 return acc;
             }, {})
     );
 };
 
-const createCustomSlice2 = <
-    State extends T.UnknownRecord,
-    CaseReducers extends SliceCaseReducers<State>,
-    Name extends string,
-    Selectors extends SliceSelectors<State>,
-    ReducerPath extends string = Name,
+type Selectors<
+    _State extends T.UnknownRecord,
+> = T.UnionToIntersection<{
+
+    [_Key in keyof _State]: _Key extends string
+        ? Record<
+            `select${Capitalize<_Key>}`,
+            (state: _State) => _State[_Key]
+        >
+        : never
+}[keyof _State]>;
+
+const createSelectors = <
+    _State extends T.UnknownRecord,
 >(
-    config: CreateSliceOptions<
-        State,
-        CaseReducers,
-        Name,
-        ReducerPath,
-        Selectors
-    >,
-): Slice<
-    State,
-    CaseReducers & Setters<State>,
-    Name,
-    ReducerPath,
-    Selectors
-> => {
-    return {} as any;
+    initialState: _State,
+): Selectors<_State> => {
+    return (
+        Object.keys<_State>(initialState)
+            .reduce<Selectors<_State>>((acc, cur) => {
+                const name = `select${capitalize(cur)}`;
+
+                // @ts-expect-error
+                acc[name] = (state: _State) => {
+                    return state[cur];
+                };
+
+                return acc;
+            }, {})
+    );
 };
 
 export const createCustomSlice = <
@@ -120,77 +97,36 @@ export const createCustomSlice = <
         ReducerPath,
         Selectors
     >,
-): Slice<
-    State,
-    CaseReducers & T.Simplify<Setters<State>>,
-    Name,
-    ReducerPath,
-    Selectors
-> => {
-    const setters = createSetters<State>(
-        isCallable(config.initialState)
-            ? config.initialState()
-            : config.initialState,
+) => {
+    const {
+        reducers,
+        initialState,
+        selectors = {} as Selectors,
+    } = config;
+
+    const getOriginalReducers = (create: ReducerCreators<State>) => (
+        isCallable(reducers)
+            ? reducers(create)
+            : reducers
     );
 
-    const reducers = (create: ReducerCreators<State>) => {
-        return (
-            isCallable(config.reducers)
-                ? config.reducers(create)
-                : config.reducers
-        );
-    };
+    const state = (
+        isCallable(initialState)
+            ? initialState()
+            : initialState
+    );
 
-    config.reducers = (create) => ({
-        ...setters,
-        ...reducers(create),
-    });
-
-    // @ts-expect-error
     return buildCreateSlice({
         creators: { asyncThunk: asyncThunkCreator },
-    })(config);
+    })({
+        ...config,
+        reducers: (create) => ({
+            ...createSetters(state, create),
+            ...getOriginalReducers(create),
+        }),
+        selectors: {
+            ...createSelectors(state),
+            ...selectors,
+        },
+    });
 };
-export type State = {
-    isInitialized: boolean;
-    isRefreshing: boolean;
-    isNetworkConnected: boolean;
-    isSocketConnected: boolean;
-    isMute: boolean;
-    isDeaf: boolean;
-    isMobileScreen: boolean;
-};
-
-export const getInitialState = (): State => {
-    return {
-        isDeaf: false,
-        isMute: false,
-        isInitialized: false,
-        isMobileScreen: false,
-        isNetworkConnected: navigator.onLine,
-        isRefreshing: false,
-        isSocketConnected: false,
-    };
-};
-const qwe = createCustomSlice({
-    name: 'Qwe',
-    initialState: getInitialState(),
-    reducers: (create) => ({
-        da: create.reducer((state, { payload }: PayloadAction<string>) => {}),
-    }),
-});
-
-const zxc = createCustomSlice({
-    name: 'Qwe',
-    initialState: {
-        isDeaf: false,
-        isMute: false,
-
-    },
-    reducers: (create) => ({
-        da: create.reducer((state, { payload }: PayloadAction<string>) => {}),
-    }),
-});
-
-qwe.actions.setIsDeaf;
-zxc.actions.setIsDeaf;

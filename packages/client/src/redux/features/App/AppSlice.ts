@@ -1,8 +1,9 @@
-import { combinedFunction } from '@lesnoypudge/utils';
+import { combinedFunction, invariant } from '@lesnoypudge/utils';
 import { addEventListener } from '@lesnoypudge/utils-web';
 import { RootState } from '@redux/store';
 import { createCustomSlice, listenerMiddleware } from '@redux/utils';
 import { Store } from '@reduxjs/toolkit';
+import { ClientEntities } from '@types';
 import { localStorageApi } from '@utils';
 import { MOBILE_SCREEN_QUERY } from '@vars';
 import { noop } from 'motion';
@@ -11,6 +12,7 @@ import { noop } from 'motion';
 
 export namespace App {
     export type State = {
+        user: ClientEntities.User.Base | null;
         isInitialized: boolean;
         isRefreshing: boolean;
         isNetworkConnected: boolean;
@@ -22,6 +24,7 @@ export namespace App {
 
     export const getInitialState = (): State => {
         return {
+            user: null,
             isDeaf: localStorageApi.get('isDeaf', false),
             isMute: localStorageApi.get('isMute', false),
             isInitialized: false,
@@ -43,31 +46,35 @@ export namespace App {
                 isInitialized: state.isInitialized,
             })),
         }),
+        selectors: {
+            selectAuthorizedUser: (state) => {
+                invariant(state.user, 'authorized user not found');
+
+                return state.user;
+            },
+        },
     });
 
-    export const setupEffects = (store: Store<RootState>) => {
+    export const setupEffects = ({
+        dispatch,
+    }: Store<RootState>) => {
+        const mediaQuery = window.matchMedia(MOBILE_SCREEN_QUERY);
+
+        const handleMediaQuery = (e: MediaQueryListEvent) => {
+            dispatch(Slice.actions.setIsMobileScreen(e.matches));
+        };
+
+        mediaQuery.addEventListener('change', handleMediaQuery);
+
         const cleanup = combinedFunction(
-            listenerMiddleware.startListening({
-                actionCreator: Slice.actions.initEffects,
-                effect: (_, api) => {
-                    const mediaQuery = window.matchMedia(MOBILE_SCREEN_QUERY);
+            () => mediaQuery.removeEventListener('change', handleMediaQuery),
 
-                    const handle = (e: MediaQueryListEvent) => {
-                        // api.dispatch(Slice.actions.setIsMobile(e.matches));
-                    };
+            addEventListener(window, 'online', () => {
+                dispatch(Slice.actions.setIsNetworkConnected(true));
+            }),
 
-                    mediaQuery.addEventListener('change', handle);
-
-                    addEventListener(window, 'online', () => {
-                        // api.dispatch(Slice.actions.setIsInternetConnected(true));
-                    });
-
-                    addEventListener(window, 'offline', () => {
-                        // api.dispatch(Slice.actions.setIsInternetConnected(false));
-                    });
-
-                    // return () => mediaQuery.removeEventListener('change', handle)
-                },
+            addEventListener(window, 'offline', () => {
+                dispatch(Slice.actions.setIsNetworkConnected(false));
             }),
 
             listenerMiddleware.startListening({
@@ -81,7 +88,7 @@ export namespace App {
             }),
         );
 
-        store.dispatch(Slice.actions.initEffects());
+        dispatch(Slice.actions.initEffects());
 
         return cleanup;
     };
