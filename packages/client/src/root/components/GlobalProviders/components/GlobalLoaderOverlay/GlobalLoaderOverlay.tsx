@@ -1,5 +1,5 @@
 import { Dialog, Overlay } from '@components';
-import { useContextProxy, useTimeout } from '@lesnoypudge/utils-react';
+import { useConst, useContextProxy, useTimeout } from '@lesnoypudge/utils-react';
 import { GlobalLoaderScreen } from '@pages/screens/GlobalLoaderScreen';
 import { createStyles, createVariants } from '@utils';
 import { FC, PropsWithChildren, Suspense } from 'react';
@@ -23,12 +23,23 @@ const variants = createVariants({
     },
 });
 
-const LoaderDisable: FC<PropsWithChildren> = ({
+type LoaderDisableProps = (
+    PropsWithChildren
+    & {
+        startTime: number;
+    }
+);
+
+const LoaderDisable: FC<LoaderDisableProps> = ({
+    startTime,
     children,
 }) => {
     const { closeOverlay } = useContextProxy(Overlay.Context);
 
-    useTimeout(closeOverlay, 50);
+    const isInstantSuspense = (Date.now() - startTime) < 100;
+    const delay = isInstantSuspense ? 100 : 0;
+
+    useTimeout(closeOverlay, delay);
 
     return children;
 };
@@ -40,6 +51,8 @@ export namespace GlobalLoaderOverlay {
 export const GlobalLoaderOverlay: FC<GlobalLoaderOverlay.Props> = ({
     children,
 }) => {
+    const startTime = useConst(() => Date.now());
+
     return (
         <Dialog.Provider
             label='Loading'
@@ -52,7 +65,7 @@ export const GlobalLoaderOverlay: FC<GlobalLoaderOverlay.Props> = ({
             </Dialog.Wrapper>
 
             <Suspense name='GlobalLoader'>
-                <LoaderDisable>
+                <LoaderDisable startTime={startTime}>
                     {children}
                 </LoaderDisable>
             </Suspense>

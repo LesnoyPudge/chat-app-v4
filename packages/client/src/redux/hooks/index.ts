@@ -1,2 +1,2 @@
-export * from './useSlice';
+export * from './useSliceSelector';
 export * from './useStoreActions';

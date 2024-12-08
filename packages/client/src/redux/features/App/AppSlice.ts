@@ -52,6 +52,10 @@ export namespace App {
 
                 return state.user;
             },
+
+            selectSomeById: (state, id: number) => {
+                return 'qwe';
+            },
         },
     });
 

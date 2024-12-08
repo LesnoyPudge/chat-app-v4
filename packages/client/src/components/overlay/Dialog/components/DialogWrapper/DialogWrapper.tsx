@@ -45,7 +45,7 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
         withBackdrop,
         withoutBackdropPointerEvents,
     } = useContextProxy(DialogContext);
-    console.log(isOverlayExist);
+
     return (
         <AnimatePresence>
             <If condition={isOverlayExist}>
@@ -58,8 +58,8 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
                             aria-describedby={describedBy}
                             variants={animationVariants}
                             initial={animationVariants.initial.key}
-                            animate={animationVariants.initial.key}
-                            exit={animationVariants.initial.key}
+                            animate={animationVariants.animate.key}
+                            exit={animationVariants.exit.key}
                         >
                             <If condition={withBackdrop}>
                                 {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}

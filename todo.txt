@@ -23,8 +23,7 @@ export const Slideshow = ({ image }) => (
     />
   </AnimatePresence>
 )
-
-
+- add hook useOptimistic
 
 
 

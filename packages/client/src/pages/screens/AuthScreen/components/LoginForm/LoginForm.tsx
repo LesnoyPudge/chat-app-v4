@@ -1,5 +1,6 @@
 import { Form } from '@components';
 import { Endpoints, Validators } from '@fakeShared';
+import { Features } from '@redux/features';
 import { FC } from 'react';
 
 
@@ -17,11 +18,11 @@ const LoginFormContext = Form.createFormContext<
 >();
 
 export const LoginForm: FC = () => {
+    const [login, {}] = Features.User.Api.useLoginMutation();
+
     const FormApi = Form.useForm({
         ...LoginFormOptions,
-        onSubmit: ({ value }) => {
-            value.login.toString();
-        },
+        onSubmit: ({ value }) => login(value),
     });
 
     return (

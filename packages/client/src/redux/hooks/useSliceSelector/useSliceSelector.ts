@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import { Slices, type RootState } from '@redux/store';
+import type { Slices, RootState } from '@redux/store';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { memoize } from 'proxy-memoize';
 import { useCallback } from 'react';
-import { Slice } from '@reduxjs/toolkit';
+import { EntityState, Slice } from '@reduxjs/toolkit';
 
 
 
@@ -13,26 +13,38 @@ const defaultSelector = <
     _Slice extends T.ValueOf<Slices>,
     _Return,
 >(
-    state: _Slice extends Slice<infer _State> ? _State : never,
+    state: (
+        _Slice extends Slice<infer _State>
+            ? _State
+            : _Slice extends Slice<EntityState<infer _State, string>>
+                ? _State
+                : never
+    ),
 ) => {
     return state as _Return;
 };
 
-namespace useSlice {
+export namespace useSliceSelector {
     export type Selector<
         _Slice extends T.ValueOf<Slices>,
         _Return,
     > = (
-        state: _Slice extends Slice<infer _State> ? _State : never
+        state: (
+            _Slice extends Slice<infer _State>
+                ? _State
+                : _Slice extends Slice<EntityState<infer _State, string>>
+                    ? _State
+                    : never
+        )
     ) => _Return;
 }
 
-const useSlice = <
+export const useSliceSelector = <
     _Slice extends T.ValueOf<Slices>,
     _Return = RootState[_Slice['name']],
 >(
     slice: _Slice,
-    selector: useSlice.Selector<
+    selector: useSliceSelector.Selector<
         _Slice,
         _Return
     > = defaultSelector,

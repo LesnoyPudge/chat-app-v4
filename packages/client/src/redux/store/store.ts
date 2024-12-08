@@ -9,7 +9,14 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 
 const rootReducer = combineSlices(
     Features.App.Slice,
+    Features.User.Slice,
+    Features.User.Api,
 );
+
+export type Slices = {
+    [Features.App.Slice.name]: typeof Features.App.Slice;
+    [Features.User.Slice.name]: typeof Features.User.Slice;
+};
 
 export type RootState = ReturnType<typeof rootReducer>;
 

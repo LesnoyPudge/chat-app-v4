@@ -1,3 +1,4 @@
+
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { capitalize, isCallable } from '@lesnoypudge/utils';
 import {
@@ -11,6 +12,8 @@ import {
     SliceCaseReducers,
     SliceSelectors,
 } from '@reduxjs/toolkit';
+import { modifySelectors } from '../modifySelectors';
+
 
 
 type Setters<
@@ -83,28 +86,29 @@ const createSelectors = <
     );
 };
 
+
 export const createCustomSlice = <
-    State extends T.UnknownRecord,
-    CaseReducers extends SliceCaseReducers<State>,
-    Name extends string,
-    Selectors extends SliceSelectors<State>,
-    ReducerPath extends string = Name,
+    _State extends T.UnknownRecord,
+    _CaseReducers extends SliceCaseReducers<_State>,
+    _Name extends string,
+    _Selectors extends SliceSelectors<_State>,
+    _ReducerPath extends string = _Name,
 >(
     config: CreateSliceOptions<
-        State,
-        CaseReducers,
-        Name,
-        ReducerPath,
-        Selectors
+        _State,
+        _CaseReducers,
+        _Name,
+        _ReducerPath,
+        _Selectors
     >,
 ) => {
     const {
         reducers,
         initialState,
-        selectors = {} as Selectors,
+        selectors = {} as _Selectors,
     } = config;
 
-    const getOriginalReducers = (create: ReducerCreators<State>) => (
+    const getOriginalReducers = (create: ReducerCreators<_State>) => (
         isCallable(reducers)
             ? reducers(create)
             : reducers
@@ -116,7 +120,7 @@ export const createCustomSlice = <
             : initialState
     );
 
-    return buildCreateSlice({
+    const slice = buildCreateSlice({
         creators: { asyncThunk: asyncThunkCreator },
     })({
         ...config,
@@ -129,4 +133,6 @@ export const createCustomSlice = <
             ...selectors,
         },
     });
+
+    return modifySelectors(slice);
 };

@@ -4,7 +4,7 @@ import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 export namespace ClientEntities {
     export namespace User {
-        export type Id = T.Tagged<string, 'User'>;
+        export type Id = string;
 
         export type Base = {
             id: Id;
@@ -47,7 +47,7 @@ export namespace ClientEntities {
     }
 
     export namespace Message {
-        export type Id = T.Tagged<string, 'Message'>;
+        export type Id = string;
 
         export type Base = {
             id: Id;
@@ -63,7 +63,7 @@ export namespace ClientEntities {
     }
 
     export namespace TextChat {
-        export type Id = T.Tagged<string, 'TextChat'>;
+        export type Id = string;
 
         type Conditional = (
             {
@@ -86,7 +86,7 @@ export namespace ClientEntities {
     }
 
     export namespace VoiceChat {
-        export type Id = T.Tagged<string, 'VoiceChat'>;
+        export type Id = string;
 
         type Conditional = (
             {
@@ -111,7 +111,7 @@ export namespace ClientEntities {
     }
 
     export namespace Conversation {
-        export type Id = T.Tagged<string, 'Conversation'>;
+        export type Id = string;
 
         export type Base = {
             id: Id;
@@ -122,7 +122,7 @@ export namespace ClientEntities {
     }
 
     export namespace Role {
-        export type Id = T.Tagged<string, 'Role'>;
+        export type Id = string;
 
         export type Base = {
             id: Id;
@@ -145,7 +145,7 @@ export namespace ClientEntities {
     }
 
     export namespace Channel {
-        export type Id = T.Tagged<string, 'Channel'>;
+        export type Id = string;
 
         type Conditional = (
             {
@@ -170,7 +170,7 @@ export namespace ClientEntities {
     }
 
     export namespace Server {
-        export type Id = T.Tagged<string, 'Server'>;
+        export type Id = string;
 
         export type Base = {
             id: Id;
@@ -193,7 +193,7 @@ export namespace ClientEntities {
     }
 
     export namespace File {
-        export type Id = T.Tagged<string, 'File'>;
+        export type Id = string;
 
         export type Encoded = {
             id: Id;
