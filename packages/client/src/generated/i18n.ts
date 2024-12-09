@@ -18,6 +18,8 @@ export type NamespacesType = {
         "InvitationScreen.totalCount_one": "{{count}} участник",
         "InvitationScreen.totalCount_few": "{{count}} участников",
         "InvitationScreen.totalCount_many": "{{count}} участников",
-        "InvitationScreen.totalCount_other": "{{count}} участников"
+        "InvitationScreen.totalCount_other": "{{count}} участников",
+        "ValidationErrors.invalidEmail": "Некорректный e-mail",
+        "ValidationErrors.required": "Значение не указано"
     }
 };

@@ -21,8 +21,12 @@ const env = process.env;
 // @ts-ignore
 const locales = JSON.parse(env._PUBLIC_SUPPORTED_LNGS);
 
-const input = ['/**/*.ts', '/**/*.tsx'].map((item) => {
-    return path.join(process.cwd(), 'src') + item;
+const input = ['/**/*.ts', '/**/*.tsx'].flatMap((item) => {
+    return [
+        path.join(process.cwd(), 'src') + item,
+        path.join(process.cwd(), 'fakeShared') + item,
+        path.join(process.cwd(), 'fakeServer') + item,
+    ];
 });
 
 invariant(

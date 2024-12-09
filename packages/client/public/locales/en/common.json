@@ -9,5 +9,7 @@
     "InvitationScreen.onlineCount_one": "__NOT_TRANSLATED__",
     "InvitationScreen.onlineCount_other": "__NOT_TRANSLATED__",
     "InvitationScreen.totalCount_one": "__NOT_TRANSLATED__",
-    "InvitationScreen.totalCount_other": "__NOT_TRANSLATED__"
+    "InvitationScreen.totalCount_other": "__NOT_TRANSLATED__",
+    "ValidationErrors.invalidEmail": "__NOT_TRANSLATED__",
+    "ValidationErrors.required": "__NOT_TRANSLATED__"
 }

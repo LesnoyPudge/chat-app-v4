@@ -15,7 +15,7 @@ const DevRoute = (
 const NotFound = <Navigate to='/' replace/>;
 
 const router = createBrowserRouter([{
-    errorElement: NotFound,
+    // errorElement: NotFound,
     children: [
         ...ProdRoute,
         ...DevRoute,

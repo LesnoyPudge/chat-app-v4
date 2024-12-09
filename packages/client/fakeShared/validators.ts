@@ -1,6 +1,7 @@
 import * as v from 'valibot';
 import { Endpoints } from './endpoints';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { t } from '@i18n';
 
 
 
@@ -16,16 +17,28 @@ const schema = <
     schema: v.GenericSchema<SimpleId<_Shape>>,
 ) => schema;
 
+const VALIDATION_ERRORS = {
+    REQUIRED: t('ValidationErrors.required'),
+    INVALID_EMAIL: t('ValidationErrors.invalidEmail'),
+} as const;
+
+const ve = VALIDATION_ERRORS;
+
 class SharedValidators {
     commonString = v.pipe(
         v.string(),
         v.trim(),
-        v.nonEmpty(),
+        v.nonEmpty(ve.REQUIRED),
     );
 
     id = v.pipe(
         this.commonString,
         v.uuid(),
+    );
+
+    email = v.pipe(
+        this.commonString,
+        v.email(ve.INVALID_EMAIL),
     );
 }
 

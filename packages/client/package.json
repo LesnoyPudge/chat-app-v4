@@ -12,8 +12,9 @@
     },
     "dependencies": {
         "@lesnoypudge/utils": "^16.3.0",
-        "@lesnoypudge/utils-react": "^4.4.0",
+        "@lesnoypudge/utils-react": "^4.4.1",
         "@lesnoypudge/utils-web": "^1.0.0",
+        "@react-spring/web": "^9.7.5",
         "@reduxjs/toolkit": "^2.4.0",
         "@tanstack/react-form": "0.39.0",
         "@tanstack/valibot-form-adapter": "^0.39.0",

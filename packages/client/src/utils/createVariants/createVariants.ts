@@ -1,5 +1,5 @@
 import { invariant } from '@lesnoypudge/utils';
-import { Variant, Variants } from 'motion/react';
+import { TargetAndTransition, Variant, Variants } from 'motion/react';
 
 
 
@@ -11,8 +11,16 @@ type VariantsWithKey<
     _Key extends PropertyKey = string,
 > = Record<_Key, VariantWithKey>;
 
+export namespace createVariants {
+    export type Transition = Pick<
+        TargetAndTransition,
+        'transition'
+    >['transition'];
+}
+
 export const createVariants = <_Shape extends Variants>(
     variants: _Shape,
+    sharedTransition?: createVariants.Transition,
 ) => {
     return (
         Object.keys(variants)
@@ -22,6 +30,14 @@ export const createVariants = <_Shape extends Variants>(
 
                 acc[cur] = {
                     ...original,
+                    transition: {
+                        ...sharedTransition,
+                        ...(
+                            'transition' in original
+                                ? original.transition
+                                : {}
+                        ),
+                    },
                     key: cur,
                 };
 

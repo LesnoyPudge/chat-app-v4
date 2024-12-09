@@ -1,0 +1,16 @@
+@tailwind components;
+
+
+
+@layer components {
+    .editor {
+        [data-slate-spacer=true] {
+            position: static !important;
+        }
+
+        [data-slate-placeholder=true] {
+            @apply truncate;
+            opacity: 1 !important;
+        }
+    }
+}

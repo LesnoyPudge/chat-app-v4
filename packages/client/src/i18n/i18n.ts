@@ -7,34 +7,32 @@ import { namespaces } from '@generated/i18n';
 
 
 
-export const i18nInit = async () => {
-    await (i18n
-        .use(HttpBackend)
-        .use(LanguageDetector)
-        .use(initReactI18next)
-        .init<HttpBackendOptions>({
-            // debug: true,
-            partialBundledLanguages: true,
-            interpolation: {
-                escapeValue: false,
-            },
-            load: 'languageOnly',
-            ns: namespaces,
-            supportedLngs: JSON.parse(env._PUBLIC_SUPPORTED_LNGS) as string[],
-            fallbackLng: env._PUBLIC_DEFAULT_LNG,
-            defaultNS: env._PUBLIC_DEFAULT_LNG_NS,
-            backend: {
-                loadPath: '/locales/{{lng}}/{{ns}}.json',
-            },
-        })
-    );
+export const t = await (i18n
+    .use(HttpBackend)
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init<HttpBackendOptions>({
+        // debug: true,
+        partialBundledLanguages: true,
+        interpolation: {
+            escapeValue: false,
+        },
+        load: 'languageOnly',
+        ns: namespaces,
+        supportedLngs: JSON.parse(env._PUBLIC_SUPPORTED_LNGS) as string[],
+        fallbackLng: env._PUBLIC_DEFAULT_LNG,
+        defaultNS: env._PUBLIC_DEFAULT_LNG_NS,
+        backend: {
+            loadPath: '/locales/{{lng}}/{{ns}}.json',
+        },
+    })
+);
 
-    if (isDev) {
-        await i18n.changeLanguage(env._PUBLIC_DEFAULT_LNG);
+if (isDev) {
+    await i18n.changeLanguage(env._PUBLIC_DEFAULT_LNG);
 
-        const translationCheck = await import('translation-check');
-        i18n.use(translationCheck.i18nextPlugin);
+    const translationCheck = await import('translation-check');
+    i18n.use(translationCheck.i18nextPlugin);
 
-        // translationCheck.showTranslations(i18n);
-    }
-};
+    // translationCheck.showTranslations(i18n);
+}

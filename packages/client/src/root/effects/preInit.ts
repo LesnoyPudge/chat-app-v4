@@ -1,4 +1,4 @@
-import { i18nInit } from '@i18n';
+import '@i18n';
 import { isDev } from '@vars';
 
 
@@ -7,12 +7,12 @@ export const preInit = async () => {
     if (isDev) {
         const { scan } = await import('react-scan');
 
-        // eslint-disable-next-line no-console
-        const log = console.log;
-        const messageToIgnore = [
-            'Try Million Lint to automatically',
-            'optimize your app: https://million.dev',
-        ].join(' ');
+
+        // const log = console.log;
+        // const messageToIgnore = [
+        //     'Try Million Lint to automatically',
+        //     'optimize your app: https://million.dev',
+        // ].join(' ');
 
 
         // console.log = (...args) => {
@@ -31,6 +31,4 @@ export const preInit = async () => {
             log: true,
         });
     }
-
-    await i18nInit();
 };
