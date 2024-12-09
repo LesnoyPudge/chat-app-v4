@@ -2,7 +2,7 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import {
     useAnimationFrame,
-    useIsFirstRender,
+    useFunction,
     useRefManager,
     useUniqueState,
 } from '@lesnoypudge/utils-react';
@@ -64,9 +64,8 @@ export const useRelativePosition = ({
     unbounded = false,
 }: useRelativePosition.Props): useRelativePosition.WithAlignment => {
     const [alignment, setAlignment] = useUniqueState(preferredAlignment);
-    const { getIsFirstRender } = useIsFirstRender();
 
-    const calculate = () => {
+    const calculate = useFunction(() => {
         if (
             !followerElementRef.current
             || !leaderElementOrRectRef.current
@@ -101,14 +100,10 @@ export const useRelativePosition = ({
         if (follower.style.transform === transformValue) return;
 
         follower.style.transform = transformValue;
-    };
+    });
 
-    useLayoutEffect(() => {
-        if (!getIsFirstRender()) return;
-
-        calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    useLayoutEffect(calculate, []);
 
     useAnimationFrame(calculate, true);
 

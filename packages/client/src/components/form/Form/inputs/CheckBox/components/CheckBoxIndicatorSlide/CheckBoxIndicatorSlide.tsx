@@ -1,9 +1,10 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { useUpdateEffect } from '@lesnoypudge/utils-react';
+// import { useUpdateEffect } from '@lesnoypudge/utils-react';
 import { cn, createStyles, createVariants } from '@utils';
-import { m, useAnimate, useAnimation, useMotionValue, useTransform } from 'motion/react';
-import { FC } from 'react';
+import { animate, m, useAnimate, useAnimation, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'motion/react';
+import { FC, useEffect } from 'react';
 import { animated, easings, useSpringValue } from '@react-spring/web';
+import { useUpdateEffect } from '@lesnoypudge/utils-react';
 
 
 
@@ -225,50 +226,30 @@ export const CheckBoxIndicatorSlideOld: FC<CheckBoxIndicatorSlide.Props> = ({
     );
 };
 
+// const useUpdateEffect = (fn: () => void, deps: unknown[] = []) => {
+//     useIsFirstRender();
+//     useEffect(() => {}, deps);
+// };
+
 export const CheckBoxIndicatorSlide: FC<CheckBoxIndicatorSlide.Props> = ({
     className = '',
     checked,
 }) => {
-    const value = useMotionValue(checked ? 1 : 0);
-    const translateX = useTransform(value, [0, 1], [0, 16]);
-    const width = useTransform(value, [0, 0.3, 0.7, 1], [18, 24, 24, 18]);
-    const height = useTransform(value, [0, 0.3, 0.7, 1], [18, 15, 15, 18]);
-
-    const controls = useAnimation();
+    const x = useMotionValue(checked ? 1 : 0);
+    /*
+        keyframes
+        0 % { width: 18px; height: 18; translateX: 0px; }
+        30% { width: 24px; height: 16; }
+        70% { width: 24px; height: 16; }
+        100% { width: 18px; height: 18; translateX: 16px; }
+    ` */
+    const translateX = useTransform(x, [0, 1], [0, 16]);
+    const width = useTransform(x, [0, 0.3, 0.7, 1], [18, 24, 24, 18]);
+    const height = useTransform(x, [0, 0.3, 0.7, 1], [18, 15, 15, 18]);
 
     useUpdateEffect(() => {
-        // controls.start();
-        // value.set(checked ? 1 : 0);
-        console.log(value.isAnimating());
-
-        // value.
-        // const ballVariant = (
-        //     checked ? ballVariants.on.key : ballVariants.off.key
-        // );
-        // void controls.start([ballVariants.base.key, ballVariant]);
-
-        // void controls.start(ballVariant);
-        // void controls.start(ballVariants.base.key);
+        animate(x, checked ? 1 : 0, sharedTransition);
     }, [checked]);
-
-    // const x = useSpringValue(checked ? 1 : 0, {
-    //     config: {
-    //         duration: 200,
-    //         easing: easings.linear,
-    //     },
-    // });
-
-    // useUpdateEffect(() => {
-    //     x.start(checked ? 1 : 0);
-    // }, [checked]);
-
-
-    const firstBarVariant = (
-        checked ? firstBarVariants.on.key : firstBarVariants.off.key
-    );
-    const secondBarVariant = (
-        checked ? secondBarVariants.on.key : secondBarVariants.off.key
-    );
 
     return (
         <div className={cn(
@@ -280,30 +261,12 @@ export const CheckBoxIndicatorSlide: FC<CheckBoxIndicatorSlide.Props> = ({
             <div className={styles.inner}>
                 <m.div
                     className={styles.ball}
-                    // transition={sharedTransition}
-                    // variants={ballVariants}
-                    // variants={{
-                    //     on: {
-                    //         translateX: 0,
-                    //     },
-                    //     off: {
-                    //         translateX: 16,
-                    //     },
-                    // }}
-                    // initial={ballVariants.base.key}
-                    // animate={controls}
                     style={{
                         translateY: '-50%',
                         translateX,
                         width,
                         height,
-                        /*
-                            keyframes
-                            0 % { width: 18px; height: 18; translateX: 0px; }
-                            30% { width: 24px; height: 16; }
-                            70% { width: 24px; height: 16; }
-                            100% { width: 18px; height: 18; translateX: 16px; }
-                        ` */
+
                         // width: x.to({
                         //     range: [0, 0.3, 0.7, 1],
                         //     output: [18, 24, 24, 18],
