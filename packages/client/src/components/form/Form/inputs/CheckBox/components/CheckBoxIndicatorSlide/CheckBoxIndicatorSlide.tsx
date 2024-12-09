@@ -1,8 +1,7 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-// import { useUpdateEffect } from '@lesnoypudge/utils-react';
 import { cn, createStyles, createVariants } from '@utils';
-import { animate, m, useAnimate, useAnimation, useMotionTemplate, useMotionValue, useSpring, useTransform } from 'motion/react';
-import { FC, useEffect } from 'react';
+import { animate, m, useMotionValue, useTransform } from 'motion/react';
+import { FC } from 'react';
 import { animated, easings, useSpringValue } from '@react-spring/web';
 import { useUpdateEffect } from '@lesnoypudge/utils-react';
 
@@ -47,52 +46,6 @@ const sharedTransition: createVariants.Transition = {
     // repeatType: 'reverse',
     // repeat: Infinity,
 };
-
-/*
-    keyframes
-    0 % { width: 18px; height: 18; translateX: 0px; }
-    30% { width: 24px; height: 16; }
-    70% { width: 24px; height: 16; }
-    100% { width: 18px; height: 18; translateX: 16px; }
-` */
-const ballVariants = createVariants({
-    base: {
-        width: [18, 24, 24, 18],
-        height: [18, 15, 15, 18],
-        translateY: '-50%',
-        // translateX: [0, 16],
-    },
-    off: {
-        translateX: 0,
-    },
-    on: {
-        translateX: 16,
-    },
-}, sharedTransition);
-
-/*
-    keyframes
-    0 % { height: 12px; translateX: -1px; translateY: -6px; rotate: 45deg; }
-    30% { height: 6px; translateY: -3px; rotate: 90deg; }
-    70% { height: 6px; translateY: -3px; rotate: 90deg; }
-    100% { height: 5px; translateX: -3px; translateY: 0px; rotate: 120deg; }
-` */
-const firstBarVariants = createVariants({
-    off: {},
-    on: {},
-}, sharedTransition);
-
-/*
-    keyframes
-    0 % { height: 12px; translateX: -1px; translateY: -6px; rotate: -45deg; }
-    30% { height: 6px; translateY: -3px; rotate: -90deg; }
-    70% { height: 6px; translateY: -3px; rotate: -90deg; }
-    100% { height: 8px; translateX: 1px; translateY: -3px; rotate: -135deg; }
-` */
-const secondBarVariants = createVariants({
-    off: {},
-    on: {},
-}, sharedTransition);
 
 export namespace CheckBoxIndicatorSlide {
     export type Props = (
@@ -226,11 +179,6 @@ export const CheckBoxIndicatorSlideOld: FC<CheckBoxIndicatorSlide.Props> = ({
     );
 };
 
-// const useUpdateEffect = (fn: () => void, deps: unknown[] = []) => {
-//     useIsFirstRender();
-//     useEffect(() => {}, deps);
-// };
-
 export const CheckBoxIndicatorSlide: FC<CheckBoxIndicatorSlide.Props> = ({
     className = '',
     checked,
@@ -242,10 +190,40 @@ export const CheckBoxIndicatorSlide: FC<CheckBoxIndicatorSlide.Props> = ({
         30% { width: 24px; height: 16; }
         70% { width: 24px; height: 16; }
         100% { width: 18px; height: 18; translateX: 16px; }
-    ` */
-    const translateX = useTransform(x, [0, 1], [0, 16]);
-    const width = useTransform(x, [0, 0.3, 0.7, 1], [18, 24, 24, 18]);
-    const height = useTransform(x, [0, 0.3, 0.7, 1], [18, 15, 15, 18]);
+    */
+    const ballAnimated = {
+        translateX: useTransform(x, [0, 1], [0, 16]),
+        width: useTransform(x, [0, 0.3, 0.7, 1], [18, 24, 24, 18]),
+        height: useTransform(x, [0, 0.3, 0.7, 1], [18, 15, 15, 18]),
+    };
+
+    /*
+        keyframes
+        0 % { height: 12px; translateX: -1px; translateY: -6px; rotate: 45deg; }
+        30% { height: 6px; translateY: -3px; rotate: 90deg; }
+        70% { height: 6px; translateY: -3px; rotate: 90deg; }
+        100% { height: 5px; translateX: -3px; translateY: 0px; rotate: 120deg; }
+    */
+    const firstBarAnimated = {
+        height: useTransform(x, [0, 0.3, 0.7, 1], [12, 6, 6, 5]),
+        translateX: useTransform(x, [0, 1], [-1, -3]),
+        translateY: useTransform(x, [0, 0.3, 0.7, 1], [-6, -3, -3, 0]),
+        rotate: useTransform(x, [0, 0.3, 0.7, 1], [45, 90, 90, 120]),
+    };
+
+    /*
+        keyframes
+        0 % { height: 12px; translateX: -1px; translateY: -6px; rotate: -45deg; }
+        30% { height: 6px; translateY: -3px; rotate: -90deg; }
+        70% { height: 6px; translateY: -3px; rotate: -90deg; }
+        100% { height: 8px; translateX: 1px; translateY: -3px; rotate: -135deg; }
+    */
+    const secondBarAnimated = {
+        height: useTransform(x, [0, 0.3, 0.7, 1], [12, 6, 6, 8]),
+        translateX: useTransform(x, [0, 1], [-1, 1]),
+        translateY: useTransform(x, [0, 0.3, 0.7, 1], [-6, -3, -3, -3]),
+        rotate: useTransform(x, [0, 0.3, 0.7, 1], [-45, -90, -90, -135]),
+    };
 
     useUpdateEffect(() => {
         animate(x, checked ? 1 : 0, sharedTransition);
@@ -263,24 +241,9 @@ export const CheckBoxIndicatorSlide: FC<CheckBoxIndicatorSlide.Props> = ({
                     className={styles.ball}
                     style={{
                         translateY: '-50%',
-                        translateX,
-                        width,
-                        height,
-
-                        // width: x.to({
-                        //     range: [0, 0.3, 0.7, 1],
-                        //     output: [18, 24, 24, 18],
-                        // }).to((value) => `${value}px`),
-
-                        // height: x.to({
-                        //     range: [0, 0.3, 0.7, 1],
-                        //     output: [18, 15, 15, 18],
-                        // }).to((value) => `${value}px`),
-
-                        // transform: x.to({
-                        //     range: [0, 1],
-                        //     output: [0, 16],
-                        // }).to((value) => `translateY(-50%) translateX(${value}px)`),
+                        translateX: ballAnimated.translateX,
+                        width: ballAnimated.width,
+                        height: ballAnimated.height,
                     }}
                 >
                     <div className={styles.barsWrapper}>
@@ -289,31 +252,11 @@ export const CheckBoxIndicatorSlide: FC<CheckBoxIndicatorSlide.Props> = ({
                                 styles.bars.base,
                                 { [styles.bars.active]: checked },
                             )}
-                            variants={firstBarVariants}
                             style={{
-                                /*
-                                    keyframes
-                                    0 % { height: 12px; translateX: -1px; translateY: -6px; rotate: 45deg; }
-                                    30% { height: 6px; translateY: -3px; rotate: 90deg; }
-                                    70% { height: 6px; translateY: -3px; rotate: 90deg; }
-                                    100% { height: 5px; translateX: -3px; translateY: 0px; rotate: 120deg; }
-                                ` */
-                                // height: x.to({
-                                //     range: [0, 0.3, 0.7, 1],
-                                //     output: [12, 6, 6, 5],
-                                // }).to((value) => `${value}px`),
-                                // translateX: x.to({
-                                //     range: [0, 1],
-                                //     output: [-1, -3],
-                                // }).to((value) => `${value}px`),
-                                // translateY: x.to({
-                                //     range: [0, 0.3, 0.7, 1],
-                                //     output: [-6, -3, -3, 0],
-                                // }).to((value) => `${value}px`),
-                                // rotate: x.to({
-                                //     range: [0, 0.3, 0.7, 1],
-                                //     output: [45, 90, 90, 120],
-                                // }).to((value) => `${value}deg`),
+                                translateY: firstBarAnimated.translateY,
+                                translateX: firstBarAnimated.translateX,
+                                height: firstBarAnimated.height,
+                                rotate: firstBarAnimated.rotate,
                             }}
                         >
                         </m.div>
@@ -323,31 +266,11 @@ export const CheckBoxIndicatorSlide: FC<CheckBoxIndicatorSlide.Props> = ({
                                 styles.bars.base,
                                 { [styles.bars.active]: checked },
                             )}
-                            variants={secondBarVariants}
                             style={{
-                                /*
-                                    keyframes
-                                    0 % { height: 12px; translateX: -1px; translateY: -6px; rotate: -45deg; }
-                                    30% { height: 6px; translateY: -3px; rotate: -90deg; }
-                                    70% { height: 6px; translateY: -3px; rotate: -90deg; }
-                                    100% { height: 8px; translateX: 1px; translateY: -3px; rotate: -135deg; }
-                                ` */
-                                // height: x.to({
-                                //     range: [0, 0.3, 0.7, 1],
-                                //     output: [12, 6, 6, 8],
-                                // }).to((value) => `${value}px`),
-                                // translateX: x.to({
-                                //     range: [0, 1],
-                                //     output: [-1, 1],
-                                // }).to((value) => `${value}px`),
-                                // translateY: x.to({
-                                //     range: [0, 0.3, 0.7, 1],
-                                //     output: [-6, -3, -3, -3],
-                                // }).to((value) => `${value}px`),
-                                // rotate: x.to({
-                                //     range: [0, 0.3, 0.7, 1],
-                                //     output: [-45, -90, -90, -135],
-                                // }).to((value) => `${value}deg`),
+                                translateY: secondBarAnimated.translateY,
+                                translateX: secondBarAnimated.translateX,
+                                height: secondBarAnimated.height,
+                                rotate: secondBarAnimated.rotate,
                             }}
                         >
                         </m.div>
