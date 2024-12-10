@@ -4,11 +4,12 @@
         "src/**/*",
         "node_modules/@types",
         "./fakeServer/**/*",
-        "./fakeShared/**/*"
+        "./fakeShared/**/*",
+        "WIP"
     ],
     "exclude": [
         "./src/generated/**/*",
-        "node_modules/@types/node"
+        "node_modules/@types/node",
     ],
     "compilerOptions": {
         "types": [

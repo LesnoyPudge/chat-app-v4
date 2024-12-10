@@ -1,69 +1,133 @@
-import { Button } from '@components';
+import { Button, Iterate } from '@components';
 import { FC } from 'react';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
-import { useThrottle } from '@hooks';
-import { fpsToMs, cn } from '@utils';
-import { PropsWithClassName } from '@types';
+import { cn, createStyles } from '@utils';
+import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import css from './ColorPicker.module.scss';
+import { useFunction, useThrottled } from '@lesnoypudge/utils-react';
+import { FieldApi } from '@tanstack/react-form';
 
 
 
-export interface ColorPicker extends PropsWithClassName {
-    color: string;
-    colorPresets?: string[];
-    onChange: (color: string) => void;
-}
+const styles = createStyles({
+    colorPicker: `
+        pointer-events-auto 
+        flex 
+        shrink-0 
+        flex-col 
+        gap-4
+        rounded-md 
+        bg-primary-200 
+        p-4 
+        shadow-elevation-high
+    `,
+    colorInput: 'rounded bg-primary-500 p-2.5',
+    presetsWrapper: 'flex justify-between gap-1',
+    presetButton: 'h-8 w-8 overflow-hidden rounded-md',
+});
 
-const styles = {
-    colorPicker: `flex flex-col p-4 gap-4 shrink-0 pointer-events-auto
-    bg-primary-200 rounded-md shadow-elevation-high color-picker`,
-    colorInput: 'bg-primary-500 rounded p-2.5',
-    presetsWrapper: 'flex gap-1 justify-between',
-    presetButton: 'w-8 h-8 rounded-md overflow-hidden',
-    presetColor: 'w-full h-full',
+
+type ColorButtonProps = Pick<ColorPickerPure.Props, 'color' | 'onChange'>;
+
+const ColorButton: FC<ColorButtonProps> = ({
+    color,
+    onChange,
+}) => {
+    const handleChange = useFunction(() => onChange(color));
+
+    return (
+        <Button
+            className={styles.presetButton}
+            label={color}
+            style={{
+                backgroundColor: color,
+            }}
+            onLeftClick={handleChange}
+            key={color}
+        />
+    );
 };
 
-export const ColorPicker: FC<ColorPicker> = ({
+export namespace ColorPickerPure {
+    export type Props = (
+        RT.PropsWithClassName
+        & {
+            color: string;
+            colorPresets?: string[];
+            onChange: (color: string) => void;
+        }
+    );
+}
+
+export const ColorPickerPure: FC<ColorPickerPure.Props> = ({
     className = '',
     color,
     colorPresets = [],
     onChange,
 }) => {
-    const { throttle } = useThrottle();
-    const handleChange = throttle(onChange, fpsToMs(60));
-
-    const withColorPresets = !!colorPresets?.length;
+    const withColorPresets = !!colorPresets.length;
 
     return (
-        <div className={cn(styles.colorPicker, className)}>
-            <HexColorPicker 
-                color={color} 
-                onChange={handleChange}
+        <div className={cn(
+            css.colorPicker,
+            styles.colorPicker,
+            className,
+        )}>
+            <HexColorPicker
+                color={color}
+                onChange={onChange}
             />
 
-            <HexColorInput 
+            <HexColorInput
                 className={styles.colorInput}
                 color={color}
                 prefix='#'
                 prefixed
-                onChange={handleChange}
+                onChange={onChange}
             />
 
             <If condition={withColorPresets}>
                 <div className={styles.presetsWrapper}>
-                    {colorPresets.map((color) => (
-                        <Button 
-                            className={styles.presetButton}
-                            onLeftClick={() => onChange(color)}   
-                            key={color}
-                        >
-                            <div 
-                                className={styles.presetColor}
-                                style={{ backgroundColor: color }}
-                            ></div>
-                        </Button>
-                    ))}
+                    <Iterate items={colorPresets}>
+                        {(buttonColor) => (
+                            <ColorButton
+                                color={buttonColor}
+                                onChange={onChange}
+                            />
+                        )}
+                    </Iterate>
                 </div>
             </If>
         </div>
+    );
+};
+
+export namespace ColorPicker {
+    export type Props = (
+        Pick<
+            ColorPickerPure.Props,
+            'className' | 'colorPresets'
+        >
+        & {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            field: FieldApi<any, any, any, any, string> ;
+        }
+);
+}
+
+export const ColorPicker: FC<ColorPicker.Props> = ({
+    className,
+    colorPresets,
+    field,
+}) => {
+    const handleChange = useThrottled(field.handleChange, 1_000 / 60);
+
+    return (
+        <ColorPickerPure
+            className={className}
+            color={field.state.value}
+            colorPresets={colorPresets}
+            onChange={handleChange}
+        />
     );
 };

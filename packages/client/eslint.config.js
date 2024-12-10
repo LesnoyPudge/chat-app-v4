@@ -47,6 +47,7 @@ const configArr = config.createConfig({
         '@typescript-eslint/no-invalid-void-type': 'off',
         'unicorn/prefer-export-from': 'off',
         '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+        '@stylistic/jsx-closing-bracket-location': 'off',
     }
 })
 

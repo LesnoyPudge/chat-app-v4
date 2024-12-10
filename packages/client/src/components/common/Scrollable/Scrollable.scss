@@ -1,7 +1,4 @@
-
-
-
-.scrollable {
+.Scrollable {
     // direction?: 'horizontal' | 'vertical' | 'both';
     // withOppositeGutter?: boolean;
     // size?: 'default' | 'small' | 'hidden';
@@ -17,16 +14,10 @@
     --border-width: 2px;
     --gutter: auto;
     --track-border-width: calc(
-        (    
-            var(--scrollbar-thickness) 
-            - var(--track-thickness)
-        ) / 2
+        (var(--scrollbar-thickness) - var(--track-thickness)) / 2
     );
     --thumb-border-width: calc(
-        (    
-            var(--scrollbar-thickness) 
-            - var(--thumb-thickness)
-        ) / 2
+        (var(--scrollbar-thickness) - var(--thumb-thickness)) / 2
     );
 
     scrollbar-gutter: var(--gutter);
@@ -51,62 +42,63 @@
 
     &::-webkit-scrollbar-track {
         background-color: var(--scrollbar-track);
-        border-radius: var(--track-thickness); 
-        border: var(--track-border-width) solid rgba(0, 0, 0, 0);  
+        border-radius: var(--track-thickness);
+        border: var(--track-border-width) solid rgba(0, 0, 0, 0);
         background-clip: padding-box;
     }
 
     &::-webkit-scrollbar-thumb {
         background-color: var(--scrollbar-thumb);
         border-radius: var(--thumb-thickness);
-        border: var(--thumb-border-width) solid rgba(0, 0, 0, 0);  
+        border: var(--thumb-border-width) solid rgba(0, 0, 0, 0);
         background-clip: padding-box;
         min-height: var(--thumb-accessible-size);
         min-width: var(--thumb-accessible-size);
     }
 
-    &[data-size="default"] {
+    &[data-size='default'] {
         --firefox-width: auto;
         --scrollbar-thickness: 10px;
         --track-thickness: 8px;
         --thumb-thickness: 8px;
     }
 
-    &[data-size="small"] {
+    &[data-size='small'] {
         --firefox-width: thin;
         --scrollbar-thickness: 8px;
         --track-thickness: 6px;
         --thumb-thickness: 6px;
     }
 
-    &[data-size="hidden"] {
+    &[data-size='hidden'] {
         --firefox-width: none;
         --scrollbar-thickness: 0px;
         --track-thickness: 0px;
         --thumb-thickness: 0px;
     }
 
-    &[data-direction="horizontal"] {
+    &[data-direction='horizontal'] {
         overflow-x: auto;
-        overflow-y: hidden;    
-    }
-    
-    &[data-direction="vertical"] {
-        overflow-x: hidden;
-        overflow-y: auto;    
-    }
-    
-    &[data-direction="both"] {
-        overflow-x: auto;
-        overflow-y: auto;    
+        overflow-y: hidden;
     }
 
-    &[data-direction="vertical"], &[data-direction="both"] {
-        &[data-with-gutter="true"] {
+    &[data-direction='vertical'] {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    &[data-direction='both'] {
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+
+    &[data-direction='vertical'],
+    &[data-direction='both'] {
+        &[data-with-gutter='true'] {
             --gutter: stable;
         }
 
-        &[data-with-opposite-gutter="true"] {
+        &[data-with-opposite-gutter='true'] {
             --gutter: stable both-edges;
         }
     }

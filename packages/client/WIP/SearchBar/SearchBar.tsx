@@ -1,34 +1,44 @@
-import { Button,SpriteImage, TextInput, TextInputWrapper } from '@components';
-import { IMAGES } from '@generated';
-import { conditional, cn } from '@utils';
+import { Button, Form } from '@components';
+import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { cn, createStyles } from '@utils';
 import { FC, useRef } from 'react';
 
 
 
-interface SearchBar {
-    className?: string;
-    placeholder?: string;
-    label: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onReset: () => void;
+export namespace SearchBar {
+    export type Props = (
+        RT.PropsWithClassName
+        & {
+            placeholder?: string;
+            label: string;
+            value: string;
+            setValue: (value: string) => void;
+            // onBlur?: Form.Inputs.TextInput.NodePure.Props['onBlur'];
+        }
+    );
 }
 
-const styles = {
+const styles = createStyles({
     wrapper: 'flex h-10',
     input: 'h-full',
-    button: `flex shrink-0 h-full aspect-square rounded fill-icon-300 
-    hover:fill-icon-200 focus-visible:fill-icon-200`,
-    icon: 'h-2/3 aspect-square shrink-0 m-auto',
-};
+    button: `
+        flex 
+        aspect-square 
+        h-full 
+        shrink-0 
+        rounded 
+        fill-icon-300 
+        hover-focus-visible:fill-icon-200
+    `,
+    icon: 'm-auto aspect-square h-2/3 shrink-0',
+});
 
-export const SearchBar: FC<SearchBar> = ({
+export const SearchBar: FC<SearchBar.Props> = ({
     className = '',
     placeholder = 'Поиск',
     label,
     value,
-    onChange,
-    onReset,
+    setValue,
 }) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
 

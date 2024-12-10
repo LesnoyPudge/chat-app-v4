@@ -1,10 +1,12 @@
 import { FC } from 'react';
-import css from './Scrollable.module.scss';
+import './Scrollable.scss';
 import { cn, createStyles } from '@utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { PropsWithInnerRef } from '@types';
 
 
+
+const baseClassName = 'Scrollable';
 
 const styles = createStyles({
     scrollable: 'max-h-full max-w-full',
@@ -65,7 +67,7 @@ export const Scrollable: FC<Scrollable.Props> = ({
     return (
         <div
             className={cn(
-                css.scrollable,
+                baseClassName,
                 styles.scrollable,
                 className,
             )}

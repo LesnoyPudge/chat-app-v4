@@ -1,33 +1,56 @@
-import { PropsWithClassName } from '@types';
-import { cn } from '@utils';
+import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { cn, createStyles } from '@utils';
 import { FC } from 'react';
 
 
 
-const styles = {
-    wrapper: 'flex shrink-0 w-6 h-6 p-1 rounded-full border-2 border-current',
+const styles = createStyles({
+    wrapper: `
+        flex 
+        h-6 
+        w-6 
+        shrink-0 
+        rounded-full 
+        border-2 
+        border-current 
+        p-1
+    `,
     inner: {
-        base: 'm-auto w-full h-full scale-0 rounded-full bg-current transition-all',
+        base: `
+            m-auto 
+            h-full 
+            w-full 
+            scale-0 
+            rounded-full 
+            bg-current 
+            transition-all
+        `,
         active: 'scale-100',
     },
-};
+});
 
-interface RadioInputIndicator extends PropsWithClassName {
-    checked: boolean;
+export namespace RadioInputIndicator {
+    export type Props = (
+        RT.PropsWithClassName
+        & {
+            checked: boolean;
+        }
+    );
 }
 
-export const RadioInputIndicator: FC<RadioInputIndicator> = ({
+export const RadioInputIndicator: FC<RadioInputIndicator.Props> = ({
     className = '',
     checked,
 }) => {
     return (
         <div className={cn(styles.wrapper, className)}>
-            <div 
+            <div
                 className={cn(
-                    styles.inner.base, 
+                    styles.inner.base,
                     { [styles.inner.active]: checked },
                 )}
-            ></div>
+            >
+            </div>
         </div>
     );
 };

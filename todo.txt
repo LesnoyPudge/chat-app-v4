@@ -1,5 +1,4 @@
 https://www.youtube.com/shorts/PHXdLe2f9rs
-https://stackoverflow.com/questions/74350677/hover-or-focus-in-tailwind-css
 https://www.tailwind-variants.org/docs/getting-started
 https://fluid.tw/
 
@@ -8,8 +7,6 @@ https://fluid.tw/
 -? сделать attachemts layout через grid-template-areas
 -? сделать управление отображаемыми частями лаяута в мобильном режиме
 в лаяутах из роутера
--? Merge и MergeAll из type-spring доступны в приложении,
-убрать?
 - разобраться с страницами (page, subPage, layout)
 - вместо TabScroller сделать 
 export const Slideshow = ({ image }) => (

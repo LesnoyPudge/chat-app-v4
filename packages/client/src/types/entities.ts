@@ -195,12 +195,27 @@ export namespace ClientEntities {
     export namespace File {
         export type Id = string;
 
-        export type Encoded = {
+        export type Base = {
             id: Id;
             name: string;
             size: number;
             type: string;
             base64: string;
         };
+
+        export type Encoded = Pick<
+            Base,
+            'base64'
+            | 'name'
+            | 'size'
+            | 'type'
+        >;
+
+        export type Invalid = (
+            Pick<Encoded, 'name' | 'size' | 'type'>
+            & {
+                reason: 'type' | 'size' | 'invalid';
+            }
+        );
     }
 }

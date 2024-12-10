@@ -18,9 +18,8 @@ export namespace CheckBoxPure {
             name: string;
             label: string;
             checked: boolean;
-            id?: string;
-            onChange: ChangeEventHandler;
-            onBlur: FocusEventHandler;
+            onChange: ChangeEventHandler<HTMLInputElement>;
+            onBlur: FocusEventHandler<HTMLInputElement>;
         }
     );
 }
@@ -30,20 +29,20 @@ export const CheckBoxPure: FC<CheckBoxPure.Props> = ({
     name,
     label,
     checked,
-    id,
     onChange,
+    onBlur,
     children,
 }) => {
     return (
         <label className={cn(styles.label, className)}>
             <input
                 className={styles.input}
-                id={id}
                 type='checkbox'
                 name={name}
                 checked={checked}
                 aria-label={label}
                 onChange={onChange}
+                onBlur={onBlur}
             />
 
             {children}
@@ -57,7 +56,6 @@ export namespace CheckBox {
             CheckBoxPure.Props,
             'className'
             | 'children'
-            | 'id'
             | 'label'
         >
         & {
@@ -68,27 +66,21 @@ export namespace CheckBox {
 }
 
 export const CheckBox: FC<CheckBox.Props> = ({
-    className,
     field,
-    label,
-    id,
     children,
+    ...rest
 }) => {
-    const handleChange: ChangeEventHandler<
-        HTMLInputElement
-    > = useFunction((e) => {
+    const handleChange: CheckBoxPure.Props['onChange'] = useFunction((e) => {
         field.handleChange(e.target.checked);
     });
 
     return (
         <CheckBoxPure
-            className={className}
-            id={id}
             checked={field.state.value}
-            label={label}
             name={field.name}
             onChange={handleChange}
             onBlur={field.handleBlur}
+            {...rest}
         >
             {children}
         </CheckBoxPure>

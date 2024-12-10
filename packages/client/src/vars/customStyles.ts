@@ -11,14 +11,6 @@ const styles = createStyles({
         opacity-0
     `,
 
-    FOCUSED: `
-        outline-focus
-    `,
-
-    FOCUS_HIDDEN: `
-        outline-transparent
-    `,
-
     SCREEN: `
         relative
         isolate
