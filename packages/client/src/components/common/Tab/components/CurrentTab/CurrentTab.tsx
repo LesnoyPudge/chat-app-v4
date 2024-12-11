@@ -8,14 +8,14 @@ export namespace CurrentTab {
         _Tabs extends TabContextProvider.GenericTabs,
     > = Pick<
         TabContextProvider.Props<_Tabs>,
-        'TabContext'
+        'context'
     >;
 }
 
 export const CurrentTab = <
     _Tabs extends TabContextProvider.GenericTabs,
->({ TabContext }: CurrentTab.Props<_Tabs>) => {
-    const currentTab = useContextSelector(TabContext, (v) => v.currentTab);
+>({ context }: CurrentTab.Props<_Tabs>) => {
+    const currentTab = useContextSelector(context, (v) => v.currentTab);
 
     return currentTab.tab;
 };

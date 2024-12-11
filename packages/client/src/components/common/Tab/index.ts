@@ -1,12 +1,15 @@
-import { CurrentTab, TabContextProvider } from './components';
+import * as c from './components';
 import * as utils from './utils';
 
 
 
 export namespace Tab {
-    export const createTabContext = utils.createTabContext;
+    export const {
+        createTabContext,
+        createTabs,
+    } = utils;
 
-    export const Current = CurrentTab;
+    export import Current = c.CurrentTab;
 
-    export import Provider = TabContextProvider;
+    export import Provider = c.TabContextProvider;
 }

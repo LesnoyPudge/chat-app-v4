@@ -1,5 +1,5 @@
 import { Form } from '@components';
-import { Endpoints, Validators } from '@fakeShared';
+import { Endpoints, ApiValidators } from '@fakeShared';
 import { Heading } from '@lesnoypudge/utils-react';
 import { Features } from '@redux/features';
 import { createStyles } from '@utils';
@@ -19,7 +19,7 @@ const styles = createStyles({
 });
 
 const LoginFormOptions = Form.createForm<Endpoints.V1.User.Login.RequestBody>({
-    validator: Validators.V1.User.login,
+    validator: ApiValidators.V1.User.login,
     defaultValues: {
         login: '',
         password: '',

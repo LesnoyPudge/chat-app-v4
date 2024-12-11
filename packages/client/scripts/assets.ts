@@ -84,16 +84,6 @@ const getNameParts = (fileName: string) => {
     };
 };
 
-// const assetNamesSet = new Set<string>();
-
-// const checkDuplicates = (name: string) => {
-//     if (assetNamesSet.has(name)) {
-//         throw new Error(`Found duplicate asset name: ${name}`);
-//     }
-
-//     assetNamesSet.add(name);
-// };
-
 const main = () => {
     fs.rmSync(
         generatedAssetsDirPath,
@@ -118,13 +108,6 @@ const main = () => {
         { recursive: true },
     );
     console.log('folder for sprites for preview created');
-
-    // fs.cpSync(
-    //     rawAssetsPath.font,
-    //     generatedAssetsDirPath,
-    //     { recursive: true, force: true },
-    // );
-    // console.log('fonts copied');
 
     const spriteImagePaths = fs.globSync([
         rawAssetsPath.images.sprite,

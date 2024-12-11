@@ -19,6 +19,10 @@ export type NamespacesType = {
         "InvitationScreen.totalCount_few": "{{count}} участников",
         "InvitationScreen.totalCount_many": "{{count}} участников",
         "InvitationScreen.totalCount_other": "{{count}} участников",
+        "SearchBar.clearSearch": "__NOT_TRANSLATED__",
+        "SearchBar.focusSearch": "__NOT_TRANSLATED__",
+        "TextInputPasswordToggle.hideText": "Скрыть пароль",
+        "TextInputPasswordToggle.showText": "Показать пароль",
         "ValidationErrors.invalidEmail": "Некорректный e-mail",
         "ValidationErrors.required": "Значение не указано"
     }

@@ -20,9 +20,10 @@ export const Slideshow = ({ image }) => (
     />
   </AnimatePresence>
 )
-- add hook useOptimistic
-
-
+- добавить useOptimistic (в redux проблемы с транзакциями?)
+- добавить dataset к элементу(html? body?) 
+для работы css (theme, message-font-size, ...)
+-? сделать components/features где можно хранить User.Avatar и тд
 
 
 

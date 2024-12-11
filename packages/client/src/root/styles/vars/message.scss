@@ -1,0 +1,20 @@
+:root {
+    --message-gap: 10px;
+    --message-editor-height: calc(
+        var(--message-line-height) + (var(--message-y-padding) * 2)
+    );
+
+    --message-font-size: 16px;
+    --message-line-height: 22px;
+    --message-y-padding: 11px;
+    --message-emoji-wrapper-width: 24px;
+    --message-emoji-wrapper-height: 22px;
+
+    [data-message-font-size='16'] {
+        --message-font-size: 16px;
+        --message-line-height: 22px;
+        --message-y-padding: 11px;
+        --message-emoji-wrapper-width: 24px;
+        --message-emoji-wrapper-height: 22px;
+    }
+}

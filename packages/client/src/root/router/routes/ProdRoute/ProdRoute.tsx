@@ -6,6 +6,7 @@ import { isDev } from '@vars';
 
 
 
+// eslint-disable-next-line react-refresh/only-export-components
 const LazyPage = lazy(async () => {
     if (isDev) {
         await sleep(20_000);

@@ -10,6 +10,10 @@
     "InvitationScreen.onlineCount_other": "__NOT_TRANSLATED__",
     "InvitationScreen.totalCount_one": "__NOT_TRANSLATED__",
     "InvitationScreen.totalCount_other": "__NOT_TRANSLATED__",
+    "SearchBar.clearSearch": "__NOT_TRANSLATED__",
+    "SearchBar.focusSearch": "__NOT_TRANSLATED__",
+    "TextInputPasswordToggle.hideText": "__NOT_TRANSLATED__",
+    "TextInputPasswordToggle.showText": "__NOT_TRANSLATED__",
     "ValidationErrors.invalidEmail": "__NOT_TRANSLATED__",
     "ValidationErrors.required": "__NOT_TRANSLATED__"
 }

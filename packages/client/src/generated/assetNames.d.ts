@@ -16,8 +16,8 @@ type CommonAssetNames = 'ANIMATED_DISCORD_LOGO_PLACEHOLDER.png'|
 'OK_HAND.svg'| 
 'POOP.svg'| 
 'SMILE.svg'| 
-'THUMBSDOWN.svg'| 
-'THUMBSUP.svg'| 
+'THUMBS_DOWN.svg'| 
+'THUMBS_UP.svg'| 
 'ERROR_BOUNDARY_BG.svg'| 
 'FANCY_BG.jpg'| 
 'DISCORD_ANIMATED_LOGO.webm'| 
