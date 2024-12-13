@@ -12,8 +12,8 @@ const styles = createStyles({
 
 export namespace RelativelyPositioned {
     export type Props = (
-        RT.PropsWithRenderFunctionOrNode<[useRelativePosition.WithAlignment]>
-        & useRelativePosition.RelativePositionOptions
+        RT.PropsWithRenderFunctionOrNode<[useRelativePosition.Return]>
+        & useRelativePosition.Options
         & Pick<
             useRelativePosition.Props,
             'leaderElementOrRectRef'
@@ -32,7 +32,7 @@ export const RelativelyPositioned: FC<RelativelyPositioned.Props> = ({
     children,
 }) => {
     const followerElementRef = useRefManager<HTMLDivElement>(null);
-    const { alignment } = useRelativePosition({
+    const withAlignment = useRelativePosition({
         preferredAlignment,
         followerElementRef,
         leaderElementOrRectRef,
@@ -45,7 +45,7 @@ export const RelativelyPositioned: FC<RelativelyPositioned.Props> = ({
 
     return (
         <div className={styles.wrapper} ref={followerElementRef}>
-            {renderFunction(children, { alignment })}
+            {renderFunction(children, withAlignment)}
         </div>
     );
 };

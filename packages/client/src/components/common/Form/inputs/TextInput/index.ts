@@ -1,6 +1,7 @@
 import * as c1 from './TextInput';
 import * as c2 from './components';
 import * as c3 from './hooks';
+import * as c4 from './TextInputProvider';
 
 
 export namespace TextInput {
@@ -8,7 +9,7 @@ export namespace TextInput {
 
     export import NodePure = c1.TextInputPure;
 
-    export import Label = c2.Label;
+    export import Provider = c4.TextInputProvider;
 
     export import PasswordToggleButton = c2.PasswordToggleButton;
 

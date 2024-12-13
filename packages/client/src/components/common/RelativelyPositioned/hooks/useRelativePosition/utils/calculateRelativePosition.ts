@@ -15,7 +15,7 @@ type Props = (
 
 type Return = (
     useRelativePosition.Position
-    & useRelativePosition.WithAlignment
+    & useRelativePosition.Return
 );
 
 const UNBOUND_SIZE = 9_999;

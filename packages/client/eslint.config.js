@@ -48,6 +48,19 @@ const configArr = config.createConfig({
         'unicorn/prefer-export-from': 'off',
         '@typescript-eslint/no-unnecessary-type-assertion': 'off',
         '@stylistic/jsx-closing-bracket-location': 'off',
+        'unicorn/no-nested-ternary': 'off',
+        "@typescript-eslint/no-unused-vars": [
+            "warn",
+            {
+                "args": "all",
+                "argsIgnorePattern": "^_",
+                "caughtErrors": "all",
+                "caughtErrorsIgnorePattern": "^_",
+                "destructuredArrayIgnorePattern": "^_",
+                "varsIgnorePattern": "^_",
+                "ignoreRestSiblings": true
+            }
+        ]
     }
 })
 

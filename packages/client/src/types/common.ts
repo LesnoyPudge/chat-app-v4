@@ -5,8 +5,14 @@ import { ElementRef, RefObject } from 'react';
 
 
 
-export type PropsWithInnerRef<_TagName extends keyof JSX.IntrinsicElements> = {
-    innerRef?: RefObject<ElementRef<_TagName>>;
+export type PropsWithInnerRef<
+    _TagName extends keyof JSX.IntrinsicElements = never,
+> = {
+    innerRef?: (
+        T.IsNever<_TagName> extends true
+            ? RefObject<HTMLElement>
+            : RefObject<ElementRef<_TagName>>
+    );
 };
 
 export type WithId = {

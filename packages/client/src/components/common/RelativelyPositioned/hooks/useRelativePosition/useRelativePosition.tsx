@@ -29,11 +29,7 @@ export namespace useRelativePosition {
         leaderRect: OmittedRect;
     };
 
-    export type WithAlignment = {
-        alignment: Alignment;
-    };
-
-    export type RelativePositionOptions = {
+    export type Options = {
         preferredAlignment: Alignment;
         swappableAlignment?: boolean;
         boundsSize?: number;
@@ -43,7 +39,7 @@ export namespace useRelativePosition {
     };
 
     export type Props = (
-        RelativePositionOptions
+        Options
         & {
             followerElementRef: useRefManager.RefManager<HTMLElement>;
             leaderElementOrRectRef: useRefManager.RefManager<
@@ -51,6 +47,10 @@ export namespace useRelativePosition {
             >;
         }
     );
+
+    export type Return = {
+        alignment: Alignment;
+    };
 }
 
 export const useRelativePosition = ({
@@ -62,7 +62,7 @@ export const useRelativePosition = ({
     spacing = 0,
     centered = false,
     unbounded = false,
-}: useRelativePosition.Props): useRelativePosition.WithAlignment => {
+}: useRelativePosition.Props): useRelativePosition.Return => {
     const [alignment, setAlignment] = useUniqueState(preferredAlignment);
 
     const calculate = useFunction(() => {

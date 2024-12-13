@@ -7,11 +7,19 @@ import {
 
 
 
-// https://github.com/dcastil/tailwind-merge/blob/v1.10.0/docs/
+// https://github.com/dcastil/tailwind-merge
 export const customTwMerge = createTailwindMerge(getDefaultConfig, (config) =>
     mergeConfigs(config, {
         extend: {
-            classGroups: {},
+            classGroups: {
+                'font-size': [{ text: [
+                    '25-30',
+                    '20-24',
+                    '17-22',
+                    '12-16',
+                    '0',
+                ] }],
+            },
         },
     }),
 );

@@ -53,8 +53,10 @@ export const OverlayProvider: FC<OverlayProvider.Props> = ({
 
     const contextValues: OverlayContext = {
         isOverlayExist: overlayState.value,
+        isOverlayExistRef: overlayStateValueRef,
         closingThrottleRef: isThrottlingRef,
         wrapperRefManager,
+        setOverlay: overlayState.setValue,
         openOverlay,
         closeOverlay,
         toggleOverlay,

@@ -6,7 +6,7 @@ export type PopoverContext = {
     blockingChildren: Set<string>;
     focused: boolean;
     handleClickOutside: VoidFunction;
-    handleEscape: () => void;
+    handleEscape: VoidFunction;
 };
 
 export const PopoverContext = createContextSelectable<PopoverContext>();

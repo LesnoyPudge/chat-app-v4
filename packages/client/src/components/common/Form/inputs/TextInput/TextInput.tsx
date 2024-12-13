@@ -5,7 +5,6 @@ import { TextInputContext } from './context';
 import { useTextInput, useTextInputDefaults } from './hooks';
 import { invariant } from '@lesnoypudge/utils';
 import { TextInputTypes } from './textInputTypes';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
@@ -28,6 +27,9 @@ export namespace TextInputPure {
 
 export const TextInputPure: FC<TextInputPure.Props> = ({
     className,
+    innerRef,
+    errorId,
+    error,
     ...rest
 }) => {
     const autoCompleteValue = rest.autoComplete ? 'on' : 'off';
@@ -40,17 +42,17 @@ export const TextInputPure: FC<TextInputPure.Props> = ({
                 aria-required={rest.required}
                 autoComplete={autoCompleteValue}
                 aria-label={rest.label}
-                aria-invalid={!!rest.error}
-                aria-describedby={rest.errorId}
-                ref={rest.innerRef}
+                aria-invalid={!!error}
+                aria-describedby={errorId}
+                ref={innerRef}
             />
 
             <span
                 className={styles.error}
-                id={rest.errorId}
+                id={errorId}
                 aria-live='assertive'
             >
-                {rest.error}
+                {error}
             </span>
         </>
     );
@@ -62,11 +64,15 @@ export namespace TextInput {
 
 export const TextInput: FC<TextInput.Props> = (props) => {
     const context = useContextSelector(TextInputContext) as TextInputContext | undefined;
+
     const field = props.field ?? context?.field;
     invariant(field);
 
     const type = props.type ?? context?.type;
     invariant(type);
+
+    const label = props.label ?? context?.label;
+    invariant(label);
 
     const hook = useTextInput({
         field,
@@ -75,11 +81,17 @@ export const TextInput: FC<TextInput.Props> = (props) => {
 
     const propsWithDefaults = useTextInputDefaults(props);
 
-    const pureProps: T.StrictOmit<TextInputPure.Props, 'children'> = {
+    const {
+        initialType: _,
+        togglePasswordType: __,
+        ...safeProps
+    } = context ?? {};
+
+    const pureProps: TextInputPure.Props = {
         innerRef: props.innerRef,
-        label: props.label,
-        ...context,
+        label,
         ...propsWithDefaults,
+        ...safeProps,
         errorId: context?.errorId ?? hook.errorId,
         type: context?.type ?? hook.type,
         id: field.name,
@@ -91,8 +103,6 @@ export const TextInput: FC<TextInput.Props> = (props) => {
     };
 
     return (
-        <TextInputPure {...pureProps}>
-            {props.children}
-        </TextInputPure>
+        <TextInputPure {...pureProps}/>
     );
 };

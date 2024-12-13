@@ -1,10 +1,11 @@
 https://www.youtube.com/shorts/PHXdLe2f9rs
 https://www.tailwind-variants.org/docs/getting-started
 https://fluid.tw/
+https://mswjs.io/docs/getting-started
 
 
 --client--
--? сделать attachemts layout через grid-template-areas
+-? сделать attachments layout через grid-template-areas
 -? сделать управление отображаемыми частями лаяута в мобильном режиме
 в лаяутах из роутера
 - разобраться с страницами (page, subPage, layout)
@@ -24,6 +25,7 @@ export const Slideshow = ({ image }) => (
 - добавить dataset к элементу(html? body?) 
 для работы css (theme, message-font-size, ...)
 -? сделать components/features где можно хранить User.Avatar и тд
+-? вынести generated из src
 
 
 

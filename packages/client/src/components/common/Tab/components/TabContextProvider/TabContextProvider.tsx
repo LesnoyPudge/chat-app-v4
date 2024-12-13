@@ -30,7 +30,7 @@ export namespace TabContextProvider {
             context: ContextSelectable<createTabContext.Context<_Tabs>>;
             tabs: _Tabs;
             initialTab: keyof _Tabs;
-            onTabChange?: (prevent: () => void) => void;
+            onTabChange?: (prevent: VoidFunction) => void;
         }
     );
 }

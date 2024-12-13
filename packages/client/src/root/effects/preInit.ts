@@ -27,7 +27,7 @@ export const preInit = async () => {
         // };
 
         scan({
-            enabled: false,
+            enabled: true,
             log: true,
         });
     }

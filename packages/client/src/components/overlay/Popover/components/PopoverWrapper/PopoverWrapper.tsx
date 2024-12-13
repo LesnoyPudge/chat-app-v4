@@ -4,7 +4,7 @@ import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import ReactFocusLock from 'react-focus-lock';
 import { useClickOutside, useContextProxy } from '@lesnoypudge/utils-react';
 import { PopoverContext } from '../../context';
-import { Overlay } from '@components/overlay/Overlay';
+import { Overlay } from '@components';
 import { useKeyBind } from '@hooks';
 import { KEY } from '@lesnoypudge/utils';
 

@@ -26,7 +26,9 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
         middleware: (getDefaultMiddleware) => (
             getDefaultMiddleware()
                 .prepend(listenerMiddleware.middleware)
-                .concat()
+                .concat(
+                    Features.User.Api.middleware,
+                )
         ),
         preloadedState,
     });

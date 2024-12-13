@@ -30,10 +30,10 @@ export const FormNode: FC<FormNode.Props> = ({
     children,
     ...rest
 }) => {
-    const handleSubmit: FormNode.OnSubmit = useFunction(async (e) => {
+    const handleSubmit: FormNode.OnSubmit = useFunction((e) => {
         e.preventDefault();
         e.stopPropagation();
-        await onSubmit(e);
+        void onSubmit(e);
     });
 
     return (

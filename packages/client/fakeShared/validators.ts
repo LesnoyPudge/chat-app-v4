@@ -7,12 +7,6 @@ import { Emoji, type RichTextEditor } from '@components';
 
 
 
-// type SimpleId<_Shape extends T.UnknownRecord> = T.Override<
-//     _Shape,
-//     `id` | `${string}Id`,
-//     string
-// >;
-
 const schema = <
     _Shape extends T.UnknownRecord,
 >(

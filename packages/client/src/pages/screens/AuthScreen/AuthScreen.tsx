@@ -1,11 +1,15 @@
-import { FC } from 'react';
+import { ComponentRef, FC } from 'react';
 import { useAuthScreen } from './useAuthScreen';
 import { createStyles, createVariants, getAssetUrl } from '@utils';
 import { CUSTOM_STYLES } from '@vars';
 import { Image, Scrollable, Tab } from '@components';
 import { AnimatePresence, m } from 'motion/react';
-import { ContextConsumerProxy } from '@lesnoypudge/utils-react';
-import { LoginForm } from './components';
+import {
+    ContextConsumerProxy,
+    useRefManager,
+    MoveFocusInside,
+} from '@lesnoypudge/utils-react';
+import { LoginForm, RegistrationForm } from './components';
 
 
 
@@ -34,7 +38,7 @@ const variants = createVariants({
         translateY: '-8%',
         scale: 1.02,
         transition: {
-            duration: 0.125,
+            duration: 0.3,
         },
     },
     visible: {
@@ -42,19 +46,21 @@ const variants = createVariants({
         translateY: 0,
         scale: 1,
         transition: {
-            duration: 0.125,
+            duration: 0.3,
         },
     },
 });
 
 const tabs = {
     login: <LoginForm/>,
-    registration: <>registration</>,
+    registration: <RegistrationForm/>,
 } satisfies Tab.Provider.GenericTabs;
 
 export const AuthTabContext = Tab.createTabContext<typeof tabs>();
 
 export const AuthScreenPure: FC = () => {
+    const containerRef = useRefManager<ComponentRef<'div'>>(null);
+
     return (
         <div className={styles.screen}>
             <Image
@@ -83,8 +89,15 @@ export const AuthScreenPure: FC = () => {
                                         initial={variants.hidden.key}
                                         animate={variants.visible.key}
                                         exit={variants.hidden.key}
+                                        ref={containerRef}
                                     >
-                                        {currentTab.tab}
+                                        <MoveFocusInside
+                                            enabled
+                                            forced
+                                            containerRef={containerRef}
+                                        >
+                                            {currentTab.tab}
+                                        </MoveFocusInside>
                                     </m.div>
                                 )}
                             </ContextConsumerProxy>

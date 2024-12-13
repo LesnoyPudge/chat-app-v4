@@ -120,10 +120,10 @@ export default {
             },
 
             fontSize: {
-                '25/30': [`${pxToRem(25)}rem`, `${pxToRem(30)}rem`],
-                '20/24': [`${pxToRem(20)}rem`, `${pxToRem(24)}rem`],
-                '17/22': [`${pxToRem(17)}rem`, `${pxToRem(22)}rem`],
-                '12/16': [`${pxToRem(12)}rem`, `${pxToRem(16)}rem`],
+                '25-30': [`${pxToRem(25)}rem`, `${pxToRem(30)}rem`],
+                '20-24': [`${pxToRem(20)}rem`, `${pxToRem(24)}rem`],
+                '17-22': [`${pxToRem(17)}rem`, `${pxToRem(22)}rem`],
+                '12-16': [`${pxToRem(12)}rem`, `${pxToRem(16)}rem`],
                 '0': ['0px', '0px'],
             },
 

@@ -42,9 +42,9 @@
             "@components": [
                 "./src/components"
             ],
-            "@components/*": [
-                "./src/components/*"
-            ],
+            // "@components/*": [
+            //     "./src/components/*"
+            // ],
             "@pages/*": [
                 "src/pages/*"
             ],

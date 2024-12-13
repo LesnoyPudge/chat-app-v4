@@ -1,6 +1,6 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { invariant } from '@lesnoypudge/utils';
-import { customTwMerge, ToOneLine, toOneLine } from '@utils';
+import { ToOneLine, toOneLine } from '@utils';
 
 
 
@@ -16,7 +16,8 @@ const processValue = (
     objOrString: unknown,
 ): string | T.UnknownRecord => {
     if (typeof objOrString === 'string') {
-        return customTwMerge(toOneLine(objOrString));
+        return toOneLine(objOrString);
+        // return customTwMerge(toOneLine(objOrString));
     }
 
     if (typeof objOrString !== 'object' || objOrString === null) {

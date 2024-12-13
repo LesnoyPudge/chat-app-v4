@@ -4,31 +4,23 @@ import { useConst } from '@lesnoypudge/utils-react';
 import { getId } from '@lesnoypudge/utils';
 import { Variant } from 'motion/react';
 import { createVariants } from '@utils';
-import { Overlay } from '@components/overlay/Overlay';
-import { Popover } from '@components/overlay/Popover';
+import { Overlay, Popover } from '@components';
 
 
-
-const config: Variant = {
-    transition: {
-        duration: 0.35,
-        ease: 'easeOut',
-    },
-};
 
 const defaultVariants: DialogProvider.AnimationVariants = createVariants({
     initial: {
         opacity: 0,
-        ...config,
     },
     animate: {
         opacity: 1,
-        ...config,
     },
     exit: {
         opacity: 0,
-        ...config,
     },
+}, {
+    duration: 0.35,
+    ease: 'easeOut',
 });
 
 export namespace DialogProvider {

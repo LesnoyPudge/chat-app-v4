@@ -1,21 +1,28 @@
-import { Form } from '@components';
+import { Button, Form, Label } from '@components';
 import { Endpoints, ApiValidators } from '@fakeShared';
-import { Heading } from '@lesnoypudge/utils-react';
+import { useTrans } from '@i18n';
+import { Heading, useContextProxy } from '@lesnoypudge/utils-react';
 import { Features } from '@redux/features';
 import { createStyles } from '@utils';
 import { FC } from 'react';
+import { AuthTabContext } from '../../AuthScreen';
+import { WithLoadingIndicator } from '../LoadingIndicator';
 
 
 
 const styles = createStyles({
     title: `
-        mb-2 
         text-center 
-        text-25/30 
+        text-25-30 
         font-semibold 
         text-color-primary
     `,
-    subtitle: 'mb-5 text-center text-color-secondary',
+    subtitle: 'mt-2 text-center text-color-secondary',
+    label: 'mt-5',
+    formError: 'mt-5',
+    submit: 'mt-5 h-11 w-full',
+    extraBlock: 'mt-2 flex flex-wrap items-center gap-1 self-start',
+    extraText: 'text-sm text-color-muted',
 });
 
 const LoginFormOptions = Form.createForm<Endpoints.V1.User.Login.RequestBody>({
@@ -26,130 +33,110 @@ const LoginFormOptions = Form.createForm<Endpoints.V1.User.Login.RequestBody>({
     },
 });
 
-const TestFormOptions = Form.createForm({
-    defaultValues: {
-        some: false,
-    },
-});
-
 export const LoginForm: FC = () => {
     const [login] = Features.User.Api.useLoginMutation();
+    const { t } = useTrans();
+    const { changeTab } = useContextProxy(AuthTabContext);
 
     const FormApi = Form.useForm({
-        // ...LoginFormOptions,
-        ...TestFormOptions,
-        // onSubmit: ({ value }) => login(value),
+        ...LoginFormOptions,
+        onSubmit: ({ value }) => login(value),
     });
 
     return (
         <Form.Node onSubmit={FormApi.handleSubmit}>
             <Heading.Node className={styles.title}>
-                <>С возвращением</>
+                {t('LoginForm.title')}
             </Heading.Node>
 
             <div className={styles.subtitle}>
-                <>Мы так рады видеть вас снова!</>
+                {t('LoginForm.subtitle')}
             </div>
 
-            <FormApi.Field name='some'>
-                {(field) => {
-                    field.name;
-                    field.state.value;
-                    // field.
-                    return (
-                        <></>
-                    );
-                }}
+            <FormApi.Field name='login'>
+                {(field) => (
+                    <>
+                        <Label.Node
+                            className={styles.label}
+                            htmlFor={field.name}
+                        >
+                            {t('LoginForm.loginLabel')}
+
+                            <Label.Wildcard/>
+
+                            <Label.Error field={field}/>
+                        </Label.Node>
+
+                        <Form.Inputs.TextInput.Node
+                            type='text'
+                            label={t('LoginForm.loginLabel')}
+                            placeholder='myLogin'
+                            required
+                            field={field}
+                        />
+                    </>
+                )}
             </FormApi.Field>
 
-            {/* <FormApi.Field. name='login'>
-                {({}) => (
-                    <div className='mb-5'>
-                        {handleChange}
-                        <FieldLabel htmlFor={props.id}>
-                            {props.label}
+            <FormApi.Field name='password'>
+                {(field) => (
+                    <>
+                        <Label.Node
+                            className={styles.label}
+                            htmlFor={field.name}
+                        >
+                            {t('LoginForm.passwordLabel')}
 
-                            <RequiredWildcard/>
+                            <Label.Wildcard/>
 
-                            <ErrorInLabel error={props.error}/>
-                        </FieldLabel>
+                            <Label.Error field={field}/>
+                        </Label.Node>
 
-                        <TextInput {...props}/>
-                    </div>
+                        <Form.Inputs.TextInput.Provider
+                            type='password'
+                            field={field}
+                            label={t('LoginForm.passwordLabel')}
+                            required
+                            placeholder='myPassword'
+                        >
+                            <Form.Inputs.TextInput.Wrapper>
+                                <Form.Inputs.TextInput.Node/>
+
+                                <Form.Inputs.TextInput.PasswordToggleButton/>
+                            </Form.Inputs.TextInput.Wrapper>
+                        </Form.Inputs.TextInput.Provider>
+                    </>
                 )}
-            </FormApi.Field.>
-            <FormikTextInput
-                label='Логин'
-                name='login'
-                placeholder='myLogin'
-                required
-            >
-                {(props) => (
+            </FormApi.Field>
 
-                )}
-            </FormikTextInput>
-
-            <PasswordTypeToggle>
-                {({ toggleType, type }) => (
-                    <FormikTextInput
-                        label='Пароль'
-                        name='password'
-                        type={type}
-                        required
-                        placeholder='myPassword'
-                    >
-                        {(props) => (
-                            <div className='mb-5'>
-                                <FieldLabel htmlFor={props.id}>
-                                    {props.label}
-
-                                    <RequiredWildcard/>
-
-                                    <ErrorInLabel error={props.error}/>
-                                </FieldLabel>
-
-                                <TextInputWrapper>
-                                    <TextInput {...props}/>
-
-                                    <PasswordTypeToggleButton
-                                        type={type}
-                                        onToggle={toggleType}
-                                    />
-                                </TextInputWrapper>
-                            </div>
-                        )}
-                    </FormikTextInput>
-                )}
-            </PasswordTypeToggle>
-
-            <FormError
-                className='mb-2'
-                error={helpers.error}
+            <Form.Error
+                className={styles.formError}
+                formApi={FormApi}
             />
 
             <Button
-                className='mb-2 h-11 w-full'
+                className={styles.submit}
                 type='submit'
                 stylingPreset='brand'
-                isLoading={helpers.isLoading}
+                isLoading={FormApi.state.isSubmitting}
             >
-                <ContentWithLoading isLoading={helpers.isLoading}>
-                    <>Вход</>
-                </ContentWithLoading>
+                <WithLoadingIndicator isLoading={FormApi.state.isSubmitting}>
+                    {t('LoginForm.submit')}
+                </WithLoadingIndicator>
             </Button>
 
-            <div className='flex flex-wrap items-center self-start'>
-                <span className='mr-1 text-sm text-color-muted'>
-                    <>Нужна учётная запись?</>
+            <div className={styles.extraBlock}>
+                <span className={styles.extraText}>
+                    {t('LoginForm.registrationSuggestion')}
                 </span>
 
                 <Button
                     stylingPreset='link'
-                    onLeftClick={changeTab.registrationForm}
+                    onLeftClick={changeTab.registration}
                 >
-                    <>Зарегистрироваться</>
+                    {t('LoginForm.registrationButton')}
                 </Button>
-            </div> */}
+            </div>
         </Form.Node>
     );
 };

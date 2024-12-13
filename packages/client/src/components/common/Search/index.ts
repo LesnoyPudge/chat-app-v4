@@ -1,4 +1,4 @@
-import * as c1 from './SearchBar';
+import * as c1 from './components';
 import * as c2 from './hooks';
 
 

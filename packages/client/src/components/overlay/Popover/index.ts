@@ -7,7 +7,6 @@ import { PopoverContext } from './context';
 
 
 
-// https://css-tricks.com/clarifying-the-relationship-between-popovers-and-dialogs
 export namespace Popover {
     export const Context = PopoverContext;
 

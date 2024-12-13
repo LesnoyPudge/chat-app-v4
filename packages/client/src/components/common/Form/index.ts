@@ -1,14 +1,16 @@
 import * as formLib from '@tanstack/react-form';
-import { FormNode } from './components';
+import * as c1 from './components';
 import * as utils from './utils';
-import { FormInputs } from './inputs';
+import * as c2 from './inputs';
 
 
 
 export namespace Form {
-    export import Node = FormNode;
+    export import Node = c1.FormNode;
 
-    export import Inputs = FormInputs;
+    export import Error = c1.FormError;
+
+    export import Inputs = c2.FormInputs;
 
     export import createForm = utils.createForm;
 

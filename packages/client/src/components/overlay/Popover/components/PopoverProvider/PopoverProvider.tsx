@@ -6,7 +6,7 @@ import {
 } from '@lesnoypudge/utils-react';
 import { PopoverContext } from '../../context';
 import { FC, PropsWithChildren, useEffect } from 'react';
-import { Overlay } from '@components/overlay/Overlay';
+import { Overlay } from '@components';
 import { getId } from '@lesnoypudge/utils';
 
 

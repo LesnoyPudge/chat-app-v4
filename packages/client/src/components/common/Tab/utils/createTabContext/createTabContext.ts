@@ -7,7 +7,7 @@ export namespace createTabContext {
     export type Context<_Tabs extends TabContextProvider.GenericTabs> = {
         transformedTabs: Record<keyof _Tabs, TabContextProvider.Tab<_Tabs>>;
         currentTab: TabContextProvider.Tab<_Tabs>;
-        changeTab: Record<keyof _Tabs, () => void>;
+        changeTab: Record<keyof _Tabs, VoidFunction>;
         isActive: Record<keyof _Tabs, boolean>;
         tabProps: Record<
             keyof _Tabs,

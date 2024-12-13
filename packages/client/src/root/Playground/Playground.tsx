@@ -1,15 +1,26 @@
-import { Button, Form, Overlay } from '@components';
+import { Button, Form, Overlay, Tooltip } from '@components';
 import { noop } from '@lesnoypudge/utils';
-import { ContextConsumerProxy, useBoolean, useContextProxy } from '@lesnoypudge/utils-react';
+import { ContextConsumerProxy, useBoolean, useContextProxy, useRefManager } from '@lesnoypudge/utils-react';
 import { AnimatePresence, m } from 'motion/react';
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { ComponentRef, FC, PropsWithChildren, useEffect, useState } from 'react';
 
 
 
 export const Playground: FC = () => {
+    const buttonRef = useRefManager<ComponentRef<'button'>>(null);
+
     return (
         <div>
-            pg
+            <Tooltip
+                leaderElementRef={buttonRef}
+                preferredAlignment='right'
+            >
+                <>some tooltip</>
+            </Tooltip>
+
+            <Button innerRef={buttonRef}>
+                <>test</>
+            </Button>
         </div>
     );
 };

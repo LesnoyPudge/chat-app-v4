@@ -54,7 +54,7 @@ export namespace TextInputTypes {
     >;
 
     export type NodePureProps = T.Simplify<
-        RT.PropsWithChildrenAndClassName
+        RT.PropsWithClassName
         & PropsWithDefaultValue
         & WithRef
         & RequiredNodePureProps
@@ -66,10 +66,10 @@ export namespace TextInputTypes {
     };
 
     export type NodeProps = T.Simplify<
-        WithLabel
-        & RT.PropsWithChildrenAndClassName
+        & RT.PropsWithClassName
         & WithRef
         & Partial<
+            WithLabel
             & PropsWithDefaultValue
             & WithFieldApi
             & WithType
@@ -94,6 +94,7 @@ export namespace TextInputTypes {
         PropsWithDefaultValue
         & useTextInputReturn
         & WithFieldApi
+        & WithLabel
         & {
             initialType: WithType['type'];
         }
@@ -102,7 +103,7 @@ export namespace TextInputTypes {
     export type ContextProviderProps = T.Simplify<
         PropsWithChildren
         & WithFieldApi
-        & PropsWithDefaultValue
+        & Partial<PropsWithDefaultValue>
         & WithLabel
         & WithType
     >;

@@ -2,17 +2,19 @@ import {
     createContextSelectable,
     useRefManager,
 } from '@lesnoypudge/utils-react';
-import { Ref } from 'react';
+import { MutableRefObject } from 'react';
 
 
 
 export type OverlayContext = {
     isOverlayExist: boolean;
-    closingThrottleRef: Ref<boolean>;
+    isOverlayExistRef: MutableRefObject<boolean>;
+    closingThrottleRef: MutableRefObject<boolean>;
     wrapperRefManager: useRefManager.RefManager<HTMLDivElement>;
-    openOverlay: () => void;
-    closeOverlay: () => void;
-    toggleOverlay: () => void;
+    openOverlay: VoidFunction;
+    closeOverlay: VoidFunction;
+    toggleOverlay: VoidFunction;
+    setOverlay: (value: boolean) => void;
 };
 
 export const OverlayContext = createContextSelectable<OverlayContext>();

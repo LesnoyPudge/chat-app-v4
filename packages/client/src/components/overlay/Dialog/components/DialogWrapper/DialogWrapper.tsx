@@ -2,8 +2,7 @@ import { useContextProxy } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 import { DialogContext } from '../../context';
 import { PropsWithChildrenAndClassName } from '@lesnoypudge/types-utils-react';
-import { Overlay } from '@components/overlay/Overlay';
-import { Popover } from '@components/overlay/Popover';
+import { Overlay, Popover } from '@components';
 import { AnimatePresence, m } from 'motion/react';
 import { cn, createStyles } from '@utils';
 
