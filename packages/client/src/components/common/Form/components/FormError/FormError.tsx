@@ -1,7 +1,7 @@
 
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { isPlainObject } from '@lesnoypudge/utils';
-import { ReactFormExtendedApi } from '@tanstack/react-form';
+import { ReactFormExtendedApi, useStore } from '@tanstack/react-form';
 import { cn, createStyles } from '@utils';
 import { FC, useMemo } from 'react';
 
@@ -25,20 +25,23 @@ export const FormError: FC<FormError.Props> = ({
     className = '',
     formApi,
 }) => {
-    const errorMapValue = formApi.state.errorMap.onSubmit;
-    const error = useMemo(() => (
-        isPlainObject(errorMapValue)
-            ? errorMapValue.form
-            : errorMapValue
-    ), [errorMapValue]);
+    const error = useStore(formApi.store, (state) => state.errorMap.onSubmit);
+
+    const _error = useMemo(() => {
+        return (
+            isPlainObject(error)
+                ? error.form?.toString()
+                : error?.toString()
+        );
+    }, [error]);
 
     return (
-        <If condition={!!error}>
+        <If condition={!!_error}>
             <div
                 className={cn(styles.wrapper, className)}
                 aria-live='polite'
             >
-                {error}
+                {_error}
             </div>
         </If>
     );

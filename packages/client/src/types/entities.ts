@@ -68,10 +68,10 @@ export namespace ClientEntities {
         type Conditional = (
             {
                 channel: Channel.Id;
-                conversation?: never;
+                conversation: null;
             }
             | {
-                channel?: never;
+                channel: null;
                 conversation: Conversation.Id;
             }
         );
@@ -91,10 +91,10 @@ export namespace ClientEntities {
         type Conditional = (
             {
                 channel: Channel.Id;
-                conversation?: never;
+                conversation: null;
             }
             | {
-                channel?: never;
+                channel: null;
                 conversation: Conversation.Id;
             }
         );
@@ -127,9 +127,9 @@ export namespace ClientEntities {
         export type Base = {
             id: Id;
             server: Server.Id;
-            avatar: File.Id;
+            avatar: File.Id | null;
             name: string;
-            color: string;
+            color: string | null;
             isDefault: boolean;
             weight: number;
             users: User.Id[];
@@ -150,10 +150,10 @@ export namespace ClientEntities {
         type Conditional = (
             {
                 textChat: TextChat.Id;
-                voiceChat?: never;
+                voiceChat: null;
             }
             | {
-                textChat?: never;
+                textChat: null;
                 voiceChat: VoiceChat.Id;
             }
         );
@@ -177,7 +177,7 @@ export namespace ClientEntities {
             owner: User.Id;
             roles: Role.Id[];
             channels: Channel.Id[];
-            members: User.Id;
+            members: User.Id[];
             avatar: File.Id | null;
             identifier: string;
             name: string;

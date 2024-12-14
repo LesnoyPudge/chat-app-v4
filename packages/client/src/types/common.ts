@@ -22,7 +22,7 @@ export type WithId = {
 export type CustomQueryError = T.Simplify<
     Exclude<FetchBaseQueryError, { status: number; data: unknown }>
     | {
-        status: T.ValueOf<typeof STATUS_CODE>;
+        status: T.ValueOf<T.Except<typeof STATUS_CODE, 'OK'>>;
         data: {
             message: string;
         };

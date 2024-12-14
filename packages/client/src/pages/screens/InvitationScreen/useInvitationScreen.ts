@@ -11,6 +11,7 @@ export const useInvitationScreen = () => {
 
     const acceptInvitation = () => {
         console.log('click accept');
+        fetch('/some');
     };
 
     return {

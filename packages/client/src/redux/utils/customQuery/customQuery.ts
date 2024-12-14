@@ -16,7 +16,7 @@ import { env } from '@vars';
 
 type QueryOptions = Parameters<typeof fetchBaseQuery>[0];
 
-type CustomQueryFn = BaseQueryFn<
+export type CustomQueryFn = BaseQueryFn<
     string | FetchArgs,
     unknown,
     CustomQueryError,

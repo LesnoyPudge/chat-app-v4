@@ -5,41 +5,50 @@ import { InvitationScreenPure } from '@pages/screens/InvitationScreen';
 import { GlobalLoaderScreen } from '@pages/screens/GlobalLoaderScreen';
 import { Playground } from '@root/Playground';
 import { AuthScreenPure } from '@pages/screens/AuthScreen';
+import { createSleep } from '@utils';
 
 
+
+const Sleep = createSleep(1_000);
 
 export const DevRoute: RouteObject[] = [{
     path: 'dev',
     children: [
         {
             index: true,
-            element: <Playground/>,
+            element: <Sleep><Playground/></Sleep>,
         },
         {
             path: 'error-screen',
-            element: <ErrorScreenPure onClick={noop}/>,
+            element: <Sleep><ErrorScreenPure onClick={noop}/></Sleep>,
         },
         {
             path: 'auth-screen',
-            element: <AuthScreenPure/>,
+            element: <Sleep><AuthScreenPure/></Sleep>,
         },
         {
             path: 'invitation-screen',
             element: (
-                <InvitationScreenPure
-                    channel={{
-                        membersCount: 2,
-                        name: 'fake channel',
-                        onlineCount: 1,
-                        avatarId: 'https://i.pravatar.cc/80',
-                    }}
-                    acceptInvitation={noop}
-                />
+                <Sleep>
+                    <InvitationScreenPure
+                        channel={{
+                            membersCount: 2,
+                            name: 'fake channel',
+                            onlineCount: 1,
+                            avatarId: 'https://i.pravatar.cc/80',
+                        }}
+                        acceptInvitation={noop}
+                    />
+                </Sleep>
             ),
         },
         {
             path: 'global-loader-screen',
-            element: <GlobalLoaderScreen/>,
+            element: (
+                <Sleep>
+                    <GlobalLoaderScreen/>
+                </Sleep>
+            ),
         },
     ],
 }];

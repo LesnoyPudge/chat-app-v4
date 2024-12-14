@@ -16,5 +16,7 @@ export namespace Form {
 
     export import createFormContext = utils.createFormContext;
 
+    export import apiAdapter = utils.apiAdapter;
+
     export import useForm = formLib.useForm;
 }

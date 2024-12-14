@@ -160,17 +160,14 @@ export namespace Endpoints {
                 export const Method = HTTP_METHOD.POST;
 
                 export type RequestBody = T.Simplify<
-                    Partial<
+                    Partial<T.Override<
                         Pick<
                             Entities.User.Base,
-                            'name' | 'settings' | 'extraStatus'
-                        >
-                        & T.Override<
-                            Entities.User.Base,
-                            'avatar',
-                            Entities.File.Encoded | null
-                        >
-                    >
+                            'name' | 'settings' | 'extraStatus' | 'avatar'
+                        >,
+                        'avatar',
+                        Entities.File.Encoded | null
+                    >>
                 >;
 
                 export type Response = Entities.User.Base;
@@ -284,7 +281,7 @@ export namespace Endpoints {
                 export const Method = HTTP_METHOD.POST;
 
                 export type RequestBody = T.Override<
-                    Entities.User.Base,
+                    Pick<Entities.User.Base, 'accessCode'>,
                     'accessCode',
                     string
                 >;
@@ -408,14 +405,17 @@ export namespace Endpoints {
 
                 export const Method = HTTP_METHOD.POST;
 
-                export type RequestBody = T.Simplify<Pick<
-                    Entities.Server.Base,
-                    'name' | 'identifier'
-                > & Partial<T.Override<
-                    Entities.Server.Base,
-                    'avatar',
-                    Entities.File.Encoded
-                >>>;
+                export type RequestBody = T.Simplify<
+                    Pick<Entities.Server.Base, 'name' | 'identifier'>
+                    & Partial<T.Override<
+                        Pick<
+                            Entities.Server.Base,
+                            'avatar'
+                        >,
+                        'avatar',
+                        Entities.File.Encoded
+                    >>
+                >;
 
                 export type Response = Entities.Server.Base;
             }
@@ -456,7 +456,7 @@ export namespace Endpoints {
                         'name'
                     >
                     & T.Override<
-                        Entities.Server.Base,
+                        Pick<Entities.Server.Base, 'avatar'>,
                         'avatar',
                         Entities.File.Encoded | null
                     >>
@@ -758,7 +758,7 @@ export namespace Endpoints {
                         'color' | 'isDefault' | 'name' | 'permissions'
                     >>
                     & Partial<T.Override<
-                        Entities.Role.Base,
+                        Pick<Entities.Role.Base, 'avatar'>,
                         'avatar',
                         Entities.File.Encoded | null
                     >>
@@ -876,14 +876,14 @@ export namespace Endpoints {
 
                 export const Method = HTTP_METHOD.POST;
 
-                export type RequestBody = WithTextChatId & Partial<Pick<
-                    Entities.Message.Base,
-                    'content'
-                > & T.Override<
-                    Entities.Message.Base,
-                    'attachments',
-                    Entities.File.Encoded[]
-                >>;
+                export type RequestBody = T.Simplify<
+                    WithTextChatId
+                    & T.Override<
+                        Pick<Entities.Message.Base, 'attachments' | 'content'>,
+                        'attachments',
+                        Entities.File.Encoded[]
+                    >
+                >;
 
                 export type Response = Entities.Message.Base;
             }

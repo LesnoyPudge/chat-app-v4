@@ -2,8 +2,8 @@ import {
     Heading,
     VisuallyHidden,
     ErrorBoundary,
-    MoveFocusInside,
     useRefManager,
+    MoveFocus,
 } from '@lesnoypudge/utils-react';
 import { env } from '@vars';
 import { FC } from 'react';
@@ -31,15 +31,15 @@ export const Root: FC = () => {
 
             <SpriteSheet/>
 
-            <GlobalProviders>
-                <MoveFocusInside
-                    enabled
-                    forced
-                    containerRef={appRootRefManager}
-                >
+            <MoveFocus.Inside
+                enabled
+                once
+                containerRef={appRootRefManager}
+            >
+                <GlobalProviders>
                     <Router/>
-                </MoveFocusInside>
-            </GlobalProviders>
+                </GlobalProviders>
+            </MoveFocus.Inside>
         </ErrorBoundary.Node>
     );
 };

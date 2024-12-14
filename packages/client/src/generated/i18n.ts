@@ -4,6 +4,11 @@ export const namespaces = ["common"] as const;
 
 export type NamespacesType = {
     "common": {
+        "ApiError.BAD_REQUEST": "Неверный запрос",
+        "ApiError.FORBIDDEN": "Доступ запрещён",
+        "ApiError.INTERNAL_SERVER_ERROR": "Непредвиденная ошибка",
+        "ApiError.NOT_FOUND": "Не найдено",
+        "ApiError.UNAUTHORIZED": "Не авторизован",
         "ErrorScreen.button": "Перезагрузить",
         "ErrorScreen.heading": "Как-то неловко получается",
         "ErrorScreen.text": "В приложении возник неожиданный сбой.... Мы отследили ошибку и вскоре ей займёмся.",
@@ -19,6 +24,7 @@ export type NamespacesType = {
         "InvitationScreen.totalCount_few": "{{count}} участников",
         "InvitationScreen.totalCount_many": "{{count}} участников",
         "InvitationScreen.totalCount_other": "{{count}} участников",
+        "LoginForm.BAD_REQUEST": "Неверный Логин или пароль",
         "LoginForm.loginLabel": "Логин",
         "LoginForm.passwordLabel": "Пароль",
         "LoginForm.registrationButton": "Зарегистрироваться",

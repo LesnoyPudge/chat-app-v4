@@ -60,7 +60,8 @@ const configArr = config.createConfig({
                 "varsIgnorePattern": "^_",
                 "ignoreRestSiblings": true
             }
-        ]
+        ],
+        'unicorn/no-abusive-eslint-disable': 'off',
     }
 })
 

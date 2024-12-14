@@ -7,7 +7,7 @@ import { AnimatePresence, m } from 'motion/react';
 import {
     ContextConsumerProxy,
     useRefManager,
-    MoveFocusInside,
+    MoveFocus,
 } from '@lesnoypudge/utils-react';
 import { LoginForm, RegistrationForm } from './components';
 
@@ -91,13 +91,15 @@ export const AuthScreenPure: FC = () => {
                                         exit={variants.hidden.key}
                                         ref={containerRef}
                                     >
-                                        <MoveFocusInside
+                                        <MoveFocus.Inside
+                                            key={currentTab.identifier}
                                             enabled
                                             forced
+                                            once
                                             containerRef={containerRef}
                                         >
                                             {currentTab.tab}
-                                        </MoveFocusInside>
+                                        </MoveFocus.Inside>
                                     </m.div>
                                 )}
                             </ContextConsumerProxy>

@@ -1,4 +1,9 @@
 {
+    "ApiError.BAD_REQUEST": "__NOT_TRANSLATED__",
+    "ApiError.FORBIDDEN": "__NOT_TRANSLATED__",
+    "ApiError.INTERNAL_SERVER_ERROR": "__NOT_TRANSLATED__",
+    "ApiError.NOT_FOUND": "__NOT_TRANSLATED__",
+    "ApiError.UNAUTHORIZED": "__NOT_TRANSLATED__",
     "ErrorScreen.button": "__NOT_TRANSLATED__",
     "ErrorScreen.heading": "__NOT_TRANSLATED__",
     "ErrorScreen.text": "__NOT_TRANSLATED__",
@@ -10,6 +15,7 @@
     "InvitationScreen.onlineCount_other": "__NOT_TRANSLATED__",
     "InvitationScreen.totalCount_one": "__NOT_TRANSLATED__",
     "InvitationScreen.totalCount_other": "__NOT_TRANSLATED__",
+    "LoginForm.BAD_REQUEST": "__NOT_TRANSLATED__",
     "LoginForm.loginLabel": "__NOT_TRANSLATED__",
     "LoginForm.passwordLabel": "__NOT_TRANSLATED__",
     "LoginForm.registrationButton": "__NOT_TRANSLATED__",

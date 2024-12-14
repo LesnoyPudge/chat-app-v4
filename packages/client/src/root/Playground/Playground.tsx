@@ -8,6 +8,9 @@ import { ComponentRef, FC, PropsWithChildren, useEffect, useState } from 'react'
 
 export const Playground: FC = () => {
     const buttonRef = useRefManager<ComponentRef<'button'>>(null);
+    const url = 'http://localhost:5000/api/some';
+    // const url = '/api/some';
+    const method = 'get';
 
     return (
         <div>
@@ -18,7 +21,12 @@ export const Playground: FC = () => {
                 <>some tooltip</>
             </Tooltip>
 
-            <Button innerRef={buttonRef}>
+            <Button
+                onLeftClick={() => {
+                    fetch(url, { method });
+                }}
+                innerRef={buttonRef}
+            >
                 <>test</>
             </Button>
         </div>

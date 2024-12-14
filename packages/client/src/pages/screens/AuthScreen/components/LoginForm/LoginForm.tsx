@@ -40,7 +40,9 @@ export const LoginForm: FC = () => {
 
     const FormApi = Form.useForm({
         ...LoginFormOptions,
-        onSubmit: ({ value }) => login(value),
+        onSubmit: Form.apiAdapter(login, {
+            BAD_REQUEST: t('LoginForm.BAD_REQUEST'),
+        }),
     });
 
     return (
@@ -114,16 +116,20 @@ export const LoginForm: FC = () => {
                 formApi={FormApi}
             />
 
-            <Button
-                className={styles.submit}
-                type='submit'
-                stylingPreset='brand'
-                isLoading={FormApi.state.isSubmitting}
-            >
-                <WithLoadingIndicator isLoading={FormApi.state.isSubmitting}>
-                    {t('LoginForm.submit')}
-                </WithLoadingIndicator>
-            </Button>
+            <FormApi.Subscribe selector={(state) => state.isSubmitting}>
+                {(isSubmitting) => (
+                    <Button
+                        className={styles.submit}
+                        type='submit'
+                        stylingPreset='brand'
+                        isLoading={isSubmitting}
+                    >
+                        <WithLoadingIndicator isLoading={isSubmitting}>
+                            {t('LoginForm.submit')}
+                        </WithLoadingIndicator>
+                    </Button>
+                )}
+            </FormApi.Subscribe>
 
             <div className={styles.extraBlock}>
                 <span className={styles.extraText}>

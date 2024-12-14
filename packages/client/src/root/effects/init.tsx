@@ -1,12 +1,14 @@
 import '@root/styles/index.scss';
 import { createRoot } from 'react-dom/client';
 import { Root } from '@root/Root';
-import { getHTMLElement } from '@utils';
+import { getHTMLElement, logger } from '@utils';
 import { StrictMode } from 'react';
 
 
 
 export const init = () => {
+    logger.log('init');
+
     createRoot(getHTMLElement.appRoot()).render(
         <StrictMode>
             <Root/>

@@ -1,13 +1,16 @@
+import { logger } from '@utils';
 import { isDev } from '@vars';
 
 
 
 export const postInit = async () => {
+    logger.log('postInit');
+
     if (isDev) {
         const ReactDOM = await import('react-dom');
         const React = await import('react');
 
-        void import('@axe-core/react').then((axe) => {
+        await import('@axe-core/react').then((axe) => {
             void axe.default(React, ReactDOM, 1_000, {
                 disableDeduplicate: true,
                 rules: [

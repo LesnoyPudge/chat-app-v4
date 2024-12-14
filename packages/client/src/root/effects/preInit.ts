@@ -1,9 +1,15 @@
 import '@i18n';
+import { fakeServer } from '@fakeServer';
 import { isDev } from '@vars';
+import { logger } from '@utils';
 
 
 
 export const preInit = async () => {
+    logger.log('preInit');
+
+    await fakeServer.init();
+
     if (isDev) {
         const { scan } = await import('react-scan');
 

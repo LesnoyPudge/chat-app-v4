@@ -22,7 +22,7 @@ export const createForm = <
 }: createForm.Options<_Shape>) => {
     return formOptions({
         validators: validator ? {
-            onBlur: validator,
+            // onBlur: validator,
             onChange: validator,
             onSubmit: validator,
         } : undefined,

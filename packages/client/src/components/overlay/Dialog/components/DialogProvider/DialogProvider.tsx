@@ -40,6 +40,7 @@ export namespace DialogProvider {
     export type Props = (
         PropsWithChildren
         & Pick<Overlay.Provider.Props, 'initialState'>
+        & Pick<Popover.Provider.Props, 'focused'>
         & OwnProps
     );
 }
@@ -49,6 +50,7 @@ export const DialogProvider: FC<DialogProvider.Props> = ({
     animationVariants = defaultVariants,
     withoutBackdropPointerEvents = false,
     withBackdrop = false,
+    focused,
     initialState,
     children,
 }) => {
@@ -70,7 +72,7 @@ export const DialogProvider: FC<DialogProvider.Props> = ({
                 blocking
                 closeOnClickOutside
                 closeOnEscape
-                focused
+                focused={focused}
             >
                 <DialogContext.Provider value={contextValue}>
                     {children}

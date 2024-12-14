@@ -1,4 +1,5 @@
 export * from './cn';
+export * from './createSleep';
 export * from './createStyles';
 export * from './createVariants';
 export * from './fileSize';

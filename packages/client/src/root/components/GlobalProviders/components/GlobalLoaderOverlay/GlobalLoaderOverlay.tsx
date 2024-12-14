@@ -57,6 +57,7 @@ export const GlobalLoaderOverlay: FC<GlobalLoaderOverlay.Props> = ({
         <Dialog.Provider
             label='Loading'
             initialState
+            focused={false}
             withBackdrop={false}
             animationVariants={variants}
         >

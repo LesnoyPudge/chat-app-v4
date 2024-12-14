@@ -41,7 +41,7 @@ export const RegistrationForm: FC = () => {
 
     const FormApi = Form.useForm({
         ...RegistrationFormOptions,
-        onSubmit: ({ value }) => registration(value),
+        onSubmit: Form.apiAdapter(registration),
     });
 
     return (
@@ -136,16 +136,20 @@ export const RegistrationForm: FC = () => {
                 formApi={FormApi}
             />
 
-            <Button
-                className={styles.submit}
-                type='submit'
-                stylingPreset='brand'
-                isLoading={FormApi.state.isSubmitting}
-            >
-                <WithLoadingIndicator isLoading={FormApi.state.isSubmitting}>
-                    {t('RegistrationForm.submit')}
-                </WithLoadingIndicator>
-            </Button>
+            <FormApi.Subscribe selector={(state) => state.isSubmitting}>
+                {(isSubmitting) => (
+                    <Button
+                        className={styles.submit}
+                        type='submit'
+                        stylingPreset='brand'
+                        isLoading={isSubmitting}
+                    >
+                        <WithLoadingIndicator isLoading={isSubmitting}>
+                            {t('RegistrationForm.submit')}
+                        </WithLoadingIndicator>
+                    </Button>
+                )}
+            </FormApi.Subscribe>
 
             <Button
                 className={styles.loginFormButton}
