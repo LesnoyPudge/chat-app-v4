@@ -36,11 +36,7 @@ export const PopoverProvider: FC<PopoverProvider.Props> = ({
 }) => {
     const id = useConst(() => getId());
     const blockingChildren = useConst(() => new Set<string>());
-    const {
-        isOverlayExist,
-        wrapperRefManager,
-        closeOverlay,
-    } = useContextProxy(Overlay.Context);
+    const overlay = useContextSelector(Overlay.Context);
 
     const upperChildren = useContextSelector(
         PopoverContext,
@@ -56,25 +52,25 @@ export const PopoverProvider: FC<PopoverProvider.Props> = ({
         return () => {
             upperChildren.delete(id);
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [blocking, upperChildren]);
+    }, [blocking, id, upperChildren]);
 
     const handleClickOutside = useFunction(() => {
         if (!closeOnClickOutside) return;
-        if (!isOverlayExist) return;
-        if (!wrapperRefManager.current) return;
-        if (!blockingChildren.size) return closeOverlay();
+        if (!overlay.isOverlayExist) return;
+        if (!overlay.wrapperRefManager.current) return;
+        if (!blockingChildren.size) return overlay.closeOverlay();
     });
 
     const handleEscape = useFunction(() => {
         if (!closeOnEscape) return;
-        if (!isOverlayExist) return;
-        if (!wrapperRefManager.current) return;
-        if (!blockable) return closeOverlay();
-        if (!blockingChildren.size) return closeOverlay();
+        if (!overlay.isOverlayExist) return;
+        if (!overlay.wrapperRefManager.current) return;
+        if (!blockable) return overlay.closeOverlay();
+        if (!blockingChildren.size) return overlay.closeOverlay();
     });
 
     const contextValue: PopoverContext = {
+        ...overlay,
         blockingChildren,
         focused,
         handleClickOutside,

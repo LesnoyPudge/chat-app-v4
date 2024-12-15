@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from 'react';
 import { DialogContext } from '../../context';
-import { useConst } from '@lesnoypudge/utils-react';
+import { useConst, useContextSelector } from '@lesnoypudge/utils-react';
 import { getId } from '@lesnoypudge/utils';
 import { Variant } from 'motion/react';
 import { createVariants } from '@utils';
@@ -37,6 +37,11 @@ export namespace DialogProvider {
         withoutBackdropPointerEvents?: boolean;
     };
 
+    export type InnerProps = (
+        PropsWithChildren
+        & OwnProps
+    );
+
     export type Props = (
         PropsWithChildren
         & Pick<Overlay.Provider.Props, 'initialState'>
@@ -45,18 +50,18 @@ export namespace DialogProvider {
     );
 }
 
-export const DialogProvider: FC<DialogProvider.Props> = ({
+export const DialogProviderInner: FC<DialogProvider.InnerProps> = ({
     label,
     animationVariants = defaultVariants,
     withoutBackdropPointerEvents = false,
     withBackdrop = false,
-    focused,
-    initialState,
     children,
 }) => {
+    const popover = useContextSelector(Popover.Context);
     const id = useConst(() => getId());
 
     const contextValue: DialogContext = {
+        ...popover,
         id,
         describedBy: `describedBy-${id}`,
         label,
@@ -66,6 +71,19 @@ export const DialogProvider: FC<DialogProvider.Props> = ({
     };
 
     return (
+        <DialogContext.Provider value={contextValue}>
+            {children}
+        </DialogContext.Provider>
+    );
+};
+
+export const DialogProvider: FC<DialogProvider.Props> = ({
+    focused,
+    initialState,
+    children,
+    ...rest
+}) => {
+    return (
         <Overlay.Provider initialState={initialState}>
             <Popover.Provider
                 blockable
@@ -74,9 +92,9 @@ export const DialogProvider: FC<DialogProvider.Props> = ({
                 closeOnEscape
                 focused={focused}
             >
-                <DialogContext.Provider value={contextValue}>
+                <DialogProviderInner {...rest}>
                     {children}
-                </DialogContext.Provider>
+                </DialogProviderInner>
             </Popover.Provider>
         </Overlay.Provider>
     );

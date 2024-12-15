@@ -18,19 +18,17 @@ export const UserApi = createApi({
             >({
                 query: (body) => ({
                     url: User.Login.Path,
-                    method: User.Login.Method,
                     body,
                 }),
             })
         ),
         [User.Refresh.ActionName]: (
-            build.mutation<
+            build.query<
                 User.Refresh.Response,
                 User.Refresh.RequestBody
             >({
                 query: (body) => ({
                     url: User.Refresh.Path,
-                    method: User.Refresh.Method,
                     body,
                 }),
             })
@@ -42,7 +40,6 @@ export const UserApi = createApi({
             >({
                 query: (body) => ({
                     url: User.Registration.Path,
-                    method: User.Registration.Method,
                     body,
                 }),
             })

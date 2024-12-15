@@ -2,18 +2,19 @@ import { combinedFunction, invariant } from '@lesnoypudge/utils';
 import { addEventListener } from '@lesnoypudge/utils-web';
 import { RootState } from '@redux/store';
 import { createCustomSlice, listenerMiddleware } from '@redux/utils';
-import { Store } from '@reduxjs/toolkit';
+import { Store, isAnyOf } from '@reduxjs/toolkit';
 import { ClientEntities } from '@types';
 import { localStorageApi } from '@utils';
 import { MOBILE_SCREEN_QUERY } from '@vars';
 import { noop } from 'motion';
+import { User } from '../Users';
 
 
 
 export namespace App {
     export type State = {
         user: ClientEntities.User.Base | null;
-        isInitialized: boolean;
+        isAttemptedToRefresh: boolean;
         isRefreshing: boolean;
         isNetworkConnected: boolean;
         isSocketConnected: boolean;
@@ -27,7 +28,7 @@ export namespace App {
             user: null,
             isDeaf: localStorageApi.get('isDeaf', false),
             isMute: localStorageApi.get('isMute', false),
-            isInitialized: false,
+            isAttemptedToRefresh: false,
             isMobileScreen: window.matchMedia(MOBILE_SCREEN_QUERY).matches,
             isNetworkConnected: navigator.onLine,
             isRefreshing: false,
@@ -43,18 +44,49 @@ export namespace App {
 
             softReset: create.reducer((state) => ({
                 ...getInitialState(),
-                isInitialized: state.isInitialized,
+                isAttemptedToRefresh: state.isAttemptedToRefresh,
             })),
         }),
+        extraReducers: (builder) => {
+            builder.addMatcher(
+                isAnyOf(
+                    User.Api.endpoints.login.matchPending,
+                    User.Api.endpoints.registration.matchPending,
+                    User.Api.endpoints.refresh.matchPending,
+                ),
+                (state) => {
+                    state.isRefreshing = true;
+                },
+            );
+            builder.addMatcher(
+                isAnyOf(
+                    User.Api.endpoints.login.matchFulfilled,
+                    User.Api.endpoints.registration.matchFulfilled,
+                    User.Api.endpoints.refresh.matchFulfilled,
+                ),
+                (state, { payload }) => {
+                    state.user = payload;
+                    state.isRefreshing = false;
+                    state.isAttemptedToRefresh = true;
+                },
+            );
+            builder.addMatcher(
+                isAnyOf(
+                    User.Api.endpoints.login.matchRejected,
+                    User.Api.endpoints.registration.matchRejected,
+                    User.Api.endpoints.refresh.matchRejected,
+                ),
+                (state) => {
+                    state.isRefreshing = false;
+                    state.isAttemptedToRefresh = true;
+                },
+            );
+        },
         selectors: {
             selectAuthorizedUser: (state) => {
                 invariant(state.user, 'authorized user not found');
 
                 return state.user;
-            },
-
-            selectSomeById: (state, id: number) => {
-                return 'qwe';
             },
         },
     });

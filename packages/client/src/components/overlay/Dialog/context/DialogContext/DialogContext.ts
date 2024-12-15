@@ -1,10 +1,12 @@
 import { createContextSelectable } from '@lesnoypudge/utils-react';
 import { DialogProvider } from '../../components';
+import { Popover } from '@components';
 
 
 
 export type DialogContext = (
-    Required<DialogProvider.OwnProps>
+    Popover.Context
+    & Required<DialogProvider.OwnProps>
     & {
         id: string;
         describedBy: string;

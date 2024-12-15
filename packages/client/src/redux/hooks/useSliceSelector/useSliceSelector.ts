@@ -4,6 +4,7 @@ import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { memoize } from 'proxy-memoize';
 import { useCallback } from 'react';
 import { EntityState, Slice } from '@reduxjs/toolkit';
+import { useConst } from '@lesnoypudge/utils-react';
 
 
 
@@ -50,9 +51,13 @@ export const useSliceSelector = <
     > = defaultSelector,
     deps?: unknown[],
 ): _Return => {
+    const _selector = useConst(() => memoize((state: RootState) => {
+        const sliceState = state[slice.name] as Parameters<typeof selector>[0];
+        return selector(sliceState);
+    }));
+
     const memoizedSelector = useCallback((state: RootState) => {
-        // @ts-expect-error
-        return memoize(selector)(state[slice.name]);
+        return _selector(state);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, deps ?? []);
 

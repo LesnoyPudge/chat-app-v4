@@ -1,4 +1,4 @@
-import { FC, useEffect, useLayoutEffect, useRef } from 'react';
+import { FC, useLayoutEffect, useRef } from 'react';
 import { PartialFormatter, API, Options, PipsMode, create } from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
@@ -140,8 +140,7 @@ export const SliderInputPure: FC<SliderInputPure.Props> = ({
             pipListeners.forEach((unsub) => unsub());
             blurUnsub();
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [name, label]);
+    }, [name, label, sliderOptions, onBlur, handleClick, onChange]);
 
     useUpdateEffect(() => {
         if (!sliderApiRef.current) return;

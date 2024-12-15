@@ -5,8 +5,8 @@ import {
     useRefManager,
     MoveFocus,
 } from '@lesnoypudge/utils-react';
-import { env } from '@vars';
-import { FC } from 'react';
+import { env, isDev } from '@vars';
+import { FC, lazy } from 'react';
 import { GlobalProviders, Masks, SpriteSheet } from '@root/components';
 import { ErrorScreen } from '@pages/screens/ErrorScreen';
 import { Router } from '@root/router/Router';
@@ -15,6 +15,8 @@ import { getHTMLElement } from '@utils';
 
 
 const appRoot = getHTMLElement.appRoot();
+
+const DevTools = lazy(() => import('@root/components/DevTools'));
 
 export const Root: FC = () => {
     const appRootRefManager = useRefManager(appRoot);
@@ -30,6 +32,10 @@ export const Root: FC = () => {
             <Masks/>
 
             <SpriteSheet/>
+
+            <If condition={isDev}>
+                <DevTools/>
+            </If>
 
             <MoveFocus.Inside
                 enabled

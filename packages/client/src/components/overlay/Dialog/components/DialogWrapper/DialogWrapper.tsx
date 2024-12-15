@@ -13,7 +13,8 @@ const styles = createStyles({
     backdrop: `
         absolute 
         inset-0
-        scale-[999] 
+        -z-10 
+        scale-[999]
         bg-black/70
     `,
     withPointer: 'pointer-events-auto',
@@ -44,7 +45,7 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
         withBackdrop,
         withoutBackdropPointerEvents,
     } = useContextProxy(DialogContext);
-
+    console.log(animationVariants);
     return (
         <AnimatePresence>
             <If condition={isOverlayExist}>

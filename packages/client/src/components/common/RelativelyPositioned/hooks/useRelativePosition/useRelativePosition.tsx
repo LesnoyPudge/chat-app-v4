@@ -102,8 +102,7 @@ export const useRelativePosition = ({
         follower.style.transform = transformValue;
     });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useLayoutEffect(calculate, []);
+    useLayoutEffect(calculate, [calculate]);
 
     useAnimationFrame(calculate, true);
 

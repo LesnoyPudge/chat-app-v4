@@ -12,6 +12,7 @@
         "node_modules/@types/node",
     ],
     "compilerOptions": {
+        "allowImportingTsExtensions": true,
         "types": [
             "@lesnoypudge/types-global-base",
             "@lesnoypudge/types-global-web",
@@ -71,6 +72,9 @@
             ],
             "@redux/utils": [
                 "./src/redux/utils"
+            ],
+            "@entities": [
+                "./src/entities"
             ],
         },
         "jsx": "react-jsx",

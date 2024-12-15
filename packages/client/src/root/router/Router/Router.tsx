@@ -1,30 +1,38 @@
 import { FC } from 'react';
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router';
-import { ProdRoute } from '@root/router/routes/ProdRoute';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
+import { ProdRoutes } from '@root/router/routes/ProdRoutes';
 import { isDev } from '@vars';
+import { Navigator } from '@entities';
+import { useConst } from '@lesnoypudge/utils-react';
 
 
 
-const DevRoute = (
+const DevRoutes = (
     isDev
         // eslint-disable-next-line unicorn/no-await-expression-member
-        ? (await import('@root/router/routes/DevRoute')).DevRoute
-        : []
+        ? (await import('@root/router/routes/DevRoutes')).DevRoutes
+        : () => null
 );
 
-const NotFound = <Navigate to='/' replace/>;
-
-const router = createBrowserRouter([{
-    // errorElement: NotFound,
-    children: [
-        ...ProdRoute,
-        ...DevRoute,
-        { path: '*', element: NotFound },
-    ],
-}]);
-
 export const Router: FC = () => {
+    const _ProdRoutes = useConst(() => ProdRoutes({}));
+    const _DevRoutes = useConst(() => DevRoutes({}));
+
     return (
-        <RouterProvider router={router}/>
+        <BrowserRouter>
+            <Routes>
+                {_ProdRoutes}
+                {_DevRoutes}
+
+                <Route
+                    path='*'
+                    element={(
+                        <Navigate
+                            to={Navigator.staticNavigatorPath.root}
+                            replace
+                        />
+                    )}/>
+            </Routes>
+        </BrowserRouter>
     );
 };

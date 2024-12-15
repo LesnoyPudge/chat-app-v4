@@ -2,6 +2,7 @@
 
 
 export const useInvitationScreen = () => {
+    // get channel by invitationId
     const channel = {
         name: 'amazing channel',
         avatarId: 'https://i.pravatar.cc/80',

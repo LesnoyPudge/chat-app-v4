@@ -2,8 +2,8 @@ import { store } from '@redux/store';
 import { Heading } from '@lesnoypudge/utils-react';
 import { LazyMotion, MotionConfig } from 'motion/react';
 import { FC, PropsWithChildren } from 'react';
-import { GlobalLoaderOverlay } from './components';
 import { Provider as ReduxProvider } from 'react-redux';
+import { GlobalLoader } from '@root/GlobalLoader';
 
 
 
@@ -23,9 +23,9 @@ export const GlobalProviders: FC<PropsWithChildren> = ({
                     strict
                 >
                     <MotionConfig reducedMotion='user'>
-                        <GlobalLoaderOverlay>
+                        <GlobalLoader.Wrapper>
                             {children}
-                        </GlobalLoaderOverlay>
+                        </GlobalLoader.Wrapper>
                     </MotionConfig>
                 </LazyMotion>
             </Heading.Provider>
