@@ -63,6 +63,7 @@ const configArr = config.createConfig({
         ],
         'unicorn/no-abusive-eslint-disable': 'off',
         '@typescript-eslint/no-unused-expressions': 'off',
+        '@stylistic/no-extra-parens': 'off',
     }
 })
 

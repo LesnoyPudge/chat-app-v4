@@ -5,7 +5,7 @@ import ReactFocusLock from 'react-focus-lock';
 import { useClickOutside, useContextProxy } from '@lesnoypudge/utils-react';
 import { PopoverContext } from '../../context';
 import { Overlay } from '@components';
-import { useKeyBind } from '@hooks';
+import { useHotKey } from '@hooks';
 import { KEY } from '@lesnoypudge/utils';
 
 
@@ -36,7 +36,7 @@ export const PopoverWrapper: FC<PopoverWrapper.Props> = ({
 
     useClickOutside(wrapperRefManager, handleClickOutside);
 
-    useKeyBind(wrapperRefManager, [KEY.Escape], handleEscape);
+    useHotKey(document, [KEY.Escape], handleEscape);
 
     return (
         <ReactFocusLock

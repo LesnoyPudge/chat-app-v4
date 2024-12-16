@@ -14,49 +14,57 @@ export namespace OverlayProvider {
     export type Props = (
         PropsWithChildren
         & {
-            initialState?: boolean;
             disabled?: boolean;
+            outerState?: boolean;
+            initialState?: boolean;
+            onChange?: (value: boolean) => void;
         }
     );
 }
 
 export const OverlayProvider: FC<OverlayProvider.Props> = ({
-    children,
-    initialState = false,
+    outerState,
+    initialState,
     disabled = false,
+    onChange,
+    children,
 }) => {
-    const overlayState = useBoolean(initialState);
-    const overlayStateValueRef = useLatest(overlayState.value);
+    const _initialState = outerState ?? initialState ?? false;
+    const { value, ...overlay } = useBoolean(_initialState, onChange);
+
+    const isOverlayExist = outerState ?? value;
+    const isOverlayExistRef = useLatest(isOverlayExist);
+
     const { isThrottlingRef, throttle } = useThrottle({ stateless: true });
     const wrapperRefManager = useRefManager<HTMLDivElement>(null);
 
     const closeOverlay = useFunction(() => {
-        if (!overlayStateValueRef.current) return;
+        if (!isOverlayExistRef.current) return;
         if (disabled) return;
 
-        throttle(overlayState.setFalse, 1_000 / 60)();
+        throttle(overlay.setFalse, 1_000 / 60)();
     });
 
     const openOverlay = useFunction(() => {
         if (isThrottlingRef.current) return;
         if (disabled) return;
 
-        overlayState.setTrue();
+        overlay.setTrue();
     });
 
     const toggleOverlay = useFunction(() => {
         if (isThrottlingRef.current) return;
         if (disabled) return;
 
-        overlayState.toggle();
+        overlay.toggle();
     });
 
     const contextValues: OverlayContext = {
-        isOverlayExist: overlayState.value,
-        isOverlayExistRef: overlayStateValueRef,
+        isOverlayExist,
+        isOverlayExistRef,
         closingThrottleRef: isThrottlingRef,
         wrapperRefManager,
-        setOverlay: overlayState.setValue,
+        setOverlay: overlay.setValue,
         openOverlay,
         closeOverlay,
         toggleOverlay,

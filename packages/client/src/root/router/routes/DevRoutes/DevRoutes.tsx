@@ -4,20 +4,27 @@ import { InvitationScreenPure } from '@pages/screens/InvitationScreen';
 import { GlobalLoaderScreen } from '@pages/screens/GlobalLoaderScreen';
 import { Playground } from '@root/Playground';
 import { AuthScreenPure } from '@pages/screens/AuthScreen';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 import { Outlet, Route } from 'react-router';
 import { GlobalLoader } from '@root/GlobalLoader';
+import { createSleep } from '@utils';
 
 
+
+const Sleep = createSleep(1_000);
 
 export const DevRoutes: FC = () => {
     return (
         <Route
             path='/dev'
             element={(
-                <GlobalLoader.Disable>
-                    <Outlet/>
-                </GlobalLoader.Disable>
+                <Suspense>
+                    <Sleep>
+                        <GlobalLoader.Disable>
+                            <Outlet/>
+                        </GlobalLoader.Disable>
+                    </Sleep>
+                </Suspense>
             )}
         >
             <Route

@@ -45,7 +45,7 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
         withBackdrop,
         withoutBackdropPointerEvents,
     } = useContextProxy(DialogContext);
-    console.log(animationVariants);
+
     return (
         <AnimatePresence>
             <If condition={isOverlayExist}>

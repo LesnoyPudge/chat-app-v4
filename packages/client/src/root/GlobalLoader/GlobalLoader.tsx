@@ -68,8 +68,7 @@ export const GlobalLoaderWrapper: FC<GlobalLoaderWrapper.Props> = ({
         <Dialog.Provider
             label='Loading'
             initialState
-            focused={false}
-            withBackdrop={false}
+            focused
             animationVariants={variants}
         >
             <Dialog.Wrapper>
@@ -77,11 +76,7 @@ export const GlobalLoaderWrapper: FC<GlobalLoaderWrapper.Props> = ({
             </Dialog.Wrapper>
 
             <Suspense name='GlobalLoader'>
-                {/* <LoaderDisable> */}
-                {/* <Pass> */}
                 {children}
-                {/* </Pass> */}
-                {/* </LoaderDisable> */}
             </Suspense>
         </Dialog.Provider>
     );

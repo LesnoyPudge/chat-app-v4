@@ -4,6 +4,7 @@ import { listenerMiddleware } from '@redux/utils';
 import type { Action, ThunkAction } from '@reduxjs/toolkit';
 import { combineSlices, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { isDev } from '@vars';
 
 
 
@@ -41,6 +42,17 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
 };
 
 export const store = makeStore();
+
+if (isDev) {
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    window._devtools = {
+        // @ts-expect-error
+        ...window._devtools,
+        store,
+        softReset: Features.App.Slice.actions.softReset,
+    };
+}
 
 export type AppStore = typeof store;
 export type AppDispatch = AppStore['dispatch'];

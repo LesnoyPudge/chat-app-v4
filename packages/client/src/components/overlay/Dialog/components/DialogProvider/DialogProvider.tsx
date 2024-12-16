@@ -44,7 +44,10 @@ export namespace DialogProvider {
 
     export type Props = (
         PropsWithChildren
-        & Pick<Overlay.Provider.Props, 'initialState'>
+        & Pick<
+            Overlay.Provider.Props,
+            'initialState' | 'outerState' | 'onChange'
+        >
         & Pick<Popover.Provider.Props, 'focused'>
         & OwnProps
     );
@@ -81,10 +84,16 @@ export const DialogProvider: FC<DialogProvider.Props> = ({
     focused,
     initialState,
     children,
+    outerState,
+    onChange,
     ...rest
 }) => {
     return (
-        <Overlay.Provider initialState={initialState}>
+        <Overlay.Provider
+            initialState={initialState}
+            outerState={outerState}
+            onChange={onChange}
+        >
             <Popover.Provider
                 blockable
                 blocking

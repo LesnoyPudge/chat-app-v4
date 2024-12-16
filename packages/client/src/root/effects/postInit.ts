@@ -11,20 +11,32 @@ export const postInit = async () => {
         const React = await import('react');
 
         await import('@axe-core/react').then((axe) => {
-            void axe.default(React, ReactDOM, 1_000, {
-                disableDeduplicate: true,
-                rules: [
-                // https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md
-                    {
-                        id: 'color-contrast',
-                        enabled: false,
-                    },
-                    {
-                        id: 'color-contrast-enhanced',
-                        enabled: false,
-                    },
-                ],
-            });
+            const axeReact = () => {
+                void axe.default(React, ReactDOM, 1_000, {
+                    disableDeduplicate: true,
+                    rules: [
+                    // https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md
+                        {
+                            id: 'color-contrast',
+                            enabled: false,
+                        },
+                        {
+                            id: 'color-contrast-enhanced',
+                            enabled: false,
+                        },
+                    ],
+                });
+            };
+
+            axeReact();
+
+            // @ts-expect-error
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            window._devtools = {
+                // @ts-expect-error
+                ...window._devtools,
+                axeReact,
+            };
         });
     }
 };

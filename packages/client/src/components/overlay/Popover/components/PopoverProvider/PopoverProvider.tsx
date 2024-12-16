@@ -27,9 +27,9 @@ export namespace PopoverProvider {
 export const PopoverProvider: FC<PopoverProvider.Props> = ({
     // is popover block its popover parent
     blocking = false,
-    focused = false,
     // is popover able to be blocked by popover children
     blockable = false,
+    focused = false,
     closeOnClickOutside = false,
     closeOnEscape = false,
     children,
@@ -64,7 +64,6 @@ export const PopoverProvider: FC<PopoverProvider.Props> = ({
     const handleEscape = useFunction(() => {
         if (!closeOnEscape) return;
         if (!overlay.isOverlayExist) return;
-        if (!overlay.wrapperRefManager.current) return;
         if (!blockable) return overlay.closeOverlay();
         if (!blockingChildren.size) return overlay.closeOverlay();
     });
