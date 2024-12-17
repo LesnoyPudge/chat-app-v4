@@ -1,12 +1,20 @@
 import { Navigator } from '@entities';
 import { Features } from '@redux/features';
-import { useSliceSelector } from '@redux/hooks';
+import { useLocalStorage, useSliceSelector } from '@redux/hooks';
 import { FC, useEffect } from 'react';
 import { Outlet } from 'react-router';
 
 
 
-export const OnlyAuthorized: FC = () => {
+export namespace OnlyAuthorized {
+    export type Props = {
+        disabled?: boolean;
+    };
+}
+
+export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
+    disabled = false,
+}) => {
     const {
         isAttemptedToRefresh,
         isRefreshing,
@@ -21,24 +29,31 @@ export const OnlyAuthorized: FC = () => {
         isAuthorized: !!user,
     }));
     const { navigateTo } = Navigator.useNavigator();
+    const [refresh] = Features.User.Api.useRefreshMutation();
+    const { refreshToken } = useLocalStorage('refreshToken');
 
-    Features.User.Api.useRefreshQuery(
-        undefined,
-        { skip: isAttemptedToRefresh },
-    );
-
-    const notRefreshing = isAttemptedToRefresh && !isRefreshing;
+    const shouldNotWait = isAttemptedToRefresh || !refreshToken;
+    const notRefreshing = shouldNotWait && !isRefreshing;
     const shouldNavigateToAuth = notRefreshing && !isAuthorized;
     const shouldShowOutlet = notRefreshing && isAuthorized;
 
     useEffect(() => {
+        if (disabled) return;
+        if (isAttemptedToRefresh) return;
+        if (!refreshToken) return;
+
+        void refresh({ refreshToken });
+    }, [disabled, isAttemptedToRefresh, refresh, refreshToken]);
+
+    useEffect(() => {
+        if (disabled) return;
         if (!shouldNavigateToAuth) return;
 
         void navigateTo.auth({ replace: true });
-    }, [navigateTo, shouldNavigateToAuth]);
+    }, [disabled, navigateTo, shouldNavigateToAuth]);
 
     return (
-        <If condition={shouldShowOutlet}>
+        <If condition={shouldShowOutlet || disabled}>
             <Outlet/>
         </If>
     );

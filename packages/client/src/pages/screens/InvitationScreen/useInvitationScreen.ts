@@ -1,22 +1,22 @@
+import { useValidatedParams } from '@hooks';
+import { useFunction } from '@lesnoypudge/utils-react';
+import { Features } from '@redux/features';
 
 
 
 export const useInvitationScreen = () => {
-    // get channel by invitationId
-    const channel = {
-        name: 'amazing channel',
-        avatarId: 'https://i.pravatar.cc/80',
-        membersCount: 3_228,
-        onlineCount: 1_337,
-    };
+    const { invitationCode } = useValidatedParams('invitationScreen');
+    const [accept] = Features.Servers.Api.useAcceptInvitationMutation();
+    const { data } = Features.Servers.Api.useGetOneByInvitationCodeQuery({
+        invitationCode,
+    });
 
-    const acceptInvitation = () => {
-        console.log('click accept');
-        fetch('/some');
-    };
+    const acceptInvitation = useFunction(() => {
+        void accept({ invitationCode });
+    });
 
     return {
-        channel,
+        server: data,
         acceptInvitation,
     };
 };

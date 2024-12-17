@@ -21,7 +21,7 @@ const Sleep = createSleep(1_000);
 export const ProdRoutes: FC = () => {
     return (
         <Route path={Navigator.staticNavigatorPath.root}>
-            <Route element={<OnlyAuthorized/>}>
+            <Route element={<OnlyAuthorized disabled/>}>
                 <Route
                     index
                     element={(

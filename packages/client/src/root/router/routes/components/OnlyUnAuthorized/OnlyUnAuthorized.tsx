@@ -1,16 +1,20 @@
 import { Navigator } from '@entities';
 import { Features } from '@redux/features';
-import { useSliceSelector } from '@redux/hooks';
-import { GlobalLoader } from '@root/GlobalLoader';
-import { createSleep } from '@utils';
-import { FC, Suspense, useEffect } from 'react';
+import { useLocalStorage, useSliceSelector } from '@redux/hooks';
+import { FC, useEffect } from 'react';
 import { Outlet } from 'react-router';
 
 
 
-const Sleep = createSleep(Infinity);
+export namespace OnlyUnAuthorized {
+    export type Props = {
+        disabled?: boolean;
+    };
+}
 
-export const OnlyUnAuthorized: FC = () => {
+export const OnlyUnAuthorized: FC<OnlyUnAuthorized.Props> = ({
+    disabled = false,
+}) => {
     const {
         isAttemptedToRefresh,
         isRefreshing,
@@ -25,31 +29,23 @@ export const OnlyUnAuthorized: FC = () => {
         isAuthorized: !!user,
     }));
     const { navigateTo } = Navigator.useNavigator();
+    const { refreshToken } = useLocalStorage('refreshToken');
 
-    Features.User.Api.useRefreshQuery(
-        undefined,
-        { skip: isAttemptedToRefresh },
-    );
-
-    const notRefreshing = isAttemptedToRefresh && !isRefreshing;
+    const shouldNotWait = isAttemptedToRefresh || !refreshToken;
+    const notRefreshing = shouldNotWait && !isRefreshing;
     const shouldShowOutlet = notRefreshing && !isAuthorized;
     const shouldNavigateToRoot = notRefreshing && isAuthorized;
 
     useEffect(() => {
+        if (disabled) return;
         if (!shouldNavigateToRoot) return;
 
         void navigateTo.root({ replace: true });
-    }, [navigateTo, shouldNavigateToRoot]);
+    }, [disabled, navigateTo, shouldNavigateToRoot]);
 
     return (
-        <>
-            {/* <If condition={!shouldShowOutlet}>
-                <Sleep/>
-            </If> */}
-
-            <If condition={shouldShowOutlet}>
-                <Outlet/>
-            </If>
-        </>
+        <If condition={shouldShowOutlet || disabled}>
+            <Outlet/>
+        </If>
     );
 };

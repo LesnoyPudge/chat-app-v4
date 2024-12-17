@@ -20,6 +20,8 @@ export const styles = createStyles({
         underline-offset-4 
         transition-all 
         duration-100 
+        aria-[disabled=true]:cursor-not-allowed
+        aria-[disabled=true]:opacity-55 
         data-[loading=true]:animate-pulse
     `,
 

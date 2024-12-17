@@ -1,4 +1,4 @@
-import { Button, Image, Scrollable } from '@components';
+import { Avatar, Button, Image, Scrollable } from '@components';
 import { FC } from 'react';
 import { useInvitationScreen } from './useInvitationScreen';
 import { createStyles, getAssetUrl } from '@utils';
@@ -30,7 +30,7 @@ const styles = createStyles({
         shadow-elevation-high 
         [@media(max-width:480px)]:px-4
     `,
-    avatar: 'size-20 rounded-full',
+    avatar: 'size-20',
     heading: 'mt-4 text-2xl font-semibold text-color-primary',
     statsWrapper: `
         mt-2 
@@ -48,7 +48,7 @@ const styles = createStyles({
 
 export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
     acceptInvitation,
-    channel,
+    server,
 }) => {
     const { t } = useTrans();
 
@@ -66,13 +66,14 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
             >
                 <div className={styles.inner}>
                     <div className={styles.contentWrapper}>
-                        <Image
-                            className={styles.avatar}
-                            src={channel.avatarId}
+                        <Avatar.Server
+                            avatarClassName={styles.avatar}
+                            avatar={server?.avatar}
+                            name={server?.name}
                         />
 
                         <Heading.Node className={styles.heading}>
-                            {channel.name}
+                            {server?.name}
                         </Heading.Node>
 
                         <div className={styles.statsWrapper}>
@@ -82,7 +83,7 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
                                 <span>
                                     {t(
                                         'InvitationScreen.onlineCount',
-                                        { count: channel.onlineCount },
+                                        { count: server?.onlineMemberCount ?? 0 },
                                     )}
                                 </span>
                             </div>
@@ -93,7 +94,7 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
                                 <span>
                                     <>{t(
                                         'InvitationScreen.totalCount',
-                                        { count: channel.membersCount },
+                                        { count: server?.memberCount ?? 0 },
                                     )}
                                     </>
                                 </span>
@@ -104,6 +105,7 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
                             className={styles.button}
                             size='big'
                             stylingPreset='brand'
+                            isDisabled={!server}
                             onLeftClick={acceptInvitation}
                         >
                             {t('InvitationScreen.button')}

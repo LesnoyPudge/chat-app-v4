@@ -6,7 +6,7 @@ import { createCustomQuery } from '@redux/utils';
 
 import User = Endpoints.V1.User;
 
-export const UserApi = createApi({
+export const UsersApi = createApi({
     baseQuery: createCustomQuery(),
     reducerPath: 'UsersApi',
     tagTypes: ['Users'],
@@ -23,7 +23,7 @@ export const UserApi = createApi({
             })
         ),
         [User.Refresh.ActionName]: (
-            build.query<
+            build.mutation<
                 User.Refresh.Response,
                 User.Refresh.RequestBody
             >({

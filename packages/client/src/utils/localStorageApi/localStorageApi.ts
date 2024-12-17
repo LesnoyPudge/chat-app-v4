@@ -6,6 +6,8 @@ export namespace localStorageApi {
     export type Storage = {
         isDeaf: boolean;
         isMute: boolean;
+        refreshToken: string;
+        accessToken: string;
         // lastVisitedChannels: Record<ChannelId, RoomId>;
         // savedMessageDrafts: Record<ChatId, RTETypes.Nodes>;
     };

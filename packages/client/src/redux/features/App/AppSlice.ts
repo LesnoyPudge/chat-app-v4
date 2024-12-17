@@ -118,8 +118,28 @@ export namespace App {
                 effect: () => {
                     localStorageApi.remove('isDeaf');
                     localStorageApi.remove('isMute');
+                    localStorageApi.remove('accessToken');
+                    localStorageApi.remove('refreshToken');
                     // localStorageApi.remove('lastVisitedChannels');
                     // localStorageApi.remove('savedMessageDrafts');
+                },
+            }),
+
+            listenerMiddleware.startListening({
+                matcher: isAnyOf(
+                    User.Api.endpoints.login.matchFulfilled,
+                    User.Api.endpoints.registration.matchFulfilled,
+                    User.Api.endpoints.refresh.matchFulfilled,
+                ),
+                effect: async (_, api) => {
+                    const [{ payload }] = await api.take(isAnyOf(
+                        User.Api.endpoints.login.matchFulfilled,
+                        User.Api.endpoints.registration.matchFulfilled,
+                        User.Api.endpoints.refresh.matchFulfilled,
+                    ));
+
+                    localStorageApi.set('accessToken', payload.accessToken);
+                    localStorageApi.set('refreshToken', payload.refreshToken);
                 },
             }),
         );

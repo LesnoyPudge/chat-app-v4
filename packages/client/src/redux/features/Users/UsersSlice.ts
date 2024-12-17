@@ -1,4 +1,3 @@
-import { useSliceSelector } from '@redux/hooks';
 import {
     createCustomEntityAdapter,
     createCustomSliceEntityAdapter,

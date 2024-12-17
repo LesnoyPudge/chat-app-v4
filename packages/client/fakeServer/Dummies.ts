@@ -1,66 +1,62 @@
-
-import { Endpoints } from '@fakeShared';
 import { ClientEntities } from '@types';
-import { v4 as uuid } from 'uuid';
-import E_Channel = Endpoints.V1.Channel;
-import E_Conversation = Endpoints.V1.Conversation;
-import E_File = Endpoints.V1.File;
-import E_Message = Endpoints.V1.Message;
-import E_Role = Endpoints.V1.Role;
-import E_Server = Endpoints.V1.Server;
-import E_TextChat = Endpoints.V1.TextChat;
-import E_User = Endpoints.V1.User;
 import { inRange, invariant } from '@lesnoypudge/utils';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { nanoid } from '@reduxjs/toolkit';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
 export class Dummies {
-    channel(
+    static channel(
         data: (
-            E_Channel.Create.RequestBody
-            & Pick<ClientEntities.Channel.Base, 'textChat' | 'voiceChat'>
+            Pick<
+                ClientEntities.Channel.Base,
+                'id'
+                | 'textChat'
+                | 'voiceChat'
+                | 'roleWhitelist'
+                | 'server'
+                | 'name'
+            >
         ),
     ): ClientEntities.Channel.Base {
-        const id = uuid();
         invariant(!data.textChat && !data.voiceChat);
 
         return {
-            id,
+            id: data.id,
             name: data.name,
             roleWhitelist: data.roleWhitelist,
-            server: data.serverId,
+            server: data.server,
             textChat: data.textChat,
             voiceChat: data.voiceChat,
         } as ClientEntities.Channel.Base;
     }
 
-    conversation(
+    static conversation(
         data: (
-            E_Conversation.Create.RequestBody
-            & Pick<ClientEntities.Conversation.Base, 'textChat' | 'voiceChat'>
+            Pick<
+                ClientEntities.Conversation.Base,
+                'id' | 'textChat' | 'voiceChat' | 'user'
+            >
         ),
     ): ClientEntities.Conversation.Base {
         return {
-            id: uuid(),
+            id: data.id,
             textChat: data.textChat,
             voiceChat: data.voiceChat,
-            user: data.targetId,
+            user: data.user,
         };
     }
 
-    message(
+    static message(
         data: (
-            E_Message.Create.RequestBody
-            & Pick<
+            Pick<
                 ClientEntities.Message.Base,
-                'attachments' | 'author' | 'index'
+                'id' | 'attachments' | 'author' | 'index' | 'content'
             >
         ),
     ): ClientEntities.Message.Base {
         return {
-            id: uuid(),
+            id: data.id,
             attachments: data.attachments,
             author: data.author,
             content: data.content,
@@ -72,12 +68,17 @@ export class Dummies {
         };
     }
 
-    role(
+    static role(
         data: (
-            E_Role.Create.RequestBody
-            & Pick<
+            Pick<
                 ClientEntities.Role.Base,
-                'avatar' | 'color' | 'isDefault' | 'weight'
+                'id'
+                | 'avatar'
+                | 'color'
+                | 'isDefault'
+                | 'weight'
+                | 'name'
+                | 'server'
             >
             & Partial<Pick<
                 ClientEntities.Role.Base,
@@ -86,7 +87,7 @@ export class Dummies {
         ),
     ): ClientEntities.Role.Base {
         return {
-            id: uuid(),
+            id: data.id,
             avatar: data.avatar,
             color: data.color,
             isDefault: data.isDefault,
@@ -99,20 +100,20 @@ export class Dummies {
                 kickMember: false,
                 serverControl: false,
             },
-            server: data.serverId,
+            server: data.server,
             users: [],
             weight: data.weight,
         };
     }
 
-    server(
-        data: (
-            E_Server.Create.RequestBody
-            & Pick<ClientEntities.Server.Base, 'avatar' | 'owner'>
-        ),
+    static server(
+        data: Pick<
+            ClientEntities.Server.Base,
+            'id' | 'avatar' | 'owner' | 'identifier' | 'name'
+        >,
     ): ClientEntities.Server.Base {
         return {
-            id: uuid(),
+            id: data.id,
             avatar: data.avatar,
             banned: [],
             channels: [],
@@ -123,14 +124,24 @@ export class Dummies {
             name: data.name,
             owner: data.owner,
             roles: [],
+            memberCount: 0,
+            onlineMemberCount: 0,
         };
     }
 
-    user(
-        data: E_User.Registration.RequestBody,
+    static user(
+        data: Pick<
+            ClientEntities.User.Base,
+            'id'
+            | 'login'
+            | 'password'
+            | 'name'
+            | 'accessToken'
+            | 'refreshToken'
+        >,
     ): ClientEntities.User.Base {
         return {
-            id: uuid(),
+            id: data.id,
             accessCode: nanoid(6).toUpperCase(),
             avatar: null,
             blocked: [],
@@ -157,64 +168,75 @@ export class Dummies {
                 theme: 'dark',
             },
             status: 'offline',
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
         };
     }
 
-    textChatChannel(
-        channelId: string,
+    static textChatChannel(
+        data: T.SetNonNullable<Pick<
+            ClientEntities.TextChat.Base,
+            'id' | 'channel'
+        >>,
     ): ClientEntities.TextChat.Base {
         return {
-            id: uuid(),
+            id: data.id,
             message: [],
-            channel: channelId,
+            channel: data.channel,
             conversation: null,
         };
     }
 
 
-    textChatConversation(
-        conversationId: string,
+    static textChatConversation(
+        data: T.SetNonNullable<Pick<
+            ClientEntities.TextChat.Base,
+            'id' | 'conversation'
+        >>,
     ): ClientEntities.TextChat.Base {
         return {
-            id: uuid(),
+            id: data.id,
             message: [],
             channel: null,
-            conversation: conversationId,
+            conversation: data.conversation,
         };
     }
 
-    voiceChatChannel(
-        channelId: string,
+    static voiceChatChannel(
+        data: T.SetNonNullable<Pick<
+            ClientEntities.TextChat.Base,
+            'id' | 'channel'
+        >>,
     ): ClientEntities.VoiceChat.Base {
         return {
-            id: uuid(),
+            id: data.id,
             deafen: [],
             muted: [],
             participants: [],
-            channel: channelId,
+            channel: data.channel,
             conversation: null,
         };
     }
 
-    voiceChatConversation(
-        conversationId: string,
+    static voiceChatConversation(
+        data: T.SetNonNullable<Pick<
+            ClientEntities.VoiceChat.Base,
+            'id' | 'conversation'
+        >>,
     ): ClientEntities.VoiceChat.Base {
         return {
-            id: uuid(),
+            id: data.id,
             channel: null,
-            conversation: conversationId,
+            conversation: data.conversation,
             deafen: [],
             muted: [],
             participants: [],
         };
     }
 
-    file(
-        data: ClientEntities.File.Encoded,
+    static file(
+        data: ClientEntities.File.Base,
     ): ClientEntities.File.Base {
-        return {
-            id: uuid(),
-            ...data,
-        };
+        return data;
     }
 }

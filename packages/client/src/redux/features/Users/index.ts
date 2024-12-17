@@ -1,10 +1,10 @@
-import { UserApi } from './UsersApi';
+import { UsersApi } from './UsersApi';
 import * as UserSlice from './UsersSlice';
 
 
 
 export namespace User {
-    export const Api = UserApi;
+    export const Api = UsersApi;
 
     export const {
         Slice,

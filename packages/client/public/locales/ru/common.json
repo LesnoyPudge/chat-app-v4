@@ -4,6 +4,7 @@
     "ApiError.INTERNAL_SERVER_ERROR": "Непредвиденная ошибка",
     "ApiError.NOT_FOUND": "Не найдено",
     "ApiError.UNAUTHORIZED": "Не авторизован",
+    "Avatar.alt": "аватар",
     "ErrorScreen.button": "Перезагрузить",
     "ErrorScreen.heading": "Как-то неловко получается",
     "ErrorScreen.text": "В приложении возник неожиданный сбой.... Мы отследили ошибку и вскоре ей займёмся.",

@@ -43,7 +43,11 @@ export namespace ClientEntities {
                 lastIndex: number;
             }[];
             isDeleted: boolean;
+            refreshToken: string;
+            accessToken: string;
         };
+
+        export type TokenData = Pick<Base, 'id' | 'password'>;
     }
 
     export namespace Message {
@@ -178,6 +182,8 @@ export namespace ClientEntities {
             roles: Role.Id[];
             channels: Channel.Id[];
             members: User.Id[];
+            memberCount: number;
+            onlineMemberCount: number;
             avatar: File.Id | null;
             identifier: string;
             name: string;

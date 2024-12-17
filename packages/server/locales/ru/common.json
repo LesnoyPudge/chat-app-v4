@@ -1,8 +1,0 @@
-{
-    "apiError": {
-        "badRequest": "__NOT_TRANSLATED__",
-        "unauthorized": "__NOT_TRANSLATED__",
-        "notFound": "__NOT_TRANSLATED__",
-        "internal": "__NOT_TRANSLATED__"
-    }
-}

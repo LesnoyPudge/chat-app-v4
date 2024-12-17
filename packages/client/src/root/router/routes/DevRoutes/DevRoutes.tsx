@@ -8,6 +8,7 @@ import { FC, Suspense } from 'react';
 import { Outlet, Route } from 'react-router';
 import { GlobalLoader } from '@root/GlobalLoader';
 import { createSleep } from '@utils';
+import { Dummies } from '@fakeServer';
 
 
 
@@ -46,12 +47,13 @@ export const DevRoutes: FC = () => {
                 path='invitation-screen'
                 element={(
                     <InvitationScreenPure
-                        channel={{
-                            membersCount: 2,
-                            name: 'fake channel',
-                            onlineCount: 1,
-                            avatarId: 'https://i.pravatar.cc/80',
-                        }}
+                        server={Dummies.server({
+                            id: '',
+                            name: 'server name',
+                            avatar: null,
+                            identifier: '',
+                            owner: '',
+                        })}
                         acceptInvitation={noop}
                     />
                 )}

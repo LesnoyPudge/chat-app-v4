@@ -1,4 +1,5 @@
 /* eslint-disable unicorn/prefer-spread */
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { Features } from '@redux/features';
 import { listenerMiddleware } from '@redux/utils';
 import type { Action, ThunkAction } from '@reduxjs/toolkit';
@@ -8,16 +9,33 @@ import { isDev } from '@vars';
 
 
 
-const rootReducer = combineSlices(
+const _slices = [
     Features.App.Slice,
     Features.User.Slice,
+    Features.Servers.Slice,
+] as const;
+
+const _apis = [
     Features.User.Api,
+    Features.Servers.Api,
+] as const;
+
+const rootReducer = combineSlices(
+    ..._slices,
+    ..._apis,
 );
 
+type SlicesArray = typeof _slices;
+
 export type Slices = {
-    [Features.App.Slice.name]: typeof Features.App.Slice;
-    [Features.User.Slice.name]: typeof Features.User.Slice;
+    [_Index in T.IntRange<0, SlicesArray['length']> as (
+        SlicesArray[_Index]['name']
+    )]: (
+        SlicesArray[_Index]
+    )
 };
+
+const apiMiddlewares = _apis.map((api) => api.middleware);
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -27,9 +45,7 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
         middleware: (getDefaultMiddleware) => (
             getDefaultMiddleware()
                 .prepend(listenerMiddleware.middleware)
-                .concat(
-                    Features.User.Api.middleware,
-                )
+                .concat(apiMiddlewares)
         ),
         preloadedState,
     });

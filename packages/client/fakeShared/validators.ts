@@ -3,7 +3,8 @@ import { Endpoints } from './endpoints';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { t } from '@i18n';
 import { promiseToBoolean } from '@lesnoypudge/utils';
-import { Emoji, type RichTextEditor } from '@components';
+import type { RichTextEditor } from '@components/common/RichTextEditor';
+import { EmojiStore } from '@components/media/Emoji/EmojiStore';
 
 
 
@@ -93,7 +94,7 @@ class SharedValidators {
                     type: v.literal('emoji'),
                     code: v.pipe(
                         v.string(),
-                        v.regex(Emoji.Store.emojiCodeWithAliasesRegExp),
+                        v.regex(EmojiStore.emojiCodeWithAliasesRegExp),
                     ),
                     children: v.pipeAsync(
                         v.arrayAsync(v.pipeAsync(
@@ -102,7 +103,7 @@ class SharedValidators {
                                 text: v.pipe(
                                     v.string(),
                                     v.regex(
-                                        Emoji.Store.emojiCodeWithAliasesRegExp,
+                                        EmojiStore.emojiCodeWithAliasesRegExp,
                                     ),
                                 ),
                             }),
@@ -172,28 +173,28 @@ export namespace ApiValidators {
             import Server = Endpoints.V1.Server;
         }
 
-        export namespace Channel {
-            import Channel = Endpoints.V1.Channel;
-        }
+        // export namespace Channel {
+        //     import Channel = Endpoints.V1.Channel;
+        // }
 
-        export namespace Role {
-            import Role = Endpoints.V1.Role;
-        }
+        // export namespace Role {
+        //     import Role = Endpoints.V1.Role;
+        // }
 
-        export namespace Conversation {
-            import Conversation = Endpoints.V1.Conversation;
-        }
+        // export namespace Conversation {
+        //     import Conversation = Endpoints.V1.Conversation;
+        // }
 
-        export namespace Message {
-            import Message = Endpoints.V1.Message;
-        }
+        // export namespace Message {
+        //     import Message = Endpoints.V1.Message;
+        // }
 
-        export namespace File {
-            import File = Endpoints.V1.File;
-        }
+        // export namespace File {
+        //     import File = Endpoints.V1.File;
+        // }
 
-        export namespace TextChat {
-            import TextChat = Endpoints.V1.TextChat;
-        }
+        // export namespace TextChat {
+        //     import TextChat = Endpoints.V1.TextChat;
+        // }
     }
 }

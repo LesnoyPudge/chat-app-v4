@@ -27,10 +27,22 @@ export namespace createCustomEntityAdapter {
         )
     };
 
+    export type ExtraReducers<_State extends WithId> = {
+        [_Key in T.ArrayValues<ActionNames>]: (
+            (
+                state: Parameters<EntityAdapter<_State, string>[_Key]>[0],
+                nestedPayload: {
+                    payload: _State;
+                }
+            ) => ReturnType<EntityAdapter<_State, string>[_Key]>
+        )
+    };
+
     export type Return<_State extends WithId> = (
         EntityAdapter<_State, _State['id']>
         & {
             reducers: Reducers<_State>;
+            extraReducers: ExtraReducers<_State>;
         }
     );
 }
@@ -49,8 +61,19 @@ export const createCustomEntityAdapter = <
         return acc;
     }, {});
 
+    const extraReducers = actionNames.reduce<
+        createCustomEntityAdapter.ExtraReducers<_State>
+    >((acc, cur) => {
+        // @ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        acc[cur] = (state, { payload }) => adapter[cur](state, payload);
+
+        return acc;
+    }, {});
+
     return {
         ...adapter,
         reducers,
+        extraReducers,
     };
 };
