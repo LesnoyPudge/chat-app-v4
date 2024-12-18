@@ -10,3 +10,4 @@ export * from './RichTextEditor';
 export * from './Scrollable';
 export * from './Search';
 export * from './Tab';
+export * from './UserStatus';

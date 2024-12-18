@@ -1,33 +1,91 @@
 import { ClientEntities } from '@types';
 import { FC } from 'react';
-import { BaseAvatar } from '../BaseAvatar';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { getReadImagePath } from '../../utils';
+import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { Image } from '@components';
+import { cn, createStyles } from '@utils';
+import { useTrans } from '@i18n';
+import { useBoolean } from '@lesnoypudge/utils-react';
+import { sharedStyles } from '../../vars';
 
 
+
+const styles = createStyles({
+    wrapper: {
+        base: 'relative @container',
+        loaded: 'animate-none',
+    },
+    name: `
+        absolute
+        left-1/2
+        top-1/2
+        max-w-full
+        -translate-x-1/2
+        -translate-y-1/2 
+        select-none 
+        truncate 
+        px-1.5
+        text-[35cqw]
+        font-medium 
+        uppercase 
+        leading-none
+    `,
+});
 
 export namespace ServerAvatar {
-    type ConditionalProps = Partial<Pick<
-        ClientEntities.Server.Base,
-        'avatar' | 'name'
-    >>;
-
     export type Props = (
-        ConditionalProps
-        & T.Except<BaseAvatar.Props, 'id' | 'src'>
+        RT.PropsWithClassName
+        & Partial<Pick<
+            ClientEntities.Server.Base,
+            'avatar' | 'name'
+        >>
     );
 }
 
 export const ServerAvatar: FC<ServerAvatar.Props> = ({
-    avatarClassName = '',
-    placeholderClassName = '',
+    className = '',
     avatar,
     name,
 }) => {
+    const { t } = useTrans();
+    const isLoadedState = useBoolean(false);
+
     const src = getReadImagePath(avatar);
 
+    const showImage = !!src;
+    const showName = !src && !!name;
+
+    const formattedName = (
+        name
+            ? name.split(' ').map((word) => word.charAt(0)).join('')
+            : null
+    );
+
     return (
-        <>
-        </>
+        <div className={cn(
+            sharedStyles.wrapper,
+            styles.wrapper.base,
+            showName && styles.wrapper.loaded,
+            className,
+        )}>
+            <If condition={showImage}>
+                <Image
+                    className={cn(
+                        sharedStyles.image.base,
+                        !isLoadedState.value && sharedStyles.image.notLoaded,
+                    )}
+                    src={src}
+                    alt={t('Avatar.alt')}
+                    onLoad={isLoadedState.setTrue}
+                    onError={isLoadedState.setFalse}
+                />
+            </If>
+
+            <If condition={showName}>
+                <div className={styles.name}>
+                    {formattedName}
+                </div>
+            </If>
+        </div>
     );
 };

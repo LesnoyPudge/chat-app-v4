@@ -35,6 +35,8 @@ export const preInit = async () => {
         scan({
             enabled: true,
             log: true,
+            alwaysShowLabels: false,
+            showToolbar: false,
         });
     }
 };

@@ -13,14 +13,16 @@ export const leading = () => (
                 },
             },
             {
-                values: Array.from({
-                    length: 41,
-                }).fill('').map((_, i) => {
-                    return i / 4;
-                }).reduce<Record<string, string>>((acc, cur) => {
-                    acc[cur] = `${cur * 0.25}rem`;
-                    return acc;
-                }, {}),
+                values: {
+                    ...Array.from({
+                        length: 41,
+                    }).fill('').map((_, i) => {
+                        return i / 4;
+                    }).reduce<Record<string, string>>((acc, cur) => {
+                        acc[cur] = `${cur * 0.25}rem`;
+                        return acc;
+                    }, {}),
+                },
             },
         );
     })

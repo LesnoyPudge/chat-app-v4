@@ -67,6 +67,9 @@ const configArr = config.createConfig({
         '@typescript-eslint/consistent-indexed-object-style': 'off',
         'unicorn/no-static-only-class': 'off',
         '@typescript-eslint/no-extraneous-class': 'off',
+        'jsx-control-statements/jsx-use-if-tag': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
+        'tailwindcss/no-unnecessary-arbitrary-value': 'off',
     }
 })
 

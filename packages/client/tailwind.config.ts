@@ -1,6 +1,8 @@
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
-import { animationDelay, leading, variants } from './twPlugins';
+import { animationDelay, variants } from './twPlugins';
+import containerQueries from '@tailwindcss/container-queries';
+
 
 
 const pxToRem = (px = 0, baseFontSize = 16) => {
@@ -15,13 +17,14 @@ export default {
 
     plugins: [
         animationDelay(),
-        leading(),
+        // leading(),
         variants(),
+        containerQueries,
     ],
 
-    corePlugins: {
-        lineHeight: false,
-    },
+    // corePlugins: {
+    //     lineHeight: false,
+    // },
 
     theme: {
         screens: {

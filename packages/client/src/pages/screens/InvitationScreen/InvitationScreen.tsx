@@ -1,4 +1,4 @@
-import { Avatar, Button, Image, Scrollable } from '@components';
+import { Avatar, Button, Image, Placeholder, Scrollable } from '@components';
 import { FC } from 'react';
 import { useInvitationScreen } from './useInvitationScreen';
 import { createStyles, getAssetUrl } from '@utils';
@@ -31,10 +31,18 @@ const styles = createStyles({
         [@media(max-width:480px)]:px-4
     `,
     avatar: 'size-20',
-    heading: 'mt-4 text-2xl font-semibold text-color-primary',
+    heading: `
+        mt-4
+        w-full
+        text-center 
+        text-2xl 
+        font-semibold 
+        text-color-primary
+    `,
     statsWrapper: `
-        mt-2 
+        mt-2
         flex 
+        w-full 
         flex-wrap 
         justify-center 
         gap-3 
@@ -67,38 +75,41 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
                 <div className={styles.inner}>
                     <div className={styles.contentWrapper}>
                         <Avatar.Server
-                            avatarClassName={styles.avatar}
+                            className={styles.avatar}
                             avatar={server?.avatar}
                             name={server?.name}
                         />
 
                         <Heading.Node className={styles.heading}>
-                            {server?.name}
+                            <Placeholder.With reveal={!!server}>
+                                {server?.name}
+                            </Placeholder.With>
                         </Heading.Node>
 
                         <div className={styles.statsWrapper}>
-                            <div className={styles.stat}>
-                                <div className={styles.statOnline}></div>
+                            <Placeholder.With reveal={!!server}>
+                                <div className={styles.stat}>
+                                    <div className={styles.statOnline}></div>
 
-                                <span>
-                                    {t(
-                                        'InvitationScreen.onlineCount',
-                                        { count: server?.onlineMemberCount ?? 0 },
-                                    )}
-                                </span>
-                            </div>
+                                    <span>
+                                        {t(
+                                            'InvitationScreen.onlineCount',
+                                            { count: server?.onlineMemberCount },
+                                        )}
+                                    </span>
+                                </div>
 
-                            <div className={styles.stat}>
-                                <div className={styles.statOffline}></div>
+                                <div className={styles.stat}>
+                                    <div className={styles.statOffline}></div>
 
-                                <span>
-                                    <>{t(
-                                        'InvitationScreen.totalCount',
-                                        { count: server?.memberCount ?? 0 },
-                                    )}
-                                    </>
-                                </span>
-                            </div>
+                                    <span>
+                                        {t(
+                                            'InvitationScreen.totalCount',
+                                            { count: server?.memberCount },
+                                        )}
+                                    </span>
+                                </div>
+                            </Placeholder.With>
                         </div>
 
                         <Button
