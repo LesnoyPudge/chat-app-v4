@@ -26,8 +26,10 @@ export const Slideshow = ({ image }) => (
 для работы css (theme, message-font-size, ...)
 -? сделать components/features где можно хранить User.Avatar и тд
 -? вынести generated из src
-
-
+- решить двойной рефреш в OnlyAuthorized (возможно переделать 
+в query и добавить кэш)
+- после неудачного сабмита формы, нельзя сабмитить до очистки ошибки
+- LoginForm баг с фокусом
 
 
 

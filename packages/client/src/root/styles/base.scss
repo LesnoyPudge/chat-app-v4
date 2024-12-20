@@ -5,7 +5,7 @@
         outline-style: solid;
         outline-color: transparent;
         color: inherit;
-        // overflow: hidden;
+        color-scheme: light dark;
 
         &:focus:not(:focus-visible) {
             @apply outline-transparent;

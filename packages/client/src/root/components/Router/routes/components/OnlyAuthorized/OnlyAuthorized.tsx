@@ -29,7 +29,10 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
         isAuthorized: !!user,
     }));
     const { navigateTo } = Navigator.useNavigator();
-    const [refresh] = Features.User.Api.useRefreshMutation();
+    const [
+        refresh,
+        { isUninitialized },
+    ] = Features.User.Api.useRefreshMutation();
     const { refreshToken } = useLocalStorage('refreshToken');
 
     const shouldNotWait = isAttemptedToRefresh || !refreshToken;
@@ -39,11 +42,12 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
 
     useEffect(() => {
         if (disabled) return;
+        if (isRefreshing) return;
         if (isAttemptedToRefresh) return;
         if (!refreshToken) return;
 
         void refresh({ refreshToken });
-    }, [disabled, isAttemptedToRefresh, refresh, refreshToken]);
+    }, [disabled, isAttemptedToRefresh, isRefreshing, refresh, refreshToken]);
 
     useEffect(() => {
         if (disabled) return;

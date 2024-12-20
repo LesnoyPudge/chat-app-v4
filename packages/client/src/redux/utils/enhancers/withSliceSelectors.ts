@@ -31,7 +31,7 @@ type SliceWithModifiedSelectors<_Slice extends Slice> = (
     }
 );
 
-export const modifySelectors = <
+export const withSliceSelectors = <
     _Slice extends Slice,
     _State extends (
         _Slice extends Slice<infer _Value>

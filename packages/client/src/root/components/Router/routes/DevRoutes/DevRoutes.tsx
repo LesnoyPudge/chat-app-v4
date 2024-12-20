@@ -2,7 +2,7 @@ import { ErrorScreenPure } from '@pages/screens/ErrorScreen';
 import { noop } from '@lesnoypudge/utils';
 import { InvitationScreenPure } from '@pages/screens/InvitationScreen';
 import { GlobalLoaderScreen } from '@pages/screens/GlobalLoaderScreen';
-import { Playground } from '@root/Playground';
+import { Playground } from './components';
 import { AuthScreenPure } from '@pages/screens/AuthScreen';
 import { FC, Suspense } from 'react';
 import { Outlet, Route } from 'react-router';

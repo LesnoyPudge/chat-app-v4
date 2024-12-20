@@ -18,6 +18,7 @@ export const UsersApi = createApi({
             >({
                 query: (body) => ({
                     url: User.Login.Path,
+                    method: User.Login.Method,
                     body,
                 }),
             })
@@ -29,6 +30,7 @@ export const UsersApi = createApi({
             >({
                 query: (body) => ({
                     url: User.Refresh.Path,
+                    method: User.Refresh.Method,
                     body,
                 }),
             })
@@ -40,6 +42,7 @@ export const UsersApi = createApi({
             >({
                 query: (body) => ({
                     url: User.Registration.Path,
+                    method: User.Registration.Method,
                     body,
                 }),
             })

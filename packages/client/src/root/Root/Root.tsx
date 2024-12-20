@@ -7,9 +7,8 @@ import {
 } from '@lesnoypudge/utils-react';
 import { env, isDev } from '@vars';
 import { FC, lazy } from 'react';
-import { GlobalProviders, Masks, SpriteSheet } from '@root/components';
+import { GlobalProviders, Masks, SpriteSheet, Router } from '@root/components';
 import { ErrorScreen } from '@pages/screens/ErrorScreen';
-import { Router } from '@root/router/Router';
 import { getHTMLElement } from '@utils';
 
 

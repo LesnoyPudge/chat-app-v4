@@ -1,4 +1,3 @@
-import { Endpoints } from '@fakeShared';
 import { STATUS_CODE } from '@lesnoypudge/utils';
 import { Features } from '@redux/features';
 import {
@@ -49,11 +48,14 @@ const withRetry = (baseQuery: CustomQueryFn): CustomQueryFn => {
     return retry<CustomQueryFn>(async (...args) => {
         const result = await baseQuery(...args);
 
-        const shouldBail = (
-            result.error?.status !== STATUS_CODE.INTERNAL_SERVER_ERROR
+        const shouldFail = (
+            result.error
+            && 'status' in result.error
+            && typeof result.error.status === 'number'
+            && result.error.status !== STATUS_CODE.INTERNAL_SERVER_ERROR
         );
 
-        if (shouldBail) retry.fail(result.error);
+        if (shouldFail) retry.fail(result.error);
 
         return result;
     }, retryOptions);

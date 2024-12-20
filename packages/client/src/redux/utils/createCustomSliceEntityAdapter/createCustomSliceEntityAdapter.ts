@@ -1,15 +1,13 @@
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import {
     asyncThunkCreator,
     buildCreateSlice,
     CreateSliceOptions,
-    EntityAdapter,
     EntityState,
     ReducerCreators,
     SliceCaseReducers,
     SliceSelectors,
 } from '@reduxjs/toolkit';
-import { modifySelectors } from '../modifySelectors';
+import { withSliceSelectors } from '../enhancers';
 import { isCallable } from '@lesnoypudge/utils';
 import { createCustomEntityAdapter } from '../createCustomEntityAdapter';
 import { WithId } from '@types';
@@ -60,5 +58,5 @@ export const createCustomSliceEntityAdapter = <
         },
     });
 
-    return modifySelectors(slice);
+    return withSliceSelectors(slice);
 };

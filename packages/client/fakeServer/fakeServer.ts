@@ -2,7 +2,7 @@
 
 import { Endpoints } from '@fakeShared';
 import { logger } from '@utils';
-import { delay, http, HttpResponse } from 'msw';
+import { delay as _delay, http, HttpResponse } from 'msw';
 import { setupWorker } from 'msw/browser';
 import { FakeDBB } from './FakeDB';
 import { Dummies } from './Dummies';
@@ -24,6 +24,8 @@ import E_User = Endpoints.V1.User;
 
 const db = new FakeDBB();
 const res = HttpResponse;
+
+const delay = () => _delay(1_500);
 
 const apiError = {
     badRequest: () => new res(null, {
