@@ -1,4 +1,4 @@
-import { ComponentRef, FC } from 'react';
+import { ComponentRef, FC, PropsWithChildren, RefObject } from 'react';
 import { useAuthScreen } from './useAuthScreen';
 import { createStyles, createVariants, getAssetUrl } from '@utils';
 import { CUSTOM_STYLES } from '@vars';
@@ -6,10 +6,21 @@ import { Image, Scrollable, Tab } from '@components';
 import { AnimatePresence, m } from 'motion/react';
 import {
     ContextConsumerProxy,
+    Focus,
     useRefManager,
-    MoveFocus,
 } from '@lesnoypudge/utils-react';
 import { LoginForm, RegistrationForm } from './components';
+
+
+
+namespace CustomMoveFocusInside {
+    export type Props = (
+        PropsWithChildren
+        & {
+            containerRef: RefObject<HTMLElement>;
+        }
+    );
+}
 
 
 
@@ -91,15 +102,12 @@ export const AuthScreenPure: FC = () => {
                                         exit={variants.hidden.key}
                                         ref={containerRef}
                                     >
-                                        <MoveFocus.Inside
-                                            key={currentTab.identifier}
+                                        <Focus.Inside
                                             enabled
-                                            forced
-                                            once
                                             containerRef={containerRef}
                                         >
                                             {currentTab.tab}
-                                        </MoveFocus.Inside>
+                                        </Focus.Inside>
                                     </m.div>
                                 )}
                             </ContextConsumerProxy>

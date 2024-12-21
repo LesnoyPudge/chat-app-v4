@@ -50,7 +50,9 @@ export const apiAdapter = <
 ) => {
     const _errorTable = defaults(errorTable, defaultErrorTable);
 
-    return async ({ value, formApi }: OnSubmitProps<_ApiTrigger>) => {
+    return async ({
+        value,
+    }: OnSubmitProps<_ApiTrigger>): Promise<string | null> => {
         const response = await apiFn(value);
 
         if (
@@ -58,17 +60,13 @@ export const apiAdapter = <
             && 'status' in response.error
             && typeof response.error.status === 'number'
         ) {
-            formApi.setErrorMap({
-                onSubmit: _errorTable[codeToName[response.error.status]],
-            });
-
-            return;
+            return _errorTable[codeToName[response.error.status]];
         }
 
         if (response.error) {
-            formApi.setErrorMap({
-                onSubmit: _errorTable.INTERNAL_SERVER_ERROR,
-            });
+            return _errorTable.INTERNAL_SERVER_ERROR;
         }
+
+        return null;
     };
 };

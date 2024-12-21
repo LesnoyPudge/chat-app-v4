@@ -29,10 +29,7 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
         isAuthorized: !!user,
     }));
     const { navigateTo } = Navigator.useNavigator();
-    const [
-        refresh,
-        { isUninitialized },
-    ] = Features.User.Api.useRefreshMutation();
+    const [refresh] = Features.User.Api.useRefreshMutation();
     const { refreshToken } = useLocalStorage('refreshToken');
 
     const shouldNotWait = isAttemptedToRefresh || !refreshToken;

@@ -3,11 +3,11 @@ import {
     VisuallyHidden,
     ErrorBoundary,
     useRefManager,
-    MoveFocus,
+    Focus,
 } from '@lesnoypudge/utils-react';
 import { env, isDev } from '@vars';
 import { FC, lazy } from 'react';
-import { GlobalProviders, Masks, SpriteSheet, Router } from '@root/components';
+import { GlobalProviders, Masks, SpriteSheet, Router } from './components';
 import { ErrorScreen } from '@pages/screens/ErrorScreen';
 import { getHTMLElement } from '@utils';
 
@@ -15,7 +15,7 @@ import { getHTMLElement } from '@utils';
 
 const appRoot = getHTMLElement.appRoot();
 
-const DevTools = lazy(() => import('@root/components/DevTools'));
+const DevTools = lazy(() => import('./components/DevTools'));
 
 export const Root: FC = () => {
     const appRootRefManager = useRefManager(appRoot);
@@ -36,15 +36,14 @@ export const Root: FC = () => {
                 <DevTools/>
             </If>
 
-            <MoveFocus.Inside
+            <Focus.Inside
                 enabled
-                once
                 containerRef={appRootRefManager}
             >
                 <GlobalProviders>
                     <Router/>
                 </GlobalProviders>
-            </MoveFocus.Inside>
+            </Focus.Inside>
         </ErrorBoundary.Node>
     );
 };

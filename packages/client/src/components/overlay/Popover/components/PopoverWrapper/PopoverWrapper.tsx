@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import { cn, createStyles } from '@utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import ReactFocusLock from 'react-focus-lock';
-import { useClickOutside, useContextProxy } from '@lesnoypudge/utils-react';
+import { Focus, useClickOutside, useContextProxy } from '@lesnoypudge/utils-react';
 import { PopoverContext } from '../../context';
 import { Overlay } from '@components';
 import { useHotKey } from '@hooks';
@@ -39,13 +38,13 @@ export const PopoverWrapper: FC<PopoverWrapper.Props> = ({
     useHotKey(document, [KEY.Escape], handleEscape);
 
     return (
-        <ReactFocusLock
+        <Focus.Lock
             className={cn(styles.lock, className)}
             returnFocus
             autoFocus={focused}
             disabled={isLockDisabled}
         >
             {children}
-        </ReactFocusLock>
+        </Focus.Lock>
     );
 };

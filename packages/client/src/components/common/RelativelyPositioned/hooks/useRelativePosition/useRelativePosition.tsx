@@ -4,10 +4,9 @@ import {
     useAnimationFrame,
     useFunction,
     useRefManager,
-    useUniqueState,
 } from '@lesnoypudge/utils-react';
 import { calculateRelativePosition, isOmittedRect } from './utils';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 
 
@@ -63,7 +62,7 @@ export const useRelativePosition = ({
     centered = false,
     unbounded = false,
 }: useRelativePosition.Props): useRelativePosition.Return => {
-    const [alignment, setAlignment] = useUniqueState(preferredAlignment);
+    const [alignment, setAlignment] = useState(preferredAlignment);
 
     const calculate = useFunction(() => {
         if (

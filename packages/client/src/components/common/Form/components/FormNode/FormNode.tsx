@@ -1,7 +1,9 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { useFunction } from '@lesnoypudge/utils-react';
+import { useContextSelector, useFunction } from '@lesnoypudge/utils-react';
 import { PropsWithInnerRef } from '@types';
 import { ComponentPropsWithoutRef, FC, FormEvent } from 'react';
+import { UntypedFormContext } from '../../context';
+import { invariant } from '@lesnoypudge/utils';
 
 
 
@@ -14,7 +16,7 @@ export namespace FormNode {
         RT.PropsWithChildrenAndClassName
         & PropsWithInnerRef<'form'>
         & {
-            onSubmit: OnSubmit;
+            onSubmit?: OnSubmit;
         }
     );
 
@@ -30,10 +32,17 @@ export const FormNode: FC<FormNode.Props> = ({
     children,
     ...rest
 }) => {
+    const contextValue = useContextSelector(
+        UntypedFormContext,
+    ) as UntypedFormContext | undefined;
+
+    const _onSubmit = onSubmit ?? contextValue?.formApi.handleSubmit;
+    invariant(_onSubmit);
+
     const handleSubmit: FormNode.OnSubmit = useFunction((e) => {
         e.preventDefault();
         e.stopPropagation();
-        void onSubmit(e);
+        void _onSubmit(e);
     });
 
     return (

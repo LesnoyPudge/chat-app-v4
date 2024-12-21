@@ -1,5 +1,5 @@
-import { ContextSelectable, useConst, useFunction, useUniqueState } from '@lesnoypudge/utils-react';
-import { PropsWithChildren, ReactNode, useMemo } from 'react';
+import { ContextSelectable, useConst, useFunction } from '@lesnoypudge/utils-react';
+import { PropsWithChildren, ReactNode, useMemo, useState } from 'react';
 import { createTabContext } from '../../utils';
 import { invariant } from '@lesnoypudge/utils';
 
@@ -53,7 +53,7 @@ export const TabContextProvider = <
         tab: tabs[identifier],
     }));
 
-    const [currentTab, setCurrentTab] = useUniqueState<
+    const [currentTab, setCurrentTab] = useState<
         TabContextProvider.Tab<_Tabs>
     >(() => {
         invariant(tabsArray[0], 'Tabs not provided');

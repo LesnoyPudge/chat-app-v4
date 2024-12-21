@@ -2,7 +2,7 @@ import { Button, Dialog, Iterate } from '@components';
 import { createStyles, createVariants } from '@utils';
 import { FC } from 'react';
 import { useDevTools } from './hooks';
-import { MoveFocus } from '@lesnoypudge/utils-react';
+import { Focus } from '@lesnoypudge/utils-react';
 
 
 
@@ -42,6 +42,7 @@ export const DevTools: FC = () => {
     const {
         actions,
         state,
+        currentFocusedId,
         getIsFocused,
         getTabIndex,
         withFocusSet,
@@ -58,28 +59,32 @@ export const DevTools: FC = () => {
             animationVariants={variants}
         >
             <Dialog.Wrapper>
+                <div>
+                    {currentFocusedId}
+                </div>
+
                 <div
                     className={styles.wrapper}
                     ref={wrapperRef}
                 >
                     <Iterate items={Object.keys(actions)}>
                         {(actionName) => (
-                            <MoveFocus.At<HTMLButtonElement>
+                            <Focus.Inside<HTMLButtonElement>
                                 enabled={getIsFocused(actionName)}
                                 key={actionName}
                             >
-                                {({ elementRef }) => (
+                                {({ containerRef }) => (
                                     <Button
                                         className={styles.action}
                                         onAnyClick={withFocusSet(actionName)}
                                         onLeftClick={actions[actionName]}
                                         tabIndex={getTabIndex(actionName)}
-                                        innerRef={elementRef}
+                                        innerRef={containerRef}
                                     >
-                                        {actionName}
+                                        {`enabled: ${getIsFocused(actionName)}`} {actionName}
                                     </Button>
                                 )}
-                            </MoveFocus.At>
+                            </Focus.Inside>
                         )}
                     </Iterate>
                 </div>

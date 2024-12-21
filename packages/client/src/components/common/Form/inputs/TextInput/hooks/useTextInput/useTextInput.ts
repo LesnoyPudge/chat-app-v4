@@ -1,5 +1,5 @@
-import { useId } from 'react';
-import { useFunction, useUniqueState } from '@lesnoypudge/utils-react';
+import { useId, useState } from 'react';
+import { useFunction } from '@lesnoypudge/utils-react';
 import { TextInputTypes } from '../../textInputTypes';
 
 
@@ -15,7 +15,7 @@ export const useTextInput = ({
     type,
 }: useTextInput.Props): useTextInput.Return => {
     const errorId = useId();
-    const [fieldType, setType] = useUniqueState(type);
+    const [fieldType, setType] = useState(type);
 
     const togglePasswordType = useFunction(() => {
         setType((prev) => prev === 'password' ? 'text' : 'password');

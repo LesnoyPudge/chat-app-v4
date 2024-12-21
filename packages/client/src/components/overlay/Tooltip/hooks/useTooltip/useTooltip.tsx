@@ -4,10 +4,10 @@ import {
     useEventListener,
     useFunction,
     useIntersectionObserver,
-    useIsFocusVisible,
     useRefManager,
 } from '@lesnoypudge/utils-react';
 import { useRef } from 'react';
+import { useIsFocusVisible } from '@hooks';
 
 
 

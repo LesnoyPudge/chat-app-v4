@@ -4,11 +4,10 @@ import {
     useIsFocusedWithin,
     useLatest,
     useRefManager,
-    useUniqueState,
 } from '@lesnoypudge/utils-react';
 import { hotKey } from '@lesnoypudge/utils-web';
 import { useHotKey } from '@hooks';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
@@ -48,10 +47,17 @@ export const useKeyboardNavigation = (
 ) => {
     const optionsRef = useLatest(providedOptions);
     const { isFocusedWithin } = useIsFocusedWithin(wrapperRefManager);
-    const [currentFocusedId, setCurrentFocusedId] = useUniqueState((
-        optionsRef.current.initialFocusedId
-        ?? optionsRef.current.list.at(0)
-    ));
+
+    const getInitialId = useFunction(() => {
+        return (
+            optionsRef.current.initialFocusedId
+            ?? optionsRef.current.list.at(0)
+        );
+    });
+
+    const [currentFocusedId, setCurrentFocusedId] = useState(() => {
+        return getInitialId();
+    });
 
     const getPossibleIndexes = useFunction((currentIndex: number) => {
         const listLength = optionsRef.current.list.length;
@@ -181,11 +187,16 @@ export const useKeyboardNavigation = (
     );
 
     const getTabIndex = useCallback((id: string) => {
+        if (!currentFocusedId) {
+            return id === getInitialId() ? 0 : -1;
+        }
+
         return id === currentFocusedId ? 0 : -1;
-    }, [currentFocusedId]);
+    }, [currentFocusedId, getInitialId]);
 
     const getIsFocused = useCallback((id: string) => {
         if (!isFocusedWithin) return false;
+
         return id === currentFocusedId;
     }, [currentFocusedId, isFocusedWithin]);
 
@@ -197,6 +208,7 @@ export const useKeyboardNavigation = (
     }, [setCurrentFocusedId]);
 
     return {
+        currentFocusedId,
         getTabIndex,
         getIsFocused,
         withFocusSet,

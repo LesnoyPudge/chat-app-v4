@@ -38,7 +38,7 @@ export const LoginForm: FC = () => {
     const { t } = useTrans();
     const { changeTab } = useContextProxy(AuthTabContext);
 
-    const FormApi = Form.useForm({
+    const { FormApi, submitError } = Form.useForm({
         ...LoginFormOptions,
         onSubmit: Form.apiAdapter(login, {
             BAD_REQUEST: t('LoginForm.BAD_REQUEST'),
@@ -46,103 +46,102 @@ export const LoginForm: FC = () => {
     });
 
     return (
-        <Form.Node onSubmit={FormApi.handleSubmit}>
-            <Heading.Node className={styles.title}>
-                {t('LoginForm.title')}
-            </Heading.Node>
+        <Form.Provider formApi={FormApi} submitError={submitError}>
+            <Form.Node>
+                <Heading.Node className={styles.title}>
+                    {t('LoginForm.title')}
+                </Heading.Node>
 
-            <div className={styles.subtitle}>
-                {t('LoginForm.subtitle')}
-            </div>
+                <div className={styles.subtitle}>
+                    {t('LoginForm.subtitle')}
+                </div>
 
-            <FormApi.Field name='login'>
-                {(field) => (
-                    <>
-                        <Label.Node
-                            className={styles.label}
-                            htmlFor={field.name}
+                <FormApi.Field name='login'>
+                    {(field) => (
+                        <>
+                            <Label.Node
+                                className={styles.label}
+                                htmlFor={field.name}
+                            >
+                                {t('LoginForm.loginLabel')}
+
+                                <Label.Wildcard/>
+
+                                <Label.Error field={field}/>
+                            </Label.Node>
+
+                            <Form.Inputs.TextInput.Node
+                                type='text'
+                                label={t('LoginForm.loginLabel')}
+                                placeholder='myLogin'
+                                required
+                                field={field}
+                            />
+                        </>
+                    )}
+                </FormApi.Field>
+
+                <FormApi.Field name='password'>
+                    {(field) => (
+                        <>
+                            <Label.Node
+                                className={styles.label}
+                                htmlFor={field.name}
+                            >
+                                {t('LoginForm.passwordLabel')}
+
+                                <Label.Wildcard/>
+
+                                <Label.Error field={field}/>
+                            </Label.Node>
+
+                            <Form.Inputs.TextInput.Provider
+                                type='password'
+                                field={field}
+                                label={t('LoginForm.passwordLabel')}
+                                required
+                                placeholder='myPassword'
+                            >
+                                <Form.Inputs.TextInput.Wrapper>
+                                    <Form.Inputs.TextInput.Node/>
+
+                                    <Form.Inputs.TextInput.PasswordToggleButton/>
+                                </Form.Inputs.TextInput.Wrapper>
+                            </Form.Inputs.TextInput.Provider>
+                        </>
+                    )}
+                </FormApi.Field>
+
+                <Form.Error className={styles.formError}/>
+
+                <FormApi.Subscribe selector={(state) => state.isSubmitting}>
+                    {(isSubmitting) => (
+                        <Button
+                            className={styles.submit}
+                            type='submit'
+                            stylingPreset='brand'
+                            isLoading={isSubmitting}
                         >
-                            {t('LoginForm.loginLabel')}
+                            <WithLoadingIndicator isLoading={isSubmitting}>
+                                {t('LoginForm.submit')}
+                            </WithLoadingIndicator>
+                        </Button>
+                    )}
+                </FormApi.Subscribe>
 
-                            <Label.Wildcard/>
+                <div className={styles.extraBlock}>
+                    <span className={styles.extraText}>
+                        {t('LoginForm.registrationSuggestion')}
+                    </span>
 
-                            <Label.Error field={field}/>
-                        </Label.Node>
-
-                        <Form.Inputs.TextInput.Node
-                            type='text'
-                            label={t('LoginForm.loginLabel')}
-                            placeholder='myLogin'
-                            required
-                            field={field}
-                        />
-                    </>
-                )}
-            </FormApi.Field>
-
-            <FormApi.Field name='password'>
-                {(field) => (
-                    <>
-                        <Label.Node
-                            className={styles.label}
-                            htmlFor={field.name}
-                        >
-                            {t('LoginForm.passwordLabel')}
-
-                            <Label.Wildcard/>
-
-                            <Label.Error field={field}/>
-                        </Label.Node>
-
-                        <Form.Inputs.TextInput.Provider
-                            type='password'
-                            field={field}
-                            label={t('LoginForm.passwordLabel')}
-                            required
-                            placeholder='myPassword'
-                        >
-                            <Form.Inputs.TextInput.Wrapper>
-                                <Form.Inputs.TextInput.Node/>
-
-                                <Form.Inputs.TextInput.PasswordToggleButton/>
-                            </Form.Inputs.TextInput.Wrapper>
-                        </Form.Inputs.TextInput.Provider>
-                    </>
-                )}
-            </FormApi.Field>
-
-            <Form.Error
-                className={styles.formError}
-                formApi={FormApi}
-            />
-
-            <FormApi.Subscribe selector={(state) => state.isSubmitting}>
-                {(isSubmitting) => (
                     <Button
-                        className={styles.submit}
-                        type='submit'
-                        stylingPreset='brand'
-                        isLoading={isSubmitting}
+                        stylingPreset='link'
+                        onLeftClick={changeTab.registration}
                     >
-                        <WithLoadingIndicator isLoading={isSubmitting}>
-                            {t('LoginForm.submit')}
-                        </WithLoadingIndicator>
+                        {t('LoginForm.registrationButton')}
                     </Button>
-                )}
-            </FormApi.Subscribe>
-
-            <div className={styles.extraBlock}>
-                <span className={styles.extraText}>
-                    {t('LoginForm.registrationSuggestion')}
-                </span>
-
-                <Button
-                    stylingPreset='link'
-                    onLeftClick={changeTab.registration}
-                >
-                    {t('LoginForm.registrationButton')}
-                </Button>
-            </div>
-        </Form.Node>
+                </div>
+            </Form.Node>
+        </Form.Provider>
     );
 };

@@ -1,11 +1,11 @@
-import { useFunction, useUniqueState } from '@lesnoypudge/utils-react';
+import { useFunction } from '@lesnoypudge/utils-react';
 import { isHtmlElement } from '@lesnoypudge/utils-web';
-import { ChangeEvent, useDeferredValue } from 'react';
+import { ChangeEvent, useDeferredValue, useState } from 'react';
 
 
 
 export const useSearch = (initialValue?: string) => {
-    const [value, setState] = useUniqueState(initialValue ?? '');
+    const [value, setState] = useState(initialValue ?? '');
     const deferredValue = useDeferredValue(value);
 
     const handleChange = useFunction((e: Event | ChangeEvent) => {

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
-import { ProdRoutes } from '@root/components/Router/routes/ProdRoutes';
+import { ProdRoutes } from './routes/ProdRoutes';
 import { isDev } from '@vars';
 import { Navigator } from '@entities';
 import { useConst } from '@lesnoypudge/utils-react';
@@ -10,7 +10,7 @@ import { useConst } from '@lesnoypudge/utils-react';
 const DevRoutes = (
     isDev
         // eslint-disable-next-line unicorn/no-await-expression-member
-        ? (await import('@root/components/Router/routes/DevRoutes')).DevRoutes
+        ? (await import('./routes/DevRoutes')).DevRoutes
         : () => null
 );
 

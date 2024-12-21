@@ -1,22 +1,24 @@
-import * as formLib from '@tanstack/react-form';
-import * as c1 from './components';
-import * as utils from './utils';
-import * as c2 from './inputs';
+import * as c1 from './hooks';
+import * as c2 from './components';
+import * as c3 from './utils';
+import * as c4 from './inputs';
 
 
 
 export namespace Form {
-    export import Node = c1.FormNode;
+    export import Node = c2.FormNode;
 
-    export import Error = c1.FormError;
+    export import Provider = c2.FormProvider;
 
-    export import Inputs = c2.FormInputs;
+    export import Error = c2.FormError;
 
-    export import createForm = utils.createForm;
+    export import Inputs = c4.FormInputs;
 
-    export import createFormContext = utils.createFormContext;
+    export const {
+        apiAdapter,
+        createForm,
+        createFormContext,
+    } = c3;
 
-    export import apiAdapter = utils.apiAdapter;
-
-    export import useForm = formLib.useForm;
+    export import useForm = c1.useForm;
 }

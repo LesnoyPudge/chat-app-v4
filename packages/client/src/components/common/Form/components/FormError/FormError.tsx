@@ -1,9 +1,9 @@
-
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { isPlainObject } from '@lesnoypudge/utils';
-import { ReactFormExtendedApi, useStore } from '@tanstack/react-form';
+import { useContextSelector } from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@utils';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
+import { UntypedFormContext } from '../../context';
+import { invariant } from '@lesnoypudge/utils';
 
 
 
@@ -15,25 +15,21 @@ export namespace FormError {
     export type Props = (
         RT.PropsWithClassName
         & {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            formApi: ReactFormExtendedApi<any, any>;
+            error?: string | null;
         }
     );
 }
 
 export const FormError: FC<FormError.Props> = ({
     className = '',
-    formApi,
+    error,
 }) => {
-    const error = useStore(formApi.store, (state) => state.errorMap.onSubmit);
+    const contextValue = useContextSelector(
+        UntypedFormContext,
+    ) as UntypedFormContext | undefined;
 
-    const _error = useMemo(() => {
-        return (
-            isPlainObject(error)
-                ? error.form?.toString()
-                : error?.toString()
-        );
-    }, [error]);
+    const _error = error ?? contextValue?.submitError;
+    invariant(_error !== undefined);
 
     return (
         <If condition={!!_error}>

@@ -25,7 +25,7 @@ export type NamespacesType = {
         "InvitationScreen.totalCount_few": "{{count}} участников",
         "InvitationScreen.totalCount_many": "{{count}} участников",
         "InvitationScreen.totalCount_other": "{{count}} участников",
-        "LoginForm.BAD_REQUEST": "Неверный Логин или пароль",
+        "LoginForm.BAD_REQUEST": "Неверный логин или пароль",
         "LoginForm.loginLabel": "Логин",
         "LoginForm.passwordLabel": "Пароль",
         "LoginForm.registrationButton": "Зарегистрироваться",

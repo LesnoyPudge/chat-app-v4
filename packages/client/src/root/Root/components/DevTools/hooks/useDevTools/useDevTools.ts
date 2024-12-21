@@ -1,7 +1,7 @@
 import { useHotKey, useKeyboardNavigation } from '@hooks';
 import { KEY } from '@lesnoypudge/utils';
 import { useBoolean, useRefManager } from '@lesnoypudge/utils-react';
-import { logger, toOneLine } from '@utils';
+import { localStorageApi, logger, toOneLine } from '@utils';
 
 
 // @ts-expect-error
@@ -73,7 +73,13 @@ const actions: Record<string, VoidFunction> = {
     setAutoTheme: () => {
         document.documentElement.dataset.theme = 'auto';
     },
+
+    clearLocalStorage: () => {
+        localStorageApi.clear();
+    },
 };
+
+logger.log(`${KEY.Slash} to clear console`);
 
 export const useDevTools = () => {
     const state = useBoolean(false);
@@ -87,6 +93,11 @@ export const useDevTools = () => {
     useHotKey(document, [KEY.Shift, KEY.Control, KEY.P], (e) => {
         e.preventDefault();
         state.setTrue();
+    });
+
+    useHotKey(document, [KEY.Slash], (e) => {
+        e.preventDefault();
+        logger.clear();
     });
 
     return {
