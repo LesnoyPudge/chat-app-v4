@@ -14,14 +14,10 @@ class PrivateEnv {
         '@localhost:5432/chatapp?schema=public',
     );
 
-    _JWT_ACCESS_KEYWORD = '';
-    _JWT_REFRESH_KEYWORD = '';
     _SMTP_SERVICE = 'Mail.ru';
     _SMTP_USER = 'qwezxcpochtalyon@mail.ru';
     _SMTP_PASSWORD = '';
     _BCRYPT_SALT_ROUNDS = '10';
-    _REFRESH_TOKEN_DURATION = String(ms('30d'));
-    _ACCESS_TOKEN_DURATION = String(ms('15m'));
     _ACCESS_CODE_DURATION = String(ms('6h'));
 }
 
@@ -73,6 +69,11 @@ class PublicEnv {
         this._PUBLIC_DEFAULT_LNG,
         'en',
     ]);
+
+    _PUBLIC_JWT_ACCESS_KEYWORD = '';
+    _PUBLIC_JWT_REFRESH_KEYWORD = '';
+    _PUBLIC_REFRESH_TOKEN_DURATION = String(ms('30d'));
+    _PUBLIC_ACCESS_TOKEN_DURATION = String(ms('15m'));
 }
 
 createEnv({

@@ -1,14 +1,10 @@
 import { sharedValidators } from '@fakeShared';
 import { parseJSON } from '@lesnoypudge/utils';
 import { ClientEntities } from '@types';
+import { env } from '@vars';
 import * as v from 'valibot';
 
 
-
-const JWT_ACCESS_KEYWORD = 'accessSecret';
-const JWT_REFRESH_KEYWORD = 'refreshSecret';
-const REFRESH_TOKEN_DURATION = 30 * 24 * 60 * 60 * 1_000; // 30 days
-const ACCESS_TOKEN_DURATION = 15 * 60 * 1_000; // 15 min
 
 const jwtSchema = v.object({
     payload: v.object({
@@ -58,13 +54,21 @@ export const token = {
         return {
             refreshToken: fakeJwt.sign(
                 payload,
-                JWT_REFRESH_KEYWORD,
-                { expiresIn: REFRESH_TOKEN_DURATION },
+                env._PUBLIC_JWT_REFRESH_KEYWORD,
+                {
+                    expiresIn: Number.parseInt(
+                        env._PUBLIC_REFRESH_TOKEN_DURATION,
+                    ),
+                },
             ),
             accessToken: fakeJwt.sign(
                 payload,
-                JWT_ACCESS_KEYWORD,
-                { expiresIn: ACCESS_TOKEN_DURATION },
+                env._PUBLIC_JWT_ACCESS_KEYWORD,
+                {
+                    expiresIn: Number.parseInt(
+                        env._PUBLIC_ACCESS_TOKEN_DURATION,
+                    ),
+                },
             ),
         };
     },
@@ -72,14 +76,14 @@ export const token = {
     validateRefreshToken: (refreshToken: string) => {
         return fakeJwt.verify(
             refreshToken,
-            JWT_REFRESH_KEYWORD,
+            env._PUBLIC_JWT_REFRESH_KEYWORD,
         );
     },
 
     validateAccessToken: (accessToken: string) => {
         return fakeJwt.verify(
             accessToken,
-            JWT_ACCESS_KEYWORD,
+            env._PUBLIC_JWT_ACCESS_KEYWORD,
         );
     },
 };

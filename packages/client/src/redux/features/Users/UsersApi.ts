@@ -24,7 +24,7 @@ export const UsersApi = createApi({
             })
         ),
         [User.Refresh.ActionName]: (
-            build.mutation<
+            build.query<
                 User.Refresh.Response,
                 User.Refresh.RequestBody
             >({

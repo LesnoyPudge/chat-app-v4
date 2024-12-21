@@ -1,6 +1,7 @@
 import { Navigator } from '@entities';
 import { Features } from '@redux/features';
 import { useLocalStorage, useSliceSelector } from '@redux/hooks';
+import { env } from '@vars';
 import { FC, useEffect } from 'react';
 import { Outlet } from 'react-router';
 
@@ -29,22 +30,26 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
         isAuthorized: !!user,
     }));
     const { navigateTo } = Navigator.useNavigator();
-    const [refresh] = Features.User.Api.useRefreshMutation();
     const { refreshToken } = useLocalStorage('refreshToken');
+
+    const skip = (
+        disabled
+        || isRefreshing
+        || isAttemptedToRefresh
+        || !refreshToken
+    );
+
+    Features.User.Api.useRefreshQuery({
+        refreshToken: refreshToken ?? '',
+    }, {
+        skip,
+        pollingInterval: Number.parseInt(env._PUBLIC_ACCESS_TOKEN_DURATION),
+    });
 
     const shouldNotWait = isAttemptedToRefresh || !refreshToken;
     const notRefreshing = shouldNotWait && !isRefreshing;
     const shouldNavigateToAuth = notRefreshing && !isAuthorized;
     const shouldShowOutlet = notRefreshing && isAuthorized;
-
-    useEffect(() => {
-        if (disabled) return;
-        if (isRefreshing) return;
-        if (isAttemptedToRefresh) return;
-        if (!refreshToken) return;
-
-        void refresh({ refreshToken });
-    }, [disabled, isAttemptedToRefresh, isRefreshing, refresh, refreshToken]);
 
     useEffect(() => {
         if (disabled) return;
