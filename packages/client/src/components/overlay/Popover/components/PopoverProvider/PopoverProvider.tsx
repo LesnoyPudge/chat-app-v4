@@ -1,6 +1,5 @@
 import {
     useConst,
-    useContextProxy,
     useContextSelector,
     useFunction,
 } from '@lesnoypudge/utils-react';
@@ -8,6 +7,7 @@ import { PopoverContext } from '../../context';
 import { FC, PropsWithChildren, useEffect } from 'react';
 import { Overlay } from '@components';
 import { getId } from '@lesnoypudge/utils';
+import { hideOthers } from 'aria-hidden';
 
 
 
@@ -42,6 +42,15 @@ export const PopoverProvider: FC<PopoverProvider.Props> = ({
         PopoverContext,
         (v) => (v as PopoverContext | undefined)?.blockingChildren,
     );
+
+    useEffect(() => {
+        if (!overlay.isOverlayExist) return;
+        if (!focused) return;
+
+        return overlay.portalRefManager.effect((node) => {
+            return hideOthers(node);
+        });
+    }, [overlay.portalRefManager, overlay.isOverlayExist, focused]);
 
     useEffect(() => {
         if (!blocking) return;
@@ -81,4 +90,15 @@ export const PopoverProvider: FC<PopoverProvider.Props> = ({
             {children}
         </PopoverContext.Provider>
     );
+};
+
+const Test = () => {
+    <>
+        <PopoverProvider
+            blockable
+            blocking
+        >
+
+        </PopoverProvider>
+    </>;
 };

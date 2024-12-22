@@ -4,6 +4,7 @@ import { LazyMotion, MotionConfig } from 'motion/react';
 import { FC, PropsWithChildren } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { GlobalLoader } from '@root/GlobalLoader';
+import { BrowserRouter } from 'react-router';
 
 
 
@@ -16,19 +17,21 @@ export const GlobalProviders: FC<PropsWithChildren> = ({
     children,
 }) => {
     return (
-        <ReduxProvider store={store}>
-            <Heading.Provider>
-                <LazyMotion
-                    features={loadDomAnimation}
-                    strict
-                >
-                    <MotionConfig reducedMotion='user'>
-                        <GlobalLoader.Wrapper>
-                            {children}
-                        </GlobalLoader.Wrapper>
-                    </MotionConfig>
-                </LazyMotion>
-            </Heading.Provider>
-        </ReduxProvider>
+        <BrowserRouter>
+            <ReduxProvider store={store}>
+                <Heading.Provider>
+                    <LazyMotion
+                        features={loadDomAnimation}
+                        strict
+                    >
+                        <MotionConfig reducedMotion='user'>
+                            <GlobalLoader.Wrapper>
+                                {children}
+                            </GlobalLoader.Wrapper>
+                        </MotionConfig>
+                    </LazyMotion>
+                </Heading.Provider>
+            </ReduxProvider>
+        </BrowserRouter>
     );
 };

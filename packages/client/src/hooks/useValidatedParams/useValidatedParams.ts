@@ -1,14 +1,28 @@
+import { Navigator } from '@entities';
 import { sharedValidators } from '@fakeShared';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { invariant, shallowEqual } from '@lesnoypudge/utils';
 import { useRef } from 'react';
 import { useParams } from 'react-router';
 import * as v from 'valibot';
 
 
+type ParamNames = T.Writable<{
+    [_Key in keyof typeof Navigator.params]: _Key;
+}>;
+
+const paramNames = (
+    Object.keys<typeof Navigator.params>(Navigator.params)
+        .reduce<ParamNames>((acc, cur) => {
+            // @ts-expect-error
+            acc[cur] = cur;
+            return acc;
+        }, {})
+);
 
 const presets = {
     invitationScreen: v.object({
-        invitationCode: sharedValidators.id,
+        [paramNames.invitationCode]: sharedValidators.id,
     }),
     some: v.object({}),
 } satisfies Record<string, v.GenericSchema>;

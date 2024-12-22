@@ -1,9 +1,36 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { NavigateOptions, useLocation, useNavigate } from 'react-router';
 import { useConst, useFunction, useLatest } from '@lesnoypudge/utils-react';
 import { navigatorPath } from '../../vars';
 
 
+
+type NavigatorPath = typeof navigatorPath;
+
+/* eslint-disable @stylistic/indent */
+type NavigateTo = {
+    [_Key in keyof NavigatorPath]: (
+        Parameters<NavigatorPath[_Key]>[0] extends void
+            ? (options?: NavigateOptions) => Promise<void> | void
+            : (
+                (
+                    props: Parameters<NavigatorPath[_Key]>[0],
+                    options?: NavigateOptions
+                ) => Promise<void> | void
+            )
+    )
+};
+
+type MyLocationIs = (
+    {
+        [_Key in keyof NavigatorPath]: (
+            (props: Parameters<NavigatorPath[_Key]>[0]) => boolean
+        );
+    }
+    & {
+        anyConversation: () => boolean;
+    }
+);
 
 export const useNavigator = () => {
     const _navigate = useNavigate();
@@ -11,90 +38,96 @@ export const useNavigator = () => {
     const latestPathRef = useLatest(pathname);
     const previousLocationRef = useRef(pathname);
 
-    const myLocationIs = useConst(() => ({
-        auth: () => latestPathRef.current === navigatorPath.auth(),
-        root: () => latestPathRef.current === navigatorPath.root(),
-        // anyPrivateChat: () => latestPathRef.current.includes(navigatorPath.anyPrivateChat()),
-        // privateChat: (...args: Parameters<typeof navigatorPath.privateChat>) => {
-        //     return latestPathRef.current === navigatorPath.privateChat(...args);
-        // },
-        // channel: (...args: Parameters<typeof navigatorPath.channel>) => {
-        //     return latestPathRef.current.includes(navigatorPath.channel(...args));
-        // },
-        // room: (...args: Parameters<typeof navigatorPath.room>) => {
-        //     return latestPathRef.current === navigatorPath.room(...args);
-        // },
-    }));
+    const getLocationResolver = useFunction((path?: string) => {
+        const pathToUse = (
+            path === undefined
+                ? latestPathRef
+                : { current: path }
+        );
+
+        return {
+            root: () => pathToUse.current === navigatorPath.root(),
+
+            auth: () => pathToUse.current === navigatorPath.auth(),
+
+            conversation: (props) => {
+                return pathToUse.current === navigatorPath.conversation(props);
+            },
+
+            anyConversation: () => {
+                throw new Error('');
+
+                return pathToUse.current === '';
+            },
+
+            invitation: (props) => {
+                return pathToUse.current === navigatorPath.invitation(props);
+            },
+
+            channel: (props) => {
+                return pathToUse.current === navigatorPath.channel(props);
+            },
+
+            server: (props) => {
+                return pathToUse.current === navigatorPath.server(props);
+            },
+        } satisfies MyLocationIs;
+    });
+
+    const stableMyLocationIs = useConst(() => getLocationResolver());
+
+    const myLocationIs = useMemo(() => {
+        return getLocationResolver(pathname);
+    }, [getLocationResolver, pathname]);
 
     const navigate = useFunction((to: string, options?: NavigateOptions) => {
         previousLocationRef.current = pathname;
         return _navigate(to, options);
     });
 
-    const navigateTo = useConst(() => ({
-        auth: (options?: NavigateOptions) => {
-            if (myLocationIs.auth()) return;
-
-            return navigate(navigatorPath.auth(), options);
-        },
-
-        root: (options?: NavigateOptions) => {
-            if (myLocationIs.root()) return;
+    const navigateTo: NavigateTo = useConst(() => ({
+        root: (options) => {
+            if (stableMyLocationIs.root()) return;
 
             return navigate(navigatorPath.root(), options);
         },
 
-        // privateChat: (privateChatId: string, options?: NavigateOptions) => {
-        //     if (myLocationIs.privateChat(privateChatId)) return;
+        auth: (options) => {
+            if (stableMyLocationIs.auth()) return;
 
-        //     if (options?.withState) {
-        //         stateRef.current.from = latestPathRef.current;
-        //     }
+            return navigate(navigatorPath.auth(), options);
+        },
 
-        //     navigate(navigatorPath.privateChat(privateChatId), options);
-        // },
+        invitation: (props, options) => {
+            if (stableMyLocationIs.invitation(props)) return;
 
-        // channel: (channelId: string, options?: NavigateOptions) => {
-        //     closeMobileMenu();
+            return navigate(navigatorPath.invitation(props), options);
+        },
 
-        //     if (myLocationIs.channel(channelId)) return;
 
-        //     if (options?.withState) {
-        //         stateRef.current.from = latestPathRef.current;
-        //     }
+        conversation: (props, options) => {
+            if (stableMyLocationIs.conversation(props)) return;
 
-        //     const latestRoomId = localStorageApi.get('lastVisitedTextRooms')?.[channelId];
-        //     if (latestRoomId) {
-        //         navigate(navigatorPath.room(channelId, latestRoomId), options);
-        //         return;
-        //     }
+            return navigate(navigatorPath.conversation(props), options);
+        },
 
-        //     navigate(navigatorPath.channel(channelId), options);
-        // },
 
-        // room: (channelId: string, roomId: string, options?: NavigateOptions) => {
-        //     closeMobileMenu();
+        channel: (props, options) => {
+            if (stableMyLocationIs.channel(props)) return;
 
-        //     if (myLocationIs.room(channelId, roomId)) return;
+            return navigate(navigatorPath.channel(props), options);
+        },
 
-        //     if (options?.withState) {
-        //         stateRef.current.from = latestPathRef.current;
-        //     }
 
-        //     navigate(navigatorPath.room(channelId, roomId), options);
-        // },
+        server: (props, options) => {
+            if (stableMyLocationIs.server(props)) return;
+
+            return navigate(navigatorPath.server(props), options);
+        },
     }));
 
-    // const navigateToDev = useConst(() => ({
-    //     app: () => navigate('app'),
-    //     loader: () => navigate('/dev/loader'),
-    //     error: () => navigate('/dev/error'),
-    //     auth: () => navigate('/dev/auth'),
-    //     playground: () => navigate('/dev/playground'),
-    //     invitation: () => navigate('/dev/invitation/fake-link'),
-    // }));
-
     return {
+        stableMyLocationIs,
         myLocationIs,
         navigateTo,
         navigate,

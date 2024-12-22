@@ -1,35 +1,29 @@
-import { Button, Dialog, Iterate } from '@components';
-import { createStyles, createVariants } from '@utils';
+import { Button, Dialog, Iterate, Scrollable } from '@components';
+import { createStyles } from '@utils';
 import { FC } from 'react';
 import { useDevTools } from './hooks';
 import { Focus } from '@lesnoypudge/utils-react';
 
 
 
-// don't animate due to unloaded motion config
-const variants = createVariants({
-    initial: {},
-    animate: {},
-    exit: {},
-});
-
 const styles = createStyles({
     wrapper: `
         pointer-events-auto
         absolute
-        left-1/2        
-        top-1/2 
-        m-3
-        flex
-        -translate-x-1/2 
-        -translate-y-1/2 
-        flex-col 
-        gap-2 
+        left-1/2
+        top-1/2
+        w-fit
+        -translate-x-1/2
+        -translate-y-1/2
         bg-black 
         p-3 
         font-semibold 
-        text-white
+        text-white 
+        outline-2
+        outline-red-700
     `,
+    scrollable: 'max-h-[90dvh] py-4',
+    inner: 'flex flex-col gap-2 ',
     action: `
         px-2
         py-1
@@ -42,7 +36,6 @@ export const DevTools: FC = () => {
     const {
         actions,
         state,
-        currentFocusedId,
         getIsFocused,
         getTabIndex,
         withFocusSet,
@@ -56,37 +49,38 @@ export const DevTools: FC = () => {
             outerState={state.value}
             withBackdrop
             onChange={state.setValue}
-            animationVariants={variants}
         >
             <Dialog.Wrapper>
-                <div>
-                    {currentFocusedId}
-                </div>
-
-                <div
-                    className={styles.wrapper}
-                    ref={wrapperRef}
-                >
-                    <Iterate items={Object.keys(actions)}>
-                        {(actionName) => (
-                            <Focus.Inside<HTMLButtonElement>
-                                enabled={getIsFocused(actionName)}
-                                key={actionName}
-                            >
-                                {({ containerRef }) => (
-                                    <Button
-                                        className={styles.action}
-                                        onAnyClick={withFocusSet(actionName)}
-                                        onLeftClick={actions[actionName]}
-                                        tabIndex={getTabIndex(actionName)}
-                                        innerRef={containerRef}
+                <div className={styles.wrapper}>
+                    <Scrollable className={styles.scrollable}>
+                        <div
+                            className={styles.inner}
+                            ref={wrapperRef}
+                        >
+                            <Iterate items={Object.keys(actions)}>
+                                {(actionName) => (
+                                    <Focus.Inside<HTMLButtonElement>
+                                        enabled={getIsFocused(actionName)}
+                                        key={actionName}
                                     >
-                                        {`enabled: ${getIsFocused(actionName)}`} {actionName}
-                                    </Button>
+                                        {({ containerRef }) => (
+                                            <Button
+                                                className={styles.action}
+                                                onLeftClick={withFocusSet(
+                                                    actionName,
+                                                    actions[actionName],
+                                                )}
+                                                tabIndex={getTabIndex(actionName)}
+                                                innerRef={containerRef}
+                                            >
+                                                {actionName}
+                                            </Button>
+                                        )}
+                                    </Focus.Inside>
                                 )}
-                            </Focus.Inside>
-                        )}
-                    </Iterate>
+                            </Iterate>
+                        </div>
+                    </Scrollable>
                 </div>
             </Dialog.Wrapper>
         </Dialog.Provider>

@@ -1,9 +1,8 @@
 import { FC } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import { ProdRoutes } from './routes/ProdRoutes';
 import { isDev } from '@vars';
 import { Navigator } from '@entities';
-import { useConst } from '@lesnoypudge/utils-react';
 
 
 
@@ -15,24 +14,21 @@ const DevRoutes = (
 );
 
 export const Router: FC = () => {
-    const _ProdRoutes = useConst(() => ProdRoutes({}));
-    const _DevRoutes = useConst(() => DevRoutes({}));
-
     return (
-        <BrowserRouter>
-            <Routes>
-                {_ProdRoutes}
-                {_DevRoutes}
+        <Routes>
+            {DevRoutes()}
 
-                <Route
-                    path='*'
-                    element={(
-                        <Navigate
-                            to={Navigator.staticNavigatorPath.root}
-                            replace
-                        />
-                    )}/>
-            </Routes>
-        </BrowserRouter>
+            {ProdRoutes()}
+
+            <Route
+                path='*'
+                element={(
+                    <Navigate
+                        to={Navigator.staticNavigatorPath.root}
+                        replace
+                    />
+                )}
+            />
+        </Routes>
     );
 };

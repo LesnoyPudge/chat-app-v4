@@ -1,1 +1,0 @@
-export { InvitationScreen as default } from '@pages/screens/InvitationScreen';

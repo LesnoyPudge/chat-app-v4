@@ -1,12 +1,11 @@
 import { invariant, KEY } from '@lesnoypudge/utils';
 import {
     useFunction,
-    useIsFocusedWithin,
     useLatest,
     useRefManager,
 } from '@lesnoypudge/utils-react';
 import { hotKey } from '@lesnoypudge/utils-web';
-import { useHotKey } from '@hooks';
+import { useHotKey, useIsFocusVisible } from '@hooks';
 import { useCallback, useState } from 'react';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
@@ -46,7 +45,10 @@ export const useKeyboardNavigation = (
     providedOptions: useKeyboardNavigation.Options,
 ) => {
     const optionsRef = useLatest(providedOptions);
-    const { isFocusedWithin } = useIsFocusedWithin(wrapperRefManager);
+    const { isFocusedRef } = useIsFocusVisible(
+        wrapperRefManager,
+        { within: true, stateless: true },
+    );
 
     const getInitialId = useFunction(() => {
         return (
@@ -195,10 +197,16 @@ export const useKeyboardNavigation = (
     }, [currentFocusedId, getInitialId]);
 
     const getIsFocused = useCallback((id: string) => {
-        if (!isFocusedWithin) return false;
+        if (!isFocusedRef.current) return false;
 
         return id === currentFocusedId;
-    }, [currentFocusedId, isFocusedWithin]);
+    }, [currentFocusedId, isFocusedRef]);
+
+    // const getIsFocusedVisible = useCallback((id: string) => {
+    //     if (!isFocusedVisibleWithin) return false;
+
+    //     return id === currentFocusedId;
+    // }, [currentFocusedId, isFocusedVisibleWithin]);
 
     const withFocusSet = useCallback((id: string, cb?: T.AnyFunction) => {
         return () => {
@@ -211,6 +219,7 @@ export const useKeyboardNavigation = (
         currentFocusedId,
         getTabIndex,
         getIsFocused,
+        // getIsFocusedVisible,
         withFocusSet,
     };
 };

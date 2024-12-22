@@ -11,6 +11,7 @@ export type OverlayContext = {
     isOverlayExistRef: MutableRefObject<boolean>;
     closingThrottleRef: MutableRefObject<boolean>;
     wrapperRefManager: useRefManager.RefManager<HTMLDivElement>;
+    portalRefManager: useRefManager.RefManager<HTMLDivElement>;
     openOverlay: VoidFunction;
     closeOverlay: VoidFunction;
     toggleOverlay: VoidFunction;

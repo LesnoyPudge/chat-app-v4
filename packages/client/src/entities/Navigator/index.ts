@@ -10,5 +10,6 @@ export namespace Navigator {
         navigatorPath,
         staticNavigatorPath,
         params,
+        navigatorDevPath,
     } = c2;
 }

@@ -46,8 +46,8 @@
             "@components": [
                 "./src/components"
             ],
-            "@pages/*": [
-                "src/pages/*"
+            "@screens/*": [
+                "./src/screens/*"
             ],
             "@types": [
                 "./src/types"

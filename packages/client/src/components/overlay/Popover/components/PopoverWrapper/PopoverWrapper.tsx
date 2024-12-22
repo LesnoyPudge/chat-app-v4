@@ -10,7 +10,7 @@ import { KEY } from '@lesnoypudge/utils';
 
 
 const styles = createStyles({
-    lock: 'size-full',
+    lock: 'size-full overflow-hidden',
 });
 
 export namespace PopoverWrapper {

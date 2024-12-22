@@ -1,47 +1,36 @@
 import { Route } from 'react-router';
-import { OnlyAuthorized, OnlyUnAuthorized } from '../components/index.ts';
-import { withDelay } from '../utils/index.ts';
+import {
+    OnlyAuthorized,
+    OnlyUnAuthorized,
+    SuspenseWithGlobalLoader,
+} from '../components';
+import { withDelay } from '../utils';
 import { Navigator } from '@entities';
-import { GlobalLoader } from '@root/GlobalLoader';
-import { FC, lazy, Suspense } from 'react';
-import { createSleep } from '@utils';
+import { lazy } from 'react';
+import { AppRoutes } from './AppRoutes';
 
 
 
 const InvitationScreen = lazy(withDelay(() => {
-    return import('./lazy/InvitationScreen.ts');
+    return import('@screens/lazy/InvitationScreen');
 }));
 
 const AuthScreen = lazy(withDelay(() => {
-    return import('./lazy/AuthScreen.ts');
+    return import('@screens/lazy/AuthScreen');
 }));
 
-const Sleep = createSleep(1_000);
-
-export const ProdRoutes: FC = () => {
+export const ProdRoutes = () => {
     return (
         <Route path={Navigator.staticNavigatorPath.root}>
             <Route element={<OnlyAuthorized/>}>
-                <Route
-                    index
-                    element={(
-                        <Suspense fallback={<GlobalLoader.Enable/>}>
-                            <GlobalLoader.Disable>
-                                <Sleep>
-                                    <>index page</>
-                                </Sleep>
-                            </GlobalLoader.Disable>
-                        </Suspense>
-                    )}
-                />
+                {AppRoutes({})}
+
                 <Route
                     path={Navigator.staticNavigatorPath.invitation}
                     element={(
-                        <Suspense fallback={<GlobalLoader.Enable/>}>
-                            <GlobalLoader.Disable>
-                                <InvitationScreen/>
-                            </GlobalLoader.Disable>
-                        </Suspense>
+                        <SuspenseWithGlobalLoader>
+                            <InvitationScreen/>
+                        </SuspenseWithGlobalLoader>
                     )}
                 />
             </Route>
@@ -50,11 +39,9 @@ export const ProdRoutes: FC = () => {
                 <Route
                     path={Navigator.staticNavigatorPath.auth}
                     element={(
-                        <Suspense fallback={<GlobalLoader.Enable/>}>
-                            <GlobalLoader.Disable>
-                                <AuthScreen/>
-                            </GlobalLoader.Disable>
-                        </Suspense>
+                        <SuspenseWithGlobalLoader>
+                            <AuthScreen/>
+                        </SuspenseWithGlobalLoader>
                     )}
                 />
             </Route>

@@ -1,5 +1,6 @@
+import { Navigator } from '@entities';
 import { useHotKey, useKeyboardNavigation } from '@hooks';
-import { KEY } from '@lesnoypudge/utils';
+import { capitalize, KEY } from '@lesnoypudge/utils';
 import { useBoolean, useRefManager } from '@lesnoypudge/utils-react';
 import { localStorageApi, logger, toOneLine } from '@utils';
 
@@ -10,17 +11,20 @@ if (!window._devtools) {
     window._devtools = {};
 }
 
-const actions: Record<string, VoidFunction> = {
+const rawActions: Record<string, VoidFunction> = {
     toggleElementsOutline: () => {
         const currentValue = (
             document
                 .documentElement
                 .dataset
-                .outline as 'false' | 'true'
+                .outline as 'false' | 'true' | undefined
         );
 
         document.documentElement.dataset.outline = (
-            currentValue === 'false' ? 'true' : 'false'
+            (
+                currentValue === 'false'
+                || !currentValue
+            ) ? 'true' : 'false'
         );
     },
 
@@ -29,11 +33,14 @@ const actions: Record<string, VoidFunction> = {
             document
                 .documentElement
                 .dataset
-                .background as 'false' | 'true'
+                .background as 'false' | 'true' | undefined
         );
 
         document.documentElement.dataset.background = (
-            currentValue === 'false' ? 'true' : 'false'
+            (
+                currentValue === 'false'
+                || !currentValue
+            ) ? 'true' : 'false'
         );
     },
 
@@ -84,6 +91,72 @@ logger.log(`${KEY.Slash} to clear console`);
 export const useDevTools = () => {
     const state = useBoolean(false);
     const wrapperRef = useRefManager<HTMLDivElement>(null);
+    const { navigateTo, navigate } = Navigator.useNavigator();
+
+    const navigateToDev = Object.entries({
+        playground: () => navigate(Navigator.navigatorDevPath.playground),
+        errorScreen: () => navigate(Navigator.navigatorDevPath.errorScreen),
+        authScreen: () => navigate(Navigator.navigatorDevPath.authScreen),
+        invitationScreen: () => navigate(
+            Navigator.navigatorDevPath.invitationScreen,
+        ),
+        globalLoaderScreen: () => navigate(
+            Navigator.navigatorDevPath.globalLoaderScreen,
+        ),
+    }).reduce<Record<string, () => void | Promise<void>>>((
+        acc,
+        [key, value],
+    ) => {
+        acc[`navigateToDev${capitalize(key)}`] = value;
+
+        return acc;
+    }, {});
+
+    const navigateToWithPrompt = Object.entries({
+        root: navigateTo.root,
+        auth: navigateTo.auth,
+        conversation: () => {
+            const conversationId = prompt('conversationId');
+            if (!conversationId) return;
+
+            return navigateTo.conversation({ conversationId });
+        },
+        invitation: () => {
+            const invitationCode = prompt('invitationCode');
+            if (!invitationCode) return;
+
+            return navigateTo.invitation({ invitationCode });
+        },
+        server: () => {
+            const serverId = prompt('serverId');
+            if (!serverId) return;
+
+            return navigateTo.server({ serverId });
+        },
+        channel: () => {
+            const serverId = prompt('serverId');
+            if (!serverId) return;
+
+            const channelId = prompt('channelId');
+            if (!channelId) return;
+
+            return navigateTo.channel({ serverId, channelId });
+        },
+    }).reduce<Record<string, () => void | Promise<void>>>((
+        acc,
+        [key, value],
+    ) => {
+        acc[`navigateToWithPrompt${capitalize(key)}`] = value;
+
+        return acc;
+    }, {});
+
+    const actions = {
+        ...rawActions,
+        ...navigateToDev,
+        ...navigateToWithPrompt,
+    };
+
     const navigation = useKeyboardNavigation(wrapperRef, {
         list: Object.keys(actions),
         direction: 'vertical',

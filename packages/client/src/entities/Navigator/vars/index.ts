@@ -1,3 +1,4 @@
+export * from './navigatorDevPath';
 export * from './navigatorPath';
 export * from './params';
-export * from './staticNavigatorPath';
+export * from './staticPath';

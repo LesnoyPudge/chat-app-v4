@@ -1,31 +1,29 @@
-import { ErrorScreenPure } from '@pages/screens/ErrorScreen';
+import { ErrorScreenPure } from '@screens/bundled/ErrorScreen';
 import { noop } from '@lesnoypudge/utils';
-import { InvitationScreenPure } from '@pages/screens/InvitationScreen';
-import { GlobalLoaderScreen } from '@pages/screens/GlobalLoaderScreen';
+import { InvitationScreenPure } from '@screens/lazy/InvitationScreen/InvitationScreen';
+import { GlobalLoaderScreen } from '@screens/bundled/GlobalLoaderScreen';
 import { Playground } from './components';
-import { AuthScreenPure } from '@pages/screens/AuthScreen';
-import { FC, Suspense } from 'react';
+import { AuthScreenPure } from '@screens/lazy/AuthScreen/AuthScreen';
+import { FC } from 'react';
 import { Outlet, Route } from 'react-router';
-import { GlobalLoader } from '@root/GlobalLoader';
 import { createSleep } from '@utils';
 import { Dummies } from '@fakeServer';
+import { SuspenseWithGlobalLoader } from '../components';
 
 
 
 const Sleep = createSleep(1_000);
 
-export const DevRoutes: FC = () => {
+export const DevRoutes = () => {
     return (
         <Route
             path='/dev'
             element={(
-                <Suspense>
+                <SuspenseWithGlobalLoader>
                     <Sleep>
-                        <GlobalLoader.Disable>
-                            <Outlet/>
-                        </GlobalLoader.Disable>
+                        <Outlet/>
                     </Sleep>
-                </Suspense>
+                </SuspenseWithGlobalLoader>
             )}
         >
             <Route

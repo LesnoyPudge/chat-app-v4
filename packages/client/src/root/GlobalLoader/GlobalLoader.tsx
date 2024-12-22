@@ -1,6 +1,6 @@
 import { Dialog, Overlay } from '@components';
 import { useContextProxy } from '@lesnoypudge/utils-react';
-import { GlobalLoaderScreen } from '@pages/screens/GlobalLoaderScreen';
+import { GlobalLoaderScreen } from '@screens/bundled/GlobalLoaderScreen';
 import { createStyles, createVariants, logger } from '@utils';
 import { FC, PropsWithChildren, Suspense, useEffect } from 'react';
 
@@ -75,9 +75,7 @@ export const GlobalLoaderWrapper: FC<GlobalLoaderWrapper.Props> = ({
                 <GlobalLoaderScreen className={styles.base}/>
             </Dialog.Wrapper>
 
-            <Suspense name='GlobalLoader'>
-                {children}
-            </Suspense>
+            {children}
         </Dialog.Provider>
     );
 };

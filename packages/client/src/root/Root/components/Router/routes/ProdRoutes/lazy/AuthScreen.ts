@@ -1,1 +1,0 @@
-export { AuthScreen as default } from '@pages/screens/AuthScreen';

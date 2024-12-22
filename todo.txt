@@ -8,7 +8,6 @@ https://mswjs.io/docs/getting-started
 -? сделать attachments layout через grid-template-areas
 -? сделать управление отображаемыми частями лаяута в мобильном режиме
 в лаяутах из роутера
-- разобраться с страницами (page, subPage, layout)
 - вместо TabScroller сделать 
 export const Slideshow = ({ image }) => (
   <AnimatePresence>
@@ -24,11 +23,10 @@ export const Slideshow = ({ image }) => (
 - добавить useOptimistic (в redux проблемы с транзакциями?)
 - добавить dataset к элементу(html? body?) 
 для работы css (theme, message-font-size, ...)
--? сделать components/features где можно хранить User.Avatar и тд
 -? вынести generated из src
--? transform refresh mutation to query
-
-
+-? загружать диалоги отдельно? сделать лоадер контекст что бы загружать
+компоненты после основного контента? сделать обёртку в модалках с стандартным
+скелетоном пока они грузятся?
 
 
 

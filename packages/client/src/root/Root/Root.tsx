@@ -8,7 +8,7 @@ import {
 import { env, isDev } from '@vars';
 import { FC, lazy } from 'react';
 import { GlobalProviders, Masks, SpriteSheet, Router } from './components';
-import { ErrorScreen } from '@pages/screens/ErrorScreen';
+import { ErrorScreen } from '@screens/bundled/ErrorScreen';
 import { getHTMLElement } from '@utils';
 
 
@@ -32,15 +32,17 @@ export const Root: FC = () => {
 
             <SpriteSheet/>
 
-            <If condition={isDev}>
-                <DevTools/>
-            </If>
 
             <Focus.Inside
                 enabled
                 containerRef={appRootRefManager}
             >
+
                 <GlobalProviders>
+                    <If condition={isDev}>
+                        <DevTools/>
+                    </If>
+
                     <Router/>
                 </GlobalProviders>
             </Focus.Inside>
