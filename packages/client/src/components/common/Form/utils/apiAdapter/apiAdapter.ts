@@ -22,6 +22,11 @@ type ErrorCodes = T.RequiredKeysOf<StatusCode>;
 
 type ErrorTable = Record<ErrorCodes, string>;
 
+type Options<_Result> = {
+    errorTable?: Partial<ErrorTable>;
+    onSuccess?: (value: _Result) => void;
+};
+
 const defaultErrorTable = {
     BAD_REQUEST: t('ApiError.BAD_REQUEST'),
     FORBIDDEN: t('ApiError.FORBIDDEN'),
@@ -44,11 +49,15 @@ const codeToName = {
 export const apiAdapter = <
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     _ApiTrigger extends TypedMutationTrigger<any, any, CustomQueryFn>,
+    _Result = _ApiTrigger extends TypedMutationTrigger<
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        infer _Value, any, CustomQueryFn
+    > ? _Value : never,
 >(
     apiFn: _ApiTrigger,
-    errorTable: Partial<ErrorTable> = {},
+    options?: Options<_Result>,
 ) => {
-    const _errorTable = defaults(errorTable, defaultErrorTable);
+    const _errorTable = defaults(options?.errorTable ?? {}, defaultErrorTable);
 
     return async ({
         value,
@@ -66,6 +75,9 @@ export const apiAdapter = <
         if (response.error) {
             return _errorTable.INTERNAL_SERVER_ERROR;
         }
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        options?.onSuccess?.(response.data);
 
         return null;
     };

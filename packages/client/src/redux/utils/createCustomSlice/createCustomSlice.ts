@@ -2,7 +2,6 @@ import { T } from '@lesnoypudge/types-utils-base/namespace';
 import {
     asyncThunkCreator,
     buildCreateSlice,
-    createListenerMiddleware,
     CreateSliceOptions,
     SliceCaseReducers,
     SliceSelectors,
@@ -27,11 +26,7 @@ export const createCustomSlice = <
         _Name,
         _Name,
         _Selectors
-    >, 'reducerPath'> & {
-        listenerMiddlewares?: ((
-            props: ReturnType<typeof createListenerMiddleware>
-        ) => void)[];
-    },
+    >, 'reducerPath'>,
 ) => {
     const enhancedConfig = (
         withConfigSelectors(

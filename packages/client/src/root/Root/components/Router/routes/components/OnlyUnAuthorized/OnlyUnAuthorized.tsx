@@ -1,6 +1,7 @@
 import { Navigator } from '@entities';
+import { useLocalStorage } from '@hooks';
 import { Features } from '@redux/features';
-import { useLocalStorage, useSliceSelector } from '@redux/hooks';
+import { useSliceSelector } from '@redux/hooks';
 import { FC, useEffect } from 'react';
 import { Outlet } from 'react-router';
 

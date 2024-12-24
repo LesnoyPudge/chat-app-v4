@@ -1,7 +1,13 @@
 import { useMemo, useRef } from 'react';
 import { NavigateOptions, useLocation, useNavigate } from 'react-router';
-import { useConst, useFunction, useLatest } from '@lesnoypudge/utils-react';
-import { navigatorPath } from '../../vars';
+import {
+    useConst,
+    useContextSelector,
+    useFunction,
+    useLatest,
+} from '@lesnoypudge/utils-react';
+import { navigatorPath, params, staticNavigatorPath } from '../../vars';
+import { MobileMenu } from '@components';
 
 
 
@@ -37,6 +43,9 @@ export const useNavigator = () => {
     const { pathname } = useLocation();
     const latestPathRef = useLatest(pathname);
     const previousLocationRef = useRef(pathname);
+    const mobileMenu = useContextSelector(
+        MobileMenu.Context,
+    ) as MobileMenu.Context | undefined;
 
     const getLocationResolver = useFunction((path?: string) => {
         const pathToUse = (
@@ -55,9 +64,14 @@ export const useNavigator = () => {
             },
 
             anyConversation: () => {
-                throw new Error('');
+                const conversationPath = (
+                    staticNavigatorPath.conversation.replace(
+                        params.conversationId,
+                        '',
+                    )
+                );
 
-                return pathToUse.current === '';
+                return pathToUse.current.startsWith(conversationPath);
             },
 
             invitation: (props) => {
@@ -82,6 +96,11 @@ export const useNavigator = () => {
 
     const navigate = useFunction((to: string, options?: NavigateOptions) => {
         previousLocationRef.current = pathname;
+
+        if (mobileMenu?.shouldShowMenu) {
+            mobileMenu.closeMenu();
+        }
+
         return _navigate(to, options);
     });
 

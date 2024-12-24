@@ -1,3 +1,3 @@
-export * from './useLocalStorage';
+export * from './useSliceActions';
 export * from './useSliceSelector';
-export * from './useStoreActions';
+export * from './useStoreSelector';

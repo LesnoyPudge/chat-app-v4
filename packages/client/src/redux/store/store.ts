@@ -1,7 +1,11 @@
 /* eslint-disable unicorn/prefer-spread */
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { Features } from '@redux/features';
-import type { Action, ThunkAction } from '@reduxjs/toolkit';
+import type {
+    Action,
+    CombinedSliceReducer,
+    ThunkAction,
+} from '@reduxjs/toolkit';
 import { combineSlices, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { isDev } from '@vars';
@@ -9,19 +13,20 @@ import { useSharedListenerMiddleware } from '@redux/utils';
 
 
 
-const _slices = (
-    Object.keys<typeof Features>(Features)
-        .map((key) => Features[key].Slice)
-);
+type FeaturesType = typeof Features;
 
-type Apis = {
-    [_Key in keyof typeof Features]: (
-        (typeof Features)[_Key] extends { Api: infer _Api } ? _Api : never
+const _slices = Object.values(Features).map((s) => s.Slice);
+
+type Apis = T.ConditionalExcept<{
+    [_Key in keyof FeaturesType]: (
+        (FeaturesType)[_Key] extends { Api: infer _Api } ? _Api : never
     )
-}[keyof typeof Features];
+}, never>;
+
+type ApisArray = Apis[keyof Apis][];
 
 const _apis = (
-    Object.keys<typeof Features>(Features)
+    Object.keys<FeaturesType>(Features)
         .map((key) => {
             if ('Api' in Features[key]) {
                 return Features[key].Api;
@@ -30,18 +35,36 @@ const _apis = (
             return;
         })
         .filter(Boolean)
-) as Apis[];
+) as ApisArray;
+
+type FixedSlices = T.Simplify<(
+    {
+        [_Key in keyof FeaturesType as FeaturesType[_Key]['Slice']['name']]: (
+            ReturnType<FeaturesType[_Key]['Slice']['getInitialState']>
+        )
+    }
+)>;
+
+const rootReducer = combineSlices(
+    ..._slices,
+    ..._apis,
+) as unknown as (
+    CombinedSliceReducer<T.Simplify<(
+        ReturnType<ReturnType<typeof combineSlices<ApisArray>>>
+        & FixedSlices
+    )>>
+);
 
 type Effects = {
-    [_Key in keyof typeof Features]: (
-        (typeof Features)[_Key] extends {
+    [_Key in keyof FeaturesType]: (
+        (FeaturesType)[_Key] extends {
             Effects: infer _Effects;
         } ? _Effects : never
     )
-}[keyof typeof Features];
+}[keyof FeaturesType];
 
 const _effects = (
-    Object.keys<typeof Features>(Features)
+    Object.keys<FeaturesType>(Features)
         .map((key) => {
             if ('Effects' in Features[key]) {
                 return Features[key].Effects;
@@ -55,11 +78,6 @@ const _effects = (
 const setupEffects = (store: AppStore) => _effects.forEach((effect) => {
     effect.setupEffects(store);
 });
-
-const rootReducer = combineSlices(
-    ..._slices,
-    ..._apis,
-);
 
 const apiMiddlewares = _apis.map((api) => api.middleware);
 
@@ -91,8 +109,8 @@ export type RootState = ReturnType<typeof rootReducer>;
 export const store = makeStore();
 
 export type Slices = {
-    [_Key in keyof typeof Features]: (
-        (typeof Features)[_Key]['Slice']
+    [_Key in keyof FeaturesType]: (
+        (FeaturesType)[_Key]['Slice']
     )
 };
 

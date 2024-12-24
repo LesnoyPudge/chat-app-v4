@@ -152,6 +152,28 @@ namespace EndpointsV1 {
 
             export type Response = Entities.Server.Base;
         }
+
+        export namespace Create {
+            export const ActionName = 'create';
+
+            export const Path = v1('server', ActionName);
+
+            export const Method = HTTP_METHOD.POST;
+
+            export type RequestBody = T.Simplify<
+                Pick<Entities.Server.Base, 'name' | 'identifier'>
+                & T.Override<
+                    Pick<
+                        Entities.Server.Base,
+                        'avatar'
+                    >,
+                    'avatar',
+                    Entities.File.Encoded | null
+                >
+            >;
+
+            export type Response = Entities.Server.Base;
+        }
     }
 
     export namespace File {

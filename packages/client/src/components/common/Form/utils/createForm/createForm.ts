@@ -9,7 +9,7 @@ export namespace createForm {
     export type Options<_Shape extends T.UnknownRecord> = (
         FormOptions<_Shape, ReturnType<typeof valibotValidator>>
         & {
-            validator?: v.GenericSchema<_Shape>;
+            validator: v.GenericSchema<_Shape>;
         }
     );
 }
@@ -21,11 +21,10 @@ export const createForm = <
     ...options
 }: createForm.Options<_Shape>) => {
     return formOptions({
-        validators: validator ? {
-            // onBlur: validator,
+        validators: {
             onChange: validator,
             onSubmit: validator,
-        } : undefined,
+        },
         ...options,
         validatorAdapter: valibotValidator(),
     });

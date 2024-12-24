@@ -5,6 +5,8 @@ import { t } from '@i18n';
 import { promiseToBoolean } from '@lesnoypudge/utils';
 import type { RichTextEditor } from '@components/common/RichTextEditor';
 import { EmojiStore } from '@components/media/Emoji/EmojiStore';
+import { ClientEntities } from '@types';
+import { FILE_MAX_SIZE } from './vars';
 
 
 
@@ -138,6 +140,21 @@ class SharedValidators {
 
         return false;
     }));
+
+    file = schema<ClientEntities.File.Encoded>(v.object({
+        type: sv.commonString,
+        base64: v.pipe(
+            sv.commonString,
+            v.base64(),
+        ),
+        name: sv.commonString,
+        size: v.pipe(
+            v.number(),
+            v.maxValue(FILE_MAX_SIZE),
+        ),
+    }));
+
+    possiblyFile = v.optional(this.file);
 }
 
 const sv = new SharedValidators();
@@ -171,6 +188,30 @@ export namespace ApiValidators {
 
         export namespace Server {
             import Server = Endpoints.V1.Server;
+
+            export const {
+                acceptInvitation,
+                create,
+                getOneByInvitationCode,
+            } = {
+                [Server.AcceptInvitation.ActionName]: (
+                    schema<Server.AcceptInvitation.RequestBody>(v.object({
+                        invitationCode: sv.commonString,
+                    }))
+                ),
+                [Server.Create.ActionName]: (
+                    schema<Server.Create.RequestBody>(v.object({
+                        name: sv.commonString,
+                        identifier: sv.commonString,
+                        avatar: sv.possiblyFile,
+                    }))
+                ),
+                [Server.GetOneByInvitationCode.ActionName]: (
+                    schema<Server.GetOneByInvitationCode.RequestBody>(v.object({
+                        invitationCode: sv.commonString,
+                    }))
+                ),
+            };
         }
 
         // export namespace Channel {

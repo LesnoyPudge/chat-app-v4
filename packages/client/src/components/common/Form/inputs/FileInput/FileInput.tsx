@@ -1,6 +1,6 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { cn, createStyles, MBToBytes } from '@utils';
+import { cn, createStyles } from '@utils';
 import { ChangeEventHandler, FC, FocusEventHandler } from 'react';
 import { ACCEPTED_FILE_TYPE } from './acceptedFileType';
 import { CUSTOM_STYLES } from '@vars';
@@ -8,6 +8,7 @@ import { FieldApi } from '@tanstack/react-form';
 import { ClientEntities } from '@types';
 import { useFileInput } from './useFileInput';
 import { invariant, noop } from '@lesnoypudge/utils';
+import { FILE_MAX_SIZE } from '@fakeShared';
 
 
 
@@ -81,7 +82,6 @@ export namespace FileInput {
         & Partial<Pick<
             useFileInput.Props,
             'amountLimit'
-            | 'sizeLimit'
             | 'onAmountLimit'
             | 'onInvalid'
             | 'onSizeLimit'
@@ -92,7 +92,7 @@ export namespace FileInput {
             field: FieldApi<
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 any, any, any, any,
-                ClientEntities.File.Encoded | ClientEntities.File.Encoded[]
+                null | ClientEntities.File.Encoded | ClientEntities.File.Encoded[]
             >;
         }
     >;
@@ -101,7 +101,6 @@ export namespace FileInput {
 export const FileInput: FC<FileInput.Props> = ({
     field,
     amountLimit = 1,
-    sizeLimit = MBToBytes(1),
     accept,
     onAmountLimit = noop,
     onSizeLimit = noop,
@@ -114,14 +113,16 @@ export const FileInput: FC<FileInput.Props> = ({
     const fileState = (
         Array.isArray(field.state.value)
             ? field.state.value
-            : [field.state.value]
+            : field.state.value === null
+                ? []
+                : [field.state.value]
     );
 
     const { onChange } = useFileInput({
         accept,
         amountLimit,
         files: fileState,
-        sizeLimit,
+        sizeLimit: FILE_MAX_SIZE,
         onAmountLimit,
         onInvalid,
         onSizeLimit,

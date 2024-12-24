@@ -70,6 +70,7 @@ const configArr = config.createConfig({
         'jsx-control-statements/jsx-use-if-tag': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
         'tailwindcss/no-unnecessary-arbitrary-value': 'off',
+        
     }
 })
 
@@ -90,6 +91,9 @@ const _config = config.createConfig(
         rules: {
             '@stylistic/max-len': ['warn', {
                 'code': 100,
+                'ignoreStrings': true,
+                'ignoreTemplateLiterals': true,
+                'ignoreRegExpLiterals': true,
                 'ignoreComments': true,
             }],
         }

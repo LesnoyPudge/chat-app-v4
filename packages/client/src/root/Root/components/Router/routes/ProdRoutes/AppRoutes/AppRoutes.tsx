@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Outlet, Route } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../../components';
 import { Navigator } from '@entities';
-import { WithPrimaryNavigation } from './layouts';
+import { WithPrimaryNavigation } from '@layouts';
 
 
 // PRELOAD ALL LAYOUTS???

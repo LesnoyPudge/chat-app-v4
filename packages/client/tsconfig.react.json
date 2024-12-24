@@ -76,6 +76,15 @@
             "@entities": [
                 "./src/entities"
             ],
+            "@layouts": [
+                "./src/layouts"
+            ],
+            "@panels": [
+                "./src/panels"
+            ],
+            "@modals": [
+                "./src/modals"
+            ],
         },
         "jsx": "react-jsx",
         "lib": [

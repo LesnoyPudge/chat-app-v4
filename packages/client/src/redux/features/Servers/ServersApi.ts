@@ -42,5 +42,21 @@ export const ServersApi = createApi({
                 ],
             })
         ),
+
+        [Server.Create.ActionName]: (
+            build.mutation<
+                Server.Create.Response,
+                Server.Create.RequestBody
+            >({
+                query: (body) => ({
+                    url: Server.Create.Path,
+                    method: Server.Create.Method,
+                    body,
+                }),
+                invalidatesTags: (result) => [
+                    { type: 'Servers', id: result?.id },
+                ],
+            })
+        ),
     }),
 });

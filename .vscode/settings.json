@@ -22,5 +22,23 @@
             100
         ],
         "editor.defaultFormatter": "vscode.json-language-features"
-    }
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/node_modules": true,
+        "**/package-lock.json": true,
+        "**/.vscode": true,
+        "**/build": true,
+        "**/public": true,
+        "**/generated": true,
+        "packages/server": true,
+        "packages/emails": true,
+        "packages/shared": true
+    },
+    "explorerExclude.backup": {}
 }
