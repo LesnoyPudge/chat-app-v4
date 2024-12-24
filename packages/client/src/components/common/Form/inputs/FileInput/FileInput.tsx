@@ -67,7 +67,13 @@ export const FileInputPure: FC<FileInputPure.Props> = ({
 };
 
 export namespace FileInput {
-    export type Props = T.Simplify<
+    export type CastedType<_Amount extends number> = (
+        _Amount extends 1
+            ? null | ClientEntities.File.Encoded
+            : null | ClientEntities.File.Encoded[]
+    );
+
+    export type Props<_Amount extends number> = T.Simplify<
         Pick<
             FileInputPure.Props,
             | 'children'
@@ -81,26 +87,25 @@ export namespace FileInput {
         >
         & Partial<Pick<
             useFileInput.Props,
-            'amountLimit'
-            | 'onAmountLimit'
+            'onAmountLimit'
             | 'onInvalid'
             | 'onSizeLimit'
             | 'onUnacceptableType'
         >>
         & {
-
+            amountLimit: _Amount;
             field: FieldApi<
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 any, any, any, any,
-                null | ClientEntities.File.Encoded | ClientEntities.File.Encoded[]
+                CastedType<_Amount>
             >;
         }
     >;
 }
 
-export const FileInput: FC<FileInput.Props> = ({
+export const FileInput = <_Amount extends number>({
     field,
-    amountLimit = 1,
+    amountLimit,
     accept,
     onAmountLimit = noop,
     onSizeLimit = noop,
@@ -108,15 +113,21 @@ export const FileInput: FC<FileInput.Props> = ({
     onInvalid = noop,
     children,
     ...rest
-}) => {
+}: FileInput.Props<_Amount>) => {
     const isMultiple = amountLimit > 1;
-    const fileState = (
-        Array.isArray(field.state.value)
-            ? field.state.value
-            : field.state.value === null
-                ? []
-                : [field.state.value]
+    const isOne = amountLimit === 1;
+
+    const _state = (
+        field.state.value === null
+            ? []
+            : isOne
+                ? [field.state.value]
+                : field.state.value
     );
+
+    const fileState = (
+        Array.isArray(_state) ? _state : [_state]
+    ) as ClientEntities.File.Encoded[];
 
     const { onChange } = useFileInput({
         accept,
@@ -129,7 +140,9 @@ export const FileInput: FC<FileInput.Props> = ({
         onUnacceptableType,
         setFiles: (files) => {
             invariant(files[0]);
-            field.handleChange(isMultiple ? files : files[0]);
+            field.handleChange((
+                isOne ? files[0] : files
+            ) as FileInput.CastedType<_Amount>);
         },
     });
 

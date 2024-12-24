@@ -1,4 +1,4 @@
-import { Button, Form, Label, Sprite } from '@components';
+import { Button, Form, Image, Label, Sprite } from '@components';
 import { ApiValidators, Endpoints } from '@fakeShared';
 import { useContextProxy, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
@@ -56,58 +56,40 @@ export const CreateServerTab: FC = () => {
                         {(field) => (
                             <Label.Node htmlFor={field.name}>
                                 <Form.Inputs.FileInput.Node
+                                    className='self-center rounded-full'
                                     accept='image/*'
                                     amountLimit={1}
                                     field={field}
-                                    label=''
+                                    label='Загрузить значок сервера'
                                 >
+                                    <div className='pointer-events-none flex h-20 w-20 rounded-full bg-primary-300'>
+                                        <If condition={!!field.state.value}>
+                                            <Image
+                                                className='rounded-full'
+                                                src={field.state.value?.base64}
+                                                alt='Значок сервера'
+                                            />
+                                        </If>
 
+                                        <If condition={!field.state.value}>
+                                            <div className='relative flex h-full w-full rounded-full border-2 border-dashed border-icon-100'>
+                                                <span className='text-2xs m-auto font-semibold uppercase'>
+                                                    <>Загрузить</>
+                                                </span>
+
+                                                <div className='absolute right-0 top-0 h-6 w-6 rounded-full bg-brand p-1.5'>
+                                                    <Sprite
+                                                        className='h-full w-full fill-white'
+                                                        name='PLUS_ICON'
+                                                    />
+                                                </div>
+                                            </div>
+                                        </If>
+                                    </div>
                                 </Form.Inputs.FileInput.Node>
                             </Label.Node>
                         )}
                     </FormApi.Field>
-
-                    <FormikFileInput
-                        name='avatar'
-                        label='Загрузить значок канала'
-                        options={{
-                            accept: MIME.IMAGES,
-                            amountLimit: 1,
-                            sizeLimit: MBToBytes(1),
-                        }}
-                    >
-                        {({ value, fileInputProps }) => (
-                            <FileInput
-                                className='self-center rounded-full'
-                                {...fileInputProps}
-                            >
-                                <div className='pointer-events-none flex h-20 w-20 rounded-full bg-primary-300'>
-                                    <If condition={!!value}>
-                                        <Image
-                                            className='rounded-full'
-                                            src={value?.base64}
-                                            alt='Значок канала'
-                                        />
-                                    </If>
-
-                                    <If condition={!value}>
-                                        <div className='relative flex h-full w-full rounded-full border-2 border-dashed border-icon-100'>
-                                            <span className='text-2xs m-auto font-semibold uppercase'>
-                                                <>Загрузить</>
-                                            </span>
-
-                                            <div className='absolute right-0 top-0 h-6 w-6 rounded-full bg-brand p-1.5'>
-                                                <Sprite
-                                                    className='h-full w-full fill-white'
-                                                    name='PLUS_ICON'
-                                                />
-                                            </div>
-                                        </div>
-                                    </If>
-                                </div>
-                            </FileInput>
-                        )}
-                    </FormikFileInput>
 
                     <FormApi.Field name='identifier'>
                         {(field) => (
