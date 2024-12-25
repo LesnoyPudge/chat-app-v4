@@ -4,8 +4,14 @@ import { useContextProxy } from '@lesnoypudge/utils-react';
 import { Modal } from '@entities';
 import { CreateServerTabContext } from '../../CreateServerModal';
 import { useTrans } from '@i18n';
+import { createStyles } from '@utils';
 
 
+
+const styles = createStyles({
+    content: 'gap-2.5',
+    button: 'w-full',
+});
 
 export const CreateServerOrFollowInvitationTab: FC = () => {
     const { closeOverlay } = useContextProxy(Modal.Context);
@@ -17,7 +23,6 @@ export const CreateServerOrFollowInvitationTab: FC = () => {
             <Modal.Base.Header>
                 <Modal.Base.Title>
                     {t('CreateServerModal.CreateServerOrFollowInvitationTab.title')}
-                    <>Добавьте канал</>
                 </Modal.Base.Title>
 
                 <Modal.Base.Subtitle>
@@ -25,9 +30,9 @@ export const CreateServerOrFollowInvitationTab: FC = () => {
                 </Modal.Base.Subtitle>
             </Modal.Base.Header>
 
-            <Modal.Base.Content className='gap-2.5'>
+            <Modal.Base.Content className={styles.content}>
                 <Button
-                    className='w-full'
+                    className={styles.button}
                     stylingPreset='brand'
                     size='medium'
                     onLeftClick={changeTab.createServer}
@@ -36,7 +41,7 @@ export const CreateServerOrFollowInvitationTab: FC = () => {
                 </Button>
 
                 <Button
-                    className='w-full'
+                    className={styles.button}
                     stylingPreset='brand'
                     size='medium'
                     onLeftClick={changeTab.followInvitation}
@@ -45,7 +50,7 @@ export const CreateServerOrFollowInvitationTab: FC = () => {
                 </Button>
 
                 <Button
-                    className='w-full'
+                    className={styles.button}
                     stylingPreset='lite'
                     size='medium'
                     onLeftClick={closeOverlay}

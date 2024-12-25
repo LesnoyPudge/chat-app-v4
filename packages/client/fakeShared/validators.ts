@@ -5,7 +5,7 @@ import { t } from '@i18n';
 import { promiseToBoolean } from '@lesnoypudge/utils';
 import type { RichTextEditor } from '@components/common/RichTextEditor';
 import { EmojiStore } from '@components/media/Emoji/EmojiStore';
-import { ClientEntities } from '@types';
+import type { ClientEntities } from '@types';
 import { FILE_MAX_SIZE } from './vars';
 
 
@@ -142,19 +142,25 @@ class SharedValidators {
     }));
 
     file = schema<ClientEntities.File.Encoded>(v.object({
-        type: sv.commonString,
+        type: this.commonString,
         base64: v.pipe(
-            sv.commonString,
-            v.base64(),
+            this.commonString,
+            v.check((val) => v.safeParse(
+                v.pipe(
+                    this.commonString,
+                    v.base64(),
+                ),
+                val.split('base64,')[1],
+            ).success),
         ),
-        name: sv.commonString,
+        name: this.commonString,
         size: v.pipe(
             v.number(),
             v.maxValue(FILE_MAX_SIZE),
         ),
     }));
 
-    possiblyFile = v.optional(this.file);
+    nullableFile = v.nullable(this.file);
 }
 
 const sv = new SharedValidators();
@@ -203,7 +209,7 @@ export namespace ApiValidators {
                     schema<Server.Create.RequestBody>(v.object({
                         name: sv.commonString,
                         identifier: sv.commonString,
-                        avatar: sv.possiblyFile,
+                        avatar: sv.nullableFile,
                     }))
                 ),
                 [Server.GetOneByInvitationCode.ActionName]: (

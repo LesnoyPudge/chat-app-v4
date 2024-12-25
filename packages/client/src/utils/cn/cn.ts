@@ -17,6 +17,7 @@ export const customTwMerge = createTailwindMerge(getDefaultConfig, (config) =>
                     '20-24',
                     '17-22',
                     '12-16',
+                    '10-12',
                     '0',
                 ] }],
             },

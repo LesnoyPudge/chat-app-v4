@@ -13,9 +13,14 @@ const styles = createStyles({
 });
 
 export namespace Scrollable {
+    type DeprecatedProps = {
+        followContentSize?: boolean;
+    };
+
     type StableProps = (
         RT.PropsWithChildrenAndClassName
         & PropsWithInnerRef<'div'>
+        & DeprecatedProps
         & {
             withoutGutter?: boolean;
             label?: string;

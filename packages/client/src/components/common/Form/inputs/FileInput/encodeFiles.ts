@@ -48,7 +48,7 @@ export const encodeFiles = async (
         const isTypeAcceptable = (
             options.accept === ACCEPTED_FILE_TYPE.ALL
                 ? true
-                : file.type.includes(options.accept)
+                : file.type.includes(options.accept.replace('*', ''))
         );
         const isBad = !isTypeAcceptable || !isInLimit;
 

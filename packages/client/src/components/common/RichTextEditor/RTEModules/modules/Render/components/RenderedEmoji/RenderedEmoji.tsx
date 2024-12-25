@@ -14,6 +14,8 @@ const styles = createStyles({
         h-[--message-emoji-wrapper-height] 
         w-[--message-emoji-wrapper-width]
     `,
+    code: 'text-[0px]',
+    emoji: 'inline-block h-full w-full',
 });
 
 export namespace RenderedEmoji {
@@ -42,14 +44,14 @@ export const RenderedEmoji: FC<RenderedEmoji.Props> = ({
             {children}
 
             <span
-                className='text-[0px]'
+                className={styles.code}
                 contentEditable={false}
             >
                 {element.code}
             </span>
 
             <Emoji.Node
-                className='inline-block h-full w-full'
+                className={styles.emoji}
                 code={element.code}
             />
 

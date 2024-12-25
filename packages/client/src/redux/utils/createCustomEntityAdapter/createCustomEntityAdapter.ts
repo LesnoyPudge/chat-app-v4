@@ -1,6 +1,12 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { createEntityAdapter, EntityAdapter } from '@reduxjs/toolkit';
+import {
+    createEntityAdapter,
+    EntityAdapter,
+    EntitySelectors,
+    EntityState,
+} from '@reduxjs/toolkit';
 import { WithId } from '@types';
+
 
 
 const actionNames = [
@@ -38,11 +44,32 @@ export namespace createCustomEntityAdapter {
         )
     };
 
+    export type SelectsByIds<_State extends WithId> = (
+        state: EntityState<_State, _State['id']>,
+        ids: string[],
+    ) => _State[];
+
+    export type GetSelectors<_State extends WithId> = () => (
+        EntitySelectors<
+            _State,
+            EntityState<_State, _State['id']>,
+            _State['id']
+        >
+        & {
+            // disabled to enforce better practices
+            // selectByIds: SelectsByIds<_State>;
+        }
+    );
+
     export type Return<_State extends WithId> = (
-        EntityAdapter<_State, _State['id']>
+        T.Except<
+            EntityAdapter<_State, _State['id']>,
+            'getSelectors'
+        >
         & {
             reducers: Reducers<_State>;
             extraReducers: ExtraReducers<_State>;
+            getSelectors: GetSelectors<_State>;
         }
     );
 }
@@ -71,9 +98,28 @@ export const createCustomEntityAdapter = <
         return acc;
     }, {});
 
+    const getSelectors: createCustomEntityAdapter.GetSelectors<_State> = () => {
+        const defaultSelectors = adapter.getSelectors();
+
+        const selectByIds: createCustomEntityAdapter.SelectsByIds<_State> = (
+            state: EntityState<_State, _State['id']>,
+            ids: string[],
+        ) => {
+            return ids.map((id) => {
+                return defaultSelectors.selectById(state, id);
+            }).filter(Boolean);
+        };
+
+        return {
+            ...defaultSelectors,
+            selectByIds,
+        };
+    };
+
     return {
         ...adapter,
         reducers,
         extraReducers,
+        getSelectors,
     };
 };

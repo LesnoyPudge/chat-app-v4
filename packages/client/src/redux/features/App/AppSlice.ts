@@ -59,7 +59,6 @@ export const Slice = createCustomSlice({
                 User.Api.endpoints.refresh.matchFulfilled,
             ),
             (state, { payload }) => {
-                invariant(payload, 'empty user');
                 state.user = payload;
                 state.isRefreshing = false;
                 state.isAttemptedToRefresh = true;

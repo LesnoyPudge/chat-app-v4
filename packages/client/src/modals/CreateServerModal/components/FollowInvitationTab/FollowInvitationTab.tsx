@@ -42,7 +42,7 @@ export const FollowInvitationTab: FC = () => {
         }),
     });
 
-    const invitePlaceholder = `${env._PUBLIC_CLIENT_URL}/hTkzmak, hTkzmak`;
+    const invitePlaceholder = `hTkzmak`;
 
     return (
         <Form.Provider formApi={FormApi} submitError={submitError}>

@@ -65,7 +65,9 @@ export class FakeDBB {
         localStorage.setItem(this.dbName, JSON.stringify(this.storage));
     }
 
-    create(tableKey: keyof Storage, data: SettableData) {
+    create<
+        _Key extends keyof Storage,
+    >(tableKey: _Key, data: Storage[_Key][string]): Storage[_Key][string] {
         this.storage[tableKey][data.id] = data;
         this.saveStorage();
 

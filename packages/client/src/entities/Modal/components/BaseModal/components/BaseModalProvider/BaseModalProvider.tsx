@@ -1,8 +1,27 @@
 import { FC, PropsWithChildren } from 'react';
 import { useModalControls } from '../../../../hooks';
 import { Dialog } from '@components';
+import { createVariants } from '@utils';
 
 
+
+const animationVariants: Dialog.Provider.AnimationVariants = createVariants({
+    initial: {
+        opacity: 0,
+        scale: 0.1,
+    },
+    animate: {
+        opacity: 1,
+        scale: 1,
+    },
+    exit: {
+        opacity: 0,
+        scale: 0.1,
+    },
+}, {
+    duration: 0.35,
+    ease: 'backOut',
+});
 
 export namespace BaseModalProvider {
     export type WithControls = {
@@ -18,7 +37,6 @@ export namespace BaseModalProvider {
         & PropsWithChildren
         & Pick<
             Dialog.Provider.Props,
-            'animationVariants'
             | 'withoutBackdropPointerEvents'
         >
     );
@@ -27,7 +45,6 @@ export namespace BaseModalProvider {
 export const BaseModalProvider: FC<BaseModalProvider.Props> = ({
     controls,
     label,
-    animationVariants,
     withoutBackdropPointerEvents,
     children,
 }) => {

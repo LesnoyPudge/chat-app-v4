@@ -43,7 +43,7 @@ const fakeJwt = {
         const { output } = validated;
 
         if (output.secret !== secret) return null;
-        if (output.options.expiresAt >= Date.now()) return null;
+        if (output.options.expiresAt <= Date.now()) return null;
 
         return output.payload;
     },

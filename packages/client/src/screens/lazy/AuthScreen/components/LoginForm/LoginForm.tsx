@@ -41,7 +41,9 @@ export const LoginForm: FC = () => {
     const { FormApi, submitError } = Form.useForm({
         ...LoginFormOptions,
         onSubmit: Form.apiAdapter(login, {
-            BAD_REQUEST: t('LoginForm.BAD_REQUEST'),
+            errorTable: {
+                BAD_REQUEST: t('LoginForm.BAD_REQUEST'),
+            },
         }),
     });
 

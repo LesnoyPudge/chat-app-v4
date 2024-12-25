@@ -127,6 +127,7 @@ export default {
                 '20-24': [`${pxToRem(20)}rem`, `${pxToRem(24)}rem`],
                 '17-22': [`${pxToRem(17)}rem`, `${pxToRem(22)}rem`],
                 '12-16': [`${pxToRem(12)}rem`, `${pxToRem(16)}rem`],
+                '10-12': [`${pxToRem(10)}rem`, `${pxToRem(12)}rem`],
                 '0': ['0px', '0px'],
             },
 

@@ -5,7 +5,7 @@ import {
     ActionButtons,
     HomePageButton,
     Notifications,
-    Servers,
+    ServerList,
 } from './components';
 
 
@@ -46,7 +46,7 @@ export const PrimaryNavigation = () => {
 
                     <Notifications/>
 
-                    <Servers/>
+                    <ServerList/>
 
                     <ActionButtons/>
                 </div>

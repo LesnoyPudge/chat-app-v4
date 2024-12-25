@@ -22,6 +22,14 @@ export const Slice = createCustomSliceEntityAdapter({
             ServersApi.endpoints.getOneByInvitationCode.matchFulfilled,
             adapter.extraReducers.upsertOne,
         );
+        builder.addMatcher(
+            ServersApi.endpoints.create.matchFulfilled,
+            adapter.extraReducers.upsertOne,
+        );
+        builder.addMatcher(
+            ServersApi.endpoints.acceptInvitation.matchFulfilled,
+            adapter.extraReducers.upsertOne,
+        );
     },
     selectors: {},
 }, adapter);

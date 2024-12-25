@@ -2,6 +2,7 @@ import { ClientEntities } from '@types';
 import { inRange, invariant } from '@lesnoypudge/utils';
 import { nanoid } from '@reduxjs/toolkit';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { v4 as uuid } from 'uuid';
 
 
 
@@ -19,7 +20,7 @@ export class Dummies {
             >
         ),
     ): ClientEntities.Channel.Base {
-        invariant(!data.textChat && !data.voiceChat);
+        invariant(data.textChat ?? data.voiceChat, 'chat not provided');
 
         return {
             id: data.id,
@@ -76,9 +77,9 @@ export class Dummies {
                 | 'avatar'
                 | 'color'
                 | 'isDefault'
-                | 'weight'
                 | 'name'
                 | 'server'
+                | 'users'
             >
             & Partial<Pick<
                 ClientEntities.Role.Base,
@@ -102,14 +103,21 @@ export class Dummies {
             },
             server: data.server,
             users: [],
-            weight: data.weight,
+            weight: 0,
         };
     }
 
     static server(
         data: Pick<
             ClientEntities.Server.Base,
-            'id' | 'avatar' | 'owner' | 'identifier' | 'name'
+            'id'
+            | 'avatar'
+            | 'owner'
+            | 'identifier'
+            | 'name'
+            | 'channels'
+            | 'roles'
+            | 'members'
         >,
     ): ClientEntities.Server.Base {
         return {
@@ -235,8 +243,11 @@ export class Dummies {
     }
 
     static file(
-        data: ClientEntities.File.Base,
+        data: ClientEntities.File.Encoded,
     ): ClientEntities.File.Base {
-        return data;
+        return {
+            id: uuid(),
+            ...data,
+        };
     }
 }

@@ -20,5 +20,8 @@ export namespace Form {
         createFormContext,
     } = c3;
 
-    export import useForm = c1.useForm;
+    export const {
+        useForm,
+        useField,
+    } = c1;
 }
