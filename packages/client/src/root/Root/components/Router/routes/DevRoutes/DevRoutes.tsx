@@ -4,7 +4,6 @@ import { InvitationScreenPure } from '@screens/lazy/InvitationScreen/InvitationS
 import { GlobalLoaderScreen } from '@screens/bundled/GlobalLoaderScreen';
 import { Playground } from './components';
 import { AuthScreenPure } from '@screens/lazy/AuthScreen/AuthScreen';
-import { FC } from 'react';
 import { Outlet, Route } from 'react-router';
 import { createSleep } from '@utils';
 import { Dummies } from '@fakeServer';
@@ -51,6 +50,9 @@ export const DevRoutes = () => {
                             avatar: null,
                             identifier: '',
                             owner: '',
+                            channels: [],
+                            members: [],
+                            roles: [],
                         })}
                         acceptInvitation={noop}
                     />

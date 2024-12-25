@@ -40,8 +40,8 @@
             "@root/*": [
                 "./src/root/*"
             ],
-            "@components/*": [
-                "./src/components/*"
+            "@src/*": [
+                "./src/*"
             ],
             "@components": [
                 "./src/components"

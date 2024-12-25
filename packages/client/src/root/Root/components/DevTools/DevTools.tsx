@@ -38,8 +38,8 @@ export const DevTools: FC = () => {
         state,
         getIsFocused,
         getTabIndex,
-        withFocusSet,
         wrapperRef,
+        setCurrentFocusedId,
     } = useDevTools();
 
     return (
@@ -66,10 +66,10 @@ export const DevTools: FC = () => {
                                         {({ containerRef }) => (
                                             <Button
                                                 className={styles.action}
-                                                onLeftClick={withFocusSet(
-                                                    actionName,
-                                                    actions[actionName],
-                                                )}
+                                                onLeftClick={() => {
+                                                    void actions[actionName]?.();
+                                                    setCurrentFocusedId(actionName);
+                                                }}
                                                 tabIndex={getTabIndex(actionName)}
                                                 innerRef={containerRef}
                                             >

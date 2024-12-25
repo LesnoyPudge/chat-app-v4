@@ -1,8 +1,18 @@
+import { Button } from '@components';
+import { cn } from '@utils';
 import { FC } from 'react';
 
 
 
-export const ServerListItem: FC = () => {
+export namespace ServerListItem {
+    export type Props = {
+        serverId: string;
+    };
+}
+
+export const ServerListItem: FC<ServerListItem.Props> = ({
+    serverId,
+}) => {
     return (
         <>
             <Button

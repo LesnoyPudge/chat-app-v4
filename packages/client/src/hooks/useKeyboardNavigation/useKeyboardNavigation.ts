@@ -202,24 +202,19 @@ export const useKeyboardNavigation = (
         return id === currentFocusedId;
     }, [currentFocusedId, isFocusedRef]);
 
-    // const getIsFocusedVisible = useCallback((id: string) => {
-    //     if (!isFocusedVisibleWithin) return false;
-
-    //     return id === currentFocusedId;
-    // }, [currentFocusedId, isFocusedVisibleWithin]);
-
-    const withFocusSet = useCallback((id: string, cb?: T.AnyFunction) => {
-        return () => {
-            setCurrentFocusedId(id);
-            cb?.();
-        };
-    }, [setCurrentFocusedId]);
+    // removed to enforce better practices
+    // const withFocusSet = useCallback((id: string, cb?: T.AnyFunction) => {
+    //     return () => {
+    //         setCurrentFocusedId(id);
+    //         cb?.();
+    //     };
+    // }, [setCurrentFocusedId]);
 
     return {
         currentFocusedId,
         getTabIndex,
         getIsFocused,
-        // getIsFocusedVisible,
-        withFocusSet,
+        setCurrentFocusedId,
+        // withFocusSet,
     };
 };
