@@ -35,7 +35,7 @@ const RegistrationFormOptions = Form.createForm<
 });
 
 export const RegistrationForm: FC = () => {
-    const [registration] = Features.User.Api.useRegistrationMutation();
+    const [registration] = Features.Users.Api.useRegistrationMutation();
     const { t } = useTrans();
     const { changeTab } = useContextProxy(AuthTabContext);
 

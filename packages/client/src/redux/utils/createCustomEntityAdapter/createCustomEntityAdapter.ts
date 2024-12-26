@@ -1,4 +1,5 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { RootState, Slices } from '@redux/store';
 import {
     createEntityAdapter,
     EntityAdapter,
@@ -45,20 +46,23 @@ export namespace createCustomEntityAdapter {
     };
 
     export type SelectsByIds<_State extends WithId> = (
-        state: EntityState<_State, _State['id']>,
+        state: RootState,
         ids: string[],
     ) => _State[];
 
     export type GetSelectors<_State extends WithId> = () => (
         EntitySelectors<
             _State,
-            EntityState<_State, _State['id']>,
+            RootState,
             _State['id']
         >
         & {
-            // disabled to enforce better practices
-            // selectByIds: SelectsByIds<_State>;
+            selectByIds: SelectsByIds<_State>;
         }
+    );
+
+    export type Selectors<_State extends WithId> = (
+        ReturnType<GetSelectors<_State>>
     );
 
     export type Return<_State extends WithId> = (
@@ -69,14 +73,17 @@ export namespace createCustomEntityAdapter {
         & {
             reducers: Reducers<_State>;
             extraReducers: ExtraReducers<_State>;
-            getSelectors: GetSelectors<_State>;
+            selectors: Selectors<_State>;
         }
     );
 }
 
 export const createCustomEntityAdapter = <
     _State extends WithId,
->(): createCustomEntityAdapter.Return<_State> => {
+    _Name extends keyof T.Except<Slices, 'App'>,
+>(
+    name: _Name,
+): createCustomEntityAdapter.Return<_State> => {
     const adapter = createEntityAdapter<_State>();
 
     const reducers = actionNames.reduce<
@@ -98,13 +105,20 @@ export const createCustomEntityAdapter = <
         return acc;
     }, {});
 
-    const getSelectors: createCustomEntityAdapter.GetSelectors<_State> = () => {
-        const defaultSelectors = adapter.getSelectors();
+    const getDefaultSelectors = () => {
+        return adapter.getSelectors<RootState>((state) => {
+            return state[name] as unknown as EntityState<_State, _State['id']>;
+        });
+    };
 
+    const getSelectors: createCustomEntityAdapter.GetSelectors<_State> = () => {
+        const defaultSelectors = getDefaultSelectors();
+        adapter.getSelectors().selectAll();
         const selectByIds: createCustomEntityAdapter.SelectsByIds<_State> = (
-            state: EntityState<_State, _State['id']>,
-            ids: string[],
+            state,
+            ids,
         ) => {
+            console.log('probably reason of unstable return?');
             return ids.map((id) => {
                 return defaultSelectors.selectById(state, id);
             }).filter(Boolean);
@@ -120,6 +134,6 @@ export const createCustomEntityAdapter = <
         ...adapter,
         reducers,
         extraReducers,
-        getSelectors,
+        selectors: getSelectors(),
     };
 };

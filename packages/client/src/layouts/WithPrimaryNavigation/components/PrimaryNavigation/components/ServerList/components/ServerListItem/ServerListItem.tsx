@@ -1,69 +1,140 @@
-import { Button } from '@components';
-import { cn } from '@utils';
+import { Avatar, Button, Tooltip } from '@components';
+import { Navigator } from '@entities';
+import { useKeyboardNavigation } from '@hooks';
+import { Focus, useFunction, useRefManager } from '@lesnoypudge/utils-react';
+import { cn, createStyles } from '@utils';
 import { FC } from 'react';
+import { WrapperWithBullet } from '../../../WrapperWithBullet';
+import { Features } from '@redux/features';
+import { useSliceSelector, useStoreSelector } from '@redux/hooks';
+import { sharedStyles } from '../../../../sharedStyles';
 
 
+
+const styles = createStyles({
+    avatar: 'size-full rounded-none',
+});
 
 export namespace ServerListItem {
-    export type Props = {
-        serverId: string;
-    };
+    export type Props = (
+        Pick<useKeyboardNavigation.Return, 'setCurrentFocusedId'>
+        & {
+            serverId: string;
+            isFocused: boolean;
+            tabIndex: number;
+        }
+    );
 }
 
 export const ServerListItem: FC<ServerListItem.Props> = ({
     serverId,
+    isFocused,
+    tabIndex,
+    setCurrentFocusedId,
 }) => {
+    const buttonRef = useRefManager<HTMLButtonElement>(null);
+    const { myLocationIs, navigateTo } = Navigator.useNavigator();
+    const isInServer = myLocationIs.server({ serverId });
+    const server = useSliceSelector(
+        Features.Servers.Slice,
+        (state) => {
+            return Features.Servers.Slice.getSelectors().selectById(state, serverId);
+        },
+    );
+
+    // useSliceSelector(
+    //     Features.App.Slice,
+    //     Features.App.Slice.getSelectors().selectIsDeaf,
+    // );
+    // const server = useStoreSelector(
+    //     Features.Servers.Slice.selectors.selectById(serverId),
+    // );
+
+    const notificationsCount = useStoreSelector(
+        Features.Servers.StoreSelectors.selectNotificationCountById(serverId),
+    );
+
+    const isMuted = useStoreSelector(
+        Features.Servers.StoreSelectors.selectIsMutedById(serverId),
+    );
+
+    const setFocused = useFunction(() => {
+        setCurrentFocusedId(serverId);
+    });
+
+    const navigateToServer = useFunction(() => {
+        setFocused();
+        void navigateTo.server({ serverId });
+    });
+
     return (
-        <>
-            <Button
-                className={cn(
-                    styles.button.base,
-                    styles.brandButton.base,
-                    {
-                        [styles.button.active]: isInChannel,
-                        [styles.brandButton.active]: isInChannel,
-                    },
-                )}
-                tabIndex={getTabIndex(channelId)}
-                label={getTextFallback(channel?.name)}
-                isLoading={!channel}
-                isActive={isInChannel}
-                innerRef={ref}
-                onLeftClick={withFocusSet(channelId, navigateToChannel)}
-                onAnyClick={withFocusSet(channelId)}
+        <li>
+            <Focus.Inside
+                enabled={isFocused}
+                containerRef={buttonRef}
             >
-                <ChannelAvatar
-                    className={styles.channelAvatar}
-                    avatar={getReadImagePath(channel?.avatar)}
-                    name={channel?.name}
-                />
-            </Button>
-
-            <Tooltip
-                preferredAlignment='right'
-                leaderElementRef={ref}
-            >
-                <>{getTextFallback(channel?.name)}</>
-            </Tooltip>
-
-            <OverlayContextProvider>
-                <ToDo>
-                    <ContextMenu
-                        preferredAlignment='right'
-                        leaderElementRef={ref}
+                <WrapperWithBullet
+                    isActive={isInServer}
+                    notificationsCount={notificationsCount}
+                >
+                    <Button
+                        className={cn(
+                            sharedStyles.button.base,
+                            sharedStyles.brandButton.base,
+                            {
+                                [sharedStyles.button.active]: isInServer,
+                                [sharedStyles.brandButton.active]: isInServer,
+                            },
+                        )}
+                        tabIndex={tabIndex}
+                        label={server?.name}
+                        isActive={isInServer}
+                        innerRef={buttonRef}
+                        onLeftClick={navigateToServer}
+                        onAnyClick={setFocused}
                     >
-                        <>menu</>
+                        <Avatar.Server
+                            className={styles.avatar}
+                            name={server?.name}
+                            avatar={server?.avatar}
+                        />
+                    </Button>
 
-                        <Button>
-                            <>1</>
-                        </Button>
+                    <If condition={!!server}>
+                        <Tooltip
+                            preferredAlignment='right'
+                            leaderElementRef={buttonRef}
+                        >
+                            {server?.name}
+                        </Tooltip>
 
-                        <Button>
-                            <>2</>
-                        </Button>
-                    </ContextMenu>
-                </ToDo>
-            </OverlayContextProvider>
-        </>
+                        {/* <ContextMenu
+                            preferredAlignment='right'
+                            leaderElementRef={buttonRef}
+                        >
+                            <Button>
+                                <>leave</>
+                            </Button>
+
+                            <If condition={isMuted}>
+                                <Button>
+                                    <>unmute notifications</>
+                                </Button>
+                            </If>
+
+                            <If condition={!isMuted}>
+                                <Button>
+                                    <>mute notifications</>
+                                </Button>
+                            </If>
+
+                            <Button isDisabled={!hasNotifications}>
+                                <>mark as read</>
+                            </Button>
+                        </ContextMenu> */}
+                    </If>
+                </WrapperWithBullet>
+            </Focus.Inside>
+        </li>
     );
 };

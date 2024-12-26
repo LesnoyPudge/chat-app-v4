@@ -27,6 +27,17 @@ const styles = createStyles({
         `,
         active: 'h-10 opacity-100',
     },
+    count: `
+        absolute 
+        bottom-0 
+        h-4 
+        min-w-4 
+        rounded-full 
+        bg-danger 
+        text-xs 
+        font-bold 
+        text-white
+    `,
 });
 
 export namespace WrapperWithBullet {
@@ -34,6 +45,7 @@ export namespace WrapperWithBullet {
         RT.PropsWithChildrenAndClassName
         & {
             isActive: boolean;
+            notificationsCount?: number;
         }
     );
 }
@@ -41,8 +53,19 @@ export namespace WrapperWithBullet {
 export const WrapperWithBullet: FC<WrapperWithBullet.Props> = ({
     className = '',
     isActive = false,
+    notificationsCount,
     children,
 }) => {
+    const showNotificationCount = (
+        !!notificationsCount && notificationsCount > 0
+    );
+
+    const trimmedCount = (
+        showNotificationCount
+            ? notificationsCount >= 100 ? '99+' : notificationsCount
+            : null
+    );
+
     return (
         <div className={cn(styles.buttonWrapper, className)}>
             {children}
@@ -57,6 +80,12 @@ export const WrapperWithBullet: FC<WrapperWithBullet.Props> = ({
                 )}
             >
             </div>
+
+            <If condition={showNotificationCount}>
+                <span className={styles.count}>
+                    {trimmedCount}
+                </span>
+            </If>
         </div>
     );
 };

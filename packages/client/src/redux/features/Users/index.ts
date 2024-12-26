@@ -3,11 +3,12 @@ import * as UserSlice from './UsersSlice';
 
 
 
-export namespace User {
+export namespace Users {
     export const Api = UsersApi;
 
     export const {
         Slice,
+        StoreSelectors,
     } = UserSlice;
 
     export type State = UserSlice.State;

@@ -83,7 +83,12 @@ export const useNavigator = () => {
             },
 
             server: (props) => {
-                return pathToUse.current === navigatorPath.server(props);
+                const serverPath = navigatorPath.server(props);
+
+                return (
+                    pathToUse.current === serverPath
+                    || pathToUse.current.startsWith(serverPath)
+                );
             },
         } satisfies MyLocationIs;
     });

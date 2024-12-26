@@ -1,15 +1,13 @@
-import { invariant } from '@lesnoypudge/utils';
 import { createCustomSlice } from '@redux/utils';
 import { isAnyOf } from '@reduxjs/toolkit';
-import { ClientEntities } from '@types';
 import { localStorageApi } from '@utils';
 import { MOBILE_SCREEN_QUERY } from '@vars';
-import { User } from '../Users';
+import { Users } from '../Users';
 
 
 
 export type State = {
-    user: ClientEntities.User.Base | null;
+    userId: string | null;
     isAttemptedToRefresh: boolean;
     isRefreshing: boolean;
     isNetworkConnected: boolean;
@@ -21,7 +19,7 @@ export type State = {
 
 export const getInitialState = (): State => {
     return {
-        user: null,
+        userId: null,
         isDeaf: localStorageApi.get('isDeaf', false),
         isMute: localStorageApi.get('isMute', false),
         isAttemptedToRefresh: false,
@@ -33,7 +31,7 @@ export const getInitialState = (): State => {
 };
 
 export const Slice = createCustomSlice({
-    name: 'AppSlice',
+    name: 'App',
     initialState: getInitialState(),
     reducers: (create) => ({
         softReset: create.reducer((state) => ({
@@ -44,9 +42,9 @@ export const Slice = createCustomSlice({
     extraReducers: (builder) => {
         builder.addMatcher(
             isAnyOf(
-                User.Api.endpoints.login.matchPending,
-                User.Api.endpoints.registration.matchPending,
-                User.Api.endpoints.refresh.matchPending,
+                Users.Api.endpoints.login.matchPending,
+                Users.Api.endpoints.registration.matchPending,
+                Users.Api.endpoints.refresh.matchPending,
             ),
             (state) => {
                 state.isRefreshing = true;
@@ -54,33 +52,26 @@ export const Slice = createCustomSlice({
         );
         builder.addMatcher(
             isAnyOf(
-                User.Api.endpoints.login.matchFulfilled,
-                User.Api.endpoints.registration.matchFulfilled,
-                User.Api.endpoints.refresh.matchFulfilled,
+                Users.Api.endpoints.login.matchFulfilled,
+                Users.Api.endpoints.registration.matchFulfilled,
+                Users.Api.endpoints.refresh.matchFulfilled,
             ),
             (state, { payload }) => {
-                state.user = payload;
+                state.userId = payload.id;
                 state.isRefreshing = false;
                 state.isAttemptedToRefresh = true;
             },
         );
         builder.addMatcher(
             isAnyOf(
-                User.Api.endpoints.login.matchRejected,
-                User.Api.endpoints.registration.matchRejected,
-                User.Api.endpoints.refresh.matchRejected,
+                Users.Api.endpoints.login.matchRejected,
+                Users.Api.endpoints.registration.matchRejected,
+                Users.Api.endpoints.refresh.matchRejected,
             ),
             (state) => {
                 state.isRefreshing = false;
                 state.isAttemptedToRefresh = true;
             },
         );
-    },
-    selectors: {
-        selectAuthorizedUser: (state) => {
-            invariant(state.user, 'authorized user not found');
-
-            return state.user;
-        },
     },
 });

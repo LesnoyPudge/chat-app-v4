@@ -6,8 +6,7 @@ import {
 } from '@lesnoypudge/utils-react';
 import { hotKey } from '@lesnoypudge/utils-web';
 import { useHotKey, useIsFocusVisible } from '@hooks';
-import { useCallback, useState } from 'react';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
 
 
@@ -38,12 +37,19 @@ export namespace useKeyboardNavigation {
             prevent: () => void;
         }) => void;
     };
+
+    export type Return = {
+        currentFocusedId: string | undefined;
+        getTabIndex: (id: string) => 0 | -1;
+        getIsFocused: (id: string) => boolean;
+        setCurrentFocusedId: Dispatch<SetStateAction<string | undefined>>;
+    };
 }
 
 export const useKeyboardNavigation = (
     wrapperRefManager: useRefManager.RefManager<HTMLElement>,
     providedOptions: useKeyboardNavigation.Options,
-) => {
+): useKeyboardNavigation.Return => {
     const optionsRef = useLatest(providedOptions);
     const { isFocusedRef } = useIsFocusVisible(
         wrapperRefManager,
@@ -215,6 +221,5 @@ export const useKeyboardNavigation = (
         getTabIndex,
         getIsFocused,
         setCurrentFocusedId,
-        // withFocusSet,
     };
 };

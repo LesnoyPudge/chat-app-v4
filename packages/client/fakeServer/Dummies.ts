@@ -23,12 +23,7 @@ export class Dummies {
         invariant(data.textChat ?? data.voiceChat, 'chat not provided');
 
         return {
-            id: data.id,
-            name: data.name,
-            roleWhitelist: data.roleWhitelist,
-            server: data.server,
-            textChat: data.textChat,
-            voiceChat: data.voiceChat,
+            ...data,
         } as ClientEntities.Channel.Base;
     }
 
@@ -41,10 +36,7 @@ export class Dummies {
         ),
     ): ClientEntities.Conversation.Base {
         return {
-            id: data.id,
-            textChat: data.textChat,
-            voiceChat: data.voiceChat,
-            user: data.user,
+            ...data,
         };
     }
 
@@ -57,12 +49,8 @@ export class Dummies {
         ),
     ): ClientEntities.Message.Base {
         return {
-            id: data.id,
-            attachments: data.attachments,
-            author: data.author,
-            content: data.content,
+            ...data,
             createdAt: Date.now(),
-            index: data.index,
             isDeleted: false,
             isModified: false,
             updatedAt: Date.now(),
@@ -88,11 +76,7 @@ export class Dummies {
         ),
     ): ClientEntities.Role.Base {
         return {
-            id: data.id,
-            avatar: data.avatar,
-            color: data.color,
-            isDefault: data.isDefault,
-            name: data.name,
+            ...data,
             permissions: data.permissions ?? {
                 admin: false,
                 banMember: false,
@@ -101,8 +85,6 @@ export class Dummies {
                 kickMember: false,
                 serverControl: false,
             },
-            server: data.server,
-            users: [],
             weight: 0,
         };
     }
@@ -121,18 +103,10 @@ export class Dummies {
         >,
     ): ClientEntities.Server.Base {
         return {
-            id: data.id,
-            avatar: data.avatar,
+            ...data,
             banned: [],
-            channels: [],
-            identifier: data.identifier,
             invitations: [],
             isPrivate: false,
-            members: [],
-            name: data.name,
-            owner: data.owner,
-            roles: [],
-            memberCount: 0,
             onlineMemberCount: 0,
         };
     }
@@ -149,7 +123,7 @@ export class Dummies {
         >,
     ): ClientEntities.User.Base {
         return {
-            id: data.id,
+            ...data,
             accessCode: nanoid(6).toUpperCase(),
             avatar: null,
             blocked: [],
@@ -164,10 +138,7 @@ export class Dummies {
             hiddenConversations: [],
             isDeleted: false,
             lastSeenMessages: [],
-            login: data.login,
-            mutedTextChats: [],
-            name: data.name,
-            password: data.password,
+            mutedServers: [],
             servers: [],
             settings: {
                 messageDisplayMode: 'cozy',
@@ -176,8 +147,6 @@ export class Dummies {
                 theme: 'dark',
             },
             status: 'offline',
-            accessToken: data.accessToken,
-            refreshToken: data.refreshToken,
         };
     }
 
@@ -188,9 +157,8 @@ export class Dummies {
         >>,
     ): ClientEntities.TextChat.Base {
         return {
-            id: data.id,
-            message: [],
-            channel: data.channel,
+            ...data,
+            messages: [],
             conversation: null,
         };
     }
@@ -203,10 +171,9 @@ export class Dummies {
         >>,
     ): ClientEntities.TextChat.Base {
         return {
-            id: data.id,
-            message: [],
+            ...data,
+            messages: [],
             channel: null,
-            conversation: data.conversation,
         };
     }
 
@@ -217,11 +184,10 @@ export class Dummies {
         >>,
     ): ClientEntities.VoiceChat.Base {
         return {
-            id: data.id,
+            ...data,
             deafen: [],
             muted: [],
             participants: [],
-            channel: data.channel,
             conversation: null,
         };
     }
@@ -233,9 +199,8 @@ export class Dummies {
         >>,
     ): ClientEntities.VoiceChat.Base {
         return {
-            id: data.id,
+            ...data,
             channel: null,
-            conversation: data.conversation,
             deafen: [],
             muted: [],
             participants: [],

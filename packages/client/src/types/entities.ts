@@ -25,6 +25,7 @@ export namespace ClientEntities {
             friends: Id[];
             blocked: Id[];
             servers: Server.Id[];
+            mutedServers: Server.Id[];
             conversations: Conversation.Id[];
             hiddenConversations: Conversation.Id[];
             friendRequests: {
@@ -37,7 +38,6 @@ export namespace ClientEntities {
                     createdAt: number;
                 }[];
             };
-            mutedTextChats: TextChat.Id[];
             lastSeenMessages: {
                 textChatId: TextChat.Id;
                 lastIndex: number;
@@ -84,7 +84,7 @@ export namespace ClientEntities {
             Conditional
             & {
                 id: Id;
-                message: Message.Id[];
+                messages: Message.Id[];
             }
         >;
     }
@@ -182,7 +182,6 @@ export namespace ClientEntities {
             roles: Role.Id[];
             channels: Channel.Id[];
             members: User.Id[];
-            memberCount: number;
             onlineMemberCount: number;
             avatar: File.Id | null;
             identifier: string;

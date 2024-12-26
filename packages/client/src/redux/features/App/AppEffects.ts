@@ -3,7 +3,7 @@ import { Slice } from './AppSlice';
 import { MOBILE_SCREEN_QUERY } from '@vars';
 import { addEventListener } from '@lesnoypudge/utils-web';
 import { localStorageApi } from '@utils';
-import { User } from '../Users';
+import { Users } from '../Users';
 import { isAnyOf } from '@reduxjs/toolkit';
 
 
@@ -49,9 +49,9 @@ export const { setupEffects } = createEffects({
 
         ({ startListening }) => {
             const matcher = isAnyOf(
-                User.Api.endpoints.login.matchFulfilled,
-                User.Api.endpoints.registration.matchFulfilled,
-                User.Api.endpoints.refresh.matchFulfilled,
+                Users.Api.endpoints.login.matchFulfilled,
+                Users.Api.endpoints.registration.matchFulfilled,
+                Users.Api.endpoints.refresh.matchFulfilled,
             );
 
             startListening({

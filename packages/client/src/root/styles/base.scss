@@ -57,15 +57,6 @@
         @apply z-20 pointer-events-none;
     }
 
-    // https://gerardkcohen.me/writing/2017/voiceover-list-style-type.html
-    ul,
-    ol,
-    menu {
-        li::before {
-            content: '\200B'; /* add zero-width space */
-        }
-    }
-
     button,
     [role='button'] {
         &:disabled {

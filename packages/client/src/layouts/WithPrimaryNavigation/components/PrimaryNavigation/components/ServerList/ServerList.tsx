@@ -1,24 +1,36 @@
 import { FC } from 'react';
 import { ServerListItem } from './components';
-import { useSliceSelector } from '@redux/hooks';
+import { useStoreSelector } from '@redux/hooks';
 import { Features } from '@redux/features';
 import { Iterate, Scrollable, Separator } from '@components';
+import { useKeyboardNavigation, usePropsChange } from '@hooks';
+import { useRefManager } from '@lesnoypudge/utils-react';
+import { createStyles } from '@utils';
+import { useTrans } from '@i18n';
 
 
+
+const styles = createStyles({
+    list: 'flex flex-col gap-2',
+});
 
 export const ServerList: FC = () => {
-    // const { myLocationIs, navigateTo } = useNavigator();
-    // const ids = useMemoSelector((s) => AppSelectors.selectMe(s).channels, []);
-    // const channels = useMemoSelector(ChannelSelectors.selectByIds(ids), [ids]);
-    // const channelsRef = useLatest(channels);
-    // const keyboardNavigation = useKeyboardNavigation(channelsRef);
+    const { t } = useTrans();
 
-    const serverIds = useSliceSelector(
-        Features.App.Slice,
-        (state) => Features.App.Slice.selectors.selectAuthorizedUser()(
-            state,
-        ).servers,
-    );
+    const serverIds = useStoreSelector((state) => {
+        return Features.Users.StoreSelectors.selectMe()(state).servers;
+    });
+    usePropsChange({ serverIds });
+    const wrapperRef = useRefManager<HTMLUListElement>(null);
+    const {
+        getIsFocused,
+        getTabIndex,
+        setCurrentFocusedId,
+    } = useKeyboardNavigation(wrapperRef, {
+        list: serverIds,
+        direction: 'vertical',
+        loop: false,
+    });
 
     const showServers = !!serverIds.length;
 
@@ -27,46 +39,25 @@ export const ServerList: FC = () => {
             <Separator length='50%' spacing={0}/>
 
             <Scrollable
-                className={styles.scrollbar}
                 size='hidden'
                 followContentSize
             >
                 <ul
                     className={styles.list}
-                    aria-label='Список каналов'
-                    ref={keyboardNavigation.setRoot}
+                    aria-label={t('PrimaryNavigation.ServerList.label')}
+                    ref={wrapperRef}
                 >
-                    <Iterate items={serverIds}></Iterate>
-                    <List list={ids}>
-                        {(channelId) => (
-                            <EntityContextProvider.Channel id={channelId}>
-                                {(channel) => {
-                                    const isInChannel = myLocationIs.channel(channelId);
-                                    const navigateToChannel = () => navigateTo.channel(channelId);
-
-                                    const childrenArgs: ChildrenArgs = [
-                                        channelId,
-                                        channel,
-                                        isInChannel,
-                                        navigateToChannel,
-                                        keyboardNavigation,
-                                    ];
-
-                                    return (
-                                        <li>
-                                            <MoveFocusInside enabled={keyboardNavigation.getIsFocused(channelId)}>
-                                                <WrapperWithBullet isActive={isInChannel}>
-                                                    <ChildrenAsNodeOrFunction args={childrenArgs}>
-                                                        {children}
-                                                    </ChildrenAsNodeOrFunction>
-                                                </WrapperWithBullet>
-                                            </MoveFocusInside>
-                                        </li>
-                                    );
-                                }}
-                            </EntityContextProvider.Channel>
+                    <Iterate items={serverIds}>
+                        {(serverId) => (
+                            <ServerListItem
+                                serverId={serverId}
+                                key={serverId}
+                                isFocused={getIsFocused(serverId)}
+                                setCurrentFocusedId={setCurrentFocusedId}
+                                tabIndex={getTabIndex(serverId)}
+                            />
                         )}
-                    </List>
+                    </Iterate>
                 </ul>
             </Scrollable>
 

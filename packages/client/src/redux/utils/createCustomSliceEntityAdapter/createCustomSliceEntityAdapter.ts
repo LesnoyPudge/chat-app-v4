@@ -32,7 +32,6 @@ export const createCustomSliceEntityAdapter = <
     adapter: createCustomEntityAdapter.Return<_EntityState>,
 ) => {
     const {
-        selectors = {} as _Selectors,
         reducers,
     } = config;
 
@@ -42,8 +41,6 @@ export const createCustomSliceEntityAdapter = <
             : reducers
     );
 
-    const adapterSelectors = adapter.getSelectors();
-
     const slice = buildCreateSlice({
         creators: { asyncThunk: asyncThunkCreator },
     })({
@@ -52,10 +49,6 @@ export const createCustomSliceEntityAdapter = <
             ...adapter.reducers,
             ...getOriginalReducers(create),
         }),
-        selectors: {
-            ...adapterSelectors,
-            ...selectors,
-        },
     });
 
     return withSliceSelectors(slice);

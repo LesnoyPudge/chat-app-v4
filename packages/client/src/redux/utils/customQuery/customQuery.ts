@@ -81,7 +81,7 @@ const withReAuthorization = (baseQuery: CustomQueryFn): CustomQueryFn => {
         }
 
         const refreshResponse = await api.dispatch(
-            Features.User.Api.endpoints.refresh.initiate({
+            Features.Users.Api.endpoints.refresh.initiate({
                 refreshToken,
             }, { forceRefetch: true, subscribe: false }),
         );

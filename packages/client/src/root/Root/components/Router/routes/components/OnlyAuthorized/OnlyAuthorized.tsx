@@ -24,11 +24,11 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
     } = useSliceSelector(Features.App.Slice, ({
         isAttemptedToRefresh,
         isRefreshing,
-        user,
+        userId,
     }) => ({
         isAttemptedToRefresh,
         isRefreshing,
-        isAuthorized: !!user,
+        isAuthorized: !!userId,
     }));
     const { navigateTo } = Navigator.useNavigator();
     const { refreshToken } = useLocalStorage('refreshToken');
@@ -40,7 +40,7 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
         || !refreshToken
     );
 
-    Features.User.Api.useRefreshQuery({
+    Features.Users.Api.useRefreshQuery({
         refreshToken: refreshToken ?? '',
     }, {
         skip,

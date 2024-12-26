@@ -34,7 +34,7 @@ const LoginFormOptions = Form.createForm<Endpoints.V1.User.Login.RequestBody>({
 });
 
 export const LoginForm: FC = () => {
-    const [login] = Features.User.Api.useLoginMutation();
+    const [login] = Features.Users.Api.useLoginMutation();
     const { t } = useTrans();
     const { changeTab } = useContextProxy(AuthTabContext);
 

@@ -19,9 +19,9 @@ export const OnlyUnAuthorized: FC<OnlyUnAuthorized.Props> = ({
     const {
         isAuthorized,
     } = useSliceSelector(Features.App.Slice, ({
-        user,
+        userId,
     }) => ({
-        isAuthorized: !!user,
+        isAuthorized: !!userId,
     }));
     const { navigateTo } = Navigator.useNavigator();
     const { refreshToken } = useLocalStorage('refreshToken');

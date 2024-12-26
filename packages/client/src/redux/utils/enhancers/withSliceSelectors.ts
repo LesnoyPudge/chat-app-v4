@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @stylistic/indent */
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { Slice } from '@reduxjs/toolkit';
@@ -7,7 +8,6 @@ import { Slice } from '@reduxjs/toolkit';
 type ModifiedSelectors<
     _Slice extends Slice,
 > = (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     _Slice extends Slice<any, any, any, any, infer _Selectors>
         ? {
             [_Key in keyof _Selectors]: (
@@ -41,9 +41,8 @@ export const withSliceSelectors = <
 >(
     slice: _Slice,
 ): SliceWithModifiedSelectors<_Slice> => {
-    const selectors = slice.selectors as Record<
+    const selectors = slice.getSelectors() as Record<
         string,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (state: _State, props: any) => unknown
     >;
 
