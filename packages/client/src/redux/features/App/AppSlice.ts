@@ -10,6 +10,7 @@ export type State = {
     userId: string | null;
     isAttemptedToRefresh: boolean;
     isRefreshing: boolean;
+    lastSuccessfulRefreshTimestamp: number | null;
     isNetworkConnected: boolean;
     isSocketConnected: boolean;
     isMute: boolean;
@@ -23,6 +24,7 @@ export const getInitialState = (): State => {
         isDeaf: localStorageApi.get('isDeaf', false),
         isMute: localStorageApi.get('isMute', false),
         isAttemptedToRefresh: false,
+        lastSuccessfulRefreshTimestamp: null,
         isMobileScreen: window.matchMedia(MOBILE_SCREEN_QUERY).matches,
         isNetworkConnected: navigator.onLine,
         isRefreshing: false,

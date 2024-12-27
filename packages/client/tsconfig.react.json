@@ -40,9 +40,6 @@
             "@root/*": [
                 "./src/root/*"
             ],
-            // "@src/*": [
-            //     "./src/*"
-            // ],
             "@components": [
                 "./src/components"
             ],
@@ -76,11 +73,11 @@
             "@entities": [
                 "./src/entities"
             ],
-            "@layouts": [
-                "./src/layouts"
+            "@layouts/*": [
+                "./src/layouts/*"
             ],
-            "@panels": [
-                "./src/panels"
+            "@panels/*": [
+                "./src/panels/*"
             ],
             "@modals": [
                 "./src/modals"

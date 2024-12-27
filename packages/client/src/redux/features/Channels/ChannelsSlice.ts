@@ -10,18 +10,20 @@ import { ChannelsApi } from './ChannelsApi';
 
 export type State = ClientEntities.Channel.Base;
 
-const adapter = createCustomEntityAdapter<State>();
+const name = 'Channels';
+
+const adapter = createCustomEntityAdapter<State, typeof name>(name);
 
 const initialState = adapter.getInitialState();
 
 export const Slice = createCustomSliceEntityAdapter({
-    name: 'Channels',
+    name,
     initialState,
     reducers: (create) => ({}),
     extraReducers: (builder) => {},
     selectors: {
         selectIdsByServerId: (state, serverId: string) => {
-            const channels = adapter.selectors.selectAll(state);
+            const channels = Object.values(state.entities);
 
             return channels.filter((channel) => {
                 return channel.server === serverId;
@@ -31,5 +33,5 @@ export const Slice = createCustomSliceEntityAdapter({
 }, adapter);
 
 export const { StoreSelectors } = createStoreSelectors({
-    ...adapter.selectors,
+    ...adapter.storeSelectors,
 });

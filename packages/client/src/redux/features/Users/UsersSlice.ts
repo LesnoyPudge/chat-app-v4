@@ -37,7 +37,7 @@ export const Slice = createCustomSliceEntityAdapter({
 }, adapter);
 
 export const { StoreSelectors } = createStoreSelectors({
-    ...adapter.selectors,
+    ...adapter.storeSelectors,
     selectMe: (state) => {
         const myId = App.Slice.selectors.selectUserId()(state.App);
         invariant(myId, 'id not found');

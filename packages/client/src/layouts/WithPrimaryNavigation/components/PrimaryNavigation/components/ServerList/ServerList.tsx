@@ -3,7 +3,7 @@ import { ServerListItem } from './components';
 import { useStoreSelector } from '@redux/hooks';
 import { Features } from '@redux/features';
 import { Iterate, Scrollable, Separator } from '@components';
-import { useKeyboardNavigation, usePropsChange } from '@hooks';
+import { useKeyboardNavigation } from '@hooks';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { createStyles } from '@utils';
 import { useTrans } from '@i18n';
@@ -16,12 +16,10 @@ const styles = createStyles({
 
 export const ServerList: FC = () => {
     const { t } = useTrans();
-
+    const wrapperRef = useRefManager<HTMLUListElement>(null);
     const serverIds = useStoreSelector((state) => {
         return Features.Users.StoreSelectors.selectMe()(state).servers;
     });
-    usePropsChange({ serverIds });
-    const wrapperRef = useRefManager<HTMLUListElement>(null);
     const {
         getIsFocused,
         getTabIndex,

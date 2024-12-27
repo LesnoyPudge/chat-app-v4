@@ -1,1 +1,1 @@
-export * from './WithPrimaryNavigation';
+export { WithPrimaryNavigation as default } from './WithPrimaryNavigation';

@@ -105,7 +105,7 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
                                     <span>
                                         {t(
                                             'InvitationScreen.totalCount',
-                                            { count: server?.memberCount },
+                                            { count: server?.members.length },
                                         )}
                                     </span>
                                 </div>

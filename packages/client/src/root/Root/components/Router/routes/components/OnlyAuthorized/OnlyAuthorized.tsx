@@ -19,38 +19,68 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
 }) => {
     const {
         isAttemptedToRefresh,
+        lastSuccessfulRefreshTimestamp,
         isRefreshing,
         isAuthorized,
     } = useSliceSelector(Features.App.Slice, ({
         isAttemptedToRefresh,
         isRefreshing,
+        lastSuccessfulRefreshTimestamp,
         userId,
     }) => ({
         isAttemptedToRefresh,
+        lastSuccessfulRefreshTimestamp,
         isRefreshing,
         isAuthorized: !!userId,
     }));
     const { navigateTo } = Navigator.useNavigator();
     const { refreshToken } = useLocalStorage('refreshToken');
 
-    const skip = (
+    // consider duration to be 2 min less then actual duration
+    const tokenDuration = (
+        Number.parseInt(env._PUBLIC_ACCESS_TOKEN_DURATION)
+        - 2 * 60 * 1_000
+    );
+
+    // it's time if now is more then duration minus minute
+    const isItTimeToRefresh = (
+        lastSuccessfulRefreshTimestamp === null
+            ? true
+            : Date.now() >= (
+                lastSuccessfulRefreshTimestamp + tokenDuration - 1 * 60 * 1_000
+            )
+    );
+
+    const haveRefreshToken = !!refreshToken;
+    const skipRefresh = (
         disabled
         || isRefreshing
-        || isAttemptedToRefresh
-        || !refreshToken
+        || !isItTimeToRefresh
+        || !haveRefreshToken
     );
 
     Features.Users.Api.useRefreshQuery({
         refreshToken: refreshToken ?? '',
     }, {
-        skip,
-        pollingInterval: Number.parseInt(env._PUBLIC_ACCESS_TOKEN_DURATION),
+        skip: skipRefresh,
+        pollingInterval: tokenDuration,
     });
 
-    const shouldNotWait = isAttemptedToRefresh || !refreshToken;
-    const notRefreshing = shouldNotWait && !isRefreshing;
-    const shouldNavigateToAuth = notRefreshing && !isAuthorized;
-    const shouldShowOutlet = notRefreshing && isAuthorized;
+    const shouldNavigateToAuth = (
+        // tried to refresh at least once and not refreshing now
+        (isAttemptedToRefresh && !isAuthorized && !isRefreshing)
+        //  or don't have refresh token
+        || !haveRefreshToken
+    );
+
+    // we should show outlet during refreshing if it was shown once
+    // if we refresh for the first time we don't show outlet while refreshing
+    const shouldShowOutlet = (
+        // show while refreshing if it was shown once
+        (isAttemptedToRefresh && haveRefreshToken && isRefreshing)
+        // if refresh is successful
+        || (isAttemptedToRefresh && isAuthorized && !isRefreshing)
+    );
 
     useEffect(() => {
         if (disabled) return;

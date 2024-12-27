@@ -7,4 +7,5 @@ export * from './createEffects';
 export * from './createStoreSelectors';
 export * from './customQuery';
 export * from './enhancers';
+export * from './toCurriedSelectors';
 export * from './useSharedListenerMiddleware';

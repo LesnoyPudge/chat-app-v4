@@ -33,6 +33,7 @@ export const createCustomSliceEntityAdapter = <
 ) => {
     const {
         reducers,
+        selectors = {} as _Selectors,
     } = config;
 
     const getOriginalReducers = (create: ReducerCreators<_State>) => (
@@ -49,6 +50,10 @@ export const createCustomSliceEntityAdapter = <
             ...adapter.reducers,
             ...getOriginalReducers(create),
         }),
+        selectors: {
+            ...adapter.entitySelectors,
+            ...selectors,
+        },
     });
 
     return withSliceSelectors(slice);

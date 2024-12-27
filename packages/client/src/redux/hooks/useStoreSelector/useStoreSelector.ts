@@ -1,5 +1,7 @@
 import { useConst } from '@lesnoypudge/utils-react';
 import { RootState } from '@redux/store';
+import { logger } from '@utils';
+import { isDev } from '@vars';
 import { memoize } from 'proxy-memoize';
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
@@ -18,6 +20,13 @@ export const useStoreSelector = <
     }));
 
     const memoizedSelector = useCallback((state: RootState) => {
+        if (isDev) {
+            const firstResult = _selector(state);
+            const secondResult = _selector(state);
+            const notEqual = firstResult !== secondResult;
+            notEqual && logger.warn('selector returned different reference');
+        }
+
         return _selector(state);
     }, [_selector]);
 

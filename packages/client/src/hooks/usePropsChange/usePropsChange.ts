@@ -11,9 +11,7 @@ import { useEffect, useRef } from 'react';
 const empty = {} as T.UnknownRecord;
 
 const getDiff = (prev: T.UnknownRecord, next: T.UnknownRecord) => {
-    const diff = {};
-
-    [
+    const diff = [
         ...Object.keys(prev),
         ...Object.keys(next),
     ].reduce<T.UnknownRecord>((acc, cur) => {

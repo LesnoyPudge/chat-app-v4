@@ -3,7 +3,6 @@ import { RootState, Slices } from '@redux/store';
 import {
     createEntityAdapter,
     EntityAdapter,
-    EntitySelectors,
     EntityState,
 } from '@reduxjs/toolkit';
 import { WithId } from '@types';
@@ -45,25 +44,51 @@ export namespace createCustomEntityAdapter {
         )
     };
 
-    export type SelectsByIds<_State extends WithId> = (
-        state: RootState,
-        ids: string[],
-    ) => _State[];
+    export type CustomEntitySelectors<_State extends WithId> = {
+        selectIds: (
+            entityState: EntityState<_State, _State['id']>
+        ) => _State['id'][];
+        selectEntities: (
+            entityState: EntityState<_State, _State['id']>
+        ) => Record<_State['id'], _State>;
+        selectAll: (
+            entityState: EntityState<_State, _State['id']>
+        ) => Record<_State['id'], _State>[_State['id']][];
+        selectById: (
+            entityState: EntityState<_State, _State['id']>,
+            id: _State['id']
+        ) => Record<_State['id'], _State>[_State['id']] | undefined;
+        selectByIds: (
+            entityState: EntityState<_State, _State['id']>,
+            ids: _State['id'][]
+        ) => Record<_State['id'], _State>[_State['id']][];
+        selectTotal: (
+            entityState: EntityState<_State, _State['id']>
+        ) => number;
+    };
 
-    export type GetSelectors<_State extends WithId> = () => (
-        EntitySelectors<
-            _State,
-            RootState,
-            _State['id']
-        >
-        & {
-            selectByIds: SelectsByIds<_State>;
-        }
-    );
-
-    export type Selectors<_State extends WithId> = (
-        ReturnType<GetSelectors<_State>>
-    );
+    export type CustomStoreSelectors<_State extends WithId> = {
+        selectIds: (
+            rootState: RootState
+        ) => _State['id'][];
+        selectEntities: (
+            rootState: RootState
+        ) => Record<_State['id'], _State>;
+        selectAll: (
+            rootState: RootState
+        ) => Record<_State['id'], _State>[_State['id']][];
+        selectById: (
+            rootState: RootState,
+            id: _State['id']
+        ) => Record<_State['id'], _State>[_State['id']] | undefined;
+        selectByIds: (
+            rootState: RootState,
+            ids: _State['id'][]
+        ) => Record<_State['id'], _State>[_State['id']][];
+        selectTotal: (
+            rootState: RootState
+        ) => number;
+    };
 
     export type Return<_State extends WithId> = (
         T.Except<
@@ -73,7 +98,8 @@ export namespace createCustomEntityAdapter {
         & {
             reducers: Reducers<_State>;
             extraReducers: ExtraReducers<_State>;
-            selectors: Selectors<_State>;
+            entitySelectors: CustomEntitySelectors<_State>;
+            storeSelectors: CustomStoreSelectors<_State>;
         }
     );
 }
@@ -105,35 +131,90 @@ export const createCustomEntityAdapter = <
         return acc;
     }, {});
 
-    const getDefaultSelectors = () => {
-        return adapter.getSelectors<RootState>((state) => {
-            return state[name] as unknown as EntityState<_State, _State['id']>;
-        });
+    const selectSliceState = (rootState: RootState) => {
+        // assume that name is same as in slice
+        return rootState[name] as unknown as EntityState<
+            _State,
+            _State['id']
+        >;
     };
 
-    const getSelectors: createCustomEntityAdapter.GetSelectors<_State> = () => {
-        const defaultSelectors = getDefaultSelectors();
-        adapter.getSelectors().selectAll();
-        const selectByIds: createCustomEntityAdapter.SelectsByIds<_State> = (
-            state,
-            ids,
-        ) => {
-            console.log('probably reason of unstable return?');
-            return ids.map((id) => {
-                return defaultSelectors.selectById(state, id);
-            }).filter(Boolean);
-        };
+    const entitySelectors: createCustomEntityAdapter.CustomEntitySelectors<
+        _State
+    > = {
+        selectIds: (entityState) => {
+            return entityState.ids;
+        },
 
-        return {
-            ...defaultSelectors,
-            selectByIds,
-        };
+        selectEntities: (entityState) => {
+            return entityState.entities;
+        },
+
+        selectAll: (entityState) => {
+            const ids = entitySelectors.selectIds(entityState);
+            const entities = entitySelectors.selectEntities(entityState);
+
+            return ids.map((id) => entities[id]);
+        },
+
+        selectById: (entityState, id) => {
+            const entities = entitySelectors.selectEntities(entityState);
+
+            return entities[id];
+        },
+
+        selectByIds: (entityState, ids) => {
+            const entities = entitySelectors.selectEntities(entityState);
+
+            return ids.map((id) => entities[id]);
+        },
+
+        selectTotal: (entityState) => {
+            const ids = entitySelectors.selectIds(entityState);
+
+            return ids.length;
+        },
+    };
+
+    const storeSelectors: createCustomEntityAdapter.CustomStoreSelectors<
+        _State
+    > = {
+        selectIds: (rootState) => {
+            return entitySelectors.selectIds(selectSliceState(rootState));
+        },
+
+        selectEntities: (rootState) => {
+            return entitySelectors.selectEntities(selectSliceState(rootState));
+        },
+
+        selectAll: (rootState) => {
+            return entitySelectors.selectAll(selectSliceState(rootState));
+        },
+
+        selectById: (rootState, id) => {
+            return entitySelectors.selectById(
+                selectSliceState(rootState),
+                id,
+            );
+        },
+
+        selectByIds: (rootState, ids) => {
+            return entitySelectors.selectByIds(
+                selectSliceState(rootState),
+                ids,
+            );
+        },
+
+        selectTotal: (rootState) => {
+            return entitySelectors.selectTotal(selectSliceState(rootState));
+        },
     };
 
     return {
         ...adapter,
         reducers,
         extraReducers,
-        selectors: getSelectors(),
+        entitySelectors,
+        storeSelectors,
     };
 };

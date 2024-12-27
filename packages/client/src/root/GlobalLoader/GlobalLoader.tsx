@@ -1,8 +1,8 @@
-import { Dialog, Overlay } from '@components';
+import { Dialog } from '@components';
 import { useContextProxy } from '@lesnoypudge/utils-react';
 import { GlobalLoaderScreen } from '@screens/bundled/GlobalLoaderScreen';
 import { createStyles, createVariants, logger } from '@utils';
-import { FC, PropsWithChildren, Suspense, useEffect } from 'react';
+import { FC, PropsWithChildren, useEffect } from 'react';
 
 
 
@@ -33,10 +33,11 @@ export const LoaderDisable: FC<LoaderActionProps> = ({
     id,
     children,
 }) => {
-    const { setOverlay } = useContextProxy(Overlay.Context);
+    const { setOverlay } = useContextProxy(Dialog.Context);
 
     useEffect(() => {
-        id && logger.log(`disable global loader: ${id}`);
+        id && logger.log(`${Date.now()} disable global loader: ${id}`);
+
         setOverlay(false);
     }, [id, setOverlay]);
 
@@ -47,11 +48,18 @@ export const LoaderEnable: FC<LoaderActionProps> = ({
     id,
     children,
 }) => {
-    const { setOverlay } = useContextProxy(Overlay.Context);
+    const { setOverlay } = useContextProxy(Dialog.Context);
 
     useEffect(() => {
-        id && logger.log('enable global loader');
+        id && logger.log(`${Date.now()} enable global loader ${id}`);
+
         setOverlay(true);
+
+        return () => {
+            id && logger.log(`${Date.now()} toggle off global loader ${id}`);
+
+            setOverlay(false);
+        };
     }, [setOverlay, id]);
 
     return children;

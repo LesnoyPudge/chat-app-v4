@@ -1,28 +1,31 @@
-import { FC } from 'react';
+import { FC, lazy } from 'react';
 import { Outlet, Route } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../../components';
 import { Navigator } from '@entities';
-import { WithPrimaryNavigation } from '@layouts';
+import { createGroupedLazyLoad, withDelay } from '../../utils';
 
 
-// PRELOAD ALL LAYOUTS???
-// OR PRELOAD ALL SKELETONS???
-// OR DON'T USE SKELETONS???
-// OR SKELETONS AS PART OF LAYOUT/PANEL, DURING FETCHING
-// IN THIS CASE, WE NEED SOME SUSPENSE MANAGER WHERE WE CAN
-// PRELOAD ALL SUSPENDED COMPONENTS ONCE ONE COMPONENT IS LOADED
+
+const { withGroupedLazyLoad } = createGroupedLazyLoad();
+
+const WithPrimaryNavigation = lazy(withGroupedLazyLoad(withDelay(() => {
+    return import('@layouts/WithPrimaryNavigation');
+})));
 
 export const AppRoutes: FC = () => {
     return (
-        <Route element={<WithPrimaryNavigation/>}>
+        <Route element={(
+            <SuspenseWithGlobalLoader>
+                <WithPrimaryNavigation/>
+            </SuspenseWithGlobalLoader>
+        )}>
             <Route element={<>with Conversations <Outlet/></>}>
                 <Route
                     index
                     element={(
-                        <SuspenseWithGlobalLoader>
+                        <>
                             <>index</>
-                        </SuspenseWithGlobalLoader>
-
+                        </>
                         // <Suspense fallback={<SubPageSkeleton/>}>
                         //     <GlobalLoader.Loaded>
                         //         <AppSubPage/>
@@ -34,9 +37,7 @@ export const AppRoutes: FC = () => {
                 <Route
                     path={Navigator.staticNavigatorPath.conversation}
                     element={(
-                        <SuspenseWithGlobalLoader>
-                            <>conversation</>
-                        </SuspenseWithGlobalLoader>
+                        <>conversation</>
                         // <Suspense fallback={<SubPageSkeleton/>}>
                         //     <GlobalLoader.Loaded>
                         //         <PrivateChatSubPage/>
@@ -53,9 +54,7 @@ export const AppRoutes: FC = () => {
                 <Route
                     index
                     element={(
-                        <SuspenseWithGlobalLoader>
-                            <>auto redirect or chose available channel</>
-                        </SuspenseWithGlobalLoader>
+                        <>auto redirect or chose available channel</>
 
                         // <NavigateToRoom
                         //     loader={<>show room skeleton loader while deciding what room to join</>}
@@ -73,9 +72,7 @@ export const AppRoutes: FC = () => {
                 <Route
                     path={Navigator.staticNavigatorPath.channel}
                     element={(
-                        <SuspenseWithGlobalLoader>
-                            <>channel</>
-                        </SuspenseWithGlobalLoader>
+                        <>channel</>
 
                         // <Suspense fallback={<SubPageSkeleton/>}>
                         //     <GlobalLoader.Loaded>

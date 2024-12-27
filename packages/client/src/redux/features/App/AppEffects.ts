@@ -5,6 +5,7 @@ import { addEventListener } from '@lesnoypudge/utils-web';
 import { localStorageApi } from '@utils';
 import { Users } from '../Users';
 import { isAnyOf } from '@reduxjs/toolkit';
+import { App } from '.';
 
 
 
@@ -56,7 +57,13 @@ export const { setupEffects } = createEffects({
 
             startListening({
                 matcher,
-                effect: ({ payload }) => {
+                effect: ({ payload }, { dispatch }) => {
+                    dispatch(
+                        App.Slice.actions.setLastSuccessfulRefreshTimestamp(
+                            Date.now(),
+                        ),
+                    );
+
                     localStorageApi.set('accessToken', payload.accessToken);
                     localStorageApi.set('refreshToken', payload.refreshToken);
                 },

@@ -10,16 +10,20 @@ import { ConversationsApi } from './ConversationsApi';
 
 export type State = ClientEntities.Conversation.Base;
 
-const adapter = createCustomEntityAdapter<State>();
+const name = 'Conversations';
+
+const adapter = createCustomEntityAdapter<State, typeof name>(name);
 
 const initialState = adapter.getInitialState();
 
 export const Slice = createCustomSliceEntityAdapter({
-    name: 'Conversations',
+    name,
     initialState,
     reducers: (create) => ({}),
     extraReducers: (builder) => {},
     selectors: {},
 }, adapter);
 
-export const { StoreSelectors } = createStoreSelectors({});
+export const { StoreSelectors } = createStoreSelectors({
+    ...adapter.storeSelectors,
+});

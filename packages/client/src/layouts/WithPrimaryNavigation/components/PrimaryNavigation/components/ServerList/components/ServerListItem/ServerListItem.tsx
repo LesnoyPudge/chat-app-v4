@@ -35,20 +35,11 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { myLocationIs, navigateTo } = Navigator.useNavigator();
     const isInServer = myLocationIs.server({ serverId });
+
     const server = useSliceSelector(
         Features.Servers.Slice,
-        (state) => {
-            return Features.Servers.Slice.getSelectors().selectById(state, serverId);
-        },
+        Features.Servers.Slice.selectors.selectById(serverId),
     );
-
-    // useSliceSelector(
-    //     Features.App.Slice,
-    //     Features.App.Slice.getSelectors().selectIsDeaf,
-    // );
-    // const server = useStoreSelector(
-    //     Features.Servers.Slice.selectors.selectById(serverId),
-    // );
 
     const notificationsCount = useStoreSelector(
         Features.Servers.StoreSelectors.selectNotificationCountById(serverId),

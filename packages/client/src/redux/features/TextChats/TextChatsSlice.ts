@@ -12,12 +12,14 @@ import { Channels } from '../Channels';
 
 export type State = ClientEntities.TextChat.Base;
 
-const adapter = createCustomEntityAdapter<State>();
+const name = 'TextChats';
+
+const adapter = createCustomEntityAdapter<State, typeof name>(name);
 
 const initialState = adapter.getInitialState();
 
 export const Slice = createCustomSliceEntityAdapter({
-    name: 'TextChats',
+    name,
     initialState,
     reducers: (create) => ({}),
     extraReducers: (builder) => {},
@@ -25,12 +27,15 @@ export const Slice = createCustomSliceEntityAdapter({
 }, adapter);
 
 export const { StoreSelectors } = createStoreSelectors({
+    ...adapter.storeSelectors,
     selectByServerId: (state, serverId: string) => {
         const channelIds = (
-            Channels.Slice.selectors.selectIdsByServerId(serverId)(state)
+            Channels.Slice.selectors.selectIdsByServerId(
+                serverId,
+            )(state.Channels)
         );
 
-        const textChats = Slice.selectors.selectAll()(state);
+        const textChats = StoreSelectors.selectAll()(state);
 
         const foundTextChats = textChats.filter((textChat) => {
             return channelIds.includes(textChat.channel);

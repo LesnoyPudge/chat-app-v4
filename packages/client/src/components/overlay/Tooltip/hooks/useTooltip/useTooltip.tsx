@@ -31,7 +31,6 @@ export const useTooltip = ({
 
     const changeState = useFunction(() => {
         const newState = withKeyboardRef.current || withMouseRef.current;
-        if (newState === isOverlayExistRef.current) return;
 
         setOverlay(newState);
     });

@@ -10,16 +10,20 @@ import { VoiceChatsApi } from './VoiceChatsApi';
 
 export type State = ClientEntities.VoiceChat.Base;
 
-const adapter = createCustomEntityAdapter<State>();
+const name = 'VoiceChats';
+
+const adapter = createCustomEntityAdapter<State, typeof name>(name);
 
 const initialState = adapter.getInitialState();
 
 export const Slice = createCustomSliceEntityAdapter({
-    name: 'VoiceChats',
+    name,
     initialState,
     reducers: (create) => ({}),
     extraReducers: (builder) => {},
     selectors: {},
 }, adapter);
 
-export const { StoreSelectors } = createStoreSelectors({});
+export const { StoreSelectors } = createStoreSelectors({
+    ...adapter.storeSelectors,
+});

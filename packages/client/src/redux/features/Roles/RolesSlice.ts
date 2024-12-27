@@ -10,16 +10,20 @@ import { RolesApi } from './RolesApi';
 
 export type State = ClientEntities.Role.Base;
 
-const adapter = createCustomEntityAdapter<State>();
+const name = 'Roles';
+
+const adapter = createCustomEntityAdapter<State, typeof name>(name);
 
 const initialState = adapter.getInitialState();
 
 export const Slice = createCustomSliceEntityAdapter({
-    name: 'Roles',
+    name,
     initialState,
     reducers: (create) => ({}),
     extraReducers: (builder) => {},
     selectors: {},
 }, adapter);
 
-export const { StoreSelectors } = createStoreSelectors({});
+export const { StoreSelectors } = createStoreSelectors({
+    ...adapter.storeSelectors,
+});
