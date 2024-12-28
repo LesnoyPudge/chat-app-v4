@@ -36,7 +36,6 @@ export const OverlayProvider: FC<OverlayProvider.Props> = ({
     const isOverlayExistRef = useLatest(isOverlayExist);
 
     const { isThrottlingRef, throttle } = useThrottle({ stateless: true });
-    const wrapperRefManager = useRefManager<HTMLDivElement>(null);
     const portalRefManager = useRefManager<HTMLDivElement>(null);
 
     const closeOverlay = useFunction(() => {
@@ -64,7 +63,6 @@ export const OverlayProvider: FC<OverlayProvider.Props> = ({
         isOverlayExist,
         isOverlayExistRef,
         closingThrottleRef: isThrottlingRef,
-        wrapperRefManager,
         portalRefManager,
         setOverlay: overlay.setValue,
         openOverlay,

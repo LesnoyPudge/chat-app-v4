@@ -37,13 +37,25 @@ export namespace useRelativePosition {
         unbounded?: boolean;
     };
 
+    export type LeaderElementOrRect = HTMLElement | OmittedRect;
+
+    export type LeaderElementRef = useRefManager.RefManager<
+        HTMLElement
+    >;
+
+    export type LeaderElementRectRef = useRefManager.RefManager<
+        OmittedRect
+    >;
+
+    export type LeaderElementOrRectRef = useRefManager.RefManager<
+        LeaderElementOrRect
+    >;
+
     export type Props = (
         Options
         & {
             followerElementRef: useRefManager.RefManager<HTMLElement>;
-            leaderElementOrRectRef: useRefManager.RefManager<
-                HTMLElement | OmittedRect
-            >;
+            leaderElementOrRectRef: LeaderElementOrRectRef;
         }
     );
 

@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { DialogContext } from '../../context';
 import { PropsWithChildrenAndClassName } from '@lesnoypudge/types-utils-react';
 import { Overlay, Popover } from '@components';
-import { AnimatePresence, m } from 'motion/react';
+import { m } from 'motion/react';
 import { cn, createStyles } from '@utils';
 
 
@@ -34,52 +34,46 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
     children,
 }) => {
     const {
-        isOverlayExist,
-        closeOverlay,
-    } = useContextProxy(Overlay.Context);
-
-    const {
         animationVariants,
         describedBy,
         label,
         withBackdrop,
         withoutBackdropPointerEvents,
+        closeOverlay,
     } = useContextProxy(DialogContext);
 
     return (
-        <AnimatePresence>
-            <If condition={isOverlayExist}>
-                <Overlay.Wrapper>
-                    <Popover.Wrapper>
-                        <m.div
-                            className={cn(styles.dialog, className)}
-                            role='dialog'
-                            aria-label={label}
-                            aria-describedby={describedBy}
-                            variants={animationVariants}
-                            initial={animationVariants.initial.key}
-                            animate={animationVariants.animate.key}
-                            exit={animationVariants.exit.key}
-                        >
-                            <If condition={withBackdrop}>
-                                {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
-                                <div
-                                    className={cn(
-                                        styles.backdrop,
-                                        getPointerStyle(
-                                            withoutBackdropPointerEvents,
-                                        ),
-                                    )}
-                                    onClick={closeOverlay}
-                                >
-                                </div>
-                            </If>
+        <Overlay.Presence>
+            <Overlay.Wrapper>
+                <Popover.Wrapper>
+                    <m.div
+                        className={cn(styles.dialog, className)}
+                        role='dialog'
+                        aria-label={label}
+                        aria-describedby={describedBy}
+                        variants={animationVariants}
+                        initial={animationVariants.initial.key}
+                        animate={animationVariants.animate.key}
+                        exit={animationVariants.exit.key}
+                    >
+                        <If condition={withBackdrop}>
+                            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
+                            <div
+                                className={cn(
+                                    styles.backdrop,
+                                    getPointerStyle(
+                                        withoutBackdropPointerEvents,
+                                    ),
+                                )}
+                                onClick={closeOverlay}
+                            >
+                            </div>
+                        </If>
 
-                            {children}
-                        </m.div>
-                    </Popover.Wrapper>
-                </Overlay.Wrapper>
-            </If>
-        </AnimatePresence>
+                        {children}
+                    </m.div>
+                </Popover.Wrapper>
+            </Overlay.Wrapper>
+        </Overlay.Presence>
     );
 };

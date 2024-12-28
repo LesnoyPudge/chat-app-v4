@@ -23,7 +23,7 @@ export const PopoverWrapper: FC<PopoverWrapper.Props> = ({
 }) => {
     const {
         isOverlayExist,
-        wrapperRefManager,
+        portalRefManager,
     } = useContextProxy(Overlay.Context);
     const {
         focused,
@@ -33,7 +33,7 @@ export const PopoverWrapper: FC<PopoverWrapper.Props> = ({
 
     const isLockDisabled = !focused || !isOverlayExist;
 
-    useClickOutside(wrapperRefManager, handleClickOutside);
+    useClickOutside(portalRefManager, handleClickOutside);
 
     useHotKey(document, [KEY.Escape], handleEscape);
 

@@ -1,10 +1,10 @@
 import { Overlay, RelativelyPositioned } from '@components';
 import { cn, createStyles } from '@utils';
-import { ComponentRef, FC } from 'react';
+import { ComponentRef } from 'react';
 import { useTooltip } from './hooks';
-import { useContextProxy, useRefManager } from '@lesnoypudge/utils-react';
+import { useRefManager } from '@lesnoypudge/utils-react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { AnimatePresence, m, Variants } from 'motion/react';
+import { m, Variants } from 'motion/react';
 
 
 
@@ -57,18 +57,6 @@ const variants = {
     }),
 } satisfies Variants;
 
-const withOverlayProvider = (Component: typeof Tooltip) => {
-    const Decorated = (props: Tooltip.Props) => {
-        return (
-            <Overlay.Provider>
-                <Component {...props}/>
-            </Overlay.Provider>
-        );
-    };
-
-    return Decorated;
-};
-
 export namespace Tooltip {
     export type Props = (
         RT.PropsWithChildrenAndClassName
@@ -77,7 +65,7 @@ export namespace Tooltip {
     );
 }
 
-export const Tooltip: FC<Tooltip.Props> = withOverlayProvider(({
+export const Tooltip = Overlay.withProvider(({
     className = '',
     leaderElementRef,
     boundsSize = 20,
@@ -85,10 +73,10 @@ export const Tooltip: FC<Tooltip.Props> = withOverlayProvider(({
     spacing = 20,
     swappableAlignment = true,
     within = false,
+    unbounded = false,
     children,
     ...rest
-}) => {
-    const { isOverlayExist } = useContextProxy(Overlay.Context);
+}: Tooltip.Props) => {
     const followerElementRef = useRefManager<ComponentRef<'div'>>(null);
 
     useTooltip({
@@ -97,34 +85,33 @@ export const Tooltip: FC<Tooltip.Props> = withOverlayProvider(({
     });
 
     return (
-        <AnimatePresence>
-            <If condition={isOverlayExist}>
-                <Overlay.Wrapper>
-                    <RelativelyPositioned.Node
-                        leaderElementOrRectRef={leaderElementRef}
-                        boundsSize={boundsSize}
-                        centered={centered}
-                        spacing={spacing}
-                        swappableAlignment={swappableAlignment}
-                        {...rest}
-                    >
-                        {({ alignment }) => (
-                            <m.div
-                                className={cn(styles.base, className)}
-                                role='tooltip'
-                                variants={variants}
-                                initial='hidden'
-                                animate='visible'
-                                exit='hidden'
-                                custom={alignment}
-                                ref={followerElementRef}
-                            >
-                                {children}
-                            </m.div>
-                        )}
-                    </RelativelyPositioned.Node>
-                </Overlay.Wrapper>
-            </If>
-        </AnimatePresence>
+        <Overlay.Presence>
+            <Overlay.Wrapper>
+                <RelativelyPositioned.Node
+                    leaderElementOrRectRef={leaderElementRef}
+                    boundsSize={boundsSize}
+                    centered={centered}
+                    spacing={spacing}
+                    swappableAlignment={swappableAlignment}
+                    unbounded={unbounded}
+                    {...rest}
+                >
+                    {({ alignment }) => (
+                        <m.div
+                            className={cn(styles.base, className)}
+                            role='tooltip'
+                            variants={variants}
+                            initial='hidden'
+                            animate='visible'
+                            exit='hidden'
+                            custom={alignment}
+                            ref={followerElementRef}
+                        >
+                            {children}
+                        </m.div>
+                    )}
+                </RelativelyPositioned.Node>
+            </Overlay.Wrapper>
+        </Overlay.Presence>
     );
 });

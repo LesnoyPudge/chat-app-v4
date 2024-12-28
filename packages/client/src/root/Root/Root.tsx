@@ -4,12 +4,15 @@ import {
     ErrorBoundary,
     useRefManager,
     Focus,
+    withDisplayName,
 } from '@lesnoypudge/utils-react';
 import { env, isDev } from '@vars';
-import { FC, lazy } from 'react';
+import { lazy } from 'react';
 import { GlobalProviders, Masks, SpriteSheet, Router } from './components';
 import { ErrorScreen } from '@screens/bundled/ErrorScreen';
-import { getHTMLElement } from '@utils';
+import { createWithDecorator, getHTMLElement } from '@utils';
+import { GlobalLoader } from '@root/GlobalLoader';
+import { usePreventDefault, useFocusTracker } from './hooks';
 
 
 
@@ -17,11 +20,24 @@ const appRoot = getHTMLElement.appRoot();
 
 const DevTools = lazy(() => import('./components/DevTools'));
 
-export const Root: FC = () => {
-    const appRootRefManager = useRefManager(appRoot);
-
+const decorated = createWithDecorator(({ children }) => {
     return (
         <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
+            <GlobalProviders>
+                {children}
+            </GlobalProviders>
+        </ErrorBoundary.Node>
+    );
+});
+
+export const Root = withDisplayName('Root', decorated(() => {
+    const appRootRefManager = useRefManager(appRoot);
+
+    usePreventDefault();
+    // useFocusTracker();
+
+    return (
+        <>
             <VisuallyHidden>
                 <Heading.Node>
                     {env._PUBLIC_APP_NAME}
@@ -32,20 +48,18 @@ export const Root: FC = () => {
 
             <SpriteSheet/>
 
+            <If condition={isDev}>
+                <DevTools/>
+            </If>
 
             <Focus.Inside
                 enabled
                 containerRef={appRootRefManager}
             >
-
-                <GlobalProviders>
-                    <If condition={isDev}>
-                        <DevTools/>
-                    </If>
-
+                <GlobalLoader.Wrapper>
                     <Router/>
-                </GlobalProviders>
+                </GlobalLoader.Wrapper>
             </Focus.Inside>
-        </ErrorBoundary.Node>
+        </>
     );
-};
+}));

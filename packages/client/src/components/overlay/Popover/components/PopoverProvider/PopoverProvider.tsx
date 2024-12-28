@@ -56,7 +56,7 @@ export const PopoverProvider: FC<PopoverProvider.Props> = ({
     const handleClickOutside = useFunction(() => {
         if (!closeOnClickOutside) return;
         if (!overlay.isOverlayExist) return;
-        if (!overlay.wrapperRefManager.current) return;
+        if (!overlay.portalRefManager.current) return;
         if (!blockingChildren.size) return overlay.closeOverlay();
     });
 

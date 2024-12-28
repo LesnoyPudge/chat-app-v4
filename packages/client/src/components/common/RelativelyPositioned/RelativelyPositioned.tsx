@@ -22,25 +22,13 @@ export namespace RelativelyPositioned {
 }
 
 export const RelativelyPositioned: FC<RelativelyPositioned.Props> = ({
-    leaderElementOrRectRef,
-    preferredAlignment,
-    swappableAlignment,
-    centered,
-    spacing = 20,
-    boundsSize = 20,
-    unbounded,
     children,
+    ...options
 }) => {
     const followerElementRef = useRefManager<HTMLDivElement>(null);
     const withAlignment = useRelativePosition({
-        preferredAlignment,
+        ...options,
         followerElementRef,
-        leaderElementOrRectRef,
-        swappableAlignment,
-        centered,
-        spacing,
-        boundsSize,
-        unbounded,
     });
 
     return (

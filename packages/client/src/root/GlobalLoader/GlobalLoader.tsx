@@ -75,7 +75,6 @@ export const GlobalLoaderWrapper: FC<GlobalLoaderWrapper.Props> = ({
     return (
         <Dialog.Provider
             label='Loading'
-            initialState
             focused
             animationVariants={variants}
         >

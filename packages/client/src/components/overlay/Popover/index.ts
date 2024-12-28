@@ -1,20 +1,14 @@
-import {
-    PopoverConsumerProxy,
-    PopoverProvider,
-    PopoverWrapper,
-} from './components';
-import { PopoverContext } from './context';
+import * as c1 from './components';
+import * as c2 from './context';
 
 
 
 export namespace Popover {
-    export const Context = PopoverContext;
+    export import Context = c2.PopoverContext;
 
-    export type Context = PopoverContext;
+    export import Consumer = c1.PopoverConsumerProxy;
 
-    export const Consumer = PopoverConsumerProxy;
+    export import Provider = c1.PopoverProvider;
 
-    export import Provider = PopoverProvider;
-
-    export import Wrapper = PopoverWrapper;
+    export import Wrapper = c1.PopoverWrapper;
 }

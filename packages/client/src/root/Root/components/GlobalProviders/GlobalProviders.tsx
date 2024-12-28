@@ -3,7 +3,6 @@ import { Heading } from '@lesnoypudge/utils-react';
 import { LazyMotion, MotionConfig } from 'motion/react';
 import { FC, PropsWithChildren } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { GlobalLoader } from '@root/GlobalLoader';
 import { BrowserRouter } from 'react-router';
 
 
@@ -25,9 +24,7 @@ export const GlobalProviders: FC<PropsWithChildren> = ({
                         strict
                     >
                         <MotionConfig reducedMotion='user'>
-                            <GlobalLoader.Wrapper>
-                                {children}
-                            </GlobalLoader.Wrapper>
+                            {children}
                         </MotionConfig>
                     </LazyMotion>
                 </Heading.Provider>
