@@ -11,6 +11,8 @@ import { useTrans } from '@i18n';
 
 
 const styles = createStyles({
+    wrapper: 'flex flex-col',
+    scrollable: 'py-1',
     list: 'flex flex-col gap-2',
 });
 
@@ -34,32 +36,35 @@ export const ServerList: FC = () => {
 
     return (
         <If condition={showServers}>
-            <Separator length='50%' spacing={0}/>
+            <div className={styles.wrapper}>
+                <Separator length='50%' spacing={0}/>
 
-            <Scrollable
-                size='hidden'
-                followContentSize
-            >
-                <ul
-                    className={styles.list}
-                    aria-label={t('PrimaryNavigation.ServerList.label')}
-                    ref={wrapperRef}
+                <Scrollable
+                    className={styles.scrollable}
+                    size='hidden'
+                    followContentSize
                 >
-                    <Iterate items={serverIds}>
-                        {(serverId) => (
-                            <ServerListItem
-                                serverId={serverId}
-                                key={serverId}
-                                isFocused={getIsFocused(serverId)}
-                                setCurrentFocusedId={setCurrentFocusedId}
-                                tabIndex={getTabIndex(serverId)}
-                            />
-                        )}
-                    </Iterate>
-                </ul>
-            </Scrollable>
+                    <ul
+                        className={styles.list}
+                        aria-label={t('PrimaryNavigation.ServerList.label')}
+                        ref={wrapperRef}
+                    >
+                        <Iterate items={serverIds}>
+                            {(serverId) => (
+                                <ServerListItem
+                                    serverId={serverId}
+                                    key={serverId}
+                                    isFocused={getIsFocused(serverId)}
+                                    setCurrentFocusedId={setCurrentFocusedId}
+                                    tabIndex={getTabIndex(serverId)}
+                                />
+                            )}
+                        </Iterate>
+                    </ul>
+                </Scrollable>
 
-            <Separator length='50%' spacing={0}/>
+                <Separator length='50%' spacing={0}/>
+            </div>
         </If>
     );
 };

@@ -30,6 +30,10 @@ export const Slice = createCustomSliceEntityAdapter({
                 UsersApi.endpoints.login.matchFulfilled,
                 UsersApi.endpoints.registration.matchFulfilled,
                 UsersApi.endpoints.refresh.matchFulfilled,
+                UsersApi.endpoints.refresh.matchFulfilled,
+                UsersApi.endpoints.unmuteServer.matchFulfilled,
+                UsersApi.endpoints.muteServer.matchFulfilled,
+                UsersApi.endpoints.markServerNotificationsAsRead.matchFulfilled,
             ),
             adapter.upsertOne,
         );

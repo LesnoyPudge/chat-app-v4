@@ -1,3 +1,3 @@
 export * from './ContextMenuContainer';
-export * from './ContextMenuNode';
+export * from './ContextMenuWrapper';
 export * from './ContextMenuProvider';

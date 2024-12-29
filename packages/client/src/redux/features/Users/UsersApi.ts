@@ -47,5 +47,42 @@ export const UsersApi = createApi({
                 }),
             })
         ),
+        [User.MuteServer.ActionName]: (
+            build.mutation<
+                User.MuteServer.Response,
+                User.MuteServer.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.MuteServer.Path,
+                    method: User.MuteServer.Method,
+                    body,
+                }),
+            })
+        ),
+        [User.UnmuteServer.ActionName]: (
+            build.mutation<
+                User.UnmuteServer.Response,
+                User.UnmuteServer.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.UnmuteServer.Path,
+                    method: User.UnmuteServer.Method,
+                    body,
+                }),
+
+            })
+        ),
+        [User.MarkServerNotificationsAsRead.ActionName]: (
+            build.mutation<
+                User.MarkServerNotificationsAsRead.Response,
+                User.MarkServerNotificationsAsRead.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.MarkServerNotificationsAsRead.Path,
+                    method: User.MarkServerNotificationsAsRead.Method,
+                    body,
+                }),
+            })
+        ),
     }),
 });

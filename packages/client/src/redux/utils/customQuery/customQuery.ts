@@ -10,7 +10,7 @@ import {
 } from '@reduxjs/toolkit/query';
 import { CustomQueryError } from '@types';
 import { localStorageApi } from '@utils';
-import { env } from '@vars';
+import { env, isDev } from '@vars';
 
 
 
@@ -42,7 +42,7 @@ const createBaseQuery = (options: QueryOptions) => fetchBaseQuery({
 
 const withRetry = (baseQuery: CustomQueryFn): CustomQueryFn => {
     const retryOptions: RetryOptions = {
-        maxRetries: 5,
+        maxRetries: isDev ? 1 : 3,
     };
 
     return retry<CustomQueryFn>(async (...args) => {

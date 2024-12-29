@@ -122,6 +122,42 @@ namespace EndpointsV1 {
 
             export type Response = Entities.User.Base;
         }
+
+        export namespace MuteServer {
+            export const ActionName = 'muteServer';
+
+            export const Path = v1('user', ActionName);
+
+            export const Method = HTTP_METHOD.POST;
+
+            export type RequestBody = WithId.Server;
+
+            export type Response = Entities.User.Base;
+        }
+
+        export namespace UnmuteServer {
+            export const ActionName = 'unmuteServer';
+
+            export const Path = v1('user', ActionName);
+
+            export const Method = HTTP_METHOD.POST;
+
+            export type RequestBody = WithId.Server;
+
+            export type Response = Entities.User.Base;
+        }
+
+        export namespace MarkServerNotificationsAsRead {
+            export const ActionName = 'markServerNotificationsAsRead';
+
+            export const Path = v1('user', ActionName);
+
+            export const Method = HTTP_METHOD.POST;
+
+            export type RequestBody = WithId.Server;
+
+            export type Response = Entities.User.Base;
+        }
     }
 
     export namespace Server {
@@ -173,6 +209,18 @@ namespace EndpointsV1 {
             >;
 
             export type Response = Entities.Server.Base;
+        }
+
+        export namespace Leave {
+            export const ActionName = 'leave';
+
+            export const Path = v1('server', ActionName);
+
+            export const Method = HTTP_METHOD.POST;
+
+            export type RequestBody = WithId.Server;
+
+            export type Response = void;
         }
     }
 

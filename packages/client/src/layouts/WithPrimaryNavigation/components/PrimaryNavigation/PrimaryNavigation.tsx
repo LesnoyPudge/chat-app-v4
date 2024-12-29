@@ -4,7 +4,7 @@ import { cn, createStyles } from '@utils';
 import {
     ActionButtons,
     HomePageButton,
-    Notifications,
+    ConversationList,
     ServerList,
 } from './components';
 
@@ -44,7 +44,7 @@ export const PrimaryNavigation = () => {
                 >
                     <HomePageButton/>
 
-                    <Notifications/>
+                    <ConversationList/>
 
                     <ServerList/>
 

@@ -6,14 +6,12 @@ https://mswjs.io/docs/getting-started
 
 --client--
 -? сделать attachments layout через grid-template-areas
-- добавить useOptimistic (в redux проблемы с транзакциями?)
 - добавить dataset к элементу(html? body?) 
 для работы css (theme, message-font-size, ...)
 -? вынести generated из src
 -???? использовать groupedLazyLoad что бы загружать
 модалки после основного контента? сделать обёртку в модалках с стандартным
 скелетоном пока они грузятся?
--!!! при рефреше в приложении onlyAuthorized скрывает приложение, исправить
 - после создания/добавления сервера инвалидировать кэш для рефетча ролей и тд?
 
 

@@ -1,4 +1,5 @@
 import { createStyles } from '@utils';
+import type { Button } from '@components';
 
 
 
@@ -18,4 +19,9 @@ export const menuItemProps = {
     stylingPreset: 'invisibleBrand',
     size: 'small',
     role: 'menuitem',
-} as const;
+} satisfies Pick<
+    Button.Props,
+    'stylingPreset'
+    | 'size'
+    | 'role'
+>;

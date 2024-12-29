@@ -8,6 +8,7 @@ import { ServersApi } from './ServersApi';
 import { TextChats } from '../TextChats';
 import { Users } from '../Users';
 import { Channels } from '../Channels';
+import { isAnyOf } from '@reduxjs/toolkit';
 
 
 
@@ -25,16 +26,21 @@ export const Slice = createCustomSliceEntityAdapter({
     reducers: (create) => ({}),
     extraReducers: (builder) => {
         builder.addMatcher(
-            ServersApi.endpoints.getOneByInvitationCode.matchFulfilled,
+            isAnyOf(
+                ServersApi.endpoints.getOneByInvitationCode.matchFulfilled,
+                ServersApi.endpoints.create.matchFulfilled,
+                ServersApi.endpoints.acceptInvitation.matchFulfilled,
+            ),
             adapter.extraReducers.upsertOne,
         );
         builder.addMatcher(
-            ServersApi.endpoints.create.matchFulfilled,
-            adapter.extraReducers.upsertOne,
-        );
-        builder.addMatcher(
-            ServersApi.endpoints.acceptInvitation.matchFulfilled,
-            adapter.extraReducers.upsertOne,
+            ServersApi.endpoints.leave.matchFulfilled,
+            (state, { meta }) => {
+                adapter.extraReducers.removeOne(
+                    state,
+                    { payload: meta.arg.originalArgs.serverId },
+                );
+            },
         );
     },
     selectors: {},

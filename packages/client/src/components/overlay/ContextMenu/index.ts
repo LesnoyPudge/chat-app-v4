@@ -5,7 +5,7 @@ import * as c3 from './vars';
 
 
 export namespace ContextMenu {
-    export import Node = c1.ContextMenuNode;
+    export import Wrapper = c1.ContextMenuWrapper;
 
     export import Container = c1.ContextMenuContainer;
 

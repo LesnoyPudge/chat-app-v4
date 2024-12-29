@@ -8,6 +8,7 @@ import {
 import { WithId } from '@types';
 
 
+type Adapter = ReturnType<typeof createEntityAdapter<WithId>>;
 
 const actionNames = [
     'addMany',
@@ -22,7 +23,7 @@ const actionNames = [
     'updateOne',
     'upsertMany',
     'upsertOne',
-] satisfies (keyof ReturnType<typeof createEntityAdapter<WithId>>)[];
+] satisfies (keyof Adapter)[];
 
 type ActionNames = typeof actionNames;
 
@@ -38,7 +39,13 @@ export namespace createCustomEntityAdapter {
             (
                 state: Parameters<EntityAdapter<_State, string>[_Key]>[0],
                 nestedPayload: {
-                    payload: _State;
+                    payload: (
+                        Parameters<Adapter[_Key]>[1] extends {
+                            payload: infer _Payload;
+                        }
+                            ? Parameters<Adapter[_Key]>[1]['payload']
+                            : Parameters<Adapter[_Key]>[1]
+                    );
                 }
             ) => ReturnType<EntityAdapter<_State, string>[_Key]>
         )

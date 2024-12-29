@@ -1,4 +1,4 @@
-import { Avatar, Button, Tooltip } from '@components';
+import { Avatar, Button, ContextMenu, Tooltip } from '@components';
 import { Navigator } from '@entities';
 import { useKeyboardNavigation } from '@hooks';
 import { Focus, useFunction, useRefManager } from '@lesnoypudge/utils-react';
@@ -8,6 +8,7 @@ import { WrapperWithBullet } from '../../../WrapperWithBullet';
 import { Features } from '@redux/features';
 import { useSliceSelector, useStoreSelector } from '@redux/hooks';
 import { sharedStyles } from '../../../../sharedStyles';
+import { ServerItemMenu } from './components';
 
 
 
@@ -45,10 +46,6 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
         Features.Servers.StoreSelectors.selectNotificationCountById(serverId),
     );
 
-    const isMuted = useStoreSelector(
-        Features.Servers.StoreSelectors.selectIsMutedById(serverId),
-    );
-
     const setFocused = useFunction(() => {
         setCurrentFocusedId(serverId);
     });
@@ -80,6 +77,7 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
                         tabIndex={tabIndex}
                         label={server?.name}
                         isActive={isInServer}
+                        isDisabled={!server}
                         innerRef={buttonRef}
                         onLeftClick={navigateToServer}
                         onAnyClick={setFocused}
@@ -99,30 +97,12 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
                             {server?.name}
                         </Tooltip>
 
-                        {/* <ContextMenu
-                            preferredAlignment='right'
+                        <ContextMenu.Wrapper
                             leaderElementRef={buttonRef}
+                            preferredAlignment='right'
                         >
-                            <Button>
-                                <>leave</>
-                            </Button>
-
-                            <If condition={isMuted}>
-                                <Button>
-                                    <>unmute notifications</>
-                                </Button>
-                            </If>
-
-                            <If condition={!isMuted}>
-                                <Button>
-                                    <>mute notifications</>
-                                </Button>
-                            </If>
-
-                            <Button isDisabled={!hasNotifications}>
-                                <>mark as read</>
-                            </Button>
-                        </ContextMenu> */}
+                            <ServerItemMenu serverId={serverId}/>
+                        </ContextMenu.Wrapper>
                     </If>
                 </WrapperWithBullet>
             </Focus.Inside>

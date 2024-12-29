@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 
 
-export const Notifications: FC = () => {
+export const ConversationList: FC = () => {
     return (
         <>
         </>

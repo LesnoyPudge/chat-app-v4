@@ -58,5 +58,18 @@ export const ServersApi = createApi({
                 ],
             })
         ),
+
+        [Server.Leave.ActionName]: (
+            build.mutation<
+                Server.Leave.Response,
+                Server.Leave.RequestBody
+            >({
+                query: (body) => ({
+                    url: Server.Leave.Path,
+                    method: Server.Leave.Method,
+                    body,
+                }),
+            })
+        ),
     }),
 });
