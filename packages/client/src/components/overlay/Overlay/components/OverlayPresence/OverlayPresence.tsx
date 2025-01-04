@@ -8,9 +8,9 @@ import { OverlayContext } from '../../context';
 export const OverlayPresence: FC<PropsWithChildren> = ({
     children,
 }) => {
-    const isOverlayExist = useContextSelector(
+    const { isOverlayExist } = useContextSelector(
         OverlayContext,
-        (s) => s.isOverlayExist,
+        ({ isOverlayExist }) => ({ isOverlayExist }),
     );
 
     return (

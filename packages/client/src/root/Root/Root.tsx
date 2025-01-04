@@ -2,21 +2,21 @@ import {
     Heading,
     VisuallyHidden,
     ErrorBoundary,
-    useRefManager,
-    Focus,
     withDisplayName,
+    Focus,
 } from '@lesnoypudge/utils-react';
 import { env, isDev } from '@vars';
 import { lazy } from 'react';
 import { GlobalProviders, Masks, SpriteSheet, Router } from './components';
-import { ErrorScreen } from '@screens/bundled/ErrorScreen';
-import { createWithDecorator, getHTMLElement } from '@utils';
+import { ErrorScreen } from '@screens/bundled';
+import { createWithDecorator } from '@utils';
 import { GlobalLoader } from '@root/GlobalLoader';
-import { usePreventDefault, useFocusTracker } from './hooks';
+import {
+    usePreventDefault,
+    // useFocusTracker,
+} from './hooks';
 
 
-
-const appRoot = getHTMLElement.appRoot();
 
 const DevTools = lazy(() => import('./components/DevTools'));
 
@@ -31,13 +31,11 @@ const decorated = createWithDecorator(({ children }) => {
 });
 
 export const Root = withDisplayName('Root', decorated(() => {
-    const appRootRefManager = useRefManager(appRoot);
-
     usePreventDefault();
     // useFocusTracker();
 
     return (
-        <>
+        <Focus.Lock autoFocus enabled noIsolation>
             <VisuallyHidden>
                 <Heading.Node>
                     {env._PUBLIC_APP_NAME}
@@ -52,14 +50,9 @@ export const Root = withDisplayName('Root', decorated(() => {
                 <DevTools/>
             </If>
 
-            <Focus.Inside
-                enabled
-                containerRef={appRootRefManager}
-            >
-                <GlobalLoader.Wrapper>
-                    <Router/>
-                </GlobalLoader.Wrapper>
-            </Focus.Inside>
-        </>
+            <GlobalLoader.Wrapper>
+                <Router/>
+            </GlobalLoader.Wrapper>
+        </Focus.Lock>
     );
 }));

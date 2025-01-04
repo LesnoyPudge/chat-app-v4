@@ -12,7 +12,7 @@ import { useTrans } from '@i18n';
 
 const styles = createStyles({
     wrapper: 'flex flex-col',
-    scrollable: 'py-1',
+    scrollable: 'py-2',
     list: 'flex flex-col gap-2',
 });
 
@@ -37,7 +37,11 @@ export const ServerList: FC = () => {
     return (
         <If condition={showServers}>
             <div className={styles.wrapper}>
-                <Separator length='50%' spacing={0}/>
+                <Separator
+                    length={32}
+                    spacing={0}
+                    thickness={2}
+                />
 
                 <Scrollable
                     className={styles.scrollable}
@@ -63,7 +67,11 @@ export const ServerList: FC = () => {
                     </ul>
                 </Scrollable>
 
-                <Separator length='50%' spacing={0}/>
+                <Separator
+                    length={32}
+                    spacing={0}
+                    thickness={2}
+                />
             </div>
         </If>
     );

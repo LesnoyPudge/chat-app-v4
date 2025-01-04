@@ -1,5 +1,5 @@
 import { MobileMenu } from '@components';
-import { Focus, useContextProxy } from '@lesnoypudge/utils-react';
+import { Focus, useContextProxy, useRefManager } from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@utils';
 import {
     ActionButtons,
@@ -31,26 +31,29 @@ export const PrimaryNavigation = () => {
         shouldShowMenu,
         shouldShowContent,
     } = useContextProxy(MobileMenu.Context);
+    const containerRef = useRefManager<HTMLDivElement>(null);
 
     return (
-        <Focus.Inside<HTMLDivElement> enabled={shouldShowMenu}>
-            {({ containerRef }) => (
-                <div
-                    className={cn(
-                        styles.wrapper.base,
-                        shouldShowContent && styles.wrapper.hidden,
-                    )}
-                    ref={containerRef}
-                >
-                    <HomePageButton/>
+        <Focus.Inside
+            isEnabled={shouldShowMenu}
+            containerRef={containerRef}
+            once
+        >
+            <div
+                className={cn(
+                    styles.wrapper.base,
+                    shouldShowContent && styles.wrapper.hidden,
+                )}
+                ref={containerRef}
+            >
+                <HomePageButton/>
 
-                    <ConversationList/>
+                <ConversationList/>
 
-                    <ServerList/>
+                <ServerList/>
 
-                    <ActionButtons/>
-                </div>
-            )}
+                <ActionButtons/>
+            </div>
         </Focus.Inside>
     );
 };

@@ -1,6 +1,6 @@
 import { Dialog } from '@components';
 import { useContextProxy } from '@lesnoypudge/utils-react';
-import { GlobalLoaderScreen } from '@screens/bundled/GlobalLoaderScreen';
+import { GlobalLoaderScreen } from '@screens/bundled';
 import { createStyles, createVariants, logger } from '@utils';
 import { FC, PropsWithChildren, useEffect } from 'react';
 

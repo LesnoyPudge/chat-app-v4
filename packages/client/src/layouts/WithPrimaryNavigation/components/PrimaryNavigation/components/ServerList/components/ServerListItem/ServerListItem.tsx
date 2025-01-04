@@ -58,13 +58,10 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
     return (
         <li>
             <Focus.Inside
-                enabled={isFocused}
+                isEnabled={isFocused}
                 containerRef={buttonRef}
             >
-                <WrapperWithBullet
-                    isActive={isInServer}
-                    notificationsCount={notificationsCount}
-                >
+                <WrapperWithBullet isActive={isInServer}>
                     <Button
                         className={cn(
                             sharedStyles.button.base,

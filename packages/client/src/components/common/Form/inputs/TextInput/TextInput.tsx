@@ -63,7 +63,9 @@ export namespace TextInput {
 }
 
 export const TextInput: FC<TextInput.Props> = (props) => {
-    const context = useContextSelector(TextInputContext) as TextInputContext | undefined;
+    const context = useContextSelector(
+        TextInputContext,
+    ) as TextInputContext | undefined;
 
     const field = props.field ?? context?.field;
     invariant(field);

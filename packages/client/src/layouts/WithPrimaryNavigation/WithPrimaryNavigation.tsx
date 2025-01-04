@@ -1,24 +1,24 @@
 import { createStyles } from '@utils';
-import { CUSTOM_STYLES } from '@vars';
 import { FC } from 'react';
 import { Outlet } from 'react-router';
 import { PrimaryNavigation } from './components';
 import { MobileMenu } from '@components';
+import { Screen } from '@layouts/bundled';
 
 
 
 const styles = createStyles({
-    screen: `${CUSTOM_STYLES.SCREEN} flex`,
+    screen: `flex`,
 });
 
 export const WithPrimaryNavigation: FC = () => {
     return (
-        <div className={styles.screen}>
+        <Screen className={styles.screen}>
             <MobileMenu.Provider>
                 <PrimaryNavigation/>
 
                 <Outlet/>
             </MobileMenu.Provider>
-        </div>
+        </Screen>
     );
 };

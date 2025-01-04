@@ -10,22 +10,11 @@ import {
     useRefManager,
 } from '@lesnoypudge/utils-react';
 import { LoginForm, RegistrationForm } from './components';
-
-
-
-namespace CustomMoveFocusInside {
-    export type Props = (
-        PropsWithChildren
-        & {
-            containerRef: RefObject<HTMLElement>;
-        }
-    );
-}
+import { Screen } from '@layouts/bundled';
 
 
 
 const styles = createStyles({
-    screen: CUSTOM_STYLES.SCREEN,
     bg: CUSTOM_STYLES.IMAGE_BG_FULLSCREEN,
     scrollable: 'h-full',
     content: `
@@ -73,7 +62,7 @@ export const AuthScreenPure: FC = () => {
     const containerRef = useRefManager<ComponentRef<'div'>>(null);
 
     return (
-        <div className={styles.screen}>
+        <Screen>
             <Image
                 className={styles.bg}
                 src={getAssetUrl('FANCY_BG.jpg')}
@@ -103,7 +92,7 @@ export const AuthScreenPure: FC = () => {
                                         ref={containerRef}
                                     >
                                         <Focus.Inside
-                                            enabled
+                                            isEnabled={true}
                                             containerRef={containerRef}
                                         >
                                             {currentTab.tab}
@@ -115,7 +104,7 @@ export const AuthScreenPure: FC = () => {
                     </AnimatePresence>
                 </div>
             </Scrollable>
-        </div>
+        </Screen>
     );
 };
 

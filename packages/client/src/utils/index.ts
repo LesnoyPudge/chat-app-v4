@@ -4,6 +4,7 @@ export * from './createStyles';
 export * from './createVariants';
 export * from './createWithDecorator';
 export * from './fileSize';
+export * from './formatNotificationCount';
 export * from './getAssetUrl';
 export * from './getHTMLElement';
 export * from './getStatusLabel';

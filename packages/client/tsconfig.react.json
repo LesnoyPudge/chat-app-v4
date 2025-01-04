@@ -82,6 +82,9 @@
             "@modals": [
                 "./src/modals"
             ],
+            // "@lesnoypudge/utils-react": [
+            //     "../../../@lesnoypudge-utils-react/build"
+            // ]
         },
         "jsx": "react-jsx",
         "lib": [

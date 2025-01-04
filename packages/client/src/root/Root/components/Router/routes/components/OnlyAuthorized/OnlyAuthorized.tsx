@@ -5,8 +5,14 @@ import { useSliceSelector } from '@redux/hooks';
 import { env } from '@vars';
 import { FC, useEffect } from 'react';
 import { Outlet } from 'react-router';
+import { SuspenseWithGlobalLoader } from '../SuspenseWithGlobalLoader';
+import { createSleep } from '@utils';
+import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
+import { ErrorThrower } from '@components';
 
 
+
+const Sleep = createSleep(hoursToMilliseconds(12), true);
 
 export namespace OnlyAuthorized {
     export type Props = {
@@ -39,15 +45,17 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
     // consider duration to be 2 min less then actual duration
     const tokenDuration = (
         Number.parseInt(env._PUBLIC_ACCESS_TOKEN_DURATION)
-        - 2 * 60 * 1_000
+        - minutesToMilliseconds(2)
     );
 
     // it's time if now is more then duration minus minute
     const isItTimeToRefresh = (
         lastSuccessfulRefreshTimestamp === null
             ? true
-            : Date.now() >= (
-                lastSuccessfulRefreshTimestamp + tokenDuration - 1 * 60 * 1_000
+            : Date.now() > (
+                lastSuccessfulRefreshTimestamp
+                + tokenDuration
+                - minutesToMilliseconds(1)
             )
     );
 
@@ -82,6 +90,8 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
         || (isAttemptedToRefresh && isAuthorized && !isRefreshing)
     );
 
+    const showLoader = !shouldShowOutlet && !shouldNavigateToAuth;
+
     useEffect(() => {
         if (disabled) return;
         if (!shouldNavigateToAuth) return;
@@ -90,8 +100,18 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
     }, [disabled, navigateTo, shouldNavigateToAuth]);
 
     return (
-        <If condition={shouldShowOutlet || disabled}>
-            <Outlet/>
-        </If>
+        <>
+            <If condition={shouldShowOutlet || disabled}>
+                <Outlet/>
+            </If>
+
+            <If condition={showLoader}>
+                <SuspenseWithGlobalLoader>
+                    <Sleep>
+                        <ErrorThrower/>
+                    </Sleep>
+                </SuspenseWithGlobalLoader>
+            </If>
+        </>
     );
 };

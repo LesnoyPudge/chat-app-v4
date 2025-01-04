@@ -1,28 +1,13 @@
-import { Button, Dialog, Iterate, Scrollable } from '@components';
+import { Button, Iterate } from '@components';
 import { createStyles } from '@utils';
 import { FC } from 'react';
 import { useDevTools } from './hooks';
-import { Focus } from '@lesnoypudge/utils-react';
+import { Focus, useRefManager } from '@lesnoypudge/utils-react';
+import { Modal } from '@entities';
 
 
 
 const styles = createStyles({
-    wrapper: `
-        pointer-events-auto
-        absolute
-        left-1/2
-        top-1/2
-        w-fit
-        -translate-x-1/2
-        -translate-y-1/2
-        bg-black 
-        p-3 
-        font-semibold 
-        text-white 
-        outline-2
-        outline-red-700
-    `,
-    scrollable: 'max-h-[90dvh] py-4',
     inner: 'flex flex-col gap-2 ',
     action: `
         px-2
@@ -35,54 +20,57 @@ const styles = createStyles({
 export const DevTools: FC = () => {
     const {
         actions,
-        state,
+        controls,
         getIsFocused,
         getTabIndex,
         wrapperRef,
         setCurrentFocusedId,
     } = useDevTools();
 
+    const Item: FC<{ actionName: string }> = ({ actionName }) => {
+        const containerRef = useRefManager<HTMLButtonElement>(null);
+
+        return (
+            <Focus.Inside
+                once
+                isEnabled={getIsFocused(actionName)}
+                containerRef={containerRef}
+            >
+                <Button
+                    className={styles.action}
+                    onLeftClick={() => {
+                        void actions[actionName]?.();
+                        setCurrentFocusedId(actionName);
+                    }}
+                    tabIndex={getTabIndex(actionName)}
+                    innerRef={containerRef}
+                >
+                    {actionName}
+                </Button>
+            </Focus.Inside>
+        );
+    };
+
     return (
-        <Dialog.Provider
+        <Modal.Base.Provider
+            controls={controls}
             label='devtools'
-            focused
-            outerState={state.value}
-            withBackdrop
-            onChange={state.setValue}
         >
-            <Dialog.Wrapper>
-                <div className={styles.wrapper}>
-                    <Scrollable className={styles.scrollable}>
-                        <div
-                            className={styles.inner}
-                            ref={wrapperRef}
-                        >
-                            <Iterate items={Object.keys(actions)}>
-                                {(actionName) => (
-                                    <Focus.Inside<HTMLButtonElement>
-                                        enabled={getIsFocused(actionName)}
-                                        key={actionName}
-                                    >
-                                        {({ containerRef }) => (
-                                            <Button
-                                                className={styles.action}
-                                                onLeftClick={() => {
-                                                    void actions[actionName]?.();
-                                                    setCurrentFocusedId(actionName);
-                                                }}
-                                                tabIndex={getTabIndex(actionName)}
-                                                innerRef={containerRef}
-                                            >
-                                                {actionName}
-                                            </Button>
-                                        )}
-                                    </Focus.Inside>
-                                )}
-                            </Iterate>
-                        </div>
-                    </Scrollable>
+            <Modal.Base.Wrapper>
+                <div
+                    className={styles.inner}
+                    ref={wrapperRef}
+                >
+                    <Iterate items={[Object.keys(actions)[0]!]}>
+                        {(actionName) => (
+                            <Item
+                                actionName={actionName}
+                                key={actionName}
+                            />
+                        )}
+                    </Iterate>
                 </div>
-            </Dialog.Wrapper>
-        </Dialog.Provider>
+            </Modal.Base.Wrapper>
+        </Modal.Base.Provider>
     );
 };

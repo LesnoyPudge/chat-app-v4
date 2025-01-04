@@ -1,11 +1,8 @@
 import { FC } from 'react';
 import { cn, createStyles } from '@utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { Focus, useClickOutside, useContextProxy } from '@lesnoypudge/utils-react';
+import { Focus, useContextProxy } from '@lesnoypudge/utils-react';
 import { PopoverContext } from '../../context';
-import { Overlay } from '@components';
-import { useHotKey } from '@hooks';
-import { KEY } from '@lesnoypudge/utils';
 
 
 
@@ -22,27 +19,22 @@ export const PopoverWrapper: FC<PopoverWrapper.Props> = ({
     children,
 }) => {
     const {
-        isOverlayExist,
-        portalRefManager,
-    } = useContextProxy(Overlay.Context);
-    const {
         focused,
         handleClickOutside,
         handleEscape,
     } = useContextProxy(PopoverContext);
-
-    const isLockDisabled = !focused || !isOverlayExist;
-
-    useClickOutside(portalRefManager, handleClickOutside);
-
-    useHotKey(document, [KEY.Escape], handleEscape);
 
     return (
         <Focus.Lock
             className={cn(styles.lock, className)}
             returnFocus
             autoFocus={focused}
-            disabled={isLockDisabled}
+            enabled={focused}
+            focusLock
+            preventScrollOnFocus
+            scrollLock
+            onClickOutside={handleClickOutside}
+            onEscapeKey={handleEscape}
         >
             {children}
         </Focus.Lock>

@@ -17,6 +17,10 @@ const animationVariants: Dialog.Provider.AnimationVariants = createVariants({
     exit: {
         opacity: 0,
         scale: 0.1,
+        transition: {
+            duration: 0.15,
+            ease: 'backOut',
+        },
     },
 }, {
     duration: 0.35,
@@ -33,12 +37,9 @@ export namespace BaseModalProvider {
         & Pick<
             Dialog.Provider.Props,
             'label'
-        >
-        & PropsWithChildren
-        & Pick<
-            Dialog.Provider.Props,
             | 'withoutBackdropPointerEvents'
         >
+        & PropsWithChildren
     );
 }
 

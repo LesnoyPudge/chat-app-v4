@@ -1,4 +1,3 @@
-import { CUSTOM_STYLES } from '@vars';
 import { FC } from 'react';
 import { cn, createStyles, getAssetUrl } from '@utils';
 import { useGlobalLoaderScreen } from './useGlobalLoaderScreen';
@@ -6,14 +5,12 @@ import { m } from 'motion/react';
 import { ExternalLink, Scrollable, Sprite } from '@components';
 import { useTrans } from '@i18n';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { Screen } from '@layouts/bundled';
 
 
 
 const styles = createStyles({
-    screen: `
-        ${CUSTOM_STYLES.SCREEN}
-        bg-primary-400
-    `,
+    screen: `bg-primary-400`,
     scrollable: 'h-full',
     content: `
         grid 
@@ -61,7 +58,7 @@ export const GlobalLoaderScreenPure: FC<GlobalLoaderScreenPure.Props> = ({
     const { t } = useTrans();
 
     return (
-        <div className={cn(styles.screen, className)}>
+        <Screen className={cn(styles.screen, className)}>
             <Scrollable
                 className={styles.scrollable}
                 withOppositeGutter
@@ -126,7 +123,7 @@ export const GlobalLoaderScreenPure: FC<GlobalLoaderScreenPure.Props> = ({
                     </If>
                 </div>
             </Scrollable>
-        </div>
+        </Screen>
     );
 };
 

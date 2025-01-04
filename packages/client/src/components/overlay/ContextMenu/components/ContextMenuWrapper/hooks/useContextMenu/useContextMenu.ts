@@ -1,5 +1,5 @@
 import {
-    useContextSelector,
+    useContextProxy,
     useEventListener,
     useFunction,
     useRefManager,
@@ -21,7 +21,7 @@ export const useContextMenu = ({
     const {
         closingThrottleRef,
         openOverlay,
-    } = useContextSelector(Popover.Context);
+    } = useContextProxy(Popover.Context);
     const leaderElementOrRectRef = useRefManager<
         RelativelyPositioned.useRelativePosition.LeaderElementOrRect
     >(null);

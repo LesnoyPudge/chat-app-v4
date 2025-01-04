@@ -4,7 +4,7 @@ import { createStyles } from '@utils';
 
 const styles = createStyles({
     wrapper: `
-        size-10 
+        size-full 
         shrink-0 
         animate-pulse 
         overflow-hidden 

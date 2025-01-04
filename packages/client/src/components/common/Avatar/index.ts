@@ -8,4 +8,6 @@ export namespace Avatar {
     export import User = c1.UserAvatar;
 
     export import Server = c1.ServerAvatar;
+
+    export import WithBadge = c1.WithBadge;
 }

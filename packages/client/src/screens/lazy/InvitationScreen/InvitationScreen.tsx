@@ -5,6 +5,7 @@ import { createStyles, getAssetUrl } from '@utils';
 import { CUSTOM_STYLES } from '@vars';
 import { Heading } from '@lesnoypudge/utils-react';
 import { useTrans } from '@i18n';
+import { Screen } from '@layouts/bundled';
 
 
 
@@ -13,7 +14,6 @@ export namespace InvitationScreenPure {
 }
 
 const styles = createStyles({
-    screen: CUSTOM_STYLES.SCREEN,
     scrollable: 'h-full',
     inner: `flex min-h-full content-center py-5`,
     bg: CUSTOM_STYLES.IMAGE_BG_FULLSCREEN,
@@ -61,7 +61,7 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
     const { t } = useTrans();
 
     return (
-        <div className={styles.screen}>
+        <Screen>
             <Image
                 className={styles.bg}
                 src={getAssetUrl('FANCY_BG.jpg')}
@@ -124,7 +124,7 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
                     </div>
                 </div>
             </Scrollable>
-        </div>
+        </Screen>
     );
 };
 

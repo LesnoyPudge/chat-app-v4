@@ -57,7 +57,7 @@ export type NamespacesType = {
         "PrimaryNavigation.CreateServer.text": "Создать сервер",
         "PrimaryNavigation.HomePageButton.label": "Перейти на главную страницу",
         "PrimaryNavigation.HomePageButton.text": "Главная страница",
-        "PrimaryNavigation.ServerList.Item.menu.label": "Список серверов",
+        "PrimaryNavigation.ServerList.Item.menu.label": "Список действий",
         "PrimaryNavigation.ServerList.Item.menu.leaveButton.text": "Покинуть сервер",
         "PrimaryNavigation.ServerList.Item.menu.NotificationButton.text.mute": "Отключить уведомления",
         "PrimaryNavigation.ServerList.Item.menu.NotificationButton.text.unmute": "Включить уведомления",

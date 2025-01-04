@@ -30,9 +30,9 @@ export namespace Separator {
     export type Props = (
         RT.PropsWithClassName
         & {
-            spacing?: number | string;
-            thickness?: number | string;
-            length?: number | string;
+            spacing: number | string;
+            thickness: number | string;
+            length: number | string;
             orientation?: 'horizontal' | 'vertical';
         }
     );
@@ -40,9 +40,9 @@ export namespace Separator {
 
 export const Separator: FC<Separator.Props> = ({
     className = '',
-    spacing = '8px',
-    thickness = '2px',
-    length = '10px',
+    spacing,
+    thickness,
+    length,
     orientation = 'horizontal',
 }) => {
     const style = useMemo(() => ({

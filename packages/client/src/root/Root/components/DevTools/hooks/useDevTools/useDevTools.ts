@@ -1,4 +1,4 @@
-import { Navigator } from '@entities';
+import { Modal, Navigator } from '@entities';
 import { useHotKey, useKeyboardNavigation } from '@hooks';
 import { capitalize, KEY } from '@lesnoypudge/utils';
 import { useBoolean, useRefManager } from '@lesnoypudge/utils-react';
@@ -89,7 +89,7 @@ const rawActions: Record<string, VoidFunction> = {
 logger.log(`${KEY.Slash} to clear console`);
 
 export const useDevTools = () => {
-    const state = useBoolean(false);
+    const controls = Modal.useModalControls(false);
     const wrapperRef = useRefManager<HTMLDivElement>(null);
     const { navigateTo, navigate } = Navigator.useNavigator();
 
@@ -165,7 +165,7 @@ export const useDevTools = () => {
 
     useHotKey(document, [KEY.Shift, KEY.Control, KEY.P], (e) => {
         e.preventDefault();
-        state.setTrue();
+        controls.open();
     });
 
     useHotKey(document, [KEY.Slash], (e) => {
@@ -175,7 +175,7 @@ export const useDevTools = () => {
 
     return {
         ...navigation,
-        state,
+        controls,
         actions,
         wrapperRef,
     };

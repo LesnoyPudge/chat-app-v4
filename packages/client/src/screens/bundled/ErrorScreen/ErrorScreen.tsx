@@ -5,11 +5,12 @@ import { createStyles, getAssetUrl } from '@utils';
 import { CUSTOM_STYLES } from '@vars';
 import { FC } from 'react';
 import { useErrorScreen } from './useErrorScreen';
+import { Screen } from '@layouts/bundled';
 
 
 
 const styles = createStyles({
-    screen: `${CUSTOM_STYLES.SCREEN} bg-primary-300`,
+    screen: `bg-primary-300`,
     scrollable: 'h-full',
     content: `
         flex 
@@ -38,7 +39,7 @@ export const ErrorScreenPure: FC<ErrorScreenPure.Props> = ({
     const { t } = useTrans();
 
     return (
-        <div className={styles.screen}>
+        <Screen className={styles.screen}>
             <Image
                 className={styles.bg}
                 src={getAssetUrl('ERROR_BOUNDARY_BG.svg')}
@@ -73,7 +74,7 @@ export const ErrorScreenPure: FC<ErrorScreenPure.Props> = ({
                     </Button>
                 </div>
             </Scrollable>
-        </div>
+        </Screen>
     );
 };
 

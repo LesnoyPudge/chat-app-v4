@@ -14,8 +14,8 @@ const styles = createStyles({
     SCREEN: `
         relative
         isolate
-        h-full
-        w-full
+        h-dvh
+        w-dvw
     `,
 
     IMAGE_BG_FULLSCREEN: `
