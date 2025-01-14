@@ -6,7 +6,7 @@ import { CSSProperties, FC, useMemo } from 'react';
 
 
 const styles = createStyles({
-    wrapper: 'relative @container',
+    wrapper: 'relative size-full @container',
     inner: 'size-full',
     badge: {
         base: `

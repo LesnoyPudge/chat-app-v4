@@ -198,7 +198,7 @@ export namespace ApiValidators {
             export const {
                 acceptInvitation,
                 create,
-                getOneByInvitationCode,
+                getByInvitationCode,
             } = {
                 [Server.AcceptInvitation.ActionName]: (
                     schema<Server.AcceptInvitation.RequestBody>(v.object({
@@ -212,8 +212,8 @@ export namespace ApiValidators {
                         avatar: sv.nullableFile,
                     }))
                 ),
-                [Server.GetOneByInvitationCode.ActionName]: (
-                    schema<Server.GetOneByInvitationCode.RequestBody>(v.object({
+                [Server.GetByInvitationCode.ActionName]: (
+                    schema<Server.GetByInvitationCode.RequestBody>(v.object({
                         invitationCode: sv.commonString,
                     }))
                 ),

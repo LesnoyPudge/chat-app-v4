@@ -15,7 +15,7 @@ export type State = ClientEntities.User.Base;
 
 const name = 'Users';
 
-const adapter = createCustomEntityAdapter<State, typeof name>(name);
+const adapter = createCustomEntityAdapter<State>()(name, []);
 
 const initialState = adapter.getInitialState();
 

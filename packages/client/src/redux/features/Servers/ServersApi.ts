@@ -11,14 +11,14 @@ export const ServersApi = createApi({
     reducerPath: 'ServersApi',
     tagTypes: ['Servers'],
     endpoints: (build) => ({
-        [Server.GetOneByInvitationCode.ActionName]: (
+        [Server.GetByInvitationCode.ActionName]: (
             build.query<
-                Server.GetOneByInvitationCode.Response,
-                Server.GetOneByInvitationCode.RequestBody
+                Server.GetByInvitationCode.Response,
+                Server.GetByInvitationCode.RequestBody
             >({
                 query: (body) => ({
-                    url: Server.GetOneByInvitationCode.Path,
-                    method: Server.GetOneByInvitationCode.Method,
+                    url: Server.GetByInvitationCode.Path,
+                    method: Server.GetByInvitationCode.Method,
                     body,
                 }),
                 providesTags: (result) => [
@@ -69,6 +69,22 @@ export const ServersApi = createApi({
                     method: Server.Leave.Method,
                     body,
                 }),
+            })
+        ),
+        [Server.GetMany.ActionName]: (
+            build.query<
+                Server.GetMany.Response,
+                Server.GetMany.RequestBody
+            >({
+                query: (body) => ({
+                    url: Server.GetMany.Path,
+                    method: Server.GetMany.Method,
+                    body,
+                }),
+                providesTags: (result) => result?.map(({ id }) => ({
+                    type: 'Servers',
+                    id,
+                })) ?? [{ type: 'Servers', id: 'LIST' }],
             })
         ),
     }),

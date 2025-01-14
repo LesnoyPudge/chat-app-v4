@@ -1,4 +1,4 @@
 export * from './endpoints';
-export * from './entityName';
+export * from './entity';
 export * from './validators';
 export * from './vars';

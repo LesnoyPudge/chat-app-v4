@@ -12,7 +12,7 @@ export type State = ClientEntities.VoiceChat.Base;
 
 const name = 'VoiceChats';
 
-const adapter = createCustomEntityAdapter<State, typeof name>(name);
+const adapter = createCustomEntityAdapter<State>()(name, []);
 
 const initialState = adapter.getInitialState();
 

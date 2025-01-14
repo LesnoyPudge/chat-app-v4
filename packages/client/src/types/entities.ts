@@ -53,29 +53,45 @@ export namespace ClientEntities {
     export namespace Message {
         export type Id = string;
 
-        export type Base = {
-            id: Id;
-            index: number;
-            author: User.Id;
-            content: string;
-            isModified: boolean;
-            isDeleted: boolean;
-            attachments: File.Id;
-            createdAt: number;
-            updatedAt: number;
+        type Conditional = {
+            channel: Channel.Id;
+            server: Server.Id;
+            conversation: null;
+        } | {
+            channel: null;
+            server: null;
+            conversation: Conversation.Id;
         };
+
+        export type Base = T.Simplify<(
+            Conditional
+            & {
+                id: Id;
+                textChat: TextChat.Id;
+                index: number;
+                author: User.Id;
+                content: string;
+                isModified: boolean;
+                isDeleted: boolean;
+                attachments: File.Id;
+                createdAt: number;
+                updatedAt: number;
+            }
+        )>;
     }
 
     export namespace TextChat {
         export type Id = string;
 
-        type Conditional = (
+        export type Conditional = (
             {
                 channel: Channel.Id;
+                server: Server.Id;
                 conversation: null;
             }
             | {
                 channel: null;
+                server: null;
                 conversation: Conversation.Id;
             }
         );
@@ -84,6 +100,7 @@ export namespace ClientEntities {
             Conditional
             & {
                 id: Id;
+                messageCount: number;
                 messages: Message.Id[];
             }
         >;
@@ -95,10 +112,12 @@ export namespace ClientEntities {
         type Conditional = (
             {
                 channel: Channel.Id;
+                server: Server.Id;
                 conversation: null;
             }
             | {
                 channel: null;
+                server: null;
                 conversation: Conversation.Id;
             }
         );

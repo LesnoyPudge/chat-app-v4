@@ -42,9 +42,12 @@ export class Dummies {
 
     static message(
         data: (
-            Pick<
+            T.Except<
                 ClientEntities.Message.Base,
-                'id' | 'attachments' | 'author' | 'index' | 'content'
+                'createdAt'
+                | 'isDeleted'
+                | 'isModified'
+                | 'updatedAt'
             >
         ),
     ): ClientEntities.Message.Base {
@@ -153,11 +156,12 @@ export class Dummies {
     static textChatChannel(
         data: T.SetNonNullable<Pick<
             ClientEntities.TextChat.Base,
-            'id' | 'channel'
+            'id' | 'channel' | 'server'
         >>,
     ): ClientEntities.TextChat.Base {
         return {
             ...data,
+            messageCount: 0,
             messages: [],
             conversation: null,
         };
@@ -172,6 +176,8 @@ export class Dummies {
     ): ClientEntities.TextChat.Base {
         return {
             ...data,
+            server: null,
+            messageCount: 0,
             messages: [],
             channel: null,
         };
@@ -180,7 +186,7 @@ export class Dummies {
     static voiceChatChannel(
         data: T.SetNonNullable<Pick<
             ClientEntities.TextChat.Base,
-            'id' | 'channel'
+            'id' | 'channel' | 'server'
         >>,
     ): ClientEntities.VoiceChat.Base {
         return {
@@ -200,6 +206,7 @@ export class Dummies {
     ): ClientEntities.VoiceChat.Base {
         return {
             ...data,
+            server: null,
             channel: null,
             deafen: [],
             muted: [],

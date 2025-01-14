@@ -1,6 +1,7 @@
 import {
     createCustomEntityAdapter,
     createCustomSliceEntityAdapter,
+    createEntitySubscription,
     createStoreSelectors,
 } from '@redux/utils';
 import { ClientEntities } from '@types';
@@ -12,7 +13,14 @@ export type State = ClientEntities.Channel.Base;
 
 const name = 'Channels';
 
-const adapter = createCustomEntityAdapter<State, typeof name>(name);
+const adapter = createCustomEntityAdapter<State>()(name, [
+    'server',
+]);
+
+export const {
+    Subscription,
+    createExtraReducers,
+} = createEntitySubscription(name, adapter);
 
 const initialState = adapter.getInitialState();
 
@@ -20,16 +28,15 @@ export const Slice = createCustomSliceEntityAdapter({
     name,
     initialState,
     reducers: (create) => ({}),
-    extraReducers: (builder) => {},
-    selectors: {
-        selectIdsByServerId: (state, serverId: string) => {
-            const channels = Object.values(state.entities);
+    extraReducers: (builder) => {
+        createExtraReducers(builder);
 
-            return channels.filter((channel) => {
-                return channel.server === serverId;
-            }).map((channel) => channel.id);
-        },
+        builder.addMatcher(
+            ChannelsApi.endpoints.getMany.matchFulfilled,
+            adapter.upsertMany,
+        );
     },
+    selectors: {},
 }, adapter);
 
 export const { StoreSelectors } = createStoreSelectors({

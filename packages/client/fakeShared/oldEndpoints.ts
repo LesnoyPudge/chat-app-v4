@@ -1,5 +1,5 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { ENTITY_NAME } from './entityName';
+import { ENTITY_NAME } from './entity';
 import { HTTP_METHOD } from '@lesnoypudge/utils';
 import { ClientEntities as Entities } from '@types';
 
@@ -440,10 +440,10 @@ const toAction = <
 //                 export type Response = Entities.Server.Base;
 //             }
 
-//             export namespace GetOneByInvitationCode {
+//             export namespace GetByInvitationCode {
 //                 export const Path = v1('server');
 
-//                 export const ActionName = 'getOneByInvitationCode';
+//                 export const ActionName = 'getByInvitationCode';
 
 //                 export const ActionNameWithEntity = toAction(
 //                     ENTITY_NAME.SERVER,

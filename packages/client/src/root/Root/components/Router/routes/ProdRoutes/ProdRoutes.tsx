@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router';
+import { Route } from 'react-router';
 import {
     OnlyAuthorized,
     OnlyUnAuthorized,

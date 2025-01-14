@@ -41,6 +41,7 @@ const styles = createStyles({
         active: 'bg-brand fill-white',
     },
     icon: 'h-7 w-7 transition-all duration-75 ease-linear',
+    avatar: 'rounded-none',
 });
 
 export const sharedStyles = styles;

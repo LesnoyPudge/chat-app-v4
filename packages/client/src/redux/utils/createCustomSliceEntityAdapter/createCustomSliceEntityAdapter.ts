@@ -16,6 +16,7 @@ import { WithId } from '@types';
 
 export const createCustomSliceEntityAdapter = <
     _EntityState extends WithId,
+    _Keys extends keyof _EntityState,
     _State extends EntityState<_EntityState, string>,
     _CaseReducers extends SliceCaseReducers<_State>,
     _Name extends string,
@@ -29,7 +30,7 @@ export const createCustomSliceEntityAdapter = <
         _ReducerPath,
         _Selectors
     >,
-    adapter: createCustomEntityAdapter.Return<_EntityState>,
+    adapter: createCustomEntityAdapter.Return<_EntityState, _Keys>,
 ) => {
     const {
         reducers,

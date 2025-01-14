@@ -5,6 +5,7 @@
         "node_modules/@types",
         "./fakeServer/**/*",
         "./fakeShared/**/*",
+        "./fakeSocket/**/*",
         "WIP"
     ],
     "exclude": [
@@ -58,6 +59,9 @@
             "@fakeShared": [
                 "./fakeShared"
             ],
+            "@fakeSocket": [
+                "./fakeSocket"
+            ],
             "@redux/features": [
                 "./src/redux/features"
             ],
@@ -69,6 +73,9 @@
             ],
             "@redux/utils": [
                 "./src/redux/utils"
+            ],
+            "@redux/actions": [
+                "./src/redux/actions"
             ],
             "@entities": [
                 "./src/entities"
@@ -82,9 +89,18 @@
             "@modals": [
                 "./src/modals"
             ],
-            // "@lesnoypudge/utils-react": [
-            //     "../../../@lesnoypudge-utils-react/build"
-            // ]
+            "@contextMenus": [
+                "./src/contextMenus"
+            ],
+            "_@lesnoypudge/utils-react": [
+                "../../../@lesnoypudge-utils-react/build"
+            ],
+            "_@lesnoypudge/utils": [
+                "../../../@lesnoypudge-utils/build"
+            ],
+            "_@lesnoypudge/utils-web": [
+                "../../../@lesnoypudge/utils-web/build"
+            ],
         },
         "jsx": "react-jsx",
         "lib": [

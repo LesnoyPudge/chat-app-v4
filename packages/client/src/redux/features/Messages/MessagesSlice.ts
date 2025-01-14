@@ -12,7 +12,7 @@ export type State = ClientEntities.Message.Base;
 
 const name = 'Messages';
 
-const adapter = createCustomEntityAdapter<State, typeof name>(name);
+const adapter = createCustomEntityAdapter<State>()(name, []);
 
 const initialState = adapter.getInitialState();
 

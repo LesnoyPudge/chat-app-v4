@@ -4,11 +4,28 @@ import { createCustomQuery } from '@redux/utils';
 
 
 
-// import Message = Endpoints.V1.Message;
+import Conversation = Endpoints.V1.Conversation;
 
 export const ConversationsApi = createApi({
     baseQuery: createCustomQuery(),
     reducerPath: 'ConversationsApi',
     tagTypes: ['Conversations'],
-    endpoints: (build) => ({}),
+    endpoints: (build) => ({
+        [Conversation.GetMany.ActionName]: (
+            build.query<
+                Conversation.GetMany.Response,
+                Conversation.GetMany.RequestBody
+            >({
+                query: (body) => ({
+                    url: Conversation.GetMany.Path,
+                    method: Conversation.GetMany.Method,
+                    body,
+                }),
+                providesTags: (result) => result?.map(({ id }) => ({
+                    type: 'Conversations',
+                    id,
+                })) ?? [{ type: 'Conversations', id: 'LIST' }],
+            })
+        ),
+    }),
 });

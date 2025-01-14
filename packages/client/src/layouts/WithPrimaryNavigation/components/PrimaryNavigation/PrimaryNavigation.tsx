@@ -4,9 +4,9 @@ import { cn, createStyles } from '@utils';
 import {
     ActionButtons,
     HomePageButton,
-    ConversationList,
-    ServerList,
+    NavigationList,
 } from './components';
+import { FC } from 'react';
 
 
 
@@ -26,7 +26,7 @@ const styles = createStyles({
     },
 });
 
-export const PrimaryNavigation = () => {
+export const PrimaryNavigation: FC = () => {
     const {
         shouldShowMenu,
         shouldShowContent,
@@ -48,9 +48,7 @@ export const PrimaryNavigation = () => {
             >
                 <HomePageButton/>
 
-                <ConversationList/>
-
-                <ServerList/>
+                <NavigationList/>
 
                 <ActionButtons/>
             </div>

@@ -185,12 +185,12 @@ class FakeServer {
             },
         ),
 
-        http[E_Server.GetOneByInvitationCode.Method]<
+        http[E_Server.GetByInvitationCode.Method]<
             any,
-            E_Server.GetOneByInvitationCode.RequestBody,
-            E_Server.GetOneByInvitationCode.Response
+            E_Server.GetByInvitationCode.RequestBody,
+            E_Server.GetByInvitationCode.Response
         >(
-            `${env._PUBLIC_SERVER_URL}${E_Server.GetOneByInvitationCode.Path}`,
+            `${env._PUBLIC_SERVER_URL}${E_Server.GetByInvitationCode.Path}`,
             withAuth(async ({ request }) => {
                 await delay();
                 const body = await request.json();
@@ -272,6 +272,7 @@ class FakeServer {
                 const textChat = db.create('textChat', Dummies.textChatChannel({
                     id: uuid(),
                     channel: textChannelId,
+                    server: serverId,
                 }));
 
                 const textChannel = db.create('channel', Dummies.channel({
@@ -290,6 +291,7 @@ class FakeServer {
                     Dummies.voiceChatChannel({
                         id: uuid(),
                         channel: voiceChannelId,
+                        server: serverId,
                     }),
                 );
 

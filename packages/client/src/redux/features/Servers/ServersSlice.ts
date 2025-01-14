@@ -7,7 +7,6 @@ import { ClientEntities } from '@types';
 import { ServersApi } from './ServersApi';
 import { TextChats } from '../TextChats';
 import { Users } from '../Users';
-import { Channels } from '../Channels';
 import { isAnyOf } from '@reduxjs/toolkit';
 
 
@@ -16,7 +15,7 @@ export type State = ClientEntities.Server.Base;
 
 const name = 'Servers';
 
-const adapter = createCustomEntityAdapter<State, typeof name>(name);
+const adapter = createCustomEntityAdapter<State>()(name, []);
 
 const initialState = adapter.getInitialState();
 
@@ -27,7 +26,7 @@ export const Slice = createCustomSliceEntityAdapter({
     extraReducers: (builder) => {
         builder.addMatcher(
             isAnyOf(
-                ServersApi.endpoints.getOneByInvitationCode.matchFulfilled,
+                ServersApi.endpoints.getByInvitationCode.matchFulfilled,
                 ServersApi.endpoints.create.matchFulfilled,
                 ServersApi.endpoints.acceptInvitation.matchFulfilled,
             ),
@@ -54,7 +53,7 @@ export const { StoreSelectors } = createStoreSelectors({
 
         const { lastSeenMessages } = Users.StoreSelectors.selectMe()(state);
 
-        const textChats = TextChats.StoreSelectors.selectByServerId(
+        const textChats = TextChats.StoreSelectors.selectFilteredByServer(
             serverId,
         )(state);
 
@@ -62,10 +61,13 @@ export const { StoreSelectors } = createStoreSelectors({
             const lastSeenMessageIndex = lastSeenMessages.find((item) => {
                 return item.textChatId === textChat.id;
             })?.lastIndex;
-            if (!lastSeenMessageIndex) return acc;
 
-            const lastMessageIndex = textChat.messages.length - 1;
-            const diff = lastMessageIndex - lastSeenMessageIndex;
+            if (lastSeenMessageIndex === undefined) {
+                acc += textChat.messageCount;
+                return acc;
+            }
+
+            const diff = textChat.messageCount - (lastSeenMessageIndex + 1);
 
             acc += diff;
 
@@ -85,5 +87,31 @@ export const { StoreSelectors } = createStoreSelectors({
         const isMuted = mutedServers.includes(id);
 
         return isMuted;
+    },
+
+    selectIdsWithUnreadNotificationCount: (state) => {
+        const { servers } = Users.StoreSelectors.selectMe()(state);
+
+        return servers.map((serverId) => {
+            const count = StoreSelectors.selectNotificationCountById(
+                serverId,
+            )(state);
+
+            if (count === 0) return;
+
+            return [serverId, count] as const;
+        }).filter(Boolean);
+    },
+
+    selectIdsWithoutUnreadNotifications: (state) => {
+        const { servers: serverIds } = Users.StoreSelectors.selectMe()(state);
+
+        return serverIds.filter((serverId) => {
+            const count = StoreSelectors.selectNotificationCountById(
+                serverId,
+            )(state);
+
+            return count === 0;
+        });
     },
 });

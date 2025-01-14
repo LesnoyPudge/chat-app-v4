@@ -14,7 +14,10 @@ export type State = ClientEntities.TextChat.Base;
 
 const name = 'TextChats';
 
-const adapter = createCustomEntityAdapter<State, typeof name>(name);
+const adapter = createCustomEntityAdapter<State>()(name, [
+    'server',
+    'conversation',
+]);
 
 const initialState = adapter.getInitialState();
 
@@ -28,19 +31,4 @@ export const Slice = createCustomSliceEntityAdapter({
 
 export const { StoreSelectors } = createStoreSelectors({
     ...adapter.storeSelectors,
-    selectByServerId: (state, serverId: string) => {
-        const channelIds = (
-            Channels.Slice.selectors.selectIdsByServerId(
-                serverId,
-            )(state.Channels)
-        );
-
-        const textChats = StoreSelectors.selectAll()(state);
-
-        const foundTextChats = textChats.filter((textChat) => {
-            return channelIds.includes(textChat.channel);
-        });
-
-        return foundTextChats;
-    },
 });

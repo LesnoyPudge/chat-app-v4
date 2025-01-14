@@ -12,7 +12,7 @@ export type State = ClientEntities.Role.Base;
 
 const name = 'Roles';
 
-const adapter = createCustomEntityAdapter<State, typeof name>(name);
+const adapter = createCustomEntityAdapter<State>()(name, []);
 
 const initialState = adapter.getInitialState();
 

@@ -8,49 +8,49 @@ import { FC } from 'react';
 
 
 
-export namespace ServerItemMenu {
+export namespace ConversationContextMenu {
     export type Props = {
-        serverId: string;
+        conversationId: string;
     };
 }
 
-export const ServerItemMenu: FC<ServerItemMenu.Props> = ({
-    serverId,
+export const ConversationContextMenu: FC<ConversationContextMenu.Props> = ({
+    conversationId,
 }) => {
     const { t } = useTrans();
-    const [mute] = Features.Users.Api.useMuteServerMutation();
-    const [unmute] = Features.Users.Api.useUnmuteServerMutation();
+    const [mute] = Features.Users.Api.useMuteConversationMutation();
+    const [unmute] = Features.Users.Api.useUnmuteConversationMutation();
     const [
-        leaveTrigger,
-        leaveHelpers,
-    ] = Features.Servers.Api.useLeaveMutation();
+        hideTrigger,
+        hideHelpers,
+    ] = Features.Users.Api.useHideConversationMutation();
 
-    const leave = useFunction(() => {
-        void leaveTrigger({ serverId });
+    const hide = useFunction(() => {
+        void hideTrigger({ conversationId });
     });
 
     const [
         markAsReadTrigger,
         markAsReadHelpers,
-    ] = Features.Users.Api.useMarkServerNotificationsAsReadMutation();
+    ] = Features.Users.Api.useMarkConversationNotificationsAsReadMutation();
 
     const markAsRead = useFunction(() => {
-        void markAsReadTrigger({ serverId });
+        void markAsReadTrigger({ conversationId });
     });
 
     const hasNotifications = !!useStoreSelector(
-        Features.Servers.StoreSelectors.selectNotificationCountById(
-            serverId,
+        Features.Conversations.StoreSelectors.selectNotificationCountById(
+            conversationId,
         ),
     );
 
     const isMuted = useStoreSelector(
-        Features.Servers.StoreSelectors.selectIsMutedById(serverId),
+        Features.Conversations.StoreSelectors.selectIsMutedById(conversationId),
     );
 
     const isMutedOptimistic = useOptimisticQueue(isMuted, [
-        ['mute', () => true, () => mute({ serverId })],
-        ['unmute', () => false, () => unmute({ serverId })],
+        ['mute', () => true, () => mute({ conversationId })],
+        ['unmute', () => false, () => unmute({ conversationId })],
     ]);
 
     const toggleNotification = useFunction(() => {
@@ -61,10 +61,10 @@ export const ServerItemMenu: FC<ServerItemMenu.Props> = ({
         );
     });
 
-    const serverNotificationToggleText = (
+    const conversationNotificationToggleText = (
         isMutedOptimistic.value
-            ? t('PrimaryNavigation.ServerList.Item.menu.NotificationButton.text.unmute')
-            : t('PrimaryNavigation.ServerList.Item.menu.NotificationButton.text.mute')
+            ? t('ConversationContextMenu.NotificationButton.text.unmute')
+            : t('ConversationContextMenu.NotificationButton.text.mute')
     );
 
     const isMarkAsReadButtonDisabled = (
@@ -74,14 +74,14 @@ export const ServerItemMenu: FC<ServerItemMenu.Props> = ({
 
     return (
         <ContextMenu.Container
-            label={t('PrimaryNavigation.ServerList.Item.menu.label')}
+            label={t('ConversationContextMenu.label')}
         >
             <Button
                 className={ContextMenu.menuItemStyles}
                 {...ContextMenu.menuItemProps}
                 onLeftClick={toggleNotification}
             >
-                {serverNotificationToggleText}
+                {conversationNotificationToggleText}
             </Button>
 
             <Button
@@ -90,16 +90,16 @@ export const ServerItemMenu: FC<ServerItemMenu.Props> = ({
                 isDisabled={isMarkAsReadButtonDisabled}
                 onLeftClick={markAsRead}
             >
-                {t('PrimaryNavigation.ServerList.Item.menu.readNotificationsButton.text')}
+                {t('ConversationContextMenu.readNotificationsButton.text')}
             </Button>
 
             <Button
                 className={ContextMenu.menuItemStyles}
                 {...ContextMenu.menuItemProps}
-                onLeftClick={leave}
-                isLoading={leaveHelpers.isLoading}
+                onLeftClick={hide}
+                isLoading={hideHelpers.isLoading}
             >
-                {t('PrimaryNavigation.ServerList.Item.menu.leaveButton.text')}
+                {t('ConversationContextMenu.hideButton.text')}
             </Button>
         </ContextMenu.Container>
     );

@@ -6,34 +6,36 @@ import { localStorageApi } from '@utils';
 import { Users } from '../Users';
 import { isAnyOf } from '@reduxjs/toolkit';
 import { App } from '.';
+import { socket } from '@fakeSocket';
+import { socketActions } from '@redux/actions';
 
 
 
 export const { setupEffects } = createEffects({
-    effects: ({ dispatch }) => {
-        const mediaQuery = window.matchMedia(MOBILE_SCREEN_QUERY);
+    effects: ({ dispatch }) => [
+        (() => {
+            const mediaQuery = window.matchMedia(MOBILE_SCREEN_QUERY);
 
-        const handleMediaQuery = (e: MediaQueryListEvent) => {
-            dispatch(Slice.actions.setIsMobileScreen(e.matches));
-        };
+            const handleMediaQuery = (e: MediaQueryListEvent) => {
+                dispatch(Slice.actions.setIsMobileScreen(e.matches));
+            };
 
-        mediaQuery.addEventListener('change', handleMediaQuery);
+            mediaQuery.addEventListener('change', handleMediaQuery);
 
-        return [
-            () => mediaQuery.removeEventListener(
+            return () => mediaQuery.removeEventListener(
                 'change',
                 handleMediaQuery,
-            ),
+            );
+        })(),
 
-            addEventListener(window, 'online', () => {
-                dispatch(Slice.actions.setIsNetworkConnected(true));
-            }),
+        addEventListener(window, 'online', () => {
+            dispatch(Slice.actions.setIsNetworkConnected(true));
+        }),
 
-            addEventListener(window, 'offline', () => {
-                dispatch(Slice.actions.setIsNetworkConnected(false));
-            }),
-        ];
-    },
+        addEventListener(window, 'offline', () => {
+            dispatch(Slice.actions.setIsNetworkConnected(false));
+        }),
+    ],
 
     listenerMiddlewares: [
         ({ startListening }) => startListening({
@@ -45,6 +47,11 @@ export const { setupEffects } = createEffects({
                 localStorageApi.remove('refreshToken');
                 // localStorageApi.remove('lastVisitedChannels');
                 // localStorageApi.remove('savedMessageDrafts');
+
+                socket.disconnect();
+
+                socket.removeOnAddData();
+                socket.removeOnRemoveData();
             },
         }),
 
@@ -66,6 +73,16 @@ export const { setupEffects } = createEffects({
 
                     localStorageApi.set('accessToken', payload.accessToken);
                     localStorageApi.set('refreshToken', payload.refreshToken);
+
+                    socket.connect();
+
+                    socket.onAddData((data) => {
+                        dispatch(socketActions.addSocketData(data));
+                    });
+
+                    socket.onRemoveData((data) => {
+                        dispatch(socketActions.removeSocketData(data));
+                    });
                 },
             });
         },

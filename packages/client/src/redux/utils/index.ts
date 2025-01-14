@@ -4,6 +4,7 @@ export * from './createCustomMiddleware';
 export * from './createCustomSlice';
 export * from './createCustomSliceEntityAdapter';
 export * from './createEffects';
+export * from './createEntitySubscription';
 export * from './createStoreSelectors';
 export * from './customQuery';
 export * from './enhancers';

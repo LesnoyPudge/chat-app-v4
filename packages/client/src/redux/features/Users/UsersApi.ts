@@ -84,5 +84,70 @@ export const UsersApi = createApi({
                 }),
             })
         ),
+        [User.MuteConversation.ActionName]: (
+            build.mutation<
+                User.MuteConversation.Response,
+                User.MuteConversation.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.MuteConversation.Path,
+                    method: User.MuteConversation.Method,
+                    body,
+                }),
+            })
+        ),
+        [User.UnmuteConversation.ActionName]: (
+            build.mutation<
+                User.UnmuteConversation.Response,
+                User.UnmuteConversation.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.UnmuteConversation.Path,
+                    method: User.UnmuteConversation.Method,
+                    body,
+                }),
+
+            })
+        ),
+        [User.MarkConversationNotificationsAsRead.ActionName]: (
+            build.mutation<
+                User.MarkConversationNotificationsAsRead.Response,
+                User.MarkConversationNotificationsAsRead.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.MarkConversationNotificationsAsRead.Path,
+                    method: User.MarkConversationNotificationsAsRead.Method,
+                    body,
+                }),
+            })
+        ),
+        [User.HideConversation.ActionName]: (
+            build.mutation<
+                User.HideConversation.Response,
+                User.HideConversation.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.HideConversation.Path,
+                    method: User.HideConversation.Method,
+                    body,
+                }),
+            })
+        ),
+        [User.GetMany.ActionName]: (
+            build.query<
+                User.GetMany.Response,
+                User.GetMany.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.GetMany.Path,
+                    method: User.GetMany.Method,
+                    body,
+                }),
+                providesTags: (result) => result?.map(({ id }) => ({
+                    type: 'Users',
+                    id,
+                })) ?? [{ type: 'Users', id: 'LIST' }],
+            })
+        ),
     }),
 });
