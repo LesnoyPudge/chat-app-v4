@@ -47,7 +47,7 @@ export const RadioInputIndicator: FC<RadioInputIndicator.Props> = ({
             <div
                 className={cn(
                     styles.inner.base,
-                    { [styles.inner.active]: checked },
+                    checked && styles.inner.active,
                 )}
             >
             </div>

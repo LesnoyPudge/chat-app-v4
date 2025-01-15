@@ -33,14 +33,14 @@ export const CheckBoxIndicatorCheck: FC<CheckBoxIndicatorCheck.Props> = ({
         <>
             <div className={cn(
                 styles.checkBox.base,
-                { [styles.checkBox.active]: checked },
+                checked && styles.checkBox.active,
                 className,
             )}
             >
                 <Sprite
                     className={cn(
                         styles.checkBoxIcon.base,
-                        { [styles.checkBoxIcon.active]: !checked },
+                        !checked && styles.checkBoxIcon.active,
                     )}
                     name='CHECK_ICON'
                 />

@@ -77,6 +77,7 @@
     "STATUS.online": "В сети",
     "TextInputPasswordToggle.hideText": "Скрыть пароль",
     "TextInputPasswordToggle.showText": "Показать пароль",
+    "ValidationErrors.badValue": "Указано некорректное значение",
     "ValidationErrors.invalidEmail": "Некорректный e-mail",
     "ValidationErrors.required": "Значение не указано"
 }

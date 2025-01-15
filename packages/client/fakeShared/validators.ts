@@ -19,24 +19,35 @@ const schema = <
 const VALIDATION_ERRORS = {
     REQUIRED: t('ValidationErrors.required'),
     INVALID_EMAIL: t('ValidationErrors.invalidEmail'),
+    BAD_VALUE: t('ValidationErrors.badValue'),
 } as const;
 
 const ve = VALIDATION_ERRORS;
 
 class SharedValidators {
     commonString = v.pipe(
-        v.string(),
+        v.string(ve.BAD_VALUE),
         v.trim(),
         v.nonEmpty(ve.REQUIRED),
     );
 
-    id = v.pipe(
+    noWhitespaces = v.pipe(
+        v.string(ve.BAD_VALUE),
+        v.check((input) => input.split(' ').length === 1, ve.BAD_VALUE),
+    );
+
+    singleCommonString = v.pipe(
         this.commonString,
-        v.uuid(),
+        this.noWhitespaces,
+    );
+
+    id = v.pipe(
+        this.singleCommonString,
+        v.uuid(ve.BAD_VALUE),
     );
 
     email = v.pipe(
-        this.commonString,
+        this.singleCommonString,
         v.email(ve.INVALID_EMAIL),
     );
 
@@ -47,7 +58,7 @@ class SharedValidators {
                     text: v.string(),
                     bold: v.pipe(v.optional(v.boolean())),
                     italic: v.pipe(v.optional(v.boolean())),
-                }),
+                }, ve.BAD_VALUE),
             ),
             value,
         ));
@@ -60,7 +71,7 @@ class SharedValidators {
             v.objectAsync({
                 type: v.literal('paragraph'),
                 children: this.RTENodes,
-            }),
+            }, ve.BAD_VALUE),
             value,
         ));
     });
@@ -73,15 +84,17 @@ class SharedValidators {
                 v.objectAsync({
                     type: v.literal('link'),
                     url: v.pipe(
-                        this.commonString,
+                        this.singleCommonString,
                         v.url(),
                     ),
                     children: v.pipeAsync(
                         v.arrayAsync(this.RTEText),
                         v.length(1),
                     ),
-                }),
-                v.check((link) => link.url === link.children[0]?.text),
+                }, ve.BAD_VALUE),
+                v.check((link) => {
+                    return link.url === link.children[0]?.text;
+                }, ve.BAD_VALUE),
             ),
             value,
         ));
@@ -112,10 +125,10 @@ class SharedValidators {
                         )),
                         v.length(1),
                     ),
-                }),
+                }, ve.BAD_VALUE),
                 v.check((emoji) => {
                     return emoji.code === emoji.children[0]?.text;
-                }),
+                }, ve.BAD_VALUE),
             ),
             value,
         ));
@@ -139,15 +152,15 @@ class SharedValidators {
         }
 
         return false;
-    }));
+    }), ve.BAD_VALUE);
 
     file = schema<ClientEntities.File.Encoded>(v.object({
         type: this.commonString,
         base64: v.pipe(
-            this.commonString,
+            this.singleCommonString,
             v.check((val) => v.safeParse(
                 v.pipe(
-                    this.commonString,
+                    this.singleCommonString,
                     v.base64(),
                 ),
                 val.split('base64,')[1],
@@ -158,9 +171,9 @@ class SharedValidators {
             v.number(),
             v.maxValue(FILE_MAX_SIZE),
         ),
-    }));
+    }, ve.BAD_VALUE));
 
-    nullableFile = v.nullable(this.file);
+    nullableFile = v.nullable(this.file, ve.BAD_VALUE);
 }
 
 const sv = new SharedValidators();
@@ -178,15 +191,15 @@ export namespace ApiValidators {
             } = {
                 [User.Login.ActionName]: (
                     schema<User.Login.RequestBody>(v.object({
-                        login: sv.commonString,
-                        password: sv.commonString,
+                        login: sv.singleCommonString,
+                        password: sv.singleCommonString,
                     }))
                 ),
                 [User.Registration.ActionName]: (
                     schema<User.Registration.RequestBody>(v.object({
                         name: sv.commonString,
-                        login: sv.commonString,
-                        password: sv.commonString,
+                        login: sv.singleCommonString,
+                        password: sv.singleCommonString,
                     }))
                 ),
             };
@@ -202,19 +215,19 @@ export namespace ApiValidators {
             } = {
                 [Server.AcceptInvitation.ActionName]: (
                     schema<Server.AcceptInvitation.RequestBody>(v.object({
-                        invitationCode: sv.commonString,
+                        invitationCode: sv.singleCommonString,
                     }))
                 ),
                 [Server.Create.ActionName]: (
                     schema<Server.Create.RequestBody>(v.object({
                         name: sv.commonString,
-                        identifier: sv.commonString,
+                        identifier: sv.singleCommonString,
                         avatar: sv.nullableFile,
                     }))
                 ),
                 [Server.GetByInvitationCode.ActionName]: (
                     schema<Server.GetByInvitationCode.RequestBody>(v.object({
-                        invitationCode: sv.commonString,
+                        invitationCode: sv.singleCommonString,
                     }))
                 ),
             };

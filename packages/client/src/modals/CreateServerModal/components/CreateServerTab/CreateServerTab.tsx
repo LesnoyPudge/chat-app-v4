@@ -82,10 +82,6 @@ export const CreateServerTab: FC = () => {
         }),
     });
 
-    const { AvatarField } = Form.useField(FormApi, 'avatar');
-    const { IdentifierField } = Form.useField(FormApi, 'identifier');
-    const { NameField } = Form.useField(FormApi, 'name');
-
     return (
         <Form.Provider formApi={FormApi} submitError={submitError}>
             <Form.Node>
@@ -100,80 +96,92 @@ export const CreateServerTab: FC = () => {
                 </Modal.Base.Header>
 
                 <Modal.Base.Content>
-                    <Form.Inputs.FileInput.Node
-                        className={styles.fileInputNode}
-                        accept='image/*'
-                        amountLimit={1}
-                        field={AvatarField}
-                        label={t('CreateServerModal.CreateServerTab.fileInput.label')}
-                    >
-                        <div className={styles.fileInputWrapper}>
-                            <If condition={!!AvatarField.state.value}>
-                                <Image
-                                    className={styles.serverAvatar}
-                                    src={AvatarField.state.value?.base64}
-                                    alt={t('CreateServerModal.CreateServerTab.fileInput.serverImage.alt')}
-                                />
-                            </If>
-
-                            <If condition={!AvatarField.state.value}>
-                                <div className={styles.fileInputActionWrapper}>
-                                    <span className={styles.fileInputActionText}>
-                                        {t('CreateServerModal.CreateServerTab.fileInput.uploadAction.text')}
-                                    </span>
-
-                                    <div className={styles.fileInputActionIconWrapper}>
-                                        <Sprite
-                                            className={styles.fileInputActionIcon}
-                                            name='PLUS_ICON'
+                    <FormApi.Field name='avatar'>
+                        {(AvatarField) => (
+                            <Form.Inputs.FileInput.Node
+                                className={styles.fileInputNode}
+                                accept={Form.Inputs.FileInput.ACCEPTED_FILE_TYPE.IMAGES}
+                                amountLimit={1}
+                                field={AvatarField}
+                                label={t('CreateServerModal.CreateServerTab.fileInput.label')}
+                            >
+                                <div className={styles.fileInputWrapper}>
+                                    <If condition={!!AvatarField.state.value}>
+                                        <Image
+                                            className={styles.serverAvatar}
+                                            src={AvatarField.state.value?.base64}
+                                            alt={t('CreateServerModal.CreateServerTab.fileInput.serverImage.alt')}
                                         />
-                                    </div>
+                                    </If>
+
+                                    <If condition={!AvatarField.state.value}>
+                                        <div className={styles.fileInputActionWrapper}>
+                                            <span className={styles.fileInputActionText}>
+                                                {t('CreateServerModal.CreateServerTab.fileInput.uploadAction.text')}
+                                            </span>
+
+                                            <div className={styles.fileInputActionIconWrapper}>
+                                                <Sprite
+                                                    className={styles.fileInputActionIcon}
+                                                    name='PLUS_ICON'
+                                                />
+                                            </div>
+                                        </div>
+                                    </If>
                                 </div>
-                            </If>
-                        </div>
-                    </Form.Inputs.FileInput.Node>
+                            </Form.Inputs.FileInput.Node>
+                        )}
+                    </FormApi.Field>
 
-                    <Form.Inputs.TextInput.Provider
-                        field={IdentifierField}
-                        label={t('CreateServerModal.CreateServerTab.identifierField.label')}
-                        type='text'
-                        maxLength={32}
-                        required
-                        placeholder='myServer'
-                    >
-                        <div className={styles.identifierFieldSpacing}>
-                            <Label.Node htmlFor={IdentifierField.name}>
-                                {t('CreateServerModal.CreateServerTab.identifierField.label')}
+                    <FormApi.Field name='identifier'>
+                        {(IdentifierField) => (
+                            <Form.Inputs.TextInput.Provider
+                                field={IdentifierField}
+                                label={t('CreateServerModal.CreateServerTab.identifierField.label')}
+                                type='text'
+                                maxLength={32}
+                                required
+                                placeholder='myServer'
+                            >
+                                <div className={styles.identifierFieldSpacing}>
+                                    <Label.Node htmlFor={IdentifierField.name}>
+                                        {t('CreateServerModal.CreateServerTab.identifierField.label')}
 
-                                <Label.Wildcard/>
+                                        <Label.Wildcard/>
 
-                                <Label.Error field={IdentifierField}/>
-                            </Label.Node>
+                                        <Label.Error field={IdentifierField}/>
+                                    </Label.Node>
 
-                            <Form.Inputs.TextInput.Node/>
-                        </div>
-                    </Form.Inputs.TextInput.Provider>
+                                    <Form.Inputs.TextInput.Node/>
+                                </div>
+                            </Form.Inputs.TextInput.Provider>
+                        )}
+                    </FormApi.Field>
 
-                    <Form.Inputs.TextInput.Provider
-                        field={NameField}
-                        label={t('CreateServerModal.CreateServerTab.nameField.label')}
-                        type='text'
-                        maxLength={32}
-                        required
-                        placeholder='Мой новый сервер'
-                    >
-                        <div className={styles.nameFieldSpacing}>
-                            <Label.Node htmlFor={NameField.name}>
-                                {t('CreateServerModal.CreateServerTab.nameField.label')}
+                    <FormApi.Field name='name'>
+                        {(NameField) => (
+                            <Form.Inputs.TextInput.Provider
+                                field={NameField}
+                                label={t('CreateServerModal.CreateServerTab.nameField.label')}
+                                type='text'
+                                maxLength={32}
+                                required
+                                placeholder='Мой новый сервер'
+                            >
+                                <div className={styles.nameFieldSpacing}>
+                                    <Label.Node htmlFor={NameField.name}>
+                                        {t('CreateServerModal.CreateServerTab.nameField.label')}
 
-                                <Label.Wildcard/>
+                                        <Label.Wildcard/>
 
-                                <Label.Error field={NameField}/>
-                            </Label.Node>
+                                        <Label.Error field={NameField}/>
+                                    </Label.Node>
 
-                            <Form.Inputs.TextInput.Node/>
-                        </div>
-                    </Form.Inputs.TextInput.Provider>
+                                    <Form.Inputs.TextInput.Node/>
+                                </div>
+                            </Form.Inputs.TextInput.Provider>
+                        )}
+                    </FormApi.Field>
 
                     <Form.Error className={styles.formErrorSpacing}/>
                 </Modal.Base.Content>
@@ -187,12 +195,19 @@ export const CreateServerTab: FC = () => {
                         {t('CreateServerModal.CreateServerTab.backButton.text')}
                     </Button>
 
-                    <FormApi.Subscribe selector={(s) => s.isSubmitting}>
-                        {(isSubmitting) => (
+                    <FormApi.Subscribe selector={({
+                        isSubmitting,
+                        isFormValid,
+                    }) => ({
+                        isSubmitting,
+                        isFormValid,
+                    })}>
+                        {({ isFormValid, isSubmitting }) => (
                             <Button
                                 stylingPreset='brand'
                                 size='medium'
                                 type='submit'
+                                isDisabled={!isFormValid}
                                 isLoading={isSubmitting}
                             >
                                 {t('CreateServerModal.CreateServerTab.submitButton.text')}

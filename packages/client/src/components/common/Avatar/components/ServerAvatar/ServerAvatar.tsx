@@ -63,7 +63,8 @@ export const ServerAvatar: FC<ServerAvatar.Props> = ({
 
     return (
         <div className={cn(
-            sharedStyles.wrapper,
+            sharedStyles.wrapper.base,
+            !isLoadedState.value && sharedStyles.wrapper.notLoaded,
             styles.wrapper.base,
             showName && styles.wrapper.loaded,
             className,

@@ -55,7 +55,7 @@ export const RadioInputPure: FC<RadioInputPure.Props> = ({
         <label
             className={cn(
                 styles.label.base,
-                { [styles.label.active]: checked },
+                checked && styles.label.active,
                 className,
             )}
         >

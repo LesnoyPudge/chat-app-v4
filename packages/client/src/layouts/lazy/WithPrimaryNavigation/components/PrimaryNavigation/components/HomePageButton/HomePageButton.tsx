@@ -28,10 +28,8 @@ export const HomePageButton: FC = () => {
                 className={cn(
                     sharedStyles.button.base,
                     sharedStyles.brandButton.base,
-                    {
-                        [sharedStyles.button.active]: isInRootOrConversation,
-                        [sharedStyles.brandButton.active]: isInRootOrConversation,
-                    },
+                    isInRootOrConversation && sharedStyles.button.active,
+                    isInRootOrConversation && sharedStyles.brandButton.active,
                 )}
                 innerRef={buttonRef}
                 isActive={isInRootOrConversation}

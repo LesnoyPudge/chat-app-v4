@@ -9,6 +9,7 @@ export namespace Conversations {
     export const {
         Slice,
         StoreSelectors,
+        Subscription,
     } = ConversationsSlice;
 
     export type State = ConversationsSlice.State;

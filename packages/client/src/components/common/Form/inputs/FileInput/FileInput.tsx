@@ -21,10 +21,10 @@ export namespace FileInputPure {
     export type Props = (
         RT.PropsWithChildrenAndClassName
         & {
-            id?: string;
+            id: string;
             name: string;
-            accept?: T.ValueOf<typeof ACCEPTED_FILE_TYPE>;
-            multiple?: boolean;
+            accept: T.ValueOf<typeof ACCEPTED_FILE_TYPE>;
+            multiple: boolean;
             label: string;
             hidden?: boolean;
             onChange: ChangeEventHandler<HTMLInputElement>;
@@ -38,8 +38,8 @@ export const FileInputPure: FC<FileInputPure.Props> = ({
     id,
     label,
     name,
-    accept = ACCEPTED_FILE_TYPE.ALL,
-    multiple = false,
+    accept,
+    multiple,
     hidden = false,
     onChange,
     onBlur,
@@ -76,11 +76,14 @@ export namespace FileInput {
     export type Props<_Amount extends number> = T.Simplify<
         Pick<
             FileInputPure.Props,
+            'label'
+        >
+        & Partial<Pick<
+            FileInputPure.Props,
+            'hidden'
             | 'children'
             | 'className'
-            | 'hidden'
-            | 'label'
-        >
+        >>
         & Pick<
             useFileInput.Props,
             'accept'
@@ -151,6 +154,7 @@ export const FileInput = <_Amount extends number>({
             id={field.name}
             name={field.name}
             multiple={isMultiple}
+            accept={accept}
             onChange={onChange}
             onBlur={field.handleBlur}
             {...rest}

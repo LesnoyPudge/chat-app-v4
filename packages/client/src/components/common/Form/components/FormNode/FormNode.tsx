@@ -42,6 +42,7 @@ export const FormNode: FC<FormNode.Props> = ({
     const handleSubmit: FormNode.OnSubmit = useFunction((e) => {
         e.preventDefault();
         e.stopPropagation();
+
         void _onSubmit(e);
     });
 

@@ -9,6 +9,7 @@ export namespace Servers {
     export const {
         Slice,
         StoreSelectors,
+        Subscription,
     } = ServersSlice;
 
     export type State = ServersSlice.State;

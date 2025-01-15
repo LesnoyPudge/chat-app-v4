@@ -43,7 +43,6 @@ export const ContextMenuContainer: FC<ContextMenuContainer.Props> = ({
                 className={styles.scrollable}
                 size='small'
                 withOppositeGutter
-                followContentSize
             >
                 {children}
             </Scrollable>

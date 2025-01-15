@@ -45,11 +45,16 @@ export const encodeFiles = async (
 
     await Promise.all(files.map(async (file) => {
         const isInLimit = file.size <= options.sizeLimit;
+
         const isTypeAcceptable = (
             options.accept === ACCEPTED_FILE_TYPE.ALL
                 ? true
-                : file.type.includes(options.accept.replace('*', ''))
+                : options.accept
+                    .replaceAll(',', '')
+                    .split(' ')
+                    .includes(file.type)
         );
+
         const isBad = !isTypeAcceptable || !isInLimit;
 
         const okLimitReached = result.ok.length >= options.amountLimit;

@@ -2,6 +2,7 @@ import { invariant } from '@lesnoypudge/utils';
 import {
     createCustomEntityAdapter,
     createCustomSliceEntityAdapter,
+    createEntitySubscription,
     createStoreSelectors,
 } from '@redux/utils';
 import { ClientEntities } from '@types';
@@ -17,6 +18,11 @@ const name = 'Users';
 
 const adapter = createCustomEntityAdapter<State>()(name, []);
 
+export const {
+    Subscription,
+    createExtraReducers,
+} = createEntitySubscription(name, adapter);
+
 const initialState = adapter.getInitialState();
 
 export const Slice = createCustomSliceEntityAdapter({
@@ -25,12 +31,24 @@ export const Slice = createCustomSliceEntityAdapter({
     reducers: (create) => ({}),
     selectors: {},
     extraReducers: (builder) => {
+        createExtraReducers(builder);
+
         builder.addMatcher(
             isAnyOf(
                 UsersApi.endpoints.login.matchFulfilled,
                 UsersApi.endpoints.registration.matchFulfilled,
                 UsersApi.endpoints.refresh.matchFulfilled,
-                UsersApi.endpoints.refresh.matchFulfilled,
+            ),
+            (state, { payload }) => {
+                adapter.upsertMany(state, [
+                    payload.userData,
+                    ...payload.User,
+                ]);
+            },
+        );
+
+        builder.addMatcher(
+            isAnyOf(
                 UsersApi.endpoints.unmuteServer.matchFulfilled,
                 UsersApi.endpoints.muteServer.matchFulfilled,
                 UsersApi.endpoints.markServerNotificationsAsRead.matchFulfilled,

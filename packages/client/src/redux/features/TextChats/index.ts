@@ -9,6 +9,7 @@ export namespace TextChats {
     export const {
         Slice,
         StoreSelectors,
+        Subscription,
     } = TextChatsSlice;
 
     export type State = TextChatsSlice.State;

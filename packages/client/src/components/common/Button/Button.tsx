@@ -129,10 +129,10 @@ export const Button: FC<Button.Props> = ({
     return (
         <button
             className={cn(
-                stylingPreset && styles.base,
-                stylingPreset && styles[stylingPreset].base,
-                stylingPreset && isActive && styles[stylingPreset].active,
-                size && styles.sizes[size],
+                !!stylingPreset && styles.base,
+                !!stylingPreset && styles[stylingPreset].base,
+                !!stylingPreset && isActive && styles[stylingPreset].active,
+                !!size && styles.sizes[size],
                 className,
             )}
             id={id}

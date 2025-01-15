@@ -25,7 +25,10 @@ export const customTwMerge = createTailwindMerge(getDefaultConfig, (config) =>
     }),
 );
 
-export const cn = (...args: Parameters<typeof clsx>): string => {
+// Parameters<typeof clsx>
+type Args = (string | boolean | undefined)[];
+
+export const cn = (...args: Args): string => {
     if (
         args.length === 2
         && (args[1] === undefined || args[1] === '')

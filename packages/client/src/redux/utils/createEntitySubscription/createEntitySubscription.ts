@@ -5,6 +5,7 @@ import { useEffect, useId } from 'react';
 import { createCustomEntityAdapter } from '../createCustomEntityAdapter';
 import { WithId } from '@types';
 import { socketActions } from '@redux/actions';
+import { getId } from '@lesnoypudge/utils';
 
 
 
@@ -44,13 +45,14 @@ export const createEntitySubscription = <
 
     const useSubscribe = (ids: string[] | undefined) => {
         const memoizedIds = useMemoShallow(ids);
-        const id = useId();
 
         useEffect(() => {
             if (!memoizedIds?.length) return;
 
+            const id = getId();
+
             return socket.subscribe(id, entityName, memoizedIds);
-        }, [memoizedIds, id]);
+        }, [memoizedIds]);
     };
 
     return {

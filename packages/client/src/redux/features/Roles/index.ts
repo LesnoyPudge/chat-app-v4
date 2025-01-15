@@ -9,6 +9,7 @@ export namespace Roles {
     export const {
         Slice,
         StoreSelectors,
+        Subscription,
     } = RolesSlice;
 
     export type State = RolesSlice.State;

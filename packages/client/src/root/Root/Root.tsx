@@ -1,11 +1,10 @@
 import {
     Heading,
-    VisuallyHidden,
     ErrorBoundary,
     withDisplayName,
     Focus,
 } from '@lesnoypudge/utils-react';
-import { env, isDev } from '@vars';
+import { isDev } from '@vars';
 import { lazy } from 'react';
 import { GlobalProviders, Masks, SpriteSheet, Router } from './components';
 import { ErrorScreen } from '@screens/bundled';
@@ -36,12 +35,6 @@ export const Root = withDisplayName('Root', decorated(() => {
 
     return (
         <Focus.Lock autoFocus enabled noIsolation>
-            <VisuallyHidden>
-                <Heading.Node>
-                    {env._PUBLIC_APP_NAME}
-                </Heading.Node>
-            </VisuallyHidden>
-
             <Masks/>
 
             <SpriteSheet/>

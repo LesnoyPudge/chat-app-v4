@@ -21,10 +21,8 @@ export const ActionButtons: FC = () => {
                 className={cn(
                     sharedStyles.button.base,
                     sharedStyles.actionButton.base,
-                    {
-                        [sharedStyles.button.active]: controls.isOpen,
-                        [sharedStyles.actionButton.active]: controls.isOpen,
-                    },
+                    controls.isOpen && sharedStyles.button.active,
+                    controls.isOpen && sharedStyles.actionButton.active,
                 )}
                 hasPopup='dialog'
                 isActive={controls.isOpen}

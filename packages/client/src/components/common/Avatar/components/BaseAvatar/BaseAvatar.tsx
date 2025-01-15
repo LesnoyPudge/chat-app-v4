@@ -28,7 +28,11 @@ export const BaseAvatar: FC<BaseAvatar.Props> = ({
     const src = getReadImagePath(id);
 
     return (
-        <div className={cn(sharedStyles.wrapper, className)}>
+        <div className={cn(
+            sharedStyles.wrapper.base,
+            !isLoadedState.value && sharedStyles.wrapper.notLoaded,
+            className,
+        )}>
             <Image
                 className={cn(
                     sharedStyles.image.base,

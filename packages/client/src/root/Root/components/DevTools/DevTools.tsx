@@ -8,7 +8,7 @@ import { Modal } from '@entities';
 
 
 const styles = createStyles({
-    inner: 'flex flex-col gap-2 ',
+    inner: 'flex flex-col gap-2 p-2',
     action: `
         px-2
         py-1
@@ -27,7 +27,7 @@ export const DevTools: FC = () => {
         setCurrentFocusedId,
     } = useDevTools();
 
-    const Item: FC<{ actionName: string }> = ({ actionName }) => {
+    const Item: FC<{ actionName: keyof typeof actions }> = ({ actionName }) => {
         const containerRef = useRefManager<HTMLButtonElement>(null);
 
         return (
@@ -39,7 +39,7 @@ export const DevTools: FC = () => {
                 <Button
                     className={styles.action}
                     onLeftClick={() => {
-                        void actions[actionName]?.();
+                        actions[actionName]();
                         setCurrentFocusedId(actionName);
                     }}
                     tabIndex={getTabIndex(actionName)}
@@ -61,7 +61,7 @@ export const DevTools: FC = () => {
                     className={styles.inner}
                     ref={wrapperRef}
                 >
-                    <Iterate items={[Object.keys(actions)[0]!]}>
+                    <Iterate items={Object.keys<typeof actions>(actions)}>
                         {(actionName) => (
                             <Item
                                 actionName={actionName}

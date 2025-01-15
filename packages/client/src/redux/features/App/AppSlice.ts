@@ -59,7 +59,7 @@ export const Slice = createCustomSlice({
                 Users.Api.endpoints.refresh.matchFulfilled,
             ),
             (state, { payload }) => {
-                state.userId = payload.id;
+                state.userId = payload.userData.id;
                 state.isRefreshing = false;
                 state.isAttemptedToRefresh = true;
             },

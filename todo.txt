@@ -20,7 +20,7 @@ https://mswjs.io/docs/getting-started
 - переделать useValidatedProps, использовать один источник для ключей валидации
 -? возможно изменить lastSeenMessages на lastSeenMessageIds (но мне нужен индекс сообщения а не id???)
 -? добавить Fetchers? фэтчить информацию одновременно с lazyload компотентами а не внутри компонентов что бы избежать waterfall
-- удалить все @ts-ignore / @ts-expect-error в циклах, использовать новую технику: https://stackoverflow.com/questions/77724165/typescript-error-assigning-values-to-object-properties-in-a-loop
+- кулдаун на звуки уведомлений
 
 
 

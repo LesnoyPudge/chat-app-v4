@@ -9,6 +9,7 @@ export namespace Channels {
     export const {
         Slice,
         StoreSelectors,
+        Subscription,
     } = ChannelsSlice;
 
     export type State = ChannelsSlice.State;

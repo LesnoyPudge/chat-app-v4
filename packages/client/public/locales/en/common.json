@@ -84,6 +84,7 @@
     "STATUS.online": "__NOT_TRANSLATED__",
     "TextInputPasswordToggle.hideText": "__NOT_TRANSLATED__",
     "TextInputPasswordToggle.showText": "__NOT_TRANSLATED__",
+    "ValidationErrors.badValue": "__NOT_TRANSLATED__",
     "ValidationErrors.invalidEmail": "__NOT_TRANSLATED__",
     "ValidationErrors.required": "__NOT_TRANSLATED__"
 }

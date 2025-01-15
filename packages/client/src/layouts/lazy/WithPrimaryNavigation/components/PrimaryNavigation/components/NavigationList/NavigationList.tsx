@@ -50,8 +50,6 @@ export const NavigationList: FC = () => {
         ...serverIds,
     ];
 
-    Features.Conversations.Api.useGetManyQuery({ serverIds });
-
     const {
         getIsFocused,
         getTabIndex,
@@ -79,7 +77,6 @@ export const NavigationList: FC = () => {
                 <Scrollable
                     className={styles.scrollable}
                     size='hidden'
-                    followContentSize
                 >
                     <div
                         className={styles.list}

@@ -104,6 +104,18 @@ namespace WithIds {
     };
 }
 
+type AppData = {
+    userData: Entities.User.Base;
+    [ENTITY_NAME.CHANNEL]: Entities.Channel.Base[];
+    [ENTITY_NAME.CONVERSATION]: Entities.Conversation.Base[];
+    [ENTITY_NAME.MESSAGE]: Entities.Message.Base[];
+    [ENTITY_NAME.ROLE]: Entities.Role.Base[];
+    [ENTITY_NAME.SERVER]: Entities.Server.Base[];
+    [ENTITY_NAME.TEXT_CHAT]: Entities.TextChat.Base[];
+    [ENTITY_NAME.USER]: Entities.User.Base[];
+    [ENTITY_NAME.VOICE_CHAT]: Entities.VoiceChat.Base[];
+};
+
 namespace EndpointsV1 {
     export namespace User {
         const BasePath = ENTITY_NAME.USER;
@@ -120,7 +132,7 @@ namespace EndpointsV1 {
                 'login' | 'password' | 'name'
             >;
 
-            export type Response = Entities.User.Base;
+            export type Response = AppData;
         }
 
         export namespace Login {
@@ -135,7 +147,7 @@ namespace EndpointsV1 {
                 'login' | 'password'
             >;
 
-            export type Response = Entities.User.Base;
+            export type Response = AppData;
         }
 
         export namespace Logout {
@@ -160,12 +172,17 @@ namespace EndpointsV1 {
 
             export const Method = HTTP_METHOD.POST;
 
-            export type RequestBody = Pick<
-                Entities.User.Base,
-                'refreshToken'
-            >;
+            export type RequestBody = (
+                Pick<
+                    Entities.User.Base,
+                    'refreshToken'
+                >
+                & {
+                    withData?: boolean;
+                }
+            );
 
-            export type Response = Entities.User.Base;
+            export type Response = AppData;
         }
 
         export namespace MuteServer {
@@ -405,6 +422,10 @@ namespace EndpointsV1 {
 
             export type Response = Entities.TextChat.Base[];
         }
+    }
+
+    export namespace Message {
+        const BasePath = ENTITY_NAME.MESSAGE;
     }
 
     export namespace VoiceChat {

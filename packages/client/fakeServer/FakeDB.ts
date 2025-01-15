@@ -29,7 +29,7 @@ type Storage = {
     voiceChat: Record<string, ClientEntities.VoiceChat.Base>;
 };
 
-export class FakeDBB {
+class FakeDBB {
     private storage: Storage;
     private version: number;
     private dbName: string;
@@ -151,3 +151,5 @@ export class FakeDBB {
         return this.getMany(tableKey, (item) => ids.includes(item.id));
     }
 }
+
+export const db = new FakeDBB();

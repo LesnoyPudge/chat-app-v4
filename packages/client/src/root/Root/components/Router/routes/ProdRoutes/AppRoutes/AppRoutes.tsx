@@ -8,9 +8,17 @@ import { createGroupedLazyLoad, withDelay } from '../../utils';
 
 const { withGroupedLazyLoad } = createGroupedLazyLoad();
 
-const WithPrimaryNavigation = lazy(withGroupedLazyLoad(withDelay(() => {
-    return import('@layouts/WithPrimaryNavigation');
-})));
+const WithPrimaryNavigation = lazy(withGroupedLazyLoad(
+    withDelay(() => {
+        return import('@layouts/lazy/WithPrimaryNavigation');
+    }),
+));
+
+const WithSecondaryNavigationWrapper = lazy(withGroupedLazyLoad(
+    withDelay(() => {
+        return import('@layouts/lazy/WithSecondaryNavigationWrapper');
+    }),
+));
 
 export const AppRoutes: FC = () => {
     return (
@@ -19,7 +27,11 @@ export const AppRoutes: FC = () => {
                 <WithPrimaryNavigation/>
             </SuspenseWithGlobalLoader>
         )}>
-            <Route element={<>with Conversations <Outlet/></>}>
+            <Route element={(
+                <WithSecondaryNavigationWrapper>
+                    <>with Conversations</>
+                </WithSecondaryNavigationWrapper>
+            )}>
                 <Route
                     index
                     element={(
@@ -49,7 +61,11 @@ export const AppRoutes: FC = () => {
 
             <Route
                 path={Navigator.staticNavigatorPath.server}
-                element={<>with channel list <Outlet/></>}
+                element={(
+                    <WithSecondaryNavigationWrapper>
+                        <>with channel list</>
+                    </WithSecondaryNavigationWrapper>
+                )}
             >
                 <Route
                     index

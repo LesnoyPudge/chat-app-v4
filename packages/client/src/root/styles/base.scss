@@ -16,6 +16,11 @@
         }
     }
 
+    [data-hidden='true'],
+    [data-focus-guard='true'] {
+        @apply outline-transparent;
+    }
+
     html {
         background-color: theme('backgroundColor.primary.500');
         color: theme('textColor.color.base');

@@ -6,6 +6,8 @@ import {
 } from '@redux/utils';
 import { ClientEntities } from '@types';
 import { ChannelsApi } from './ChannelsApi';
+import { isAnyOf } from '@reduxjs/toolkit';
+import { Users } from '../Users';
 
 
 
@@ -30,6 +32,17 @@ export const Slice = createCustomSliceEntityAdapter({
     reducers: (create) => ({}),
     extraReducers: (builder) => {
         createExtraReducers(builder);
+
+        builder.addMatcher(
+            isAnyOf(
+                Users.Api.endpoints.login.matchFulfilled,
+                Users.Api.endpoints.registration.matchFulfilled,
+                Users.Api.endpoints.refresh.matchFulfilled,
+            ),
+            (state, { payload }) => {
+                adapter.upsertMany(state, payload.Channel);
+            },
+        );
 
         builder.addMatcher(
             ChannelsApi.endpoints.getMany.matchFulfilled,

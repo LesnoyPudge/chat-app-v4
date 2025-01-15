@@ -104,7 +104,7 @@ export const CheckBoxIndicatorSlide: FC<CheckBoxIndicatorSlide.Props> = ({
     return (
         <div className={cn(
             styles.wrapper.base,
-            { [styles.wrapper.active]: checked },
+            checked && styles.wrapper.active,
             className,
         )}>
             <div className={styles.inner}>
@@ -116,7 +116,7 @@ export const CheckBoxIndicatorSlide: FC<CheckBoxIndicatorSlide.Props> = ({
                         <m.div
                             className={cn(
                                 styles.bars.base,
-                                { [styles.bars.active]: checked },
+                                checked && styles.bars.active,
                             )}
                             style={firstBarAnimated}
                         >
@@ -125,7 +125,7 @@ export const CheckBoxIndicatorSlide: FC<CheckBoxIndicatorSlide.Props> = ({
                         <m.div
                             className={cn(
                                 styles.bars.base,
-                                { [styles.bars.active]: checked },
+                                checked && styles.bars.active,
                             )}
                             style={secondBarAnimated}
                         >

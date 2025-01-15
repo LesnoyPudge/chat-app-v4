@@ -71,8 +71,14 @@ export const { setupEffects } = createEffects({
                         ),
                     );
 
-                    localStorageApi.set('accessToken', payload.accessToken);
-                    localStorageApi.set('refreshToken', payload.refreshToken);
+                    localStorageApi.set(
+                        'accessToken',
+                        payload.userData.accessToken,
+                    );
+                    localStorageApi.set(
+                        'refreshToken',
+                        payload.userData.refreshToken,
+                    );
 
                     socket.connect();
 

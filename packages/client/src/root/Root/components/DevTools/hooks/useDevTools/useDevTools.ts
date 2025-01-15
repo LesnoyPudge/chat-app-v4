@@ -1,7 +1,7 @@
 import { Modal, Navigator } from '@entities';
 import { useHotKey, useKeyboardNavigation } from '@hooks';
 import { capitalize, KEY } from '@lesnoypudge/utils';
-import { useBoolean, useRefManager } from '@lesnoypudge/utils-react';
+import { useRefManager } from '@lesnoypudge/utils-react';
 import { localStorageApi, logger, toOneLine } from '@utils';
 
 
@@ -11,7 +11,12 @@ if (!window._devtools) {
     window._devtools = {};
 }
 
-const rawActions: Record<string, VoidFunction> = {
+const logConsoleHint = () => {
+    logger.log(`${KEY.F1} to clear console`);
+    logger.log(`${KEY.F2} to log activeElement`);
+};
+
+const rawActions = {
     toggleElementsOutline: () => {
         const currentValue = (
             document
@@ -60,7 +65,10 @@ const rawActions: Record<string, VoidFunction> = {
         window._devtools?.axeReact();
     },
 
-    clearConsole: () => logger.clear(),
+    clearConsole: () => {
+        logger.clear();
+        logConsoleHint();
+    },
 
     logElementsCount: () => {
         logger.log(toOneLine(`
@@ -84,9 +92,9 @@ const rawActions: Record<string, VoidFunction> = {
     clearLocalStorage: () => {
         localStorageApi.clear();
     },
-};
+} satisfies Record<string, VoidFunction>;
 
-logger.log(`${KEY.Slash} to clear console`);
+logConsoleHint();
 
 export const useDevTools = () => {
     const controls = Modal.useModalControls(false);
@@ -168,10 +176,19 @@ export const useDevTools = () => {
         controls.open();
     });
 
-    useHotKey(document, [KEY.Slash], (e) => {
-        e.preventDefault();
-        logger.clear();
-    });
+    useHotKey(
+        document,
+        [KEY.F1],
+        rawActions.clearConsole,
+        { hotKeyOptions: { prevent: true } },
+    );
+
+    useHotKey(
+        document,
+        [KEY.F2],
+        () => logger.log(document.activeElement),
+        { hotKeyOptions: { prevent: true } },
+    );
 
     return {
         ...navigation,

@@ -1,12 +1,14 @@
 import {
     createCustomEntityAdapter,
     createCustomSliceEntityAdapter,
+    createEntitySubscription,
     createStoreSelectors,
 } from '@redux/utils';
 import { ClientEntities } from '@types';
 import { TextChatsApi } from './TextChatsApi';
 import { Users } from '../Users';
 import { Channels } from '../Channels';
+import { isAnyOf } from '@reduxjs/toolkit';
 
 
 
@@ -19,13 +21,31 @@ const adapter = createCustomEntityAdapter<State>()(name, [
     'conversation',
 ]);
 
+export const {
+    Subscription,
+    createExtraReducers,
+} = createEntitySubscription(name, adapter);
+
 const initialState = adapter.getInitialState();
 
 export const Slice = createCustomSliceEntityAdapter({
     name,
     initialState,
     reducers: (create) => ({}),
-    extraReducers: (builder) => {},
+    extraReducers: (builder) => {
+        createExtraReducers(builder);
+
+        builder.addMatcher(
+            isAnyOf(
+                Users.Api.endpoints.login.matchFulfilled,
+                Users.Api.endpoints.registration.matchFulfilled,
+                Users.Api.endpoints.refresh.matchFulfilled,
+            ),
+            (state, { payload }) => {
+                adapter.upsertMany(state, payload.TextChat);
+            },
+        );
+    },
     selectors: {},
 }, adapter);
 

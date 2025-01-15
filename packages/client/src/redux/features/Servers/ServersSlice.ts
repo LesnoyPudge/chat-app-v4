@@ -1,6 +1,7 @@
 import {
     createCustomEntityAdapter,
     createCustomSliceEntityAdapter,
+    createEntitySubscription,
     createStoreSelectors,
 } from '@redux/utils';
 import { ClientEntities } from '@types';
@@ -17,6 +18,11 @@ const name = 'Servers';
 
 const adapter = createCustomEntityAdapter<State>()(name, []);
 
+export const {
+    Subscription,
+    createExtraReducers,
+} = createEntitySubscription(name, adapter);
+
 const initialState = adapter.getInitialState();
 
 export const Slice = createCustomSliceEntityAdapter({
@@ -24,6 +30,19 @@ export const Slice = createCustomSliceEntityAdapter({
     initialState,
     reducers: (create) => ({}),
     extraReducers: (builder) => {
+        createExtraReducers(builder);
+
+        builder.addMatcher(
+            isAnyOf(
+                Users.Api.endpoints.login.matchFulfilled,
+                Users.Api.endpoints.registration.matchFulfilled,
+                Users.Api.endpoints.refresh.matchFulfilled,
+            ),
+            (state, { payload }) => {
+                adapter.upsertMany(state, payload.Server);
+            },
+        );
+
         builder.addMatcher(
             isAnyOf(
                 ServersApi.endpoints.getByInvitationCode.matchFulfilled,

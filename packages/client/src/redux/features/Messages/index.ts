@@ -9,6 +9,7 @@ export namespace Messages {
     export const {
         Slice,
         StoreSelectors,
+        Subscription,
     } = MessagesSlice;
 
     export type State = MessagesSlice.State;

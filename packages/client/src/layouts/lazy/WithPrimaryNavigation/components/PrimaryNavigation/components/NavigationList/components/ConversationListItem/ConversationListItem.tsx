@@ -8,72 +8,83 @@ import { WrapperWithBullet } from '../../../WrapperWithBullet';
 import { Features } from '@redux/features';
 import { useSliceSelector, useStoreSelector } from '@redux/hooks';
 import { sharedStyles } from '../../../../sharedStyles';
-import { ServerContextMenu } from '@contextMenus';
+import { ConversationContextMenu } from '@contextMenus';
 
 
 
-export namespace ServerListItem {
+export namespace ConversationListItem {
     export type Props = (
         Pick<
             useKeyboardNavigation.Return,
             'setCurrentFocusedId'
         >
         & {
-            serverId: string;
+            conversationId: string;
             isFocused: boolean;
             tabIndex: number;
         }
     );
 }
 
-export const ServerListItem: FC<ServerListItem.Props> = ({
-    serverId,
+export const ConversationListItem: FC<ConversationListItem.Props> = ({
+    conversationId,
     isFocused,
     tabIndex,
     setCurrentFocusedId,
 }) => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { myLocationIs, navigateTo } = Navigator.useNavigator();
-    const isInServer = myLocationIs.server({ serverId });
+    const isInConversation = myLocationIs.conversation({ conversationId });
 
-    const server = useSliceSelector(
-        Features.Servers.Slice,
-        Features.Servers.Slice.selectors.selectById(serverId),
+    const conversation = useSliceSelector(
+        Features.Conversations.Slice,
+        Features.Conversations.Slice.selectors.selectById(conversationId),
+    );
+
+    const userTarget = useSliceSelector(
+        Features.Users.Slice,
+        (state) => {
+            if (!conversation) return;
+
+            return Features.Users.Slice.selectors.selectById(
+                conversation.user,
+            )(state);
+        },
     );
 
     const notificationsCount = useStoreSelector(
-        Features.Servers.StoreSelectors.selectNotificationCountById(serverId),
+        Features.Conversations.StoreSelectors.selectNotificationCountById(conversationId),
     );
 
     const setFocused = useFunction(() => {
-        setCurrentFocusedId(serverId);
+        setCurrentFocusedId(conversationId);
     });
 
     const navigateToServer = useFunction(() => {
         setFocused();
-        void navigateTo.server({ serverId });
+        void navigateTo.conversation({ conversationId });
     });
+
+    const isUserAndConversationExist = userTarget && conversation;
 
     return (
         <Focus.Inside
             isEnabled={isFocused}
             containerRef={buttonRef}
         >
-            <WrapperWithBullet isActive={isInServer}>
+            <WrapperWithBullet isActive={isInConversation}>
                 <Button
                     className={cn(
                         sharedStyles.button.base,
                         sharedStyles.brandButton.base,
-                        {
-                            [sharedStyles.button.active]: isInServer,
-                            [sharedStyles.brandButton.active]: isInServer,
-                        },
+                        isInConversation && sharedStyles.button.active,
+                        isInConversation && sharedStyles.brandButton.active,
                     )}
                     tabIndex={tabIndex}
-                    label={server?.name}
+                    label={userTarget?.name}
                     role='menuitem'
-                    isActive={isInServer}
-                    isDisabled={!server}
+                    isActive={isInConversation}
+                    isDisabled={!isUserAndConversationExist}
                     innerRef={buttonRef}
                     onLeftClick={navigateToServer}
                     onAnyClick={setFocused}
@@ -81,27 +92,27 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
                     <Avatar.WithBadge.Notifications
                         count={notificationsCount}
                     >
-                        <Avatar.Server
+                        <Avatar.User
                             className={sharedStyles.avatar}
-                            name={server?.name}
-                            avatar={server?.avatar}
+                            avatar={userTarget?.avatar}
+                            defaultAvatar={userTarget?.defaultAvatar}
                         />
                     </Avatar.WithBadge.Notifications>
                 </Button>
 
-                <If condition={!!server}>
+                <If condition={!!isUserAndConversationExist}>
                     <Tooltip
                         preferredAlignment='right'
                         leaderElementRef={buttonRef}
                     >
-                        {server?.name}
+                        {userTarget?.name}
                     </Tooltip>
 
                     <ContextMenu.Wrapper
                         leaderElementRef={buttonRef}
                         preferredAlignment='right'
                     >
-                        <ServerContextMenu serverId={serverId}/>
+                        <ConversationContextMenu conversationId={conversationId}/>
                     </ContextMenu.Wrapper>
                 </If>
             </WrapperWithBullet>

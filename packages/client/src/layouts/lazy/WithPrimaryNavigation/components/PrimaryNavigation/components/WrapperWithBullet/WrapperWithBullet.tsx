@@ -50,10 +50,8 @@ export const WrapperWithBullet: FC<WrapperWithBullet.Props> = ({
             <div
                 className={cn(
                     styles.bullet.base,
-                    {
-                        [styles.bullet.focused]: !isActive,
-                        [styles.bullet.active]: isActive,
-                    },
+                    !isActive && styles.bullet.focused,
+                    isActive && styles.bullet.active,
                 )}
             >
             </div>

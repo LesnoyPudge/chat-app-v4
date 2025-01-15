@@ -9,7 +9,7 @@ import {
     HttpResponseResolver,
 } from 'msw';
 import { setupWorker } from 'msw/browser';
-import { FakeDBB } from './FakeDB';
+import { db } from './FakeDB';
 import { Dummies } from './Dummies';
 import { STATUS_CODE } from '@lesnoypudge/utils';
 import { env } from '@vars';
@@ -17,18 +17,18 @@ import { token } from './token';
 import { v4 as uuid } from 'uuid';
 
 
-// import E_Channel = Endpoints.V1.Channel;
-// import E_Conversation = Endpoints.V1.Conversation;
-// import E_File = Endpoints.V1.File;
-// import E_Message = Endpoints.V1.Message;
-// import E_Role = Endpoints.V1.Role;
+import E_Channel = Endpoints.V1.Channel;
+import E_Conversation = Endpoints.V1.Conversation;
+import E_File = Endpoints.V1.File;
+import E_Message = Endpoints.V1.Message;
+import E_Role = Endpoints.V1.Role;
 import E_Server = Endpoints.V1.Server;
-// import E_TextChat = Endpoints.V1.TextChat;
+import E_TextChat = Endpoints.V1.TextChat;
 import E_User = Endpoints.V1.User;
+import { getAppData } from './utils';
 
 
 
-const db = new FakeDBB();
 const res = HttpResponse;
 
 const delay = () => _delay(1_500);
@@ -44,7 +44,7 @@ export const withAuth = <
         }
     ) => ReturnType<_Resolver>,
 ): _Resolver => {
-    const hoc: HttpResponseResolver<any, any, any> = (input) => {
+    const fn: HttpResponseResolver<any, any, any> = (input) => {
         const { request } = input;
 
         const header = request.headers.get('Authorization');
@@ -65,7 +65,7 @@ export const withAuth = <
         });
     };
 
-    return hoc as _Resolver;
+    return fn as _Resolver;
 };
 
 const apiError = {
@@ -112,7 +112,10 @@ class FakeServer {
 
                 if (!user) return apiError.badRequest();
 
-                return res.json(user);
+                return res.json({
+                    userData: user,
+                    ...getAppData(user.id),
+                });
             },
         ),
 
@@ -149,7 +152,10 @@ class FakeServer {
                     refreshToken,
                 }));
 
-                return res.json(user);
+                return res.json({
+                    userData: user,
+                    ...getAppData(user.id),
+                });
             },
         ),
 
@@ -180,8 +186,12 @@ class FakeServer {
                     ...item,
                     accessToken,
                 }));
+                if (!updatedUser) return apiError.badRequest();
 
-                return res.json(updatedUser);
+                return res.json({
+                    userData: updatedUser,
+                    ...getAppData(updatedUser.id),
+                });
             },
         ),
 
@@ -317,6 +327,35 @@ class FakeServer {
 
                 return res.json(newServer);
             }),
+        ),
+
+        http[E_File.Read.Method](
+            `${env._PUBLIC_SERVER_URL}${E_File.Read.Path}/:fileId`,
+            async ({ params }) => {
+                await delay();
+
+                const { fileId } = params as { fileId: string };
+                if (!fileId) return apiError.badRequest();
+
+                const file = db.getById('file', fileId);
+                if (!file) return apiError.badRequest();
+
+                const base64Data = file.base64.split(';base64,')[1];
+                if (!base64Data) return apiError.badRequest();
+
+                const buffer = Uint8Array.from(
+                    atob(base64Data),
+                    // eslint-disable-next-line unicorn/prefer-code-point
+                    (char) => char.charCodeAt(0),
+                );
+
+                return res.arrayBuffer(buffer, {
+                    headers: {
+                        'Content-Type': file.type,
+                        'Content-Length': buffer.byteLength.toString(),
+                    },
+                });
+            },
         ),
     ];
 }

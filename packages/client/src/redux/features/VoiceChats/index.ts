@@ -9,6 +9,7 @@ export namespace VoiceChats {
     export const {
         Slice,
         StoreSelectors,
+        Subscription,
     } = VoiceChatsSlice;
 
     export type State = VoiceChatsSlice.State;

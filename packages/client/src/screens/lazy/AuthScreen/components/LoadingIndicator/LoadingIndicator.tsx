@@ -40,7 +40,7 @@ export const WithLoadingIndicator: FC<WithLoadingIndicator.Props> = ({
 }) => {
     return (
         <div className={styles.wrapper}>
-            <div className={cn({ [styles.child]: isLoading })}>
+            <div className={cn(isLoading && styles.child)}>
                 {children}
             </div>
 
