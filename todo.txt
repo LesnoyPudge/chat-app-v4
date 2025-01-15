@@ -6,63 +6,16 @@ https://mswjs.io/docs/getting-started
 
 --client--
 -? сделать attachments layout через grid-template-areas
-- добавить dataset к элементу(html? body?) 
-для работы css (theme, message-font-size, ...)
--? вынести generated из src
+- добавить dataset к элементу(html? body?) для работы css (theme, message-font-size, ...)
+- вынести generated из src
 -???? использовать groupedLazyLoad (или отложенную загрузку) что бы загружать
 модалки после основного контента? сделать обёртку в модалках с стандартным
 скелетоном пока они грузятся?
-- после создания/добавления сервера инвалидировать кэш для рефетча ролей и тд?
 - протестировать useKeyboardNavigation (что будет при удалении итема в фокусе,
 возможно переносить фокус на след/пред итем, протестировать как работает
 нативный перенос фокуса с пропавшего итема)
 - убрать рендер просы с реф менеджерами, подавать реф сверху
 - переделать useValidatedProps, использовать один источник для ключей валидации
--? возможно изменить lastSeenMessages на lastSeenMessageIds (но мне нужен индекс сообщения а не id???)
--? добавить Fetchers? фэтчить информацию одновременно с lazyload компотентами а не внутри компонентов что бы избежать waterfall
-- кулдаун на звуки уведомлений
-
-
-
---- server ---
-https://feature-sliced.design/docs/get-started/overview
-
-4: добавить ретраи на транзакции
-const MAX_RETRIES = 5
-  let retries = 0
-
-  let result
-  while (retries < MAX_RETRIES) {
-    try {
-      result = await prisma.$transaction(
-        [
-          prisma.user.deleteMany({
-            where: {
-              /** args */
-            },
-          }),
-          prisma.post.createMany({
-            data: {
-              /** args */
-            },
-          }),
-        ],
-        {
-          isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
-        }
-      )
-      break
-    } catch (error) {
-      if (error.code === 'P2034') {
-        retries++
-        continue
-      }
-      throw error
-    }
-
-5: избавится от подписок, сделать переодические рефетчи
-6: использовать сокет только для чата, онлайн статуса???,
-отображения того кто пишет сообщение, составления списка
-пользователей онлайн но не рассылка статусов
-7: сократить количество эндпоинтов, оставить только используемые
-8: на каждый запрос обновлять accessToken??
+- кулдаун на звуки уведомлений в SoundManager
+- investigate OnlyAuthorized refresh pooling 
+-? перенести Form в entities? или перенести всё из entities в components/common

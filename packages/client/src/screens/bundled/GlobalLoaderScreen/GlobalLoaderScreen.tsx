@@ -10,7 +10,7 @@ import { Screen } from '@layouts/bundled';
 
 
 const styles = createStyles({
-    screen: `bg-primary-400`,
+    screen: `pointer-events-auto bg-primary-400`,
     scrollable: 'h-full',
     content: `
         grid 

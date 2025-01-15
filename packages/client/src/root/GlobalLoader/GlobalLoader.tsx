@@ -1,14 +1,10 @@
 import { Dialog } from '@components';
 import { useContextProxy } from '@lesnoypudge/utils-react';
 import { GlobalLoaderScreen } from '@screens/bundled';
-import { createStyles, createVariants, logger } from '@utils';
+import { createVariants, logger } from '@utils';
 import { FC, PropsWithChildren, useEffect } from 'react';
 
 
-
-const styles = createStyles({
-    base: 'pointer-events-auto',
-});
 
 const variants = createVariants({
     initial: {
@@ -79,7 +75,7 @@ export const GlobalLoaderWrapper: FC<GlobalLoaderWrapper.Props> = ({
             animationVariants={variants}
         >
             <Dialog.Wrapper>
-                <GlobalLoaderScreen className={styles.base}/>
+                <GlobalLoaderScreen/>
             </Dialog.Wrapper>
 
             {children}
