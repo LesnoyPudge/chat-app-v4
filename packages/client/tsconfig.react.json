@@ -86,8 +86,8 @@
             "@panels/*": [
                 "./src/panels/*"
             ],
-            "@modals": [
-                "./src/modals"
+            "@modals/*": [
+                "./src/modals/*"
             ],
             "@contextMenus": [
                 "./src/contextMenus"

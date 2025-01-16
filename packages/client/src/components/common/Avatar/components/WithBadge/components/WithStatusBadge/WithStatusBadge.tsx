@@ -16,7 +16,7 @@ type StatusNames = T.ValueOf<Pick<
 >>;
 
 const styles = createStyles({
-    wrapper: 'relative',
+    wrapper: 'relative shrink-0',
     inner: 'size-full',
     badge: {
         base: `

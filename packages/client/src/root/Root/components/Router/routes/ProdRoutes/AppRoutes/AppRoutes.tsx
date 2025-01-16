@@ -1,24 +1,18 @@
 import { FC, lazy } from 'react';
-import { Outlet, Route } from 'react-router';
+import { Route } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../../components';
 import { Navigator } from '@entities';
-import { createGroupedLazyLoad, withDelay } from '../../utils';
+import { lazyLoad } from '@utils';
 
 
 
-const { withGroupedLazyLoad } = createGroupedLazyLoad();
+const WithPrimaryNavigation = lazyLoad.basePreloadedComponent(() => {
+    return import('@layouts/lazy/WithPrimaryNavigation');
+});
 
-const WithPrimaryNavigation = lazy(withGroupedLazyLoad(
-    withDelay(() => {
-        return import('@layouts/lazy/WithPrimaryNavigation');
-    }),
-));
-
-const WithSecondaryNavigationWrapper = lazy(withGroupedLazyLoad(
-    withDelay(() => {
-        return import('@layouts/lazy/WithSecondaryNavigationWrapper');
-    }),
-));
+const WithSecondaryNavigationWrapper = lazyLoad.basePreloadedComponent(() => {
+    return import('@layouts/lazy/WithSecondaryNavigationWrapper');
+});
 
 export const AppRoutes: FC = () => {
     return (

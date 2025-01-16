@@ -3,6 +3,7 @@ import { Focus, useContextProxy, useRefManager } from '@lesnoypudge/utils-react'
 import { cn, createStyles } from '@utils';
 import { FC, PropsWithChildren } from 'react';
 import { Outlet } from 'react-router';
+import { UserToolBar } from './components';
 
 
 
@@ -53,7 +54,7 @@ export const WithSecondaryNavigationWrapper: FC<PropsWithChildren> = ({
             )}>
                 {children}
 
-                {/* <UserToolBar/> */}
+                <UserToolBar/>
             </div>
 
             <Focus.Inside

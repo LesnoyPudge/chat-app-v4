@@ -69,10 +69,11 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
 
     Features.Users.Api.useRefreshQuery({
         refreshToken: refreshToken ?? '',
-        withData: !isAuthorized,
+        withData: true,
     }, {
         skip: skipRefresh,
         pollingInterval: tokenDuration,
+        refetchOnReconnect: true,
     });
 
     const shouldNavigateToAuth = (

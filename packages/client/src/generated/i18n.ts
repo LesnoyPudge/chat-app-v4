@@ -1,4 +1,4 @@
-// GENERATED IN E:\Projects\chat-app-v4\packages\client\scripts\i18n.ts
+// GENERATED IN i18n.ts
 
 export const namespaces = ["common"] as const;
 
@@ -41,6 +41,8 @@ export type NamespacesType = {
         "GlobalLoaderScreen.problems": "Проблемы с подключением? Сообщите нам!",
         "GlobalLoaderScreen.statusLink": "Состояние сервера",
         "GlobalLoaderScreen.textUsLink": "Напишите нам в Твиттере",
+        "HEADPHONE.DISABLE": "Откл. звук",
+        "HEADPHONE.ENABLE": "Вкл. звук",
         "InvitationScreen.button": "Принять приглашение",
         "InvitationScreen.onlineCount_one": "{{count}} в сети",
         "InvitationScreen.onlineCount_few": "{{count}} в сети",
@@ -58,6 +60,8 @@ export type NamespacesType = {
         "LoginForm.submit": "Вход",
         "LoginForm.subtitle": "Мы так рады видеть вас снова!",
         "LoginForm.title": "С возвращением",
+        "MICROPHONE.DISABLE": "Откл. микрофон",
+        "MICROPHONE.ENABLE": "Вкл. микрофон",
         "Modal.closeButton.text": "Закрыть диалог",
         "PrimaryNavigation.CreateServer.text": "Создать сервер",
         "PrimaryNavigation.HomePageButton.label": "Перейти на главную страницу",

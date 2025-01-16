@@ -147,7 +147,7 @@ const main = () => {
     console.log('sprites for preview written');
 
     const spriteData = [
-        `// GENERATED IN ${import.meta.filename}\n`,
+        `// GENERATED IN ${path.basename(import.meta.filename)}\n`,
         'export const SPRITE_SHEET: string = `',
         spriteArray.join(' \n'),
         '`;',
@@ -161,7 +161,7 @@ const main = () => {
     console.log('sprite generated');
 
     const spriteNamesTypeData = [
-        `// GENERATED IN ${import.meta.filename}\n`,
+        `// GENERATED IN ${path.basename(import.meta.filename)}\n`,
         'type SpriteNames = ',
         spriteNameArray.map((name) => `'${name}'`).join('| \n'),
         ';',
@@ -240,7 +240,7 @@ const main = () => {
     console.log('sounds and videos generated');
 
     const commonAssetNamesTypeData = [
-        `// GENERATED IN ${import.meta.filename}\n`,
+        `// GENERATED IN ${path.basename(import.meta.filename)}\n`,
         'type CommonAssetNames = ',
         [
             ...commonImageNamesArray,

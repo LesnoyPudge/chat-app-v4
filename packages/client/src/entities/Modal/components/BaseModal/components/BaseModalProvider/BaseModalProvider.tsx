@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
-import { useModalControls } from '../../../../hooks';
 import { Dialog } from '@components';
 import { createVariants } from '@utils';
+import { WithControls } from '../../../../types';
 
 
 
@@ -28,10 +28,6 @@ const animationVariants: Dialog.Provider.AnimationVariants = createVariants({
 });
 
 export namespace BaseModalProvider {
-    export type WithControls = {
-        controls: useModalControls.Return;
-    };
-
     export type Props = (
         WithControls
         & Pick<

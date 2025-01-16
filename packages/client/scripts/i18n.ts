@@ -101,12 +101,12 @@ const main = async () => {
             ) as Keyset;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
         namespacesObj = resources[locale]!;
     }
 
     const i18nData = [
-        `// GENERATED IN ${import.meta.filename}`,
+        `// GENERATED IN ${path.basename(import.meta.filename)}`,
         '',
         `export const namespaces = ${
             JSON.stringify([...namespacesSet])

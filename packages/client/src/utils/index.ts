@@ -8,6 +8,7 @@ export * from './formatNotificationCount';
 export * from './getAssetUrl';
 export * from './getHTMLElement';
 export * from './getStatusLabel';
+export * from './lazyLoad';
 export * from './localStorageApi';
 export * from './logger';
 export * from './toOneLine';

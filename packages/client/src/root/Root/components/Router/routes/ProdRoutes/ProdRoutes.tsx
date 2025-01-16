@@ -4,20 +4,19 @@ import {
     OnlyUnAuthorized,
     SuspenseWithGlobalLoader,
 } from '../components';
-import { withDelay } from '../utils';
 import { Navigator } from '@entities';
-import { lazy } from 'react';
 import { AppRoutes } from './AppRoutes';
+import { lazyLoad } from '@utils';
 
 
 
-const InvitationScreen = lazy(withDelay(() => {
+const InvitationScreen = lazyLoad.baseAsyncComponent(() => {
     return import('@screens/lazy/InvitationScreen');
-}));
+});
 
-const AuthScreen = lazy(withDelay(() => {
+const AuthScreen = lazyLoad.baseAsyncComponent(() => {
     return import('@screens/lazy/AuthScreen');
-}));
+});
 
 export const ProdRoutes = () => {
     return (

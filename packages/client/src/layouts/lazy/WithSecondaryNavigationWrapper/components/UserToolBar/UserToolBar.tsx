@@ -1,0 +1,155 @@
+import { createStyles, lazyLoad } from '@utils';
+import { FC } from 'react';
+import { UserInfo } from './components';
+import { useSliceActions, useSliceSelector } from '@redux/hooks';
+import { Features } from '@redux/features';
+import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
+import { useTrans } from '@i18n';
+import { Button, Sprite, Tooltip } from '@components';
+import { Modal } from '@entities';
+
+
+
+const AppSettingsModal = lazyLoad.baseAsyncModal(() => {
+    return import('@modals/lazy/AppSettingsModal');
+});
+
+const styles = createStyles({
+    wrapper: `
+        mt-auto 
+        flex 
+        h-[52px] 
+        shrink-0 
+        items-center 
+        bg-primary-400 
+        px-2 py-0
+    `,
+    button: `
+        flex 
+        h-8 
+        w-8 
+        shrink-0 
+        rounded 
+        fill-icon-300 
+        hover-focus-visible:bg-primary-hover
+        hover-focus-visible:fill-icon-200
+    `,
+    icon: 'm-auto h-5 w-5',
+});
+
+export const UserToolBar: FC = () => {
+    const { t } = useTrans();
+    const microphoneButtonRef = useRefManager<HTMLButtonElement>(null);
+    const headphoneButtonRef = useRefManager<HTMLButtonElement>(null);
+    const settingsButtonRef = useRefManager<HTMLButtonElement>(null);
+    const modalControls = Modal.useModalControls();
+
+    const {
+        isDeaf,
+        isMute,
+    } = useSliceSelector(
+        Features.App.Slice,
+        ({ isDeaf, isMute }) => ({ isDeaf, isMute }),
+    );
+
+    const {
+        setIsDeaf,
+        setIsMute,
+    } = useSliceActions(Features.App.Slice);
+
+    const toggleMute = useFunction(() => setIsMute(!isMute));
+    const toggleDeaf = useFunction(() => setIsDeaf(!isDeaf));
+
+    const microphoneIconId: SpriteNames = (
+        isMute
+            ? 'MICROPHONE_MUTED'
+            : 'MICROPHONE'
+    );
+
+    const headphoneIconId: SpriteNames = (
+        isDeaf
+            ? 'HEADPHONE_MUTED'
+            : 'HEADPHONE'
+    );
+
+    const microphoneLabel = (
+        isMute
+            ? t('MICROPHONE.ENABLE')
+            : t('MICROPHONE.DISABLE')
+    );
+
+    const headphoneLabel = (
+        isMute
+            ? t('HEADPHONE.ENABLE')
+            : t('HEADPHONE.DISABLE')
+    );
+
+    return (
+        <div className={styles.wrapper}>
+            <UserInfo/>
+
+            <Button
+                className={styles.button}
+                label={microphoneLabel}
+                isActive={isMute}
+                innerRef={microphoneButtonRef}
+                onLeftClick={toggleMute}
+            >
+                <Sprite
+                    className={styles.icon}
+                    name={microphoneIconId}
+                />
+            </Button>
+
+            <Tooltip
+                preferredAlignment='top'
+                leaderElementRef={microphoneButtonRef}
+            >
+                {microphoneLabel}
+            </Tooltip>
+
+            <Button
+                className={styles.button}
+                label={headphoneLabel}
+                isActive={isDeaf}
+                innerRef={headphoneButtonRef}
+                onLeftClick={toggleDeaf}
+            >
+                <Sprite
+                    className={styles.icon}
+                    name={headphoneIconId}
+                />
+            </Button>
+
+            <Tooltip
+                preferredAlignment='top'
+                leaderElementRef={headphoneButtonRef}
+            >
+                {headphoneLabel}
+            </Tooltip>
+
+            <Button
+                className={styles.button}
+                label='Открыть настройки'
+                hasPopup='dialog'
+                isActive={modalControls.isOpen}
+                innerRef={settingsButtonRef}
+                onLeftClick={modalControls.open}
+            >
+                <Sprite
+                    className={styles.icon}
+                    name='SETTINGS_GEAR'
+                />
+            </Button>
+
+            <Tooltip
+                preferredAlignment='top'
+                leaderElementRef={settingsButtonRef}
+            >
+                <>Настройки</>
+            </Tooltip>
+
+            <AppSettingsModal controls={modalControls}/>
+        </div>
+    );
+};

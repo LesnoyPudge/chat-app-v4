@@ -8,11 +8,32 @@ import * as v from 'valibot';
 
 
 
+type PathToParams = typeof Navigator['pathToParams'];
+
 const presets = {
-    invitationScreen: v.object({
-        invitationCode: sharedValidators.commonString,
+    invitation: v.object({
+        invitationCode: sharedValidators.singleCommonString,
     }),
-} satisfies Record<string, v.GenericSchema>;
+    channel: v.object({
+        serverId: sharedValidators.id,
+        channelId: sharedValidators.id,
+    }),
+    conversation: v.object({
+        conversationId: sharedValidators.id,
+    }),
+    server: v.object({
+        serverId: sharedValidators.id,
+    }),
+} satisfies T.ConditionalExcept<{
+    [_Key in keyof PathToParams]: (
+        T.IsEqual<PathToParams[_Key]['length'], 0> extends true
+            ? never
+            : v.GenericSchema<Record<
+                T.ArrayValues<PathToParams[_Key]>,
+                string
+            >>
+    )
+}, never>;
 
 export const useValidatedParams = <
     _Key extends keyof typeof presets,
