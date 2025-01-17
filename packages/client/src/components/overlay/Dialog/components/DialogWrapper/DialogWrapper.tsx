@@ -35,7 +35,6 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
 }) => {
     const {
         animationVariants,
-        describedBy,
         label,
         withBackdrop,
         withoutBackdropPointerEvents,
@@ -50,7 +49,6 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
                         className={cn(styles.dialog, className)}
                         role='dialog'
                         aria-label={label}
-                        aria-describedby={describedBy}
                         variants={animationVariants}
                         initial={animationVariants.initial.key}
                         animate={animationVariants.animate.key}

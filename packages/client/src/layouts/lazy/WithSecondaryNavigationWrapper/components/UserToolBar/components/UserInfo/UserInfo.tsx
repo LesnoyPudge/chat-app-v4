@@ -1,66 +1,76 @@
-import { Button, OverlayContextProvider, Popup, Ref, UserAvatar } from '@components';
-import { AppSelectors } from '@redux/features';
-import { useMemoSelector, useMemoSelectorV2 } from '@redux/hooks';
+import { Avatar, Button, Overlay } from '@components';
 import { FC } from 'react';
-import { Menu } from './components';
+import { UserMenu } from './components';
+import { createStyles } from '@utils';
+import { useStoreSelector } from '@redux/hooks';
+import { Features } from '@redux/features';
+import { useRefManager } from '@lesnoypudge/utils-react';
+import { useTrans } from '@i18n';
 
 
 
-const styles = {
-    userInfo: `w-full min-w-0 mr-1 px-1 py-0.5 rounded-md flex items-center 
-    hover:bg-primary-hover focus-visible:bg-primary-hover`,
+const styles = createStyles({
+    userInfo: `
+        flex 
+        w-full 
+        items-center 
+        rounded-md 
+        px-1 
+        py-0.5 
+        hover-focus-visible:bg-primary-hover
+    `,
     avatar: 'h-8 w-8',
-    username: 'ml-2 text-color-primary font-semibold text-sm truncated',
-};
+    username: `
+        ml-2 
+        truncate 
+        text-sm 
+        font-semibold 
+        text-color-primary
+    `,
+});
 
 export const UserInfo: FC = () => {
     const {
-        username,
-        avatarId,
+        avatar,
+        defaultAvatar,
+        name,
+        status,
         extraStatus,
-    } = useMemoSelectorV2(AppSelectors.selectMe);
+    } = useStoreSelector(Features.Users.StoreSelectors.selectMe());
+    const controls = Overlay.useOverlayControls();
+    const buttonRef = useRefManager<HTMLButtonElement>(null);
+    const { t } = useTrans();
 
     return (
-        <Ref<HTMLButtonElement>>
-            {(ref) => (
-                <OverlayContextProvider>
-                    {({ toggleOverlay, isOverlayExist }) => (
-                        <>
-                            <Button
-                                className={styles.userInfo}
-                                innerRef={ref}
-                                hasPopup='menu'
-                                label='Меню действий'
-                                isActive={isOverlayExist}
-                                onLeftClick={toggleOverlay}
-                            >
-                                <UserAvatar
-                                    className={styles.avatar}
-                                    avatarId={avatarId}
-                                    status='online'
-                                    extraStatus={extraStatus}
-                                    username=''
-                                />
+        <>
+            <Button
+                className={styles.userInfo}
+                innerRef={buttonRef}
+                hasPopup='dialog'
+                label={t('UserInfo.openMenuButton.label')}
+                isActive={controls.isOpen}
+                onLeftClick={controls.toggle}
+            >
+                <Avatar.WithBadge.Status
+                    className={styles.avatar}
+                    status={status}
+                    extraStatus={extraStatus}
+                >
+                    <Avatar.User
+                        avatar={avatar}
+                        defaultAvatar={defaultAvatar}
+                    />
+                </Avatar.WithBadge.Status>
 
-                                <div className={styles.username}>
-                                    {username}
-                                </div>
-                            </Button>
+                <div className={styles.username}>
+                    {name}
+                </div>
+            </Button>
 
-                            <Popup
-                                preferredAlignment='top'
-                                leaderElementOrRectRef={ref}
-                                label='Меню действий'
-                                role='menu'
-                                centered
-                                spacing={10}
-                            >
-                                <Menu/>
-                            </Popup>
-                        </>
-                    )}
-                </OverlayContextProvider>
-            )}
-        </Ref>
+            <UserMenu
+                controls={controls}
+                leaderElementOrRectRef={buttonRef}
+            />
+        </>
     );
 };

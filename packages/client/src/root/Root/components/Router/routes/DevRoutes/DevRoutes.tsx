@@ -7,20 +7,10 @@ import { Outlet, Route } from 'react-router';
 import { createSleep } from '@utils';
 import { Dummies } from '@fakeServer';
 import { SuspenseWithGlobalLoader } from '../components';
-import { FC, PropsWithChildren } from 'react';
 
 
 
 const Sleep = createSleep(1_000);
-
-const Test: FC<PropsWithChildren> = ({ children }) => {
-    console.log('test');
-    return (
-        <>
-            {children}
-        </>
-    );
-};
 
 export const DevRoutes = () => {
     return (
@@ -29,9 +19,7 @@ export const DevRoutes = () => {
             element={(
                 <SuspenseWithGlobalLoader>
                     <Sleep>
-                        <Test>
-                            <Outlet/>
-                        </Test>
+                        <Outlet/>
                     </Sleep>
                 </SuspenseWithGlobalLoader>
             )}

@@ -1,6 +1,5 @@
 import { Overlay, RelativelyPositioned } from '@components';
 import { cn, createStyles } from '@utils';
-import { ComponentRef } from 'react';
 import { useTooltip } from './hooks';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
@@ -13,7 +12,7 @@ import Alignment = RelativelyPositioned.useRelativePosition.Alignment;
 const styles = createStyles({
     base: `
         w-max 
-        max-w-[300px] 
+        max-w-[min(300px,100dvw)] 
         rounded-md 
         bg-primary-500 
         px-2.5 
@@ -77,7 +76,7 @@ export const Tooltip = Overlay.withProvider(({
     children,
     ...rest
 }: Tooltip.Props) => {
-    const followerElementRef = useRefManager<ComponentRef<'div'>>(null);
+    const followerElementRef = useRefManager<HTMLDivElement>(null);
 
     useTooltip({
         leaderElementRef,

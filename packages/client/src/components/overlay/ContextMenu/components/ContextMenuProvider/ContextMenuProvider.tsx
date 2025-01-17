@@ -1,12 +1,12 @@
 import { Overlay, Popover } from '@components';
-import { useContextSelector } from '@lesnoypudge/utils-react';
+import { useContextSelector, withDisplayName } from '@lesnoypudge/utils-react';
 import { createWithDecorator } from '@utils';
 import { ContextMenuContext } from '../../context';
 import { PropsWithChildren } from 'react';
 
 
 
-const decorated = createWithDecorator(({ children }) => {
+const { withDecorator } = createWithDecorator(({ children }) => {
     return (
         <Overlay.Provider>
             <Popover.Provider
@@ -22,14 +22,17 @@ const decorated = createWithDecorator(({ children }) => {
     );
 });
 
-export const ContextMenuProvider = decorated(({
-    children,
-}: PropsWithChildren) => {
-    const value = useContextSelector(Popover.Context);
+export const ContextMenuProvider = withDisplayName(
+    'ContextMenuProvider',
+    withDecorator<PropsWithChildren>(({
+        children,
+    }) => {
+        const value = useContextSelector(Popover.Context);
 
-    return (
-        <ContextMenuContext.Provider value={value}>
-            {children}
-        </ContextMenuContext.Provider>
-    );
-});
+        return (
+            <ContextMenuContext.Provider value={value}>
+                {children}
+            </ContextMenuContext.Provider>
+        );
+    }),
+);

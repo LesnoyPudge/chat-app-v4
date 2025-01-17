@@ -1,18 +1,14 @@
-import { createStyles, lazyLoad } from '@utils';
+import { createStyles } from '@utils';
 import { FC } from 'react';
 import { UserInfo } from './components';
 import { useSliceActions, useSliceSelector } from '@redux/hooks';
 import { Features } from '@redux/features';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { useTrans } from '@i18n';
-import { Button, Sprite, Tooltip } from '@components';
-import { Modal } from '@entities';
+import { Button, Sprite, Tooltip, Overlay } from '@components';
+import { AppSettingsModal } from '@modals';
 
 
-
-const AppSettingsModal = lazyLoad.baseAsyncModal(() => {
-    return import('@modals/lazy/AppSettingsModal');
-});
 
 const styles = createStyles({
     wrapper: `
@@ -21,9 +17,12 @@ const styles = createStyles({
         h-[52px] 
         shrink-0 
         items-center 
+        gap-2 
         bg-primary-400 
-        px-2 py-0
+        px-2
+        py-0
     `,
+    buttonsWrapper: 'flex shrink-0',
     button: `
         flex 
         h-8 
@@ -42,7 +41,7 @@ export const UserToolBar: FC = () => {
     const microphoneButtonRef = useRefManager<HTMLButtonElement>(null);
     const headphoneButtonRef = useRefManager<HTMLButtonElement>(null);
     const settingsButtonRef = useRefManager<HTMLButtonElement>(null);
-    const modalControls = Modal.useModalControls();
+    const modalControls = Overlay.useOverlayControls();
 
     const {
         isDeaf,
@@ -79,7 +78,7 @@ export const UserToolBar: FC = () => {
     );
 
     const headphoneLabel = (
-        isMute
+        isDeaf
             ? t('HEADPHONE.ENABLE')
             : t('HEADPHONE.DISABLE')
     );
@@ -88,68 +87,76 @@ export const UserToolBar: FC = () => {
         <div className={styles.wrapper}>
             <UserInfo/>
 
-            <Button
-                className={styles.button}
-                label={microphoneLabel}
-                isActive={isMute}
-                innerRef={microphoneButtonRef}
-                onLeftClick={toggleMute}
-            >
-                <Sprite
-                    className={styles.icon}
-                    name={microphoneIconId}
-                />
-            </Button>
+            <div className={styles.buttonsWrapper}>
+                <>
+                    <Button
+                        className={styles.button}
+                        label={microphoneLabel}
+                        isActive={isMute}
+                        innerRef={microphoneButtonRef}
+                        onLeftClick={toggleMute}
+                    >
+                        <Sprite
+                            className={styles.icon}
+                            name={microphoneIconId}
+                        />
+                    </Button>
 
-            <Tooltip
-                preferredAlignment='top'
-                leaderElementRef={microphoneButtonRef}
-            >
-                {microphoneLabel}
-            </Tooltip>
+                    <Tooltip
+                        preferredAlignment='top'
+                        leaderElementRef={microphoneButtonRef}
+                    >
+                        {microphoneLabel}
+                    </Tooltip>
+                </>
 
-            <Button
-                className={styles.button}
-                label={headphoneLabel}
-                isActive={isDeaf}
-                innerRef={headphoneButtonRef}
-                onLeftClick={toggleDeaf}
-            >
-                <Sprite
-                    className={styles.icon}
-                    name={headphoneIconId}
-                />
-            </Button>
+                <>
+                    <Button
+                        className={styles.button}
+                        label={headphoneLabel}
+                        isActive={isDeaf}
+                        innerRef={headphoneButtonRef}
+                        onLeftClick={toggleDeaf}
+                    >
+                        <Sprite
+                            className={styles.icon}
+                            name={headphoneIconId}
+                        />
+                    </Button>
 
-            <Tooltip
-                preferredAlignment='top'
-                leaderElementRef={headphoneButtonRef}
-            >
-                {headphoneLabel}
-            </Tooltip>
+                    <Tooltip
+                        preferredAlignment='top'
+                        leaderElementRef={headphoneButtonRef}
+                    >
+                        {headphoneLabel}
+                    </Tooltip>
+                </>
 
-            <Button
-                className={styles.button}
-                label='Открыть настройки'
-                hasPopup='dialog'
-                isActive={modalControls.isOpen}
-                innerRef={settingsButtonRef}
-                onLeftClick={modalControls.open}
-            >
-                <Sprite
-                    className={styles.icon}
-                    name='SETTINGS_GEAR'
-                />
-            </Button>
+                <>
+                    <Button
+                        className={styles.button}
+                        label='Открыть настройки'
+                        hasPopup='dialog'
+                        isActive={modalControls.isOpen}
+                        innerRef={settingsButtonRef}
+                        onLeftClick={modalControls.open}
+                    >
+                        <Sprite
+                            className={styles.icon}
+                            name='SETTINGS_GEAR'
+                        />
+                    </Button>
 
-            <Tooltip
-                preferredAlignment='top'
-                leaderElementRef={settingsButtonRef}
-            >
-                <>Настройки</>
-            </Tooltip>
+                    <Tooltip
+                        preferredAlignment='top'
+                        leaderElementRef={settingsButtonRef}
+                    >
+                        {t('COMMON.Settings')}
+                    </Tooltip>
 
-            <AppSettingsModal controls={modalControls}/>
+                    <AppSettingsModal controls={modalControls}/>
+                </>
+            </div>
         </div>
     );
 };

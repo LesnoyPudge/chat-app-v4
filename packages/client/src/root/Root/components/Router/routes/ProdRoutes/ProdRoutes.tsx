@@ -4,7 +4,7 @@ import {
     OnlyUnAuthorized,
     SuspenseWithGlobalLoader,
 } from '../components';
-import { Navigator } from '@entities';
+import { Navigator } from '@components';
 import { AppRoutes } from './AppRoutes';
 import { lazyLoad } from '@utils';
 

@@ -1,7 +1,7 @@
 import { FC, lazy } from 'react';
 import { Route } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../../components';
-import { Navigator } from '@entities';
+import { Navigator } from '@components';
 import { lazyLoad } from '@utils';
 
 

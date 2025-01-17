@@ -1,34 +1,15 @@
 import { FC, PropsWithChildren } from 'react';
 import { DialogContext } from '../../context';
-import { useConst, useContextSelector } from '@lesnoypudge/utils-react';
-import { getId } from '@lesnoypudge/utils';
-import { Variant } from 'motion/react';
-import { createVariants } from '@utils';
+import { useContextSelector } from '@lesnoypudge/utils-react';
 import { Overlay, Popover } from '@components';
+import { getAnimationVariants } from '@utils';
 
 
 
-const defaultVariants: DialogProvider.AnimationVariants = createVariants({
-    initial: {
-        opacity: 0,
-    },
-    animate: {
-        opacity: 1,
-    },
-    exit: {
-        opacity: 0,
-    },
-}, {
-    duration: 0.35,
-    ease: 'easeOut',
-});
+const defaultVariants = getAnimationVariants.baseModal().animationVariants;
 
 export namespace DialogProvider {
-    export type AnimationVariants = ReturnType<typeof createVariants<{
-        initial: Variant;
-        animate: Variant;
-        exit: Variant;
-    }>>;
+    export type AnimationVariants = typeof defaultVariants;
 
     export type OwnProps = {
         label: string;
@@ -61,12 +42,9 @@ export const DialogProviderInner: FC<DialogProvider.InnerProps> = ({
     children,
 }) => {
     const popover = useContextSelector(Popover.Context);
-    const id = useConst(() => getId());
 
     const contextValue: DialogContext = {
         ...popover,
-        id,
-        describedBy: `describedBy-${id}`,
         label,
         animationVariants,
         withBackdrop,

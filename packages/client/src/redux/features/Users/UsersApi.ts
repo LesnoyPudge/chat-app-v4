@@ -149,5 +149,17 @@ export const UsersApi = createApi({
                 })) ?? [{ type: 'Users', id: 'LIST' }],
             })
         ),
+        [User.ProfileUpdate.ActionName]: (
+            build.mutation<
+                User.ProfileUpdate.Response,
+                User.ProfileUpdate.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.ProfileUpdate.Path,
+                    method: User.ProfileUpdate.Method,
+                    body,
+                }),
+            })
+        ),
     }),
 });

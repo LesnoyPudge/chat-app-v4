@@ -1,7 +1,6 @@
 export * from './cn';
 export * from './createSleep';
 export * from './createStyles';
-export * from './createVariants';
 export * from './createWithDecorator';
 export * from './fileSize';
 export * from './formatNotificationCount';
@@ -11,4 +10,5 @@ export * from './getStatusLabel';
 export * from './lazyLoad';
 export * from './localStorageApi';
 export * from './logger';
+export * from './sharedAnimationVariants';
 export * from './toOneLine';

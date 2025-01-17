@@ -1,4 +1,4 @@
-import { Navigator } from '@entities';
+import { Navigator } from '@components';
 import { useLocalStorage } from '@hooks';
 import { Features } from '@redux/features';
 import { useSliceSelector } from '@redux/hooks';

@@ -1,9 +1,8 @@
-import { Button, Iterate } from '@components';
+import { Button, Iterate, Modal } from '@components';
 import { createStyles } from '@utils';
 import { FC } from 'react';
 import { useDevTools } from './hooks';
 import { Focus, useRefManager } from '@lesnoypudge/utils-react';
-import { Modal } from '@entities';
 
 
 

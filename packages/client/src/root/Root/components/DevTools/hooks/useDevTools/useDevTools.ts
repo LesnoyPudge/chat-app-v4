@@ -1,4 +1,4 @@
-import { Modal, Navigator } from '@entities';
+import { Navigator, Overlay } from '@components';
 import { useHotKey, useKeyboardNavigation } from '@hooks';
 import { capitalize, KEY } from '@lesnoypudge/utils';
 import { useRefManager } from '@lesnoypudge/utils-react';
@@ -97,7 +97,7 @@ const rawActions = {
 logConsoleHint();
 
 export const useDevTools = () => {
-    const controls = Modal.useModalControls(false);
+    const controls = Overlay.useOverlayControls(false);
     const wrapperRef = useRefManager<HTMLDivElement>(null);
     const { navigateTo, navigate } = Navigator.useNavigator();
 

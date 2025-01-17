@@ -1,4 +1,4 @@
-import { Navigator } from '@entities';
+import { Navigator, ErrorThrower } from '@components';
 import { useLocalStorage } from '@hooks';
 import { Features } from '@redux/features';
 import { useSliceSelector } from '@redux/hooks';
@@ -8,7 +8,6 @@ import { Outlet } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../SuspenseWithGlobalLoader';
 import { createSleep } from '@utils';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
-import { ErrorThrower } from '@components';
 
 
 

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { cn, createStyles, getAssetUrl } from '@utils';
-import { ClientEntities } from '@types';
+import { ClientEntities, ExtendedRecord } from '@types';
 import { getReadImagePath } from '../../utils';
 import { useTrans } from '@i18n';
 import { useBoolean } from '@lesnoypudge/utils-react';
@@ -10,18 +10,12 @@ import { sharedStyles } from '../../vars';
 
 
 
-const styles = createStyles({
-    wrapper: 'relative',
-    status: 'absolute bottom-0 right-0 size-1/3',
-});
-
 export namespace UserAvatar {
     export type Props = (
-        Partial<Pick<
+        ExtendedRecord<Pick<
             ClientEntities.User.Base,
-            'avatar'
-            | 'defaultAvatar'
-        >>
+            'avatar' | 'defaultAvatar'
+        >, undefined>
         & RT.PropsWithClassName
     );
 }

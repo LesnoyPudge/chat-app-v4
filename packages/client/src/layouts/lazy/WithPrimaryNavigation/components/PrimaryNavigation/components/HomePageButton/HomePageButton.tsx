@@ -1,5 +1,4 @@
-import { Button, Sprite, Tooltip } from '@components';
-import { Navigator } from '@entities';
+import { Button, Sprite, Tooltip, Navigator } from '@components';
 import { useTrans } from '@i18n';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { cn } from '@utils';

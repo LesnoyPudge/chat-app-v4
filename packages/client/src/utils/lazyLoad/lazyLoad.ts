@@ -162,8 +162,6 @@ class LazyLoad {
     basePreloadedComponent = this.createBasePreloadedComponent();
 
     baseAsyncComponent = this.createBaseAsyncLoadedComponent();
-
-    baseAsyncModal = this.createBaseAsyncLoadedComponent();
 }
 
 export const lazyLoad = { ...new LazyLoad() };

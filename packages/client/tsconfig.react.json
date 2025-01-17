@@ -77,17 +77,14 @@
             "@redux/actions": [
                 "./src/redux/actions"
             ],
-            "@entities": [
-                "./src/entities"
-            ],
             "@layouts/*": [
                 "./src/layouts/*"
             ],
             "@panels/*": [
                 "./src/panels/*"
             ],
-            "@modals/*": [
-                "./src/modals/*"
+            "@modals": [
+                "./src/modals"
             ],
             "@contextMenus": [
                 "./src/contextMenus"

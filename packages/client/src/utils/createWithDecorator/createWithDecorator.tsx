@@ -1,22 +1,24 @@
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { withDisplayName } from '@lesnoypudge/utils-react';
-import { ComponentProps, PropsWithChildren, ReactNode } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 
 
 
-export const createWithDecorator = (
-    Decorator: (props: PropsWithChildren) => ReactNode,
+export const createWithDecorator = <
+    _ExtraProps extends T.UnknownRecord = T.EmptyObject,
+>(
+    Decorator: (props: PropsWithChildren & _ExtraProps) => ReactNode,
 ) => {
     const NamedDecorator = withDisplayName('Decorator', Decorator);
 
     const withDecorator = <
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        _Component extends (props: any) => ReactNode,
+        _Props extends T.UnknownRecord = T.EmptyObject,
     >(
-        Component: _Component,
+        Component: (props: _Props) => ReactNode,
     ) => {
-        const Decorated = (props: ComponentProps<_Component>) => {
+        const Decorated = (props: _ExtraProps & _Props) => {
             return (
-                <NamedDecorator>
+                <NamedDecorator {...props}>
                     <Component {...props}/>
                 </NamedDecorator>
             );
@@ -25,5 +27,7 @@ export const createWithDecorator = (
         return Decorated;
     };
 
-    return withDecorator;
+    return {
+        withDecorator,
+    };
 };

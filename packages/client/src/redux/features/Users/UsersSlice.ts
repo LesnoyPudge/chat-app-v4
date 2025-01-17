@@ -49,9 +49,14 @@ export const Slice = createCustomSliceEntityAdapter({
 
         builder.addMatcher(
             isAnyOf(
-                UsersApi.endpoints.unmuteServer.matchFulfilled,
-                UsersApi.endpoints.muteServer.matchFulfilled,
+                UsersApi.endpoints.hideConversation.matchFulfilled,
+                UsersApi.endpoints.markConversationNotificationsAsRead.matchFulfilled,
                 UsersApi.endpoints.markServerNotificationsAsRead.matchFulfilled,
+                UsersApi.endpoints.muteConversation.matchFulfilled,
+                UsersApi.endpoints.muteServer.matchFulfilled,
+                UsersApi.endpoints.profileUpdate.matchFulfilled,
+                UsersApi.endpoints.unmuteConversation.matchFulfilled,
+                UsersApi.endpoints.unmuteServer.matchFulfilled,
             ),
             adapter.upsertOne,
         );

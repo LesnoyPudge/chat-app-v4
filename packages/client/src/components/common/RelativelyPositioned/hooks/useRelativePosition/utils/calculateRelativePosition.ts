@@ -44,14 +44,15 @@ export const calculateRelativePosition = ({
         ),
     };
 
-    const minBound = window.innerHeight - boundsSize;
+    const minHeightBound = window.innerHeight - boundsSize;
+    const minWidthBound = window.innerWidth - boundsSize;
 
     const bounds = {
         top: unbounded ? UNBOUND_SIZE_NEGATIVE : boundsSize,
-        bottom: unbounded ? UNBOUND_SIZE : minBound - followerRect.height,
+        bottom: unbounded ? UNBOUND_SIZE : minHeightBound - followerRect.height,
         left: unbounded ? UNBOUND_SIZE_NEGATIVE : boundsSize,
-        right: unbounded ? UNBOUND_SIZE : minBound - followerRect.width,
-    };
+        right: unbounded ? UNBOUND_SIZE : minWidthBound - followerRect.width,
+    } satisfies Record<useRelativePosition.Alignment, number>;
 
     const unboundedPositions = {
         top: {
@@ -70,7 +71,10 @@ export const calculateRelativePosition = ({
             top: leaderRect.top - centering.vertical,
             left: leaderRect.right + spacing,
         },
-    };
+    } satisfies Record<
+        useRelativePosition.Alignment,
+        Record<'top' | 'left', number>
+    >;
 
     const positions = {
         top: {
@@ -105,7 +109,10 @@ export const calculateRelativePosition = ({
                 bounds.left, unboundedPositions.right.left, bounds.right,
             ),
         },
-    };
+    } satisfies Record<
+        useRelativePosition.Alignment,
+        Record<'top' | 'left', number>
+    >;
 
     const defaultResult: Return = {
         ...positions[preferredAlignment],
@@ -119,7 +126,7 @@ export const calculateRelativePosition = ({
         bottom: unboundedPositions.bottom.top < bounds.bottom,
         left: unboundedPositions.left.left > bounds.left,
         right: unboundedPositions.right.left < bounds.right,
-    };
+    } satisfies Record<useRelativePosition.Alignment, boolean>;
 
     if (availableAlignments[preferredAlignment]) return defaultResult;
 
@@ -132,7 +139,7 @@ export const calculateRelativePosition = ({
 
     if (noSpaceAvailable) return defaultResult;
 
-    const result: Record<'top' | 'bottom' | 'left' | 'right', Return> = {
+    const result = {
         top: {
             alignment: 'top',
             ...positions.top,
@@ -149,7 +156,7 @@ export const calculateRelativePosition = ({
             alignment: 'right',
             ...positions.right,
         },
-    };
+    } satisfies Record<useRelativePosition.Alignment, Return>;
 
     const alternativeAlignmentOptions = {
         top: (
@@ -176,7 +183,7 @@ export const calculateRelativePosition = ({
             || (availableAlignments.bottom && result.bottom)
             || result.right
         ),
-    };
+    } satisfies Record<useRelativePosition.Alignment, Return>;
 
     return alternativeAlignmentOptions[preferredAlignment];
 };

@@ -280,6 +280,27 @@ namespace EndpointsV1 {
 
             export type Response = Entities.User.Base[];
         }
+
+        export namespace ProfileUpdate {
+            export const ActionName = 'profileUpdate';
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHOD.POST;
+
+            export type RequestBody = T.Simplify<
+                Partial<T.Override<
+                    Pick<
+                        Entities.User.Base,
+                        'name' | 'settings' | 'extraStatus' | 'avatar'
+                    >,
+                    'avatar',
+                    Entities.File.Encoded | null
+                >>
+            >;
+
+            export type Response = Entities.User.Base;
+        }
     }
 
     export namespace Server {

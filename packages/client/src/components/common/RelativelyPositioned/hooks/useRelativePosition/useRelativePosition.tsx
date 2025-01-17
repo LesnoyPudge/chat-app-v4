@@ -1,12 +1,12 @@
-
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import {
     useAnimationFrame,
     useFunction,
     useRefManager,
 } from '@lesnoypudge/utils-react';
-import { calculateRelativePosition, isOmittedRect } from './utils';
+import { calculateRelativePosition } from './utils';
 import { useLayoutEffect, useState } from 'react';
+import { isHtmlElement } from '@lesnoypudge/utils-web';
 
 
 
@@ -77,16 +77,14 @@ export const useRelativePosition = ({
     const [alignment, setAlignment] = useState(preferredAlignment);
 
     const calculate = useFunction(() => {
-        if (
-            !followerElementRef.current
-            || !leaderElementOrRectRef.current
-        ) return;
+        if (!followerElementRef.current) return;
+        if (!leaderElementOrRectRef.current) return;
 
         const leaderRect = (
-            isOmittedRect(leaderElementOrRectRef.current)
-                ? leaderElementOrRectRef.current
-                : leaderElementOrRectRef.current.getBoundingClientRect()
-        ) as useRelativePosition.OmittedRect;
+            isHtmlElement(leaderElementOrRectRef.current)
+                ? leaderElementOrRectRef.current.getBoundingClientRect()
+                : leaderElementOrRectRef.current
+        );
 
         const {
             alignment: newAlignment,

@@ -1,5 +1,4 @@
-import { Avatar, Button, ContextMenu, Tooltip } from '@components';
-import { Navigator } from '@entities';
+import { Avatar, Button, ContextMenu, Tooltip, Navigator } from '@components';
 import { useKeyboardNavigation } from '@hooks';
 import { Focus, useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { cn } from '@utils';

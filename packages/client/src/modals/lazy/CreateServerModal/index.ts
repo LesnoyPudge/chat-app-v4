@@ -1,1 +1,0 @@
-export { CreateServerModal as default } from './CreateServerModal';

@@ -3,6 +3,7 @@ import { createStyles } from '@utils';
 import { FC } from 'react';
 import { useRelativePosition } from './hooks';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
@@ -11,13 +12,21 @@ const styles = createStyles({
 });
 
 export namespace RelativelyPositioned {
-    export type Props = (
-        RT.PropsWithRenderFunctionOrNode<[useRelativePosition.Return]>
-        & useRelativePosition.Options
-        & Pick<
+    export type RequiredProps = (
+        Pick<
             useRelativePosition.Props,
             'leaderElementOrRectRef'
         >
+        & Pick<
+            useRelativePosition.Options,
+            'preferredAlignment'
+        >
+    );
+
+    export type Props = (
+        RT.PropsWithRenderFunctionOrNode<[useRelativePosition.Return]>
+        & T.Except<useRelativePosition.Options, 'preferredAlignment'>
+        & RequiredProps
     );
 }
 

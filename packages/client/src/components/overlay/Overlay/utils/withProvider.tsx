@@ -3,9 +3,11 @@ import { OverlayProvider } from '../components';
 
 
 
-export const withProvider = createWithDecorator(({ children }) => {
+export const { withDecorator: withProvider } = createWithDecorator<
+    OverlayProvider.Props
+>(({ children, ...rest }) => {
     return (
-        <OverlayProvider>
+        <OverlayProvider {...rest}>
             {children}
         </OverlayProvider>
     );

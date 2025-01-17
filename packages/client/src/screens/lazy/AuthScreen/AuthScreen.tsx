@@ -1,6 +1,6 @@
-import { ComponentRef, FC, PropsWithChildren, RefObject } from 'react';
+import { FC } from 'react';
 import { useAuthScreen } from './useAuthScreen';
-import { createStyles, createVariants, getAssetUrl } from '@utils';
+import { createStyles, getAnimationVariants, getAssetUrl } from '@utils';
 import { CUSTOM_STYLES } from '@vars';
 import { Image, Scrollable, Tab } from '@components';
 import { AnimatePresence, m } from 'motion/react';
@@ -32,7 +32,7 @@ const styles = createStyles({
     `,
 });
 
-const variants = createVariants({
+const { animationVariants } = getAnimationVariants.custom({
     hidden: {
         opacity: 0,
         translateY: '-8%',
@@ -59,7 +59,7 @@ const tabs = {
 export const AuthTabContext = Tab.createTabContext<typeof tabs>();
 
 export const AuthScreenPure: FC = () => {
-    const containerRef = useRefManager<ComponentRef<'div'>>(null);
+    const containerRef = useRefManager<HTMLDivElement>(null);
 
     return (
         <Screen>
@@ -85,10 +85,10 @@ export const AuthScreenPure: FC = () => {
                                     <m.div
                                         className={styles.itemWrapper}
                                         key={currentTab.identifier}
-                                        variants={variants}
-                                        initial={variants.hidden.key}
-                                        animate={variants.visible.key}
-                                        exit={variants.hidden.key}
+                                        variants={animationVariants}
+                                        initial={animationVariants.hidden.key}
+                                        animate={animationVariants.visible.key}
+                                        exit={animationVariants.hidden.key}
                                         ref={containerRef}
                                     >
                                         <Focus.Inside

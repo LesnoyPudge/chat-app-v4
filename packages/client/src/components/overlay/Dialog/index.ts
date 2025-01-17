@@ -1,13 +1,14 @@
-import { DialogContext } from './context';
-import { DialogProvider, DialogWrapper } from './components';
+import * as c1 from './components';
+import * as c2 from './context';
+import * as c3 from './utils';
 
 
 export namespace Dialog {
-    export const Context = DialogContext;
+    export import Provider = c1.DialogProvider;
 
-    export type Context = DialogContext;
+    export import Wrapper = c1.DialogWrapper;
 
-    export import Provider = DialogProvider;
+    export import Context = c2.DialogContext;
 
-    export import Wrapper = DialogWrapper;
+    export const { withProvider } = c3;
 }

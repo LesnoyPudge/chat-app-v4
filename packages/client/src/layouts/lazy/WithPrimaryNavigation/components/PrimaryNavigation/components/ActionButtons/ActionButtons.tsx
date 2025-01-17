@@ -1,22 +1,18 @@
-import { Button, Sprite, Tooltip } from '@components';
+import { Button, Sprite, Tooltip, Overlay } from '@components';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 import { WrapperWithBullet } from '../WrapperWithBullet';
-import { cn, lazyLoad } from '@utils';
+import { cn } from '@utils';
 import { sharedStyles } from '../../sharedStyles';
 import { useTrans } from '@i18n';
-import { Modal } from '@entities';
+import { CreateServerModal } from '@modals';
 
 
-
-const CreateServerModal = lazyLoad.baseAsyncModal(() => {
-    return import('@modals/lazy/CreateServerModal');
-});
 
 export const ActionButtons: FC = () => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { t } = useTrans();
-    const controls = Modal.useModalControls();
+    const controls = Overlay.useOverlayControls();
 
     return (
         <WrapperWithBullet isActive={controls.isOpen}>

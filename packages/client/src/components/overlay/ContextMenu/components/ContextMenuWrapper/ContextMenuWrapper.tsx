@@ -1,25 +1,16 @@
 import { PropsWithChildren } from 'react';
 import { Popover, RelativelyPositioned, Overlay } from '@components';
 import { useContextMenu } from './hooks';
-import { createVariants, createWithDecorator } from '@utils';
+import { createWithDecorator, getAnimationVariants } from '@utils';
 import { withDisplayName } from '@lesnoypudge/utils-react';
 import { ContextMenuProvider } from '../ContextMenuProvider';
 import { m } from 'motion/react';
 
 
 
-const variants = createVariants({
-    hidden: {
-        scale: 0.95,
-        opacity: 0,
-    },
-    visible: {
-        scale: 1,
-        opacity: 1,
-    },
-});
+const { animationVariants } = getAnimationVariants.contextMenu();
 
-const decorated = createWithDecorator(({ children }) => {
+const { withDecorator } = createWithDecorator(({ children }) => {
     return (
         <ContextMenuProvider>
             {children}
@@ -44,7 +35,7 @@ export namespace ContextMenuWrapper {
 
 export const ContextMenuWrapper = withDisplayName(
     'ContextMenuWrapper',
-    decorated(({
+    withDecorator(({
         preferredAlignment,
         leaderElementRef,
         children,
@@ -65,10 +56,10 @@ export const ContextMenuWrapper = withDisplayName(
                             swappableAlignment
                         >
                             <m.div
-                                variants={variants}
-                                initial={variants.hidden.key}
-                                animate={variants.visible.key}
-                                exit={variants.hidden.key}
+                                variants={animationVariants}
+                                initial={animationVariants.initial.key}
+                                animate={animationVariants.animate.key}
+                                exit={animationVariants.exit.key}
                             >
                                 {children}
                             </m.div>

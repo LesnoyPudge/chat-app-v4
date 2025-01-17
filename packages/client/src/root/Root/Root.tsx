@@ -1,5 +1,4 @@
 import {
-    Heading,
     ErrorBoundary,
     withDisplayName,
     Focus,
@@ -19,7 +18,7 @@ import {
 
 const DevTools = lazy(() => import('./components/DevTools'));
 
-const decorated = createWithDecorator(({ children }) => {
+const { withDecorator } = createWithDecorator(({ children }) => {
     return (
         <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
             <GlobalProviders>
@@ -29,7 +28,7 @@ const decorated = createWithDecorator(({ children }) => {
     );
 });
 
-export const Root = withDisplayName('Root', decorated(() => {
+export const Root = withDisplayName('Root', withDecorator(() => {
     usePreventDefault();
     // useFocusTracker();
 

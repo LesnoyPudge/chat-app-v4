@@ -1,12 +1,11 @@
 import { Dialog } from '@components';
 import { useContextProxy } from '@lesnoypudge/utils-react';
 import { GlobalLoaderScreen } from '@screens/bundled';
-import { createVariants, logger } from '@utils';
+import { getAnimationVariants, logger } from '@utils';
 import { FC, PropsWithChildren, useEffect } from 'react';
 
 
-
-const variants = createVariants({
+const { animationVariants } = getAnimationVariants.custom({
     initial: {
         opacity: 1,
         scale: 1,
@@ -72,7 +71,7 @@ export const GlobalLoaderWrapper: FC<GlobalLoaderWrapper.Props> = ({
         <Dialog.Provider
             label='Loading'
             focused
-            animationVariants={variants}
+            animationVariants={animationVariants}
         >
             <Dialog.Wrapper>
                 <GlobalLoaderScreen/>

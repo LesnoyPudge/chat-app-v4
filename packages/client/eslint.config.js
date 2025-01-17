@@ -70,7 +70,13 @@ const configArr = config.createConfig({
         'jsx-control-statements/jsx-use-if-tag': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
         'tailwindcss/no-unnecessary-arbitrary-value': 'off',
-        
+        '@stylistic/max-len': ['warn', {
+            'code': 100,
+            'ignoreStrings': true,
+            'ignoreTemplateLiterals': true,
+            'ignoreRegExpLiterals': true,
+            'ignoreComments': true,
+        }],
     }
 })
 
@@ -85,18 +91,6 @@ const _config = config.createConfig(
     {
         ...config.configs.node,
         files: ['./scripts/**/*.ts']
-    },
-    {
-        files: ['**/*.tsx'],
-        rules: {
-            '@stylistic/max-len': ['warn', {
-                'code': 100,
-                'ignoreStrings': true,
-                'ignoreTemplateLiterals': true,
-                'ignoreRegExpLiterals': true,
-                'ignoreComments': true,
-            }],
-        }
     },
     config.configs.disableTypeChecked,
 );
