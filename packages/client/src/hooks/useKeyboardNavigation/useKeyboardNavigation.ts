@@ -1,15 +1,13 @@
 import { invariant, KEY, shallowEqual } from '@lesnoypudge/utils';
 import { hotKey } from '@lesnoypudge/utils-web';
 import { useHotKey, useIsFocusVisible, usePropsChange } from '@hooks';
-import { Dispatch, SetStateAction, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
     usePrevious,
-    useForceUpdate,
-    useIsFirstMount,
     useFunction,
-    useLatest,
     useRefManager,
 } from '_@lesnoypudge/utils-react';
+import { useMemoShallow } from '@lesnoypudge/utils-react';
 
 
 const hotKeyOptions: hotKey.HotKeyOptions = {
@@ -61,15 +59,18 @@ export const useKeyboardNavigation = (
         onFocusChange,
     } = options;
 
-    const prevList = usePrevious(list);
+    const memoizedList = useMemoShallow(list);
+    const prevListRef = usePrevious(memoizedList);
+
+    usePropsChange({ memoizedList, prevListRef });
     const { isFocused } = useIsFocusVisible(
         wrapperRefManager,
         { within: true },
     );
 
     const getInitialId = useCallback(() => {
-        return initialFocusedId ?? list.at(0);
-    }, [initialFocusedId, list]);
+        return initialFocusedId ?? memoizedList.at(0);
+    }, [initialFocusedId, memoizedList]);
 
     const [
         lastMovedOnId,
@@ -85,7 +86,7 @@ export const useKeyboardNavigation = (
     const getDerivedId = useFunction((
         lastFocusedId: string | undefined,
     ): string | undefined => {
-        const isListEmpty = list.length === 0;
+        const isListEmpty = memoizedList.length === 0;
         if (isListEmpty) return;
         // list not empty
 
@@ -93,10 +94,11 @@ export const useKeyboardNavigation = (
         if (!isIdDefined) return getInitialId();
         // list not empty and id is defined
 
-        const isValidId = list.includes(lastFocusedId);
+        const isValidId = memoizedList.includes(lastFocusedId);
         if (isValidId) return lastFocusedId;
         // list not empty but id is invalid
 
+        const prevList = prevListRef.current;
         const isPrevListEmpty = (
             prevList === undefined
             || prevList.length === 0
@@ -111,11 +113,11 @@ export const useKeyboardNavigation = (
         // prev list contains current id;
 
         const newIndex = Math.min(
-            list.length - 1,
+            memoizedList.length - 1,
             currentIdIndex,
         );
 
-        const newId = list[newIndex];
+        const newId = memoizedList[newIndex];
         invariant(newId);
 
         return newId;
@@ -123,9 +125,14 @@ export const useKeyboardNavigation = (
 
     const initializedFocusedIdRef = useRef<string>();
 
-    const derivedCurrentFocusedId: string | undefined = useMemo(() => {
-        const isNewList = !shallowEqual(list, prevList);
-        const shouldRecalculate = isNewList || shouldUseMovedOnIdRef.current;
+    const derivedCurrentFocusedId = useMemo(() => {
+        const isListChanged = !shallowEqual(
+            memoizedList,
+            prevListRef.current,
+        );
+        const shouldRecalculate = (
+            isListChanged || shouldUseMovedOnIdRef.current
+        );
         if (!shouldRecalculate) return initializedFocusedIdRef.current;
 
         const lastFocusedId = (
@@ -142,7 +149,7 @@ export const useKeyboardNavigation = (
         initializedFocusedIdRef.current = newId;
 
         return newId;
-    }, [lastMovedOnId, list, prevList, getDerivedId]);
+    }, [lastMovedOnId, memoizedList, prevListRef, getDerivedId]);
 
     const changeFocus = (
         moveDirection: useKeyboardNavigation.MoveDirection,
@@ -213,7 +220,6 @@ export const useKeyboardNavigation = (
         if (!list.length) return;
 
         const isForward = moveDirection === 'forward';
-
         const currentIndex = (
             derivedCurrentFocusedId === undefined
                 ? -1
@@ -332,37 +338,181 @@ export const useKeyboardNavigation = (
 
 // export const useKeyboardNavigation = (
 //     wrapperRefManager: useRefManager.RefManager<HTMLElement>,
-//     providedOptions: useKeyboardNavigation.Options,
+//     options: useKeyboardNavigation.Options,
 // ): useKeyboardNavigation.Return => {
-//     const prevListRef = useRef(providedOptions.list);
-//     const optionsRef = useLatest(providedOptions);
-//     const { isFocusedRef } = useIsFocusVisible(
+//     const {
+//         direction,
+//         list,
+//         loop,
+//         initialFocusedId,
+//         onFocusChange,
+//     } = options;
+
+//     const memoizedList = useMemoShallow(list);
+//     const prevListRef = usePrevious(memoizedList);
+//     // console.table({
+//     //     memoizedList: JSON.stringify(memoizedList),
+//     //     list: JSON.stringify(list),
+//     //     prevListRef: JSON.stringify(prevListRef.current),
+//     // });
+
+
+//     const [state, setState] = useState({ val: 0 });
+//     const memoState = useMemo(() => {
+//         return {
+//             val: state.val + 0.1,
+//         };
+//     }, [state]);
+//     const inc = () => setState((prev) => ({ val: prev.val + 1 }));
+
+//     console.log(`state is: ${
+//         JSON.stringify(state)
+//     } ${
+//         JSON.stringify(memoState)
+//     }`);
+
+//     useEffect(() => {
+//         console.log(`Effect state is: ${
+//             JSON.stringify(state)
+//         } ${
+//             JSON.stringify(memoState)
+//         }`);
+//     });
+
+//     useInterval(inc, 3_000);
+
+//     // const memoizedList = useMemo(() => {
+//     //     console.log('1');
+//     //     return list;
+//     // }, [list]);
+//     // console.log('2');
+
+//     const { isFocused } = useIsFocusVisible(
 //         wrapperRefManager,
-//         { within: true, stateless: true },
+//         { within: true },
 //     );
 
 //     const getInitialId = useCallback(() => {
-//         return (
-//             providedOptions.initialFocusedId
-//             ?? providedOptions.list.at(0)
-//         );
-//     }, [providedOptions.initialFocusedId, providedOptions.list]);
+//         return initialFocusedId ?? memoizedList.at(0);
+//     }, [initialFocusedId, memoizedList]);
 
-//     const [currentFocusedId, setCurrentFocusedId] = useState(() => {
-//         return getInitialId();
+//     const [
+//         lastMovedOnId,
+//         setLastMovedOnId,
+//     ] = useState(() => getInitialId());
+//     const shouldUseMovedOnIdRef = useRef(true);
+
+//     const setCurrentFocusedId = useFunction((newId: string) => {
+//         console.log(`set focus to ${newId}`);
+//         shouldUseMovedOnIdRef.current = true;
+//         setLastMovedOnId(newId);
 //     });
-//     const currentFocusedIdRef = useLatest(currentFocusedId);
 
-//     const getPossibleIndexes = useFunction((currentIndex: number) => {
-//         const listLength = optionsRef.current.list.length;
+//     const getDerivedId = useFunction((
+//         lastFocusedId: string | undefined,
+//     ): string | undefined => {
+//         const isListEmpty = memoizedList.length === 0;
+//         if (isListEmpty) return;
+//         // list not empty
+
+//         const isIdDefined = lastFocusedId !== undefined;
+//         if (!isIdDefined) return getInitialId();
+//         // list not empty and id is defined
+
+//         const isValidId = memoizedList.includes(lastFocusedId);
+//         if (isValidId) return lastFocusedId;
+//         // list not empty but id is invalid
+
+//         const prevList = prevListRef.current;
+//         const isPrevListEmpty = (
+//             prevList === undefined
+//             || prevList.length === 0
+//         );
+//         if (isPrevListEmpty) return getInitialId();
+//         // list not empty, id is invalid and prev list is not empty
+
+//         const currentIdIndex = prevList.indexOf(lastFocusedId);
+//         const isCurrentIdIndexInvalid = currentIdIndex === -1;
+//         if (isCurrentIdIndexInvalid) return getInitialId();
+//         // list not empty, id is invalid and prev list is not empty
+//         // prev list contains current id;
+
+//         const newIndex = Math.min(
+//             memoizedList.length - 1,
+//             currentIdIndex,
+//         );
+
+//         const newId = memoizedList[newIndex];
+//         invariant(newId);
+
+//         return newId;
+//     });
+
+//     const initializedFocusedIdRef = useRef<string>();
+
+//     const derivedCurrentFocusedId = useMemo(() => {
+//         const isListChanged = !shallowEqual(
+//             memoizedList,
+//             prevListRef.current,
+//         );
+//         const shouldRecalculate = (
+//             isListChanged || shouldUseMovedOnIdRef.current
+//         );
+//         if (!shouldRecalculate) return initializedFocusedIdRef.current;
+
+//         const lastFocusedId = (
+//             shouldUseMovedOnIdRef.current
+//                 ? lastMovedOnId
+//                 : initializedFocusedIdRef.current
+//         );
+
+//         if (shouldUseMovedOnIdRef.current) {
+//             shouldUseMovedOnIdRef.current = false;
+//         }
+
+//         const newId = getDerivedId(lastFocusedId);
+//         initializedFocusedIdRef.current = newId;
+
+//         return newId;
+//     }, [lastMovedOnId, memoizedList, prevListRef, getDerivedId]);
+
+//     const changeFocus = (
+//         moveDirection: useKeyboardNavigation.MoveDirection,
+//         prevItem: useKeyboardNavigation.onFocusChangeItem | undefined,
+//         nextItem: useKeyboardNavigation.onFocusChangeItem,
+//     ) => {
+//         let bail = false;
+
+//         const prevent = () => {
+//             bail = true;
+//         };
+
+//         onFocusChange?.({
+//             prev: prevItem,
+//             next: nextItem,
+//             moveDirection,
+//             prevent,
+//         });
+
+//         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+//         if (bail) return;
+
+//         setCurrentFocusedId(nextItem.id);
+//     };
+
+//     const getPossibleIndexes = (
+//         currentIndex: number,
+//         isLoop: boolean,
+//     ) => {
+//         const listLength = list.length;
+//         invariant(listLength !== 0);
+
 //         if (listLength === 1) return {
 //             nextIndex: currentIndex,
 //             prevIndex: currentIndex,
 //         };
 
-//         const loop = optionsRef.current.loop;
-
-//         if (!loop) {
+//         if (!isLoop) {
 //             const nextIndex = Math.min(listLength - 1, currentIndex + 1);
 //             const prevIndex = Math.max(0, currentIndex - 1);
 
@@ -387,49 +537,26 @@ export const useKeyboardNavigation = (
 //             nextIndex,
 //             prevIndex,
 //         };
-//     });
+//     };
 
-//     const changeFocus = useFunction((
-//         moveDirection: useKeyboardNavigation.MoveDirection,
-//         prevItem: useKeyboardNavigation.onFocusChangeItem | undefined,
-//         nextItem: useKeyboardNavigation.onFocusChangeItem,
-//     ) => {
-//         let bail = false;
-
-//         const prevent = () => {
-//             bail = true;
-//         };
-
-//         optionsRef.current.onFocusChange?.({
-//             prev: prevItem,
-//             next: nextItem,
-//             moveDirection,
-//             prevent,
-//         });
-
-//         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-//         if (bail) return;
-
-//         setCurrentFocusedId(nextItem.id);
-//     });
-
-//     const move = useFunction((
+//     const move = (
 //         moveDirection: useKeyboardNavigation.MoveDirection,
 //     ) => {
-//         const list = optionsRef.current.list;
 //         if (!list.length) return;
 
 //         const isForward = moveDirection === 'forward';
-
 //         const currentIndex = (
-//             currentFocusedId
-//                 ? list.indexOf(currentFocusedId)
-//                 : -1
+//             derivedCurrentFocusedId === undefined
+//                 ? -1
+//                 : list.indexOf(derivedCurrentFocusedId)
 //         );
 
-//         const isValidId = !!currentFocusedId && (currentIndex !== -1);
+//         const isValidId = (
+//             derivedCurrentFocusedId !== undefined
+//             && (currentIndex !== -1)
+//         );
 //         if (!isValidId) {
-//             const newId = optionsRef.current.initialFocusedId ?? list[0];
+//             const newId = getInitialId();
 //             if (!newId) return;
 
 //             changeFocus(moveDirection, undefined, {
@@ -440,82 +567,92 @@ export const useKeyboardNavigation = (
 //             return;
 //         }
 
-//         const { nextIndex, prevIndex } = getPossibleIndexes(currentIndex);
+//         const { nextIndex, prevIndex } = getPossibleIndexes(
+//             currentIndex,
+//             loop,
+//         );
 //         const newIndex = isForward ? nextIndex : prevIndex;
 //         const newId = list[newIndex];
 //         invariant(newId);
 
-//         changeFocus(moveDirection, {
-//             id: currentFocusedId,
-//             index: currentIndex,
-//         }, {
+//         const prevItem = (
+//             derivedCurrentFocusedId
+//                 ? ({
+//                         id: derivedCurrentFocusedId,
+//                         index: currentIndex,
+//                     })
+//                 : undefined
+//         );
+
+//         changeFocus(moveDirection, prevItem, {
 //             id: newId,
 //             index: newIndex,
 //         });
-//     });
+//     };
 
-//     // forward moves ↓→
+//     const isHorizontal = direction === 'horizontal';
+//     const isVertical = direction === 'vertical';
+
+//     // forward vertical moves ↓
 //     useHotKey(
 //         wrapperRefManager,
 //         [
 //             [KEY.ArrowDown],
-//             [KEY.ArrowRight],
-//             [KEY.D],
 //             [KEY.S],
 //         ],
-//         () => move('forward'),
+//         () => isVertical && move('forward'),
 //         { hotKeyOptions },
 //     );
 
-//     // backward moves ←↑
+//     // backward vertical moves ↑
 //     useHotKey(
 //         wrapperRefManager,
 //         [
 //             [KEY.ArrowUp],
-//             [KEY.ArrowLeft],
-//             [KEY.A],
 //             [KEY.W],
 //         ],
-//         () => move('backward'),
+//         () => isVertical && move('backward'),
 //         { hotKeyOptions },
 //     );
 
-//     useLayoutEffect(() => {
-//         const list = providedOptions.list;
-//         const prevList = prevListRef.current;
-//         const isSame = shallowEqual(list, prevList);
-//         if (isSame) return;
+//     // forward horizontal moves →
+//     useHotKey(
+//         wrapperRefManager,
+//         [
+//             [KEY.ArrowRight],
+//             [KEY.D],
+//         ],
+//         () => isHorizontal && move('forward'),
+//         { hotKeyOptions },
+//     );
 
-//         console.log(`list changed, prev: ${
-//             JSON.stringify(prevListRef.current)
-//         }, new: ${JSON.stringify(list)}`);
-//         prevListRef.current = list;
-//         const currentId = currentFocusedIdRef.current;
-//         const isCurrentIdValid = list.includes(currentId);
-//         if (isCurrentIdValid) return;
-//         console.log(`id ${currentId} is invalid!`);
-//         // const prevIdIndex = prevList.indexOf(currentId);
-//     }, [providedOptions.list, currentFocusedIdRef]);
+//     // backward horizontal moves ←
+//     useHotKey(
+//         wrapperRefManager,
+//         [
+//             [KEY.ArrowLeft],
+//             [KEY.A],
+//         ],
+//         () => isHorizontal && move('backward'),
+//         { hotKeyOptions },
+//     );
 
 //     const getTabIndex = useCallback((id: string) => {
-//         if (!currentFocusedId) {
+//         if (derivedCurrentFocusedId === undefined) {
 //             return id === getInitialId() ? 0 : -1;
 //         }
 
-//         return id === currentFocusedId ? 0 : -1;
-//     }, [
-//         currentFocusedId,
-//         getInitialId,
-//     ]);
+//         return id === derivedCurrentFocusedId ? 0 : -1;
+//     }, [derivedCurrentFocusedId, getInitialId]);
 
 //     const getIsFocused = useCallback((id: string) => {
-//         if (!isFocusedRef.current) return false;
+//         if (!isFocused) return false;
 
-//         return id === currentFocusedId;
-//     }, [currentFocusedId, isFocusedRef]);
+//         return id === derivedCurrentFocusedId;
+//     }, [derivedCurrentFocusedId, isFocused]);
 
 //     return {
-//         currentFocusedId,
+//         currentFocusedId: derivedCurrentFocusedId,
 //         getTabIndex,
 //         getIsFocused,
 //         setCurrentFocusedId,

@@ -1,6 +1,5 @@
-import { Tab, Modal, Overlay } from '@components';
-import { useTrans } from '@i18n';
-import { FC } from 'react';
+import { Tab, Modal } from '@components';
+import { t } from '@i18n';
 import {
     CreateServerOrFollowInvitationTab,
     FollowInvitationTab,
@@ -17,29 +16,20 @@ const tabs = Tab.createTabs({
 
 export const CreateServerTabContext = Tab.createTabContext<typeof tabs>();
 
-export namespace CreateServerModal {
-    export type Props = Overlay.Types.WithControls;
-}
+const {
+    withDecorator,
+} = Modal.Base.createDecorator('CreateServerModal', {
+    label: t('CreateServerModal.label'),
+});
 
-export const CreateServerModal: FC<CreateServerModal.Props> = ({
-    controls,
-}) => {
-    const { t } = useTrans();
-
+export const CreateServerModal = withDecorator(() => {
     return (
-        <Modal.Base.Provider
-            label={t('CreateServerModal.label')}
-            controls={controls}
+        <Tab.Provider
+            context={CreateServerTabContext}
+            tabs={tabs}
+            initialTab='createServerOrFollowInvitation'
         >
-            <Modal.Base.Wrapper>
-                <Tab.Provider
-                    context={CreateServerTabContext}
-                    tabs={tabs}
-                    initialTab='createServerOrFollowInvitation'
-                >
-                    <Tab.Current context={CreateServerTabContext}/>
-                </Tab.Provider>
-            </Modal.Base.Wrapper>
-        </Modal.Base.Provider>
+            <Tab.Current context={CreateServerTabContext}/>
+        </Tab.Provider>
     );
-};
+});

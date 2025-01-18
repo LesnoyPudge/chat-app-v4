@@ -8,8 +8,9 @@ import { useSliceActions, useSliceSelector, useStoreSelector } from '@redux/hook
 import { RootState } from '@redux/store';
 import { formatNotificationCount } from '@utils';
 import { env, MASK_ID } from '@vars';
+import { useInterval } from '_@lesnoypudge/utils-react';
 import { AnimatePresence, m } from 'motion/react';
-import { FC, Fragment, memo, PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { FC, Fragment, memo, PropsWithChildren, useEffect, useMemo, useRef, useState } from 'react';
 
 
 const defaultArr = ['1', '2', '3', '4', '5'];
@@ -32,10 +33,6 @@ const Item: FC<{
         shuffle,
         remove,
     } = props;
-
-    useEffect(() => {
-        console.log(`effect in ${item}`);
-    });
 
     const buttonRef = useRefManager<HTMLButtonElement>(null);
 
@@ -88,14 +85,6 @@ export const Playground: FC = () => {
         list: arr,
         loop: false,
     });
-
-    useEffect(() => {
-        console.log(`EFF ${currentFocusedId}`);
-    });
-
-    // useTimeout(() => {
-    //     setArr([...defaultArr]);
-    // }, 3_000);
 
     const shuffle = useFunction(() => {
         setArr((prevArr) => {

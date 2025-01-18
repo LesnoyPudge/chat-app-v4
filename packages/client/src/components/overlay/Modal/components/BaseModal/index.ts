@@ -1,5 +1,5 @@
 import * as c1 from './components';
-
+import * as c2 from './utils';
 
 
 export namespace BaseModal {
@@ -17,5 +17,5 @@ export namespace BaseModal {
 
     export import Title = c1.BaseModalTitle;
 
-
+    export const { createDecorator } = c2;
 }

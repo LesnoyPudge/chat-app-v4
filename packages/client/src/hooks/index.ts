@@ -5,3 +5,4 @@ export * from './useLocalStorage';
 export * from './useOptimisticQueue';
 export * from './usePropsChange';
 export * from './useValidatedParams';
+export * from './useUniqueState';

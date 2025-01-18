@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEventListener, useRefManager } from '@lesnoypudge/utils-react';
+import { isHtmlElement } from '@lesnoypudge/utils-web';
 import { useRef, useState } from 'react';
 
 
@@ -217,7 +218,7 @@ export const useIsFocusVisible = (
 
     const inEvent = options?.within ? 'focusin' : 'focus';
     const outEvent = options?.within ? 'focusout' : 'blur';
-    const withStateUpdated = !options?.stateless;
+    const withStateUpdate = !options?.stateless;
 
     useEventListener(elementRef, inEvent, (e) => {
         if (!e.target) return;
@@ -227,7 +228,7 @@ export const useIsFocusVisible = (
             && !focusTriggersKeyboardModality(e.target)
         ) return;
 
-        withStateUpdated && setIsFocused(true);
+        withStateUpdate && setIsFocused(true);
         isFocusedRef.current = true;
 
         options?.onFocus?.(e);
@@ -249,8 +250,21 @@ export const useIsFocusVisible = (
             hadFocusVisibleRecently = false;
         }, 100);
 
-        withStateUpdated && setIsFocused(false);
-        isFocusedRef.current = true;
+        const wrapper = elementRef.current;
+        const shouldSetState = (
+            withStateUpdate
+            && wrapper
+            && (
+                (
+                    isHtmlElement(e.relatedTarget)
+                    && !wrapper.contains(e.relatedTarget)
+                )
+                || e.relatedTarget === null
+            )
+        );
+
+        shouldSetState && setIsFocused(false);
+        isFocusedRef.current = false;
 
         options?.onBlur?.(e);
     });

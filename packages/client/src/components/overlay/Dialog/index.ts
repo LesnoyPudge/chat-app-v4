@@ -10,5 +10,5 @@ export namespace Dialog {
 
     export import Context = c2.DialogContext;
 
-    export const { withProvider } = c3;
+    export const { createDecorator } = c3;
 }

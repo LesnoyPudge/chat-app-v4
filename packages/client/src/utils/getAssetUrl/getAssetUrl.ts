@@ -10,7 +10,7 @@ export const getAssetUrl = (fileName: CommonAssetNames) => {
     }
 
     const { href } = new URL(
-        `../../generated/assets/${fileName}`,
+        `../../../generated/assets/${fileName}`,
         import.meta.url,
     );
 

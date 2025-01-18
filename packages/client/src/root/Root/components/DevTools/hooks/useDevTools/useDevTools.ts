@@ -1,103 +1,12 @@
-import { Navigator, Overlay } from '@components';
-import { useHotKey, useKeyboardNavigation } from '@hooks';
-import { capitalize, KEY } from '@lesnoypudge/utils';
+import { Navigator } from '@components';
+import { useKeyboardNavigation } from '@hooks';
+import { capitalize } from '@lesnoypudge/utils';
 import { useRefManager } from '@lesnoypudge/utils-react';
-import { localStorageApi, logger, toOneLine } from '@utils';
+import { rawActions } from '../../actions';
 
 
-// @ts-expect-error
-if (!window._devtools) {
-    // @ts-expect-error
-    window._devtools = {};
-}
-
-const logConsoleHint = () => {
-    logger.log(`${KEY.F1} to clear console`);
-    logger.log(`${KEY.F2} to log activeElement`);
-};
-
-const rawActions = {
-    toggleElementsOutline: () => {
-        const currentValue = (
-            document
-                .documentElement
-                .dataset
-                .outline as 'false' | 'true' | undefined
-        );
-
-        document.documentElement.dataset.outline = (
-            (
-                currentValue === 'false'
-                || !currentValue
-            ) ? 'true' : 'false'
-        );
-    },
-
-    toggleBackgroundHighlight: () => {
-        const currentValue = (
-            document
-                .documentElement
-                .dataset
-                .background as 'false' | 'true' | undefined
-        );
-
-        document.documentElement.dataset.background = (
-            (
-                currentValue === 'false'
-                || !currentValue
-            ) ? 'true' : 'false'
-        );
-    },
-
-    softResetReduxStore: () => {
-        // @ts-expect-error
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        window._devtools?.store?.dispatch(
-            // @ts-expect-error
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-            window._devtools?.softReset(),
-        );
-    },
-
-    runAxe: () => {
-        // @ts-expect-error
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        window._devtools?.axeReact();
-    },
-
-    clearConsole: () => {
-        logger.clear();
-        logConsoleHint();
-    },
-
-    logElementsCount: () => {
-        logger.log(toOneLine(`
-            ${document.querySelectorAll('*')?.length} 
-            DOM elements
-        `));
-    },
-
-    setDarkTheme: () => {
-        document.documentElement.dataset.theme = 'dark';
-    },
-
-    setLightTheme: () => {
-        document.documentElement.dataset.theme = 'light';
-    },
-
-    setAutoTheme: () => {
-        document.documentElement.dataset.theme = 'auto';
-    },
-
-    clearLocalStorage: () => {
-        localStorageApi.clear();
-    },
-} satisfies Record<string, VoidFunction>;
-
-logConsoleHint();
 
 export const useDevTools = () => {
-    const controls = Overlay.useOverlayControls(false);
     const wrapperRef = useRefManager<HTMLDivElement>(null);
     const { navigateTo, navigate } = Navigator.useNavigator();
 
@@ -171,28 +80,8 @@ export const useDevTools = () => {
         loop: true,
     });
 
-    useHotKey(document, [KEY.Shift, KEY.Control, KEY.P], (e) => {
-        e.preventDefault();
-        controls.open();
-    });
-
-    useHotKey(
-        document,
-        [KEY.F1],
-        rawActions.clearConsole,
-        { hotKeyOptions: { prevent: true } },
-    );
-
-    useHotKey(
-        document,
-        [KEY.F2],
-        () => logger.log(document.activeElement),
-        { hotKeyOptions: { prevent: true } },
-    );
-
     return {
         ...navigation,
-        controls,
         actions,
         wrapperRef,
     };
