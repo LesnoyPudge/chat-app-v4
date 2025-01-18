@@ -15,7 +15,7 @@
     "dependencies": {
         "@lesnoypudge/types-utils-base": "^3.4.1",
         "@lesnoypudge/utils": "^16.3.0",
-        "@lesnoypudge/utils-react": "^9.0.0",
+        "@lesnoypudge/utils-react": "^10.0.0",
         "@lesnoypudge/utils-web": "^1.0.0",
         "@reduxjs/toolkit": "^2.5.0",
         "@tailwindcss/container-queries": "^0.1.1",

@@ -1,13 +1,14 @@
 import { invariant, KEY, shallowEqual } from '@lesnoypudge/utils';
 import { hotKey } from '@lesnoypudge/utils-web';
-import { useHotKey, useIsFocusVisible, usePropsChange } from '@hooks';
+import { useHotKey, useIsFocusVisible } from '@hooks';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {
     usePrevious,
     useFunction,
     useRefManager,
+    useMemoShallow,
 } from '_@lesnoypudge/utils-react';
-import { useMemoShallow } from '@lesnoypudge/utils-react';
+
 
 
 const hotKeyOptions: hotKey.HotKeyOptions = {
@@ -62,7 +63,6 @@ export const useKeyboardNavigation = (
     const memoizedList = useMemoShallow(list);
     const prevListRef = usePrevious(memoizedList);
 
-    usePropsChange({ memoizedList, prevListRef });
     const { isFocused } = useIsFocusVisible(
         wrapperRefManager,
         { within: true },
@@ -333,10 +333,6 @@ export const useKeyboardNavigation = (
         setCurrentFocusedId,
     };
 };
-
-
-
-// export const useKeyboardNavigation = (
 //     wrapperRefManager: useRefManager.RefManager<HTMLElement>,
 //     options: useKeyboardNavigation.Options,
 // ): useKeyboardNavigation.Return => {
