@@ -35,7 +35,6 @@
         "**/.vscode": true,
         "**/build": true,
         "**/public": true,
-        "**/generated": true,
         "packages/server": true,
         "packages/emails": true,
         "packages/shared": true

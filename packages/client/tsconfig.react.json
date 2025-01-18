@@ -9,7 +9,7 @@
         "WIP"
     ],
     "exclude": [
-        "./src/generated/**/*",
+        "./generated/**/*",
         "node_modules/@types/node",
     ],
     "compilerOptions": {
@@ -21,8 +21,8 @@
             "../shared/shared.d.ts",
             "./src/root/declarations/global.d.ts",
             "./src/root/declarations/vite-env.d.ts",
-            "./src/generated/assetNames.d.ts",
-            "./src/generated/spriteNames.d.ts",
+            "./generated/assetNames.d.ts",
+            "./generated/spriteNames.d.ts",
             "./src/i18n/i18n.d.ts",
         ],
         "paths": {
@@ -33,7 +33,7 @@
                 "./src/utils"
             ],
             "@generated/*": [
-                "./src/generated/*"
+                "./generated/*"
             ],
             "@i18n": [
                 "./src/i18n"

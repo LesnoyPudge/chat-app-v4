@@ -1,4 +1,4 @@
-// GENERATED IN E:\Projects\chat-app-v4\packages\client\scripts\assets.ts
+// GENERATED IN assets.ts
 type SpriteNames = 'ADD_CHANNEL_NAVIGATION_ICON'| 
 'ADD_FILE_ICON'| 
 'ADD_IMAGE_ICON'| 

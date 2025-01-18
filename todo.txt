@@ -7,9 +7,3 @@ https://mswjs.io/docs/getting-started
 --client--
 -? сделать attachments layout через grid-template-areas
 - добавить dataset к элементу(html? body?) для работы css (theme, message-font-size, ...)
-- вынести generated из src
-- вынести packages/client в рут, убрать старые файлы из рута
-- протестировать useKeyboardNavigation (что будет при удалении итема в фокусе,
-возможно переносить фокус на след/пред итем, протестировать как работает
-нативный перенос фокуса с пропавшего итема)
--? перенести Form в entities? или перенести всё из entities в components/common

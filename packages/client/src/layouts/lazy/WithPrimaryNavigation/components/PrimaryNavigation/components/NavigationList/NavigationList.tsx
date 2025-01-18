@@ -4,7 +4,7 @@ import { useStoreSelector } from '@redux/hooks';
 import { Features } from '@redux/features';
 import { Iterate, Scrollable, Separator } from '@components';
 import { useKeyboardNavigation } from '@hooks';
-import { useRefManager } from '@lesnoypudge/utils-react';
+import { Memo, useRefManager } from '@lesnoypudge/utils-react';
 import { createStyles } from '@utils';
 import { useTrans } from '@i18n';
 
@@ -87,13 +87,14 @@ export const NavigationList: FC = () => {
                         <If condition={showConversations}>
                             <Iterate items={sortedConversationIds}>
                                 {(conversationId) => (
-                                    <ConversationListItem
-                                        conversationId={conversationId}
-                                        isFocused={getIsFocused(conversationId)}
-                                        setCurrentFocusedId={setCurrentFocusedId}
-                                        tabIndex={getTabIndex(conversationId)}
-                                        key={conversationId}
-                                    />
+                                    <Memo key={conversationId}>
+                                        <ConversationListItem
+                                            conversationId={conversationId}
+                                            isFocused={getIsFocused(conversationId)}
+                                            setCurrentFocusedId={setCurrentFocusedId}
+                                            tabIndex={getTabIndex(conversationId)}
+                                        />
+                                    </Memo>
                                 )}
                             </Iterate>
 
@@ -102,13 +103,14 @@ export const NavigationList: FC = () => {
 
                         <Iterate items={serverIds}>
                             {(serverId) => (
-                                <ServerListItem
-                                    serverId={serverId}
-                                    isFocused={getIsFocused(serverId)}
-                                    setCurrentFocusedId={setCurrentFocusedId}
-                                    tabIndex={getTabIndex(serverId)}
-                                    key={serverId}
-                                />
+                                <Memo key={serverId}>
+                                    <ServerListItem
+                                        serverId={serverId}
+                                        isFocused={getIsFocused(serverId)}
+                                        setCurrentFocusedId={setCurrentFocusedId}
+                                        tabIndex={getTabIndex(serverId)}
+                                    />
+                                </Memo>
                             )}
                         </Iterate>
                     </div>

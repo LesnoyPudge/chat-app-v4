@@ -7,7 +7,7 @@ import { optimize } from 'svgo';
 
 const rootPath = process.cwd();
 const rawAssetsDirPath = path.join(rootPath, 'rawAssets');
-const generatedDirPath = path.join(rootPath, 'src/generated');
+const generatedDirPath = path.join(rootPath, 'generated');
 const generatedAssetsDirPath = path.join(
     generatedDirPath,
     'assets',
@@ -99,7 +99,7 @@ const main = () => {
 
     fs.rmSync(
         generatedSpritePreviewPath,
-        { recursive: true },
+        { recursive: true, force: true },
     );
     console.log('folder for sprites for preview removed');
 

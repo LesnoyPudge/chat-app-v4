@@ -4,7 +4,7 @@ import { HexColorPicker, HexColorInput } from 'react-colorful';
 import { cn, createStyles } from '@utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import css from './ColorPicker.module.scss';
-import { useFunction, useThrottled } from '@lesnoypudge/utils-react';
+import { Memo, useFunction, useThrottled } from '@lesnoypudge/utils-react';
 import { FieldApi } from '@tanstack/react-form';
 
 
@@ -89,11 +89,13 @@ export const ColorPickerPure: FC<ColorPickerPure.Props> = ({
             <If condition={withColorPresets}>
                 <div className={styles.presetsWrapper}>
                     <Iterate items={colorPresets}>
-                        {(buttonColor) => (
-                            <ColorButton
-                                color={buttonColor}
-                                onChange={onChange}
-                            />
+                        {(buttonColor, index) => (
+                            <Memo key={index}>
+                                <ColorButton
+                                    color={buttonColor}
+                                    onChange={onChange}
+                                />
+                            </Memo>
                         )}
                     </Iterate>
                 </div>

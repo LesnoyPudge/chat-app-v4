@@ -45,7 +45,7 @@ export default {
     contextSeparator: '_',
     // Key separator used in your translation keys
 
-    createOldCatalogs: false,
+    createOldCatalogs: true,
     // Save the \_old files
 
     defaultNamespace: env._PUBLIC_DEFAULT_LNG_NS,

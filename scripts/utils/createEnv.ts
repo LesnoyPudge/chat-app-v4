@@ -18,6 +18,7 @@ export const createEnv = (
         typePath,
         publicPrefix,
     } = options;
+
     const envData = Object.keys(value).map((key) => {
         return `${key} = ${String(value[key])}`;
     }).join('\n');

@@ -40,7 +40,7 @@ const config: UserConfigFn = ({ mode }) => {
         },
         envPrefix: env._PUBLIC_SAFE_ENV_PREFIX,
         envDir,
-        assetsInclude: ['generated/assets/**/*'],
+        assetsInclude: ['./generated/assets/**/*'],
         plugins: [
             react({
                 babel: {
@@ -55,39 +55,39 @@ const config: UserConfigFn = ({ mode }) => {
             }),
             tsconfigPaths(),
             checker({ typescript: true }),
-            // VitePWA({
-            //     workbox: {
-            //         globPatterns: ['**/*'],
-            //     },
-            //     includeAssets: [
-            //         '**/*',
-            //     ],
-            //     registerType: 'autoUpdate',
-            //     manifest: {
-            //         'short_name': env._PUBLIC_APP_NAME,
-            //         'name': [
-            //             env._PUBLIC_APP_NAME,
-            //             'by',
-            //             env._PUBLIC_AUTHOR_NAME,
-            //         ].join(' '),
-            //         'icons': [
-            //             {
-            //                 'src': '/android-chrome-192x192.png',
-            //                 'sizes': '192x192',
-            //                 'type': 'image/png',
-            //             },
-            //             {
-            //                 'src': '/android-chrome-512x512.png',
-            //                 'sizes': '512x512',
-            //                 'type': 'image/png',
-            //             },
-            //         ],
-            //         'start_url': '.',
-            //         'display': 'standalone',
-            //         'theme_color': '#000000',
-            //         'background_color': '#000000',
-            //     },
-            // }),
+            VitePWA({
+                workbox: {
+                    globPatterns: ['**/*'],
+                },
+                includeAssets: [
+                    '**/*',
+                ],
+                registerType: 'autoUpdate',
+                manifest: {
+                    'short_name': env._PUBLIC_APP_NAME,
+                    'name': [
+                        env._PUBLIC_APP_NAME,
+                        'by',
+                        env._PUBLIC_AUTHOR_NAME,
+                    ].join(' '),
+                    'icons': [
+                        {
+                            'src': '/android-chrome-192x192.png',
+                            'sizes': '192x192',
+                            'type': 'image/png',
+                        },
+                        {
+                            'src': '/android-chrome-512x512.png',
+                            'sizes': '512x512',
+                            'type': 'image/png',
+                        },
+                    ],
+                    'start_url': '.',
+                    'display': 'standalone',
+                    'theme_color': '#000000',
+                    'background_color': '#000000',
+                },
+            }),
         ],
     });
 };

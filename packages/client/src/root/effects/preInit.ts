@@ -38,6 +38,8 @@ export const preInit = async () => {
             alwaysShowLabels: false,
             showToolbar: false,
             trackUnnecessaryRenders: true,
+            renderCountThreshold: 1,
+            smoothlyAnimateOutlines: false,
         });
     }
 };

@@ -1,4 +1,4 @@
-// GENERATED IN E:\Projects\chat-app-v4\packages\client\scripts\assets.ts
+// GENERATED IN assets.ts
 type CommonAssetNames = 'ANIMATED_DISCORD_LOGO_PLACEHOLDER.png'| 
 'BANHUMMER.svg'| 
 'DEFAULT_AVATAR_1.png'| 

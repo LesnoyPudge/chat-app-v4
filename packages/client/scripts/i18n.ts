@@ -10,7 +10,7 @@ type Namespace = Record<string, Keyset>;
 type Locales = Record<string, Namespace>;
 
 const rootPath = process.cwd();
-const generatedDirPath = path.join(rootPath, 'src/generated');
+const generatedDirPath = path.join(rootPath, 'generated');
 const i18nGeneratedPath = path.join(generatedDirPath, 'i18n.ts');
 const localesDirPath = path.join(rootPath, 'public/locales');
 
@@ -57,11 +57,10 @@ const main = async () => {
         `locales not found on path ${localesDirPath}`,
     );
 
-    // fs.rmSync(
-    //     i18nGeneratedPath,
-    //     { force: true },
-    // );
-    // console.log('i18n vars deleted');
+    fs.mkdirSync(
+        generatedDirPath,
+        { recursive: true },
+    );
 
     for (const locale of localeNames) {
         const namespacesFolder = path.join(
