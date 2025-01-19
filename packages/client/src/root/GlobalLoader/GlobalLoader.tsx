@@ -1,8 +1,9 @@
-import { Dialog } from '@components';
-import { useContextProxy } from '@lesnoypudge/utils-react';
+import { Dialog, Overlay } from '@components';
+import { useTrans } from '@i18n';
+import { createContextSelectable, useContextProxy } from '@lesnoypudge/utils-react';
 import { GlobalLoaderScreen } from '@screens/bundled';
 import { getAnimationVariants, logger } from '@utils';
-import { FC, PropsWithChildren, useEffect } from 'react';
+import { FC, PropsWithChildren, useEffect, useLayoutEffect, useTransition } from 'react';
 
 
 const { animationVariants } = getAnimationVariants.custom({
@@ -24,17 +25,21 @@ type LoaderActionProps = (
     }
 );
 
+type GlobalLoaderContext = Overlay.Types.WithControls['controls'];
+
+const GlobalLoaderContext = createContextSelectable<GlobalLoaderContext>();
+
 export const LoaderDisable: FC<LoaderActionProps> = ({
     id,
     children,
 }) => {
-    const { setOverlay } = useContextProxy(Dialog.Context);
+    const { close } = useContextProxy(GlobalLoaderContext);
 
     useEffect(() => {
         id && logger.log(`${Date.now()} disable global loader: ${id}`);
 
-        setOverlay(false);
-    }, [id, setOverlay]);
+        close();
+    }, [id, close]);
 
     return children;
 };
@@ -43,19 +48,20 @@ export const LoaderEnable: FC<LoaderActionProps> = ({
     id,
     children,
 }) => {
-    const { setOverlay } = useContextProxy(Dialog.Context);
+    const { open, close } = useContextProxy(GlobalLoaderContext);
+    const [, startTransition] = useTransition();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         id && logger.log(`${Date.now()} enable global loader ${id}`);
 
-        setOverlay(true);
+        startTransition(open);
 
         return () => {
             id && logger.log(`${Date.now()} toggle off global loader ${id}`);
 
-            setOverlay(false);
+            close();
         };
-    }, [setOverlay, id]);
+    }, [id, open, close]);
 
     return children;
 };
@@ -67,17 +73,25 @@ export namespace GlobalLoaderWrapper {
 export const GlobalLoaderWrapper: FC<GlobalLoaderWrapper.Props> = ({
     children,
 }) => {
+    const { t } = useTrans();
+    const controls = Overlay.useOverlayControls(true);
+
+
     return (
-        <Dialog.Provider
-            label='Loading'
-            focused
-            animationVariants={animationVariants}
-        >
-            <Dialog.Wrapper>
-                <GlobalLoaderScreen/>
-            </Dialog.Wrapper>
+        <GlobalLoaderContext.Provider value={controls}>
+            <Dialog.Provider
+                label={t('COMMON.Loading')}
+                focused
+                animationVariants={animationVariants}
+                outerState={controls.isOpen}
+                onChange={controls.onChange}
+            >
+                <Dialog.Wrapper>
+                    <GlobalLoaderScreen/>
+                </Dialog.Wrapper>
+            </Dialog.Provider>
 
             {children}
-        </Dialog.Provider>
+        </GlobalLoaderContext.Provider>
     );
 };

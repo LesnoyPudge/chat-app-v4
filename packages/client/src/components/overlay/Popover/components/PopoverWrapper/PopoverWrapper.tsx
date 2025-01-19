@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles, getHTMLElement } from '@utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Focus, useContextProxy } from '@lesnoypudge/utils-react';
 import { PopoverContext } from '../../context';
@@ -9,6 +9,8 @@ import { PopoverContext } from '../../context';
 const styles = createStyles({
     lock: 'size-full overflow-hidden',
 });
+
+const visibleElements = [getHTMLElement.H1];
 
 export namespace PopoverWrapper {
     export type Props = RT.PropsWithChildrenAndClassName;
@@ -31,6 +33,7 @@ export const PopoverWrapper: FC<PopoverWrapper.Props> = ({
             autoFocus={focused}
             enabled={focused}
             focusLock
+            shards={visibleElements}
             preventScrollOnFocus
             scrollLock
             onClickOutside={handleClickOutside}

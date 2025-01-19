@@ -9,7 +9,7 @@ import { StrictMode } from '@lesnoypudge/utils-react';
 export const init = () => {
     logger.log('init');
 
-    createRoot(getHTMLElement.appRoot()).render((
+    createRoot(getHTMLElement.appRoot).render((
         <StrictMode isEnabled={false}>
             <Root/>
         </StrictMode>

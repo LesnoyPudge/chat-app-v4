@@ -15,7 +15,7 @@ const styles = createStyles({
     `,
 });
 
-const overlayRoot = getHTMLElement.overlayRoot();
+const { overlayRoot } = getHTMLElement;
 
 const OverlayPortal: FC<PropsWithChildren> = ({ children }) => {
     return createPortal(children, overlayRoot);

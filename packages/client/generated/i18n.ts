@@ -10,6 +10,7 @@ export type NamespacesType = {
         "ApiError.NOT_FOUND": "Не найдено",
         "ApiError.UNAUTHORIZED": "Не авторизован",
         "Avatar.alt": "аватар",
+        "COMMON.Loading": "Загрузка",
         "COMMON.Settings": "Настройки",
         "ConversationContextMenu.hideButton.text": "Скрыть сообщения",
         "ConversationContextMenu.label": "Список действий",
