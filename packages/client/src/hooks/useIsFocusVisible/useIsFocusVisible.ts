@@ -251,9 +251,8 @@ export const useIsFocusVisible = (
         }, 100);
 
         const wrapper = elementRef.current;
-        const shouldSetState = (
-            withStateUpdate
-            && wrapper
+        const shouldUpdateState = (
+            wrapper
             && (
                 (
                     isHtmlElement(e.relatedTarget)
@@ -263,8 +262,10 @@ export const useIsFocusVisible = (
             )
         );
 
-        shouldSetState && setIsFocused(false);
-        isFocusedRef.current = false;
+        if (shouldUpdateState) {
+            withStateUpdate && setIsFocused(false);
+            isFocusedRef.current = false;
+        }
 
         options?.onBlur?.(e);
     });

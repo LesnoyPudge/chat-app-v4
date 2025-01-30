@@ -18,6 +18,9 @@ const configArr = config.createConfig({
         }
     },
     rules: {
+            'tailwindcss/enforces-shorthand': 'off',
+            'tailwindcss/no-unnecessary-arbitrary-value': 'off',
+
         'prefer-const': 'off',
         'unicorn/prefer-top-level-await': 'off',
         '@stylistic/jsx-tag-spacing': ['warn', {
@@ -41,7 +44,7 @@ const configArr = config.createConfig({
         ],
         'jsx-control-statements/jsx-for-require-each': 'off',
         'no-console': 'error',
-        'tailwindcss/enforces-shorthand': 'off',
+        // 'tailwindcss/enforces-shorthand': 'off',
         'import-x/no-named-as-default-member': 'off',
         'jsx-a11y/no-autofocus': 'off',
         '@typescript-eslint/no-invalid-void-type': 'off',
@@ -69,7 +72,7 @@ const configArr = config.createConfig({
         '@typescript-eslint/no-extraneous-class': 'off',
         'jsx-control-statements/jsx-use-if-tag': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
-        'tailwindcss/no-unnecessary-arbitrary-value': 'off',
+        // 'tailwindcss/no-unnecessary-arbitrary-value': 'off',
         '@stylistic/max-len': ['warn', {
             'code': 100,
             'ignoreStrings': true,
