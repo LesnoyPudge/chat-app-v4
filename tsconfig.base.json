@@ -17,7 +17,9 @@
         "module": "ESNext",
         "moduleResolution": "Bundler",
         "baseUrl": ".",
-        "paths": {},
+        "paths": {
+            // "@root": ["src/index.ts"]
+        },
         "types": [],
         "resolveJsonModule": true,
         "noUncheckedSideEffectImports": true,
@@ -52,7 +54,7 @@
     
         */
         /* Completeness */
-        "skipLibCheck": true,
+        "skipLibCheck": false,
         /*
         
         */

@@ -1,8 +1,0 @@
-{
-    "watch": [
-        "./src",
-        "./generated"
-    ],
-    "ext": "*",
-    "exec": "tsc -p tsconfig.node.build.json && builder --configName tsconfig.node.build.json || exit 1"
-}

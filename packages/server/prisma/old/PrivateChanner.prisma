@@ -1,8 +1,0 @@
-model Conversation {
-    id            String    @id @default(uuid())
-    users         User[]
-    hiddenByUsers User[]    @relation("HiddenConversations")
-    messages      Message[]
-    createdAt     DateTime  @default(now())
-    updatedAt     DateTime  @updatedAt
-}

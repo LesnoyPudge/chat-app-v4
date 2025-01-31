@@ -1,25 +1,8 @@
-import ms from 'ms';
+/* eslint-disable @typescript-eslint/no-misused-spread */
 import { createEnv } from './utils/createEnv';
+import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
 
 
-
-class PrivateEnv {
-    _DB_LOGIN = 'postgres';
-    _DB_PASSWORD = 'pass';
-    _DATABASE_URL = ''.concat(
-        'postgresql://',
-        this._DB_LOGIN,
-        ':',
-        this._DB_PASSWORD,
-        '@localhost:5432/chatapp?schema=public',
-    );
-
-    _SMTP_SERVICE = 'Mail.ru';
-    _SMTP_USER = 'qwezxcpochtalyon@mail.ru';
-    _SMTP_PASSWORD = '';
-    _BCRYPT_SALT_ROUNDS = '10';
-    _ACCESS_CODE_DURATION = String(ms('6h'));
-}
 
 class PublicEnv {
     _PUBLIC_SAFE_ENV_PREFIX = '_PUBLIC';
@@ -70,18 +53,16 @@ class PublicEnv {
         'en',
     ]);
 
-    _PUBLIC_JWT_ACCESS_KEYWORD = '';
-    _PUBLIC_JWT_REFRESH_KEYWORD = '';
-    _PUBLIC_REFRESH_TOKEN_DURATION = String(ms('30d'));
-    _PUBLIC_ACCESS_TOKEN_DURATION = String(ms('15m'));
+    _PUBLIC_REFRESH_TOKEN_DURATION = String(hoursToMilliseconds(24) * 30);
+    _PUBLIC_ACCESS_TOKEN_DURATION = String(minutesToMilliseconds(15));
+    _PUBLIC_ACCESS_CODE_DURATION = String(hoursToMilliseconds(6));
+    _PUBLIC_JWT_ACCESS_KEYWORD = 'accessSecret';
+    _PUBLIC_JWT_REFRESH_KEYWORD = 'refreshSecret';
 }
 
 createEnv({
     publicPrefix: new PublicEnv()._PUBLIC_SAFE_ENV_PREFIX,
-    envPath: 'packages/shared/generated',
-    typePath: 'packages/shared/generated',
-    value: {
-        ...new PrivateEnv(),
-        ...new PublicEnv(),
-    },
+    envPath: '../generated',
+    typePath: '../generated',
+    value: { ...new PublicEnv() },
 });

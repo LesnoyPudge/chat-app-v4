@@ -1,10 +1,7 @@
 node_modules
-dist
 build
 package-lock.json
 .env
 env.d.ts
 scripts/env.ts
-server.key
-server.crt
-test
+generated

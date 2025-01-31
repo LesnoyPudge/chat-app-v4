@@ -1,14 +1,18 @@
 {
     "extends": "./tsconfig.base.json",
     "include": [
-        "scripts/**/*",
-        "node_modules/@types"
+        "./scripts/**/*",
+        "vite.config.ts",
+        "node_modules/@types",
+        "tailwind.config.ts",
+        "./twPlugins/**/*",
+        "eslint.config.js",
     ],
     "exclude": [],
     "compilerOptions": {
         "types": [
             "@lesnoypudge/types-global-base",
             "@lesnoypudge/types-global-node",
-        ]
+        ],
     }
 }

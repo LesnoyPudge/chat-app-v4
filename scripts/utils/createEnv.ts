@@ -23,11 +23,13 @@ export const createEnv = (
         return `${key} = ${String(value[key])}`;
     }).join('\n');
 
-    const pathToEnv = path.join(envPath, '/.env');
+    const fullEnvFolderPath = path.resolve(envPath);
+    const pathToEnv = path.join(fullEnvFolderPath, '.env');
 
     catchError(() => fs.rmSync(pathToEnv));
+    catchError(() => fs.rmdirSync(pathToEnv));
 
-    fs.mkdirSync(envPath, { recursive: true });
+    fs.mkdirSync(fullEnvFolderPath, { recursive: true });
     fs.writeFileSync(
         pathToEnv,
         envData,
@@ -41,7 +43,7 @@ export const createEnv = (
     }).join('\n');
 
     const privateEnvType = [
-        'type Env = {',
+        'export type Env = {',
         privateEnvTypeValues,
         nodeEnv,
         '}',
@@ -56,7 +58,7 @@ export const createEnv = (
     }).join('\n');
 
     const publicEnvType = [
-        'type PublicEnv = {',
+        'export type PublicEnv = {',
         publicEnvTypeValues,
         '}',
     ].join('\n');

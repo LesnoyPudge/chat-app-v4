@@ -35,9 +35,7 @@
         "**/.vscode": false,
         "**/build": false,
         "**/public": false,
-        "packages/server": false,
-        "packages/emails": false,
-        "packages/shared": false
+        "**/generated": false
     },
     "explorerExclude.backup": {
         "**/.git": true,
@@ -51,8 +49,6 @@
         "**/.vscode": true,
         "**/build": true,
         "**/public": true,
-        "packages/server": true,
-        "packages/emails": true,
-        "packages/shared": true
+        "**/generated": true
     }
 }
