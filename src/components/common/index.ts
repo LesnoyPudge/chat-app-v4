@@ -1,5 +1,6 @@
 export * from './Avatar';
 export * from './Button';
+export * from './CustomizableList';
 export * from './ErrorThrower';
 export * from './Form';
 export * from './Iterate';
@@ -7,7 +8,7 @@ export * from './Label';
 export * from './MobileMenu';
 export * from './Navigator';
 export * from './Placeholder';
-export * from './PresenseStatus';
+export * from './PresenceStatus';
 export * from './RelativelyPositioned';
 export * from './RichTextEditor';
 export * from './Scrollable';

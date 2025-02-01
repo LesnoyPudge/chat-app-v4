@@ -220,6 +220,22 @@ export const useIsFocusVisible = (
     const outEvent = options?.within ? 'focusout' : 'blur';
     const withStateUpdate = !options?.stateless;
 
+    const getShouldUpdateState = (relatedTarget: EventTarget | null) => {
+        const wrapper = elementRef.current;
+        const shouldUpdateState = (
+            wrapper
+            && (
+                (
+                    isHtmlElement(relatedTarget)
+                    && !wrapper.contains(relatedTarget)
+                )
+                || relatedTarget === null
+            )
+        );
+
+        return shouldUpdateState;
+    };
+
     useEventListener(elementRef, inEvent, (e) => {
         if (!e.target) return;
         if (!isValidFocusTarget(e.target)) return;
@@ -228,8 +244,10 @@ export const useIsFocusVisible = (
             && !focusTriggersKeyboardModality(e.target)
         ) return;
 
-        withStateUpdate && setIsFocused(true);
-        isFocusedRef.current = true;
+        if (getShouldUpdateState(e.relatedTarget)) {
+            withStateUpdate && setIsFocused(true);
+            isFocusedRef.current = true;
+        }
 
         options?.onFocus?.(e);
     });
@@ -250,19 +268,7 @@ export const useIsFocusVisible = (
             hadFocusVisibleRecently = false;
         }, 100);
 
-        const wrapper = elementRef.current;
-        const shouldUpdateState = (
-            wrapper
-            && (
-                (
-                    isHtmlElement(e.relatedTarget)
-                    && !wrapper.contains(e.relatedTarget)
-                )
-                || e.relatedTarget === null
-            )
-        );
-
-        if (shouldUpdateState) {
+        if (getShouldUpdateState(e.relatedTarget)) {
             withStateUpdate && setIsFocused(false);
             isFocusedRef.current = false;
         }

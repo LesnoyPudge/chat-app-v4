@@ -5,16 +5,16 @@ import { PropsWithChildrenAndClassName } from '@lesnoypudge/types-utils-react';
 import { Overlay, Popover } from '@components';
 import { m } from 'motion/react';
 import { cn, createStyles } from '@utils';
+import { pick } from '@lesnoypudge/utils';
 
 
 
 const styles = createStyles({
-    dialog: 'relative size-full',
+    dialog: 'size-full',
     backdrop: `
         absolute 
         inset-0
         -z-10 
-        scale-[999]
         bg-black/70
     `,
     withPointer: 'pointer-events-auto',
@@ -41,10 +41,38 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
         closeOverlay,
     } = ContextSelectable.useProxy(DialogContext);
 
+    const onlyWithOpacity = Object.fromEntries(
+        Object.entries(animationVariants).map(([key, value]) => {
+            if ('name' in value) return [key, value];
+
+            const trimmed = pick(value, 'opacity', 'transition');
+
+            return [key, trimmed];
+        }),
+    ) as typeof animationVariants;
+
     return (
         <Overlay.Presence>
             <Overlay.Wrapper>
-                <Popover.Wrapper>
+                <Popover.Wrapper className='relative'>
+                    <If condition={withBackdrop}>
+                        { }
+                        <m.div
+                            variants={onlyWithOpacity}
+                            initial={animationVariants.initial.key}
+                            animate={animationVariants.animate.key}
+                            exit={animationVariants.exit.key}
+                            className={cn(
+                                styles.backdrop,
+                                getPointerStyle(
+                                    withoutBackdropPointerEvents,
+                                ),
+                            )}
+                            onClick={closeOverlay}
+                        >
+                        </m.div>
+                    </If>
+
                     <m.div
                         className={cn(styles.dialog, className)}
                         role='dialog'
@@ -54,20 +82,6 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
                         animate={animationVariants.animate.key}
                         exit={animationVariants.exit.key}
                     >
-                        <If condition={withBackdrop}>
-                            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
-                            <div
-                                className={cn(
-                                    styles.backdrop,
-                                    getPointerStyle(
-                                        withoutBackdropPointerEvents,
-                                    ),
-                                )}
-                                onClick={closeOverlay}
-                            >
-                            </div>
-                        </If>
-
                         {children}
                     </m.div>
                 </Popover.Wrapper>

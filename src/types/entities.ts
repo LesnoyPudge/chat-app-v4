@@ -73,7 +73,7 @@ export namespace ClientEntities {
                 content: string;
                 isModified: boolean;
                 isDeleted: boolean;
-                attachments: File.Id;
+                attachments: File.Id[];
                 createdAt: number;
                 updatedAt: number;
             }
@@ -138,7 +138,7 @@ export namespace ClientEntities {
 
         export type Base = {
             id: Id;
-            user: User.Id;
+            members: User.Id[];
             textChat: TextChat.Id;
             voiceChat: VoiceChat.Id;
         };

@@ -12,6 +12,7 @@ if (!window._devtools) {
 const logConsoleHint = () => {
     logger.log(`${KEY.F1} to clear console`);
     logger.log(`${KEY.F2} to log activeElement`);
+    logger.log(`${KEY.F3} to open devtools`);
 };
 
 export const rawActions = {

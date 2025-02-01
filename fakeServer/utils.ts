@@ -43,11 +43,11 @@ export const getAppData = (
 
     const users = db.getByIds(
         'user',
-        [
+        [...new Set([
             user.id,
             ...user.friends,
-            ...conversations.flatMap(({ user }) => [user]),
-        ],
+            ...conversations.flatMap(({ members }) => members),
+        ])],
     );
 
     return {

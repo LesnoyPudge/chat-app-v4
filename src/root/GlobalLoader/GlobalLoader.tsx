@@ -49,12 +49,11 @@ export const LoaderEnable: FC<LoaderActionProps> = ({
     children,
 }) => {
     const { open, close } = ContextSelectable.useProxy(GlobalLoaderContext);
-    const [, startTransition] = useTransition();
 
     useLayoutEffect(() => {
         id && logger.log(`${Date.now()} enable global loader ${id}`);
 
-        startTransition(open);
+        open();
 
         return () => {
             id && logger.log(`${Date.now()} toggle off global loader ${id}`);

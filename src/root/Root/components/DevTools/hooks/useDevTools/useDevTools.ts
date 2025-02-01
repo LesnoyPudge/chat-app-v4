@@ -1,5 +1,4 @@
 import { Navigator } from '@components';
-import { useKeyboardNavigation } from '@hooks';
 import { capitalize } from '@lesnoypudge/utils';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { rawActions } from '../../actions';
@@ -74,14 +73,7 @@ export const useDevTools = () => {
         ...navigateToWithPrompt,
     };
 
-    const navigation = useKeyboardNavigation(wrapperRef, {
-        list: Object.keys(actions),
-        direction: 'vertical',
-        loop: true,
-    });
-
     return {
-        ...navigation,
         actions,
         wrapperRef,
     };

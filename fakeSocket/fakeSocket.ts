@@ -1,3 +1,4 @@
+import { FakeDB } from '@fakeServer';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { never } from '@lesnoypudge/utils';
 import { Slices } from '@redux/store';
@@ -136,93 +137,93 @@ class FakeSocket {
         return () => this.unsubscribe(listenerId, entityName, ids);
     }
 
-    broadcast<_Type extends 'add' | 'remove'>(
-        type: _Type,
-        data: (
-            _Type extends 'add'
-                ? socket.AddedData
-                : socket.RemovedData
-        ),
-    ) {
-        let timeoutId: number | undefined;
+    // broadcast<_Type extends 'add' | 'remove'>(
+    //     type: _Type,
+    //     data: (
+    //         _Type extends 'add'
+    //             ? socket.AddedData
+    //             : socket.RemovedData
+    //     ),
+    // ) {
+    //     let timeoutId: number | undefined;
 
-        switch (type) {
-            case 'add': {
-                timeoutId = this.addDataTimeoutId;
-                this.mergeAddBuffer(data as socket.AddedData);
-                break;
-            }
+    //     switch (type) {
+    //         case 'add': {
+    //             timeoutId = this.addDataTimeoutId;
+    //             this.mergeAddBuffer(data as socket.AddedData);
+    //             break;
+    //         }
 
-            case 'remove': {
-                timeoutId = this.removeDataTimeoutId;
-                this.mergeRemoveBuffer(data as socket.RemovedData);
-                break;
-            }
+    //         case 'remove': {
+    //             timeoutId = this.removeDataTimeoutId;
+    //             this.mergeRemoveBuffer(data as socket.RemovedData);
+    //             break;
+    //         }
 
-            default: {
-                never();
-            }
-        }
+    //         default: {
+    //             never();
+    //         }
+    //     }
 
-        timeoutId && clearInterval(timeoutId);
+    //     timeoutId && clearInterval(timeoutId);
 
-        const newTimeoutId = setInterval(() => {
-            if (!this.isConnected) return;
+    //     const newTimeoutId = setInterval(() => {
+    //         if (!this.isConnected) return;
 
-            switch (type) {
-                case 'add': {
-                    this.addDataCallback?.(this.addDataBroadcastBuffer);
-                    this.addDataBroadcastBuffer = this.createEmptyBuffer();
-                    break;
-                }
+    //         switch (type) {
+    //             case 'add': {
+    //                 this.addDataCallback?.(this.addDataBroadcastBuffer);
+    //                 this.addDataBroadcastBuffer = this.createEmptyBuffer();
+    //                 break;
+    //             }
 
-                case 'remove': {
-                    this.removeDataCallback?.(this.removeDataBroadcastBuffer);
-                    this.removeDataBroadcastBuffer = this.createEmptyBuffer();
-                    break;
-                }
+    //             case 'remove': {
+    //                 this.removeDataCallback?.(this.removeDataBroadcastBuffer);
+    //                 this.removeDataBroadcastBuffer = this.createEmptyBuffer();
+    //                 break;
+    //             }
 
-                default: {
-                    never();
-                }
-            }
+    //             default: {
+    //                 never();
+    //             }
+    //         }
 
-            clearInterval(newTimeoutId);
-        }, 300);
+    //         clearInterval(newTimeoutId);
+    //     }, 300);
 
-        switch (type) {
-            case 'add': {
-                this.addDataTimeoutId = newTimeoutId;
-                break;
-            }
+    //     switch (type) {
+    //         case 'add': {
+    //             this.addDataTimeoutId = newTimeoutId;
+    //             break;
+    //         }
 
-            case 'remove': {
-                this.removeDataTimeoutId = newTimeoutId;
-                break;
-            }
+    //         case 'remove': {
+    //             this.removeDataTimeoutId = newTimeoutId;
+    //             break;
+    //         }
 
-            default: {
-                never();
-            }
-        }
+    //         default: {
+    //             never();
+    //         }
+    //     }
 
-        // for (const entityName of Object.keys(data) as socket.Names[]) {
-        //     const entityData = data[entityName];
-        //     if (!entityData) continue;
+    //     // for (const entityName of Object.keys(data) as socket.Names[]) {
+    //     //     const entityData = data[entityName];
+    //     //     if (!entityData) continue;
 
-        //     const entityIdToListenerIds = this.store[entityName];
+    //     //     const entityIdToListenerIds = this.store[entityName];
 
-        //     if (type === 'add') {
-        //         for (const entity of entityData as (
-        //             Required<socket.AddedData>[socket.Names]
-        //         )) {
-        //             if (!entityIdToListenerIds.has(entity.id)) continue;
-        //         }
+    //     //     if (type === 'add') {
+    //     //         for (const entity of entityData as (
+    //     //             Required<socket.AddedData>[socket.Names]
+    //     //         )) {
+    //     //             if (!entityIdToListenerIds.has(entity.id)) continue;
+    //     //         }
 
-        //         continue;
-        //     }
-        // }
-    }
+    //     //         continue;
+    //     //     }
+    //     // }
+    // }
 
     addData(data: socket.AddedData) {
         this.addDataCallback?.(data);
@@ -248,6 +249,19 @@ class FakeSocket {
 
     removeOnRemoveData() {
         this.removeDataCallback = null;
+    }
+
+    addDataFromStorage(storage: FakeDB.Storage) {
+        this.addData(structuredClone({
+            Channels: Object.values(storage.channel),
+            Conversations: Object.values(storage.conversation),
+            Messages: Object.values(storage.message),
+            Roles: Object.values(storage.role),
+            Servers: Object.values(storage.server),
+            TextChats: Object.values(storage.textChat),
+            Users: Object.values(storage.user),
+            VoiceChats: Object.values(storage.voiceChat),
+        }));
     }
 }
 

@@ -31,7 +31,7 @@ export class Dummies {
         data: (
             Pick<
                 ClientEntities.Conversation.Base,
-                'id' | 'textChat' | 'voiceChat' | 'user'
+                'id' | 'textChat' | 'voiceChat' | 'members'
             >
         ),
     ): ClientEntities.Conversation.Base {

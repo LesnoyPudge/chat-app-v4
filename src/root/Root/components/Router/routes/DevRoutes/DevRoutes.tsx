@@ -10,14 +10,14 @@ import { SuspenseWithGlobalLoader } from '../components';
 
 
 
-const Sleep = createSleep(1_000);
+const Sleep = createSleep(1_000, true);
 
 export const DevRoutes = () => {
     return (
         <Route
             path='/dev'
             element={(
-                <SuspenseWithGlobalLoader>
+                <SuspenseWithGlobalLoader loaderId='dev routes loader'>
                     <Sleep>
                         <Outlet/>
                     </Sleep>

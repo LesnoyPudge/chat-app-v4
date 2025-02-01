@@ -1,6 +1,7 @@
 
 /* eslint-disable @typescript-eslint/no-dynamic-delete */
-import { parseJSON } from '@lesnoypudge/utils';
+import { socket } from '@fakeSocket';
+import { merge, parseJSON } from '@lesnoypudge/utils';
 import { ClientEntities } from '@types';
 
 
@@ -17,36 +18,62 @@ type SettableData = (
     | ClientEntities.VoiceChat.Base
 );
 
-type Storage = {
-    channel: Record<string, ClientEntities.Channel.Base>;
-    conversation: Record<string, ClientEntities.Conversation.Base>;
-    file: Record<string, ClientEntities.File.Base>;
-    message: Record<string, ClientEntities.Message.Base>;
-    role: Record<string, ClientEntities.Role.Base>;
-    server: Record<string, ClientEntities.Server.Base>;
-    textChat: Record<string, ClientEntities.TextChat.Base>;
-    user: Record<string, ClientEntities.User.Base>;
-    voiceChat: Record<string, ClientEntities.VoiceChat.Base>;
-};
 
-class FakeDBB {
-    private storage: Storage;
+
+export namespace FakeDB {
+    export type Options = {
+        localStorage?: globalThis.Storage;
+        socket?: typeof socket;
+    };
+
+    export type Storage = {
+        channel: Record<string, ClientEntities.Channel.Base>;
+        conversation: Record<string, ClientEntities.Conversation.Base>;
+        file: Record<string, ClientEntities.File.Base>;
+        message: Record<string, ClientEntities.Message.Base>;
+        role: Record<string, ClientEntities.Role.Base>;
+        server: Record<string, ClientEntities.Server.Base>;
+        textChat: Record<string, ClientEntities.TextChat.Base>;
+        user: Record<string, ClientEntities.User.Base>;
+        voiceChat: Record<string, ClientEntities.VoiceChat.Base>;
+    };
+}
+
+export class FakeDB {
+    private storage: FakeDB.Storage;
     private version: number;
     private dbName: string;
+    private localStorage: globalThis.Storage | undefined;
 
-    constructor() {
+    constructor(options?: FakeDB.Options) {
         this.version = 1;
         this.dbName = `db-${this.version}`;
+        this.localStorage = options?.localStorage;
 
-        const db = localStorage.getItem(this.dbName);
+        const db = this.localStorage?.getItem(this.dbName);
 
         if (db) {
-            const parsedDB = parseJSON(db) as Storage;
+            const parsedDB = parseJSON(db) as FakeDB.Storage;
             this.storage = parsedDB;
             return;
         }
 
-        this.storage = {
+        this.storage = this.createEmptyStorage();
+
+        this.saveStorage();
+    }
+
+    private saveStorage() {
+        this.localStorage?.setItem(this.dbName, JSON.stringify(this.storage));
+    }
+
+    clearStorage() {
+        this.storage = this.createEmptyStorage();
+        this.saveStorage();
+    }
+
+    createEmptyStorage() {
+        return {
             channel: {},
             conversation: {},
             file: {},
@@ -57,17 +84,22 @@ class FakeDBB {
             user: {},
             voiceChat: {},
         };
-
-        this.saveStorage();
     }
 
-    private saveStorage() {
-        localStorage.setItem(this.dbName, JSON.stringify(this.storage));
+    getStorageClone() {
+        return structuredClone(this.storage);
+    }
+
+    set(data: Partial<FakeDB.Storage>) {
+        this.storage = merge(this.storage, data) as FakeDB.Storage;
+        this.saveStorage();
+
+        return this.storage;
     }
 
     create<
-        _Key extends keyof Storage,
-    >(tableKey: _Key, data: Storage[_Key][string]): Storage[_Key][string] {
+        _Key extends keyof FakeDB.Storage,
+    >(tableKey: _Key, data: FakeDB.Storage[_Key][string]): FakeDB.Storage[_Key][string] {
         this.storage[tableKey][data.id] = data;
         this.saveStorage();
 
@@ -75,13 +107,13 @@ class FakeDBB {
     }
 
     update<
-        _Key extends keyof Storage,
+        _Key extends keyof FakeDB.Storage,
     >(
         tableKey: _Key,
         id: string,
-        fn: (item: Storage[_Key][string]) => Storage[_Key][string],
-    ): Storage[_Key][string] | undefined {
-        const item = this.storage[tableKey][id] as Storage[_Key][string] | undefined;
+        fn: (item: FakeDB.Storage[_Key][string]) => FakeDB.Storage[_Key][string],
+    ): FakeDB.Storage[_Key][string] | undefined {
+        const item = this.storage[tableKey][id] as FakeDB.Storage[_Key][string] | undefined;
         if (!item) return undefined;
 
         const updatedItem = {
@@ -95,7 +127,7 @@ class FakeDBB {
         return updatedItem;
     }
 
-    delete(tableKey: keyof Storage, id: string): boolean {
+    delete(tableKey: keyof FakeDB.Storage, id: string): boolean {
         const item = this.storage[tableKey][id];
         if (!item) return false;
 
@@ -106,14 +138,14 @@ class FakeDBB {
     }
 
     getOne<
-        _Key extends keyof Storage,
+        _Key extends keyof FakeDB.Storage,
     >(
         tableKey: _Key,
-        predicate: (items: Storage[_Key][string]) => boolean,
-    ): Storage[_Key][string] | undefined {
+        predicate: (items: FakeDB.Storage[_Key][string]) => boolean,
+    ): FakeDB.Storage[_Key][string] | undefined {
         const items = Object.values(
             this.storage[tableKey],
-        ) as Storage[_Key][string][];
+        ) as FakeDB.Storage[_Key][string][];
 
         const item = items.find((value) => {
             return predicate(value);
@@ -123,14 +155,14 @@ class FakeDBB {
     }
 
     getMany<
-        _Key extends keyof Storage,
+        _Key extends keyof FakeDB.Storage,
     >(
         tableKey: _Key,
-        predicate: (items: Storage[_Key][string]) => boolean,
-    ): Storage[_Key][string][] {
+        predicate: (items: FakeDB.Storage[_Key][string]) => boolean,
+    ): FakeDB.Storage[_Key][string][] {
         const items = Object.values(
             this.storage[tableKey],
-        ) as Storage[_Key][string][];
+        ) as FakeDB.Storage[_Key][string][];
 
         const foundItems = items.filter((value) => {
             return predicate(value);
@@ -140,16 +172,19 @@ class FakeDBB {
     }
 
     getById<
-        _Key extends keyof Storage,
-    >(tableKey: _Key, id: string): Storage[_Key][string] | undefined {
+        _Key extends keyof FakeDB.Storage,
+    >(tableKey: _Key, id: string): FakeDB.Storage[_Key][string] | undefined {
         return this.getOne(tableKey, (item) => item.id === id);
     }
 
     getByIds<
-        _Key extends keyof Storage,
-    >(tableKey: _Key, ids: string[]): Storage[_Key][string][] {
+        _Key extends keyof FakeDB.Storage,
+    >(tableKey: _Key, ids: string[]): FakeDB.Storage[_Key][string][] {
         return this.getMany(tableKey, (item) => ids.includes(item.id));
     }
 }
 
-export const db = new FakeDBB();
+export const db = new FakeDB({
+    localStorage,
+    socket,
+});

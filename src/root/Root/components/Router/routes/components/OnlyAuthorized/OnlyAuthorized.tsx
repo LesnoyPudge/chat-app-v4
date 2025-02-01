@@ -3,15 +3,13 @@ import { useLocalStorage } from '@hooks';
 import { Features } from '@redux/features';
 import { useSliceSelector } from '@redux/hooks';
 import { env } from '@vars';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Outlet } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../SuspenseWithGlobalLoader';
 import { createSleep } from '@utils';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
 
 
-
-const Sleep = createSleep(hoursToMilliseconds(12), true);
 
 export namespace OnlyAuthorized {
     export type Props = {
@@ -40,7 +38,7 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
     }));
     const { navigateTo } = Navigator.useNavigator();
     const { refreshToken } = useLocalStorage('refreshToken');
-    console.log('???', refreshToken);
+
     // consider duration to be 2 min less then actual duration
     const tokenDuration = (
         Number.parseInt(env._PUBLIC_ACCESS_TOKEN_DURATION)
@@ -99,6 +97,8 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
 
         void navigateTo.auth({ replace: true });
     }, [disabled, navigateTo, shouldNavigateToAuth]);
+
+    const Sleep = createSleep(hoursToMilliseconds(12));
 
     return (
         <>

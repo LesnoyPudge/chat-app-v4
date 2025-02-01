@@ -1,8 +1,7 @@
-import { Button, Iterate, Modal, Overlay } from '@components';
+import { Button, CustomizableList, Modal, Overlay } from '@components';
 import { createStyles, createWithDecorator, logger } from '@utils';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { useDevTools } from './hooks';
-import { Focus, useRefManager } from '@lesnoypudge/utils-react';
 import { useHotKey } from '@hooks';
 import { KEY } from '@lesnoypudge/utils';
 import { rawActions } from './actions';
@@ -22,11 +21,6 @@ const styles = createStyles({
 const { withDecorator } = createWithDecorator(({ children }) => {
     const controls = Overlay.useOverlayControls();
 
-    useHotKey(document, [KEY.Shift, KEY.Control, KEY.P], (e) => {
-        e.preventDefault();
-        controls.open();
-    });
-
     useHotKey(
         document,
         [KEY.F1],
@@ -38,6 +32,13 @@ const { withDecorator } = createWithDecorator(({ children }) => {
         document,
         [KEY.F2],
         () => logger.log(document.activeElement),
+        { hotKeyOptions: { prevent: true } },
+    );
+
+    useHotKey(
+        document,
+        [KEY.F3],
+        controls.open,
         { hotKeyOptions: { prevent: true } },
     );
 
@@ -55,47 +56,37 @@ const { withDecorator } = createWithDecorator(({ children }) => {
 export const DevTools: FC = withDecorator(() => {
     const {
         actions,
-        getIsFocused,
-        getTabIndex,
         wrapperRef,
-        setCurrentFocusedId,
     } = useDevTools();
 
-    const Item: FC<{ actionName: keyof typeof actions }> = ({ actionName }) => {
-        const containerRef = useRefManager<HTMLButtonElement>(null);
-        return (
-            <Focus.Inside
-                isEnabled={getIsFocused(actionName)}
-                containerRef={containerRef}
-            >
-                <Button
-                    className={styles.action}
-                    onLeftClick={() => {
-                        actions[actionName]();
-                        setCurrentFocusedId(actionName);
-                    }}
-                    tabIndex={getTabIndex(actionName)}
-                    innerRef={containerRef}
-                >
-                    {actionName}
-                </Button>
-            </Focus.Inside>
-        );
-    };
+    const items = Object.keys<typeof actions>(actions);
 
     return (
         <div
             className={styles.inner}
             ref={wrapperRef}
         >
-            <Iterate items={Object.keys<typeof actions>(actions)}>
-                {(actionName) => (
-                    <Item
-                        actionName={actionName}
-                        key={actionName}
-                    />
+            <CustomizableList
+                wrapperRef={wrapperRef}
+                items={items}
+                getId={(index) => String(items[index])}
+                direction='vertical'
+                loop
+            >
+                {({ item, itemRef, tabIndex, setCurrentFocusedId }) => (
+                    <Button
+                        className={styles.action}
+                        onLeftClick={() => {
+                            actions[item]();
+                            setCurrentFocusedId(item);
+                        }}
+                        tabIndex={tabIndex}
+                        innerRef={itemRef}
+                    >
+                        {item}
+                    </Button>
                 )}
-            </Iterate>
+            </CustomizableList>
         </div>
     );
 });

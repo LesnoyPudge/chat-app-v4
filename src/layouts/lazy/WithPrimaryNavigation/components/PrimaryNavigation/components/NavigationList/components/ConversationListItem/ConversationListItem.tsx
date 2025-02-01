@@ -40,14 +40,21 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
         Features.Conversations.Slice.selectors.selectById(conversationId),
     );
 
+    const myId = useSliceSelector(
+        Features.App.Slice,
+        Features.App.Slice.selectors.selectUserId(),
+    );
+
     const userTarget = useSliceSelector(
         Features.Users.Slice,
         (state) => {
             if (!conversation) return;
+            if (!myId) return;
 
-            return Features.Users.Slice.selectors.selectById(
-                conversation.user,
-            )(state);
+            const targetId = conversation.members.find((id) => id !== myId);
+            if (!targetId) return;
+
+            return Features.Users.Slice.selectors.selectById(targetId)(state);
         },
     );
 

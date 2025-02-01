@@ -18,7 +18,9 @@ export const SuspenseWithGlobalLoader: FC<SuspenseWithGlobalLoader.Props> = ({
 }) => {
     return (
         <Suspense fallback={<GlobalLoader.Enable id={loaderId}/>}>
-            {children}
+            <GlobalLoader.Disable id={loaderId}>
+                {children}
+            </GlobalLoader.Disable>
         </Suspense>
     );
 };
