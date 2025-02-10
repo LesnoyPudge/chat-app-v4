@@ -1,30 +1,22 @@
-import { FC, lazy } from 'react';
+import { FC } from 'react';
 import { Route } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../../components';
-import { Navigator } from '@components';
-import { lazyLoad } from '@utils';
+import { Navigator } from '@features';
+import { Layouts } from '@layouts/lazy';
 
 
-
-const WithPrimaryNavigation = lazyLoad.basePreloadedComponent(() => {
-    return import('@layouts/lazy/WithPrimaryNavigation');
-});
-
-const WithSecondaryNavigationWrapper = lazyLoad.basePreloadedComponent(() => {
-    return import('@layouts/lazy/WithSecondaryNavigationWrapper');
-});
 
 export const AppRoutes: FC = () => {
     return (
         <Route element={(
             <SuspenseWithGlobalLoader>
-                <WithPrimaryNavigation/>
+                <Layouts.WithPrimaryNavigation/>
             </SuspenseWithGlobalLoader>
         )}>
             <Route element={(
-                <WithSecondaryNavigationWrapper>
+                <Layouts.WithSecondaryNavigation>
                     <>with Conversations</>
-                </WithSecondaryNavigationWrapper>
+                </Layouts.WithSecondaryNavigation>
             )}>
                 <Route
                     index
@@ -56,9 +48,9 @@ export const AppRoutes: FC = () => {
             <Route
                 path={Navigator.staticNavigatorPath.server}
                 element={(
-                    <WithSecondaryNavigationWrapper>
+                    <Layouts.WithSecondaryNavigation>
                         <>with channel list</>
-                    </WithSecondaryNavigationWrapper>
+                    </Layouts.WithSecondaryNavigation>
                 )}
             >
                 <Route

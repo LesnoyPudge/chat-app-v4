@@ -81,7 +81,10 @@ export const { setupEffects } = createEffects({
                         payload.userData.refreshToken,
                     );
 
-                    scenarios.populate(payload.userData.id);
+                    if (localStorageApi.get('shouldPopulate')) {
+                        localStorageApi.set('shouldPopulate', false);
+                        scenarios.populate(payload.userData.id);
+                    }
 
                     socket.connect();
 

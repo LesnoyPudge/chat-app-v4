@@ -1,4 +1,4 @@
-import { STATUS_CODE } from '@lesnoypudge/utils';
+import { HTTP_STATUS_CODES } from '@lesnoypudge/utils';
 import { Features } from '@redux/features';
 import {
     BaseQueryFn,
@@ -52,7 +52,7 @@ const withRetry = (baseQuery: CustomQueryFn): CustomQueryFn => {
             result.error
             && 'status' in result.error
             && typeof result.error.status === 'number'
-            && result.error.status !== STATUS_CODE.INTERNAL_SERVER_ERROR
+            && result.error.status !== HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
         );
 
         if (shouldFail) retry.fail(result.error);
@@ -67,7 +67,7 @@ const withReAuthorization = (baseQuery: CustomQueryFn): CustomQueryFn => {
 
         if (!result.error) return result;
 
-        if (result.error.status !== STATUS_CODE.UNAUTHORIZED) {
+        if (result.error.status !== HTTP_STATUS_CODES.UNAUTHORIZED) {
             return result;
         }
 

@@ -1,12 +1,12 @@
-import { Button, Form, Label, Modal, Navigator } from '@components';
+import { Button, Form, Label, Modal } from '@components';
 import { ApiValidators, Endpoints } from '@fakeShared';
 import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 import { CreateServerTabContext } from '../../CreateServerModal';
 import { Features } from '@redux/features';
-import { env } from '@vars';
 import { createStyles } from '@utils';
 import { useTrans } from '@i18n';
+import { Navigator } from '@features';
 
 
 

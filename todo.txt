@@ -7,3 +7,6 @@ https://mswjs.io/docs/getting-started
 --client--
 -? сделать attachments layout через grid-template-areas
 - добавить dataset к элементу(html? body?) для работы css (theme, message-font-size, ...)
+- заменить большое кол-во Iterate на CustomizableList
+- appData фэтчит только поверхностные данные, нужно 
+добавить фэтчи для каждого энтити

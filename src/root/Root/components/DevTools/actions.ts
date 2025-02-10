@@ -15,6 +15,8 @@ const logConsoleHint = () => {
     logger.log(`${KEY.F3} to open devtools`);
 };
 
+logConsoleHint();
+
 export const rawActions = {
     toggleElementsOutline: () => {
         const currentValue = (
@@ -91,6 +93,10 @@ export const rawActions = {
     clearLocalStorage: () => {
         localStorageApi.clear();
     },
-} satisfies Record<string, VoidFunction>;
 
-logConsoleHint();
+    populateDatabase: () => {
+        localStorageApi.set('shouldPopulate', true);
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
+    },
+} satisfies Record<string, VoidFunction>;

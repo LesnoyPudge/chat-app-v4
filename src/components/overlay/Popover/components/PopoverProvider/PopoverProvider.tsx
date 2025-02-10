@@ -6,7 +6,7 @@ import {
 import { PopoverContext } from '../../context';
 import { FC, PropsWithChildren, useEffect } from 'react';
 import { Overlay } from '@components';
-import { getId } from '@lesnoypudge/utils';
+import { createId } from '@lesnoypudge/utils';
 
 
 
@@ -33,7 +33,7 @@ export const PopoverProvider: FC<PopoverProvider.Props> = ({
     closeOnEscape = false,
     children,
 }) => {
-    const id = useConst(() => getId());
+    const id = useConst(() => createId());
     const blockingChildren = useConst(() => new Set<string>());
     const overlay = ContextSelectable.useSelector(Overlay.Context);
 

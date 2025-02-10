@@ -6,7 +6,6 @@ export * from './Form';
 export * from './Iterate';
 export * from './Label';
 export * from './MobileMenu';
-export * from './Navigator';
 export * from './Placeholder';
 export * from './PresenceStatus';
 export * from './RelativelyPositioned';

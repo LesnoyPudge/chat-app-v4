@@ -1,10 +1,11 @@
-import { Button, Sprite, Tooltip, Navigator } from '@components';
+import { Button, Sprite, Tooltip } from '@components';
 import { useTrans } from '@i18n';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { cn } from '@utils';
 import { FC } from 'react';
 import { WrapperWithBullet } from '../WrapperWithBullet';
 import { sharedStyles } from '../../sharedStyles';
+import { Navigator } from '@features';
 
 
 

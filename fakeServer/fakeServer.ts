@@ -11,7 +11,7 @@ import {
 import { setupWorker } from 'msw/browser';
 import { db } from './FakeDB';
 import { Dummies } from './Dummies';
-import { STATUS_CODE } from '@lesnoypudge/utils';
+import { HTTP_STATUS_CODES } from '@lesnoypudge/utils';
 import { env } from '@vars';
 import { token } from './token';
 import { v4 as uuid } from 'uuid';
@@ -70,10 +70,10 @@ export const withAuth = <
 
 const apiError = {
     badRequest: () => new res(null, {
-        status: STATUS_CODE.BAD_REQUEST,
+        status: HTTP_STATUS_CODES.BAD_REQUEST,
     }) as never,
     unauthorized: () => new res(null, {
-        status: STATUS_CODE.UNAUTHORIZED,
+        status: HTTP_STATUS_CODES.UNAUTHORIZED,
     }) as never,
 };
 
@@ -151,6 +151,8 @@ class FakeServer {
                     accessToken,
                     refreshToken,
                 }));
+
+                user.status = 'online';
 
                 return res.json({
                     userData: user,

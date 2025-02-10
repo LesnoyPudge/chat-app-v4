@@ -1,6 +1,6 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { ENTITY_NAME } from './entity';
-import { HTTP_METHOD } from '@lesnoypudge/utils';
+import { HTTP_METHODS } from '@lesnoypudge/utils';
 import { ClientEntities as Entities } from '@types';
 
 
@@ -69,7 +69,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = Pick<
 //                     Entities.User.Base,
@@ -89,7 +89,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = Pick<
 //                     Entities.User.Base,
@@ -109,7 +109,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = void;
 
@@ -126,7 +126,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.GET;
+//                 export const Method = HTTP_METHODS.GET;
 
 //                 export type RequestBody = void;
 
@@ -143,7 +143,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.GET;
+//                 export const Method = HTTP_METHODS.GET;
 
 //                 export type RequestBody = WithTargetId;
 
@@ -160,7 +160,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<
 //                     Partial<T.Override<
@@ -186,7 +186,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<
 //                     Pick<
@@ -213,7 +213,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = void;
 
@@ -230,7 +230,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithTargetId;
 
@@ -247,7 +247,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithTargetId;
 
@@ -264,7 +264,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = void;
 
@@ -281,7 +281,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Override<
 //                     Pick<Entities.User.Base, 'accessCode'>,
@@ -302,7 +302,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithTargetId;
 
@@ -319,7 +319,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithTargetId;
 
@@ -336,7 +336,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithTargetId;
 
@@ -353,7 +353,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithTargetId;
 
@@ -370,7 +370,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithTargetId;
 
@@ -387,7 +387,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithConversationId;
 
@@ -406,7 +406,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<
 //                     Pick<Entities.Server.Base, 'name' | 'identifier'>
@@ -433,7 +433,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.GET;
+//                 export const Method = HTTP_METHODS.GET;
 
 //                 export type RequestBody = WithServerId;
 
@@ -450,7 +450,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.GET;
+//                 export const Method = HTTP_METHODS.GET;
 
 //                 export type RequestBody = {
 //                     invitationCode: string;
@@ -469,7 +469,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<
 //                     WithServerId
@@ -497,7 +497,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithServerId;
 
@@ -514,7 +514,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithServerId;
 
@@ -531,7 +531,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithServerId & WithTargetId;
 
@@ -548,7 +548,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<
 //                     WithServerId
@@ -568,7 +568,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithTargetId & WithServerId;
 
@@ -585,7 +585,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<WithServerId & Pick<
 //                     Entities.Server.Base['invitations'][number],
@@ -605,7 +605,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<Pick<
 //                     Entities.Server.Base['invitations'][number],
@@ -625,7 +625,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<WithServerId & Pick<
 //                     Entities.Server.Base['invitations'][number],
@@ -647,7 +647,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<
 //                     WithServerId
@@ -673,7 +673,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.GET;
+//                 export const Method = HTTP_METHODS.GET;
 
 //                 export type RequestBody = WithServerId & WithChannelId;
 
@@ -690,7 +690,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<
 //                     WithServerId
@@ -714,7 +714,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithServerId & WithChannelId;
 
@@ -733,7 +733,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithServerId & Pick<
 //                     Entities.Role.Base,
@@ -753,7 +753,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.GET;
+//                 export const Method = HTTP_METHODS.GET;
 
 //                 export type RequestBody = WithServerId & WithRoleId;
 
@@ -770,7 +770,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<
 //                     WithServerId
@@ -799,7 +799,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithServerId & WithRoleId;
 
@@ -816,7 +816,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = (
 //                     WithServerId
@@ -837,7 +837,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = (
 //                     WithServerId
@@ -860,7 +860,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithTargetId;
 
@@ -877,7 +877,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.GET;
+//                 export const Method = HTTP_METHODS.GET;
 
 //                 export type RequestBody = WithConversationId;
 
@@ -896,7 +896,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<
 //                     WithTextChatId
@@ -920,7 +920,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.GET;
+//                 export const Method = HTTP_METHODS.GET;
 
 //                 export type RequestBody = WithMessageId;
 
@@ -937,7 +937,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = T.Simplify<WithMessageId & Pick<
 //                     Entities.Message.Base,
@@ -957,7 +957,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithMessageId;
 
@@ -974,7 +974,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithMessageId;
 
@@ -991,7 +991,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithMessageId & WithFileId;
 
@@ -1010,7 +1010,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.GET;
+//                 export const Method = HTTP_METHODS.GET;
 
 //                 export type RequestBody = WithFileId;
 
@@ -1027,7 +1027,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.GET;
+//                 export const Method = HTTP_METHODS.GET;
 
 //                 export type RequestBody = WithFileId;
 
@@ -1046,7 +1046,7 @@ const toAction = <
 //                     ActionName,
 //                 );
 
-//                 export const Method = HTTP_METHOD.POST;
+//                 export const Method = HTTP_METHODS.POST;
 
 //                 export type RequestBody = WithTextChatId;
 

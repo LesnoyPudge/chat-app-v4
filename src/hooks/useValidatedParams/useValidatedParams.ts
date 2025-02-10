@@ -1,4 +1,4 @@
-import { Navigator } from '@components';
+import { Navigator } from '@features';
 import { sharedValidators } from '@fakeShared';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { invariant } from '@lesnoypudge/utils';

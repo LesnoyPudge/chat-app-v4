@@ -1,4 +1,4 @@
-import { Navigator, ErrorThrower } from '@components';
+import { ErrorThrower } from '@components';
 import { useLocalStorage } from '@hooks';
 import { Features } from '@redux/features';
 import { useSliceSelector } from '@redux/hooks';
@@ -8,18 +8,11 @@ import { Outlet } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../SuspenseWithGlobalLoader';
 import { createSleep } from '@utils';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
+import { Navigator } from '@features';
 
 
 
-export namespace OnlyAuthorized {
-    export type Props = {
-        disabled?: boolean;
-    };
-}
-
-export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
-    disabled = false,
-}) => {
+export const OnlyAuthorized: FC = () => {
     const {
         isAttemptedToRefresh,
         lastSuccessfulRefreshTimestamp,
@@ -58,8 +51,7 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
 
     const haveRefreshToken = !!refreshToken.value;
     const skipRefresh = (
-        disabled
-        || isRefreshing
+        isRefreshing
         || !isItTimeToRefresh
         || !haveRefreshToken
     );
@@ -92,17 +84,16 @@ export const OnlyAuthorized: FC<OnlyAuthorized.Props> = ({
     const showLoader = !shouldShowOutlet && !shouldNavigateToAuth;
 
     useEffect(() => {
-        if (disabled) return;
         if (!shouldNavigateToAuth) return;
 
         void navigateTo.auth({ replace: true });
-    }, [disabled, navigateTo, shouldNavigateToAuth]);
+    }, [navigateTo, shouldNavigateToAuth]);
 
-    const Sleep = createSleep(hoursToMilliseconds(12));
+    const Sleep = useMemo(() => createSleep(hoursToMilliseconds(12)), []);
 
     return (
         <>
-            <If condition={shouldShowOutlet || disabled}>
+            <If condition={shouldShowOutlet}>
                 <Outlet/>
             </If>
 

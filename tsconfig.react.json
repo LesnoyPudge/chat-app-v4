@@ -75,11 +75,14 @@
             "@redux/actions": [
                 "./src/redux/actions"
             ],
-            "@layouts/*": [
-                "./src/layouts/*"
+            "@layouts/lazy": [
+                "./src/layouts/lazy"
             ],
-            "@panels/*": [
-                "./src/panels/*"
+            "@layouts/bundled": [
+                "./src/layouts/bundled"
+            ],
+            "@panels": [
+                "./src/panels"
             ],
             "@modals": [
                 "./src/modals"
@@ -99,6 +102,9 @@
             "_@lesnoypudge/utils-web": [
                 "../@lesnoypudge/utils-web/build"
             ],
+            "@features": [
+                "./src/features"
+            ]
         },
         "jsx": "react-jsx",
         "lib": [

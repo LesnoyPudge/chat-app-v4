@@ -1,5 +1,5 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { HTTP_METHOD } from '@lesnoypudge/utils';
+import { HTTP_METHODS } from '@lesnoypudge/utils';
 import { ClientEntities as Entities } from '@types';
 import { ENTITY_NAME } from './entity';
 
@@ -125,7 +125,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = Pick<
                 Entities.User.Base,
@@ -140,7 +140,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = Pick<
                 Entities.User.Base,
@@ -155,7 +155,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = Pick<
                 Entities.User.Base,
@@ -170,7 +170,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = (
                 Pick<
@@ -190,7 +190,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithId.Server;
 
@@ -202,7 +202,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithId.Server;
 
@@ -214,7 +214,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithId.Server;
 
@@ -226,7 +226,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithId.Conversation;
 
@@ -238,7 +238,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithId.Conversation;
 
@@ -250,7 +250,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithId.Conversation;
 
@@ -262,7 +262,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithId.Conversation;
 
@@ -274,7 +274,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithIds.User;
 
@@ -286,7 +286,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = T.Simplify<
                 Partial<T.Override<
@@ -311,7 +311,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = {
                 invitationCode: string;
@@ -325,7 +325,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = {
                 invitationCode: string;
@@ -339,7 +339,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = T.Simplify<
                 Pick<Entities.Server.Base, 'name' | 'identifier'>
@@ -361,7 +361,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithId.Server;
 
@@ -373,7 +373,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithIds.Server;
 
@@ -389,7 +389,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithIds.Server;
 
@@ -405,7 +405,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithIds.Server;
 
@@ -421,7 +421,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithIds.Server;
 
@@ -437,7 +437,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithIds.Server;
 
@@ -457,7 +457,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.POST;
+            export const Method = HTTP_METHODS.POST;
 
             export type RequestBody = WithIds.Server;
 
@@ -473,7 +473,7 @@ namespace EndpointsV1 {
 
             export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHOD.GET;
+            export const Method = HTTP_METHODS.GET;
 
             export type RequestBody = void;
 

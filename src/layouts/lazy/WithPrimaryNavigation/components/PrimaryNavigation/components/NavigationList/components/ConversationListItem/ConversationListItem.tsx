@@ -1,4 +1,4 @@
-import { Avatar, Button, ContextMenu, Tooltip, Navigator } from '@components';
+import { Avatar, Button, ContextMenu, Tooltip } from '@components';
 import { useKeyboardNavigation } from '@hooks';
 import { Focus, useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { cn } from '@utils';
@@ -8,6 +8,7 @@ import { Features } from '@redux/features';
 import { useSliceSelector, useStoreSelector } from '@redux/hooks';
 import { sharedStyles } from '../../../../sharedStyles';
 import { ConversationContextMenu } from '@contextMenus';
+import { Navigator } from '@features';
 
 
 

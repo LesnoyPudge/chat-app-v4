@@ -1,6 +1,6 @@
 import { t } from '@i18n';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { merge, STATUS_CODE } from '@lesnoypudge/utils';
+import { merge, HTTP_STATUS_CODES } from '@lesnoypudge/utils';
 import { CustomQueryFn } from '@redux/utils';
 import { TypedMutationTrigger } from '@reduxjs/toolkit/query/react';
 import { FormApi } from '@tanstack/react-form';
@@ -16,7 +16,7 @@ type OnSubmitProps<
     formApi: FormApi<Parameters<_ApiTrigger>[0], any>;
 };
 
-type StatusCode = T.Except<typeof STATUS_CODE, 'OK'>;
+type StatusCode = T.Except<typeof HTTP_STATUS_CODES, 'OK'>;
 
 type ErrorCodes = T.RequiredKeysOf<StatusCode>;
 
@@ -36,11 +36,11 @@ const defaultErrorTable = {
 } satisfies ErrorTable;
 
 const codeToName = {
-    [STATUS_CODE.BAD_REQUEST]: 'BAD_REQUEST',
-    [STATUS_CODE.FORBIDDEN]: 'FORBIDDEN',
-    [STATUS_CODE.INTERNAL_SERVER_ERROR]: 'INTERNAL_SERVER_ERROR',
-    [STATUS_CODE.NOT_FOUND]: 'NOT_FOUND',
-    [STATUS_CODE.UNAUTHORIZED]: 'UNAUTHORIZED',
+    [HTTP_STATUS_CODES.BAD_REQUEST]: 'BAD_REQUEST',
+    [HTTP_STATUS_CODES.FORBIDDEN]: 'FORBIDDEN',
+    [HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR]: 'INTERNAL_SERVER_ERROR',
+    [HTTP_STATUS_CODES.NOT_FOUND]: 'NOT_FOUND',
+    [HTTP_STATUS_CODES.UNAUTHORIZED]: 'UNAUTHORIZED',
 } satisfies Record<
     T.ValueOf<StatusCode>,
     ErrorCodes

@@ -2,7 +2,7 @@ import { socket } from '@fakeSocket';
 import { db } from './FakeDB';
 import { Dummies } from './Dummies';
 import { faker } from '@faker-js/faker';
-import { chance, inRange, invariant } from '@lesnoypudge/utils';
+import { chance, coinFlip, inRange, invariant } from '@lesnoypudge/utils';
 import { v4 as uuid } from 'uuid';
 import { ClientEntities } from '@types';
 import { RichTextEditor } from '@components';
@@ -23,14 +23,20 @@ const combineToTable = <_Item extends { id: string }>(items: _Item[]) => {
     }, {});
 };
 
-const createUser = () => Dummies.user({
-    id: uuid(),
-    accessToken: '',
-    login: faker.string.sample(),
-    password: faker.string.sample(),
-    refreshToken: '',
-    name: faker.person.firstName(),
-});
+const createUser = () => {
+    const user = Dummies.user({
+        id: uuid(),
+        accessToken: '',
+        login: faker.string.sample(),
+        password: faker.string.sample(),
+        refreshToken: '',
+        name: faker.person.firstName(),
+    });
+
+    user.status = coinFlip() ? 'online' : 'offline';
+
+    return user;
+};
 
 const createMessage = (props: Pick<
     ClientEntities.Message.Base,
@@ -276,6 +282,7 @@ class Scenarios {
             this._populate(myId);
             logger.log('Database populated');
         } catch {
+            logger.log('Database population failed');
             db.clearStorage();
         }
     }
@@ -283,6 +290,8 @@ class Scenarios {
     _populate(myId: string) {
         const me = db.getById('user', myId);
         invariant(me);
+
+        db.clearStorage();
 
         const friends = createArray(10).map(() => {
             const user = createUser();
@@ -295,7 +304,11 @@ class Scenarios {
         me.friends = extractIds(friends);
 
         const popServers = createArray(10).map(() => {
-            return createServer(me.id);
+            const server = createServer(me.id);
+
+            me.servers.push(server.server.id);
+
+            return server;
         });
 
         const members = popServers.flatMap((item) => item.members);

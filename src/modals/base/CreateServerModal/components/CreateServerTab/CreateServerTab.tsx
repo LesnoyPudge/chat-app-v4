@@ -1,4 +1,4 @@
-import { Button, Form, Image, Label, Sprite, Modal, Navigator } from '@components';
+import { Button, Form, Image, Label, Sprite, Modal } from '@components';
 import { ApiValidators, Endpoints } from '@fakeShared';
 import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
@@ -6,6 +6,7 @@ import { CreateServerTabContext } from '../../CreateServerModal';
 import { Features } from '@redux/features';
 import { useTrans } from '@i18n';
 import { createStyles } from '@utils';
+import { Navigator } from '@features';
 
 
 

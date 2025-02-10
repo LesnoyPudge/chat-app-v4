@@ -8,6 +8,7 @@ export namespace localStorageApi {
         isMute: boolean;
         refreshToken: string;
         accessToken: string;
+        shouldPopulate: boolean;
         // lastVisitedChannels: Record<ChannelId, RoomId>;
         // savedMessageDrafts: Record<ChatId, RTETypes.Nodes>;
     };

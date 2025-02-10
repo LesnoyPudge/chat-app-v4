@@ -1,5 +1,6 @@
-import { Navigator } from '@components';
+import { Navigator } from '@features';
 import { useLocalStorage } from '@hooks';
+import { invariant } from '@lesnoypudge/utils';
 import { Features } from '@redux/features';
 import { useSliceSelector } from '@redux/hooks';
 import { FC, useEffect } from 'react';
@@ -7,15 +8,7 @@ import { Outlet } from 'react-router';
 
 
 
-export namespace OnlyUnAuthorized {
-    export type Props = {
-        disabled?: boolean;
-    };
-}
-
-export const OnlyUnAuthorized: FC<OnlyUnAuthorized.Props> = ({
-    disabled = false,
-}) => {
+export const OnlyUnAuthorized: FC = () => {
     const {
         isAuthorized,
     } = useSliceSelector(Features.App.Slice, ({
@@ -26,12 +19,10 @@ export const OnlyUnAuthorized: FC<OnlyUnAuthorized.Props> = ({
     const { navigateTo } = Navigator.useNavigator();
     const { refreshToken } = useLocalStorage('refreshToken');
 
-    const shouldShowOutlet = (
-        disabled
-        || (!refreshToken.value && !isAuthorized)
-    );
+    const shouldShowOutlet = !isAuthorized;
+    const shouldNavigateToRoot = refreshToken.value && isAuthorized;
 
-    const shouldNavigateToRoot = !shouldShowOutlet;
+    invariant(shouldNavigateToRoot !== shouldShowOutlet);
 
     useEffect(() => {
         if (!shouldNavigateToRoot) return;

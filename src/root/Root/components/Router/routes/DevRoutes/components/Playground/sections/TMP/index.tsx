@@ -45,25 +45,6 @@ export const TMP: FC = () => {
     //     setState(db.getStorageClone());
     // }, 3_000);
 
-    useEffect(() => {
-        console.log('!!!');
-        localStorage.clear();
-        const orig = Object.getPrototypeOf(localStorage).setItem.bind(
-            localStorage,
-        );
-        Object.getPrototypeOf(localStorage).setItem = (...args: any[]) => {
-            console.log('hehe');
-            // orig.call(localStorage, ...args);
-            orig(...args);
-        };
-
-        localStorage.setItem('?', '1');
-        // orig.call(localStorage, '?', '1');
-
-        console.log(localStorage.getItem('?'));
-
-        console.log(localStorage);
-    }, []);
 
     return (
         <div className='h-screen w-screen'>

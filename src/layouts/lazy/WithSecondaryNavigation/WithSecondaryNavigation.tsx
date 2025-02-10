@@ -36,7 +36,7 @@ const styles = createStyles({
     },
 });
 
-export const WithSecondaryNavigationWrapper: FC<PropsWithChildren> = ({
+export const WithSecondaryNavigation: FC<PropsWithChildren> = ({
     children,
 }) => {
     const {

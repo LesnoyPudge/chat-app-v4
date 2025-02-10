@@ -1,10 +1,19 @@
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import './Scrollable.scss';
 import { cn, createStyles } from '@utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { PropsWithInnerRef } from '@types';
+import { isDev } from '@vars';
+import { mergeRefs } from '@lesnoypudge/utils-react';
+import { noop } from '@lesnoypudge/utils';
 
 
+
+const useScrollableDebug = (
+    isDev
+        ? await import('./debug/useScrollableDebug').then((v) => v.default)
+        : noop
+);
 
 const baseClassName = 'Scrollable';
 
@@ -50,6 +59,8 @@ export const Scrollable: FC<Scrollable.Props> = ({
     withoutGutter = false,
     children,
 }) => {
+    const debugRef = useRef<HTMLDivElement>(null);
+
     const notHorizontal = direction !== 'horizontal';
     const withGutter = !withoutGutter;
 
@@ -64,6 +75,8 @@ export const Scrollable: FC<Scrollable.Props> = ({
         'data-with-gutter': withGutter && notHorizontal,
     };
 
+    useScrollableDebug(debugRef);
+
     return (
         <div
             className={cn(
@@ -75,7 +88,10 @@ export const Scrollable: FC<Scrollable.Props> = ({
             aria-label={label}
             // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
-            ref={innerRef}
+            ref={mergeRefs(
+                debugRef,
+                innerRef,
+            )}
             {...data}
         >
             {children}

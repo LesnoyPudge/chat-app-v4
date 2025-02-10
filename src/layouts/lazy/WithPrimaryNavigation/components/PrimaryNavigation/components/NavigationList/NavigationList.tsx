@@ -11,7 +11,7 @@ import { useTrans } from '@i18n';
 
 
 const styles = createStyles({
-    wrapper: 'flex flex-col',
+    wrapper: 'overflow-hidden',
     scrollable: 'py-2',
     list: 'flex flex-col gap-2',
 });

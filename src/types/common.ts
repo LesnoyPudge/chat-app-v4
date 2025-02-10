@@ -1,5 +1,5 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { STATUS_CODE } from '@lesnoypudge/utils';
+import { HTTP_STATUS_CODES } from '@lesnoypudge/utils';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { ElementRef, RefObject } from 'react';
 
@@ -22,7 +22,7 @@ export type WithId = {
 export type CustomQueryError = T.Simplify<
     Exclude<FetchBaseQueryError, { status: number; data: unknown }>
     | {
-        status: T.ValueOf<T.Except<typeof STATUS_CODE, 'OK'>>;
+        status: T.ValueOf<T.Except<typeof HTTP_STATUS_CODES, 'OK'>>;
         data: {
             message: string;
         };
