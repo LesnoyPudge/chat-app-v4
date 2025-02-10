@@ -10,7 +10,7 @@ export const init = () => {
     logger.log('init');
 
     createRoot(getHTMLElement.appRoot).render((
-        <ControllableStrictMode isEnabled={false}>
+        <ControllableStrictMode isEnabled={true}>
             <Root/>
         </ControllableStrictMode>
     ));

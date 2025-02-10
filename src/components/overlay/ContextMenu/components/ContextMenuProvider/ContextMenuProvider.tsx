@@ -1,6 +1,5 @@
 import { Overlay, Popover } from '@components';
-import { ContextSelectable, withDisplayName } from '@lesnoypudge/utils-react';
-import { createWithDecorator } from '@utils';
+import { ContextSelectable, createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
 import { ContextMenuContext } from '../../context';
 import { PropsWithChildren } from 'react';
 

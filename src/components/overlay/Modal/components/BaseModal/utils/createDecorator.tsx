@@ -1,7 +1,7 @@
-import { createWithDecorator } from '@utils';
 import { BaseModalProvider, BaseModalWrapper } from '../components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { withDisplayName } from '@lesnoypudge/utils-react';
+import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
+
 
 
 type BaseProps = T.Except<

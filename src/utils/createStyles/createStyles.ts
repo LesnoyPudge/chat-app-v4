@@ -1,6 +1,5 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { invariant } from '@lesnoypudge/utils';
-import { ToOneLine, toOneLine } from '@utils';
+import { invariant, toOneLine } from '@lesnoypudge/utils';
 
 
 
@@ -30,7 +29,7 @@ const processValue = (
 type Processed<_Styles extends T.UnknownRecord> = {
     [_Key in keyof _Styles]: (
         _Styles[_Key] extends infer _Value extends string
-            ? ToOneLine<_Value>
+            ? toOneLine.Return<_Value>
             : _Styles[_Key] extends infer _Value extends T.UnknownRecord
                 ? T.Simplify<Processed<_Value>>
                 : never

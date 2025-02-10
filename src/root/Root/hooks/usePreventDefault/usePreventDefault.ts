@@ -1,6 +1,5 @@
-import { useHotKey } from '@hooks';
 import { KEY } from '@lesnoypudge/utils';
-import { useEventListener } from '@lesnoypudge/utils-react';
+import { useEventListener, useHotKey } from '@lesnoypudge/utils-react';
 
 
 

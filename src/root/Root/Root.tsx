@@ -2,12 +2,12 @@ import {
     ErrorBoundary,
     withDisplayName,
     Focus,
+    createWithDecorator,
 } from '@lesnoypudge/utils-react';
 import { isDev } from '@vars';
 import { lazy } from 'react';
 import { GlobalProviders, Masks, SpriteSheet, Router } from './components';
 import { ErrorScreen } from '@screens/bundled';
-import { createWithDecorator } from '@utils';
 import { GlobalLoader } from '@root/GlobalLoader';
 import {
     usePreventDefault,

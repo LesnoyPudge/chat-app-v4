@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Route } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../../components';
 import { Navigator } from '@features';
-import { Layouts } from '@layouts/lazy';
+import { LazyLayouts } from '@layouts/lazy';
 
 
 
@@ -10,13 +10,13 @@ export const AppRoutes: FC = () => {
     return (
         <Route element={(
             <SuspenseWithGlobalLoader>
-                <Layouts.WithPrimaryNavigation/>
+                <LazyLayouts.WithPrimaryNavigation/>
             </SuspenseWithGlobalLoader>
         )}>
             <Route element={(
-                <Layouts.WithSecondaryNavigation>
+                <LazyLayouts.WithSecondaryNavigation>
                     <>with Conversations</>
-                </Layouts.WithSecondaryNavigation>
+                </LazyLayouts.WithSecondaryNavigation>
             )}>
                 <Route
                     index
@@ -48,9 +48,9 @@ export const AppRoutes: FC = () => {
             <Route
                 path={Navigator.staticNavigatorPath.server}
                 element={(
-                    <Layouts.WithSecondaryNavigation>
+                    <LazyLayouts.WithSecondaryNavigation>
                         <>with channel list</>
-                    </Layouts.WithSecondaryNavigation>
+                    </LazyLayouts.WithSecondaryNavigation>
                 )}
             >
                 <Route

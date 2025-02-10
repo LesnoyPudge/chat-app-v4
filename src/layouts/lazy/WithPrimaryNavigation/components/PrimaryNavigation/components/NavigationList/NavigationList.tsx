@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { ConversationListItem, ServerListItem } from './components';
 import { useStoreSelector } from '@redux/hooks';
 import { Features } from '@redux/features';
-import { Iterate, Scrollable, Separator } from '@components';
+import { Scrollable, Separator } from '@components';
 import { useKeyboardNavigation } from '@hooks';
-import { Memo, useRefManager } from '@lesnoypudge/utils-react';
+import { Iterate, Memo, useRefManager } from '@lesnoypudge/utils-react';
 import { createStyles } from '@utils';
 import { useTrans } from '@i18n';
 

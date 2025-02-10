@@ -1,4 +1,4 @@
-import { createWithDecorator } from '@utils';
+import { createWithDecorator } from '@lesnoypudge/utils-react';
 import { DialogProvider, DialogWrapper } from '../components';
 
 

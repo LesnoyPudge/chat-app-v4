@@ -6,17 +6,9 @@ import {
 } from '../components';
 import { Navigator } from '@features';
 import { AppRoutes } from './AppRoutes';
-import { lazyLoad } from '@utils';
+import { LazyScreens } from '@screens/lazy';
 
 
-
-const InvitationScreen = lazyLoad.baseAsyncComponent(() => {
-    return import('@screens/lazy/InvitationScreen');
-});
-
-const AuthScreen = lazyLoad.baseAsyncComponent(() => {
-    return import('@screens/lazy/AuthScreen');
-});
 
 export const ProdRoutes = () => {
     return (
@@ -28,7 +20,7 @@ export const ProdRoutes = () => {
                     path={Navigator.staticNavigatorPath.invitation}
                     element={(
                         <SuspenseWithGlobalLoader>
-                            <InvitationScreen/>
+                            <LazyScreens.InvitationScreen/>
                         </SuspenseWithGlobalLoader>
                     )}
                 />
@@ -39,7 +31,7 @@ export const ProdRoutes = () => {
                     path={Navigator.staticNavigatorPath.auth}
                     element={(
                         <SuspenseWithGlobalLoader>
-                            <AuthScreen/>
+                            <LazyScreens.AuthScreen/>
                         </SuspenseWithGlobalLoader>
                     )}
                 />

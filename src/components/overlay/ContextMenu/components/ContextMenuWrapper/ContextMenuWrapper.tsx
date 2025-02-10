@@ -1,8 +1,8 @@
 import { PropsWithChildren } from 'react';
 import { Popover, RelativelyPositioned, Overlay } from '@components';
 import { useContextMenu } from './hooks';
-import { createWithDecorator, getAnimationVariants } from '@utils';
-import { withDisplayName } from '@lesnoypudge/utils-react';
+import { getAnimationVariants } from '@utils';
+import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
 import { ContextMenuProvider } from '../ContextMenuProvider';
 import { m } from 'motion/react';
 

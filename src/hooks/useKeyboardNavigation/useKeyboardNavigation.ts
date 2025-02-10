@@ -1,12 +1,13 @@
 import { invariant, KEY, shallowEqual } from '@lesnoypudge/utils';
 import { hotKey } from '@lesnoypudge/utils-web';
-import { useHotKey, useIsFocusVisible } from '@hooks';
+import { useIsFocusVisible } from '@hooks';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {
     usePrevious,
     useFunction,
     useRefManager,
     useMemoShallow,
+    useHotKey,
 } from '@lesnoypudge/utils-react';
 
 

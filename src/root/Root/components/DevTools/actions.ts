@@ -1,5 +1,5 @@
-import { KEY } from '@lesnoypudge/utils';
-import { localStorageApi, logger, toOneLine } from '@utils';
+import { KEY, toOneLine } from '@lesnoypudge/utils';
+import { localStorageApi, logger } from '@utils';
 
 
 

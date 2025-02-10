@@ -1,10 +1,10 @@
-import { Button, Iterate } from '@components';
+import { Button } from '@components';
 import { FC } from 'react';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
 import { cn, createStyles } from '@utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import css from './ColorPicker.module.scss';
-import { Memo, useFunction, useThrottled } from '@lesnoypudge/utils-react';
+import { Iterate, Memo, useFunction, useThrottled } from '@lesnoypudge/utils-react';
 import { FieldApi } from '@tanstack/react-form';
 
 

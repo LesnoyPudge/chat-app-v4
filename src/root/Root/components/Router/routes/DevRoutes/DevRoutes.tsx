@@ -4,13 +4,13 @@ import { InvitationScreenPure } from '@screens/lazy/InvitationScreen/InvitationS
 import { Playground } from './components';
 import { AuthScreenPure } from '@screens/lazy/AuthScreen/AuthScreen';
 import { Outlet, Route } from 'react-router';
-import { createSleep } from '@utils';
 import { Dummies } from '@fakeServer';
 import { SuspenseWithGlobalLoader } from '../components';
+import { createSleep } from '@lesnoypudge/utils-react';
 
 
 
-const Sleep = createSleep(1_000, true);
+const Sleep = createSleep(1_000, 'devRoutes');
 
 export const DevRoutes = () => {
     return (

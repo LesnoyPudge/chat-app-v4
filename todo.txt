@@ -12,3 +12,4 @@ https://mswjs.io/docs/getting-started
 добавить фэтчи для каждого энтити
 - переделать CustomizableList в ListVariants(?) namespace, откуда 
 экспортировать разные вариации листов (добавить виртуальный) 
+-? перенести useIsFocusVisible в библиотеку

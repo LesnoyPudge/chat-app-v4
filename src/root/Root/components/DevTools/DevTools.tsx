@@ -1,10 +1,10 @@
 import { Button, CustomizableList, Modal, Overlay } from '@components';
-import { createStyles, createWithDecorator, logger } from '@utils';
+import { createStyles, logger } from '@utils';
 import { FC } from 'react';
 import { useDevTools } from './hooks';
-import { useHotKey } from '@hooks';
 import { KEY } from '@lesnoypudge/utils';
 import { rawActions } from './actions';
+import { createWithDecorator, useHotKey } from '@lesnoypudge/utils-react';
 
 
 

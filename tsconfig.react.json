@@ -42,8 +42,14 @@
             "@components": [
                 "./src/components"
             ],
-            "@screens/*": [
-                "./src/screens/*"
+            "@screens/bundled": [
+                "./src/screens/bundled"
+            ],
+            "@screens/lazy": [
+                "./src/screens/lazy"
+            ],
+            "@screens/lazy/*": [
+                "./src/screens/lazy/*"
             ],
             "@types": [
                 "./src/types"

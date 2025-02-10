@@ -1,7 +1,7 @@
-import { Button, Iterate } from '@components';
+import { Button } from '@components';
 import { useKeyboardNavigation } from '@hooks';
 import { inRange } from '@lesnoypudge/utils';
-import { useRefManager, useFunction, Focus } from '@lesnoypudge/utils-react';
+import { useRefManager, useFunction, Focus, Iterate } from '@lesnoypudge/utils-react';
 import { FC, useState } from 'react';
 
 
