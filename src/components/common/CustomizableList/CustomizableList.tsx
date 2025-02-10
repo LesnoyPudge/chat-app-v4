@@ -14,7 +14,6 @@ export namespace CustomizableList {
         {
             item: _Item;
             index: number;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             itemRef: useRefManager.RefManager<any>;
             isFocused: boolean;
             tabIndex: number;
@@ -45,10 +44,10 @@ export namespace CustomizableList {
 }
 
 namespace BaseItem {
-    export type Props<_Item> = (
-        CustomizableList.WithChildren<_Item>
+    export type Props = (
+        CustomizableList.WithChildren<any>
         & Pick<
-            CustomizableList.ChildrenProps<_Item>,
+            CustomizableList.ChildrenProps<any>,
             'item'
             | 'index'
             | 'isFocused'
@@ -65,7 +64,7 @@ const BaseItem = memo(({
     isFocused,
     setCurrentFocusedId,
     tabIndex,
-}: BaseItem.Props<any>) => {
+}: BaseItem.Props) => {
     const itemRef = useRefManager<HTMLElement>(null);
 
     useScrollIntoView(itemRef, {

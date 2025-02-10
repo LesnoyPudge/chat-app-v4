@@ -10,3 +10,5 @@ https://mswjs.io/docs/getting-started
 - заменить большое кол-во Iterate на CustomizableList
 - appData фэтчит только поверхностные данные, нужно 
 добавить фэтчи для каждого энтити
+- переделать CustomizableList в ListVariants(?) namespace, откуда 
+экспортировать разные вариации листов (добавить виртуальный) 
