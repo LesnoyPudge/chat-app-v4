@@ -1,4 +1,4 @@
-import { Button, CustomizableList, Modal, Overlay } from '@components';
+import { Button, ListVariants, Modal, Overlay } from '@components';
 import { createStyles, logger } from '@utils';
 import { FC } from 'react';
 import { useDevTools } from './hooks';
@@ -66,27 +66,27 @@ export const DevTools: FC = withDecorator(() => {
             className={styles.inner}
             ref={wrapperRef}
         >
-            <CustomizableList
-                wrapperRef={wrapperRef}
+            <ListVariants.Variant1.List
                 items={items}
-                getId={(index) => String(items[index])}
-                direction='vertical'
-                loop
+                getId={(item) => item}
+                keyboardNavigation={{
+                    wrapperRef,
+                    direction: 'vertical',
+                    loop: true,
+                }}
             >
-                {({ item, itemRef, tabIndex, setCurrentFocusedId }) => (
+                {({ item, itemRef, tabIndex, setFocusId }) => (
                     <Button
                         className={styles.action}
-                        onLeftClick={() => {
-                            actions[item]();
-                            setCurrentFocusedId(item);
-                        }}
+                        onAnyClick={setFocusId}
+                        onLeftClick={actions[item]}
                         tabIndex={tabIndex}
                         innerRef={itemRef}
                     >
                         {item}
                     </Button>
                 )}
-            </CustomizableList>
+            </ListVariants.Variant1.List>
         </div>
     );
 });

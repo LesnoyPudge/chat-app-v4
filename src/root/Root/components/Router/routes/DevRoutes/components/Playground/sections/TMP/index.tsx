@@ -3,7 +3,6 @@ import { db, Dummies, FakeDB, scenarios, token } from '@fakeServer';
 import { FC, memo, useEffect, useRef, useState } from 'react';
 import { deepEqual, isCallable } from '@lesnoypudge/utils';
 import { useLocalStorage } from '@hooks';
-import { CustomizableList } from 'src/components/common/CustomizableList';
 import { Scrollable } from '@components';
 import { v4 as uuid } from 'uuid';
 
@@ -11,7 +10,7 @@ import { v4 as uuid } from 'uuid';
 
 export const TMP: FC = () => {
     // const db1 = useConst(() => new FakeDB());
-    // const [state, setState] = useState(db.createEmptyStorage());
+    const [state, setState] = useState(db.getStorageClone());
 
     // useTimeout(() => {
     //     db.clearStorage();
@@ -48,9 +47,9 @@ export const TMP: FC = () => {
 
     return (
         <div className='h-screen w-screen'>
-            {/* <Scrollable className='flex flex-col gap-4 p-4'>
+            <Scrollable className='flex flex-col gap-4 p-4'>
                 <JsonView data={JSON.stringify(state) ?? ''}/>
-            </Scrollable> */}
+            </Scrollable>
         </div>
     );
 };

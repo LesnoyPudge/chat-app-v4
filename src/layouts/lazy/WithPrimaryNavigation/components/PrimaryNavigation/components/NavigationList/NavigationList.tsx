@@ -24,6 +24,10 @@ export const NavigationList: FC = () => {
         Features.Conversations.StoreSelectors.selectIdsWithUnreadNotificationCount(),
     );
 
+    Features.Conversations.Api.useGetManyQuery({
+        conversationIds: conversationIdsWithNotifications.map((v) => v[0]),
+    });
+
     const serverIdsWithNotifications = useStoreSelector(
         Features.Servers.StoreSelectors.selectIdsWithUnreadNotificationCount(),
     );
@@ -31,6 +35,13 @@ export const NavigationList: FC = () => {
     const serverIdsWithoutNotifications = useStoreSelector(
         Features.Servers.StoreSelectors.selectIdsWithoutUnreadNotifications(),
     );
+
+    Features.Servers.Api.useGetManyQuery({
+        serverIds: [
+            ...serverIdsWithNotifications.map((v) => v[0]),
+            ...serverIdsWithoutNotifications,
+        ],
+    });
 
     const sortedConversationIds = conversationIdsWithNotifications.toSorted((a, b) => {
         return b[1] - a[1];

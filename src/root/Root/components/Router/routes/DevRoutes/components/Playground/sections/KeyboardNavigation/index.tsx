@@ -1,6 +1,6 @@
 import { Button } from '@components';
 import { useKeyboardNavigation } from '@hooks';
-import { inRange } from '@lesnoypudge/utils';
+import { inArray, inRange } from '@lesnoypudge/utils';
 import { useRefManager, useFunction, Focus, Iterate } from '@lesnoypudge/utils-react';
 import { FC, useState } from 'react';
 
@@ -84,9 +84,9 @@ export const KeyboardNavigation: FC = () => {
 
             Array.from({ length: prevArr.length * 3 }).forEach(() => {
                 const firstIndex = inRange(0, newArr.length - 1);
-                const tmp = newArr[firstIndex]!;
+                const tmp = inArray(newArr, firstIndex);
                 const secondIndex = inRange(0, newArr.length - 1);
-                newArr[firstIndex] = newArr[secondIndex]!;
+                newArr[firstIndex] = inArray(newArr, secondIndex);
                 newArr[secondIndex] = tmp;
             });
 

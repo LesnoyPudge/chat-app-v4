@@ -11,21 +11,21 @@ export const VoiceChatsApi = createApi({
     reducerPath: 'VoiceChatsApi',
     tagTypes: ['VoiceChats'],
     endpoints: (build) => ({
-        [VoiceChat.GetMany.ActionName]: (
-            build.query<
-                VoiceChat.GetMany.Response,
-                VoiceChat.GetMany.RequestBody
-            >({
-                query: (body) => ({
-                    url: VoiceChat.GetMany.Path,
-                    method: VoiceChat.GetMany.Method,
-                    body,
-                }),
-                providesTags: (result) => result?.map(({ id }) => ({
-                    type: 'VoiceChats',
-                    id,
-                })) ?? [{ type: 'VoiceChats', id: 'LIST' }],
-            })
-        ),
+        // [VoiceChat.GetMany.ActionName]: (
+        //     build.query<
+        //         VoiceChat.GetMany.Response,
+        //         VoiceChat.GetMany.RequestBody
+        //     >({
+        //         query: (body) => ({
+        //             url: VoiceChat.GetMany.Path,
+        //             method: VoiceChat.GetMany.Method,
+        //             body,
+        //         }),
+        //         providesTags: (result) => result?.map(({ id }) => ({
+        //             type: 'VoiceChats',
+        //             id,
+        //         })) ?? [{ type: 'VoiceChats', id: 'LIST' }],
+        //     })
+        // ),
     }),
 });

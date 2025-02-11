@@ -100,8 +100,10 @@ const main = async () => {
             ) as Keyset;
         }
 
+        const ns = resources[locale];
+        invariant(ns);
 
-        namespacesObj = resources[locale]!;
+        namespacesObj = ns;
     }
 
     const i18nData = [

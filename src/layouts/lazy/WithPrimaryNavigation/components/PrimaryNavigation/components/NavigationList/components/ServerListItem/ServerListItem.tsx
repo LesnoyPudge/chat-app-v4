@@ -1,6 +1,6 @@
 import { Avatar, Button, ContextMenu, Tooltip } from '@components';
 import { useKeyboardNavigation } from '@hooks';
-import { Focus, useFunction, useRefManager } from '@lesnoypudge/utils-react';
+import { Focus, useFunction, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
 import { cn } from '@utils';
 import { FC } from 'react';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
@@ -45,6 +45,15 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
         Features.Servers.StoreSelectors.selectNotificationCountById(serverId),
     );
 
+    Focus.useMoveFocusInside({
+        containerRef: buttonRef,
+        isEnabled: isFocused,
+    });
+
+    useScrollIntoView(buttonRef, {
+        enabled: isFocused,
+    });
+
     const setFocused = useFunction(() => {
         setCurrentFocusedId(serverId);
     });
@@ -55,54 +64,49 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
     });
 
     return (
-        <Focus.Inside
-            isEnabled={isFocused}
-            containerRef={buttonRef}
-        >
-            <WrapperWithBullet isActive={isInServer}>
-                <Button
-                    className={cn(
-                        sharedStyles.button.base,
-                        sharedStyles.brandButton.base,
-                        isInServer && sharedStyles.button.active,
-                        isInServer && sharedStyles.brandButton.active,
-                    )}
-                    tabIndex={tabIndex}
-                    label={server?.name}
-                    role='menuitem'
-                    isActive={isInServer}
-                    isDisabled={!server}
-                    innerRef={buttonRef}
-                    onLeftClick={navigateToServer}
-                    onAnyClick={setFocused}
+        <WrapperWithBullet isActive={isInServer}>
+            <Button
+                className={cn(
+                    sharedStyles.button.base,
+                    sharedStyles.brandButton.base,
+                    isInServer && sharedStyles.button.active,
+                    isInServer && sharedStyles.brandButton.active,
+                )}
+                tabIndex={tabIndex}
+                label={server?.name}
+                role='menuitem'
+                isActive={isInServer}
+                isDisabled={!server}
+                innerRef={buttonRef}
+                onLeftClick={navigateToServer}
+                onAnyClick={setFocused}
+            >
+                <Avatar.WithBadge.Notifications
+                    count={notificationsCount}
                 >
-                    <Avatar.WithBadge.Notifications
-                        count={notificationsCount}
-                    >
-                        <Avatar.Server
-                            className={sharedStyles.avatar}
-                            name={server?.name}
-                            avatar={server?.avatar}
-                        />
-                    </Avatar.WithBadge.Notifications>
-                </Button>
+                    <Avatar.Server
+                        className={sharedStyles.avatar}
+                        name={server?.name}
+                        avatar={server?.avatar}
+                    />
+                </Avatar.WithBadge.Notifications>
+            </Button>
 
-                <If condition={!!server}>
-                    <Tooltip
-                        preferredAlignment='right'
-                        leaderElementRef={buttonRef}
-                    >
-                        {server?.name}
-                    </Tooltip>
+            <If condition={!!server}>
+                <Tooltip
+                    preferredAlignment='right'
+                    leaderElementRef={buttonRef}
+                >
+                    {server?.name}
+                </Tooltip>
 
-                    <ContextMenu.Wrapper
-                        leaderElementRef={buttonRef}
-                        preferredAlignment='right'
-                    >
-                        <ServerContextMenu serverId={serverId}/>
-                    </ContextMenu.Wrapper>
-                </If>
-            </WrapperWithBullet>
-        </Focus.Inside>
+                <ContextMenu.Wrapper
+                    leaderElementRef={buttonRef}
+                    preferredAlignment='right'
+                >
+                    <ServerContextMenu serverId={serverId}/>
+                </ContextMenu.Wrapper>
+            </If>
+        </WrapperWithBullet>
     );
 };

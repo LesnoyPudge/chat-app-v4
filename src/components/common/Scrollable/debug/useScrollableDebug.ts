@@ -1,6 +1,5 @@
-import { useTimeout } from '@lesnoypudge/utils-react';
 import { logger } from '@utils';
-import { MutableRefObject } from 'react';
+import { MutableRefObject, useLayoutEffect } from 'react';
 
 
 
@@ -13,7 +12,7 @@ type ElementObj = {
 const useScrollableDebug = (
     debugRef: MutableRefObject<HTMLDivElement | null>,
 ) => {
-    useTimeout(() => {
+    useLayoutEffect(() => {
         const scrollableElement = debugRef.current;
         if (!scrollableElement) return;
 
@@ -55,7 +54,7 @@ const useScrollableDebug = (
                 getElementObject(scrollableElement),
             );
         }
-    }, 2_000);
+    }, []);
 };
 
 export default useScrollableDebug;

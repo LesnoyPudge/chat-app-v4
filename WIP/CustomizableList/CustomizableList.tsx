@@ -111,15 +111,15 @@ export const CustomizableList = <_Item,>({
     return (
         <Iterate items={items}>
             {(item, index) => {
-                const key = getId(index);
+                const id = getId(index);
 
                 return (
                     <BaseItem
                         index={index}
                         item={item}
-                        key={key}
-                        isFocused={getIsFocused(key)}
-                        tabIndex={getTabIndex(key)}
+                        key={id}
+                        isFocused={getIsFocused(id)}
+                        tabIndex={getTabIndex(id)}
                         setCurrentFocusedId={setCurrentFocusedId}
                     >
                         {children}

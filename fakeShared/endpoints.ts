@@ -79,8 +79,12 @@ namespace WithIds {
         textChatIds: Entities.TextChat.Id[];
     };
 
+    export type VoiceChat = {
+        voiceChatIds: Entities.VoiceChat.Id[];
+    };
+
     export type File = {
-        file: Entities.File.Id[];
+        fileIds: Entities.File.Id[];
     };
 
     export type Message = {
@@ -92,7 +96,7 @@ namespace WithIds {
     };
 
     export type Role = {
-        role: Entities.Role.Id[];
+        roleIds: Entities.Role.Id[];
     };
 
     export type Channel = {
@@ -391,7 +395,7 @@ namespace EndpointsV1 {
 
             export const Method = HTTP_METHODS.POST;
 
-            export type RequestBody = WithIds.Server;
+            export type RequestBody = WithIds.Channel;
 
             export type Response = Entities.Channel.Base[];
         }
@@ -407,7 +411,7 @@ namespace EndpointsV1 {
 
             export const Method = HTTP_METHODS.POST;
 
-            export type RequestBody = WithIds.Server;
+            export type RequestBody = WithIds.Conversation;
 
             export type Response = Entities.Conversation.Base[];
         }
@@ -423,7 +427,7 @@ namespace EndpointsV1 {
 
             export const Method = HTTP_METHODS.POST;
 
-            export type RequestBody = WithIds.Server;
+            export type RequestBody = WithIds.Role;
 
             export type Response = Entities.Role.Base[];
         }
@@ -439,7 +443,7 @@ namespace EndpointsV1 {
 
             export const Method = HTTP_METHODS.POST;
 
-            export type RequestBody = WithIds.Server;
+            export type RequestBody = WithIds.TextChat;
 
             export type Response = Entities.TextChat.Base[];
         }
@@ -452,17 +456,17 @@ namespace EndpointsV1 {
     export namespace VoiceChat {
         const BasePath = ENTITY_NAME.VOICE_CHAT;
 
-        export namespace GetMany {
-            export const ActionName = 'getMany';
+        // export namespace GetMany {
+        //     export const ActionName = 'getMany';
 
-            export const Path = v1(BasePath, ActionName);
+        //     export const Path = v1(BasePath, ActionName);
 
-            export const Method = HTTP_METHODS.POST;
+        //     export const Method = HTTP_METHODS.POST;
 
-            export type RequestBody = WithIds.Server;
+        //     export type RequestBody = WithIds.VoiceChat;
 
-            export type Response = Entities.VoiceChat.Base[];
-        }
+        //     export type Response = Entities.VoiceChat.Base[];
+        // }
     }
 
     export namespace File {

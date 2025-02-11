@@ -6,6 +6,7 @@
         "./fakeServer/**/*",
         "./fakeShared/**/*",
         "./fakeSocket/**/*",
+        "WIP/CustomizableList",
     ],
     "exclude": [
         // "./generated/**/*",

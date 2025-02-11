@@ -3,7 +3,7 @@
     "author": "LesnoyPudge",
     "type": "module",
     "scripts": {
-        "dev": "npm run scripts:i18n && concurrently \"nodemon --config nodemon.i18n.json\" \"nodemon --config nodemon.vite.json\"",
+        "dev": "npm run type:check && npm run scripts:i18n && concurrently \"nodemon --config nodemon.i18n.json\" \"nodemon --config nodemon.vite.json\"",
         "prod": "echo \"Not implemented\" && exit 1",
         "build": "npm run type:check && vite build",
         "deploy": "git add . && git commit -m 'update' && git push && git status",
@@ -19,7 +19,7 @@
     "dependencies": {
         "@faker-js/faker": "^9.4.0",
         "@lesnoypudge/types-utils-base": "^3.4.1",
-        "@lesnoypudge/utils": "^19.0.2",
+        "@lesnoypudge/utils": "^19.1.0",
         "@lesnoypudge/utils-react": "^14.1.1",
         "@lesnoypudge/utils-web": "^3.0.2",
         "@reduxjs/toolkit": "^2.5.1",
