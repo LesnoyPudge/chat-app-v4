@@ -14,7 +14,7 @@ const styles = createStyles({
     SCREEN: `
         relative
         isolate
-        h-dvh
+        h-[100dvh]
         w-dvw
     `,
 
@@ -23,8 +23,8 @@ const styles = createStyles({
         left-0
         top-0
         -z-50
-        h-dvh
-        w-dvw
+        h-[100dvh]
+        w-[100dvw]
         object-cover
         object-center
     `,

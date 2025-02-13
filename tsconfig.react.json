@@ -6,7 +6,7 @@
         "./fakeServer/**/*",
         "./fakeShared/**/*",
         "./fakeSocket/**/*",
-        "WIP/CustomizableList",
+        "./WIP/**/*",
     ],
     "exclude": [
         // "./generated/**/*",
@@ -25,6 +25,9 @@
             "./src/i18n/i18n.d.ts",
         ],
         "paths": {
+            "@src/*": [
+                "./src/*"
+            ],
             "@vars": [
                 "./src/vars"
             ],

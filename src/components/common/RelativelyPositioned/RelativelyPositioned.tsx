@@ -8,7 +8,7 @@ import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 const styles = createStyles({
-    wrapper: 'absolute',
+    wrapper: 'fixed max-h-[100dvh] max-w-[100dvw]',
 });
 
 export namespace RelativelyPositioned {

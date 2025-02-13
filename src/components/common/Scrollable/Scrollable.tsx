@@ -1,24 +1,23 @@
-import { FC, useRef } from 'react';
+import { FC } from 'react';
 import './Scrollable.scss';
 import { cn, createStyles } from '@utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { PropsWithInnerRef } from '@types';
 import { isDev } from '@vars';
 import { mergeRefs } from '@lesnoypudge/utils-react';
-import { noop } from '@lesnoypudge/utils';
 
 
 
 const useScrollableDebug = (
     isDev
         ? await import('./debug/useScrollableDebug').then((v) => v.default)
-        : noop
+        : () => null
 );
 
 const baseClassName = 'Scrollable';
 
 const styles = createStyles({
-    scrollable: 'max-h-full max-w-full',
+    scrollable: 'max-h-[min(100%,100dvh)] max-w-[min(100%,100dvw)]',
 });
 
 export namespace Scrollable {
@@ -59,7 +58,7 @@ export const Scrollable: FC<Scrollable.Props> = ({
     withoutGutter = false,
     children,
 }) => {
-    const debugRef = useRef<HTMLDivElement>(null);
+    const debugRef = useScrollableDebug();
 
     const notHorizontal = direction !== 'horizontal';
     const withGutter = !withoutGutter;
@@ -74,8 +73,6 @@ export const Scrollable: FC<Scrollable.Props> = ({
         'data-direction': direction,
         'data-with-gutter': withGutter && notHorizontal,
     };
-
-    useScrollableDebug(debugRef);
 
     return (
         <div

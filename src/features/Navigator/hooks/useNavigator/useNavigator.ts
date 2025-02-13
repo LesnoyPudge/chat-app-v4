@@ -43,9 +43,10 @@ export const useNavigator = () => {
     const { pathname } = useLocation();
     const latestPathRef = useLatest(pathname);
     const previousLocationRef = useRef(pathname);
-    const mobileMenu = ContextSelectable.useSelector(
-        MobileMenu.Context,
-    ) as MobileMenu.Context | undefined;
+    // const closeMenu = ContextSelectable.useSelector(
+    //     MobileMenu.Context,
+    //     (v) => v.closeMenu,
+    // ) as MobileMenu.Context['closeMenu'] | undefined;
 
     const getLocationResolver = useFunction((path?: string) => {
         const pathToUse = (
@@ -102,49 +103,49 @@ export const useNavigator = () => {
     const navigate = useFunction((to: string, options?: NavigateOptions) => {
         previousLocationRef.current = pathname;
 
-        if (mobileMenu?.shouldShowMenu) {
-            mobileMenu.closeMenu();
-        }
+        // if (mobileMenu?.shouldShowMenu) {
+        //     mobileMenu.closeMenu();
+        // }
 
         return _navigate(to, options);
     });
 
     const navigateTo: NavigateTo = useConst(() => ({
         root: (options) => {
-            if (stableMyLocationIs.root()) return;
+            // if (stableMyLocationIs.root()) return;
 
             return navigate(navigatorPath.root(), options);
         },
 
         auth: (options) => {
-            if (stableMyLocationIs.auth()) return;
+            // if (stableMyLocationIs.auth()) return;
 
             return navigate(navigatorPath.auth(), options);
         },
 
         invitation: (props, options) => {
-            if (stableMyLocationIs.invitation(props)) return;
+            // if (stableMyLocationIs.invitation(props)) return;
 
             return navigate(navigatorPath.invitation(props), options);
         },
 
 
         conversation: (props, options) => {
-            if (stableMyLocationIs.conversation(props)) return;
+            // if (stableMyLocationIs.conversation(props)) return;
 
             return navigate(navigatorPath.conversation(props), options);
         },
 
 
         channel: (props, options) => {
-            if (stableMyLocationIs.channel(props)) return;
+            // if (stableMyLocationIs.channel(props)) return;
 
             return navigate(navigatorPath.channel(props), options);
         },
 
 
         server: (props, options) => {
-            if (stableMyLocationIs.server(props)) return;
+            // if (stableMyLocationIs.server(props)) return;
 
             return navigate(navigatorPath.server(props), options);
         },
@@ -154,6 +155,6 @@ export const useNavigator = () => {
         stableMyLocationIs,
         myLocationIs,
         navigateTo,
-        navigate,
+        // navigate,
     };
 };

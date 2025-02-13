@@ -1,5 +1,7 @@
+import { useFunction } from '@lesnoypudge/utils-react';
 import { logger } from '@utils';
-import { MutableRefObject, useLayoutEffect } from 'react';
+import { useLayoutEffect, useRef } from 'react';
+import { getElementFillableSize, mountExpander } from '../utils';
 
 
 
@@ -9,52 +11,100 @@ type ElementObj = {
     clientHeight: number;
 };
 
-const useScrollableDebug = (
-    debugRef: MutableRefObject<HTMLDivElement | null>,
-) => {
-    useLayoutEffect(() => {
+const getElementObject = (
+    element: HTMLElement,
+): ElementObj => {
+    return {
+        element,
+        scrollHeight: element.scrollHeight,
+        clientHeight: element.clientHeight,
+    };
+};
+
+const useScrollableDebug = () => {
+    const debugRef = useRef<HTMLDivElement>(null);
+    const shouldReportCheckWindowOverflowRef = useRef(true);
+    const shouldReportCheckParentOverflowRef = useRef(true);
+
+    const checkWindowOverflow = useFunction(() => {
+        if (!shouldReportCheckWindowOverflowRef.current) return;
+
         const scrollableElement = debugRef.current;
         if (!scrollableElement) return;
 
         const parentElement = scrollableElement.parentElement;
         if (!parentElement) return;
 
-        const getElementObject = (
-            element: HTMLElement,
-        ): ElementObj => {
-            return {
-                element,
-                scrollHeight: element.scrollHeight,
-                clientHeight: element.clientHeight,
-            };
-        };
+        const { remove } = mountExpander(scrollableElement);
 
-        const expander = document.createElement('div');
-
-        expander.style.minHeight = '9999px';
-        expander.style.minWidth = '9999px';
-
-        scrollableElement.append(expander);
-
-        const isOverflowing = (
+        const isOverflowingWindow = (
             window.innerHeight < scrollableElement.clientHeight
+            || window.innerWidth < scrollableElement.clientWidth
         );
 
-        const diff = (
-            scrollableElement.clientHeight
-            - window.innerHeight
-        );
+        remove();
 
-        expander.remove();
-
-        if (isOverflowing) {
+        if (
+            isOverflowingWindow
+            && shouldReportCheckWindowOverflowRef.current
+        ) {
+            shouldReportCheckWindowOverflowRef.current = false;
             logger.warn(
-                `scrollable is overflowing by`,
-                `${diff} - 9999 = ${diff - 9_999}`,
+                `scrollable is overflowing window`,
                 getElementObject(scrollableElement),
             );
         }
-    }, []);
+    });
+
+    const checkParentOverflow = useFunction(() => {
+        if (!shouldReportCheckParentOverflowRef.current) return;
+
+        const scrollableElement = debugRef.current;
+        if (!scrollableElement) return;
+
+        const parentElement = scrollableElement.parentElement;
+        if (!parentElement) return;
+
+        const originalParentOverflow = parentElement.style.overflow;
+
+
+        parentElement.style.overflow = 'hidden';
+
+        const { remove } = mountExpander(scrollableElement);
+
+        const parentRect = parentElement.getBoundingClientRect();
+        const scrollableRect = scrollableElement.getBoundingClientRect();
+
+        const isOverflowingParent = (
+            parentRect.height < scrollableRect.height
+            || parentRect.width < scrollableRect.width
+        );
+        if (
+            isOverflowingParent
+            && shouldReportCheckParentOverflowRef.current
+        ) {
+            shouldReportCheckParentOverflowRef.current = false;
+
+            logger.warn(
+                `scrollable is overflowing parent.`,
+                getElementObject(scrollableElement),
+                { parentElement },
+                getElementFillableSize(parentElement),
+            );
+        }
+
+        remove();
+
+        parentElement.style.overflow = originalParentOverflow;
+    });
+
+    useLayoutEffect(checkWindowOverflow);
+    // useAnimationFrame(checkWindowOverflow, true);
+
+    useLayoutEffect(checkParentOverflow);
+    // useAnimationFrame(checkParentOverflow, true);
+
+    return debugRef;
 };
 
 export default useScrollableDebug;

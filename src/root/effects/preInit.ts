@@ -1,5 +1,3 @@
-import '@i18n';
-import { fakeServer } from '@fakeServer';
 import { isDev } from '@vars';
 import { logger } from '@utils';
 
@@ -8,38 +6,26 @@ import { logger } from '@utils';
 export const preInit = async () => {
     logger.log('preInit');
 
-    await fakeServer.init();
+    await Promise.all([
+        import('@src/i18n/i18n.ts'),
 
-    if (isDev) {
-        const { scan } = await import('react-scan');
+        import('@fakeServer').then(({ fakeServer }) => fakeServer.init()),
 
+        async () => {
+            if (isDev) {
+                const { scan } = await import('react-scan');
 
-        // const log = console.log;
-        // const messageToIgnore = [
-        //     'Try Million Lint to automatically',
-        //     'optimize your app: https://million.dev',
-        // ].join(' ');
-
-
-        // console.log = (...args) => {
-        //     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        //     const messageArg = args[0];
-        //     if (messageArg === messageToIgnore) {
-        //         return;
-        //     }
-
-        //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        //     log(...args);
-        // };
-
-        scan({
-            enabled: true,
-            log: false,
-            // alwaysShowLabels: false,
-            showToolbar: false,
-            // trackUnnecessaryRenders: true,s
-            // renderCountThreshold: 1,
-            // smoothlyAnimateOutlines: false,
-        });
-    }
+                scan({
+                    enabled: true,
+                    log: false,
+                    animationSpeed: 'off',
+                    // alwaysShowLabels: false,
+                    showToolbar: false,
+                    // trackUnnecessaryRenders: true,s
+                    // renderCountThreshold: 1,
+                    // smoothlyAnimateOutlines: false,
+                });
+            }
+        },
+    ]);
 };

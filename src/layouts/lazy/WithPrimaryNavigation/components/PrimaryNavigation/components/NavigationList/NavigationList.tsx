@@ -11,7 +11,8 @@ import { useTrans } from '@i18n';
 
 
 const styles = createStyles({
-    wrapper: 'overflow-hidden',
+    wrapper: '',
+    // wrapper: 'flex flex-col overflow-hidden',
     scrollable: 'py-2',
     list: 'flex flex-col gap-2',
 });
@@ -24,9 +25,13 @@ export const NavigationList: FC = () => {
         Features.Conversations.StoreSelectors.selectIdsWithUnreadNotificationCount(),
     );
 
-    Features.Conversations.Api.useGetManyQuery({
-        conversationIds: conversationIdsWithNotifications.map((v) => v[0]),
+    const conversationIdsToFetch = conversationIdsWithNotifications.map((v) => {
+        return v[0];
     });
+
+    Features.Conversations.Api.useGetManyQuery({
+        conversationIds: conversationIdsToFetch,
+    }, { skip: !conversationIdsToFetch.length });
 
     const serverIdsWithNotifications = useStoreSelector(
         Features.Servers.StoreSelectors.selectIdsWithUnreadNotificationCount(),
@@ -36,12 +41,14 @@ export const NavigationList: FC = () => {
         Features.Servers.StoreSelectors.selectIdsWithoutUnreadNotifications(),
     );
 
+    const serverIdsToFetch = [
+        ...serverIdsWithNotifications.map((v) => v[0]),
+        ...serverIdsWithoutNotifications,
+    ];
+
     Features.Servers.Api.useGetManyQuery({
-        serverIds: [
-            ...serverIdsWithNotifications.map((v) => v[0]),
-            ...serverIdsWithoutNotifications,
-        ],
-    });
+        serverIds: serverIdsToFetch,
+    }, { skip: !serverIdsToFetch.length });
 
     const sortedConversationIds = conversationIdsWithNotifications.toSorted((a, b) => {
         return b[1] - a[1];
@@ -80,55 +87,55 @@ export const NavigationList: FC = () => {
         thickness: 2,
     };
 
+    // if (!showServersOrConversations) return null;
+
     return (
-        <If condition={showServersOrConversations}>
-            <div className={styles.wrapper}>
-                <Separator {...separatorProps}/>
+        <div className={styles.wrapper}>
+            <Separator {...separatorProps}/>
 
-                <Scrollable
-                    className={styles.scrollable}
-                    size='hidden'
+            <Scrollable
+                className={styles.scrollable}
+                size='hidden'
+            >
+                <div
+                    className={styles.list}
+                    aria-label={t('PrimaryNavigation.NavigationList.label')}
+                    ref={wrapperRef}
+                    role='menubar'
                 >
-                    <div
-                        className={styles.list}
-                        aria-label={t('PrimaryNavigation.NavigationList.label')}
-                        ref={wrapperRef}
-                        role='menubar'
-                    >
-                        <If condition={showConversations}>
-                            <Iterate items={sortedConversationIds}>
-                                {(conversationId) => (
-                                    <Memo key={conversationId}>
-                                        <ConversationListItem
-                                            conversationId={conversationId}
-                                            isFocused={getIsFocused(conversationId)}
-                                            setCurrentFocusedId={setCurrentFocusedId}
-                                            tabIndex={getTabIndex(conversationId)}
-                                        />
-                                    </Memo>
-                                )}
-                            </Iterate>
-
-                            <Separator {...separatorProps}/>
-                        </If>
-
-                        <Iterate items={serverIds}>
-                            {(serverId) => (
-                                <Memo key={serverId}>
-                                    <ServerListItem
-                                        serverId={serverId}
-                                        isFocused={getIsFocused(serverId)}
+                    <If condition={showConversations}>
+                        <Iterate items={sortedConversationIds}>
+                            {(conversationId) => (
+                                <Memo key={conversationId}>
+                                    <ConversationListItem
+                                        conversationId={conversationId}
+                                        isFocused={getIsFocused(conversationId)}
                                         setCurrentFocusedId={setCurrentFocusedId}
-                                        tabIndex={getTabIndex(serverId)}
+                                        tabIndex={getTabIndex(conversationId)}
                                     />
                                 </Memo>
                             )}
                         </Iterate>
-                    </div>
-                </Scrollable>
 
-                <Separator {...separatorProps}/>
-            </div>
-        </If>
+                        <Separator {...separatorProps}/>
+                    </If>
+
+                    <Iterate items={serverIds}>
+                        {(serverId) => (
+                            <Memo key={serverId}>
+                                <ServerListItem
+                                    serverId={serverId}
+                                    isFocused={getIsFocused(serverId)}
+                                    setCurrentFocusedId={setCurrentFocusedId}
+                                    tabIndex={getTabIndex(serverId)}
+                                />
+                            </Memo>
+                        )}
+                    </Iterate>
+                </div>
+            </Scrollable>
+
+            <Separator {...separatorProps}/>
+        </div>
     );
 };
