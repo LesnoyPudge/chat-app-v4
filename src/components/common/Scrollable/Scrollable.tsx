@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import './Scrollable.scss';
+import css from './Scrollable.module.scss';
 import { cn, createStyles } from '@utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { PropsWithInnerRef } from '@types';
@@ -14,10 +14,9 @@ const useScrollableDebug = (
         : () => null
 );
 
-const baseClassName = 'Scrollable';
-
 const styles = createStyles({
-    scrollable: 'max-h-[min(100%,100dvh)] max-w-[min(100%,100dvw)]',
+    // scrollable: 'max-h-[min(100%,100dvh)] max-w-[min(100%,100dvw)]',
+    scrollable: 'max-h-full max-w-full',
 });
 
 export namespace Scrollable {
@@ -77,7 +76,7 @@ export const Scrollable: FC<Scrollable.Props> = ({
     return (
         <div
             className={cn(
-                baseClassName,
+                css.Scrollable,
                 styles.scrollable,
                 className,
             )}

@@ -1,25 +1,9 @@
 import { useFunction } from '@lesnoypudge/utils-react';
 import { logger } from '@utils';
 import { useLayoutEffect, useRef } from 'react';
-import { getElementFillableSize, mountExpander } from '../utils';
+import { getElementFillableSize, getElementObject, mountExpander } from '../utils';
 
 
-
-type ElementObj = {
-    element: HTMLElement;
-    scrollHeight: number;
-    clientHeight: number;
-};
-
-const getElementObject = (
-    element: HTMLElement,
-): ElementObj => {
-    return {
-        element,
-        scrollHeight: element.scrollHeight,
-        clientHeight: element.clientHeight,
-    };
-};
 
 const useScrollableDebug = () => {
     const debugRef = useRef<HTMLDivElement>(null);

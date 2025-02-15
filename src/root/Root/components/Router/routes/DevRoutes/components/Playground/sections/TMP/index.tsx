@@ -45,11 +45,8 @@ export const TMP: FC = () => {
     // }, 3_000);
 
 
+
     return (
-        <div className='h-screen w-screen'>
-            <Scrollable className='flex flex-col gap-4 p-4'>
-                <JsonView data={JSON.stringify(state) ?? ''}/>
-            </Scrollable>
-        </div>
+        <JsonView data={JSON.stringify({ value: 'some' }) ?? ''}/>
     );
 };

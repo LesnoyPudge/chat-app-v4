@@ -1,3 +1,11 @@
+
+
+
+// allows scrollable parents to shrink
+* > :has(.Scrollable) {
+    min-height: 0;
+}
+
 .Scrollable {
     // direction?: 'horizontal' | 'vertical' | 'both';
     // withOppositeGutter?: boolean;

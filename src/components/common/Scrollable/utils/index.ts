@@ -50,3 +50,19 @@ export const getElementFillableSize = (element: HTMLElement) => {
         fillableWidth,
     };
 };
+
+type ElementObj = {
+    element: HTMLElement;
+    scrollHeight: number;
+    clientHeight: number;
+};
+
+export const getElementObject = (
+    element: HTMLElement,
+): ElementObj => {
+    return {
+        element,
+        scrollHeight: element.scrollHeight,
+        clientHeight: element.clientHeight,
+    };
+};

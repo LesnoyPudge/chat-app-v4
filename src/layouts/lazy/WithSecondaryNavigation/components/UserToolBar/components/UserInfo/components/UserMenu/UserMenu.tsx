@@ -126,16 +126,11 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
         };
     };
 
-    const setDefaultStatus = useFunction(getSetStatus('default'));
-    const setAfkStatus = useFunction(getSetStatus('afk'));
-    const setDndStatus = useFunction(getSetStatus('dnd'));
-    const setInvisibleStatus = useFunction(getSetStatus('invisible'));
-
     const statusToFn = useConst(() => ({
-        afk: setAfkStatus,
-        default: setDefaultStatus,
-        dnd: setDndStatus,
-        invisible: setInvisibleStatus,
+        afk: getSetStatus('afk'),
+        default: getSetStatus('default'),
+        dnd: getSetStatus('dnd'),
+        invisible: getSetStatus('invisible'),
     } satisfies Record<ExtraStatusNames, VoidFunction>));
 
     const copyName = useFunction(() => {

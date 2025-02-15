@@ -34,15 +34,11 @@ import { scenarios } from './Scenarios';
 
 
 
-const res = HttpResponse;
+const _res = HttpResponse;
 
 const apiError = {
-    badRequest: () => new res(null, {
-        status: HTTP_STATUS_CODES.BAD_REQUEST,
-    }) as never,
-    unauthorized: () => new res(null, {
-        status: HTTP_STATUS_CODES.UNAUTHORIZED,
-    }) as never,
+    badRequest: () => HTTP_STATUS_CODES.BAD_REQUEST,
+    unauthorized: () => HTTP_STATUS_CODES.UNAUTHORIZED,
 };
 
 type EndpointObject = {
@@ -54,46 +50,85 @@ type Auth = {
     id: string;
 };
 
+type HandlerReturn<_Response extends DefaultBodyType> = (
+    (StrictResponse<_Response> & { _: true })
+    | 'unhandled'
+    | ReturnType<T.ValueOf<typeof apiError>>
+);
+
+// type HandlerReturn<_Response extends NonNullable<DefaultBodyType>> = (
+//     (StrictResponse<_Response>) | 'unhandled'
+// );
+
 type Handler<
     _Request extends DefaultBodyType,
-    _Response extends DefaultBodyType,
+    _Response extends NonNullable<DefaultBodyType>,
 > = (props: {
     body: _Request;
     auth: Auth;
     request: StrictRequest<_Request>;
-}) => Promise<StrictResponse<_Response>> | 'unhandled';
+}) => HandlerReturn<_Response> | Promise<HandlerReturn<_Response>>;
+
+const jsonResponse = <
+    _Response extends NonNullable<DefaultBodyType>,
+>(response: _Response): HandlerReturn<_Response> => {
+    const result = _res.json(
+        response,
+    ) as StrictResponse<_Response> & { _: true };
+
+    result._ = true;
+
+    return result;
+};
+
+const toError = (status: number) => {
+    return new _res(null, { status });
+};
 
 const route = <
     _Request extends DefaultBodyType,
-    _Response extends DefaultBodyType,
+    _Response extends NonNullable<DefaultBodyType>,
 >(endpointObject: EndpointObject) => {
     return (...handlers: Handler<_Request, _Response>[]) => {
         const path = `${env._PUBLIC_SERVER_URL}${endpointObject.Path}`;
 
-        const auth: Auth = { id: '' };
-
         return http[endpointObject.Method](
             path,
             async ({ request }) => {
-                let result;
+                let result: HttpResponse = new _res();
 
                 await delay(1_500);
 
+                const auth = undefined as unknown as Auth;
                 const body = await request.json() as _Request;
                 const req = request as StrictRequest<_Request>;
+                const props = {
+                    body,
+                    auth,
+                    request: req,
+                } as Parameters<Handler<_Request, _Response>>[0];
 
-                for (const handler of handlers) {
-                    result = await handler({ body, auth, request: req });
+                for (const [index, handler] of handlers.entries()) {
+                    const handlerResult = await handler(props);
+
+                    if (handlerResult === 'unhandled') continue;
+
+                    if (typeof handlerResult === 'number') {
+                        return new _res(null, { status: handlerResult });
+                    }
+
+                    result = handlerResult;
                 }
 
-                return result as any;
+
+                return result;
             },
         );
     };
 };
 
-const withAuth: Handler<any, any> = ({ auth, request }) => {
-    const header = request.headers.get('Authorization');
+const withAuth: Handler<any, any> = (props) => {
+    const header = props.request.headers.get('Authorization');
     if (!header) {
         return apiError.unauthorized();
     }
@@ -103,7 +138,9 @@ const withAuth: Handler<any, any> = ({ auth, request }) => {
         return apiError.unauthorized();
     }
 
-    auth.id = tokenData.id;
+    props.auth = {
+        id: tokenData.id,
+    };
 
     return 'unhandled';
 };
@@ -133,7 +170,7 @@ const routes: HttpHandler[] = [
             const populatedUser = db.getById('user', user.id);
             invariant(populatedUser);
 
-            return res.json({
+            return jsonResponse({
                 userData: populatedUser,
                 ...getAppData(populatedUser.id),
             });
@@ -180,7 +217,7 @@ const routes: HttpHandler[] = [
             const populatedUser = db.getById('user', user.id);
             invariant(populatedUser);
 
-            return res.json({
+            return jsonResponse({
                 userData: populatedUser,
                 ...getAppData(populatedUser.id),
             });
@@ -221,7 +258,7 @@ const routes: HttpHandler[] = [
             const populatedUser = db.getById('user', user.id);
             invariant(populatedUser);
 
-            return res.json({
+            return jsonResponse({
                 userData: populatedUser,
                 ...getAppData(populatedUser.id),
             });
@@ -242,7 +279,7 @@ const routes: HttpHandler[] = [
 
             if (!server) return apiError.badRequest();
 
-            return res.json(server);
+            return jsonResponse(server);
         },
     ),
 
@@ -350,7 +387,7 @@ const routes: HttpHandler[] = [
                 roles: [defaultRole.id, adminRole.id],
             }));
 
-            return res.json(newServer);
+            return jsonResponse(newServer);
         },
     ),
 
@@ -360,13 +397,13 @@ const routes: HttpHandler[] = [
             await delay();
 
             const { fileId } = params as { fileId: string };
-            if (!fileId) return apiError.badRequest();
+            if (!fileId) return toError(apiError.badRequest());
 
             const file = db.getById('file', fileId);
-            if (!file) return apiError.badRequest();
+            if (!file) return toError(apiError.badRequest());
 
             const base64Data = file.base64.split(';base64,')[1];
-            if (!base64Data) return apiError.badRequest();
+            if (!base64Data) return toError(apiError.badRequest());
 
             const buffer = Uint8Array.from(
                 atob(base64Data),
@@ -374,7 +411,7 @@ const routes: HttpHandler[] = [
                 (char) => char.charCodeAt(0),
             );
 
-            return res.arrayBuffer(buffer, {
+            return _res.arrayBuffer(buffer, {
                 headers: {
                     'Content-Type': file.type,
                     'Content-Length': buffer.byteLength.toString(),
@@ -393,7 +430,7 @@ const routes: HttpHandler[] = [
                 body.channelIds,
             );
 
-            return res.json(channels);
+            return jsonResponse(channels);
         },
     ),
 
@@ -407,7 +444,7 @@ const routes: HttpHandler[] = [
                 body.conversationIds,
             );
 
-            return res.json(conversations);
+            return jsonResponse(conversations);
         },
     ),
 
@@ -421,7 +458,7 @@ const routes: HttpHandler[] = [
                 body.roleIds,
             );
 
-            return res.json(roles);
+            return jsonResponse(roles);
         },
     ),
 
@@ -435,7 +472,7 @@ const routes: HttpHandler[] = [
                 body.serverIds,
             );
 
-            return res.json(servers);
+            return jsonResponse(servers);
         },
     ),
 
@@ -449,7 +486,7 @@ const routes: HttpHandler[] = [
                 body.textChatIds,
             );
 
-            return res.json(textChats);
+            return jsonResponse(textChats);
         },
     ),
 
@@ -463,7 +500,7 @@ const routes: HttpHandler[] = [
                 body.userIds,
             );
 
-            return res.json(users);
+            return jsonResponse(users);
         },
     ),
 
@@ -471,6 +508,7 @@ const routes: HttpHandler[] = [
         E_User.ProfileUpdate.RequestBody,
         E_User.ProfileUpdate.Response
     >(E_User.ProfileUpdate)(
+        withAuth,
         async ({ auth, body }) => {
             const user = db.update('user', auth.id, (userToUpdate) => {
                 if (
@@ -508,7 +546,9 @@ const routes: HttpHandler[] = [
                 return userToUpdate;
             });
 
-            return res.json(user);
+            if (!user) return apiError.badRequest();
+
+            return jsonResponse(user);
         },
     ),
 ];

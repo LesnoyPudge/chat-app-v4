@@ -1,30 +1,4 @@
 @layer base {
-    * {
-        min-width: 0;
-        outline-width: 3px;
-        outline-style: solid;
-        outline-color: transparent;
-        color: inherit;
-        color-scheme: light dark;
-        // overflow: hidden;
-        // flex-shrink: 0;
-        // flex-grow: 1;
-        // flex-basis: 0%;
-
-        &:focus:not(:focus-visible) {
-            @apply outline-transparent;
-        }
-
-        &:focus-visible {
-            @apply outline-focus;
-        }
-    }
-
-    [data-hidden='true'],
-    [data-focus-guard='true'] {
-        @apply outline-transparent;
-    }
-
     html {
         background-color: theme('backgroundColor.primary.500');
         color: theme('textColor.color.base');
@@ -34,53 +8,95 @@
         font-stretch: normal;
         font-size: theme('fontSize.base');
         line-height: theme('lineHeight.6');
-
         text-rendering: optimizeLegibility;
         word-break: break-word;
         overflow-wrap: break-word;
+        color-scheme: dark light;
 
-        &[data-outline='true'] * {
+        &[data-outline=true] * {
             box-shadow:
                 inset 0 0 0px 0.5px red,
                 0 0 0px 0.5px red !important;
         }
 
-        &[data-background='true'] * {
-            background-color: rgba($color: limegreen, $alpha: 0.03) !important;
+        &[data-background=true] * {
+            background-color: rgba(
+                $color: limegreen, 
+                $alpha: 0.03
+            ) !important;
         }
     }
 
-    #app-root,
-    #overlay-root {
-        position: fixed;
-        inset: 0;
-        overflow: hidden;
-        contain: strict;
+    * {
+        min-width: 0;
+        color: inherit;
+        // outline-width: 3px;
+        // outline-style: solid;
+        // outline-color: transparent;
+
+        // &:focus:not(:focus-visible) {
+        //     @apply outline-transparent;
+        // }
+
+        // &:focus-visible {
+        //     @apply outline-focus;
+        // }
     }
 
-    #app-root {
-        @apply z-10;
-    }
+    button, 
+    a, 
+    input, 
+    textarea, 
+    [tabindex] {
+        outline-width: 3px;
+        outline-style: solid;
+        outline-color: transparent;
 
-    #overlay-root {
-        @apply z-20 pointer-events-none;
-    }
+        &:focus:not(:focus-visible) {
+            outline-color: theme('colors.transparent');
+        }
 
-    button,
-    [role='button'] {
-        &:disabled {
-            @apply cursor-not-allowed;
+        &:focus-visible {
+            outline-color: theme('colors.focus');
+        }
+
+        &:disabled,
+        [aria-disabled=true] {
+            cursor: not-allowed;
+        }
+
+        &[type=hidden] {
+            @apply sr-only;
         }
     }
 
-    input[type='hidden'] {
-        @apply sr-only;
+    // react-focus-lock's focus guards
+    [data-focus-guard=true] {
+        outline-color: theme('colors.transparent');
     }
+
+    // Optional defaults to change display value from block to flex.
+    // div,
+    // form,
+    // section,
+    // article,
+    // header,
+    // main,
+    // body,
+    // footer,
+    // ol,
+    // ul,
+    // li,
+    // aside,
+    // nav {
+    //     display: flex;
+    //     flex-direction: column;
+    // }
 
     img,
     video,
     canvas {
-        @apply overflow-hidden;
+        overflow: hidden;
     }
 
     input,
@@ -92,14 +108,27 @@
         font-size: inherit;
         padding: 0px;
         resize: none;
-
-        &:disabled {
-            @apply cursor-not-allowed;
-        }
     }
 
     img[alt] {
         text-indent: -9999px;
+    }
+
+    #app-root,
+    #overlay-root {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        contain: strict;
+    }
+
+    #app-root {
+        z-index: 10;
+    }
+
+    #overlay-root {
+        z-index: 20;
+        pointer-events: none;
     }
 
     @media (prefers-reduced-motion: reduce) {

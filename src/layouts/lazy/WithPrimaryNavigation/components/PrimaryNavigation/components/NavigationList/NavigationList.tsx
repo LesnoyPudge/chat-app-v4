@@ -11,8 +11,6 @@ import { useTrans } from '@i18n';
 
 
 const styles = createStyles({
-    wrapper: '',
-    // wrapper: 'flex flex-col overflow-hidden',
     scrollable: 'py-2',
     list: 'flex flex-col gap-2',
 });
@@ -87,10 +85,10 @@ export const NavigationList: FC = () => {
         thickness: 2,
     };
 
-    // if (!showServersOrConversations) return null;
+    if (!showServersOrConversations) return null;
 
     return (
-        <div className={styles.wrapper}>
+        <div>
             <Separator {...separatorProps}/>
 
             <Scrollable
