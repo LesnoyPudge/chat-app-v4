@@ -81,7 +81,7 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
         void navigateTo.conversation({ conversationId });
     });
 
-    const isUserAndConversationExist = userTarget && conversation;
+    const isUserAndConversationExist = !!userTarget && !!conversation;
 
     return (
         <WrapperWithBullet isActive={isInConversation}>
@@ -96,7 +96,6 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
                 label={userTarget?.name}
                 role='menuitem'
                 isActive={isInConversation}
-                isDisabled={!isUserAndConversationExist}
                 innerRef={buttonRef}
                 onLeftClick={navigateToServer}
                 onAnyClick={setFocused}
@@ -112,7 +111,7 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
                 </Avatar.WithBadge.Notifications>
             </Button>
 
-            <If condition={!!isUserAndConversationExist}>
+            <If condition={isUserAndConversationExist}>
                 <Tooltip
                     preferredAlignment='right'
                     leaderElementRef={buttonRef}

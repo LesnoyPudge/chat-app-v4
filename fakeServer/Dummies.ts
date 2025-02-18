@@ -115,15 +115,21 @@ export class Dummies {
     }
 
     static user(
-        data: Pick<
-            ClientEntities.User.Base,
-            'id'
-            | 'login'
-            | 'password'
-            | 'name'
-            | 'accessToken'
-            | 'refreshToken'
-        >,
+        data: (
+            Pick<
+                ClientEntities.User.Base,
+                'id'
+                | 'login'
+                | 'password'
+                | 'name'
+                | 'accessToken'
+                | 'refreshToken'
+            >
+            & Partial<Pick<
+                ClientEntities.User.Base,
+                'status'
+            >>
+        ),
     ): ClientEntities.User.Base {
         return {
             ...data,
@@ -133,11 +139,10 @@ export class Dummies {
             conversations: [],
             defaultAvatar: inRange(1, 4) as 1 | 2 | 3 | 4,
             extraStatus: 'default',
-            friendRequests: {
-                incoming: [],
-                outgoing: [],
-            },
+            incomingFriendRequests: [],
+            outgoingFriendRequests: [],
             friends: [],
+            mutedConversations: [],
             hiddenConversations: [],
             isDeleted: false,
             lastSeenMessages: [],
@@ -149,7 +154,7 @@ export class Dummies {
                 messageGroupSpacing: 20,
                 theme: 'dark',
             },
-            status: 'offline',
+            status: data.status ?? 'offline',
         };
     }
 

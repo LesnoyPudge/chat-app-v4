@@ -32,8 +32,11 @@ export const cn = (...args: Args): string => {
     if (
         args.length === 2
         && (args[1] === undefined || args[1] === '')
-        && typeof args[0] === 'string'
-    ) return args[0];
+    ) {
+        if (typeof args[0] === 'string') return args[0];
+
+        return '';
+    };
 
     return customTwMerge(clsx(args));
 };

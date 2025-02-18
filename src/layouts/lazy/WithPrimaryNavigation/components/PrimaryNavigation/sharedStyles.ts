@@ -15,7 +15,7 @@ const styles = createStyles({
             overflow-hidden 
             rounded-3xl 
             bg-primary-300 
-            transition-all 
+            transition-[transform,background-color]
             duration-75
             ease-linear 
             data-[loading=true]:animate-pulse

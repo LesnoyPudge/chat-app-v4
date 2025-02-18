@@ -6,42 +6,55 @@ export namespace ClientEntities {
     export namespace User {
         export type Id = string;
 
+        export type DefaultAvatar = 1 | 2 | 3 | 4;
+
+        export type Settings = {
+            theme: 'auto' | 'dark' | 'light';
+            messageFontSize: 12 | 14 | 16 | 18 | 20;
+            messageGroupSpacing: 16 | 20;
+            messageDisplayMode: 'cozy' | 'compact';
+        };
+
+        export type Status = 'online' | 'offline';
+
+        export type ExtraStatus = 'default' | 'afk' | 'dnd' | 'invisible';
+
+        export type LastSeenMessage = {
+            textChatId: TextChat.Id;
+            lastIndex: number;
+        };
+
+        export type IncomingFriendRequest = {
+            from: Id;
+            createdAt: number;
+        };
+
+        export type OutgoingFriendRequest = {
+            to: Id;
+            createdAt: number;
+        };
+
         export type Base = {
             id: Id;
             login: string;
             password: string;
             name: string;
-            defaultAvatar: 1 | 2 | 3 | 4;
+            defaultAvatar: DefaultAvatar;
             avatar: File.Id | null;
-            settings: {
-                theme: 'auto' | 'dark' | 'light';
-                messageFontSize: 12 | 14 | 16 | 18 | 20;
-                messageGroupSpacing: 16 | 20;
-                messageDisplayMode: 'cozy' | 'compact';
-            };
-            status: 'online' | 'offline';
-            extraStatus: 'default' | 'afk' | 'dnd' | 'invisible';
+            settings: Settings;
+            status: Status;
+            extraStatus: ExtraStatus;
             accessCode: string;
             friends: Id[];
             blocked: Id[];
             servers: Server.Id[];
             mutedServers: Server.Id[];
             conversations: Conversation.Id[];
+            mutedConversations: Conversation.Id[];
             hiddenConversations: Conversation.Id[];
-            friendRequests: {
-                incoming: {
-                    from: Id;
-                    createdAt: number;
-                }[];
-                outgoing: {
-                    to: Id;
-                    createdAt: number;
-                }[];
-            };
-            lastSeenMessages: {
-                textChatId: TextChat.Id;
-                lastIndex: number;
-            }[];
+            incomingFriendRequests: IncomingFriendRequest[];
+            outgoingFriendRequests: OutgoingFriendRequest[];
+            lastSeenMessages: LastSeenMessage[];
             isDeleted: boolean;
             refreshToken: string;
             accessToken: string;

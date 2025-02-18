@@ -47,6 +47,9 @@ export const TMP: FC = () => {
 
 
     return (
-        <JsonView data={JSON.stringify({ value: 'some' }) ?? ''}/>
+        <JsonView
+            className='[&>pre]:max-h-dvh [&>pre]:max-w-[100dvw] [&>pre]:overflow-auto'
+            data={JSON.stringify(state) ?? ''}
+        />
     );
 };

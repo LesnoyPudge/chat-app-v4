@@ -15,4 +15,15 @@ https://mswjs.io/docs/getting-started
 -? стоит ли оставлять useOptimisticQueue? или сделать через rtkquery (
 составить таблицу запросов id запроса, при успешном убивать все записи до.
 при ошибке возвращать последнее валидное значение из таблицы)
-- mute/unmute добавить реквесты
+- добавить conversations с новыми сообщениями в populate
+- добавить autoHide к Scrollable и сделать такой 
+скролл у PrimaryNavigation, удалить size='hidden'
+-? PrimaryNavigation role 'menu'??? change to ul?
+-? remove useGetManyQuery for entities that is received through socket
+- add sorting by createTimestamp to all EntityAdapters
+-? populate VoiceChats
+-? change JsonView на https://www.npmjs.com/package/@microlink/react-json-view
+- there is no conversations with unread messages
+- PrimaryNavigation items has too quick animation
+-!!! i try to fetch conversations with notifications in PrimaryNavigation
+but i dont have info about conversation messages

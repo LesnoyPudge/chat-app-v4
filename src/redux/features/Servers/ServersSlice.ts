@@ -102,8 +102,9 @@ export const { StoreSelectors } = createStoreSelectors({
 
     selectIsMutedById: (state, id: string): boolean => {
         const { mutedServers } = Users.StoreSelectors.selectMe()(state);
+        const mutedServerIdSet = new Set(mutedServers);
 
-        const isMuted = mutedServers.includes(id);
+        const isMuted = mutedServerIdSet.has(id);
 
         return isMuted;
     },

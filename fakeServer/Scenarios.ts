@@ -1,13 +1,13 @@
-import { socket } from '@fakeSocket';
 import { db } from './FakeDB';
 import { Dummies } from './Dummies';
 import { faker } from '@faker-js/faker';
-import { chance, coinFlip, inRange, invariant } from '@lesnoypudge/utils';
+import { catchErrorAsync, chance, coinFlip, inRange, invariant } from '@lesnoypudge/utils';
 import { v4 as uuid } from 'uuid';
 import { ClientEntities } from '@types';
-import { RichTextEditor } from '@components';
+import type { RichTextEditor } from '@components';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
 import { logger } from '@utils';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
@@ -35,6 +35,23 @@ const createUser = () => {
 
     user.status = coinFlip() ? 'online' : 'offline';
 
+    if (chance(1 / 4)) {
+        user.extraStatus = 'afk';
+        return user;
+    }
+
+    if (chance(1 / 4)) {
+        user.extraStatus = 'dnd';
+        return user;
+    }
+
+    if (chance(1 / 4)) {
+        user.extraStatus = 'invisible';
+        return user;
+    }
+
+    user.extraStatus = 'default';
+
     return user;
 };
 
@@ -43,13 +60,26 @@ const createMessage = (props: Pick<
     'author' | 'conversation' | 'channel' | 'server' | 'index' | 'textChat'
 >) => {
     const content = JSON.stringify(
-        RichTextEditor.Modules.Utils.createInitialValue(
-            faker.lorem.paragraph(),
-        ),
+        [{
+            type: 'paragraph',
+            children: [{ text: faker.lorem.paragraph(inRange(1, 3)) }],
+        }] satisfies RichTextEditor.Types.Nodes,
     );
 
-    const timeDiff = minutesToMilliseconds(3 * props.index);
-    const timestamp = Date.now() - hoursToMilliseconds(24 * 10) + timeDiff;
+    const timeDiff = minutesToMilliseconds(
+        Math.min(1, inRange(0, 3)) * props.index,
+    );
+
+    const hoursPadding = hoursToMilliseconds(24 * 10);
+    const createdAt = Date.now() - hoursPadding + timeDiff;
+    const timestamp = Math.min(
+        Date.now(),
+        createdAt,
+    );
+
+    if (createdAt >= Date.now()) {
+        logger.warn('created too much messages, need to change timestamp generation');
+    }
 
     if (props.conversation) {
         const message = Dummies.message({
@@ -98,7 +128,7 @@ const createServer = (myId: string) => {
 
     owner.servers = [serverId];
 
-    const members = createArray(inRange(3, 10)).map(() => {
+    const members = createArray(inRange(mul(3), mul(10))).map(() => {
         const user = createUser();
 
         user.servers = [serverId];
@@ -106,7 +136,7 @@ const createServer = (myId: string) => {
         return user;
     });
 
-    const roles = createArray(inRange(2, 5)).map(() => {
+    const roles = createArray(inRange(mul(2), mul(5))).map(() => {
         return Dummies.role({
             avatar: null,
             color: faker.color.rgb(),
@@ -126,8 +156,8 @@ const createServer = (myId: string) => {
         });
     });
 
-    const textChatIds = createArray(inRange(1, 5)).map(() => uuid());
-    const voiceChatIds = createArray(inRange(1, 5)).map(() => uuid());
+    const textChatIds = createArray(inRange(mul(1), mul(5))).map(() => uuid());
+    const voiceChatIds = createArray(inRange(mul(1), mul(5))).map(() => uuid());
 
     const textChannelIds = createArray(textChatIds.length).map(() => uuid());
     const voiceChannelIds = createArray(voiceChatIds.length).map(() => uuid());
@@ -136,7 +166,7 @@ const createServer = (myId: string) => {
         const id = textChatIds[index];
         invariant(id);
 
-        const messages = createArray(inRange(0, 15)).map((_, index) => {
+        const messages = createArray(inRange(0, mul(25))).map((_, index) => {
             const member = members[inRange(0, members.length - 1)];
             invariant(member);
 
@@ -241,7 +271,7 @@ const createConversation = (myId: string, userId: string) => {
         conversation: id,
     });
 
-    const messages = createArray(inRange(0, 15)).map((_, index) => {
+    const messages = createArray(inRange(0, mul(15))).map((_, index) => {
         const author = chance(0.5) ? myId : userId;
 
         return createMessage({
@@ -276,92 +306,320 @@ const createConversation = (myId: string, userId: string) => {
     };
 };
 
-class Scenarios {
-    populate(myId: string) {
-        try {
-            this._populate(myId);
-            logger.log('Database populated');
-        } catch {
-            logger.log('Database population failed');
-            db.clearStorage();
+const flattenPopulated = <
+    _Prefix extends string,
+    _Input extends Record<string, T.UnknownRecord | T.UnknownRecord[]>,
+>(
+    prefix: _Prefix,
+    input: _Input[],
+) => {
+    const result = {} as {
+        [_Key in keyof _Input as _Key extends string ? (
+            `${_Prefix}${_Key}`
+        ) : never]: _Input[_Key] extends any[] ? _Input[_Key] : _Input[_Key][]
+    };
+
+    for (const obj of input) {
+        for (const key of Object.keys(obj)) {
+            const newKey = `${prefix}${key}` as keyof typeof result;
+            const value = obj[key];
+            invariant(value !== undefined);
+
+            const oldValue = (
+                result[newKey] === undefined
+                    ? []
+                    : Array.isArray(result[newKey])
+                        ? result[newKey]
+                        : [result[newKey]]
+            );
+
+            result[newKey] = [
+                ...oldValue,
+                ...(Array.isArray(value) ? value : [value]),
+            ] as T.ValueOf<typeof result>;
         }
     }
 
-    _populate(myId: string) {
-        const me = db.getById('user', myId);
-        invariant(me);
+    return result;
+};
 
-        db.clearStorage();
+type PopulateOptions = {
+    myId: string;
+    size: 'small' | 'medium' | 'large';
+};
 
-        const friends = createArray(10).map(() => {
+const sizeNameToMultiplier = {
+    small: 1,
+    medium: 3,
+    large: 10,
+};
+
+let sizeMultiplier = sizeNameToMultiplier.small;
+
+const mul = (value: number) => {
+    return value * sizeMultiplier;
+};
+
+class Scenarios {
+    async populate(options: PopulateOptions) {
+        const originalState = db.getStorageClone();
+        sizeMultiplier = sizeNameToMultiplier[options.size];
+
+        logger.log(`Database is populating with size: ${options.size}`);
+
+        const [_, error] = await catchErrorAsync(() => this._populate(options));
+
+        if (!error) {
+            logger.log(`Database successfully populated`);
+            return;
+        }
+
+        await catchErrorAsync(() => db.clearStorage());
+
+        logger.log('Database population failed', error);
+        logger.log('Restoring previous state');
+
+        await catchErrorAsync(() => db.set(originalState));
+    }
+
+    async _populate({ myId }: PopulateOptions) {
+        const oldMe = db.getById('user', myId);
+        invariant(oldMe);
+
+        await db.clearStorage();
+
+        const me = Dummies.user(oldMe);
+
+        const friends = createArray(mul(3)).map(() => {
             const user = createUser();
 
             user.friends = [me.id];
+            me.friends.push(user.id);
 
             return user;
         });
 
-        me.friends = extractIds(friends);
+        const {
+            blocked_user,
+        } = flattenPopulated('blocked_', createArray(mul(3)).map(() => {
+            const user = createUser();
 
-        const popServers = createArray(10).map(() => {
+            me.blocked.push(user.id);
+
+            return {
+                user,
+            };
+        }));
+
+        const {
+            IFR_user,
+        } = flattenPopulated('IFR_', createArray(mul(3)).map(() => {
+            const user = createUser();
+            const time = Date.now() - hoursToMilliseconds(inRange(1, 100));
+
+            user.outgoingFriendRequests = [{
+                to: me.id,
+                createdAt: time,
+            }];
+
+            const request: ClientEntities.User.IncomingFriendRequest = {
+                from: user.id,
+                createdAt: time,
+            };
+
+            me.incomingFriendRequests.push(request);
+
+            return {
+                request,
+                user,
+            };
+        }));
+
+        const {
+            OFR_user,
+        } = flattenPopulated('OFR_', createArray(mul(3)).map(() => {
+            const user = createUser();
+            const time = Date.now() - hoursToMilliseconds(inRange(1, 100));
+
+            user.incomingFriendRequests = [{
+                from: me.id,
+                createdAt: time,
+            }];
+
+            const request: ClientEntities.User.OutgoingFriendRequest = {
+                to: user.id,
+                createdAt: time,
+            };
+
+            me.outgoingFriendRequests.push(request);
+
+            return {
+                user,
+                request,
+            };
+        }));
+
+        const {
+            servers_members,
+            servers_messages,
+            servers_owner,
+            servers_roles,
+            servers_server,
+            servers_textChannels,
+            servers_textChats,
+            servers_voiceChannels,
+            servers_voiceChats,
+        } = flattenPopulated('servers_', createArray(mul(3)).map(() => {
             const server = createServer(me.id);
 
             me.servers.push(server.server.id);
 
             return server;
+        }));
+
+        const {
+            mutedServers_members,
+            mutedServers_messages,
+            mutedServers_owner,
+            mutedServers_roles,
+            mutedServers_server,
+            mutedServers_textChannels,
+            mutedServers_textChats,
+            mutedServers_voiceChannels,
+            mutedServers_voiceChats,
+        } = flattenPopulated('mutedServers_', createArray(mul(2)).map(() => {
+            const server = createServer(me.id);
+
+            me.mutedServers.push(server.server.id);
+
+            return server;
+        }));
+
+        const friendsWithConv = createArray(mul(3)).map(() => {
+            const user = createUser();
+
+            user.friends = [me.id];
+            me.friends.push(user.id);
+
+            return user;
         });
 
-        const members = popServers.flatMap((item) => item.members);
-        const servers = popServers.flatMap((item) => item.server);
-        const owners = popServers.flatMap((item) => item.owner);
-        const roles = popServers.flatMap((item) => item.roles);
-        const textChats = popServers.flatMap((item) => item.textChats);
-        const voiceChats = popServers.flatMap((item) => item.voiceChats);
-        const textChannels = popServers.flatMap((item) => item.textChannels);
-        const voiceChannels = popServers.flatMap((item) => item.voiceChannels);
-        const messages = popServers.flatMap((item) => item.messages);
+        const {
+            conv_conversation,
+            conv_messages,
+            conv_textChat,
+            conv_voiceChat,
+        } = flattenPopulated('conv_', friendsWithConv.map(({ id }) => {
+            const conversation = createConversation(myId, id);
 
-        const popConv = friends.map(({ id }) => {
-            return createConversation(myId, id);
+            me.conversations.push(conversation.conversation.id);
+
+            return conversation;
+        }));
+
+        const friendsWithMutedConv = createArray(mul(3)).map(() => {
+            const user = createUser();
+
+            user.friends = [me.id];
+            me.friends.push(user.id);
+
+            return user;
         });
 
-        const conversations = popConv.flatMap((item) => item.conversation);
-        const textChats2 = popConv.flatMap((item) => item.textChat);
-        const voiceChats2 = popConv.flatMap((item) => item.voiceChat);
-        const messages2 = popConv.flatMap((item) => item.messages);
+        const {
+            mutedConv_conversation,
+            mutedConv_messages,
+            mutedConv_textChat,
+            mutedConv_voiceChat,
+        } = flattenPopulated('mutedConv_', friendsWithMutedConv.map(({ id }) => {
+            const conversation = createConversation(myId, id);
 
-        db.set({
+            me.mutedConversations.push(conversation.conversation.id);
+
+            return conversation;
+        }));
+
+        const friendsWithHiddenConv = createArray(mul(3)).map(() => {
+            const user = createUser();
+
+            user.friends = [me.id];
+            me.friends.push(user.id);
+
+            return user;
+        });
+
+        const {
+            hiddenConv_conversation,
+            hiddenConv_messages,
+            hiddenConv_textChat,
+            hiddenConv_voiceChat,
+        } = flattenPopulated('hiddenConv_', friendsWithHiddenConv.map(({ id }) => {
+            const conversation = createConversation(myId, id);
+
+            me.mutedConversations.push(conversation.conversation.id);
+
+            return conversation;
+        }));
+
+        await db.set({
             user: combineToTable([
                 me,
                 ...friends,
-                ...members,
-                ...owners,
+                ...friendsWithConv,
+                ...friendsWithHiddenConv,
+                ...servers_members,
+                ...servers_owner,
+                ...mutedServers_owner,
+                ...mutedServers_members,
+                ...IFR_user,
+                ...OFR_user,
+                ...blocked_user,
             ]),
             channel: combineToTable([
-                ...textChannels,
-                ...voiceChannels,
+                ...servers_textChannels,
+                ...servers_voiceChannels,
+                ...mutedServers_textChannels,
+                ...mutedServers_voiceChannels,
             ]),
             conversation: combineToTable([
-                ...conversations,
+                ...conv_conversation,
+                ...hiddenConv_conversation,
+                ...mutedConv_conversation,
             ]),
             file: {},
             message: combineToTable([
-                ...messages,
-                ...messages2,
+                ...servers_messages,
+                ...mutedServers_messages,
+                ...mutedServers_messages,
+                ...conv_messages,
+                ...hiddenConv_messages,
+                ...mutedConv_messages,
             ]),
             role: combineToTable([
-                ...roles,
+                ...servers_roles,
+                ...mutedServers_roles,
+                ...mutedServers_roles,
             ]),
             server: combineToTable([
-                ...servers,
+                ...servers_server,
+                ...mutedServers_server,
+                ...mutedServers_server,
             ]),
             textChat: combineToTable([
-                ...textChats,
-                ...textChats2,
+                ...servers_textChats,
+                ...mutedServers_textChats,
+                ...mutedServers_textChats,
+                ...conv_textChat,
+                ...mutedConv_textChat,
+                ...hiddenConv_textChat,
             ]),
             voiceChat: combineToTable([
-                ...voiceChats,
-                ...voiceChats2,
+                ...servers_voiceChats,
+                ...mutedServers_voiceChats,
+                ...mutedServers_voiceChats,
+                ...conv_voiceChat,
+                ...mutedConv_voiceChat,
+                ...hiddenConv_voiceChat,
             ]),
         });
 

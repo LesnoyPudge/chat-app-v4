@@ -20,9 +20,14 @@ const styles = createStyles({
 });
 
 export namespace Scrollable {
+    type TODOProps = {
+        autoHide?: boolean;
+    };
+
     type StableProps = (
         RT.PropsWithChildrenAndClassName
         & PropsWithInnerRef<'div'>
+        & TODOProps
         & {
             withoutGutter?: boolean;
             label?: string;
@@ -55,9 +60,13 @@ export const Scrollable: FC<Scrollable.Props> = ({
     size = 'default',
     withOppositeGutter = false,
     withoutGutter = false,
+    autoHide = false,
     children,
 }) => {
-    const debugRef = useScrollableDebug();
+    const debugRef = useScrollableDebug({
+        autoHide,
+        size,
+    });
 
     const notHorizontal = direction !== 'horizontal';
     const withGutter = !withoutGutter;

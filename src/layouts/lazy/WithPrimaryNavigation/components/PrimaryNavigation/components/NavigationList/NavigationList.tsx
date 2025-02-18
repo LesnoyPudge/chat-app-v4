@@ -99,7 +99,7 @@ export const NavigationList: FC = () => {
                     className={styles.list}
                     aria-label={t('PrimaryNavigation.NavigationList.label')}
                     ref={wrapperRef}
-                    role='menubar'
+                    role='menu'
                 >
                     <If condition={showConversations}>
                         <Iterate items={sortedConversationIds}>

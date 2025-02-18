@@ -5,6 +5,7 @@
     "ApiError.NOT_FOUND": "Не найдено",
     "ApiError.UNAUTHORIZED": "Не авторизован",
     "Avatar.alt": "аватар",
+    "COMMON.Hide": "Скрыть",
     "COMMON.Loading": "Загрузка",
     "COMMON.Settings": "Настройки",
     "ConversationContextMenu.hideButton.text": "Скрыть сообщения",
@@ -12,6 +13,12 @@
     "ConversationContextMenu.NotificationButton.text.mute": "Отключить уведомления",
     "ConversationContextMenu.NotificationButton.text.unmute": "Включить уведомления",
     "ConversationContextMenu.readNotificationsButton.text": "Очистить уведомления",
+    "ConversationNavigation.ConversationList.heading": "Личные сообщения",
+    "ConversationNavigation.ConversationList.label": "Список личных сообщений",
+    "ConversationNavigation.Header.navigationButton.label": "Перейти к спискам друзей",
+    "ConversationNavigation.Header.title": "Друзья",
+    "ConversationNavigation.Item.hideButton.label": "Скрыть личные сообщения с {{name}}",
+    "ConversationNavigation.Item.navigateToMessagesButton.label": "Перейти к личным сообщениям с {{name}}",
     "CreateServerModal.CancelButton.text": "Отмена",
     "CreateServerModal.CreateServerOrFollowInvitationTab.goToCreateServerButton.text": "Перейти к созданию",
     "CreateServerModal.CreateServerOrFollowInvitationTab.goToFollowInvitationButton.text": "Воспользуйтесь приглашением",
@@ -89,5 +96,6 @@
     "UserMenu.label": "Меню действий пользователя",
     "ValidationErrors.badValue": "Указано некорректное значение",
     "ValidationErrors.invalidEmail": "Некорректный e-mail",
-    "ValidationErrors.required": "Значение не указано"
+    "ValidationErrors.required": "Значение не указано",
+    "WithTopBar.MobileMenuButton.label": "Перейти к меню"
 }

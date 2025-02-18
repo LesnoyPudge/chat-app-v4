@@ -155,6 +155,6 @@ export const useNavigator = () => {
         stableMyLocationIs,
         myLocationIs,
         navigateTo,
-        // navigate,
+        navigate,
     };
 };

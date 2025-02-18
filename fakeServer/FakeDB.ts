@@ -1,28 +1,15 @@
-
 /* eslint-disable @typescript-eslint/no-dynamic-delete */
 import { socket } from '@fakeSocket';
-import { merge, parseJSON } from '@lesnoypudge/utils';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { invariant, merge } from '@lesnoypudge/utils';
 import { ClientEntities } from '@types';
-
-
-
-type SettableData = (
-    ClientEntities.Channel.Base
-    | ClientEntities.Conversation.Base
-    | ClientEntities.File.Base
-    | ClientEntities.Message.Base
-    | ClientEntities.Role.Base
-    | ClientEntities.Server.Base
-    | ClientEntities.TextChat.Base
-    | ClientEntities.User.Base
-    | ClientEntities.VoiceChat.Base
-);
+import { env } from '@vars';
+import localforage from 'localforage';
 
 
 
 export namespace FakeDB {
     export type Options = {
-        localStorage?: globalThis.Storage;
         socket?: typeof socket;
     };
 
@@ -40,36 +27,55 @@ export namespace FakeDB {
 }
 
 export class FakeDB {
-    private storage: FakeDB.Storage;
+    private storage: FakeDB.Storage | undefined;
     private version: number;
     private dbName: string;
-    private localStorage: globalThis.Storage | undefined;
+    private externalStorage: LocalForage | undefined;
 
-    constructor(options?: FakeDB.Options) {
+    constructor(_: FakeDB.Options) {
         this.version = 1;
         this.dbName = `db-${this.version}`;
-        this.localStorage = options?.localStorage;
+        this.externalStorage = localforage;
 
-        const db = this.localStorage?.getItem(this.dbName);
+        this.externalStorage.config({
+            // driver: localforage.WEBSQL, // Force WebSQL; same as using setDriver()
+            name: env._PUBLIC_APP_NAME,
+            version: this.version,
+            // size: 4_980_736, // Size of database, in bytes. WebSQL-only for now.
+            storeName: this.dbName, // Should be alphanumeric, with underscores.
+            // description: 'some description',
+        });
+    }
 
-        if (db) {
-            const parsedDB = parseJSON(db) as FakeDB.Storage;
-            this.storage = parsedDB;
-            return;
+    async init() {
+        invariant(this.externalStorage);
+
+        const parsedDB = await this.externalStorage.getItem(this.dbName);
+
+        if (parsedDB) {
+            this.storage = parsedDB as FakeDB.Storage;
+            return this;
         }
 
         this.storage = this.createEmptyStorage();
 
-        this.saveStorage();
+        await this.saveStorage();
+
+        return this;
     }
 
-    private saveStorage() {
-        this.localStorage?.setItem(this.dbName, JSON.stringify(this.storage));
+    private async saveStorage() {
+        invariant(this.externalStorage);
+
+        await this.externalStorage.setItem(
+            this.dbName,
+            this.storage,
+        );
     }
 
-    clearStorage() {
+    async clearStorage() {
         this.storage = this.createEmptyStorage();
-        this.saveStorage();
+        await this.saveStorage();
     }
 
     createEmptyStorage() {
@@ -86,53 +92,73 @@ export class FakeDB {
         };
     }
 
-    getStorageClone() {
+    getStorageClone(): FakeDB.Storage {
+        invariant(this.storage);
+
         return structuredClone(this.storage);
     }
 
-    set(data: Partial<FakeDB.Storage>) {
+    async set(data: Partial<FakeDB.Storage>) {
+        invariant(this.storage);
+
         this.storage = merge(this.storage, data) as FakeDB.Storage;
-        this.saveStorage();
+        await this.saveStorage();
 
         return this.storage;
     }
 
-    create<
+    async create<
         _Key extends keyof FakeDB.Storage,
-    >(tableKey: _Key, data: FakeDB.Storage[_Key][string]): FakeDB.Storage[_Key][string] {
+    >(
+        tableKey: _Key,
+        data: FakeDB.Storage[_Key][string],
+    ): Promise<FakeDB.Storage[_Key][string]> {
+        invariant(this.storage);
+
         this.storage[tableKey][data.id] = data;
-        this.saveStorage();
+        await this.saveStorage();
 
         return data;
     }
 
-    update<
+    async update<
         _Key extends keyof FakeDB.Storage,
     >(
         tableKey: _Key,
         id: string,
-        fn: (item: FakeDB.Storage[_Key][string]) => FakeDB.Storage[_Key][string],
-    ): FakeDB.Storage[_Key][string] | undefined {
+        fn: (item: FakeDB.Storage[_Key][string]) => (
+            T.Promisable<FakeDB.Storage[_Key][string]>
+        ),
+    ): Promise<FakeDB.Storage[_Key][string] | undefined> {
+        invariant(this.storage);
+
         const item = this.storage[tableKey][id] as FakeDB.Storage[_Key][string] | undefined;
         if (!item) return undefined;
 
         const updatedItem = {
             ...item,
-            ...fn(item),
+            ...await fn(item),
         };
 
         this.storage[tableKey][id] = updatedItem;
-        this.saveStorage();
+
+        await this.saveStorage();
 
         return updatedItem;
     }
 
-    delete(tableKey: keyof FakeDB.Storage, id: string): boolean {
+    async delete(
+        tableKey: keyof FakeDB.Storage,
+        id: string,
+    ): Promise<boolean> {
+        invariant(this.storage);
+
         const item = this.storage[tableKey][id];
         if (!item) return false;
 
         delete this.storage[tableKey][id];
-        this.saveStorage();
+
+        await this.saveStorage();
 
         return true;
     }
@@ -143,6 +169,8 @@ export class FakeDB {
         tableKey: _Key,
         predicate: (items: FakeDB.Storage[_Key][string]) => boolean,
     ): FakeDB.Storage[_Key][string] | undefined {
+        invariant(this.storage);
+
         const items = Object.values(
             this.storage[tableKey],
         ) as FakeDB.Storage[_Key][string][];
@@ -160,6 +188,8 @@ export class FakeDB {
         tableKey: _Key,
         predicate: (items: FakeDB.Storage[_Key][string]) => boolean,
     ): FakeDB.Storage[_Key][string][] {
+        invariant(this.storage);
+
         const items = Object.values(
             this.storage[tableKey],
         ) as FakeDB.Storage[_Key][string][];
@@ -180,11 +210,12 @@ export class FakeDB {
     getByIds<
         _Key extends keyof FakeDB.Storage,
     >(tableKey: _Key, ids: string[]): FakeDB.Storage[_Key][string][] {
-        return this.getMany(tableKey, (item) => ids.includes(item.id));
+        const idSet = new Set(ids);
+
+        return this.getMany(tableKey, (item) => idSet.has(item.id));
     }
 }
 
-export const db = new FakeDB({
-    localStorage,
+export const db = await new FakeDB({
     socket,
-});
+}).init();

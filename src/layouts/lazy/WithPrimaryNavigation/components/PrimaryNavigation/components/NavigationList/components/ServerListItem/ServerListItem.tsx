@@ -76,7 +76,6 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
                 label={server?.name}
                 role='menuitem'
                 isActive={isInServer}
-                isDisabled={!server}
                 innerRef={buttonRef}
                 onLeftClick={navigateToServer}
                 onAnyClick={setFocused}

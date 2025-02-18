@@ -28,14 +28,16 @@ export default {
 
     theme: {
         screens: {
-            'mobile-sm': { 'max': '639px' },
+            'mobile-sm': { max: '639px' },
             // @media (max-width: 639px)
-            'mobile-md': { 'max': '767px' },
+            'mobile-md': { max: '767px' },
             // @media (max-width: 767px)
-            'mobile-lg': { 'max': '1023px' },
+            'mobile-lg': { max: '1023px' },
             // @media (max-width: 1023px)
             'mobile': { max: '1279px' },
             // @media (max-width: 1279px)
+            'desktop': { min: '1280px' },
+            // @media (min-width: 1280px)
         },
 
         extend: {

@@ -4,6 +4,7 @@ import { ContextSelectable } from '@lesnoypudge/utils-react';
 
 export type MobileMenuContext = {
     isMobile: boolean;
+    isDesktop: boolean;
     isMenuOpen: boolean;
     shouldShowMenu: boolean;
     shouldShowContent: boolean;

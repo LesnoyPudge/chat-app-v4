@@ -1,4 +1,4 @@
-// import { Navigator } from '@features';
+import { Navigator } from '@features';
 // import { capitalize } from '@lesnoypudge/utils';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { rawActions } from '../../actions';
@@ -7,7 +7,7 @@ import { rawActions } from '../../actions';
 
 export const useDevTools = () => {
     const wrapperRef = useRefManager<HTMLDivElement>(null);
-    // const { navigateTo, navigate } = Navigator.useNavigator();
+    const { navigateTo, navigate } = Navigator.useNavigator();
 
     // const navigateToDev = Object.entries({
     //     playground: () => navigate(Navigator.navigatorDevPath.playground),
@@ -67,8 +67,19 @@ export const useDevTools = () => {
     //     return acc;
     // }, {});
 
+    const navigatorActions = {
+        nav_to_playground: () => {
+            void navigate(Navigator.navigatorDevPath.playground);
+        },
+
+        nav_to_root: () => {
+            void navigate(Navigator.navigatorPath.root());
+        },
+    };
+
     const actions = {
         ...rawActions,
+        ...navigatorActions,
         // ...navigateToDev,
         // ...navigateToWithPrompt,
     };

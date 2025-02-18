@@ -17,6 +17,7 @@ export const MobileMenuProvider: FC<PropsWithChildren> = ({
 
     const contextValue: MobileMenuContext = {
         isMobile,
+        isDesktop: !isMobile,
         isMenuOpen: menuState.value,
         closeMenu: menuState.setFalse,
         openMenu: menuState.setTrue,

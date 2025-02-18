@@ -1,14 +1,28 @@
-import { useFunction } from '@lesnoypudge/utils-react';
+import { useFunction, useIsFirstRender } from '@lesnoypudge/utils-react';
 import { logger } from '@utils';
 import { useLayoutEffect, useRef } from 'react';
 import { getElementFillableSize, getElementObject, mountExpander } from '../utils';
+import { Scrollable } from '../Scrollable';
 
 
 
-const useScrollableDebug = () => {
+const useScrollableDebug = ({
+    autoHide,
+    size,
+}: Pick<Scrollable.Props, 'autoHide' | 'size'>) => {
     const debugRef = useRef<HTMLDivElement>(null);
     const shouldReportCheckWindowOverflowRef = useRef(true);
     const shouldReportCheckParentOverflowRef = useRef(true);
+
+    const { isFirstRender } = useIsFirstRender();
+
+    if (autoHide && isFirstRender) {
+        logger.log('autoHide not implemented');
+    }
+
+    if (size === 'hidden' && isFirstRender) {
+        logger.log('size `hidden` is deprecated, use different size with autoHide');
+    }
 
     const checkWindowOverflow = useFunction(() => {
         if (!shouldReportCheckWindowOverflowRef.current) return;

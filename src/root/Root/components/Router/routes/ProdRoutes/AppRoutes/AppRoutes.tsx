@@ -3,6 +3,7 @@ import { Route } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../../components';
 import { Navigator } from '@features';
 import { LazyLayouts } from '@layouts/lazy';
+import { LazyPanels } from '@panels';
 
 
 
@@ -15,7 +16,7 @@ export const AppRoutes: FC = () => {
         )}>
             <Route element={(
                 <LazyLayouts.WithSecondaryNavigation>
-                    <>with Conversations</>
+                    <LazyPanels.ConversationNavigation/>
                 </LazyLayouts.WithSecondaryNavigation>
             )}>
                 <Route

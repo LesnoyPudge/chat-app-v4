@@ -3,7 +3,7 @@
     "author": "LesnoyPudge",
     "type": "module",
     "scripts": {
-        "dev": "npm run type:check && npm run scripts:i18n && concurrently \"nodemon --config nodemon.i18n.json\" \"nodemon --config nodemon.vite.json\"",
+        "dev": "npm run scripts:i18n && concurrently \"nodemon --config nodemon.i18n.json\" \"nodemon --config nodemon.vite.json\"",
         "prod": "echo \"Not implemented\" && exit 1",
         "build": "npm run type:check && vite build",
         "deploy": "git add . && git commit -m 'update' && git push && git status",
@@ -17,10 +17,10 @@
         "lint:fix": "eslint --fix"
     },
     "dependencies": {
-        "@faker-js/faker": "^9.4.0",
+        "@faker-js/faker": "^9.5.0",
         "@lesnoypudge/types-utils-base": "^3.4.1",
         "@lesnoypudge/utils": "^19.1.0",
-        "@lesnoypudge/utils-react": "^14.1.1",
+        "@lesnoypudge/utils-react": "^14.2.0",
         "@lesnoypudge/utils-web": "^3.0.2",
         "@reduxjs/toolkit": "^2.5.1",
         "@tailwindcss/container-queries": "^0.1.1",
@@ -30,8 +30,9 @@
         "date-fns": "^4.1.0",
         "howler": "^2.2.4",
         "i18next": "^24.2.2",
-        "i18next-browser-languagedetector": "^8.0.2",
+        "i18next-browser-languagedetector": "^8.0.3",
         "i18next-http-backend": "^3.0.2",
+        "localforage": "^1.10.0",
         "motion": "^12.4.1",
         "msw": "^2.7.0",
         "nouislider": "^15.8.1",

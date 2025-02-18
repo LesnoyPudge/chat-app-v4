@@ -5,6 +5,7 @@
     "ApiError.NOT_FOUND": "__NOT_TRANSLATED__",
     "ApiError.UNAUTHORIZED": "__NOT_TRANSLATED__",
     "Avatar.alt": "__NOT_TRANSLATED__",
+    "COMMON.Hide": "__NOT_TRANSLATED__",
     "COMMON.Loading": "__NOT_TRANSLATED__",
     "COMMON.Settings": "__NOT_TRANSLATED__",
     "ConversationContextMenu.hideButton.text": "__NOT_TRANSLATED__",
@@ -12,6 +13,12 @@
     "ConversationContextMenu.NotificationButton.text.mute": "__NOT_TRANSLATED__",
     "ConversationContextMenu.NotificationButton.text.unmute": "__NOT_TRANSLATED__",
     "ConversationContextMenu.readNotificationsButton.text": "__NOT_TRANSLATED__",
+    "ConversationNavigation.ConversationList.heading": "__NOT_TRANSLATED__",
+    "ConversationNavigation.ConversationList.label": "__NOT_TRANSLATED__",
+    "ConversationNavigation.Header.navigationButton.label": "__NOT_TRANSLATED__",
+    "ConversationNavigation.Header.title": "__NOT_TRANSLATED__",
+    "ConversationNavigation.Item.hideButton.label": "__NOT_TRANSLATED__",
+    "ConversationNavigation.Item.navigateToMessagesButton.label": "__NOT_TRANSLATED__",
     "CreateServerModal.CancelButton.text": "__NOT_TRANSLATED__",
     "CreateServerModal.CreateServerOrFollowInvitationTab.goToCreateServerButton.text": "__NOT_TRANSLATED__",
     "CreateServerModal.CreateServerOrFollowInvitationTab.goToFollowInvitationButton.text": "__NOT_TRANSLATED__",
@@ -85,5 +92,6 @@
     "UserMenu.label": "__NOT_TRANSLATED__",
     "ValidationErrors.badValue": "__NOT_TRANSLATED__",
     "ValidationErrors.invalidEmail": "__NOT_TRANSLATED__",
-    "ValidationErrors.required": "__NOT_TRANSLATED__"
+    "ValidationErrors.required": "__NOT_TRANSLATED__",
+    "WithTopBar.MobileMenuButton.label": "__NOT_TRANSLATED__"
 }

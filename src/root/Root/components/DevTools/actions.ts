@@ -1,3 +1,4 @@
+import { db } from '@fakeServer';
 import { KEY, toOneLine } from '@lesnoypudge/utils';
 import { localStorageApi, logger } from '@utils';
 
@@ -94,8 +95,27 @@ export const rawActions = {
         localStorageApi.clear();
     },
 
-    populateDatabase: () => {
-        localStorageApi.set('shouldPopulate', true);
+    clearDatabase: () => {
+        void db.clearStorage().finally(() => {
+            // eslint-disable-next-line no-restricted-globals
+            location.reload();
+        });
+    },
+
+    populateDB_Small: () => {
+        localStorageApi.set('shouldPopulate', 'small');
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
+    },
+
+    populateDB_Medium: () => {
+        localStorageApi.set('shouldPopulate', 'medium');
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
+    },
+
+    populateDB_Large_COUPLE_SECONDS_LAG: () => {
+        localStorageApi.set('shouldPopulate', 'large');
         // eslint-disable-next-line no-restricted-globals
         location.reload();
     },

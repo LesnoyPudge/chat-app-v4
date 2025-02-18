@@ -1,6 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs';
-import { getId, invariant } from '@lesnoypudge/utils';
+import { createId, invariant } from '@lesnoypudge/utils';
 import { optimize } from 'svgo';
 
 
@@ -47,7 +47,7 @@ const rawAssetsPath = {
 
 const optimizeSVG = ({
     data,
-    name = `RANDOM_NAME_${getId()}`,
+    name = `RANDOM_NAME_${createId()}`,
 }: { data: string; name?: string }) => {
     let dataToModify = data;
     const optimized = optimize(dataToModify, {

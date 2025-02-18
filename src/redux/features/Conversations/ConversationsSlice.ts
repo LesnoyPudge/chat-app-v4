@@ -48,10 +48,12 @@ export const Slice = createCustomSliceEntityAdapter({
 
 export const { StoreSelectors } = createStoreSelectors({
     ...adapter.storeSelectors,
-    selectIsMutedById: (state, id: string): boolean => {
-        const { mutedServers } = Users.StoreSelectors.selectMe()(state);
 
-        const isMuted = mutedServers.includes(id);
+    selectIsMutedById: (state, id: string): boolean => {
+        const { mutedConversations } = Users.StoreSelectors.selectMe()(state);
+        const mutedConversationIdSet = new Set(mutedConversations);
+
+        const isMuted = mutedConversationIdSet.has(id);
 
         return isMuted;
     },
@@ -98,5 +100,19 @@ export const { StoreSelectors } = createStoreSelectors({
 
             return [conversationId, count] as const;
         }).filter(Boolean);
+    },
+
+    selectVisibleIds: (state) => {
+        const {
+            conversations,
+            hiddenConversations,
+        } = Users.StoreSelectors.selectMe()(state);
+        const hiddenConversationSet = new Set(hiddenConversations);
+
+        const visibleIds = conversations.filter((id) => {
+            return !hiddenConversationSet.has(id);
+        });
+
+        return visibleIds;
     },
 });

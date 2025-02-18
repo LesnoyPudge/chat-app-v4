@@ -85,6 +85,23 @@ const toError = (status: number) => {
     return new _res(null, { status });
 };
 
+const populateIfNeeded = async (myId: string) => {
+    const populationSize = localStorageApi.get('shouldPopulate');
+    if (populationSize && populationSize !== 'none') {
+        localStorageApi.set('shouldPopulate', 'none');
+
+        await scenarios.populate({
+            myId,
+            size: populationSize,
+        });
+    }
+
+    const user = db.getById('user', myId);
+    invariant(user, 'user not found');
+
+    return user;
+};
+
 const route = <
     _Request extends DefaultBodyType,
     _Response extends NonNullable<DefaultBodyType>,
@@ -108,7 +125,7 @@ const route = <
                     request: req,
                 } as Parameters<Handler<_Request, _Response>>[0];
 
-                for (const [index, handler] of handlers.entries()) {
+                for (const [_, handler] of handlers.entries()) {
                     const handlerResult = await handler(props);
 
                     if (handlerResult === 'unhandled') continue;
@@ -157,18 +174,11 @@ const routes: HttpHandler[] = [
                     && item.password === body.password
                 );
             });
-
             if (!user) return apiError.badRequest();
 
-            user.status = 'online';
+            const populatedUser = await populateIfNeeded(user.id);
 
-            if (localStorageApi.get('shouldPopulate')) {
-                localStorageApi.set('shouldPopulate', false);
-                scenarios.populate(user.id);
-            }
-
-            const populatedUser = db.getById('user', user.id);
-            invariant(populatedUser);
+            populatedUser.status = 'online';
 
             return jsonResponse({
                 userData: populatedUser,
@@ -207,15 +217,9 @@ const routes: HttpHandler[] = [
 
             dummy.status = 'online';
 
-            const user = db.create('user', dummy);
+            const user = await db.create('user', dummy);
 
-            if (localStorageApi.get('shouldPopulate')) {
-                localStorageApi.set('shouldPopulate', false);
-                scenarios.populate(user.id);
-            }
-
-            const populatedUser = db.getById('user', user.id);
-            invariant(populatedUser);
+            const populatedUser = await populateIfNeeded(user.id);
 
             return jsonResponse({
                 userData: populatedUser,
@@ -242,21 +246,13 @@ const routes: HttpHandler[] = [
                 password: user.password,
             });
 
-            const updatedUser = db.update('user', user.id, (item) => ({
+            const updatedUser = await db.update('user', user.id, (item) => ({
                 ...item,
                 accessToken,
             }));
             if (!updatedUser) return apiError.badRequest();
 
-            updatedUser.status = 'online';
-
-            if (localStorageApi.get('shouldPopulate')) {
-                localStorageApi.set('shouldPopulate', false);
-                scenarios.populate(user.id);
-            }
-
-            const populatedUser = db.getById('user', user.id);
-            invariant(populatedUser);
+            const populatedUser = await populateIfNeeded(user.id);
 
             return jsonResponse({
                 userData: populatedUser,
@@ -297,13 +293,13 @@ const routes: HttpHandler[] = [
 
             const avatar = (
                 body.avatar
-                    ? db.create('file', Dummies.file(body.avatar))
+                    ? await db.create('file', Dummies.file(body.avatar))
                     : null
             );
 
             const serverId = uuid();
 
-            db.update('user', auth.id, (user) => ({
+            await db.update('user', auth.id, (user) => ({
                 ...user,
                 servers: [...new Set([
                     ...user.servers,
@@ -311,7 +307,7 @@ const routes: HttpHandler[] = [
                 ])],
             }));
 
-            const defaultRole = db.create('role', Dummies.role({
+            const defaultRole = await db.create('role', Dummies.role({
                 isDefault: true,
                 users: [auth.id],
                 avatar: null,
@@ -321,7 +317,7 @@ const routes: HttpHandler[] = [
                 server: serverId,
             }));
 
-            const adminRole = db.create('role', Dummies.role({
+            const adminRole = await db.create('role', Dummies.role({
                 isDefault: false,
                 users: [auth.id],
                 avatar: null,
@@ -341,13 +337,13 @@ const routes: HttpHandler[] = [
 
             const textChannelId = uuid();
 
-            const textChat = db.create('textChat', Dummies.textChatChannel({
+            const textChat = await db.create('textChat', Dummies.textChatChannel({
                 id: uuid(),
                 channel: textChannelId,
                 server: serverId,
             }));
 
-            const textChannel = db.create('channel', Dummies.channel({
+            const textChannel = await db.create('channel', Dummies.channel({
                 id: textChannelId,
                 name: 'Text channel',
                 roleWhitelist: [],
@@ -358,7 +354,7 @@ const routes: HttpHandler[] = [
 
             const voiceChannelId = uuid();
 
-            const voiceChat = db.create(
+            const voiceChat = await db.create(
                 'voiceChat',
                 Dummies.voiceChatChannel({
                     id: uuid(),
@@ -367,7 +363,7 @@ const routes: HttpHandler[] = [
                 }),
             );
 
-            const voiceChannel = db.create('channel', Dummies.channel({
+            const voiceChannel = await db.create('channel', Dummies.channel({
                 id: voiceChannelId,
                 name: 'Text channel',
                 roleWhitelist: [],
@@ -376,7 +372,7 @@ const routes: HttpHandler[] = [
                 textChat: null,
             }));
 
-            const newServer = db.create('server', Dummies.server({
+            const newServer = await db.create('server', Dummies.server({
                 id: serverId,
                 avatar: avatar?.id ?? null,
                 identifier: body.identifier,
@@ -510,12 +506,12 @@ const routes: HttpHandler[] = [
     >(E_User.ProfileUpdate)(
         withAuth,
         async ({ auth, body }) => {
-            const user = db.update('user', auth.id, (userToUpdate) => {
+            const user = await db.update('user', auth.id, async (userToUpdate) => {
                 if (
                     Object.hasOwn(body, 'avatar')
                     && userToUpdate.avatar
                 ) {
-                    db.delete('file', userToUpdate.avatar);
+                    await db.delete('file', userToUpdate.avatar);
                 }
 
                 if (body.avatar === null) {
@@ -523,7 +519,7 @@ const routes: HttpHandler[] = [
                 }
 
                 if (body.avatar) {
-                    const avatar = db.create(
+                    const avatar = await db.create(
                         'file',
                         Dummies.file(body.avatar),
                     );
