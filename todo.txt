@@ -27,3 +27,6 @@ https://mswjs.io/docs/getting-started
 - PrimaryNavigation items has too quick animation
 -!!! i try to fetch conversations with notifications in PrimaryNavigation
 but i dont have info about conversation messages
+-!!! change the way i fetch resources, fetch full conversation 
+(without messages), and full server (without members and messages)
+to prevent waterfall fetching

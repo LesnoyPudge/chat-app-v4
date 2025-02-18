@@ -5,6 +5,7 @@ import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { PropsWithInnerRef } from '@types';
 import { isDev } from '@vars';
 import { mergeRefs } from '@lesnoypudge/utils-react';
+import { useScrollable } from './useScrollable';
 
 
 
@@ -20,18 +21,18 @@ const styles = createStyles({
 });
 
 export namespace Scrollable {
-    type TODOProps = {
+    export type Options = {
         autoHide?: boolean;
+        withoutGutter?: boolean;
+        size?: 'default' | 'small' | 'hidden';
     };
 
     type StableProps = (
         RT.PropsWithChildrenAndClassName
         & PropsWithInnerRef<'div'>
-        & TODOProps
+        & Options
         & {
-            withoutGutter?: boolean;
             label?: string;
-            size?: 'default' | 'small' | 'hidden';
         }
     );
 
@@ -67,6 +68,11 @@ export const Scrollable: FC<Scrollable.Props> = ({
         autoHide,
         size,
     });
+    const { scrollableRef } = useScrollable({
+        autoHide,
+        size,
+        withoutGutter,
+    });
 
     const notHorizontal = direction !== 'horizontal';
     const withGutter = !withoutGutter;
@@ -95,6 +101,7 @@ export const Scrollable: FC<Scrollable.Props> = ({
             tabIndex={0}
             ref={mergeRefs(
                 debugRef,
+                scrollableRef,
                 innerRef,
             )}
             {...data}

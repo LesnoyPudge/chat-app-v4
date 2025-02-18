@@ -9,7 +9,7 @@ import { Scrollable } from '../Scrollable';
 const useScrollableDebug = ({
     autoHide,
     size,
-}: Pick<Scrollable.Props, 'autoHide' | 'size'>) => {
+}: Pick<Required<Scrollable.Options>, 'autoHide' | 'size'>) => {
     const debugRef = useRef<HTMLDivElement>(null);
     const shouldReportCheckWindowOverflowRef = useRef(true);
     const shouldReportCheckParentOverflowRef = useRef(true);
