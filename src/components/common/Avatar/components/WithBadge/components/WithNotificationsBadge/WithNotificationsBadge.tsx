@@ -18,7 +18,7 @@ const styles = createStyles({
             h-1/3
             items-center
             justify-center
-            rounded-full
+            rounded-[25cqi]
             bg-danger
             font-[sans-serif]
             text-[25cqi]

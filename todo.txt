@@ -8,7 +8,6 @@ https://mswjs.io/docs/getting-started
 -? сделать attachments layout через grid-template-areas
 - добавить dataset к элементу(html? body?) для работы css (theme, message-font-size, ...)
 -? перенести useIsFocusVisible в библиотеку
-- добавить вариации размера populated данных, (small, medium, large)
 - добавить закрытие мобильного меню в местах 
 использования Navigator.useNavigator 
 -? создать хуки к каждому энтити для совместного селекта, фэтча и подписки
@@ -22,4 +21,3 @@ https://mswjs.io/docs/getting-started
 - add sorting by createTimestamp to all EntityAdapters
 -? populate VoiceChats
 -? change JsonView на https://www.npmjs.com/package/@microlink/react-json-view
-- PrimaryNavigation items has too quick animation
