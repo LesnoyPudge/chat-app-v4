@@ -21,3 +21,5 @@ https://mswjs.io/docs/getting-started
 - add sorting by createTimestamp to all EntityAdapters
 -? populate VoiceChats
 -? change JsonView на https://www.npmjs.com/package/@microlink/react-json-view
+- useRefManager effect does not rerun after hot reload, probably because it
+is called once?

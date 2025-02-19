@@ -1,8 +1,8 @@
-import { useDebounce, useIsMounted, useRefManager } from '@lesnoypudge/utils-react';
+import { useDebounce, useRefManager } from '@lesnoypudge/utils-react';
 import type { Scrollable } from './Scrollable';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { addEventListener } from '@lesnoypudge/utils-web';
-import { combinedFunction, noop } from '@lesnoypudge/utils';
+import { combinedFunction } from '@lesnoypudge/utils';
 
 
 
@@ -10,44 +10,98 @@ import { combinedFunction, noop } from '@lesnoypudge/utils';
 // const ATTRIBUTE_IS_HOVERED = 'data-is-hovered';
 // const ATTRIBUTE_IS_FOCUSED = 'data-is-focused';
 const ATTRIBUTE_IS_ALIVE = 'data-is-alive';
+const DELAY = 3_000;
 
 export const useScrollable = ({
     autoHide,
 }: Required<Scrollable.Options>) => {
     const scrollableRef = useRefManager<HTMLDivElement>(null);
-    const { debounce, isDebouncingRef } = useDebounce({ stateless: true });
-    const { getIsMounted } = useIsMounted();
+    const isAliveRef = useRef(false);
+    const isScrollingRef = useRef(false);
+    const isHoveredRef = useRef(false);
+    const {
+        debounce: scrollDebounce,
+    } = useDebounce({ stateless: true });
+    const {
+        debounce: hoverEndDebounce,
+    } = useDebounce({ stateless: true });
 
-    // useLayoutEffect(() => {
-    //     return scrollableRef.effect((scrollable) => {
-    //         const triggerIsAlive = debounce(() => {
-    //             console.log('triggerIsAlive');
-    //         }, 1_000);
+    useLayoutEffect(() => {
+        console.log('eff');
+        return scrollableRef.effect((scrollable) => {
+            console.log('ref eff');
+            const on = () => {
+                if (isAliveRef.current) return;
 
-    //         const cleanup = combinedFunction(
-    //             addEventListener(
-    //                 scrollable,
-    //                 'scroll',
-    //                 triggerIsAlive,
-    //                 { passive: true },
-    //             ),
+                isAliveRef.current = true;
+                scrollable.setAttribute(ATTRIBUTE_IS_ALIVE, 'true');
+            };
 
-    //             addEventListener(
-    //                 scrollable,
-    //                 'mousedown',
-    //                 () => console.log('mouseDown'),
-    //             ),
+            if (!autoHide) {
+                scrollable.setAttribute(ATTRIBUTE_IS_ALIVE, 'true');
+                return;
+            }
 
-    //             addEventListener(
-    //                 scrollable,
-    //                 'mouseup',
-    //                 () => console.log('mouseUp'),
-    //             ),
-    //         );
+            scrollable.setAttribute(ATTRIBUTE_IS_ALIVE, 'false');
 
-    //         return cleanup;
-    //     });
-    // }, [autoHide, debounce, scrollableRef]);
+            const off = () => {
+                if (!isAliveRef.current) return;
+                if (isScrollingRef.current) return;
+                if (isHoveredRef.current) return;
+
+                isAliveRef.current = false;
+                scrollable.setAttribute(ATTRIBUTE_IS_ALIVE, 'false');
+            };
+
+            const handleScroll = () => {
+                isScrollingRef.current = true;
+                on();
+
+                hoverEndDebounce(() => {
+                    isScrollingRef.current = false;
+                    off();
+                }, DELAY)();
+            };
+
+            const handleMouseEnter = () => {
+                isHoveredRef.current = true;
+                on();
+            };
+
+            const handleMouseLeave = () => {
+                isHoveredRef.current = false;
+
+                scrollDebounce(off, DELAY)();
+            };
+
+            const cleanup = combinedFunction(
+                addEventListener(
+                    scrollable,
+                    'scroll',
+                    handleScroll,
+                    { passive: true },
+                ),
+
+                addEventListener(
+                    scrollable,
+                    'mouseenter',
+                    handleMouseEnter,
+                ),
+
+                addEventListener(
+                    scrollable,
+                    'mouseleave',
+                    handleMouseLeave,
+                ),
+            );
+            const id = Math.random();
+            console.log(id);
+            return () => {
+                console.log('cleanup', id);
+                cleanup();
+            };
+        });
+    }, [autoHide, hoverEndDebounce, scrollDebounce, scrollableRef]);
 
     return {
         scrollableRef,

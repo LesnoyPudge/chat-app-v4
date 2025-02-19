@@ -29,6 +29,7 @@
     );
 
     scrollbar-gutter: var(--gutter);
+    
 
     @supports not selector(::-webkit-scrollbar) {
         scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
@@ -64,49 +65,54 @@
         min-width: var(--thumb-accessible-size);
     }
 
-    &[data-size='default'] {
+    &[data-is-alive=false] {
+        --scrollbar-track: transparent;
+        --scrollbar-thumb: transparent;
+    }
+
+    &[data-size=default] {
         --firefox-width: auto;
         --scrollbar-thickness: 10px;
         --track-thickness: 8px;
         --thumb-thickness: 8px;
     }
 
-    &[data-size='small'] {
+    &[data-size=small] {
         --firefox-width: thin;
         --scrollbar-thickness: 8px;
         --track-thickness: 6px;
         --thumb-thickness: 6px;
     }
 
-    &[data-size='hidden'] {
+    &[data-size=hidden] {
         --firefox-width: none;
         --scrollbar-thickness: 0px;
         --track-thickness: 0px;
         --thumb-thickness: 0px;
     }
 
-    &[data-direction='horizontal'] {
+    &[data-direction=horizontal] {
         overflow-x: auto;
         overflow-y: hidden;
     }
 
-    &[data-direction='vertical'] {
+    &[data-direction=vertical] {
         overflow-x: hidden;
         overflow-y: auto;
     }
 
-    &[data-direction='both'] {
+    &[data-direction=both] {
         overflow-x: auto;
         overflow-y: auto;
     }
 
-    &[data-direction='vertical'],
-    &[data-direction='both'] {
-        &[data-with-gutter='true'] {
+    &[data-direction=vertical],
+    &[data-direction=both] {
+        &[data-with-gutter=true] {
             --gutter: stable;
         }
 
-        &[data-with-opposite-gutter='true'] {
+        &[data-with-opposite-gutter=true] {
             --gutter: stable both-edges;
         }
     }
