@@ -20,7 +20,7 @@ import { HTTP_METHODS, HTTP_STATUS_CODES, invariant, merge } from '@lesnoypudge/
 import { env } from '@vars';
 import { token } from './token';
 import { v4 as uuid } from 'uuid';
-import { getAppData } from './utils';
+import { flattenPopulated, getAppData, getDeepConversation, getDeepServer } from './utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import E_Channel = Endpoints.V1.Channel;
 import E_Conversation = Endpoints.V1.Conversation;
@@ -55,10 +55,6 @@ type HandlerReturn<_Response extends DefaultBodyType> = (
     | 'unhandled'
     | ReturnType<T.ValueOf<typeof apiError>>
 );
-
-// type HandlerReturn<_Response extends NonNullable<DefaultBodyType>> = (
-//     (StrictResponse<_Response>) | 'unhandled'
-// );
 
 type Handler<
     _Request extends DefaultBodyType,
@@ -341,6 +337,7 @@ const routes: HttpHandler[] = [
                 id: uuid(),
                 channel: textChannelId,
                 server: serverId,
+                messages: [],
             }));
 
             const textChannel = await db.create('channel', Dummies.channel({
@@ -420,6 +417,7 @@ const routes: HttpHandler[] = [
         E_Channel.GetMany.RequestBody,
         E_Channel.GetMany.Response
     >(E_Channel.GetMany)(
+        withAuth,
         async ({ body, auth }) => {
             const channels = db.getByIds(
                 'channel',
@@ -434,6 +432,7 @@ const routes: HttpHandler[] = [
         E_Conversation.GetMany.RequestBody,
         E_Conversation.GetMany.Response
     >(E_Conversation.GetMany)(
+        withAuth,
         async ({ body, auth }) => {
             const conversations = db.getByIds(
                 'conversation',
@@ -448,6 +447,7 @@ const routes: HttpHandler[] = [
         E_Role.GetMany.RequestBody,
         E_Role.GetMany.Response
     >(E_Role.GetMany)(
+        withAuth,
         async ({ body, auth }) => {
             const roles = db.getByIds(
                 'role',
@@ -462,6 +462,7 @@ const routes: HttpHandler[] = [
         E_Server.GetMany.RequestBody,
         E_Server.GetMany.Response
     >(E_Server.GetMany)(
+        withAuth,
         async ({ body, auth }) => {
             const servers = db.getByIds(
                 'server',
@@ -476,6 +477,7 @@ const routes: HttpHandler[] = [
         E_TextChat.GetMany.RequestBody,
         E_TextChat.GetMany.Response
     >(E_TextChat.GetMany)(
+        withAuth,
         async ({ body, auth }) => {
             const textChats = db.getByIds(
                 'textChat',
@@ -490,6 +492,7 @@ const routes: HttpHandler[] = [
         E_User.GetMany.RequestBody,
         E_User.GetMany.Response
     >(E_User.GetMany)(
+        withAuth,
         async ({ body, auth }) => {
             const users = db.getByIds(
                 'user',
@@ -545,6 +548,64 @@ const routes: HttpHandler[] = [
             if (!user) return apiError.badRequest();
 
             return jsonResponse(user);
+        },
+    ),
+
+    route<
+        E_Server.GetManyDeep.RequestBody,
+        E_Server.GetManyDeep.Response
+    >(E_Server.GetManyDeep)(
+        withAuth,
+        async ({ body, auth }) => {
+            const {
+                Channel = [],
+                Role = [],
+                Server = [],
+                TextChat = [],
+                User = [],
+                VoiceChat = [],
+            } = flattenPopulated('', body.serverIds.map((id) => {
+                return getDeepServer({
+                    userId: auth.id,
+                    serverId: id,
+                });
+            }));
+
+            return jsonResponse({
+                Channel,
+                Role,
+                Server,
+                TextChat,
+                User,
+                VoiceChat,
+            });
+        },
+    ),
+
+    route<
+        E_Conversation.GetManyDeep.RequestBody,
+        E_Conversation.GetManyDeep.Response
+    >(E_Conversation.GetManyDeep)(
+        withAuth,
+        async ({ body, auth }) => {
+            const {
+                Conversation = [],
+                TextChat = [],
+                User = [],
+                VoiceChat = [],
+            } = flattenPopulated('', body.conversationIds.map((id) => {
+                return getDeepConversation({
+                    userId: auth.id,
+                    conversationId: id,
+                });
+            }));
+
+            return jsonResponse({
+                Conversation,
+                TextChat,
+                User,
+                VoiceChat,
+            });
         },
     ),
 ];

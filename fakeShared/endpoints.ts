@@ -383,6 +383,26 @@ namespace EndpointsV1 {
 
             export type Response = Entities.Server.Base[];
         }
+
+        export namespace GetManyDeep {
+            export const ActionName = 'getManyDeep';
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = WithIds.Server;
+
+            export type Response = Pick<
+                AppData,
+                'Server'
+                | 'User'
+                | 'Channel'
+                | 'Role'
+                | 'TextChat'
+                | 'VoiceChat'
+            >;
+        }
     }
 
     export namespace Channel {
@@ -414,6 +434,21 @@ namespace EndpointsV1 {
             export type RequestBody = WithIds.Conversation;
 
             export type Response = Entities.Conversation.Base[];
+        }
+
+        export namespace GetManyDeep {
+            export const ActionName = 'getManyDeep';
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = WithIds.Conversation;
+
+            export type Response = Pick<
+                AppData,
+                'Conversation' | 'User' | 'TextChat' | 'VoiceChat'
+            >;
         }
     }
 

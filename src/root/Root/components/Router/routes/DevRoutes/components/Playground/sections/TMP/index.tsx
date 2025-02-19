@@ -1,55 +1,46 @@
 import { JsonView, useConst, useRefManager, useTimeout } from '@lesnoypudge/utils-react';
 import { db, Dummies, FakeDB, scenarios, token } from '@fakeServer';
 import { FC, memo, useEffect, useRef, useState } from 'react';
-import { deepEqual, isCallable } from '@lesnoypudge/utils';
+import { deepEqual, isCallable, noop } from '@lesnoypudge/utils';
 import { useLocalStorage } from '@hooks';
-import { Scrollable } from '@components';
+import { Form, Scrollable } from '@components';
 import { v4 as uuid } from 'uuid';
+import { cn, createStyles } from '@utils';
 
 
+
+// const styles = createStyles({
+//     wrapper: 'group/custom group group-form-invalid:bg-red-100',
+//     a: `
+//         group-hover-focus-visible:bg-zinc-200
+//         group-hover-focus-visible/custom:p-40
+//         hover-focus-visible:text-red-400
+//     `,
+//     b: `
+//         group-hover-focus-visible:bg-red-800
+//         group-hover-focus-visible/custom:p-4
+//         hover-focus-visible:text-green-400
+//     `,
+// });
+
+const styles = createStyles({
+    wrapper: 'peer',
+    a: 'hover-focus-visible:bg-green-600 peer-hover-focus-visible:bg-red-500',
+    b: 'peer-hover-focus-visible:bg-red-800',
+});
 
 export const TMP: FC = () => {
-    // const db1 = useConst(() => new FakeDB());
-    const [state, setState] = useState(db.getStorageClone());
-
-    // useTimeout(() => {
-    //     db.clearStorage();
-
-    //     const id = uuid();
-    //     const { accessToken, refreshToken } = token.generateTokens({
-    //         id,
-    //         password: 'zxc',
-    //     });
-
-    //     const user = db.create('user', Dummies.user({
-    //         id,
-    //         accessToken,
-    //         refreshToken,
-    //         login: 'qwe',
-    //         password: 'zxc',
-    //         name: 'qwezxc',
-    //     }));
-
-    //     scenarios.populate(user.id);
-
-    //     // db1.create('user', Dummies.user({
-    //     //     id: 'qwe',
-    //     //     accessToken: 'zxczxc',
-    //     //     login: 'qwe',
-    //     //     name: 'qwezxc',
-    //     //     password: 'zxc',
-    //     //     refreshToken: 'qweqwe',
-    //     // }));
-
-    //     setState(db.getStorageClone());
-    // }, 3_000);
-
-
+    const className = cn(styles.a, styles.b);
 
     return (
-        <JsonView
-            className='[&>pre]:max-h-dvh [&>pre]:max-w-[100dvw] [&>pre]:overflow-auto'
-            data={JSON.stringify(state) ?? ''}
-        />
+        <div>
+            <div className={styles.wrapper}>peer</div>
+
+            <div className={className}>
+                <div>hello</div>
+
+                <div>{className}</div>
+            </div>
+        </div>
     );
 };

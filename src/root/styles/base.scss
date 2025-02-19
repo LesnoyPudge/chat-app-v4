@@ -14,9 +14,10 @@
         color-scheme: dark light;
 
         &[data-outline=true] * {
-            box-shadow:
+            box-shadow: (
                 inset 0 0 0px 0.5px red,
-                0 0 0px 0.5px red !important;
+                0 0 0px 0.5px red
+            ) !important;
         }
 
         &[data-background=true] * {
@@ -30,17 +31,7 @@
     * {
         min-width: 0;
         color: inherit;
-        // outline-width: 3px;
-        // outline-style: solid;
-        // outline-color: transparent;
-
-        // &:focus:not(:focus-visible) {
-        //     @apply outline-transparent;
-        // }
-
-        // &:focus-visible {
-        //     @apply outline-focus;
-        // }
+        box-sizing: border-box;
     }
 
     button, 
@@ -53,10 +44,12 @@
         outline-color: transparent;
 
         &:focus:not(:focus-visible) {
-            outline-color: theme('colors.transparent');
+            outline-color: transparent;
         }
 
         &:focus-visible {
+            outline-width: 3px;
+            outline-style: solid;
             outline-color: theme('colors.focus');
         }
 
@@ -72,7 +65,7 @@
 
     // react-focus-lock's focus guards
     [data-focus-guard=true] {
-        outline-color: theme('colors.transparent');
+        outline-color: transparent;
     }
 
     // Optional defaults to change display value from block to flex.

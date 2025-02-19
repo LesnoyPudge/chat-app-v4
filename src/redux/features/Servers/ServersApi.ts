@@ -71,6 +71,7 @@ export const ServersApi = createApi({
                 }),
             })
         ),
+
         [Server.GetMany.ActionName]: (
             build.query<
                 Server.GetMany.Response,
@@ -85,6 +86,19 @@ export const ServersApi = createApi({
                     type: 'Servers',
                     id,
                 })) ?? [{ type: 'Servers', id: 'LIST' }],
+            })
+        ),
+
+        [Server.GetManyDeep.ActionName]: (
+            build.query<
+                Server.GetManyDeep.Response,
+                Server.GetManyDeep.RequestBody
+            >({
+                query: (body) => ({
+                    url: Server.GetManyDeep.Path,
+                    method: Server.GetManyDeep.Method,
+                    body,
+                }),
             })
         ),
     }),

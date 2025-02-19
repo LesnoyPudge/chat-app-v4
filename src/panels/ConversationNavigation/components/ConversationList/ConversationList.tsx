@@ -4,7 +4,7 @@ import { createStyles } from '@utils';
 import { Heading, useRefManager } from '@lesnoypudge/utils-react';
 import { useTrans } from '@i18n';
 import { Features } from '@redux/features';
-import { useStoreSelector } from '@redux/hooks';
+import { useSliceSelector, useStoreSelector } from '@redux/hooks';
 import { ConversationItem } from './components';
 
 
@@ -23,13 +23,16 @@ export const ConversationList: FC = () => {
         Features.Conversations.StoreSelectors.selectVisibleIds(),
     );
 
-    Features.Conversations.Api.useGetManyQuery({
-        conversationIds,
-    }, { skip: !conversationIds.length });
+    const conversationIdsToFetch = useSliceSelector(
+        Features.Conversations.Slice,
+        Features.Conversations.Slice.selectors.selectUndefinedIdsByIds(
+            conversationIds,
+        ),
+    );
 
-    // Features.Users.Api.useGetManyQuery({
-    //     userIds,
-    // }, {skip: !userIds.length})
+    Features.Conversations.Api.useGetManyDeepQuery({
+        conversationIds: conversationIdsToFetch,
+    }, { skip: !conversationIdsToFetch.length });
 
     return (
         <div className={styles.wrapper}>
@@ -38,31 +41,33 @@ export const ConversationList: FC = () => {
             </Heading.Node>
 
             <Heading.Provider>
-                <Scrollable
-                    withOppositeGutter
-                    size='small'
-                    autoHide
-                >
-                    <ul
-                        className={styles.list}
-                        aria-label={t('ConversationNavigation.ConversationList.label')}
-                        ref={listRef}
+                <If condition={!!conversationIds.length}>
+                    <Scrollable
+                        withOppositeGutter
+                        size='small'
+                        autoHide
                     >
-                        <ListVariants.Variant1.List
-                            items={conversationIds}
-                            getId={(item) => item}
-                            keyboardNavigation={{
-                                wrapperRef: listRef,
-                                direction: 'vertical',
-                                loop: false,
-                            }}
+                        <ul
+                            className={styles.list}
+                            aria-label={t('ConversationNavigation.ConversationList.label')}
+                            ref={listRef}
                         >
-                            {(props) => (
-                                <ConversationItem {...props}/>
-                            )}
-                        </ListVariants.Variant1.List>
-                    </ul>
-                </Scrollable>
+                            <ListVariants.Variant1.List
+                                items={conversationIds}
+                                getId={(item) => item}
+                                keyboardNavigation={{
+                                    wrapperRef: listRef,
+                                    direction: 'vertical',
+                                    loop: false,
+                                }}
+                            >
+                                {(props) => (
+                                    <ConversationItem {...props}/>
+                                )}
+                            </ListVariants.Variant1.List>
+                        </ul>
+                    </Scrollable>
+                </If>
             </Heading.Provider>
         </div>
     );

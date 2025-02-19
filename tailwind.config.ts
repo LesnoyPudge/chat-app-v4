@@ -22,9 +22,10 @@ export default {
         containerQueries,
     ],
 
-    // corePlugins: {
-    //     lineHeight: false,
-    // },
+    corePlugins: {
+        // lineHeight: false,
+        // borderRadius: false,
+    },
 
     theme: {
         screens: {
@@ -142,6 +143,10 @@ export default {
 
             animation: {
                 'custom-pulse': 'var(--custom-pulse-animation)',
+            },
+
+            borderRadius: {
+                'full': '50%',
             },
         },
     },

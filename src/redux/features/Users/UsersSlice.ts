@@ -9,6 +9,8 @@ import { ClientEntities } from '@types';
 import { App } from '../App';
 import { UsersApi } from './UsersApi';
 import { isAnyOf } from '@reduxjs/toolkit';
+import { Servers } from '../Servers';
+import { Conversations } from '../Conversations';
 
 
 
@@ -38,12 +40,17 @@ export const Slice = createCustomSliceEntityAdapter({
                 UsersApi.endpoints.login.matchFulfilled,
                 UsersApi.endpoints.registration.matchFulfilled,
                 UsersApi.endpoints.refresh.matchFulfilled,
+                Servers.Api.endpoints.getManyDeep.matchFulfilled,
+                Conversations.Api.endpoints.getManyDeep.matchFulfilled,
             ),
             (state, { payload }) => {
-                adapter.upsertMany(state, [
-                    payload.userData,
-                    ...payload.User,
-                ]);
+                const result = [...payload.User];
+
+                if ('userData' in payload) {
+                    result.push(payload.userData);
+                }
+
+                adapter.upsertMany(state, result);
             },
         );
 

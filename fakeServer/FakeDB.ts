@@ -203,7 +203,12 @@ export class FakeDB {
 
     getById<
         _Key extends keyof FakeDB.Storage,
-    >(tableKey: _Key, id: string): FakeDB.Storage[_Key][string] | undefined {
+    >(
+        tableKey: _Key,
+        id: string | undefined,
+    ): FakeDB.Storage[_Key][string] | undefined {
+        if (id === undefined) return;
+
         return this.getOne(tableKey, (item) => item.id === id);
     }
 

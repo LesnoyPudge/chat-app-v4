@@ -37,6 +37,7 @@ export const Slice = createCustomSliceEntityAdapter({
                 Users.Api.endpoints.login.matchFulfilled,
                 Users.Api.endpoints.registration.matchFulfilled,
                 Users.Api.endpoints.refresh.matchFulfilled,
+                ServersApi.endpoints.getManyDeep.matchFulfilled,
             ),
             (state, { payload }) => {
                 adapter.upsertMany(state, payload.Server);
@@ -109,7 +110,7 @@ export const { StoreSelectors } = createStoreSelectors({
         return isMuted;
     },
 
-    selectIdsWithUnreadNotificationCount: (state) => {
+    selectIdsWithUnreadNotificationCountSortedByCount: (state) => {
         const { servers } = Users.StoreSelectors.selectMe()(state);
 
         return servers.map((serverId) => {
@@ -120,7 +121,9 @@ export const { StoreSelectors } = createStoreSelectors({
             if (count === 0) return;
 
             return [serverId, count] as const;
-        }).filter(Boolean);
+        }).filter(Boolean).sort((a, b) => {
+            return b[1] - a[1];
+        });
     },
 
     selectIdsWithoutUnreadNotifications: (state) => {

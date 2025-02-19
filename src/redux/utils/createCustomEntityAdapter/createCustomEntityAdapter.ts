@@ -59,23 +59,33 @@ export namespace createCustomEntityAdapter {
         selectIds: (
             entityState: EntityState<_State, _State['id']>
         ) => _State['id'][];
+
         selectEntities: (
             entityState: EntityState<_State, _State['id']>
         ) => Record<_State['id'], _State>;
+
         selectAll: (
             entityState: EntityState<_State, _State['id']>
         ) => _State[];
+
         selectById: (
             entityState: EntityState<_State, _State['id']>,
             id: _State['id'] | undefined
         ) => _State | undefined;
+
         selectByIds: (
             entityState: EntityState<_State, _State['id']>,
             ids: _State['id'][] | undefined
         ) => _State[];
+
         selectTotal: (
             entityState: EntityState<_State, _State['id']>
         ) => number;
+
+        selectUndefinedIdsByIds: (
+            entityState: EntityState<_State, _State['id']>,
+            ids: _State['id'][] | undefined
+        ) => _State['id'][];
     };
 
     export type StateEntitySelectors<
@@ -216,6 +226,12 @@ export const createCustomEntityAdapter = <
             const ids = baseSelectors.selectIds(entityState);
 
             return ids.length;
+        },
+
+        selectUndefinedIdsByIds: (entityState, ids) => {
+            if (!ids) return [];
+
+            return ids.filter((id) => !entityState.entities[id]);
         },
     };
 

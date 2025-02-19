@@ -27,5 +27,18 @@ export const ConversationsApi = createApi({
                 })) ?? [{ type: 'Conversations', id: 'LIST' }],
             })
         ),
+
+        [Conversation.GetManyDeep.ActionName]: (
+            build.query<
+                Conversation.GetManyDeep.Response,
+                Conversation.GetManyDeep.RequestBody
+            >({
+                query: (body) => ({
+                    url: Conversation.GetManyDeep.Path,
+                    method: Conversation.GetManyDeep.Method,
+                    body,
+                }),
+            })
+        ),
     }),
 });

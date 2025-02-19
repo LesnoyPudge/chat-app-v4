@@ -8,6 +8,7 @@ import { ClientEntities } from '@types';
 import { RolesApi } from './RolesApi';
 import { isAnyOf } from '@reduxjs/toolkit';
 import { Users } from '../Users';
+import { Servers } from '../Servers';
 
 
 
@@ -36,6 +37,7 @@ export const Slice = createCustomSliceEntityAdapter({
                 Users.Api.endpoints.login.matchFulfilled,
                 Users.Api.endpoints.registration.matchFulfilled,
                 Users.Api.endpoints.refresh.matchFulfilled,
+                Servers.Api.endpoints.getManyDeep.matchFulfilled,
             ),
             (state, { payload }) => {
                 adapter.upsertMany(state, payload.Role);

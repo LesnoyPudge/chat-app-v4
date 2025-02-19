@@ -2,7 +2,7 @@ import { useDebounce, useIsMounted, useRefManager } from '@lesnoypudge/utils-rea
 import type { Scrollable } from './Scrollable';
 import { useLayoutEffect } from 'react';
 import { addEventListener } from '@lesnoypudge/utils-web';
-import { noop } from '@lesnoypudge/utils';
+import { combinedFunction, noop } from '@lesnoypudge/utils';
 
 
 
@@ -18,26 +18,36 @@ export const useScrollable = ({
     const { debounce, isDebouncingRef } = useDebounce({ stateless: true });
     const { getIsMounted } = useIsMounted();
 
-    useLayoutEffect(() => {
-        return scrollableRef.effect((scrollable) => {
-            const controller = new AbortController();
-            const listenerOptions: AddEventListenerOptions = {
-                passive: true,
-                signal: controller.signal,
-            };
+    // useLayoutEffect(() => {
+    //     return scrollableRef.effect((scrollable) => {
+    //         const triggerIsAlive = debounce(() => {
+    //             console.log('triggerIsAlive');
+    //         }, 1_000);
 
-            const triggerIsAlive = debounce(noop, 200);
+    //         const cleanup = combinedFunction(
+    //             addEventListener(
+    //                 scrollable,
+    //                 'scroll',
+    //                 triggerIsAlive,
+    //                 { passive: true },
+    //             ),
 
-            addEventListener(
-                scrollable,
-                'scroll',
-                triggerIsAlive,
-                listenerOptions,
-            );
+    //             addEventListener(
+    //                 scrollable,
+    //                 'mousedown',
+    //                 () => console.log('mouseDown'),
+    //             ),
 
-            return controller.abort;
-        });
-    }, [autoHide, scrollableRef]);
+    //             addEventListener(
+    //                 scrollable,
+    //                 'mouseup',
+    //                 () => console.log('mouseUp'),
+    //             ),
+    //         );
+
+    //         return cleanup;
+    //     });
+    // }, [autoHide, debounce, scrollableRef]);
 
     return {
         scrollableRef,

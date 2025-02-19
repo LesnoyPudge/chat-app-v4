@@ -162,28 +162,25 @@ export class Dummies {
         data: T.SetNonNullable<Pick<
             ClientEntities.TextChat.Base,
             'id' | 'channel' | 'server'
-        >>,
+        >> & Pick<ClientEntities.TextChat.Base, 'messages'>,
     ): ClientEntities.TextChat.Base {
         return {
             ...data,
-            messageCount: 0,
-            messages: [],
+            messageCount: data.messages.length,
             conversation: null,
         };
     }
-
 
     static textChatConversation(
         data: T.SetNonNullable<Pick<
             ClientEntities.TextChat.Base,
             'id' | 'conversation'
-        >>,
+        >> & Pick<ClientEntities.TextChat.Base, 'messages'>,
     ): ClientEntities.TextChat.Base {
         return {
             ...data,
             server: null,
-            messageCount: 0,
-            messages: [],
+            messageCount: data.messages.length,
             channel: null,
         };
     }

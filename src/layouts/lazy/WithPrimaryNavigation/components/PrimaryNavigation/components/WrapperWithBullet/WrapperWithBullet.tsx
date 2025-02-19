@@ -21,11 +21,14 @@ const styles = createStyles({
             transition-all 
             duration-300
         `,
-        focused: `
-            peer-hover-focus-visible:h-5 
-            peer-hover-focus-visible:opacity-100 
-        `,
-        active: 'h-10 opacity-100',
+        singleState: {
+            base: `
+                peer-hover-focus-visible:h-5 
+                peer-hover-focus-visible:opacity-100 
+            `,
+            notifications: 'h-2 opacity-100',
+            active: 'h-10 opacity-100',
+        },
     },
 });
 
@@ -34,6 +37,7 @@ export namespace WrapperWithBullet {
         RT.PropsWithChildrenAndClassName
         & {
             isActive: boolean;
+            withNotifications?: boolean;
         }
     );
 }
@@ -41,8 +45,13 @@ export namespace WrapperWithBullet {
 export const WrapperWithBullet: FC<WrapperWithBullet.Props> = ({
     className = '',
     isActive = false,
+    withNotifications = false,
     children,
 }) => {
+    const showBaseStyle = !isActive;
+    const showNotificationStyle = !isActive && withNotifications;
+    const showActiveStyle = isActive;
+
     return (
         <div className={cn(styles.buttonWrapper, className)}>
             {children}
@@ -50,8 +59,9 @@ export const WrapperWithBullet: FC<WrapperWithBullet.Props> = ({
             <div
                 className={cn(
                     styles.bullet.base,
-                    !isActive && styles.bullet.focused,
-                    isActive && styles.bullet.active,
+                    showBaseStyle && styles.bullet.singleState.base,
+                    showNotificationStyle && styles.bullet.singleState.notifications,
+                    showActiveStyle && styles.bullet.singleState.active,
                 )}
             >
             </div>

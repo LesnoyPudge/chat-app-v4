@@ -1,36 +1,68 @@
 import plugin from 'tailwindcss/plugin';
-import { PluginAPI } from 'tailwindcss/types/config';
 
 
 
-const addComplexVariant = (
-    firstPart: string,
-    secondPart: string,
-    fn: PluginAPI['addVariant'],
-) => {
-    fn(`${firstPart}-${secondPart}`, [`&:${firstPart}`, `&:${secondPart}`]);
+export const variants = () => plugin(({
+    addVariant,
+    matchVariant,
+}) => {
+    const addComplexVariant = (
+        firstPart: string,
+        secondPart: string,
+    ) => {
+        const name = `${firstPart}-${secondPart}`;
 
-    fn(
-        `group-${firstPart}-${secondPart}`,
-        [
-            `:merge(.group):${firstPart} &`,
-            `:merge(.group):${secondPart} &`,
-        ],
-    );
+        addVariant(
+            name,
+            [
+                `&:${firstPart}`,
+                `&:${secondPart}`,
+            ],
+        );
 
-    fn(
-        `peer-${firstPart}-${secondPart}`,
-        [
-            `:merge(.peer):${firstPart} ~ &`,
-            `:merge(.peer):${secondPart} ~ &`,
-        ],
-    );
-};
+        const getState = (
+            state: 'group' | 'peer',
+            modifier?: string,
+        ) => {
+            const _modifier = modifier ? `\\/${modifier}` : '';
+            const _selector = state === 'group' ? '&' : '~ &';
 
-export const variants = () => plugin(({ addVariant }) => {
-    addVariant('optional', '&:optional');
+            return [
+                `:merge(.${state}${_modifier}):${firstPart} ${_selector}`,
+                `:merge(.${state}${_modifier}):${secondPart} ${_selector}`,
+            ];
+        };
 
-    addComplexVariant('hover', 'focus-visible', addVariant);
+        matchVariant(
+            'group',
+            (_, { modifier }) => (
+                modifier
+                    ? getState('group', modifier)
+                    : getState('group')
+            ),
+            {
+                values: {
+                    [name]: name,
+                },
+            },
+        );
 
-    addComplexVariant('hover', 'focus-within', addVariant);
+        matchVariant(
+            'peer',
+            (_, { modifier }) => (
+                modifier
+                    ? getState('peer', modifier)
+                    : getState('peer')
+            ),
+            {
+                values: {
+                    [name]: name,
+                },
+            },
+        );
+    };
+
+    addComplexVariant('hover', 'focus-visible');
+
+    addComplexVariant('hover', 'focus-within');
 });

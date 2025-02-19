@@ -84,13 +84,14 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
     const isUserAndConversationExist = !!userTarget && !!conversation;
 
     return (
-        <WrapperWithBullet isActive={isInConversation}>
+        <WrapperWithBullet
+            isActive={isInConversation}
+            withNotifications={!!notificationsCount}
+        >
             <Button
                 className={cn(
                     sharedStyles.button.base,
-                    sharedStyles.brandButton.base,
                     isInConversation && sharedStyles.button.active,
-                    isInConversation && sharedStyles.brandButton.active,
                 )}
                 tabIndex={tabIndex}
                 label={userTarget?.name}
@@ -104,7 +105,10 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
                     count={notificationsCount}
                 >
                     <Avatar.User
-                        className={sharedStyles.avatar}
+                        className={cn(
+                            sharedStyles.avatar.base,
+                            isInConversation && sharedStyles.avatar.active,
+                        )}
                         avatar={userTarget?.avatar}
                         defaultAvatar={userTarget?.defaultAvatar}
                     />

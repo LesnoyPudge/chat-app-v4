@@ -17,12 +17,12 @@ const useScrollableDebug = ({
     const { isFirstRender } = useIsFirstRender();
 
     if (autoHide && isFirstRender) {
-        logger.log('autoHide not implemented');
+        logger.log('autoHide is not implemented');
     }
 
-    if (size === 'hidden' && isFirstRender) {
-        logger.log('size `hidden` is deprecated, use different size with autoHide');
-    }
+    // if (size === 'hidden' && isFirstRender) {
+    //     logger.log('size `hidden` is deprecated, use different size with autoHide');
+    // }
 
     const checkWindowOverflow = useFunction(() => {
         if (!shouldReportCheckWindowOverflowRef.current) return;

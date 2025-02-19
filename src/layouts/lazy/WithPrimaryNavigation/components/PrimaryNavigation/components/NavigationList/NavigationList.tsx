@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ConversationListItem, ServerListItem } from './components';
-import { useStoreSelector } from '@redux/hooks';
+import { useSliceSelector, useStoreSelector } from '@redux/hooks';
 import { Features } from '@redux/features';
 import { Scrollable, Separator } from '@components';
 import { useKeyboardNavigation } from '@hooks';
@@ -19,42 +19,52 @@ export const NavigationList: FC = () => {
     const { t } = useTrans();
     const wrapperRef = useRefManager<HTMLDivElement>(null);
 
-    const conversationIdsWithNotifications = useStoreSelector(
-        Features.Conversations.StoreSelectors.selectIdsWithUnreadNotificationCount(),
+    const sortedConversationIds = useStoreSelector(
+        (state) => (
+            Features
+                .Conversations
+                .StoreSelectors
+                .selectIdsWithUnreadNotificationCountSortedByCount()(state)
+                .map((v) => v[0])
+        ),
     );
 
-    const conversationIdsToFetch = conversationIdsWithNotifications.map((v) => {
-        return v[0];
-    });
+    const conversationIdsToFetch = useSliceSelector(
+        Features.Conversations.Slice,
+        Features.Conversations.Slice.selectors.selectUndefinedIdsByIds(
+            sortedConversationIds,
+        ),
+    );
 
-    Features.Conversations.Api.useGetManyQuery({
+    Features.Conversations.Api.useGetManyDeepQuery({
         conversationIds: conversationIdsToFetch,
     }, { skip: !conversationIdsToFetch.length });
 
-    const serverIdsWithNotifications = useStoreSelector(
-        Features.Servers.StoreSelectors.selectIdsWithUnreadNotificationCount(),
+    const sortedServerIds = useStoreSelector(
+        (state) => (
+            Features
+                .Servers
+                .StoreSelectors
+                .selectIdsWithUnreadNotificationCountSortedByCount()(state)
+                .map((v) => v[0])
+        ),
     );
 
     const serverIdsWithoutNotifications = useStoreSelector(
         Features.Servers.StoreSelectors.selectIdsWithoutUnreadNotifications(),
     );
 
-    const serverIdsToFetch = [
-        ...serverIdsWithNotifications.map((v) => v[0]),
-        ...serverIdsWithoutNotifications,
-    ];
+    const serverIdsToFetch = useSliceSelector(
+        Features.Servers.Slice,
+        Features.Servers.Slice.selectors.selectUndefinedIdsByIds([
+            ...sortedServerIds,
+            ...serverIdsWithoutNotifications,
+        ]),
+    );
 
-    Features.Servers.Api.useGetManyQuery({
+    Features.Servers.Api.useGetManyDeepQuery({
         serverIds: serverIdsToFetch,
     }, { skip: !serverIdsToFetch.length });
-
-    const sortedConversationIds = conversationIdsWithNotifications.toSorted((a, b) => {
-        return b[1] - a[1];
-    }).map(([id]) => id);
-
-    const sortedServerIds = serverIdsWithNotifications.toSorted((a, b) => {
-        return b[1] - a[1];
-    }).map(([id]) => id);
 
     const serverIds = [
         ...sortedServerIds,

@@ -7,7 +7,7 @@ import { ClientEntities } from '@types';
 import type { RichTextEditor } from '@components';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
 import { logger } from '@utils';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { flattenPopulated } from './utils';
 
 
 
@@ -184,9 +184,8 @@ const createServer = (myId: string) => {
             id,
             channel: channelId,
             server: serverId,
+            messages: extractIds(messages),
         });
-
-        chat.messages = extractIds(messages);
 
         return {
             chat,
@@ -265,11 +264,7 @@ const createServer = (myId: string) => {
 
 const createConversation = (myId: string, userId: string) => {
     const id = uuid();
-
-    const textChat = Dummies.textChatConversation({
-        id: uuid(),
-        conversation: id,
-    });
+    const textChatId = uuid();
 
     const messages = createArray(inRange(0, mul(15))).map((_, index) => {
         const author = chance(0.5) ? myId : userId;
@@ -280,11 +275,15 @@ const createConversation = (myId: string, userId: string) => {
             server: null,
             conversation: id,
             index,
-            textChat: textChat.id,
+            textChat: textChatId,
         });
     });
 
-    textChat.messages = extractIds(messages);
+    const textChat = Dummies.textChatConversation({
+        id: textChatId,
+        conversation: id,
+        messages: extractIds(messages),
+    });
 
     const voiceChat = Dummies.voiceChatConversation({
         id: uuid(),
@@ -304,43 +303,6 @@ const createConversation = (myId: string, userId: string) => {
         conversation,
         messages,
     };
-};
-
-const flattenPopulated = <
-    _Prefix extends string,
-    _Input extends Record<string, T.UnknownRecord | T.UnknownRecord[]>,
->(
-    prefix: _Prefix,
-    input: _Input[],
-) => {
-    const result = {} as {
-        [_Key in keyof _Input as _Key extends string ? (
-            `${_Prefix}${_Key}`
-        ) : never]: _Input[_Key] extends any[] ? _Input[_Key] : _Input[_Key][]
-    };
-
-    for (const obj of input) {
-        for (const key of Object.keys(obj)) {
-            const newKey = `${prefix}${key}` as keyof typeof result;
-            const value = obj[key];
-            invariant(value !== undefined);
-
-            const oldValue = (
-                result[newKey] === undefined
-                    ? []
-                    : Array.isArray(result[newKey])
-                        ? result[newKey]
-                        : [result[newKey]]
-            );
-
-            result[newKey] = [
-                ...oldValue,
-                ...(Array.isArray(value) ? value : [value]),
-            ] as T.ValueOf<typeof result>;
-        }
-    }
-
-    return result;
 };
 
 type PopulateOptions = {
@@ -400,7 +362,7 @@ class Scenarios {
         });
 
         const {
-            blocked_user,
+            blocked_user = [],
         } = flattenPopulated('blocked_', createArray(mul(3)).map(() => {
             const user = createUser();
 
@@ -412,7 +374,7 @@ class Scenarios {
         }));
 
         const {
-            IFR_user,
+            IFR_user = [],
         } = flattenPopulated('IFR_', createArray(mul(3)).map(() => {
             const user = createUser();
             const time = Date.now() - hoursToMilliseconds(inRange(1, 100));
@@ -436,7 +398,7 @@ class Scenarios {
         }));
 
         const {
-            OFR_user,
+            OFR_user = [],
         } = flattenPopulated('OFR_', createArray(mul(3)).map(() => {
             const user = createUser();
             const time = Date.now() - hoursToMilliseconds(inRange(1, 100));
@@ -460,15 +422,15 @@ class Scenarios {
         }));
 
         const {
-            servers_members,
-            servers_messages,
-            servers_owner,
-            servers_roles,
-            servers_server,
-            servers_textChannels,
-            servers_textChats,
-            servers_voiceChannels,
-            servers_voiceChats,
+            servers_members = [],
+            servers_messages = [],
+            servers_owner = [],
+            servers_roles = [],
+            servers_server = [],
+            servers_textChannels = [],
+            servers_textChats = [],
+            servers_voiceChannels = [],
+            servers_voiceChats = [],
         } = flattenPopulated('servers_', createArray(mul(3)).map(() => {
             const server = createServer(me.id);
 
@@ -478,15 +440,15 @@ class Scenarios {
         }));
 
         const {
-            mutedServers_members,
-            mutedServers_messages,
-            mutedServers_owner,
-            mutedServers_roles,
-            mutedServers_server,
-            mutedServers_textChannels,
-            mutedServers_textChats,
-            mutedServers_voiceChannels,
-            mutedServers_voiceChats,
+            mutedServers_members = [],
+            mutedServers_messages = [],
+            mutedServers_owner = [],
+            mutedServers_roles = [],
+            mutedServers_server = [],
+            mutedServers_textChannels = [],
+            mutedServers_textChats = [],
+            mutedServers_voiceChannels = [],
+            mutedServers_voiceChats = [],
         } = flattenPopulated('mutedServers_', createArray(mul(2)).map(() => {
             const server = createServer(me.id);
 
@@ -505,10 +467,10 @@ class Scenarios {
         });
 
         const {
-            conv_conversation,
-            conv_messages,
-            conv_textChat,
-            conv_voiceChat,
+            conv_conversation = [],
+            conv_messages = [],
+            conv_textChat = [],
+            conv_voiceChat = [],
         } = flattenPopulated('conv_', friendsWithConv.map(({ id }) => {
             const conversation = createConversation(myId, id);
 
@@ -527,10 +489,10 @@ class Scenarios {
         });
 
         const {
-            mutedConv_conversation,
-            mutedConv_messages,
-            mutedConv_textChat,
-            mutedConv_voiceChat,
+            mutedConv_conversation = [],
+            mutedConv_messages = [],
+            mutedConv_textChat = [],
+            mutedConv_voiceChat = [],
         } = flattenPopulated('mutedConv_', friendsWithMutedConv.map(({ id }) => {
             const conversation = createConversation(myId, id);
 
@@ -549,10 +511,10 @@ class Scenarios {
         });
 
         const {
-            hiddenConv_conversation,
-            hiddenConv_messages,
-            hiddenConv_textChat,
-            hiddenConv_voiceChat,
+            hiddenConv_conversation = [],
+            hiddenConv_messages = [],
+            hiddenConv_textChat = [],
+            hiddenConv_voiceChat = [],
         } = flattenPopulated('hiddenConv_', friendsWithHiddenConv.map(({ id }) => {
             const conversation = createConversation(myId, id);
 

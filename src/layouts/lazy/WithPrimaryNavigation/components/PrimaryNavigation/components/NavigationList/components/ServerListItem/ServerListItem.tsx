@@ -41,8 +41,8 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
         Features.Servers.Slice.selectors.selectById(serverId),
     );
 
-    const notificationsCount = useStoreSelector(
-        Features.Servers.StoreSelectors.selectNotificationCountById(serverId),
+    const hasNotifications = useStoreSelector(
+        Features.Servers.StoreSelectors.selectHasNotificationsById(serverId),
     );
 
     Focus.useMoveFocusInside({
@@ -64,13 +64,14 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
     });
 
     return (
-        <WrapperWithBullet isActive={isInServer}>
+        <WrapperWithBullet
+            isActive={isInServer}
+            withNotifications={hasNotifications}
+        >
             <Button
                 className={cn(
                     sharedStyles.button.base,
-                    sharedStyles.brandButton.base,
                     isInServer && sharedStyles.button.active,
-                    isInServer && sharedStyles.brandButton.active,
                 )}
                 tabIndex={tabIndex}
                 label={server?.name}
@@ -80,15 +81,14 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
                 onLeftClick={navigateToServer}
                 onAnyClick={setFocused}
             >
-                <Avatar.WithBadge.Notifications
-                    count={notificationsCount}
-                >
-                    <Avatar.Server
-                        className={sharedStyles.avatar}
-                        name={server?.name}
-                        avatar={server?.avatar}
-                    />
-                </Avatar.WithBadge.Notifications>
+                <Avatar.Server
+                    className={cn(
+                        sharedStyles.avatar.base,
+                        isInServer && sharedStyles.avatar.active,
+                    )}
+                    name={server?.name}
+                    avatar={server?.avatar}
+                />
             </Button>
 
             <If condition={!!server}>

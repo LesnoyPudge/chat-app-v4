@@ -9,6 +9,8 @@ import { TextChatsApi } from './TextChatsApi';
 import { Users } from '../Users';
 import { Channels } from '../Channels';
 import { isAnyOf } from '@reduxjs/toolkit';
+import { Servers } from '../Servers';
+import { Conversations } from '../Conversations';
 
 
 
@@ -40,6 +42,8 @@ export const Slice = createCustomSliceEntityAdapter({
                 Users.Api.endpoints.login.matchFulfilled,
                 Users.Api.endpoints.registration.matchFulfilled,
                 Users.Api.endpoints.refresh.matchFulfilled,
+                Servers.Api.endpoints.getManyDeep.matchFulfilled,
+                Conversations.Api.endpoints.getManyDeep.matchFulfilled,
             ),
             (state, { payload }) => {
                 adapter.upsertMany(state, payload.TextChat);
