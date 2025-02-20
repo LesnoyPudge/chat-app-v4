@@ -10,14 +10,14 @@ import { createSleep } from '@lesnoypudge/utils-react';
 
 
 
-const Sleep = createSleep(1_000, 'devRoutes');
+const Sleep = createSleep(1_000);
 
 export const DevRoutes = () => {
     return (
         <Route
             path='/dev'
             element={(
-                <SuspenseWithGlobalLoader loaderId='dev routes loader'>
+                <SuspenseWithGlobalLoader>
                     <Sleep>
                         <Outlet/>
                     </Sleep>

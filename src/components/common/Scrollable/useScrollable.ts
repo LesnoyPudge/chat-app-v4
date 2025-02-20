@@ -27,9 +27,7 @@ export const useScrollable = ({
     } = useDebounce({ stateless: true });
 
     useLayoutEffect(() => {
-        console.log('eff');
         return scrollableRef.effect((scrollable) => {
-            console.log('ref eff');
             const on = () => {
                 if (isAliveRef.current) return;
 
@@ -74,7 +72,7 @@ export const useScrollable = ({
                 scrollDebounce(off, DELAY)();
             };
 
-            const cleanup = combinedFunction(
+            return combinedFunction(
                 addEventListener(
                     scrollable,
                     'scroll',
@@ -94,12 +92,6 @@ export const useScrollable = ({
                     handleMouseLeave,
                 ),
             );
-            const id = Math.random();
-            console.log(id);
-            return () => {
-                console.log('cleanup', id);
-                cleanup();
-            };
         });
     }, [autoHide, hoverEndDebounce, scrollDebounce, scrollableRef]);
 

@@ -23,3 +23,5 @@ https://mswjs.io/docs/getting-started
 -? change JsonView на https://www.npmjs.com/package/@microlink/react-json-view
 - useRefManager effect does not rerun after hot reload, probably because it
 is called once?
+- useIsFocusVisible is broken currently broken, state is not updated if
+document receive keydown event while focused on element (not visible)
