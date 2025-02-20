@@ -25,3 +25,5 @@ https://mswjs.io/docs/getting-started
 is called once?
 - useIsFocusVisible is broken currently broken, state is not updated if
 document receive keydown event while focused on element (not visible)
+- useIsFocusVisible should be in shared state, now blur interacts with
+setup which is wrong???

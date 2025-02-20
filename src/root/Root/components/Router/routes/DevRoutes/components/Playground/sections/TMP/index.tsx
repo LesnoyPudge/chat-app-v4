@@ -16,7 +16,7 @@ export const TMP: FC = () => {
     const ref = useRefManager<HTMLDivElement>(null);
 
     const options = {
-        within: false,
+        within: true,
         visible: true,
     };
 
