@@ -1,29 +1,21 @@
 https://www.youtube.com/shorts/PHXdLe2f9rs
 https://www.tailwind-variants.org/docs/getting-started
 https://fluid.tw/
-https://mswjs.io/docs/getting-started
 
 
 --client--
 -? сделать attachments layout через grid-template-areas
 - добавить dataset к элементу(html? body?) для работы css (theme, message-font-size, ...)
--? перенести useIsFocusVisible в библиотеку
 - добавить закрытие мобильного меню в местах 
 использования Navigator.useNavigator 
 -? создать хуки к каждому энтити для совместного селекта, фэтча и подписки
 -? стоит ли оставлять useOptimisticQueue? или сделать через rtkquery (
 составить таблицу запросов id запроса, при успешном убивать все записи до.
 при ошибке возвращать последнее валидное значение из таблицы)
--? добавить autoHide к Scrollable и сделать такой 
-скролл у PrimaryNavigation, удалить size='hidden'
+-? добавить autoHide к Scrollable и сделать такой скролл у 
+PrimaryNavigation, удалить size='hidden'
 -? PrimaryNavigation role 'menu'??? change to ul?
 -? remove useGetManyDeepQuery for entities that is received through socket
 - add sorting by createTimestamp to all EntityAdapters
 -? populate VoiceChats
 -? change JsonView на https://www.npmjs.com/package/@microlink/react-json-view
-- useRefManager effect does not rerun after hot reload, probably because it
-is called once?
-- useIsFocusVisible is broken currently broken, state is not updated if
-document receive keydown event while focused on element (not visible)
-- useIsFocusVisible should be in shared state, now blur interacts with
-setup which is wrong???
