@@ -208,7 +208,7 @@ export namespace useIsFocusVisible {
 }
 
 export const useIsFocusVisible = (
-    elementRef: useRefManager.RefManager<HTMLElement>,
+    elementRef: useRefManager.NullableRefManager<HTMLElement>,
     options?: useIsFocusVisible.Options,
 ): useIsFocusVisible.Return => {
     init();

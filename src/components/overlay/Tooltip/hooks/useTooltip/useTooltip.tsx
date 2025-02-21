@@ -13,7 +13,7 @@ import { useIsFocusVisible } from '@hooks';
 
 export namespace useTooltip {
     export type Props = {
-        leaderElementRef: useRefManager.RefManager<HTMLElement>;
+        leaderElementRef: useRefManager.NullableRefManager<HTMLElement>;
         within?: boolean;
     };
 }

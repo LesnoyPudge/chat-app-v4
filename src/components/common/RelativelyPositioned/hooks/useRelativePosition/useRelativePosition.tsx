@@ -39,22 +39,22 @@ export namespace useRelativePosition {
 
     export type LeaderElementOrRect = HTMLElement | OmittedRect;
 
-    export type LeaderElementRef = useRefManager.RefManager<
+    export type LeaderElementRef = useRefManager.NullableRefManager<
         HTMLElement
     >;
 
-    export type LeaderElementRectRef = useRefManager.RefManager<
+    export type LeaderElementRectRef = useRefManager.NullableRefManager<
         OmittedRect
     >;
 
-    export type LeaderElementOrRectRef = useRefManager.RefManager<
+    export type LeaderElementOrRectRef = useRefManager.NullableRefManager<
         LeaderElementOrRect
     >;
 
     export type Props = (
         Options
         & {
-            followerElementRef: useRefManager.RefManager<HTMLElement>;
+            followerElementRef: useRefManager.NullableRefManager<HTMLElement>;
             leaderElementOrRectRef: LeaderElementOrRectRef;
         }
     );

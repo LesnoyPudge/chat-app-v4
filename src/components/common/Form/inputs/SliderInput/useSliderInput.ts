@@ -99,6 +99,8 @@ export const useSliderInput = ({
 
     useLayoutEffect(() => {
         return sliderRef.effect((element) => {
+            if (!element) return;
+
             const sliderApi = create(element, sliderOptions);
             sliderApiRef.current = sliderApi;
 

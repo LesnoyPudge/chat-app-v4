@@ -50,7 +50,7 @@ export namespace useKeyboardNavigation {
 }
 
 export const useKeyboardNavigation = (
-    wrapperRefManager: useRefManager.RefManager<HTMLElement>,
+    wrapperRefManager: useRefManager.NullableRefManager<HTMLElement>,
     options: useKeyboardNavigation.Options,
 ): useKeyboardNavigation.Return => {
     const {

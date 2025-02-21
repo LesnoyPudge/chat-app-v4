@@ -28,6 +28,8 @@ export const useScrollable = ({
 
     useLayoutEffect(() => {
         return scrollableRef.effect((scrollable) => {
+            if (!scrollable) return;
+
             const on = () => {
                 if (isAliveRef.current) return;
 

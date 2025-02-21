@@ -19,7 +19,7 @@ export namespace Base {
             ItemProps<_Item>
             & {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                itemRef: useRefManager.RefManager<any>;
+                itemRef: useRefManager.NullableRefManager<any>;
             }
         );
 
@@ -45,7 +45,7 @@ export namespace Base {
 export namespace Features {
     export namespace WrapperProps {
         type WithWrapperRef = {
-            wrapperRef: useRefManager.RefManager<HTMLElement>;
+            wrapperRef: useRefManager.NullableRefManager<HTMLElement>;
         };
 
         export type WithKeyboardNavigation = {

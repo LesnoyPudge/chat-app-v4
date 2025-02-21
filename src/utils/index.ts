@@ -7,5 +7,4 @@ export * from './getHTMLElement';
 export * from './getStatusLabel';
 export * from './localStorageApi';
 export * from './logger';
-export * from './mutate';
 export * from './sharedAnimationVariants';
