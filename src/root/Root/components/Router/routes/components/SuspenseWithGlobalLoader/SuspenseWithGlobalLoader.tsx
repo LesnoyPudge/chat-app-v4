@@ -1,4 +1,4 @@
-import { GlobalLoader } from '@root/GlobalLoader';
+import { GlobalLoader } from '@root/Root/components/GlobalLoader';
 import { FC, PropsWithChildren, Suspense } from 'react';
 
 

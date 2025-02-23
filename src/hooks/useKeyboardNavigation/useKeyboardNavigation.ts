@@ -1,6 +1,5 @@
 import { invariant, KEY, shallowEqual } from '@lesnoypudge/utils';
 import { hotKey } from '@lesnoypudge/utils-web';
-import { useIsFocusVisible } from '@hooks';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {
     usePrevious,
@@ -8,6 +7,7 @@ import {
     useRefManager,
     useMemoShallow,
     useHotKey,
+    useIsFocused,
 } from '@lesnoypudge/utils-react';
 
 
@@ -44,7 +44,6 @@ export namespace useKeyboardNavigation {
         currentFocusedId: string | undefined;
         getTabIndex: (id: string) => 0 | -1;
         getIsFocused: (id: string) => boolean;
-        // setCurrentFocusedId: Dispatch<SetStateAction<string | undefined>>;
         setCurrentFocusedId: (newId: string) => void;
     };
 }
@@ -64,9 +63,9 @@ export const useKeyboardNavigation = (
     const memoizedList = useMemoShallow(list);
     const prevList = usePrevious(memoizedList);
 
-    const { isFocused } = useIsFocusVisible(
+    const { isFocused } = useIsFocused(
         wrapperRefManager,
-        { within: true },
+        { within: true, visible: true },
     );
 
     const getInitialId = useCallback(() => {
@@ -326,6 +325,7 @@ export const useKeyboardNavigation = (
         return id === derivedCurrentFocusedId;
     }, [derivedCurrentFocusedId, isFocused]);
 
+    // eslint-disable-next-line react-compiler/react-compiler
     return {
         currentFocusedId: derivedCurrentFocusedId,
         getTabIndex,

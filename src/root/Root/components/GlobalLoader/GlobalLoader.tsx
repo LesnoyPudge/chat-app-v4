@@ -3,7 +3,7 @@ import { useTrans } from '@i18n';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { GlobalLoaderScreen } from '@screens/bundled';
 import { getAnimationVariants, logger } from '@utils';
-import { FC, PropsWithChildren, useEffect, useLayoutEffect, useTransition } from 'react';
+import { FC, PropsWithChildren, useEffect, useLayoutEffect } from 'react';
 
 
 const { animationVariants } = getAnimationVariants.custom({
@@ -74,7 +74,6 @@ export const GlobalLoaderWrapper: FC<GlobalLoaderWrapper.Props> = ({
 }) => {
     const { t } = useTrans();
     const controls = Overlay.useOverlayControls(true);
-
 
     return (
         <GlobalLoaderContext.Provider value={controls}>

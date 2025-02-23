@@ -5,10 +5,9 @@ import {
     createWithDecorator,
 } from '@lesnoypudge/utils-react';
 import { isDev } from '@vars';
-import { lazy } from 'react';
 import { GlobalProviders, Masks, SpriteSheet, Router } from './components';
 import { ErrorScreen } from '@screens/bundled';
-import { GlobalLoader } from '@root/GlobalLoader';
+import { GlobalLoader } from '@root/Root/components/GlobalLoader';
 import {
     usePreventDefault,
     // useFocusTracker,
@@ -16,7 +15,11 @@ import {
 
 
 
-const DevTools = lazy(() => import('./components/DevTools'));
+const DevTools = (
+    isDev
+        ? await import('./components/DevTools').then((v) => v.DevTools)
+        : () => null
+);
 
 const { withDecorator } = createWithDecorator(({ children }) => {
     return (
@@ -38,9 +41,7 @@ export const Root = withDisplayName('Root', withDecorator(() => {
 
             <SpriteSheet/>
 
-            <If condition={isDev}>
-                <DevTools/>
-            </If>
+            <DevTools/>
 
             <GlobalLoader.Wrapper>
                 <Router/>

@@ -8,8 +8,7 @@ import { Navigator } from '@features';
 
 const DevRoutes = (
     isDev
-        // eslint-disable-next-line unicorn/no-await-expression-member
-        ? (await import('./routes/DevRoutes')).DevRoutes
+        ? await import('./routes/DevRoutes').then((v) => v.DevRoutes)
         : () => null
 );
 
