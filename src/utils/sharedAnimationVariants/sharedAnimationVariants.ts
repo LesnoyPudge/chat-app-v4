@@ -144,5 +144,20 @@ export const getAnimationVariants = {
         exit: {
             opacity: 0,
         },
+    }, {
+        duration: 0.125,
+        ease: 'backOut',
+    }),
+
+    withHalfScale: factory({
+        initial: {
+            scale: 0.5,
+        },
+        animate: {
+            scale: 1,
+        },
+        exit: {
+            scale: 0.5,
+        },
     }),
 };

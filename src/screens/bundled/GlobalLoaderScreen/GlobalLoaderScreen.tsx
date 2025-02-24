@@ -74,10 +74,10 @@ export const GlobalLoaderScreenPure: FC<GlobalLoaderScreenPure.Props> = ({
                         disableRemotePlayback
                         playsInline
                         muted
-                        poster={getAssetUrl('ANIMATED_DISCORD_LOGO_PLACEHOLDER.png')}
+                        poster={getAssetUrl(ASSETS.IMAGES.COMMON.ANIMATED_DISCORD_LOGO_PLACEHOLDER)}
                     >
                         <source
-                            src={getAssetUrl('DISCORD_ANIMATED_LOGO.webm')}
+                            src={getAssetUrl(ASSETS.VIDEOS.DISCORD_ANIMATED_LOGO)}
                             type='video/webm'
                         />
                     </video>

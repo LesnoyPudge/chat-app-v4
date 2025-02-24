@@ -85,7 +85,6 @@ const { withDecorator } = createWithDecorator<UserMenu.DecoratorProps>(({
                 <RelativelyPositioned.Node
                     leaderElementOrRectRef={leaderElementOrRectRef}
                     preferredAlignment='top'
-                    boundsSize={20}
                     spacing={10}
                     centered
                 >

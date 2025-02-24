@@ -151,7 +151,7 @@ const main = () => {
         }
 
         override({
-            data: fs.readFileSync(filePath).toString(),
+            data: fs.readFileSync(filePath),
             pathToFile: path.join(
                 generatedAssetsDirPath,
                 fullName,
@@ -167,7 +167,7 @@ const main = () => {
         ASSETS.SOUNDS.push([name, fullName]);
 
         override({
-            data: fs.readFileSync(filePath).toString(),
+            data: fs.readFileSync(filePath),
             pathToFile: path.join(generatedAssetsDirPath, fullName),
         });
 
@@ -182,7 +182,7 @@ const main = () => {
         ASSETS.VIDEOS.push([name, fullName]);
 
         override({
-            data: fs.readFileSync(filePath).toString(),
+            data: fs.readFileSync(filePath),
             pathToFile: path.join(generatedAssetsDirPath, fullName),
         });
 

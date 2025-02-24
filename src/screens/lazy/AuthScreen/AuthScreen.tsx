@@ -11,6 +11,7 @@ import {
 } from '@lesnoypudge/utils-react';
 import { LoginForm, RegistrationForm } from './components';
 import { Screen } from '@layouts/bundled';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -65,7 +66,7 @@ export const AuthScreenPure: FC = () => {
         <Screen>
             <Image
                 className={styles.bg}
-                src={getAssetUrl('FANCY_BG.jpg')}
+                src={getAssetUrl(ASSETS.IMAGES.COMMON.FANCY_BG)}
             />
 
             <Scrollable

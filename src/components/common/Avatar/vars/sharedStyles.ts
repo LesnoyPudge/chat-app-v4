@@ -11,7 +11,7 @@ const styles = createStyles({
             rounded-full
             bg-primary-100
         `,
-        notLoaded: 'animate-pulse',
+        notLoaded: 'animate-placeholder',
     },
     image: {
         base: 'aspect-square size-full',

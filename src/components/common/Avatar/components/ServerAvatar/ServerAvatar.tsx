@@ -53,7 +53,7 @@ export const ServerAvatar: FC<ServerAvatar.Props> = ({
     const src = getReadImagePath(avatar);
 
     const showImage = !!src;
-    const showName = !src && !!name;
+    const showName = !showImage && !!name;
 
     const formattedName = (
         name
@@ -63,8 +63,9 @@ export const ServerAvatar: FC<ServerAvatar.Props> = ({
 
     return (
         <div className={cn(
+            'HELLO SUKKA',
             sharedStyles.wrapper.base,
-            !isLoadedState.value && sharedStyles.wrapper.notLoaded,
+            !isLoadedState.value && !showName && sharedStyles.wrapper.notLoaded,
             styles.wrapper.base,
             showName && styles.wrapper.loaded,
             className,

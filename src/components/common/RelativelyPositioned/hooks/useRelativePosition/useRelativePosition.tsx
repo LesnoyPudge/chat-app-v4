@@ -69,7 +69,7 @@ export const useRelativePosition = ({
     followerElementRef,
     leaderElementOrRectRef,
     swappableAlignment = false,
-    boundsSize = 0,
+    boundsSize = 20,
     spacing = 0,
     centered = false,
     unbounded = false,

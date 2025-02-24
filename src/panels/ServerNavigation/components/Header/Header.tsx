@@ -1,26 +1,29 @@
 import { useValidatedParams } from '@hooks';
-import { cn } from '@utils';
+import { cn, createStyles } from '@utils';
 import { FC } from 'react';
-import { ChannelMenu } from './components';
+import { ServerMenu } from './components';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { useSliceSelector } from '@redux/hooks';
 import { Features } from '@redux/features';
-import { Overlay, Sprite } from '@components';
+import { Button, Overlay, Placeholder, Sprite } from '@components';
 import { ASSETS } from '@generated/ASSETS';
+import { WithTopBar } from '@layouts/bundled';
+import { useTrans } from '@i18n';
 
 
 
-const styles = {
+const styles = createStyles({
     topBar: {
-        base: 'relative hover:bg-primary-hover focus-within:bg-primary-hover',
+        base: 'relative hover-focus-within:bg-primary-hover',
         active: 'bg-primary-hover',
     },
-    button: 'flex justify-between items-center w-full h-full px-4',
-    buttonText: 'font-semibold text-color-primary truncate',
-    buttonIcon: 'w-4 h-4 fill-icon-100',
-};
+    button: 'flex h-full w-full items-center justify-between gap-4 px-4',
+    buttonText: 'truncate font-semibold text-color-primary',
+    buttonIcon: 'h-4 w-4 fill-icon-100',
+});
 
 export const Header: FC = () => {
+    const { t } = useTrans();
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { serverId } = useValidatedParams('server');
     const controls = Overlay.useOverlayControls();
@@ -37,37 +40,34 @@ export const Header: FC = () => {
     );
 
     return (
-        <OverlayContextProvider disabled={!channel}>
-            {({ openOverlay, isOverlayExist }) => {
-                return (
-                    <TopBar className={cn(
-                        styles.topBar.base,
-                        { [styles.topBar.active]: isOverlayExist },
-                    )}>
-                        <Button
-                            className={styles.button}
-                            label='Открыть меню канала'
-                            hasPopup='menu'
-                            isActive={isOverlayExist}
-                            innerRef={buttonRef}
-                            onLeftClick={openOverlay}
-                        >
-                            <span className={styles.buttonText}>
-                                {getTextFallback(channel?.name)}
-                            </span>
+        <WithTopBar className={cn(
+            styles.topBar.base,
+            controls.isOpen && styles.topBar.active,
+        )}>
+            <Button
+                className={styles.button}
+                label={t('ServerNavigation.Header.openMenuButtonLabel')}
+                hasPopup='menu'
+                isActive={controls.isOpen}
+                innerRef={buttonRef}
+                onLeftClick={controls.open}
+            >
+                <Placeholder.With reveal={!!server}>
+                    <span className={styles.buttonText}>
+                        {server?.name}
+                    </span>
+                </Placeholder.With>
 
-                            <Sprite
-                                className={styles.buttonIcon}
-                                sprite={sprite}
-                            />
-                        </Button>
+                <Sprite
+                    className={styles.buttonIcon}
+                    sprite={sprite}
+                />
+            </Button>
 
-                        <EntityContextHelpers.Channel.Loaded>
-                            <ChannelMenu leaderElementRef={ref}/>
-                        </EntityContextHelpers.Channel.Loaded>
-                    </TopBar>
-                );
-            }}
-        </OverlayContextProvider>
+            <ServerMenu
+                leaderElementOrRectRef={buttonRef}
+                controls={controls}
+            />
+        </WithTopBar>
     );
 };

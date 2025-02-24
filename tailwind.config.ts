@@ -143,6 +143,7 @@ export default {
 
             animation: {
                 'custom-pulse': 'var(--custom-pulse-animation)',
+                'placeholder': 'var(--custom-placeholder-animation)',
             },
 
             borderRadius: {

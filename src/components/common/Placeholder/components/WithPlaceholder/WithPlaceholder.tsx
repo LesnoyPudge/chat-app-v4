@@ -1,7 +1,9 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Placeholder } from '@components';
 import { cn, createStyles } from '@utils';
+import { isDev, isProd } from '@vars';
+import { useTimeout } from '@lesnoypudge/utils-react';
 
 
 
@@ -19,7 +21,6 @@ export namespace WithPlaceholder {
     );
 }
 
-
 export const WithPlaceholder: FC<WithPlaceholder.Props> = ({
     className = '',
     reveal,
@@ -27,13 +28,27 @@ export const WithPlaceholder: FC<WithPlaceholder.Props> = ({
     containerClassName,
     ...rest
 }) => {
+    let devReveal = isProd;
+
+    if (isDev) {
+        // eslint-disable-next-line react-compiler/react-compiler, react-hooks/rules-of-hooks
+        const [state, setState] = useState(false);
+
+        // eslint-disable-next-line react-compiler/react-compiler, react-hooks/rules-of-hooks
+        useTimeout(() => {
+            setState(true);
+        }, 10_000);
+
+        devReveal = state;
+    }
+
     return (
         <>
-            <If condition={reveal}>
+            <If condition={devReveal && reveal}>
                 {children}
             </If>
 
-            <If condition={!reveal}>
+            <If condition={!devReveal || !reveal}>
                 <Placeholder.Node
                     className={className}
                     containerClassName={cn(

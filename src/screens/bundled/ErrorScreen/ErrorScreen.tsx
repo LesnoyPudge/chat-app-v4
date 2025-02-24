@@ -6,6 +6,7 @@ import { CUSTOM_STYLES } from '@vars';
 import { FC } from 'react';
 import { useErrorScreen } from './useErrorScreen';
 import { Screen } from '@layouts/bundled';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -42,7 +43,7 @@ export const ErrorScreenPure: FC<ErrorScreenPure.Props> = ({
         <Screen className={styles.screen}>
             <Image
                 className={styles.bg}
-                src={getAssetUrl('ERROR_BOUNDARY_BG.svg')}
+                src={getAssetUrl(ASSETS.IMAGES.COMMON.ERROR_BOUNDARY_BG)}
             />
 
             <Scrollable
@@ -53,7 +54,7 @@ export const ErrorScreenPure: FC<ErrorScreenPure.Props> = ({
                 <div className={styles.content}>
                     <Image
                         className={styles.image}
-                        src={getAssetUrl('ERROR_BOUNDARY_IMAGE.svg')}
+                        src={getAssetUrl(ASSETS.IMAGES.COMMON.ERROR_BOUNDARY_IMAGE)}
                     />
 
                     <Heading.Node className={styles.heading}>

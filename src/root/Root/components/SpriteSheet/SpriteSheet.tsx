@@ -1,4 +1,4 @@
-import { SPRITE_SHEET } from '@generated/spriteSheet';
+import { SPRITE_SHEET } from '@generated/SPRITE_SHEET';
 import { Hidden } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 

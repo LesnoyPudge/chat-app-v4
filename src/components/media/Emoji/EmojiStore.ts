@@ -1,3 +1,4 @@
+import { ASSETS } from '@generated/ASSETS';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { invariant } from '@lesnoypudge/utils';
 import { getAssetUrl } from '@utils';
@@ -15,27 +16,27 @@ export namespace EmojiStore {
     export const emojis = [
         {
             code: ':smile:',
-            path: getAssetUrl('SMILE.svg'),
+            path: getAssetUrl(ASSETS.IMAGES.COMMON.SMILE),
             aliases: [],
         },
         {
             code: ':poop:',
-            path: getAssetUrl('POOP.svg'),
+            path: getAssetUrl(ASSETS.IMAGES.COMMON.POOP),
             aliases: [':shit:'],
         },
         {
             code: ':thumbs_up:',
-            path: getAssetUrl('THUMBS_UP.svg'),
+            path: getAssetUrl(ASSETS.IMAGES.COMMON.THUMBS_UP),
             aliases: [],
         },
         {
             code: ':thumbs_down:',
-            path: getAssetUrl('THUMBS_DOWN.svg'),
+            path: getAssetUrl(ASSETS.IMAGES.COMMON.THUMBS_DOWN),
             aliases: [],
         },
         {
             code: ':ok_hand:',
-            path: getAssetUrl('OK_HAND.svg'),
+            path: getAssetUrl(ASSETS.IMAGES.COMMON.OK_HAND),
             aliases: [':ok:'],
         },
     ] as const satisfies Emoji[];

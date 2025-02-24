@@ -4,7 +4,7 @@ import { useSliceSelector, useStoreSelector } from '@redux/hooks';
 import { Features } from '@redux/features';
 import { Scrollable, Separator } from '@components';
 import { useKeyboardNavigation } from '@hooks';
-import { Iterate, Memo, useRefManager } from '@lesnoypudge/utils-react';
+import { Iterate, useRefManager } from '@lesnoypudge/utils-react';
 import { createStyles } from '@utils';
 import { useTrans } from '@i18n';
 
@@ -13,6 +13,7 @@ import { useTrans } from '@i18n';
 const styles = createStyles({
     scrollable: 'py-2',
     list: 'flex flex-col gap-2',
+    scrollableSeparator: 'ml-5',
 });
 
 export const NavigationList: FC = () => {
@@ -125,7 +126,10 @@ export const NavigationList: FC = () => {
                             )}
                         </Iterate>
 
-                        <Separator {...separatorProps}/>
+                        <Separator
+                            className={styles.scrollableSeparator}
+                            {...separatorProps}
+                        />
                     </If>
 
                     <Iterate items={serverIds}>

@@ -5,7 +5,7 @@ import path from 'node:path';
 
 type Options = {
     pathToFile: string;
-    data: string;
+    data: string | Buffer;
 };
 
 export const override = ({

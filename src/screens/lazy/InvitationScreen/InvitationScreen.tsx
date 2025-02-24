@@ -6,6 +6,7 @@ import { CUSTOM_STYLES } from '@vars';
 import { Heading } from '@lesnoypudge/utils-react';
 import { useTrans } from '@i18n';
 import { Screen } from '@layouts/bundled';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -64,7 +65,7 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
         <Screen>
             <Image
                 className={styles.bg}
-                src={getAssetUrl('FANCY_BG.jpg')}
+                src={getAssetUrl(ASSETS.IMAGES.COMMON.FANCY_BG)}
             />
 
             <Scrollable

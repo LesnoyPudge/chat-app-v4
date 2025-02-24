@@ -52,7 +52,6 @@ export const ContextMenuWrapper = withDisplayName(
                             leaderElementOrRectRef={leaderElementOrRectRef}
                             preferredAlignment={preferredAlignment}
                             spacing={15}
-                            boundsSize={20}
                             swappableAlignment
                         >
                             <m.div

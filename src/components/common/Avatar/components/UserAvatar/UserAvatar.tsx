@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn, createStyles, getAssetUrl } from '@utils';
+import { cn, getAssetUrl } from '@utils';
 import { ClientEntities, ExtendedRecord } from '@types';
 import { getReadImagePath } from '../../utils';
 import { useTrans } from '@i18n';
@@ -7,8 +7,20 @@ import { useBoolean } from '@lesnoypudge/utils-react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Image } from '@components';
 import { sharedStyles } from '../../vars';
+import { ASSETS } from '@generated/ASSETS';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
+
+const avatarIndexToAsset = {
+    '1': ASSETS.IMAGES.COMMON.DEFAULT_AVATAR_1,
+    '2': ASSETS.IMAGES.COMMON.DEFAULT_AVATAR_2,
+    '3': ASSETS.IMAGES.COMMON.DEFAULT_AVATAR_3,
+    '4': ASSETS.IMAGES.COMMON.DEFAULT_AVATAR_4,
+} satisfies Record<
+    ClientEntities.User.Base['defaultAvatar'],
+    T.ValueOf<ASSETS['IMAGES']['COMMON']>
+>;
 
 export namespace UserAvatar {
     export type Props = (
@@ -30,7 +42,7 @@ export const UserAvatar: FC<UserAvatar.Props> = ({
 
     const defaultAvatarSrc = (
         (!avatar && defaultAvatar)
-            ? getAssetUrl(`DEFAULT_AVATAR_${defaultAvatar}.png`)
+            ? getAssetUrl(avatarIndexToAsset[defaultAvatar])
             : null
     );
 

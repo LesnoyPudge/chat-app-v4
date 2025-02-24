@@ -221,6 +221,10 @@ export class FakeDB {
     }
 }
 
-export const db = await new FakeDB({
-    socket,
-}).init();
+export let db: FakeDB;
+
+export const initDB = async () => {
+    db = await new FakeDB({
+        socket,
+    }).init();
+};

@@ -1,6 +1,6 @@
 import { createStyles } from '@utils';
 import { FC } from 'react';
-import { Header, AddRoom, RoomList } from './components';
+import { Header, AddChannel, ChannelList } from './components';
 
 
 
@@ -13,9 +13,9 @@ export const ServerNavigation: FC = () => {
         <nav className={styles.wrapper}>
             <Header/>
 
-            <AddRoom/>
+            <AddChannel/>
 
-            <RoomList/>
+            <ChannelList/>
         </nav>
     );
 };

@@ -1,20 +1,27 @@
+import { ASSETS } from '@generated/ASSETS';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
+
+type AssetItem = (
+    T.ValueOf<ASSETS['IMAGES']['COMMON']>
+    | T.ValueOf<ASSETS['IMAGES']['SPRITE']>
+    | T.ValueOf<ASSETS['SOUNDS']>
+    | T.ValueOf<ASSETS['VIDEOS']>
+);
 
 const cache = new Map<string, string>();
 
-export const getAssetUrl = (fileName: CommonAssetNames) => {
-    const found = cache.get(fileName);
-    if (found) {
-        return found;
-    }
+export const getAssetUrl = (assetItem: AssetItem) => {
+    const found = cache.get(assetItem.PATH);
+    if (found) return found;
 
     const { href } = new URL(
-        `../../../generated/assets/${fileName}`,
+        `../../../generated/assets/${assetItem.PATH}`,
         import.meta.url,
     );
 
-    cache.set(fileName, href);
+    cache.set(assetItem.PATH, href);
 
     return href;
 };

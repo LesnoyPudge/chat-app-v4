@@ -14,7 +14,7 @@ const styles = createStyles({
             rounded-full 
             transition-all
             ease-out
-            data-[loading=true]:animate-pulse 
+            data-[loading=true]:animate-placeholder 
             hover-focus-visible:rounded-2xl
             hover-focus-visible:text-white
         `,
