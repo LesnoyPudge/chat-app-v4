@@ -6,6 +6,7 @@ import { FC } from 'react';
 import { WrapperWithBullet } from '../WrapperWithBullet';
 import { sharedStyles } from '../../sharedStyles';
 import { Navigator } from '@features';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -38,7 +39,7 @@ export const HomePageButton: FC = () => {
             >
                 <Sprite
                     className={sharedStyles.icon}
-                    name='DISCORD_LOGO'
+                    sprite={ASSETS.IMAGES.SPRITE.DISCORD_LOGO}
                 />
             </Button>
 

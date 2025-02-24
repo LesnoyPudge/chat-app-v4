@@ -2,6 +2,7 @@ import { cn, createStyles } from '@utils';
 import { FC } from 'react';
 import { Sprite } from '@components';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -42,7 +43,7 @@ export const CheckBoxIndicatorCheck: FC<CheckBoxIndicatorCheck.Props> = ({
                         styles.checkBoxIcon.base,
                         !checked && styles.checkBoxIcon.active,
                     )}
-                    name='CHECK_ICON'
+                    sprite={ASSETS.IMAGES.SPRITE.CHECK_ICON}
                 />
             </div>
         </>

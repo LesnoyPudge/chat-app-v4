@@ -1,5 +1,6 @@
 import { Button, Sprite } from '@components';
 import { Navigator } from '@features';
+import { ASSETS } from '@generated/ASSETS';
 import { useTrans } from '@i18n';
 import { WithTopBar } from '@layouts/bundled';
 import { useFunction } from '@lesnoypudge/utils-react';
@@ -60,7 +61,7 @@ export const Header: FC = () => {
                         styles.icon.base,
                         isActive && styles.icon.active,
                     )}
-                    name='FRIEND_ICON'
+                    sprite={ASSETS.IMAGES.SPRITE.FRIEND_ICON}
                 />
 
                 <span>

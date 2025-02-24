@@ -7,6 +7,7 @@ import { Features } from '@redux/features';
 import { useTrans } from '@i18n';
 import { createStyles } from '@utils';
 import { Navigator } from '@features';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -123,7 +124,7 @@ export const CreateServerTab: FC = () => {
                                             <div className={styles.fileInputActionIconWrapper}>
                                                 <Sprite
                                                     className={styles.fileInputActionIcon}
-                                                    name='PLUS_ICON'
+                                                    sprite={ASSETS.IMAGES.SPRITE.PLUS_ICON}
                                                 />
                                             </div>
                                         </div>

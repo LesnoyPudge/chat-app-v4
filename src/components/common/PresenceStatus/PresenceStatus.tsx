@@ -4,6 +4,7 @@ import { ClientEntities, ExtendedRecord } from '@types';
 import { cn, createStyles } from '@utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -13,14 +14,14 @@ type StatusNames = T.ValueOf<Pick<
     | 'extraStatus'
 >>;
 
-const statusNameToSpriteName = {
-    afk: 'STATUS_AFK',
-    dnd: 'STATUS_DND',
-    invisible: 'STATUS_OFFLINE',
-    offline: 'STATUS_OFFLINE',
-    online: 'STATUS_ONLINE',
-    default: 'STATUS_ONLINE',
-} satisfies Record<StatusNames, Sprite.Props['name']>;
+const statusNameToSprite = {
+    afk: ASSETS.IMAGES.SPRITE.STATUS_AFK,
+    dnd: ASSETS.IMAGES.SPRITE.STATUS_DND,
+    invisible: ASSETS.IMAGES.SPRITE.STATUS_OFFLINE,
+    offline: ASSETS.IMAGES.SPRITE.STATUS_OFFLINE,
+    online: ASSETS.IMAGES.SPRITE.STATUS_ONLINE,
+    default: ASSETS.IMAGES.SPRITE.STATUS_ONLINE,
+} satisfies Record<StatusNames, Sprite.Props['sprite']>;
 
 const styles = createStyles({
     base: 'size-full',
@@ -81,7 +82,7 @@ export const PresenceStatus: FC<PresenceStatus.Props> = ({
                 styles.type[statusToShow],
                 className,
             )}
-            name={statusNameToSpriteName[statusToShow]}
+            sprite={statusNameToSprite[statusToShow]}
         />
     );
 };

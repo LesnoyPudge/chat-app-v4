@@ -1,4 +1,5 @@
 import { Button, Form, Sprite } from '@components';
+import { ASSETS } from '@generated/ASSETS';
 import { useTrans } from '@i18n';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { noop } from '@lesnoypudge/utils';
@@ -57,10 +58,10 @@ export const SearchBar: FC<SearchBar.Props> = ({
         onChange(e.target.value);
     });
 
-    const icon: SpriteNames = (
+    const sprite = (
         value
-            ? 'CROSS_ICON'
-            : 'SEARCH_ICON'
+            ? ASSETS.IMAGES.SPRITE.CROSS_ICON
+            : ASSETS.IMAGES.SPRITE.SEARCH_ICON
     );
 
     const buttonLabel = (
@@ -96,7 +97,7 @@ export const SearchBar: FC<SearchBar.Props> = ({
             >
                 <Sprite
                     className={styles.icon}
-                    name={icon}
+                    sprite={sprite}
                 />
             </Button>
         </Form.Inputs.TextInput.Wrapper>

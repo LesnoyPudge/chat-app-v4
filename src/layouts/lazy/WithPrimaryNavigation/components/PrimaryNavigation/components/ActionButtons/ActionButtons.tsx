@@ -6,6 +6,7 @@ import { cn } from '@utils';
 import { sharedStyles } from '../../sharedStyles';
 import { useTrans } from '@i18n';
 import { CreateServerModal } from '@modals';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -31,7 +32,7 @@ export const ActionButtons: FC = () => {
             >
                 <Sprite
                     className={sharedStyles.icon}
-                    name='ADD_CHANNEL_NAVIGATION_ICON'
+                    sprite={ASSETS.IMAGES.SPRITE.ADD_CHANNEL_NAVIGATION_ICON}
                 />
             </Button>
 

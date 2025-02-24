@@ -7,7 +7,6 @@ const styles = createStyles({
         base: `
             group/button
             peer
-            mx-auto 
             flex
             size-12 
             items-center 
@@ -23,10 +22,10 @@ const styles = createStyles({
     },
     avatar: {
         base: `
-            group-hover-focus-visible/button:rounded-2xl
             rounded-full
             transition-all
             ease-out
+            group-hover-focus-visible/button:rounded-2xl
         `,
         active: 'rounded-2xl',
     },

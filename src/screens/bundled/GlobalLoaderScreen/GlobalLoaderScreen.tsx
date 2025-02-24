@@ -6,6 +6,7 @@ import { ExternalLink, Scrollable, Sprite } from '@components';
 import { useTrans } from '@i18n';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Screen } from '@layouts/bundled';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -104,7 +105,7 @@ export const GlobalLoaderScreenPure: FC<GlobalLoaderScreenPure.Props> = ({
                                 >
                                     <Sprite
                                         className={styles.icon}
-                                        name='TWITTER_ICON'
+                                        sprite={ASSETS.IMAGES.SPRITE.TWITTER_ICON}
                                     />
 
                                     <span>

@@ -62,7 +62,7 @@ class PublicEnv {
 
 createEnv({
     publicPrefix: new PublicEnv()._PUBLIC_SAFE_ENV_PREFIX,
-    envPath: '../generated',
-    typePath: '../generated',
+    envPath: 'generated',
+    typePath: 'generated',
     value: { ...new PublicEnv() },
 });

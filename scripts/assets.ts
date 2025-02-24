@@ -1,9 +1,23 @@
 import path from 'node:path';
 import fs from 'node:fs';
-import { createId, invariant } from '@lesnoypudge/utils';
-import { optimize } from 'svgo';
+import { invariant } from '@lesnoypudge/utils';
+import { override } from './utils/override';
+import { createTsData } from './utils/createTsData';
+import { getNameParts } from './utils/getNameParts';
+import { optimizeSVG } from './utils/optimizeSVG';
+import { createObjectString } from './utils/createObjectString';
+import { namePathEntryToObject } from './utils/namePathEntryToObject';
 
 
+
+type AssetsObject = {
+    IMAGES: {
+        SPRITE: [string, string][];
+        COMMON: [string, string][];
+    };
+    SOUNDS: [string, string][];
+    VIDEOS: [string, string][];
+};
 
 const rootPath = process.cwd();
 const rawAssetsDirPath = path.join(rootPath, 'rawAssets');
@@ -13,19 +27,14 @@ const generatedAssetsDirPath = path.join(
     'assets',
 );
 
-const generatedCommonAssetNamesDeclarationPath = path.join(
-    generatedDirPath,
-    'assetNames.d.ts',
-);
-
 const generatedSpritePath = path.join(
     generatedDirPath,
-    'spriteSheet.ts',
+    'SPRITE_SHEET.ts',
 );
 
-const generatedSpriteNamesTypePath = path.join(
+const generatedAssetsObjectPath = path.join(
     generatedDirPath,
-    'spriteNames.d.ts',
+    'ASSETS.ts',
 );
 
 const generatedSpritePreviewPath = path.join(
@@ -45,216 +54,163 @@ const rawAssetsPath = {
     },
 };
 
-const optimizeSVG = ({
-    data,
-    name = `RANDOM_NAME_${createId()}`,
-}: { data: string; name?: string }) => {
-    let dataToModify = data;
-    const optimized = optimize(dataToModify, {
-        multipass: true,
-        floatPrecision: 1,
-        plugins: [{ name: 'cleanupIds', params: { minify: false } }],
-    });
+const spriteImagePaths = fs.globSync([
+    rawAssetsPath.images.sprite,
+    '/**/*',
+].join(''));
 
-    dataToModify = optimized.data.replace('<svg', `<svg id="${name}"`);
+const commonImagePaths = fs.globSync([
+    rawAssetsPath.images.background,
+    rawAssetsPath.images.emoji,
+    rawAssetsPath.images.other,
+].map((name) => `${name}/**/*`));
 
-    const xmlns = 'xmlns="http://www.w3.org/2000/svg"';
-    if (!dataToModify.includes(xmlns)) {
-        dataToModify = dataToModify.replace('<svg', `<svg ${xmlns}`);
-    }
+const soundPaths = fs.globSync([
+    rawAssetsPath.sounds,
+].map((name) => `${name}/**/*`));
 
-    return dataToModify;
-};
-
-const toUpperSnake = (word: string) => {
-    return word.toUpperCase().split('-').join('_');
-};
-
-const getNameParts = (fileName: string) => {
-    const splittedName = fileName.split('.');
-    if (splittedName.length < 2) throw new Error('Имя без расширения');
-
-    const ext = splittedName.pop();
-    invariant(ext);
-    const name = toUpperSnake(splittedName.join('.'));
-
-    return {
-        name,
-        ext,
-    };
-};
+const videoPaths = fs.globSync([
+    rawAssetsPath.videos,
+].map((name) => `${name}/**/*`));
 
 const main = () => {
-    fs.rmSync(
-        generatedAssetsDirPath,
-        { force: true, recursive: true },
-    );
-    console.log('assets folder removed');
-
-    fs.mkdirSync(
-        generatedAssetsDirPath,
-        { recursive: true },
-    );
-    console.log('assets folder created');
-
-    fs.rmSync(
-        generatedSpritePreviewPath,
-        { recursive: true, force: true },
-    );
-    console.log('folder for sprites for preview removed');
-
-    fs.mkdirSync(
-        generatedSpritePreviewPath,
-        { recursive: true },
-    );
-    console.log('folder for sprites for preview created');
-
-    const spriteImagePaths = fs.globSync([
-        rawAssetsPath.images.sprite,
-        '/**/*',
-    ].join(''));
+    const ASSETS: AssetsObject = {
+        IMAGES: {
+            COMMON: [],
+            SPRITE: [],
+        },
+        SOUNDS: [],
+        VIDEOS: [],
+    };
 
     const spriteArray: string[] = [];
     const spriteNameArray: string[] = [];
 
     spriteImagePaths.forEach((filePath) => {
-        let fileData = fs.readFileSync(filePath).toString();
         const fileName = path.basename(filePath);
-        const { ext, name } = getNameParts(fileName);
+        const { ext, name, fullName } = getNameParts(fileName);
         invariant(ext === 'svg');
-
-        const newName = `${name}.${ext}`;
 
         spriteNameArray.push(name);
 
-        fileData = optimizeSVG({
-            data: fileData,
+        ASSETS.IMAGES.SPRITE.push([name, fileName]);
+
+        const fileData = optimizeSVG({
+            data: fs.readFileSync(filePath).toString(),
             name,
         });
 
         spriteArray.push(fileData);
-        const fileToWrite = path.join(
+
+        const filePathToWrite = path.join(
             generatedSpritePreviewPath,
-            newName,
+            fullName,
         );
 
-        fs.writeFileSync(
-            fileToWrite,
-            fileData,
-            'utf8',
-        );
+        override({
+            pathToFile: filePathToWrite,
+            data: fileData,
+        });
     });
     console.log('sprites for preview written');
 
-    const spriteData = [
-        `// GENERATED IN ${path.basename(import.meta.filename)}\n`,
+    const spriteData = createTsData([
         'export const SPRITE_SHEET: string = `',
         spriteArray.join(' \n'),
         '`;',
-    ].join('');
+    ]);
 
-    fs.writeFileSync(
-        generatedSpritePath,
-        spriteData,
-        'utf8',
-    );
+    override({
+        data: spriteData,
+        pathToFile: generatedSpritePath,
+    });
     console.log('sprite generated');
-
-    const spriteNamesTypeData = [
-        `// GENERATED IN ${path.basename(import.meta.filename)}\n`,
-        'type SpriteNames = ',
-        spriteNameArray.map((name) => `'${name}'`).join('| \n'),
-        ';',
-    ].join('');
-
-    fs.writeFileSync(
-        generatedSpriteNamesTypePath,
-        spriteNamesTypeData,
-        'utf8',
-    );
-    console.log('sprite names generated');
-
-    const commonImagePaths = fs.globSync([
-        rawAssetsPath.images.background,
-        rawAssetsPath.images.emoji,
-        rawAssetsPath.images.other,
-    ].map((name) => `${name}/**/*`));
-
-    const commonImageNamesArray: string[] = [];
 
     commonImagePaths.forEach((filePath) => {
         const fileName = path.basename(filePath);
-        const { ext, name } = getNameParts(fileName);
-        const newName = `${name}.${ext}`;
+        const { ext, name, fullName } = getNameParts(fileName);
 
-        commonImageNamesArray.push(newName);
+        // commonImageNamesArray.push(fullName);
+        ASSETS.IMAGES.COMMON.push([name, fullName]);
 
         if (ext === 'svg') {
-            let fileData = fs.readFileSync(filePath).toString();
-
-            fileData = optimizeSVG({
-                data: fileData,
+            const fileData = optimizeSVG({
+                data: fs.readFileSync(filePath).toString(),
                 name,
             });
 
-            fs.writeFileSync(
-                path.join(
+            override({
+                data: fileData,
+                pathToFile: path.join(
                     generatedAssetsDirPath,
-                    newName,
+                    fullName,
                 ),
-                fileData,
-                'utf8',
-            );
+            });
 
             return;
         }
 
-        fs.copyFileSync(
-            filePath,
-            path.join(
+        override({
+            data: fs.readFileSync(filePath).toString(),
+            pathToFile: path.join(
                 generatedAssetsDirPath,
-                newName,
+                fullName,
             ),
-        );
+        });
     });
-    console.log('common images copied or written');
+    console.log('common images created');
 
-    const soundsAndVideosNames = fs.globSync([
-        rawAssetsPath.sounds,
-        rawAssetsPath.videos,
-    ].map((name) => `${name}/**/*`)).map((filePath) => {
+    soundPaths.map((filePath) => {
         const fileName = path.basename(filePath);
-        const { ext, name } = getNameParts(fileName);
-        const newName = `${name}.${ext}`;
+        const { fullName, name } = getNameParts(fileName);
 
-        const data = fs.readFileSync(filePath);
+        ASSETS.SOUNDS.push([name, fullName]);
 
-        fs.writeFileSync(
-            path.join(generatedAssetsDirPath, newName),
-            data,
-            'utf8',
-        );
+        override({
+            data: fs.readFileSync(filePath).toString(),
+            pathToFile: path.join(generatedAssetsDirPath, fullName),
+        });
 
-        return newName;
+        return fullName;
     });
-    console.log('sounds and videos generated');
+    console.log('sounds generated');
 
-    const commonAssetNamesTypeData = [
-        `// GENERATED IN ${path.basename(import.meta.filename)}\n`,
-        'type CommonAssetNames = ',
-        [
-            ...commonImageNamesArray,
-            ...soundsAndVideosNames,
-        ].map((name) => `'${name}'`).join('| \n'),
-        ';',
-    ].join('');
+    videoPaths.map((filePath) => {
+        const fileName = path.basename(filePath);
+        const { fullName, name } = getNameParts(fileName);
 
-    fs.writeFileSync(
-        generatedCommonAssetNamesDeclarationPath,
-        commonAssetNamesTypeData,
-        'utf8',
-    );
-    console.log('common asset names generated');
+        ASSETS.VIDEOS.push([name, fullName]);
+
+        override({
+            data: fs.readFileSync(filePath).toString(),
+            pathToFile: path.join(generatedAssetsDirPath, fullName),
+        });
+
+        return fullName;
+    });
+    console.log('videos generated');
+
+    const assetsObject = createObjectString({
+        name: 'ASSETS',
+        obj: {
+            IMAGES: {
+                COMMON: namePathEntryToObject(ASSETS.IMAGES.COMMON),
+                SPRITE: namePathEntryToObject(ASSETS.IMAGES.SPRITE),
+            },
+            SOUNDS: namePathEntryToObject(ASSETS.SOUNDS),
+            VIDEOS: namePathEntryToObject(ASSETS.VIDEOS),
+        },
+    });
+
+    override({
+        data: createTsData([
+            assetsObject.result,
+            'export type ASSETS = typeof ASSETS;',
+        ]),
+        pathToFile: generatedAssetsObjectPath,
+    });
+
+    console.log('ASSETS object generated');
 };
 
 main();

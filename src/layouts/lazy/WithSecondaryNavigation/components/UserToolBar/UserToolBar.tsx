@@ -7,6 +7,7 @@ import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { useTrans } from '@i18n';
 import { Button, Sprite, Tooltip, Overlay } from '@components';
 import { AppSettingsModal } from '@modals';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -59,16 +60,16 @@ export const UserToolBar: FC = () => {
     const toggleMute = useFunction(() => setIsMute(!isMute));
     const toggleDeaf = useFunction(() => setIsDeaf(!isDeaf));
 
-    const microphoneIconId: SpriteNames = (
+    const microphoneSprite = (
         isMute
-            ? 'MICROPHONE_MUTED'
-            : 'MICROPHONE'
+            ? ASSETS.IMAGES.SPRITE.MICROPHONE_MUTED
+            : ASSETS.IMAGES.SPRITE.MICROPHONE
     );
 
-    const headphoneIconId: SpriteNames = (
+    const headphoneSprite = (
         isDeaf
-            ? 'HEADPHONE_MUTED'
-            : 'HEADPHONE'
+            ? ASSETS.IMAGES.SPRITE.HEADPHONE_MUTED
+            : ASSETS.IMAGES.SPRITE.HEADPHONE
     );
 
     const microphoneLabel = (
@@ -98,7 +99,7 @@ export const UserToolBar: FC = () => {
                     >
                         <Sprite
                             className={styles.icon}
-                            name={microphoneIconId}
+                            sprite={microphoneSprite}
                         />
                     </Button>
 
@@ -120,7 +121,7 @@ export const UserToolBar: FC = () => {
                     >
                         <Sprite
                             className={styles.icon}
-                            name={headphoneIconId}
+                            sprite={headphoneSprite}
                         />
                     </Button>
 
@@ -143,7 +144,7 @@ export const UserToolBar: FC = () => {
                     >
                         <Sprite
                             className={styles.icon}
-                            name='SETTINGS_GEAR'
+                            sprite={ASSETS.IMAGES.SPRITE.SETTINGS_GEAR}
                         />
                     </Button>
 

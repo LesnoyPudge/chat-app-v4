@@ -1,6 +1,7 @@
-import fs from 'node:fs';
 import path from 'node:path';
-import { catchError } from '@lesnoypudge/utils';
+import { override } from './override';
+import { joinLines } from './joinLines';
+import { createTsData } from './createTsData';
 
 
 
@@ -19,63 +20,57 @@ export const createEnv = (
         publicPrefix,
     } = options;
 
-    const envData = Object.keys(value).map((key) => {
+    const envFileFolderPath = path.resolve(envPath);
+    const envTypeFolderPath = path.resolve(typePath);
+
+    const pathToEnvFile = path.join(envFileFolderPath, '.env');
+    const pathToEnvType = path.join(envTypeFolderPath, 'env.ts');
+
+    const envData = joinLines(Object.keys(value).map((key) => {
         return `${key} = ${String(value[key])}`;
-    }).join('\n');
+    }));
 
-    const fullEnvFolderPath = path.resolve(envPath);
-    const pathToEnv = path.join(fullEnvFolderPath, '.env');
-
-    catchError(() => fs.rmSync(pathToEnv));
-    catchError(() => fs.rmdirSync(pathToEnv));
-
-    fs.mkdirSync(fullEnvFolderPath, { recursive: true });
-    fs.writeFileSync(
-        pathToEnv,
-        envData,
-    );
+    override({
+        pathToFile: pathToEnvFile,
+        data: envData,
+    });
 
     const spaces = ' '.repeat(4);
     const nodeEnv = `${spaces}NODE_ENV: 'development' | 'production';`;
 
-    const privateEnvTypeValues = Object.keys(value).map((key) => {
+    const privateEnvTypeValues = joinLines(Object.keys(value).map((key) => {
         return `${spaces}${key}: '${String(value[key])}';`;
-    }).join('\n');
+    }));
 
-    const privateEnvType = [
+    const privateEnvType = joinLines([
         'export type Env = {',
         privateEnvTypeValues,
         nodeEnv,
-        '}',
-    ].join('\n');
+        '};',
+    ]);
 
-    const publicEnvTypeValues = Object.keys(value).filter((key) => {
+    const publicEnvTypeValues = joinLines(Object.keys(value).filter((key) => {
         if (!publicPrefix) return false;
 
         return key.startsWith(publicPrefix);
     }).map((key) => {
         return `${spaces}${key}: '${String(value[key])}';`;
-    }).join('\n');
+    }));
 
-    const publicEnvType = [
+    const publicEnvType = joinLines([
         'export type PublicEnv = {',
         publicEnvTypeValues,
-        '}',
-    ].join('\n');
+        '};',
+    ]);
 
-    const envTypeData = [
-        '/* eslint-disable */',
+    const envTypeData = createTsData([
         privateEnvType,
         publicEnvType,
-    ].join('\n\n');
+    ]);
 
-    const pathToEnvType = path.join(typePath, '/env.d.ts');
 
-    catchError(() => fs.rmSync(pathToEnvType));
-
-    fs.mkdirSync(typePath, { recursive: true });
-    fs.writeFileSync(
-        pathToEnvType,
-        envTypeData,
-    );
+    override({
+        pathToFile: pathToEnvType,
+        data: envTypeData,
+    });
 };

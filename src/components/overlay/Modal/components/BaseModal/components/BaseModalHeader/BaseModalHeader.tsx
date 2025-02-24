@@ -4,6 +4,7 @@ import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@utils';
 import { FC } from 'react';
 import { useTrans } from '@i18n';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -39,7 +40,7 @@ export const BaseModalHeader: FC<RT.PropsWithChildrenAndClassName> = ({
             >
                 <Sprite
                     className={styles.icon}
-                    name='CROSS_ICON'
+                    sprite={ASSETS.IMAGES.SPRITE.CROSS_ICON}
                 />
             </Button>
         </div>

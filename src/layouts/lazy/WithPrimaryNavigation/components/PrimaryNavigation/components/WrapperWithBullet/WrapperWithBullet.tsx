@@ -5,7 +5,7 @@ import { FC } from 'react';
 
 
 const styles = createStyles({
-    buttonWrapper: 'relative',
+    buttonWrapper: 'relative mr-auto pl-3',
     bullet: {
         base: `
             absolute 

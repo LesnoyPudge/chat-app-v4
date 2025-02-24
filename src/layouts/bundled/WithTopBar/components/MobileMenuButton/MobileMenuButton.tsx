@@ -3,6 +3,7 @@ import { Button, MobileMenu, Sprite } from '@components';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { createStyles } from '@utils';
 import { useTrans } from '@i18n';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -30,7 +31,7 @@ export const MobileMenuButton: FC = () => {
         >
             <Sprite
                 className={styles.icon}
-                name='BURGER_BARS'
+                sprite={ASSETS.IMAGES.SPRITE.BURGER_BARS}
             />
         </Button>
     );

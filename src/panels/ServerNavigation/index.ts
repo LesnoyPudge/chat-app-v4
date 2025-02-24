@@ -1,0 +1,1 @@
+export { ServerNavigation as default } from './ServerNavigation';

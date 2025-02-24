@@ -4,10 +4,10 @@ import {
     useEventListener,
     useFunction,
     useIntersectionObserver,
+    useIsFocused,
     useRefManager,
 } from '@lesnoypudge/utils-react';
 import { useRef } from 'react';
-import { useIsFocusVisible } from '@hooks';
 
 
 
@@ -35,9 +35,9 @@ export const useTooltip = ({
         setOverlay(newState);
     });
 
-    const handleFocusIn = useFunction((e: FocusEvent) => {
+    const handleFocusIn = useFunction((target: Element) => {
         if (!leaderElementRef.current) return;
-        if (e.target !== leaderElementRef.current) return;
+        if (target !== leaderElementRef.current) return;
 
         withKeyboardRef.current = true;
         changeState();
@@ -63,9 +63,10 @@ export const useTooltip = ({
         changeState();
     });
 
-    useIsFocusVisible(leaderElementRef, {
+    useIsFocused(leaderElementRef, {
         stateless: true,
         within,
+        visible: true,
         onFocus: handleFocusIn,
         onBlur: handleFocusOut,
     });

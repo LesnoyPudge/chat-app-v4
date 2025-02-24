@@ -50,7 +50,7 @@ export const AppRoutes: FC = () => {
                 path={Navigator.staticNavigatorPath.server}
                 element={(
                     <LazyLayouts.WithSecondaryNavigation>
-                        <>with channel list</>
+                        <LazyPanels.ServerNavigation/>
                     </LazyLayouts.WithSecondaryNavigation>
                 )}
             >

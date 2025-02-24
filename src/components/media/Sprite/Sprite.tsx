@@ -2,6 +2,8 @@ import { PropsWithClassName } from '@lesnoypudge/types-utils-react';
 import { PropsWithInnerRef } from '@types';
 import { cn, createStyles } from '@utils';
 import { FC } from 'react';
+import { ASSETS } from '@generated/ASSETS';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
@@ -14,7 +16,7 @@ export namespace Sprite {
         PropsWithClassName
         & PropsWithInnerRef<'svg'>
         & {
-            name: SpriteNames;
+            sprite: T.ValueOf<ASSETS['IMAGES']['SPRITE']>;
             style?: React.CSSProperties;
         }
     );
@@ -22,11 +24,11 @@ export namespace Sprite {
 
 export const Sprite: FC<Sprite.Props> = ({
     className = '',
-    name,
+    sprite,
     innerRef,
     style,
 }) => {
-    const id = `#${name}`;
+    const id = `#${sprite.NAME}`;
 
     return (
         <svg

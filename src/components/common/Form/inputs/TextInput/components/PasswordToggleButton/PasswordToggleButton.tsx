@@ -5,6 +5,7 @@ import { cn, createStyles } from '@utils';
 import { FC } from 'react';
 import { TextInputContext } from '../../context';
 import { useTrans } from '@i18n';
+import { ASSETS } from '@generated/ASSETS';
 
 
 
@@ -43,10 +44,10 @@ export const PasswordToggleButton: FC<PasswordToggleButton.Props> = ({
             : t('TextInputPasswordToggle.hideText')
     );
 
-    const iconId: SpriteNames = (
+    const sprite = (
         isPassword
-            ? 'PASSWORD_EYE_ON'
-            : 'PASSWORD_EYE_OFF'
+            ? ASSETS.IMAGES.SPRITE.PASSWORD_EYE_ON
+            : ASSETS.IMAGES.SPRITE.PASSWORD_EYE_OFF
     );
 
     return (
@@ -58,7 +59,7 @@ export const PasswordToggleButton: FC<PasswordToggleButton.Props> = ({
         >
             <Sprite
                 className={styles.icon}
-                name={iconId}
+                sprite={sprite}
             />
         </Button>
     );

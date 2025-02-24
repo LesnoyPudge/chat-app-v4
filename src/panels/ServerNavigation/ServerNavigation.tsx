@@ -1,19 +1,21 @@
 import { createStyles } from '@utils';
 import { FC } from 'react';
-import { Header, ConversationList } from './components';
+import { Header, AddRoom, RoomList } from './components';
 
 
 
 const styles = createStyles({
-    wrapper: 'flex grow flex-col',
+    wrapper: 'flex flex-col',
 });
 
-export const ConversationNavigation: FC = () => {
+export const ServerNavigation: FC = () => {
     return (
         <nav className={styles.wrapper}>
             <Header/>
 
-            <ConversationList/>
+            <AddRoom/>
+
+            <RoomList/>
         </nav>
     );
 };

@@ -1,5 +1,6 @@
 import { Avatar, Button, ListVariants, Placeholder, Sprite, Tooltip } from '@components';
 import { Navigator } from '@features';
+import { ASSETS } from '@generated/ASSETS';
 import { useTrans } from '@i18n';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { Features } from '@redux/features';
@@ -156,7 +157,7 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
             >
                 <Sprite
                     className={styles.hideIcon}
-                    name='CROSS_ICON'
+                    sprite={ASSETS.IMAGES.SPRITE.CROSS_ICON}
                 />
             </Button>
 

@@ -10,8 +10,9 @@
         "preview": "npm run build && vite preview --host",
         "scripts:assets": "tsx ./scripts/assets.ts",
         "scripts:i18n": "tsx ./scripts/i18n.ts",
+        "scripts:clear": "tsx ./scripts/clearGenerated.ts",
         "scripts:env": "tsx ./scripts/env.ts",
-        "scripts:all": "npm run scripts:assets && npm run scripts:i18n && npm run scripts:env",
+        "scripts:all": "npm run scripts:clear && npm run scripts:env && npm run scripts:assets && npm run scripts:i18n",
         "type:check": "tsc -p tsconfig.react.build.json",
         "lint:check": "eslint",
         "lint:fix": "eslint --fix"
