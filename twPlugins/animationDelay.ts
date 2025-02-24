@@ -3,8 +3,7 @@ import plugin from 'tailwindcss/plugin';
 
 
 export const animationDelay = () => (
-    plugin(({ matchUtilities, addUtilities, theme }) => {
-        // addUtilities()
+    plugin(({ matchUtilities }) => {
         matchUtilities(
             {
                 'animation-delay': (value: string) => {
@@ -15,7 +14,7 @@ export const animationDelay = () => (
             },
             {
                 values: Array.from({
-                    length: 20,
+                    length: 21,
                 }).reduce<Record<string, string>>((acc, __, index) => {
                     const value = index * 50;
 

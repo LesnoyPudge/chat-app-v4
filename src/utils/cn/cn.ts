@@ -1,7 +1,6 @@
 import { clsx } from 'clsx';
 import {
     createTailwindMerge,
-    fromTheme,
     getDefaultConfig,
     mergeConfigs,
 } from 'tailwind-merge';
@@ -32,23 +31,11 @@ export const customTwMerge = createTailwindMerge(getDefaultConfig, (config) =>
             classGroups: {
                 'animation-delay': [{
                     'animation-delay': Array.from({
-                        length: 20,
+                        length: 21,
                     }).map((_, index) => {
                         return `${index * 50}`;
                     }),
                 }],
-                // 'font-size': [{ text: [
-                //     '25-30',
-                //     '20-24',
-                //     '17-22',
-                //     '12-16',
-                //     '10-12',
-                //     '0',
-                // ] }],
-
-                // 'animation-delay': [{ 'animation-delay': [
-                //     fromTheme('tr'),
-                // ] }],
             },
         },
     }),

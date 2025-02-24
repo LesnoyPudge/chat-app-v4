@@ -10,9 +10,9 @@ import { cn, createStyles } from '@utils';
 
 
 const styles = createStyles({
-    a: 'animation-delay-3',
+    a: 'animation-delay-0',
     b: 'animation-delay-100',
-    c: 'animation-delay-300 animation-delay-50',
+    c: 'animation-delay-300',
 });
 
 export const TMP: FC = () => {

@@ -1,5 +1,6 @@
 import { Button, Overlay, Sprite, Tooltip } from '@components';
 import { ASSETS } from '@generated/ASSETS';
+import { useTrans } from '@i18n';
 import { Heading, useRefManager } from '@lesnoypudge/utils-react';
 import { createStyles } from '@utils';
 import { FC } from 'react';
@@ -14,19 +15,20 @@ const styles = createStyles({
 });
 
 export const AddChannel: FC = () => {
+    const { t } = useTrans();
     const controls = Overlay.useOverlayControls();
     const buttonRef = useRefManager<HTMLButtonElement>(null);
 
     return (
         <div className={styles.wrapper}>
             <Heading.Node className={styles.heading}>
-                <>Комнаты</>
+                {t('ServerNavigation.AddChannel.heading')}
             </Heading.Node>
 
             <Button
                 className={styles.button}
                 hasPopup='dialog'
-                label='Открыть диалог создания комнаты'
+                label={t('ServerNavigation.AddChannel.openCreationDialogButton.label')}
                 isActive={controls.isOpen}
                 innerRef={buttonRef}
                 onLeftClick={controls.open}
@@ -41,7 +43,7 @@ export const AddChannel: FC = () => {
                 leaderElementRef={buttonRef}
                 preferredAlignment='right'
             >
-                <>Добавить комнату</>
+                {t('ServerNavigation.AddChannel.tooltip')}
             </Tooltip>
 
             {/* <CreateRoomModal/> */}
