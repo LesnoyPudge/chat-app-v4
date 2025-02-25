@@ -40,17 +40,14 @@ const useScrollableDebug = ({
             || window.innerWidth < scrollableElement.clientWidth
         );
 
-        remove();
-
-        if (
-            isOverflowingWindow
-            && shouldReportCheckWindowOverflowRef.current
-        ) {
+        if (isOverflowingWindow) {
             shouldReportCheckWindowOverflowRef.current = false;
             logger.warn(
                 `scrollable is overflowing window`,
                 getElementObject(scrollableElement),
             );
+        } else {
+            remove();
         }
     });
 
@@ -65,7 +62,6 @@ const useScrollableDebug = ({
 
         const originalParentOverflow = parentElement.style.overflow;
 
-
         parentElement.style.overflow = 'hidden';
 
         const { remove } = mountExpander(scrollableElement);
@@ -77,10 +73,7 @@ const useScrollableDebug = ({
             parentRect.height < scrollableRect.height
             || parentRect.width < scrollableRect.width
         );
-        if (
-            isOverflowingParent
-            && shouldReportCheckParentOverflowRef.current
-        ) {
+        if (isOverflowingParent) {
             shouldReportCheckParentOverflowRef.current = false;
 
             logger.warn(
@@ -89,11 +82,11 @@ const useScrollableDebug = ({
                 { parentElement },
                 getElementFillableSize(parentElement),
             );
+        } else {
+            remove();
+
+            parentElement.style.overflow = originalParentOverflow;
         }
-
-        remove();
-
-        parentElement.style.overflow = originalParentOverflow;
     });
 
     useLayoutEffect(checkWindowOverflow);

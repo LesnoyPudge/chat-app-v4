@@ -1,1 +1,1 @@
-export * from './LoadedRoomItem';
+export * from './ChannelItem';

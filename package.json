@@ -20,7 +20,7 @@
     "dependencies": {
         "@faker-js/faker": "^9.5.0",
         "@lesnoypudge/types-utils-base": "^3.4.1",
-        "@lesnoypudge/utils": "^19.1.0",
+        "@lesnoypudge/utils": "^19.2.1",
         "@lesnoypudge/utils-react": "^15.0.0",
         "@lesnoypudge/utils-web": "^3.1.0",
         "@reduxjs/toolkit": "^2.5.1",
@@ -70,7 +70,7 @@
         "babel-plugin-jsx-control-statements": "^4.1.2",
         "concurrently": "^9.1.2",
         "eslint-plugin-tailwindcss": "^3.18.0",
-        "i18next-parser": "^9.1.0",
+        "i18next-parser": "^9.3.0",
         "nodemon": "^3.1.9",
         "postcss": "^8.5.1",
         "postcss-import": "^16.1.0",

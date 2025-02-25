@@ -19,3 +19,9 @@ PrimaryNavigation, удалить size='hidden'
 - add sorting by createTimestamp to all EntityAdapters
 -? populate VoiceChats
 -? change JsonView на https://www.npmjs.com/package/@microlink/react-json-view
+- ИСПРАВИТЬ ВСЕ ОВЕРЛЕИ И ПРОВЕРИТЬ ЧТО У КНОПОК СТОИТ ПРАВИЛЬНЫЙ hasPopup
+- изменить sharedAnimationVariants.contextMenu на commonPopoverMenu
+-??? сделать папки внутри overlay (components и composed) в components 
+составляющие оверлея а в composed готовые компоненты (переименовать компоненты
+например: Popover -> LockableLayer)
+- разобрать ContextMenu на Menu, useContextMenu (click handler), ActionMenu (стилизованное меню с кнопками и тд)

@@ -122,11 +122,14 @@ const createMessage = (props: Pick<
     return message;
 };
 
-const createServer = (myId: string) => {
+const createServer = (
+    myId: string,
+    providedOwner?: ClientEntities.User.Base,
+) => {
     const serverId = uuid();
-    const owner = createUser();
+    const owner = providedOwner ?? createUser();
 
-    owner.servers = [serverId];
+    owner.servers.push(serverId);
 
     const members = createArray(inRange(mul(3), mul(10))).map(() => {
         const user = createUser();
@@ -440,6 +443,20 @@ class Scenarios {
         }));
 
         const {
+            my_servers_members = [],
+            my_servers_messages = [],
+            my_servers_owner = [],
+            my_servers_roles = [],
+            my_servers_server = [],
+            my_servers_textChannels = [],
+            my_servers_textChats = [],
+            my_servers_voiceChannels = [],
+            my_servers_voiceChats = [],
+        } = flattenPopulated('my_servers_', createArray(mul(1)).map(() => {
+            return createServer(me.id, me);
+        }));
+
+        const {
             mutedServers_members = [],
             mutedServers_messages = [],
             mutedServers_owner = [],
@@ -530,6 +547,7 @@ class Scenarios {
                 ...friendsWithConv,
                 ...friendsWithHiddenConv,
                 ...servers_members,
+                ...my_servers_members,
                 ...servers_owner,
                 ...mutedServers_owner,
                 ...mutedServers_members,
@@ -540,6 +558,8 @@ class Scenarios {
             channel: combineToTable([
                 ...servers_textChannels,
                 ...servers_voiceChannels,
+                ...my_servers_textChannels,
+                ...my_servers_voiceChannels,
                 ...mutedServers_textChannels,
                 ...mutedServers_voiceChannels,
             ]),
@@ -551,6 +571,7 @@ class Scenarios {
             file: {},
             message: combineToTable([
                 ...servers_messages,
+                ...my_servers_messages,
                 ...mutedServers_messages,
                 ...mutedServers_messages,
                 ...conv_messages,
@@ -559,16 +580,19 @@ class Scenarios {
             ]),
             role: combineToTable([
                 ...servers_roles,
+                ...my_servers_roles,
                 ...mutedServers_roles,
                 ...mutedServers_roles,
             ]),
             server: combineToTable([
                 ...servers_server,
+                ...my_servers_server,
                 ...mutedServers_server,
                 ...mutedServers_server,
             ]),
             textChat: combineToTable([
                 ...servers_textChats,
+                ...my_servers_textChats,
                 ...mutedServers_textChats,
                 ...mutedServers_textChats,
                 ...conv_textChat,
@@ -577,6 +601,7 @@ class Scenarios {
             ]),
             voiceChat: combineToTable([
                 ...servers_voiceChats,
+                ...my_servers_voiceChats,
                 ...mutedServers_voiceChats,
                 ...mutedServers_voiceChats,
                 ...conv_voiceChat,

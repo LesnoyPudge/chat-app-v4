@@ -1,4 +1,4 @@
-import { Dialog, Overlay } from '@components';
+import { Dialog, Overlay, Popover } from '@components';
 import { useTrans } from '@i18n';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { GlobalLoaderScreen } from '@screens/bundled';

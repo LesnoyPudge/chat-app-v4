@@ -61,9 +61,7 @@ export const ConversationList: FC = () => {
                                     loop: false,
                                 }}
                             >
-                                {(props) => (
-                                    <ConversationItem {...props}/>
-                                )}
+                                {ConversationItem}
                             </ListVariants.Variant1.List>
                         </ul>
                     </Scrollable>

@@ -1,85 +1,54 @@
-// import { Scrollable, EntityContext, EntityContextProvider, EntityContextHelpers, Memo, Placeholder } from '@components';
-// import { useKeyboardNavigation, useLatest } from '@hooks';
-// import { idArrayToObjectsWithId } from '@utils';
-import { FC, useContext } from 'react';
-// import { ViewportList } from 'react-viewport-list';
-import { LoadedRoomItem } from './components';
+import { FC } from 'react';
+import { ChannelItem } from './components';
+import { createStyles } from '@utils';
+import { useValidatedParams } from '@hooks';
+import { useSliceSelector } from '@redux/hooks';
+import { Features } from '@redux/features';
+import { useRefManager } from '@lesnoypudge/utils-react';
+import { ListVariants, Scrollable } from '@components';
+import { useTrans } from '@i18n';
 
 
 
-const styles = {
+const styles = createStyles({
     wrapper: 'mt-4',
     list: 'flex flex-col gap-1',
-    placeholder: 'h-9 bg-primary-hover cursor-not-allowed rounded-md',
-};
+});
 
 export const ChannelList: FC = () => {
-    return null;
-    // const [channel] = useContext(EntityContext.Channel);
-    // const roomListRef = useLatest(idArrayToObjectsWithId(channel?.rooms ?? []));
+    const wrapperRef = useRefManager<HTMLUListElement>(null);
+    const { serverId } = useValidatedParams('server');
+    const { t } = useTrans();
 
-    // const {
-    //     setRoot,
-    //     withFocusSet,
-    //     getIsFocused,
-    //     getTabIndex,
-    //     setViewportIndexes,
-    // } = useKeyboardNavigation(roomListRef, undefined, {
-    //     virtualized: true,
-    //     initialFocusableId: roomListRef.current.at(0)?.id,
-    // });
+    const server = useSliceSelector(
+        Features.Servers.Slice,
+        Features.Servers.Slice.selectors.selectById(serverId),
+    );
 
-    // return (
-    //     <Scrollable
-    //         className={styles.wrapper}
-    //         label='Комнаты'
-    //         withOppositeGutter
-    //         small
-    //         focusable
-    //         autoHide
-    //     >
-    //         <ul
-    //             className={styles.list}
-    //             tabIndex={0}
-    //             aria-label='Список комнат'
-    //             ref={setRoot}
-    //         >
-    //             <ViewportList
-    //                 items={channel?.rooms}
-    //                 onViewportIndexesChange={setViewportIndexes}
-    //                 withCache
-    //                 initialPrerender={30}
-    //                 overscan={3}
-    //             >
-    //                 {(roomId) => {
-    //                     return (
-    //                         <li key={roomId}>
-    //                             <EntityContextProvider.Room id={roomId}>
-    //                                 <EntityContextHelpers.Room.Loaded>
-    //                                     {(room) => (
-    //                                         <Memo>
-    //                                             <LoadedRoomItem
-    //                                                 room={room}
-    //                                                 withFocusSet={withFocusSet}
-    //                                                 getIsFocused={getIsFocused}
-    //                                                 getTabIndex={getTabIndex}
-    //                                             />
-    //                                         </Memo>
-    //                                     )}
-    //                                 </EntityContextHelpers.Room.Loaded>
-
-    //                                 <EntityContextHelpers.Room.Loading>
-    //                                     <Placeholder
-    //                                         className={styles.placeholder}
-    //                                         title='Загрузка комнаты...'
-    //                                     />
-    //                                 </EntityContextHelpers.Room.Loading>
-    //                             </EntityContextProvider.Room>
-    //                         </li>
-    //                     );
-    //                 }}
-    //             </ViewportList>
-    //         </ul>
-    //     </Scrollable>
-    // );
+    return (
+        <Scrollable
+            className={styles.wrapper}
+            withOppositeGutter
+            size='small'
+            autoHide
+        >
+            <ul
+                className={styles.list}
+                aria-label={t('ServerNavigation.ChannelList.label')}
+                ref={wrapperRef}
+            >
+                <ListVariants.Variant1.List
+                    items={server?.channels ?? []}
+                    getId={(id) => id}
+                    keyboardNavigation={{
+                        direction: 'vertical',
+                        loop: false,
+                        wrapperRef,
+                    }}
+                >
+                    {ChannelItem}
+                </ListVariants.Variant1.List>
+            </ul>
+        </Scrollable>
+    );
 };

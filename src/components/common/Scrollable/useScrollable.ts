@@ -1,6 +1,6 @@
-import { useDebounce, useRefManager } from '@lesnoypudge/utils-react';
+import { useDebounce, useFunction, useIsFocused, useRefManager } from '@lesnoypudge/utils-react';
 import type { Scrollable } from './Scrollable';
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { addEventListener } from '@lesnoypudge/utils-web';
 import { combinedFunction } from '@lesnoypudge/utils';
 
@@ -10,7 +10,7 @@ import { combinedFunction } from '@lesnoypudge/utils';
 // const ATTRIBUTE_IS_HOVERED = 'data-is-hovered';
 // const ATTRIBUTE_IS_FOCUSED = 'data-is-focused';
 const ATTRIBUTE_IS_ALIVE = 'data-is-alive';
-const DELAY = 3_000;
+const STAY_ALIVE_DELAY = 3_000;
 
 export const useScrollable = ({
     autoHide,
@@ -19,23 +19,52 @@ export const useScrollable = ({
     const isAliveRef = useRef(false);
     const isScrollingRef = useRef(false);
     const isHoveredRef = useRef(false);
-    const {
-        debounce: scrollDebounce,
-    } = useDebounce({ stateless: true });
-    const {
-        debounce: hoverEndDebounce,
-    } = useDebounce({ stateless: true });
+    const isFocusedRef = useRef(false);
 
-    useLayoutEffect(() => {
+    const { debounce: scrollDebounce } = useDebounce({ stateless: true });
+    const { debounce: hoverEndDebounce } = useDebounce({ stateless: true });
+    const { debounce: focusEndDebounce } = useDebounce({ stateless: true });
+
+    const on = useFunction(() => {
+        const scrollable = scrollableRef.current;
+        if (!scrollable) return;
+        if (isAliveRef.current) return;
+
+        isAliveRef.current = true;
+        scrollable.setAttribute(ATTRIBUTE_IS_ALIVE, 'true');
+    });
+
+    const off = useFunction(() => {
+        const scrollable = scrollableRef.current;
+        if (!scrollable) return;
+        if (!isAliveRef.current) return;
+        if (isScrollingRef.current) return;
+        if (isHoveredRef.current) return;
+        if (isFocusedRef.current) return;
+
+        isAliveRef.current = false;
+        scrollable.setAttribute(ATTRIBUTE_IS_ALIVE, 'false');
+    });
+
+    useIsFocused(scrollableRef, {
+        visible: true,
+        within: true,
+        stateless: true,
+        onFocus: () => {
+            isFocusedRef.current = true;
+            on();
+        },
+        onBlur: () => {
+            focusEndDebounce(() => {
+                isFocusedRef.current = false;
+                off();
+            }, STAY_ALIVE_DELAY)();
+        },
+    });
+
+    useEffect(() => {
         return scrollableRef.effect((scrollable) => {
             if (!scrollable) return;
-
-            const on = () => {
-                if (isAliveRef.current) return;
-
-                isAliveRef.current = true;
-                scrollable.setAttribute(ATTRIBUTE_IS_ALIVE, 'true');
-            };
 
             if (!autoHide) {
                 scrollable.setAttribute(ATTRIBUTE_IS_ALIVE, 'true');
@@ -44,23 +73,14 @@ export const useScrollable = ({
 
             scrollable.setAttribute(ATTRIBUTE_IS_ALIVE, 'false');
 
-            const off = () => {
-                if (!isAliveRef.current) return;
-                if (isScrollingRef.current) return;
-                if (isHoveredRef.current) return;
-
-                isAliveRef.current = false;
-                scrollable.setAttribute(ATTRIBUTE_IS_ALIVE, 'false');
-            };
-
             const handleScroll = () => {
                 isScrollingRef.current = true;
                 on();
 
-                hoverEndDebounce(() => {
+                scrollDebounce(() => {
                     isScrollingRef.current = false;
                     off();
-                }, DELAY)();
+                }, STAY_ALIVE_DELAY)();
             };
 
             const handleMouseEnter = () => {
@@ -71,7 +91,7 @@ export const useScrollable = ({
             const handleMouseLeave = () => {
                 isHoveredRef.current = false;
 
-                scrollDebounce(off, DELAY)();
+                hoverEndDebounce(off, STAY_ALIVE_DELAY)();
             };
 
             return combinedFunction(
@@ -95,7 +115,7 @@ export const useScrollable = ({
                 ),
             );
         });
-    }, [autoHide, hoverEndDebounce, scrollDebounce, scrollableRef]);
+    }, [autoHide, hoverEndDebounce, off, on, scrollDebounce, scrollableRef]);
 
     return {
         scrollableRef,

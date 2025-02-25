@@ -160,6 +160,15 @@ export namespace ClientEntities {
     export namespace Role {
         export type Id = string;
 
+        export type Permissions = {
+            serverControl: boolean;
+            channelControl: boolean;
+            createInvitation: boolean;
+            kickMember: boolean;
+            banMember: boolean;
+            admin: boolean;
+        };
+
         export type Base = {
             id: Id;
             server: Server.Id;
@@ -169,14 +178,7 @@ export namespace ClientEntities {
             isDefault: boolean;
             weight: number;
             users: User.Id[];
-            permissions: {
-                serverControl: boolean;
-                channelControl: boolean;
-                createInvitation: boolean;
-                kickMember: boolean;
-                banMember: boolean;
-                admin: boolean;
-            };
+            permissions: Permissions;
         };
     }
 

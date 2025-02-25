@@ -7,7 +7,7 @@ import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 const styles = createStyles({
-    base: 'animate-placeholder bg-primary-100',
+    base: 'animate-placeholder',
 });
 
 export namespace PlaceholderNode {

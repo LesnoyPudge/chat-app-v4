@@ -11,7 +11,6 @@ import { FieldApi } from '@tanstack/react-form';
 
 const styles = createStyles({
     colorPicker: `
-        pointer-events-auto 
         flex 
         shrink-0 
         flex-col 
@@ -23,7 +22,7 @@ const styles = createStyles({
     `,
     colorInput: 'rounded bg-primary-500 p-2.5',
     presetsWrapper: 'flex justify-between gap-1',
-    presetButton: 'h-8 w-8 overflow-hidden rounded-md',
+    presetButton: 'size-8 overflow-hidden rounded-md',
 });
 
 

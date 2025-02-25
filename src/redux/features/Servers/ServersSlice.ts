@@ -9,6 +9,9 @@ import { ServersApi } from './ServersApi';
 import { TextChats } from '../TextChats';
 import { Users } from '../Users';
 import { isAnyOf } from '@reduxjs/toolkit';
+import { Roles } from '../Roles';
+import { sortFns } from '@lesnoypudge/utils';
+import { recalculatePermissions } from '@fakeShared';
 
 
 
@@ -67,6 +70,7 @@ export const Slice = createCustomSliceEntityAdapter({
 
 export const { StoreSelectors } = createStoreSelectors({
     ...adapter.storeSelectors,
+
     selectNotificationCountById: (state, serverId: string): number => {
         const isMuted = StoreSelectors.selectIsMutedById(serverId)(state);
         if (isMuted) return 0;
@@ -136,5 +140,61 @@ export const { StoreSelectors } = createStoreSelectors({
 
             return count === 0;
         });
+    },
+
+    selectUserPermissions: (() => {
+        const permissionPresets = {
+            rejected: {
+                admin: false,
+                banMember: false,
+                channelControl: false,
+                createInvitation: false,
+                kickMember: false,
+                serverControl: false,
+            },
+            owner: {
+                admin: true,
+                banMember: true,
+                channelControl: true,
+                createInvitation: true,
+                kickMember: true,
+                serverControl: true,
+            },
+        } satisfies Record<string, ClientEntities.Role.Permissions>;
+
+        return (
+            state,
+            { serverId, userId }: { serverId: string; userId: string },
+        ): ClientEntities.Role.Permissions => {
+            const server = StoreSelectors.selectById(serverId)(state);
+            if (!server) return permissionPresets.rejected;
+
+            if (server.owner === userId) return permissionPresets.owner;
+
+            const roles = Roles.StoreSelectors.selectByIds(server.roles)(state);
+            const [highestRole] = roles.filter((role) => {
+                return role.users.includes(userId);
+            }).sort((a, b) => sortFns.descending(a.weight, b.weight));
+
+            if (!highestRole) return permissionPresets.rejected;
+
+            return recalculatePermissions({
+                originalPermissions: highestRole.permissions,
+                ownerId: server.owner,
+                userId,
+            });
+        };
+    })(),
+
+    selectMyPermissionsByServerId: (
+        state,
+        serverId: string,
+    ): ClientEntities.Role.Permissions => {
+        const { id } = Users.StoreSelectors.selectMe()(state);
+
+        return StoreSelectors.selectUserPermissions({
+            userId: id,
+            serverId,
+        })(state);
     },
 });
