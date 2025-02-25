@@ -7,7 +7,7 @@ import { PopoverContext } from '../../context';
 
 
 const styles = createStyles({
-    lock: 'size-full overflow-hidden',
+    lock: 'pointer-events-auto h-dvh w-dvw overflow-hidden',
 });
 
 const visibleElements = [getHTMLElement.H1];

@@ -9,7 +9,7 @@ type BaseProps = T.Except<
     'controls'
 >;
 
-type InnerProps = Pick<BaseModalProvider.Props, 'controls'>;
+type InnerProps = Omit<BaseModalProvider.Props, keyof BaseProps>;
 
 export const createDecorator = (
     displayName: string,
@@ -17,11 +17,11 @@ export const createDecorator = (
 ) => {
     const { withDecorator } = createWithDecorator<InnerProps>(({
         children,
-        controls,
+        ...innerProps
     }) => {
         return (
             <BaseModalProvider
-                controls={controls}
+                {...innerProps}
                 {...props}
             >
                 <BaseModalWrapper>

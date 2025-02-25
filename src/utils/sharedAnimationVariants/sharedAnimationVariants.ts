@@ -3,13 +3,13 @@ import { TargetAndTransition, Variant, Variants } from 'motion/react';
 
 
 
-type Shape = {
-    initial: Variant;
-    animate: Variant;
-    exit: Variant;
-};
+export namespace createVariants {
+    export type Shape = {
+        initial: Variant;
+        animate: Variant;
+        exit: Variant;
+    };
 
-namespace createVariants {
     export type VariantWithKey = Variant & {
         key: string;
     };
@@ -18,13 +18,15 @@ namespace createVariants {
         _Key extends PropertyKey = string,
     > = Record<_Key, VariantWithKey>;
 
+    export type BaseVariantsWithKey = VariantsWithKey<keyof Shape>;
+
     export type Transition = Pick<
         TargetAndTransition,
         'transition'
     >['transition'];
 }
 
-const createVariants = <_Shape extends Variants>(
+export const createVariants = <_Shape extends Variants>(
     variants: _Shape,
     sharedTransition?: createVariants.Transition,
 ) => {
@@ -54,11 +56,11 @@ const createVariants = <_Shape extends Variants>(
 };
 
 const factory = (
-    shape: Shape,
+    shape: createVariants.Shape,
     sharedTransition?: createVariants.Transition,
 ) => {
     return (
-        extraShape?: Shape,
+        extraShape?: createVariants.Shape,
         extraSharedTransition?: createVariants.Transition,
     ) => {
         return {
@@ -75,10 +77,18 @@ export const getAnimationVariants = {
         initial: {
             opacity: 0,
             scale: 0.1,
+            transition: {
+                duration: 0.35,
+                ease: 'backOut',
+            },
         },
         animate: {
             opacity: 1,
             scale: 1,
+            transition: {
+                duration: 0.35,
+                ease: 'backOut',
+            },
         },
         exit: {
             opacity: 0,
@@ -88,9 +98,30 @@ export const getAnimationVariants = {
                 ease: 'backOut',
             },
         },
-    }, {
-        duration: 0.35,
-        ease: 'backOut',
+    }),
+
+    baseModalBackdrop: factory({
+        initial: {
+            opacity: 0,
+            transition: {
+                duration: 0.35,
+                ease: 'backOut',
+            },
+        },
+        animate: {
+            opacity: 1,
+            transition: {
+                duration: 0.35,
+                ease: 'backOut',
+            },
+        },
+        exit: {
+            opacity: 0,
+            transition: {
+                duration: 0.15,
+                ease: 'backOut',
+            },
+        },
     }),
 
     fullScreenModal: factory({
@@ -110,7 +141,7 @@ export const getAnimationVariants = {
         duration: 0.2,
     }),
 
-    contextMenu: factory({
+    popoverMenu: factory({
         initial: {
             scale: 0.95,
             opacity: 0,

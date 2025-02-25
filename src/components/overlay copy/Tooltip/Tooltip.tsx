@@ -1,13 +1,15 @@
-import { Overlay, RelativelyPositioned } from '@components';
-import { cn, createStyles } from '@utils';
-import { useTooltip } from './hooks';
-import { useRefManager } from '@lesnoypudge/utils-react';
+import { RelativelyPositioned, Overlay } from '@components';
+import { cn, createStyles, createVariants } from '@utils';
+import { useTooltip } from './useTooltip';
+import {
+    createWithDecorator,
+    useRefManager,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { m, Variants } from 'motion/react';
+import { m } from 'motion/react';
 
 
-
-import Alignment = RelativelyPositioned.useRelativePosition.Alignment;
 
 const styles = createStyles({
     base: `
@@ -23,8 +25,10 @@ const styles = createStyles({
     `,
 });
 
-const variants = {
-    hidden: (alignment: Alignment) => ({
+const variants = createVariants({
+    hidden: (
+        alignment: RelativelyPositioned.useRelativePosition.Alignment,
+    ) => ({
         opacity: 0,
         translateY: (
             alignment === 'top'
@@ -54,7 +58,17 @@ const variants = {
             duration: 0.15,
         },
     }),
-} satisfies Variants;
+});
+
+const { withDecorator } = createWithDecorator(({ children }) => {
+    return (
+        <Overlay.Provider>
+            <Overlay.Wrapper>
+                {children}
+            </Overlay.Wrapper>
+        </Overlay.Provider>
+    );
+});
 
 export namespace Tooltip {
     export type Props = (
@@ -64,7 +78,7 @@ export namespace Tooltip {
     );
 }
 
-export const Tooltip = Overlay.withProvider(({
+export const Tooltip = withDecorator(withDisplayName('Tooltip', ({
     className = '',
     leaderElementRef,
     boundsSize = 20,
@@ -84,33 +98,31 @@ export const Tooltip = Overlay.withProvider(({
     });
 
     return (
-        <Overlay.Presence>
-            <Overlay.Wrapper>
-                <RelativelyPositioned.Node
-                    leaderElementOrRectRef={leaderElementRef}
-                    boundsSize={boundsSize}
-                    centered={centered}
-                    spacing={spacing}
-                    swappableAlignment={swappableAlignment}
-                    unbounded={unbounded}
-                    {...rest}
-                >
-                    {({ alignment }) => (
-                        <m.div
-                            className={cn(styles.base, className)}
-                            role='tooltip'
-                            variants={variants}
-                            initial='hidden'
-                            animate='visible'
-                            exit='hidden'
-                            custom={alignment}
-                            ref={followerElementRef}
-                        >
-                            {children}
-                        </m.div>
-                    )}
-                </RelativelyPositioned.Node>
-            </Overlay.Wrapper>
-        </Overlay.Presence>
+        <Overlay.Wrapper>
+            <RelativelyPositioned.Node
+                leaderElementOrRectRef={leaderElementRef}
+                boundsSize={boundsSize}
+                centered={centered}
+                spacing={spacing}
+                swappableAlignment={swappableAlignment}
+                unbounded={unbounded}
+                {...rest}
+            >
+                {({ alignment }) => (
+                    <m.div
+                        className={cn(styles.base, className)}
+                        role='tooltip'
+                        variants={variants}
+                        initial='hidden'
+                        animate='visible'
+                        exit='hidden'
+                        custom={alignment}
+                        ref={followerElementRef}
+                    >
+                        {children}
+                    </m.div>
+                )}
+            </RelativelyPositioned.Node>
+        </Overlay.Wrapper>
     );
-});
+}));

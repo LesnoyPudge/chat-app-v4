@@ -9,7 +9,7 @@ const styles = createStyles({
     menu: `
         pointer-events-auto
         max-h-[90dvh] 
-        min-w-[200px]
+        min-w-[min(200px,100%)]
         rounded-sm 
         bg-primary-600 
         p-2.5 

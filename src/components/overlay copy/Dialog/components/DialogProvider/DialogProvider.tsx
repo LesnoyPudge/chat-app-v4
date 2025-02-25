@@ -2,18 +2,18 @@ import { FC, PropsWithChildren } from 'react';
 import { DialogContext } from '../../context';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { Overlay, Popover } from '@components';
-import { getAnimationVariants } from '@utils';
+import { createVariants } from '@utils';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
-
-const defaultVariants = getAnimationVariants.baseModal().animationVariants;
 
 export namespace DialogProvider {
-    export type AnimationVariants = typeof defaultVariants;
+    export type AnimationVariants = createVariants.BaseVariantsWithKey;
 
     export type OwnProps = {
         label: string;
         animationVariants?: AnimationVariants;
+        backdropAnimationVariants?: AnimationVariants;
         withBackdrop?: boolean;
         withoutBackdropPointerEvents?: boolean;
     };
@@ -23,7 +23,7 @@ export namespace DialogProvider {
         & OwnProps
     );
 
-    export type Props = (
+    export type Props = T.Simplify<(
         PropsWithChildren
         & Pick<
             Overlay.Provider.Props,
@@ -31,12 +31,13 @@ export namespace DialogProvider {
         >
         & Pick<Popover.Provider.Props, 'focused'>
         & OwnProps
-    );
+    )>;
 }
 
 export const DialogProviderInner: FC<DialogProvider.InnerProps> = ({
     label,
-    animationVariants = defaultVariants,
+    animationVariants,
+    backdropAnimationVariants,
     withoutBackdropPointerEvents = false,
     withBackdrop = false,
     children,
@@ -47,6 +48,7 @@ export const DialogProviderInner: FC<DialogProvider.InnerProps> = ({
         ...popover,
         label,
         animationVariants,
+        backdropAnimationVariants,
         withBackdrop,
         withoutBackdropPointerEvents,
     };

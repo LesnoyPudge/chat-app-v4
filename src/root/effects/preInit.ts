@@ -42,5 +42,9 @@ export const preInit = async () => {
         })(),
     ]).then(() => {
         logger.log('preInit promises resolved');
+    }).catch((e) => {
+        logger.log('preInit rejected', e);
     });
+
+    logger.log('preInit end');
 };

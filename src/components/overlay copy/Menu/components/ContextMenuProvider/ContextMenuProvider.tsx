@@ -2,6 +2,7 @@ import { Overlay, Popover } from '@components';
 import { ContextSelectable, createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
 import { ContextMenuContext } from '../../context';
 import { PropsWithChildren } from 'react';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
@@ -21,15 +22,33 @@ const { withDecorator } = createWithDecorator(({ children }) => {
     );
 });
 
+export namespace ContextMenuProvider {
+    export type Props = T.Simplify<(
+        PropsWithChildren
+        & Pick<
+            ContextMenuContext,
+            'preferredAlignment'
+            | 'leaderElementOrRectRef'
+            | 'spacing'
+            | 'label'
+            | 'controls'
+        >
+    )>;
+}
+
 export const ContextMenuProvider = withDisplayName(
     'ContextMenuProvider',
-    withDecorator<PropsWithChildren>(({
+    withDecorator<ContextMenuProvider.Props>(({
         children,
+        ...rest
     }) => {
-        const value = ContextSelectable.useSelector(Popover.Context);
+        const popover = ContextSelectable.useSelector(Popover.Context);
 
         return (
-            <ContextMenuContext.Provider value={value}>
+            <ContextMenuContext.Provider value={{
+                ...popover,
+                ...rest,
+            }}>
                 {children}
             </ContextMenuContext.Provider>
         );

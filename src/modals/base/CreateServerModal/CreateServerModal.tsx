@@ -5,6 +5,7 @@ import {
     FollowInvitationTab,
     CreateServerTab,
 } from './components';
+import { withDisplayName } from '@lesnoypudge/utils-react';
 
 
 
@@ -22,14 +23,17 @@ const {
     label: t('CreateServerModal.label'),
 });
 
-export const CreateServerModal = withDecorator(() => {
-    return (
-        <Tab.Provider
-            context={CreateServerTabContext}
-            tabs={tabs}
-            initialTab='createServerOrFollowInvitation'
-        >
-            <Tab.Current context={CreateServerTabContext}/>
-        </Tab.Provider>
-    );
-});
+export const CreateServerModal = withDisplayName(
+    'CreateServerModal',
+    withDecorator(() => {
+        return (
+            <Tab.Provider
+                context={CreateServerTabContext}
+                tabs={tabs}
+                initialTab='createServerOrFollowInvitation'
+            >
+                <Tab.Current context={CreateServerTabContext}/>
+            </Tab.Provider>
+        );
+    }),
+);

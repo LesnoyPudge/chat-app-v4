@@ -57,14 +57,18 @@ export const PopoverProvider: FC<PopoverProvider.Props> = ({
         if (!closeOnClickOutside) return;
         if (!overlay.isOverlayExist) return;
         if (!overlay.portalRefManager.current) return;
-        if (!blockingChildren.size) return overlay.closeOverlay();
+        if (blockingChildren.size) return;
+
+        overlay.closeOverlay();
     });
 
     const handleEscape = useFunction(() => {
         if (!closeOnEscape) return;
         if (!overlay.isOverlayExist) return;
         if (!blockable) return overlay.closeOverlay();
-        if (!blockingChildren.size) return overlay.closeOverlay();
+        if (blockingChildren.size) return;
+
+        overlay.closeOverlay();
     });
 
     const contextValue: PopoverContext = {

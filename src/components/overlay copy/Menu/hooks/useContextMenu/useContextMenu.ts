@@ -1,36 +1,39 @@
 import {
-    ContextSelectable,
+    mutate,
     useEventListener,
     useFunction,
     useRefManager,
 } from '@lesnoypudge/utils-react';
-import { Popover, RelativelyPositioned } from '@components';
+import { Overlay, RelativelyPositioned } from '@components';
 import { isHtmlElement } from '@lesnoypudge/utils-web';
+import { ContextMenuContext } from '../../context';
 
 
 
-type Options = {
-    leaderElementRef: (
-        RelativelyPositioned.useRelativePosition.LeaderElementRef
-    );
-};
+export namespace useContextMenuControls {
+    export type Options = {
+        leaderElementRef: (
+            RelativelyPositioned.useRelativePosition.LeaderElementRef
+        );
+    };
 
-export const useContextMenu = ({
+    export type Return = Pick<
+        ContextMenuContext,
+        'leaderElementOrRectRef' | 'controls'
+    >;
+}
+
+export const useContextMenuControls = ({
     leaderElementRef,
-}: Options) => {
-    const {
-        closingThrottleRef,
-        openOverlay,
-    } = ContextSelectable.useProxy(Popover.Context);
+}: useContextMenuControls.Options): useContextMenuControls.Return => {
+    const controls = Overlay.useControls();
     const leaderElementOrRectRef = useRefManager<
         RelativelyPositioned.useRelativePosition.LeaderElementOrRect
     >(null);
 
-    const handleContextMenu = useFunction((e: MouseEvent) => {
+    const onContextMenu = useFunction((e: MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-
-        if (closingThrottleRef.current) return;
 
         const withMouse = e.button !== -1;
         const withKeyboard = !withMouse;
@@ -38,26 +41,27 @@ export const useContextMenu = ({
         if (withMouse) {
             const cursorSize = 1;
 
-            leaderElementOrRectRef.current = {
+            mutate(leaderElementOrRectRef, 'current', {
                 top: e.clientY,
                 bottom: e.clientY + cursorSize,
                 left: e.clientX,
                 right: e.clientX + cursorSize,
                 width: cursorSize,
                 height: cursorSize,
-            };
+            });
         }
 
         if (withKeyboard && isHtmlElement(e.currentTarget)) {
-            leaderElementOrRectRef.current = e.currentTarget;
+            mutate(leaderElementOrRectRef, 'current', e.currentTarget);
         }
 
-        openOverlay();
+        controls.open();
     });
 
-    useEventListener(leaderElementRef, 'contextmenu', handleContextMenu);
+    useEventListener(leaderElementRef, 'contextmenu', onContextMenu);
 
     return {
         leaderElementOrRectRef,
+        controls,
     };
 };

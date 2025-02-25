@@ -1,16 +1,15 @@
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { DialogContext } from '../../context';
 import { PropsWithChildrenAndClassName } from '@lesnoypudge/types-utils-react';
 import { Overlay, Popover } from '@components';
 import { m } from 'motion/react';
 import { cn, createStyles } from '@utils';
-import { pick } from '@lesnoypudge/utils';
 
 
 
 const styles = createStyles({
-    dialog: 'size-full',
+    dialog: 'pointer-events-auto h-dvh w-dvw',
     backdrop: `
         absolute 
         inset-0
@@ -31,21 +30,12 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
 }) => {
     const {
         animationVariants,
+        backdropAnimationVariants,
         label,
         withBackdrop,
         withoutBackdropPointerEvents,
         closeOverlay,
     } = ContextSelectable.useProxy(DialogContext);
-
-    const onlyWithOpacity = useMemo(() => Object.fromEntries(
-        Object.entries(animationVariants).map(([key, value]) => {
-            if ('name' in value) return [key, value];
-
-            const trimmed = pick(value, 'opacity', 'transition');
-
-            return [key, trimmed];
-        }),
-    ) as typeof animationVariants, [animationVariants]);
 
     const backdropPointerClass = (
         withoutBackdropPointerEvents
@@ -54,37 +44,35 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
     );
 
     return (
-        <Overlay.Presence>
-            <Overlay.Wrapper>
-                <Popover.Wrapper>
-                    <If condition={withBackdrop}>
-                        <m.div
-                            variants={onlyWithOpacity}
-                            initial={animationVariants.initial.key}
-                            animate={animationVariants.animate.key}
-                            exit={animationVariants.exit.key}
-                            className={cn(
-                                styles.backdrop,
-                                backdropPointerClass,
-                            )}
-                            onClick={closeOverlay}
-                        >
-                        </m.div>
-                    </If>
-
+        <Overlay.Wrapper>
+            <Popover.Wrapper>
+                <If condition={withBackdrop}>
                     <m.div
-                        className={cn(styles.dialog, className)}
-                        role='dialog'
-                        aria-label={label}
-                        variants={animationVariants}
-                        initial={animationVariants.initial.key}
-                        animate={animationVariants.animate.key}
-                        exit={animationVariants.exit.key}
+                        className={cn(
+                            styles.backdrop,
+                            backdropPointerClass,
+                        )}
+                        variants={backdropAnimationVariants}
+                        initial={backdropAnimationVariants.initial.key}
+                        animate={backdropAnimationVariants.animate.key}
+                        exit={backdropAnimationVariants.exit.key}
+                        onClick={closeOverlay}
                     >
-                        {children}
                     </m.div>
-                </Popover.Wrapper>
-            </Overlay.Wrapper>
-        </Overlay.Presence>
+                </If>
+
+                <m.div
+                    className={cn(styles.dialog, className)}
+                    role='dialog'
+                    aria-label={label}
+                    variants={animationVariants}
+                    initial={animationVariants.initial.key}
+                    animate={animationVariants.animate.key}
+                    exit={animationVariants.exit.key}
+                >
+                    {children}
+                </m.div>
+            </Popover.Wrapper>
+        </Overlay.Wrapper>
     );
 };

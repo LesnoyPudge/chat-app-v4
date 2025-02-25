@@ -4,7 +4,14 @@ import { getAnimationVariants } from '@utils';
 
 
 
-const { animationVariants } = getAnimationVariants.baseModal();
+const {
+    animationVariants: baseModalVariants,
+} = getAnimationVariants.baseModal();
+
+const {
+    animationVariants: baseModalBackdropVariants,
+} = getAnimationVariants.baseModalBackdrop();
+
 
 export namespace BaseModalProvider {
     export type Props = (
@@ -31,8 +38,9 @@ export const BaseModalProvider: FC<BaseModalProvider.Props> = ({
             onChange={controls.onChange}
             outerState={controls.isOpen}
             withBackdrop
-            animationVariants={animationVariants}
             withoutBackdropPointerEvents={withoutBackdropPointerEvents}
+            animationVariants={baseModalVariants}
+            backdropAnimationVariants={baseModalBackdropVariants}
         >
             {children}
         </Dialog.Provider>

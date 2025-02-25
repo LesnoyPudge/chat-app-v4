@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Endpoints } from '@fakeShared';
 import { localStorageApi, logger } from '@utils';
 import {
@@ -8,7 +7,6 @@ import {
     DefaultBodyType,
     http,
     HttpResponse,
-    HttpResponseResolver,
     StrictRequest,
     StrictResponse,
     HttpHandler,
@@ -16,12 +14,25 @@ import {
 import { setupWorker } from 'msw/browser';
 import { db } from './FakeDB';
 import { Dummies } from './Dummies';
-import { HTTP_METHODS, HTTP_STATUS_CODES, invariant, merge } from '@lesnoypudge/utils';
+import {
+    HTTP_METHODS,
+    HTTP_STATUS_CODES,
+    invariant,
+} from '@lesnoypudge/utils';
 import { env } from '@vars';
 import { token } from './token';
 import { v4 as uuid } from 'uuid';
-import { flattenPopulated, getAppData, getDeepConversation, getDeepServer } from './utils';
+import {
+    flattenPopulated,
+    getAppData,
+    getDeepConversation,
+    getDeepServer,
+} from './utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { scenarios } from './Scenarios';
+
+
+
 import E_Channel = Endpoints.V1.Channel;
 import E_Conversation = Endpoints.V1.Conversation;
 import E_File = Endpoints.V1.File;
@@ -30,9 +41,6 @@ import E_Role = Endpoints.V1.Role;
 import E_Server = Endpoints.V1.Server;
 import E_TextChat = Endpoints.V1.TextChat;
 import E_User = Endpoints.V1.User;
-import { scenarios } from './Scenarios';
-
-
 
 const _res = HttpResponse;
 
