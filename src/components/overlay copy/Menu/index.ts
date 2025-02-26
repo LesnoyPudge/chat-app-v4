@@ -5,11 +5,11 @@ import * as c3 from './hooks';
 
 
 export namespace Menu {
-    export import Wrapper = c1.ContextMenuWrapper;
+    export import Wrapper = c1.MenuWrapper;
 
-    export import Provider = c1.ContextMenuProvider;
+    export import Provider = c1.MenuProvider;
 
-    export import Context = c2.ContextMenuContext;
+    export import MenuContext = c2.MenuContext;
 
     export const { useContextMenuControls } = c3;
 }

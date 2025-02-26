@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react';
 
 
 
-export type ContextMenuContext = (
+export type MenuContext = (
     Popover.Context
     & PropsWithChildren
     & Pick<
@@ -20,6 +20,6 @@ export type ContextMenuContext = (
     & Overlay.Types.WithControls
 );
 
-export const ContextMenuContext = ContextSelectable.createContext<
-    ContextMenuContext
+export const MenuContext = ContextSelectable.createContext<
+    MenuContext
 >();

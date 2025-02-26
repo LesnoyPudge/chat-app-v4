@@ -53,9 +53,9 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
                             backdropPointerClass,
                         )}
                         variants={backdropAnimationVariants}
-                        initial={backdropAnimationVariants.initial.key}
-                        animate={backdropAnimationVariants.animate.key}
-                        exit={backdropAnimationVariants.exit.key}
+                        initial={backdropAnimationVariants?.initial.key}
+                        animate={backdropAnimationVariants?.animate.key}
+                        exit={backdropAnimationVariants?.exit.key}
                         onClick={closeOverlay}
                     >
                     </m.div>
@@ -66,9 +66,9 @@ export const DialogWrapper: FC<DialogWrapper.Props> = ({
                     role='dialog'
                     aria-label={label}
                     variants={animationVariants}
-                    initial={animationVariants.initial.key}
-                    animate={animationVariants.animate.key}
-                    exit={animationVariants.exit.key}
+                    initial={animationVariants?.initial.key}
+                    animate={animationVariants?.animate.key}
+                    exit={animationVariants?.exit.key}
                 >
                     {children}
                 </m.div>

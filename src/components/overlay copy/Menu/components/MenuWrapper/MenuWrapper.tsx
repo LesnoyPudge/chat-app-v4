@@ -1,20 +1,24 @@
 import { Popover, RelativelyPositioned, Overlay } from '@components';
-import { getAnimationVariants } from '@utils';
+import { cn, createStyles, getAnimationVariants } from '@utils';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { m } from 'motion/react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { ContextMenuContext } from '../../context';
+import { MenuContext } from '../../context';
 import { FC } from 'react';
 
 
 
 const { animationVariants } = getAnimationVariants.popoverMenu();
 
-export namespace ContextMenuWrapper {
+const styles = createStyles({
+    content: 'pointer-events-auto',
+});
+
+export namespace MenuWrapper {
     export type Props = RT.PropsWithChildrenAndClassName;
 }
 
-export const ContextMenuWrapper: FC<ContextMenuWrapper.Props> = ({
+export const MenuWrapper: FC<MenuWrapper.Props> = ({
     className = '',
     children,
 }) => {
@@ -23,7 +27,7 @@ export const ContextMenuWrapper: FC<ContextMenuWrapper.Props> = ({
         preferredAlignment,
         spacing,
         label,
-    } = ContextSelectable.useProxy(ContextMenuContext);
+    } = ContextSelectable.useProxy(MenuContext);
 
     return (
         <Overlay.Wrapper>
@@ -35,7 +39,7 @@ export const ContextMenuWrapper: FC<ContextMenuWrapper.Props> = ({
                     swappableAlignment
                 >
                     <m.div
-                        className={className}
+                        className={cn(styles.content, className)}
                         role='menu'
                         aria-label={label}
                         variants={animationVariants}
