@@ -13,7 +13,7 @@ import { ASSETS } from '@generated/ASSETS';
 export const ActionButtons: FC = () => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { t } = useTrans();
-    const controls = Overlay.useOverlayControls();
+    const controls = Overlay.useControls();
 
     return (
         <WrapperWithBullet isActive={controls.isOpen}>

@@ -1,9 +1,10 @@
-import { Dialog, Overlay, Popover } from '@components';
-import { useTrans } from '@i18n';
+import { Overlay, Popover } from '@components';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { GlobalLoaderScreen } from '@screens/bundled';
 import { getAnimationVariants, logger } from '@utils';
-import { FC, PropsWithChildren, useEffect, useLayoutEffect } from 'react';
+import { m } from 'motion/react';
+import { FC, PropsWithChildren, useEffect } from 'react';
+
 
 
 const { animationVariants } = getAnimationVariants.custom({
@@ -25,9 +26,11 @@ type LoaderActionProps = (
     }
 );
 
-type GlobalLoaderContext = Overlay.Types.WithControls['controls'];
+type GlobalLoaderContext = Overlay.Types.Controls;
 
-const GlobalLoaderContext = ContextSelectable.createContext<GlobalLoaderContext>();
+const GlobalLoaderContext = ContextSelectable.createContext<
+    GlobalLoaderContext
+>();
 
 export const LoaderDisable: FC<LoaderActionProps> = ({
     id,
@@ -50,7 +53,7 @@ export const LoaderEnable: FC<LoaderActionProps> = ({
 }) => {
     const { open, close } = ContextSelectable.useProxy(GlobalLoaderContext);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         id && logger.log(`${Date.now()} enable global loader ${id}`);
 
         open();
@@ -72,22 +75,33 @@ export namespace GlobalLoaderWrapper {
 export const GlobalLoaderWrapper: FC<GlobalLoaderWrapper.Props> = ({
     children,
 }) => {
-    const { t } = useTrans();
-    const controls = Overlay.useOverlayControls(true);
+    const controls = Overlay.useControls(true);
 
     return (
         <GlobalLoaderContext.Provider value={controls}>
-            <Dialog.Provider
-                label={t('COMMON.Loading')}
-                focused
-                animationVariants={animationVariants}
+            <Overlay.Provider
                 outerState={controls.isOpen}
                 onChange={controls.onChange}
             >
-                <Dialog.Wrapper>
-                    <GlobalLoaderScreen/>
-                </Dialog.Wrapper>
-            </Dialog.Provider>
+                <Popover.Provider
+                    focused
+                    blockable
+                    blocking
+                >
+                    <Overlay.Wrapper>
+                        <Popover.Wrapper>
+                            <m.div
+                                variants={animationVariants}
+                                initial={animationVariants.initial.key}
+                                animate={animationVariants.animate.key}
+                                exit={animationVariants.exit.key}
+                            >
+                                <GlobalLoaderScreen/>
+                            </m.div>
+                        </Popover.Wrapper>
+                    </Overlay.Wrapper>
+                </Popover.Provider>
+            </Overlay.Provider>
 
             {children}
         </GlobalLoaderContext.Provider>

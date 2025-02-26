@@ -70,7 +70,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
 
     const { navigateTo, myLocationIs } = Navigator.useNavigator();
     const { serverId } = useValidatedParams('server');
-    const controls = Overlay.useOverlayControls();
+    const controls = Overlay.useControls();
     const settingsButtonRef = useRefManager<HTMLButtonElement>(null);
     const { t } = useTrans();
 

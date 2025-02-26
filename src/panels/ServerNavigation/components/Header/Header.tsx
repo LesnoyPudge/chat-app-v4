@@ -26,7 +26,7 @@ export const Header: FC = () => {
     const { t } = useTrans();
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { serverId } = useValidatedParams('server');
-    const controls = Overlay.useOverlayControls();
+    const controls = Overlay.useControls();
 
     const server = useSliceSelector(
         Features.Servers.Slice,

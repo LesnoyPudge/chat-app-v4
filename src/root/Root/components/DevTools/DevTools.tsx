@@ -19,7 +19,7 @@ const styles = createStyles({
 });
 
 const { withDecorator } = createWithDecorator(({ children }) => {
-    const controls = Overlay.useOverlayControls();
+    const controls = Overlay.useControls();
 
     useHotKey(
         document,

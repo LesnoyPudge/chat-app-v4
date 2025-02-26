@@ -1,4 +1,4 @@
-import { Button, Dialog, Overlay, PresenceStatus, RelativelyPositioned } from '@components';
+import { Button, Overlay, PresenceStatus, RelativelyPositioned } from '@components';
 import { useTrans } from '@i18n';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { noop } from '@lesnoypudge/utils';
@@ -24,7 +24,6 @@ type ExtraStatusNames = T.ArrayValues<typeof extraStatusNames>;
 
 const styles = createStyles({
     wrapper: `
-        pointer-events-auto 
         flex 
         min-w-[min(200px,100dvw)] 
         flex-col 
@@ -74,24 +73,19 @@ const { withDecorator } = createWithDecorator<UserMenu.DecoratorProps>(({
     const { t } = useTrans();
 
     return (
-        <Dialog.Provider
+        <Overlay.Menu.Provider
             label={t('UserMenu.label')}
             animationVariants={animationVariants}
-            focused
-            outerState={controls.isOpen}
-            onChange={controls.onChange}
+            controls={controls}
+            leaderElementOrRectRef={leaderElementOrRectRef}
+            preferredAlignment='top'
+            spacing={10}
+            centered
         >
-            <Dialog.Wrapper>
-                <RelativelyPositioned.Node
-                    leaderElementOrRectRef={leaderElementOrRectRef}
-                    preferredAlignment='top'
-                    spacing={10}
-                    centered
-                >
-                    {children}
-                </RelativelyPositioned.Node>
-            </Dialog.Wrapper>
-        </Dialog.Provider>
+            <Overlay.Menu.Wrapper>
+                {children}
+            </Overlay.Menu.Wrapper>
+        </Overlay.Menu.Provider>
     );
 });
 
@@ -101,7 +95,7 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
         extraStatus,
     } = useStoreSelector(Features.Users.StoreSelectors.selectMe());
     const { throttle, isThrottling } = useThrottle();
-    const { closeOverlay } = ContextSelectable.useProxy(Dialog.Context);
+    const { closeOverlay } = ContextSelectable.useProxy(Overlay.Dialog.Context);
     const { mounted } = useMountedWrapper();
     const { t } = useTrans();
 
@@ -144,7 +138,7 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
     );
 
     return (
-        <div className={styles.wrapper} role='menu'>
+        <div className={styles.wrapper}>
             <Iterate items={extraStatusNames}>
                 {(extraStatusItem) => {
                     const label = getStatusLabel({

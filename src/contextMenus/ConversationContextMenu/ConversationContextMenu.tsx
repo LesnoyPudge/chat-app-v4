@@ -1,4 +1,4 @@
-import { Button, ContextMenu } from '@components';
+import { Button, Overlay } from '@components';
 import { useOptimisticQueue } from '@hooks';
 import { useTrans } from '@i18n';
 import { useFunction } from '@lesnoypudge/utils-react';
@@ -73,34 +73,37 @@ export const ConversationContextMenu: FC<ConversationContextMenu.Props> = ({
     );
 
     return (
-        <ContextMenu.Container
+        <Overlay.Menu.Provider
             label={t('ConversationContextMenu.label')}
+
         >
-            <Button
-                className={ContextMenu.menuItemStyles}
-                {...ContextMenu.menuItemProps}
-                onLeftClick={toggleNotification}
-            >
-                {conversationNotificationToggleText}
-            </Button>
+            <Overlay.Menu.Wrapper>
+                <Button
+                    className={ContextMenu.menuItemStyles}
+                    {...ContextMenu.menuItemProps}
+                    onLeftClick={toggleNotification}
+                >
+                    {conversationNotificationToggleText}
+                </Button>
 
-            <Button
-                className={ContextMenu.menuItemStyles}
-                {...ContextMenu.menuItemProps}
-                isDisabled={isMarkAsReadButtonDisabled}
-                onLeftClick={markAsRead}
-            >
-                {t('ConversationContextMenu.readNotificationsButton.text')}
-            </Button>
+                <Button
+                    className={ContextMenu.menuItemStyles}
+                    {...ContextMenu.menuItemProps}
+                    isDisabled={isMarkAsReadButtonDisabled}
+                    onLeftClick={markAsRead}
+                >
+                    {t('ConversationContextMenu.readNotificationsButton.text')}
+                </Button>
 
-            <Button
-                className={ContextMenu.menuItemStyles}
-                {...ContextMenu.menuItemProps}
-                onLeftClick={hide}
-                isLoading={hideHelpers.isLoading}
-            >
-                {t('ConversationContextMenu.hideButton.text')}
-            </Button>
-        </ContextMenu.Container>
+                <Button
+                    className={ContextMenu.menuItemStyles}
+                    {...ContextMenu.menuItemProps}
+                    onLeftClick={hide}
+                    isLoading={hideHelpers.isLoading}
+                >
+                    {t('ConversationContextMenu.hideButton.text')}
+                </Button>
+            </Overlay.Menu.Wrapper>
+        </Overlay.Menu.Provider>
     );
 };

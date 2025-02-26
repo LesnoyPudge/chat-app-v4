@@ -37,7 +37,7 @@ export const UserInfo: FC = () => {
         status,
         extraStatus,
     } = useStoreSelector(Features.Users.StoreSelectors.selectMe());
-    const controls = Overlay.useOverlayControls();
+    const controls = Overlay.useControls();
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { t } = useTrans();
 

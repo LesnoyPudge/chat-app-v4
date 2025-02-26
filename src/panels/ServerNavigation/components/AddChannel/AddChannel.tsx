@@ -16,7 +16,7 @@ const styles = createStyles({
 
 export const AddChannel: FC = () => {
     const { t } = useTrans();
-    const controls = Overlay.useOverlayControls();
+    const controls = Overlay.useControls();
     const buttonRef = useRefManager<HTMLButtonElement>(null);
 
     return (

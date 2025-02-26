@@ -42,7 +42,7 @@ export const UserToolBar: FC = () => {
     const microphoneButtonRef = useRefManager<HTMLButtonElement>(null);
     const headphoneButtonRef = useRefManager<HTMLButtonElement>(null);
     const settingsButtonRef = useRefManager<HTMLButtonElement>(null);
-    const modalControls = Overlay.useOverlayControls();
+    const modalControls = Overlay.useControls();
 
     const {
         isDeaf,

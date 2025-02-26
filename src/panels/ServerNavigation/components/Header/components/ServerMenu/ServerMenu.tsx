@@ -1,4 +1,4 @@
-import { Button, Dialog, Overlay, RelativelyPositioned, Sprite } from '@components';
+import { Button, Overlay, RelativelyPositioned, Sprite } from '@components';
 import { ASSETS } from '@generated/ASSETS';
 import { useTrans } from '@i18n';
 import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
@@ -8,7 +8,6 @@ import { createStyles, getAnimationVariants } from '@utils';
 
 const styles = createStyles({
     wrapper: `
-        pointer-events-auto
         flex 
         w-full
         max-w-[220px] 
@@ -61,14 +60,14 @@ const { withDecorator } = createWithDecorator<ServerMenu.DecoratorProps>(({
     const { t } = useTrans();
 
     return (
-        <Dialog.Provider
+        <Overlay.Dialog.Provider
             label={t('ServerMenu.label')}
             animationVariants={animationVariants}
             focused
             outerState={controls.isOpen}
             onChange={controls.onChange}
         >
-            <Dialog.Wrapper>
+            <Overlay.Dialog.Wrapper>
                 <RelativelyPositioned.Node
                     leaderElementOrRectRef={leaderElementOrRectRef}
                     preferredAlignment='bottom'
@@ -77,8 +76,8 @@ const { withDecorator } = createWithDecorator<ServerMenu.DecoratorProps>(({
                 >
                     {children}
                 </RelativelyPositioned.Node>
-            </Dialog.Wrapper>
-        </Dialog.Provider>
+            </Overlay.Dialog.Wrapper>
+        </Overlay.Dialog.Provider>
     );
 });
 
@@ -86,10 +85,10 @@ export const ServerMenu = withDisplayName(
     'ServerMenu',
     withDecorator(() => {
         const { t } = useTrans();
-        const inviteFriendsControls = Overlay.useOverlayControls();
-        const serverSettingsControls = Overlay.useOverlayControls();
-        const leaveServerControls = Overlay.useOverlayControls();
-        const deleteServerControls = Overlay.useOverlayControls();
+        const inviteFriendsControls = Overlay.useControls();
+        const serverSettingsControls = Overlay.useControls();
+        const leaveServerControls = Overlay.useControls();
+        const deleteServerControls = Overlay.useControls();
 
         return (
             <div

@@ -25,3 +25,5 @@ PrimaryNavigation, удалить size='hidden'
 составляющие оверлея а в composed готовые компоненты (переименовать компоненты
 например: Popover -> LockableLayer)
 - разобрать ContextMenu на Menu, useContextMenu (click handler), ActionMenu (стилизованное меню с кнопками и тд)
+- создать все модалки которые сейчас закомментированы
+- ПЕРЕНЕСТИ ВСЕ ТИПЫ ИЗ ОВЕРЛЕЙ КОМПОНЕНТОВ В Types У КАЖДОЙ ЭНТИТИ
