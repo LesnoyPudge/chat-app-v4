@@ -20,11 +20,8 @@ PrimaryNavigation, удалить size='hidden'
 -? populate VoiceChats
 -? change JsonView на https://www.npmjs.com/package/@microlink/react-json-view
 - ИСПРАВИТЬ ВСЕ ОВЕРЛЕИ И ПРОВЕРИТЬ ЧТО У КНОПОК СТОИТ ПРАВИЛЬНЫЙ hasPopup
-- изменить sharedAnimationVariants.contextMenu на commonPopoverMenu
--??? сделать папки внутри overlay (components и composed) в components 
-составляющие оверлея а в composed готовые компоненты (переименовать компоненты
-например: Popover -> LockableLayer)
 - разобрать ContextMenu на Menu, useContextMenu (click handler), ActionMenu (стилизованное меню с кнопками и тд)
 - создать все модалки которые сейчас закомментированы
-- ПЕРЕНЕСТИ ВСЕ ТИПЫ ИЗ ОВЕРЛЕЙ КОМПОНЕНТОВ В Types У КАЖДОЙ ЭНТИТИ
 - заменить все createWithDecorator и withDisplayName на withDisplayNameAndDecorator 
+- все оверлеи которые созданы в отдельных папках (modals, contextMenus, etc)
+перенести в места использования
