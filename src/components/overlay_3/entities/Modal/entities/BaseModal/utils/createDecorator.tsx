@@ -1,5 +1,5 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { BaseModalProvider, BaseModalWrapper } from '../components';
+import { BaseModalProvider, BaseModalWrapper } from '../blocks';
 import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
 
 

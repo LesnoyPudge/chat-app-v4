@@ -7,7 +7,7 @@ import * as c3 from './types';
 export namespace Overlay {
     export const { useControls } = c2;
 
-    export import Types = c3;
+    export import Types = c3.Types;
 
     export import Dialog = c1.Dialog;
 

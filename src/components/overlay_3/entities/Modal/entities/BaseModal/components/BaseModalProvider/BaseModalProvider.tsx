@@ -1,6 +1,7 @@
-import { FC, PropsWithChildren } from 'react';
-import { getAnimationVariants } from '@utils';
+import { PropsWithChildren } from 'react';
+import { getAnimationVariants, withDisplayNameAndDecorator } from '@utils';
 import { Overlay } from '@components';
+import { ContextSelectable } from '@lesnoypudge/utils-react';
 
 
 
@@ -12,37 +13,37 @@ const {
     animationVariants: baseModalBackdropVariants,
 } = getAnimationVariants.baseModalBackdrop();
 
+const { withDecorator } = withDisplayNameAndDecorator<
+    Overlay.Modal.Base.Types.Provider.Props
+>(
+    'BaseModalProvider',
+    ({
+        controls,
+        label,
+        children,
+    }) => {
+        return (
+            <Overlay.Dialog.Provider
+                controls={controls}
+                label={label}
+                animationVariants={baseModalVariants}
+                backdropAnimationVariants={baseModalBackdropVariants}
+                withBackdrop
+            >
+                {children}
+            </Overlay.Dialog.Provider>
+        );
+    },
+);
 
-export namespace BaseModalProvider {
-    export type Props = (
-        Overlay.Types.WithControls
-        & Pick<
-            Overlay.Dialog.Provider.Props,
-            'label'
-            | 'withoutBackdropPointerEvents'
-        >
-        & PropsWithChildren
-    );
-}
-
-export const BaseModalProvider: FC<BaseModalProvider.Props> = ({
-    controls,
-    label,
-    withoutBackdropPointerEvents,
+export const BaseModalProvider = withDecorator<PropsWithChildren>(({
     children,
 }) => {
+    const dialog = ContextSelectable.useProxy(Overlay.Dialog.Context);
+
     return (
-        <Overlay.Dialog.Provider
-            label={label}
-            focused
-            onChange={controls.onChange}
-            outerState={controls.isOpen}
-            withBackdrop
-            withoutBackdropPointerEvents={withoutBackdropPointerEvents}
-            animationVariants={baseModalVariants}
-            backdropAnimationVariants={baseModalBackdropVariants}
-        >
+        <Overlay.Modal.Base.Context.Provider value={dialog}>
             {children}
-        </Overlay.Dialog.Provider>
+        </Overlay.Modal.Base.Context.Provider>
     );
-};
+});

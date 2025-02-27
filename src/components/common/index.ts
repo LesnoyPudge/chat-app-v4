@@ -1,5 +1,6 @@
 export * from './Avatar';
 export * from './Button';
+export * from './DialogBlocks';
 export * from './Form';
 export * from './Label';
 export * from './ListVariants';
