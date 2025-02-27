@@ -25,3 +25,4 @@ PrimaryNavigation, удалить size='hidden'
 - заменить все createWithDecorator и withDisplayName на withDisplayNameAndDecorator 
 - все оверлеи которые созданы в отдельных папках (modals, contextMenus, etc)
 перенести в места использования
+-? FIX ALL '../*' inside redux/features and RichTextEditor

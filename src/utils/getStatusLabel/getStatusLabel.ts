@@ -1,4 +1,4 @@
-import { t } from '@i18n';
+import { t } from '@features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { ClientEntities } from '@types';
 

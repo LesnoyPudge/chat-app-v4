@@ -22,7 +22,7 @@ export const SerializedEmoji: FC<SerializedEmoji.Props> = ({
     element,
 }) => {
     return (
-        <Emoji.Node
+        <Emoji
             className={styles.base}
             code={element.code}
         />

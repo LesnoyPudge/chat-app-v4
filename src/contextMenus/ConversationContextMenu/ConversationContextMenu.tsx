@@ -1,6 +1,6 @@
 import { Button, Overlay } from '@components';
-import { useOptimisticQueue } from '@hooks';
-import { useTrans } from '@i18n';
+import { useOptimisticQueue, useTrans } from '@hooks';
+
 import { useFunction } from '@lesnoypudge/utils-react';
 import { Features } from '@redux/features';
 import { useStoreSelector } from '@redux/hooks';

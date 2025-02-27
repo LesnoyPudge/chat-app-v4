@@ -4,7 +4,7 @@ import { getReadImagePath } from '../../utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Image } from '@components';
 import { cn, createStyles } from '@utils';
-import { useTrans } from '@i18n';
+import { useTrans } from '@hooks';
 import { useBoolean } from '@lesnoypudge/utils-react';
 import { sharedStyles } from '../../vars';
 

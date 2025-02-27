@@ -50,7 +50,7 @@ export const RenderedEmoji: FC<RenderedEmoji.Props> = ({
                 {element.code}
             </span>
 
-            <Emoji.Node
+            <Emoji
                 className={styles.emoji}
                 code={element.code}
             />

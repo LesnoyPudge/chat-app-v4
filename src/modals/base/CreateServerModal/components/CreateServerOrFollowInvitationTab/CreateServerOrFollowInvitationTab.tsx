@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Button, Modal } from '@components';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { CreateServerTabContext } from '../../CreateServerModal';
-import { useTrans } from '@i18n';
+import { useTrans } from '@hooks';
 import { createStyles } from '@utils';
 
 

@@ -4,7 +4,7 @@ import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 import { CreateServerTabContext } from '../../CreateServerModal';
 import { Features } from '@redux/features';
-import { useTrans } from '@i18n';
+import { useTrans } from '@hooks';
 import { createStyles } from '@utils';
 import { Navigator } from '@features';
 import { ASSETS } from '@generated/ASSETS';

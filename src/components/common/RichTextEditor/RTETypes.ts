@@ -1,7 +1,7 @@
 import { BaseEditor } from 'slate';
 import { HistoryEditor } from 'slate-history';
 import { ReactEditor } from 'slate-react';
-import { Emoji } from '@components';
+import { EmojiStore } from '@features';
 
 
 
@@ -33,7 +33,7 @@ export namespace RTETypes {
             children: [Text<_Text>];
         };
 
-        import Codes = Emoji.Store.EmojiCodeWithAliases;
+        import Codes = EmojiStore.EmojiCodeWithAliases;
 
         export type Emoji<
             _Code extends Codes = Codes,

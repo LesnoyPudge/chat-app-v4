@@ -1,5 +1,5 @@
 import { Tab, Modal } from '@components';
-import { t } from '@i18n';
+import { t } from '@features';
 import {
     CreateServerOrFollowInvitationTab,
     FollowInvitationTab,

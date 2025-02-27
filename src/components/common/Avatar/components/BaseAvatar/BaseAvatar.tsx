@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Image } from '@components';
-import { useTrans } from '@i18n';
+import { useTrans } from '@hooks';
 import { useBoolean } from '@lesnoypudge/utils-react';
 import { getReadImagePath } from '../../utils';
 import { cn } from '@utils';

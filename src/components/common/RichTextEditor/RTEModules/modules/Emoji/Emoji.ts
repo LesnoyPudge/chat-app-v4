@@ -1,4 +1,4 @@
-import { Emoji as _Emoji } from '@components';
+import { EmojiStore } from '@features';
 import { useCallback } from 'react';
 import { Element, Transforms } from 'slate';
 import { useSlate } from 'slate-react';
@@ -9,7 +9,7 @@ import { RTEModules } from '../..';
 
 export const Emoji = {
     createEmoji: <
-        _Code extends _Emoji.Store.EmojiCodeWithAliases,
+        _Code extends EmojiStore.EmojiCodeWithAliases,
     >(code: _Code): RTETypes.Elements.Emoji<_Code> => {
         return {
             type: 'emoji',
@@ -25,10 +25,10 @@ export const Emoji = {
     },
 
     getEmojiMatch: (text: string) => {
-        const match = _Emoji.Store.matchEmoji(text.toLowerCase());
+        const match = EmojiStore.matchEmoji(text.toLowerCase());
         if (!match) return null;
 
-        const emojiCode = match.match[0] as _Emoji.Store.EmojiCodeWithAliases;
+        const emojiCode = match.match[0] as EmojiStore.EmojiCodeWithAliases;
 
         const matchStart = text.indexOf(emojiCode);
         const matchEnd = matchStart + emojiCode.length;
@@ -100,7 +100,7 @@ export const Emoji = {
 
     insertEmoji: (
         editor: RTETypes.Editor,
-        code: _Emoji.Store.EmojiCodeWithAliases,
+        code: EmojiStore.EmojiCodeWithAliases,
     ) => {
         Transforms.insertText(editor, code);
         editor.select(editor.selection ?? editor.end([]));
@@ -110,7 +110,7 @@ export const Emoji = {
         const editor = useSlate();
 
         const insert = useCallback((
-            code: _Emoji.Store.EmojiCodeWithAliases,
+            code: EmojiStore.EmojiCodeWithAliases,
         ) => {
             Emoji.insertEmoji(editor, code);
         }, [editor]);

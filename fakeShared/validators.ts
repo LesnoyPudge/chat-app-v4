@@ -1,10 +1,9 @@
 import * as v from 'valibot';
 import { Endpoints } from './endpoints';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { t } from '@i18n';
+import { t, EmojiStore } from '@features';
 import { promiseToBoolean } from '@lesnoypudge/utils';
-import type { RichTextEditor } from 'src/components/common/RichTextEditor';
-import { EmojiStore } from 'src/components/media/Emoji/EmojiStore';
+import type { RichTextEditor } from '@components';
 import type { ClientEntities } from '@types';
 import { FILE_MAX_SIZE } from './vars';
 

@@ -1,15 +1,15 @@
-import { preInit, init, postInit } from '@root/effects';
+import { setup } from '@setup';
 import { logger } from '@utils';
 
 
 
 const main = async () => {
     try {
-        await preInit();
+        await setup.preInit();
 
-        init();
+        setup.init();
 
-        void postInit();
+        void setup.postInit();
     } catch (error) {
         logger.error(error);
     }

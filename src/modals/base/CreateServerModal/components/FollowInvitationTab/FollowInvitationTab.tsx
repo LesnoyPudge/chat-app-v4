@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { CreateServerTabContext } from '../../CreateServerModal';
 import { Features } from '@redux/features';
 import { createStyles } from '@utils';
-import { useTrans } from '@i18n';
+import { useTrans } from '@hooks';
 import { Navigator } from '@features';
 
 

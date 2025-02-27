@@ -18,14 +18,43 @@
             "@lesnoypudge/types-global-base",
             "@lesnoypudge/types-global-web",
             "@lesnoypudge/types-global-react",
-            "./src/root/declarations/global.d.ts",
-            "./src/root/declarations/vite-env.d.ts",
-            "./src/i18n/i18n.d.ts",
+            "./src/declarations/global.d.ts",
+            "./src/declarations/vite-env.d.ts",
         ],
         "paths": {
             // "@src/*": [
             //     "./src/*"
             // ],
+            "@playground": [
+                "./src/playground",
+            ],
+            "@router": [
+                "./src/router",
+            ],
+            "@router/screens/bundled": [
+                "./src/router/screens/bundled"
+            ],
+            "@router/screens/lazy": [
+                "./src/router/screens/lazy"
+            ],
+            "@router/screens/lazy/*": [
+                "./src/router/screens/lazy/*"
+            ],
+            "@router/panels": [
+                "./src/router/panels"
+            ],
+            "@router/layouts/lazy": [
+                "./src/router/layouts/lazy"
+            ],
+            "@router/layouts/bundled": [
+                "./src/router/layouts/bundled"
+            ],
+            "@setup": [
+                "./src/setup",
+            ],
+            "@styles/*": [
+                "./src/styles/*",
+            ],
             "@vars": [
                 "./src/vars"
             ],
@@ -35,23 +64,11 @@
             "@generated/*": [
                 "./generated/*"
             ],
-            "@i18n": [
-                "./src/i18n"
-            ],
-            "@root/*": [
-                "./src/root/*"
+            "@root": [
+                "./src/root"
             ],
             "@components": [
                 "./src/components"
-            ],
-            "@screens/bundled": [
-                "./src/screens/bundled"
-            ],
-            "@screens/lazy": [
-                "./src/screens/lazy"
-            ],
-            "@screens/lazy/*": [
-                "./src/screens/lazy/*"
             ],
             "@types": [
                 "./src/types"
@@ -83,27 +100,9 @@
             "@redux/actions": [
                 "./src/redux/actions"
             ],
-            "@layouts/lazy": [
-                "./src/layouts/lazy"
-            ],
-            "@layouts/bundled": [
-                "./src/layouts/bundled"
-            ],
-            "@panels": [
-                "./src/panels"
-            ],
-            "@modals": [
-                "./src/modals"
-            ],
-            "@contextMenus": [
-                "./src/contextMenus"
-            ],
             "_@lesnoypudge/utils-react": [
                 "../@lesnoypudge-utils-react/build"
             ],
-            // "_@lesnoypudge/utils-react": [
-            //     "./src/TMP_EXPORTS/reactUtils.ts"
-            // ],
             "_@lesnoypudge/utils": [
                 "../@lesnoypudge-utils/build"
             ],
