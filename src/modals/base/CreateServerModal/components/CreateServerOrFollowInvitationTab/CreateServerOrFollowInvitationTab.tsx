@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Button, Modal } from '@components';
+import { Button, DialogBlocks } from '@components';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { CreateServerTabContext } from '../../CreateServerModal';
 import { useTrans } from '@hooks';
@@ -13,23 +13,23 @@ const styles = createStyles({
 });
 
 export const CreateServerOrFollowInvitationTab: FC = () => {
-    const { closeOverlay } = ContextSelectable.useProxy(Modal.Context);
+    const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
     const { t } = useTrans();
 
     return (
         <>
-            <Modal.Base.Header>
-                <Modal.Base.Title>
+            <DialogBlocks.Base.Header>
+                <DialogBlocks.Base.Title>
                     {t('CreateServerModal.CreateServerOrFollowInvitationTab.title')}
-                </Modal.Base.Title>
+                </DialogBlocks.Base.Title>
 
-                <Modal.Base.Subtitle>
+                <DialogBlocks.Base.Subtitle>
                     {t('CreateServerModal.CreateServerOrFollowInvitationTab.subtitle')}
-                </Modal.Base.Subtitle>
-            </Modal.Base.Header>
+                </DialogBlocks.Base.Subtitle>
+            </DialogBlocks.Base.Header>
 
-            <Modal.Base.Content className={styles.content}>
+            <DialogBlocks.Base.Content className={styles.content}>
                 <Button
                     className={styles.button}
                     stylingPreset='brand'
@@ -56,7 +56,7 @@ export const CreateServerOrFollowInvitationTab: FC = () => {
                 >
                     {t('CreateServerModal.CancelButton.text')}
                 </Button>
-            </Modal.Base.Content>
+            </DialogBlocks.Base.Content>
         </>
     );
 };

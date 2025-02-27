@@ -1,4 +1,4 @@
-import { Button, Sprite, Modal } from '@components';
+import { Button, Sprite, DialogBlocks } from '@components';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@utils';
@@ -26,7 +26,7 @@ export const BaseDialogBlocksHeader: FC<RT.PropsWithChildrenAndClassName> = ({
     className = '',
     children,
 }) => {
-    const { closeOverlay } = ContextSelectable.useProxy(Modal.Context);
+    const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
     const { t } = useTrans();
 
     return (

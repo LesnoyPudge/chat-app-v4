@@ -1,4 +1,4 @@
-import { Button, Sprite, Tooltip } from '@components';
+import { Button, Sprite,Overlay } from '@components';
 import { useTrans } from '@hooks';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { cn } from '@utils';
@@ -43,12 +43,12 @@ export const HomePageButton: FC = () => {
                 />
             </Button>
 
-            <Tooltip
+            <Overlay.Tooltip
                 preferredAlignment='right'
                 leaderElementRef={buttonRef}
             >
                 {t('PrimaryNavigation.HomePageButton.text')}
-            </Tooltip>
+            </Overlay.Tooltip>
         </WrapperWithBullet>
     );
 };

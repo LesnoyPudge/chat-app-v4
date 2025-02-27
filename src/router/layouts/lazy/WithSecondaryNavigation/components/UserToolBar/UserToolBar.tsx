@@ -5,8 +5,7 @@ import { useSliceActions, useSliceSelector } from '@redux/hooks';
 import { Features } from '@redux/features';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { useTrans } from '@hooks';
-import { Button, Sprite, Tooltip, Overlay } from '@components';
-import { AppSettingsModal } from '@modals';
+import { Button, Sprite, Overlay } from '@components';
 import { ASSETS } from '@generated/ASSETS';
 
 
@@ -103,12 +102,12 @@ export const UserToolBar: FC = () => {
                         />
                     </Button>
 
-                    <Tooltip
+                    <Overlay.Tooltip
                         preferredAlignment='top'
                         leaderElementRef={microphoneButtonRef}
                     >
                         {microphoneLabel}
-                    </Tooltip>
+                    </Overlay.Tooltip>
                 </>
 
                 <>
@@ -125,12 +124,12 @@ export const UserToolBar: FC = () => {
                         />
                     </Button>
 
-                    <Tooltip
+                    <Overlay.Tooltip
                         preferredAlignment='top'
                         leaderElementRef={headphoneButtonRef}
                     >
                         {headphoneLabel}
-                    </Tooltip>
+                    </Overlay.Tooltip>
                 </>
 
                 <>
@@ -148,14 +147,14 @@ export const UserToolBar: FC = () => {
                         />
                     </Button>
 
-                    <Tooltip
+                    <Overlay.Tooltip
                         preferredAlignment='top'
                         leaderElementRef={settingsButtonRef}
                     >
                         {t('COMMON.Settings')}
-                    </Tooltip>
+                    </Overlay.Tooltip>
 
-                    <AppSettingsModal controls={modalControls}/>
+                    {/* <AppSettingsModal controls={modalControls}/> */}
                 </>
             </div>
         </div>

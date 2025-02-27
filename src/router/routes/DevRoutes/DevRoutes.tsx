@@ -11,7 +11,7 @@ import { SuspenseWithGlobalLoader } from '../components';
 import { createSleep } from '@lesnoypudge/utils-react';
 import { Navigator } from '@features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import React, { FC } from 'react';
+import React from 'react';
 
 
 
@@ -69,7 +69,7 @@ const DevElements = Object.values(Navigator.navigatorDevPath).map((path) => {
     );
 });
 
-export const DevRoutes: FC = () => {
+export const DevRoutes = () => {
     return (
         <Route>
             {DevElements}

@@ -67,6 +67,9 @@
             "@root": [
                 "./src/root"
             ],
+            "@root/components": [
+                "./src/root/components"
+            ],
             "@components": [
                 "./src/components"
             ],

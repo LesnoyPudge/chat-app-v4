@@ -1,4 +1,4 @@
-import { Button, SpriteImage, OverlayContextProvider, OverlayItem, RelativelyPositioned, Tooltip, AnimatedTransition, Ref } from '@components';
+import { Button, SpriteImage, OverlayContextProvider, OverlayItem, RelativelyPositioned,Overlay, AnimatedTransition, Ref } from '@components';
 import { FormikColorPicker } from '@libs';
 import { animated } from '@react-spring/web';
 import { getTransitionOptions, cn } from '@utils';
@@ -86,12 +86,12 @@ export const Banner: FC = () => {
                                     )}
                                 </AnimatedTransition>
 
-                                <Tooltip
+                                <Overlay.Tooltip
                                     preferredAlignment='top'
                                     leaderElementRef={ref}
                                 >
                                     <>Изменить цвет баннера</>
-                                </Tooltip>
+                                </Overlay.Tooltip>
                             </>
                         )}
                     </Ref>

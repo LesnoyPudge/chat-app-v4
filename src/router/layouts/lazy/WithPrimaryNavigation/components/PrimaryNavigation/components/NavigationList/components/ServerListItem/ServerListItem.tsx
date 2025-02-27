@@ -1,4 +1,4 @@
-import { Avatar, Button, ContextMenu, Tooltip } from '@components';
+import { Avatar, Button, Overlay } from '@components';
 import { useKeyboardNavigation } from '@hooks';
 import { Focus, useFunction, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
 import { cn } from '@utils';
@@ -7,7 +7,6 @@ import { WrapperWithBullet } from '../../../WrapperWithBullet';
 import { Features } from '@redux/features';
 import { useSliceSelector, useStoreSelector } from '@redux/hooks';
 import { sharedStyles } from '../../../../sharedStyles';
-import { ServerContextMenu } from '@contextMenus';
 import { Navigator } from '@features';
 
 
@@ -92,19 +91,19 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
             </Button>
 
             <If condition={!!server}>
-                <Tooltip
+                <Overlay.Tooltip
                     preferredAlignment='right'
                     leaderElementRef={buttonRef}
                 >
                     {server?.name}
-                </Tooltip>
+                </Overlay.Tooltip>
 
-                <ContextMenu.Wrapper
+                {/* <ContextMenu.Wrapper
                     leaderElementRef={buttonRef}
                     preferredAlignment='right'
                 >
                     <ServerContextMenu serverId={serverId}/>
-                </ContextMenu.Wrapper>
+                </ContextMenu.Wrapper> */}
             </If>
         </WrapperWithBullet>
     );

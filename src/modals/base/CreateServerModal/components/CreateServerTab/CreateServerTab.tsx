@@ -1,4 +1,4 @@
-import { Button, Form, Image, Label, Sprite, Modal } from '@components';
+import { Button, Form, Image, Label, Sprite, DialogBlocks } from '@components';
 import { ApiValidators, Endpoints } from '@fakeShared';
 import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
@@ -69,7 +69,7 @@ export const CreateServerTab: FC = () => {
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
     const [create] = Features.Servers.Api.useCreateMutation();
     const { navigateTo } = Navigator.useNavigator();
-    const { closeOverlay } = ContextSelectable.useProxy(Modal.Context);
+    const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
     const { mounted } = useMountedWrapper();
     const { t } = useTrans();
 
@@ -86,17 +86,17 @@ export const CreateServerTab: FC = () => {
     return (
         <Form.Provider formApi={FormApi} submitError={submitError}>
             <Form.Node>
-                <Modal.Base.Header>
-                    <Modal.Base.Title>
+                <DialogBlocks.Base.Header>
+                    <DialogBlocks.Base.Title>
                         {t('CreateServerModal.CreateServerTab.title')}
-                    </Modal.Base.Title>
+                    </DialogBlocks.Base.Title>
 
-                    <Modal.Base.Subtitle>
+                    <DialogBlocks.Base.Subtitle>
                         {t('CreateServerModal.CreateServerTab.subtitle')}
-                    </Modal.Base.Subtitle>
-                </Modal.Base.Header>
+                    </DialogBlocks.Base.Subtitle>
+                </DialogBlocks.Base.Header>
 
-                <Modal.Base.Content>
+                <DialogBlocks.Base.Content>
                     <FormApi.Field name='avatar'>
                         {(AvatarField) => (
                             <Form.Inputs.FileInput.Node
@@ -185,9 +185,9 @@ export const CreateServerTab: FC = () => {
                     </FormApi.Field>
 
                     <Form.Error className={styles.formErrorSpacing}/>
-                </Modal.Base.Content>
+                </DialogBlocks.Base.Content>
 
-                <Modal.Base.Footer>
+                <DialogBlocks.Base.Footer>
                     <Button
                         stylingPreset='lite'
                         size='medium'
@@ -215,7 +215,7 @@ export const CreateServerTab: FC = () => {
                             </Button>
                         )}
                     </FormApi.Subscribe>
-                </Modal.Base.Footer>
+                </DialogBlocks.Base.Footer>
             </Form.Node>
         </Form.Provider>
     );

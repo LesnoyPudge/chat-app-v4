@@ -1,4 +1,4 @@
-import { Button, Overlay, Sprite, Tooltip } from '@components';
+import { Button, Overlay, Sprite } from '@components';
 import { ASSETS } from '@generated/ASSETS';
 import { useTrans } from '@hooks';
 import { Heading, useRefManager } from '@lesnoypudge/utils-react';
@@ -39,12 +39,12 @@ export const AddChannel: FC = () => {
                 />
             </Button>
 
-            <Tooltip
+            <Overlay.Tooltip
                 leaderElementRef={buttonRef}
                 preferredAlignment='right'
             >
                 {t('ServerNavigation.AddChannel.tooltip')}
-            </Tooltip>
+            </Overlay.Tooltip>
 
             {/* <CreateRoomModal/> */}
         </div>

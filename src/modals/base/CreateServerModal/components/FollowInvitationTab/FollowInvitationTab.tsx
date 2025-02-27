@@ -1,4 +1,4 @@
-import { Button, Form, Label, Modal } from '@components';
+import { Button, Form, Label, DialogBlocks } from '@components';
 import { ApiValidators, Endpoints } from '@fakeShared';
 import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
@@ -25,7 +25,7 @@ const styles = createStyles({
 
 export const FollowInvitationTab: FC = () => {
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
-    const { closeOverlay } = ContextSelectable.useProxy(Modal.Context);
+    const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
     const { navigateTo } = Navigator.useNavigator();
     const { mounted } = useMountedWrapper();
     const [accept] = Features.Servers.Api.useAcceptInvitationMutation();
@@ -46,17 +46,17 @@ export const FollowInvitationTab: FC = () => {
     return (
         <Form.Provider formApi={FormApi} submitError={submitError}>
             <Form.Node>
-                <Modal.Base.Header>
-                    <Modal.Base.Title>
+                <DialogBlocks.Base.Header>
+                    <DialogBlocks.Base.Title>
                         {t('CreateServerModal.FollowInvitationTab.title')}
-                    </Modal.Base.Title>
+                    </DialogBlocks.Base.Title>
 
-                    <Modal.Base.Subtitle>
+                    <DialogBlocks.Base.Subtitle>
                         {t('CreateServerModal.FollowInvitationTab.subtitle')}
-                    </Modal.Base.Subtitle>
-                </Modal.Base.Header>
+                    </DialogBlocks.Base.Subtitle>
+                </DialogBlocks.Base.Header>
 
-                <Modal.Base.Content className={styles.content}>
+                <DialogBlocks.Base.Content className={styles.content}>
                     <FormApi.Field name='invitationCode'>
                         {(field) => (
                             <Form.Inputs.TextInput.Provider
@@ -82,9 +82,9 @@ export const FollowInvitationTab: FC = () => {
                     </FormApi.Field>
 
                     <Form.Error/>
-                </Modal.Base.Content>
+                </DialogBlocks.Base.Content>
 
-                <Modal.Base.Footer>
+                <DialogBlocks.Base.Footer>
                     <Button
                         stylingPreset='lite'
                         size='medium'
@@ -105,7 +105,7 @@ export const FollowInvitationTab: FC = () => {
                             </Button>
                         )}
                     </FormApi.Subscribe>
-                </Modal.Base.Footer>
+                </DialogBlocks.Base.Footer>
             </Form.Node>
         </Form.Provider>
     );

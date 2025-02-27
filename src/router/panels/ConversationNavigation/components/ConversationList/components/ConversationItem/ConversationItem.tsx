@@ -1,4 +1,4 @@
-import { Avatar, Button, ListVariants, Placeholder, Sprite, Tooltip } from '@components';
+import { Avatar, Button, ListVariants, Placeholder, Sprite,Overlay } from '@components';
 import { Navigator } from '@features';
 import { ASSETS } from '@generated/ASSETS';
 import { useTrans } from '@hooks';
@@ -161,12 +161,12 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
                 />
             </Button>
 
-            <Tooltip
+            <Overlay.Tooltip
                 preferredAlignment='right'
                 leaderElementRef={hideButtonRef}
             >
                 {t('COMMON.Hide')}
-            </Tooltip>
+            </Overlay.Tooltip>
         </li>
     );
 };

@@ -1,4 +1,4 @@
-import { Avatar, Button, ContextMenu, Tooltip } from '@components';
+import { Avatar, Button, Overlay } from '@components';
 import { useKeyboardNavigation } from '@hooks';
 import { Focus, useFunction, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
 import { cn } from '@utils';
@@ -7,7 +7,6 @@ import { WrapperWithBullet } from '../../../WrapperWithBullet';
 import { Features } from '@redux/features';
 import { useSliceSelector, useStoreSelector } from '@redux/hooks';
 import { sharedStyles } from '../../../../sharedStyles';
-import { ConversationContextMenu } from '@contextMenus';
 import { Navigator } from '@features';
 
 
@@ -116,19 +115,19 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
             </Button>
 
             <If condition={isUserAndConversationExist}>
-                <Tooltip
+                <Overlay.Tooltip
                     preferredAlignment='right'
                     leaderElementRef={buttonRef}
                 >
                     {userTarget?.name}
-                </Tooltip>
+                </Overlay.Tooltip>
 
-                <ContextMenu.Wrapper
+                {/* <ContextMenu.Wrapper
                     leaderElementRef={buttonRef}
                     preferredAlignment='right'
                 >
                     <ConversationContextMenu conversationId={conversationId}/>
-                </ContextMenu.Wrapper>
+                </ContextMenu.Wrapper> */}
             </If>
         </WrapperWithBullet>
     );

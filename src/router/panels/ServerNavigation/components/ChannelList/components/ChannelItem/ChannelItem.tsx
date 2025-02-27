@@ -1,8 +1,7 @@
-import { Button, ListVariants, Overlay, Placeholder, Sprite, Tooltip, WithPermission } from '@components';
+import { Button, ListVariants, Overlay, Placeholder, Sprite, WithPermission } from '@components';
 import { Navigator } from '@features';
 import { ASSETS } from '@generated/ASSETS';
-import { useValidatedParams } from '@hooks';
-import { useTrans } from '@hooks';
+import { useValidatedParams, useTrans } from '@hooks';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { Features } from '@redux/features';
 import { useSliceSelector } from '@redux/hooks';
@@ -149,13 +148,13 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
 
                     {/* <ChannelSettingsModal/> */}
 
-                    <Tooltip
+                    <Overlay.Tooltip
                         preferredAlignment='right'
                         spacing={5}
                         leaderElementRef={settingsButtonRef}
                     >
                         {t('ServerNavigation.ChannelList.Item.settingsTooltip')}
-                    </Tooltip>
+                    </Overlay.Tooltip>
                 </WithPermission.ChannelControl>
             </li>
         </Placeholder.With>

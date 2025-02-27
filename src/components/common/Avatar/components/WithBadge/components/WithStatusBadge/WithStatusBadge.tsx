@@ -3,7 +3,7 @@ import { useRefManager } from '@lesnoypudge/utils-react';
 import { cn, createStyles, getStatusLabel } from '@utils';
 import { MASK_ID } from '@vars';
 import { CSSProperties, FC, useMemo } from 'react';
-import { PresenceStatus, Tooltip } from '@components';
+import { PresenceStatus, Overlay } from '@components';
 
 
 
@@ -76,12 +76,12 @@ export const WithStatusBadge: FC<WithStatusBadge.Props> = ({
             </If>
 
             <If condition={showTooltip}>
-                <Tooltip
+                <Overlay.Tooltip
                     leaderElementRef={badgeRef}
                     preferredAlignment='top'
                 >
                     {statusTitle}
-                </Tooltip>
+                </Overlay.Tooltip>
             </If>
         </div>
     );

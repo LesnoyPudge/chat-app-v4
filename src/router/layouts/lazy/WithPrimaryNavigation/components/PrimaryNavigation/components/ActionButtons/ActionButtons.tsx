@@ -1,11 +1,10 @@
-import { Button, Sprite, Tooltip, Overlay } from '@components';
+import { Button, Sprite, Overlay } from '@components';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 import { WrapperWithBullet } from '../WrapperWithBullet';
 import { cn } from '@utils';
 import { sharedStyles } from '../../sharedStyles';
 import { useTrans } from '@hooks';
-import { CreateServerModal } from '@modals';
 import { ASSETS } from '@generated/ASSETS';
 
 
@@ -36,14 +35,14 @@ export const ActionButtons: FC = () => {
                 />
             </Button>
 
-            <CreateServerModal controls={controls}/>
+            {/* <CreateServerModal controls={controls}/> */}
 
-            <Tooltip
+            <Overlay.Tooltip
                 preferredAlignment='right'
                 leaderElementRef={buttonRef}
             >
                 {t('PrimaryNavigation.CreateServer.text')}
-            </Tooltip>
+            </Overlay.Tooltip>
         </WrapperWithBullet>
     );
 };

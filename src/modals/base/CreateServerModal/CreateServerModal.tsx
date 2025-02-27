@@ -1,11 +1,11 @@
-import { Tab, Modal } from '@components';
+import { Tab, DialogBlocks } from '@components';
 import { t } from '@features';
 import {
     CreateServerOrFollowInvitationTab,
     FollowInvitationTab,
     CreateServerTab,
 } from './components';
-import { withDisplayName } from '@lesnoypudge/utils-react';
+import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
 
 
 

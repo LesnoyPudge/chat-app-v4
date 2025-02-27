@@ -26,3 +26,4 @@ PrimaryNavigation, удалить size='hidden'
 - все оверлеи которые созданы в отдельных папках (modals, contextMenus, etc)
 перенести в места использования
 -? FIX ALL '../*' inside redux/features and RichTextEditor
+- переименовать переменные в локализации которые используют Modal / ContextMenu
