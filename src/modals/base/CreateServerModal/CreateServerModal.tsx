@@ -1,11 +1,11 @@
 import { Tab, DialogBlocks } from '@components';
-import { t } from '@features';
 import {
     CreateServerOrFollowInvitationTab,
     FollowInvitationTab,
     CreateServerTab,
 } from './components';
-import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
+import { withDisplayNameAndDecorator } from '@utils';
+import { useTrans } from '@hooks';
 
 
 
@@ -17,23 +17,31 @@ const tabs = Tab.createTabs({
 
 export const CreateServerTabContext = Tab.createTabContext<typeof tabs>();
 
-const {
-    withDecorator,
-} = Modal.Base.createDecorator('CreateServerModal', {
-    label: t('CreateServerModal.label'),
+const { withDecorator } = withDisplayNameAndDecorator<
+    DialogBlocks.Types.PublicProps
+>('CreateServerModal', ({ children, controls }) => {
+    const { t } = useTrans();
+
+    return (
+        <DialogBlocks.Provider
+            label={t('CreateServerModal.label')}
+            controls={controls}
+        >
+            <DialogBlocks.Base.Wrapper>
+                {children}
+            </DialogBlocks.Base.Wrapper>
+        </DialogBlocks.Provider>
+    );
 });
 
-export const CreateServerModal = withDisplayName(
-    'CreateServerModal',
-    withDecorator(() => {
-        return (
-            <Tab.Provider
-                context={CreateServerTabContext}
-                tabs={tabs}
-                initialTab='createServerOrFollowInvitation'
-            >
-                <Tab.Current context={CreateServerTabContext}/>
-            </Tab.Provider>
-        );
-    }),
-);
+export const CreateServerModal = withDecorator(() => {
+    return (
+        <Tab.Provider
+            context={CreateServerTabContext}
+            tabs={tabs}
+            initialTab='createServerOrFollowInvitation'
+        >
+            <Tab.Current context={CreateServerTabContext}/>
+        </Tab.Provider>
+    );
+});

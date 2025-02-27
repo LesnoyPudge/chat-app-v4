@@ -43,7 +43,10 @@ export namespace Types {
         export type Props = RT.PropsWithChildrenAndClassName;
     }
 
-    export type PublicProps = Overlay.Types.WithControls;
+    export type PublicProps = (
+        Overlay.Types.WithControls
+        & Pick<Context, 'leaderElementOrRectRef'>
+    );
 
     export namespace useContextMenuControls {
         export type Props = {

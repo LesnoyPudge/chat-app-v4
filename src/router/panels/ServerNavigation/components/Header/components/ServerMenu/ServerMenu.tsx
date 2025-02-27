@@ -1,8 +1,8 @@
 import { Button, Overlay, RelativelyPositioned, Sprite } from '@components';
 import { ASSETS } from '@generated/ASSETS';
 import { useTrans } from '@hooks';
-import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
-import { createStyles, getAnimationVariants } from '@utils';
+import { withDisplayName } from '@lesnoypudge/utils-react';
+import { createStyles, withDisplayNameAndDecorator } from '@utils';
 
 
 
@@ -40,6 +40,32 @@ const styles = createStyles({
     buttonIcon: 'h-5 w-5 transition-none',
 });
 
+const {
+    withDecorator,
+} = withDisplayNameAndDecorator<Overlay.Menu.Types.PublicProps>(
+    'ServerMenu',
+    ({
+        children,
+        controls,
+        leaderElementOrRectRef,
+    }) => {
+        const { t } = useTrans();
+
+        return (
+            <Overlay.Menu.Provider
+                label={t('ServerMenu.label')}
+                controls={controls}
+                preferredAlignment='right'
+                leaderElementOrRectRef={leaderElementOrRectRef}
+            >
+                <Overlay.Menu.Wrapper>
+                    {children}
+                </Overlay.Menu.Wrapper>
+            </Overlay.Menu.Provider>
+        );
+    },
+);
+
 export namespace ServerMenu {
     export type DecoratorProps = (
         Overlay.Types.WithControls
@@ -49,37 +75,6 @@ export namespace ServerMenu {
         >
     );
 }
-
-const { animationVariants } = getAnimationVariants.withOpacity();
-
-const { withDecorator } = createWithDecorator<ServerMenu.DecoratorProps>(({
-    controls,
-    leaderElementOrRectRef,
-    children,
-}) => {
-    const { t } = useTrans();
-
-    return (
-        <Overlay.Dialog.Provider
-            label={t('ServerMenu.label')}
-            animationVariants={animationVariants}
-            focused
-            outerState={controls.isOpen}
-            onChange={controls.onChange}
-        >
-            <Overlay.Dialog.Wrapper>
-                <RelativelyPositioned.Node
-                    leaderElementOrRectRef={leaderElementOrRectRef}
-                    preferredAlignment='bottom'
-                    spacing={10}
-                    centered
-                >
-                    {children}
-                </RelativelyPositioned.Node>
-            </Overlay.Dialog.Wrapper>
-        </Overlay.Dialog.Provider>
-    );
-});
 
 export const ServerMenu = withDisplayName(
     'ServerMenu',

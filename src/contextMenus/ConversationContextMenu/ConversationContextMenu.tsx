@@ -1,12 +1,37 @@
-import { Button, Overlay } from '@components';
+import { ActionMenu, Button, Overlay } from '@components';
 import { useOptimisticQueue, useTrans } from '@hooks';
-
 import { useFunction } from '@lesnoypudge/utils-react';
 import { Features } from '@redux/features';
 import { useStoreSelector } from '@redux/hooks';
-import { FC } from 'react';
+import { withDisplayNameAndDecorator } from '@utils';
 
 
+
+const {
+    withDecorator,
+} = withDisplayNameAndDecorator<Overlay.Menu.Types.PublicProps>(
+    'ConversationContextMenu',
+    ({
+        children,
+        controls,
+        leaderElementOrRectRef,
+    }) => {
+        const { t } = useTrans();
+
+        return (
+            <Overlay.Menu.Provider
+                label={t('ConversationContextMenu.label')}
+                controls={controls}
+                preferredAlignment='right'
+                leaderElementOrRectRef={leaderElementOrRectRef}
+            >
+                <Overlay.Menu.Wrapper>
+                    {children}
+                </Overlay.Menu.Wrapper>
+            </Overlay.Menu.Provider>
+        );
+    },
+);
 
 export namespace ConversationContextMenu {
     export type Props = {
@@ -14,9 +39,9 @@ export namespace ConversationContextMenu {
     };
 }
 
-export const ConversationContextMenu: FC<ConversationContextMenu.Props> = ({
-    conversationId,
-}) => {
+export const ConversationContextMenu = withDecorator<
+    ConversationContextMenu.Props
+>(({ conversationId }) => {
     const { t } = useTrans();
     const [mute] = Features.Users.Api.useMuteConversationMutation();
     const [unmute] = Features.Users.Api.useUnmuteConversationMutation();
@@ -73,37 +98,32 @@ export const ConversationContextMenu: FC<ConversationContextMenu.Props> = ({
     );
 
     return (
-        <Overlay.Menu.Provider
-            label={t('ConversationContextMenu.label')}
+        <ActionMenu.Wrapper>
+            <Button
+                className={ActionMenu.styles.button}
+                {...ActionMenu.buttonProps}
+                onLeftClick={toggleNotification}
+            >
+                {conversationNotificationToggleText}
+            </Button>
 
-        >
-            <Overlay.Menu.Wrapper>
-                <Button
-                    className={ContextMenu.menuItemStyles}
-                    {...ContextMenu.menuItemProps}
-                    onLeftClick={toggleNotification}
-                >
-                    {conversationNotificationToggleText}
-                </Button>
+            <Button
+                className={ActionMenu.styles.button}
+                {...ActionMenu.buttonProps}
+                isDisabled={isMarkAsReadButtonDisabled}
+                onLeftClick={markAsRead}
+            >
+                {t('ConversationContextMenu.readNotificationsButton.text')}
+            </Button>
 
-                <Button
-                    className={ContextMenu.menuItemStyles}
-                    {...ContextMenu.menuItemProps}
-                    isDisabled={isMarkAsReadButtonDisabled}
-                    onLeftClick={markAsRead}
-                >
-                    {t('ConversationContextMenu.readNotificationsButton.text')}
-                </Button>
-
-                <Button
-                    className={ContextMenu.menuItemStyles}
-                    {...ContextMenu.menuItemProps}
-                    onLeftClick={hide}
-                    isLoading={hideHelpers.isLoading}
-                >
-                    {t('ConversationContextMenu.hideButton.text')}
-                </Button>
-            </Overlay.Menu.Wrapper>
-        </Overlay.Menu.Provider>
+            <Button
+                className={ActionMenu.styles.button}
+                {...ActionMenu.buttonProps}
+                onLeftClick={hide}
+                isLoading={hideHelpers.isLoading}
+            >
+                {t('ConversationContextMenu.hideButton.text')}
+            </Button>
+        </ActionMenu.Wrapper>
     );
-};
+});

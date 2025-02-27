@@ -1,12 +1,37 @@
-import { Button, ContextMenu } from '@components';
+import { Button, ActionMenu, Overlay } from '@components';
 import { useOptimisticQueue, useTrans } from '@hooks';
-
 import { useFunction } from '@lesnoypudge/utils-react';
 import { Features } from '@redux/features';
 import { useStoreSelector } from '@redux/hooks';
-import { FC } from 'react';
+import { withDisplayNameAndDecorator } from '@utils';
 
 
+
+const {
+    withDecorator,
+} = withDisplayNameAndDecorator<Overlay.Menu.Types.PublicProps>(
+    'ServerContextMenu',
+    ({
+        children,
+        controls,
+        leaderElementOrRectRef,
+    }) => {
+        const { t } = useTrans();
+
+        return (
+            <Overlay.Menu.Provider
+                label={t('ServerContextMenu.label')}
+                controls={controls}
+                preferredAlignment='right'
+                leaderElementOrRectRef={leaderElementOrRectRef}
+            >
+                <Overlay.Menu.Wrapper>
+                    {children}
+                </Overlay.Menu.Wrapper>
+            </Overlay.Menu.Provider>
+        );
+    },
+);
 
 export namespace ServerContextMenu {
     export type Props = {
@@ -14,9 +39,9 @@ export namespace ServerContextMenu {
     };
 }
 
-export const ServerContextMenu: FC<ServerContextMenu.Props> = ({
-    serverId,
-}) => {
+export const ServerContextMenu = withDecorator<
+    ServerContextMenu.Props
+>(({ serverId }) => {
     const { t } = useTrans();
     const [mute] = Features.Users.Api.useMuteServerMutation();
     const [unmute] = Features.Users.Api.useUnmuteServerMutation();
@@ -73,20 +98,18 @@ export const ServerContextMenu: FC<ServerContextMenu.Props> = ({
     );
 
     return (
-        <ContextMenu.Container
-            label={t('ServerContextMenu.label')}
-        >
+        <ActionMenu.Wrapper>
             <Button
-                className={ContextMenu.menuItemStyles}
-                {...ContextMenu.menuItemProps}
+                className={ActionMenu.styles.button}
+                {...ActionMenu.buttonProps}
                 onLeftClick={toggleNotification}
             >
                 {serverNotificationToggleText}
             </Button>
 
             <Button
-                className={ContextMenu.menuItemStyles}
-                {...ContextMenu.menuItemProps}
+                className={ActionMenu.styles.button}
+                {...ActionMenu.buttonProps}
                 isDisabled={isMarkAsReadButtonDisabled}
                 onLeftClick={markAsRead}
             >
@@ -94,13 +117,13 @@ export const ServerContextMenu: FC<ServerContextMenu.Props> = ({
             </Button>
 
             <Button
-                className={ContextMenu.menuItemStyles}
-                {...ContextMenu.menuItemProps}
+                className={ActionMenu.styles.button}
+                {...ActionMenu.buttonProps}
                 onLeftClick={leave}
                 isLoading={leaveHelpers.isLoading}
             >
                 {t('ServerContextMenu.leaveButton.text')}
             </Button>
-        </ContextMenu.Container>
+        </ActionMenu.Wrapper>
     );
-};
+});
