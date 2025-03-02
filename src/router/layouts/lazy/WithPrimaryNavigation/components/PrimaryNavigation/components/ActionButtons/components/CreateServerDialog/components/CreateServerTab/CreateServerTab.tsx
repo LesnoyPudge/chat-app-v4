@@ -2,7 +2,7 @@ import { Button, Form, Image, Label, Sprite, DialogBlocks } from '@components';
 import { ApiValidators, Endpoints } from '@fakeShared';
 import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
-import { CreateServerTabContext } from '../../CreateServerModal';
+import { CreateServerTabContext } from '../../CreateServerDialog';
 import { Features } from '@redux/features';
 import { useTrans } from '@hooks';
 import { createStyles } from '@utils';
@@ -88,11 +88,11 @@ export const CreateServerTab: FC = () => {
             <Form.Node>
                 <DialogBlocks.Base.Header>
                     <DialogBlocks.Base.Title>
-                        {t('CreateServerModal.CreateServerTab.title')}
+                        {t('CreateServerDialog.CreateServerTab.title')}
                     </DialogBlocks.Base.Title>
 
                     <DialogBlocks.Base.Subtitle>
-                        {t('CreateServerModal.CreateServerTab.subtitle')}
+                        {t('CreateServerDialog.CreateServerTab.subtitle')}
                     </DialogBlocks.Base.Subtitle>
                 </DialogBlocks.Base.Header>
 
@@ -104,21 +104,21 @@ export const CreateServerTab: FC = () => {
                                 accept={Form.Inputs.FileInput.ACCEPTED_FILE_TYPE.IMAGES}
                                 amountLimit={1}
                                 field={AvatarField}
-                                label={t('CreateServerModal.CreateServerTab.fileInput.label')}
+                                label={t('CreateServerDialog.CreateServerTab.fileInput.label')}
                             >
                                 <div className={styles.fileInputWrapper}>
                                     <If condition={!!AvatarField.state.value}>
                                         <Image
                                             className={styles.serverAvatar}
                                             src={AvatarField.state.value?.base64}
-                                            alt={t('CreateServerModal.CreateServerTab.fileInput.serverImage.alt')}
+                                            alt={t('CreateServerDialog.CreateServerTab.fileInput.serverImage.alt')}
                                         />
                                     </If>
 
                                     <If condition={!AvatarField.state.value}>
                                         <div className={styles.fileInputActionWrapper}>
                                             <span className={styles.fileInputActionText}>
-                                                {t('CreateServerModal.CreateServerTab.fileInput.uploadAction.text')}
+                                                {t('CreateServerDialog.CreateServerTab.fileInput.uploadAction.text')}
                                             </span>
 
                                             <div className={styles.fileInputActionIconWrapper}>
@@ -138,7 +138,7 @@ export const CreateServerTab: FC = () => {
                         {(IdentifierField) => (
                             <Form.Inputs.TextInput.Provider
                                 field={IdentifierField}
-                                label={t('CreateServerModal.CreateServerTab.identifierField.label')}
+                                label={t('CreateServerDialog.CreateServerTab.identifierField.label')}
                                 type='text'
                                 maxLength={32}
                                 required
@@ -146,7 +146,7 @@ export const CreateServerTab: FC = () => {
                             >
                                 <div className={styles.identifierFieldSpacing}>
                                     <Label.Node htmlFor={IdentifierField.name}>
-                                        {t('CreateServerModal.CreateServerTab.identifierField.label')}
+                                        {t('CreateServerDialog.CreateServerTab.identifierField.label')}
 
                                         <Label.Wildcard/>
 
@@ -163,7 +163,7 @@ export const CreateServerTab: FC = () => {
                         {(NameField) => (
                             <Form.Inputs.TextInput.Provider
                                 field={NameField}
-                                label={t('CreateServerModal.CreateServerTab.nameField.label')}
+                                label={t('CreateServerDialog.CreateServerTab.nameField.label')}
                                 type='text'
                                 maxLength={32}
                                 required
@@ -171,7 +171,7 @@ export const CreateServerTab: FC = () => {
                             >
                                 <div className={styles.nameFieldSpacing}>
                                     <Label.Node htmlFor={NameField.name}>
-                                        {t('CreateServerModal.CreateServerTab.nameField.label')}
+                                        {t('CreateServerDialog.CreateServerTab.nameField.label')}
 
                                         <Label.Wildcard/>
 
@@ -193,7 +193,7 @@ export const CreateServerTab: FC = () => {
                         size='medium'
                         onLeftClick={changeTab.createServerOrFollowInvitation}
                     >
-                        {t('CreateServerModal.CreateServerTab.backButton.text')}
+                        {t('CreateServerDialog.CreateServerTab.backButton.text')}
                     </Button>
 
                     <FormApi.Subscribe selector={({
@@ -211,7 +211,7 @@ export const CreateServerTab: FC = () => {
                                 isDisabled={!isFormValid}
                                 isLoading={isSubmitting}
                             >
-                                {t('CreateServerModal.CreateServerTab.submitButton.text')}
+                                {t('CreateServerDialog.CreateServerTab.submitButton.text')}
                             </Button>
                         )}
                     </FormApi.Subscribe>

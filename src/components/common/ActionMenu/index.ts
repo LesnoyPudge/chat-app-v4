@@ -11,7 +11,5 @@ export namespace ActionMenu {
 
     export import Wrapper = c2.ActionMenuWrapper;
 
-    export import Separator = c2.ActionMenuSeparator;
-
     export import Group = c2.ActionMenuGroup;
 }

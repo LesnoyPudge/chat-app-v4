@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Button, DialogBlocks } from '@components';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { CreateServerTabContext } from '../../CreateServerModal';
+import { CreateServerTabContext } from '../../CreateServerDialog';
 import { useTrans } from '@hooks';
 import { createStyles } from '@utils';
 
@@ -21,11 +21,11 @@ export const CreateServerOrFollowInvitationTab: FC = () => {
         <>
             <DialogBlocks.Base.Header>
                 <DialogBlocks.Base.Title>
-                    {t('CreateServerModal.CreateServerOrFollowInvitationTab.title')}
+                    {t('CreateServerDialog.CreateServerOrFollowInvitationTab.title')}
                 </DialogBlocks.Base.Title>
 
                 <DialogBlocks.Base.Subtitle>
-                    {t('CreateServerModal.CreateServerOrFollowInvitationTab.subtitle')}
+                    {t('CreateServerDialog.CreateServerOrFollowInvitationTab.subtitle')}
                 </DialogBlocks.Base.Subtitle>
             </DialogBlocks.Base.Header>
 
@@ -36,7 +36,7 @@ export const CreateServerOrFollowInvitationTab: FC = () => {
                     size='medium'
                     onLeftClick={changeTab.createServer}
                 >
-                    {t('CreateServerModal.CreateServerOrFollowInvitationTab.goToCreateServerButton.text')}
+                    {t('CreateServerDialog.CreateServerOrFollowInvitationTab.goToCreateServerButton.text')}
                 </Button>
 
                 <Button
@@ -45,7 +45,7 @@ export const CreateServerOrFollowInvitationTab: FC = () => {
                     size='medium'
                     onLeftClick={changeTab.followInvitation}
                 >
-                    {t('CreateServerModal.CreateServerOrFollowInvitationTab.goToFollowInvitationButton.text')}
+                    {t('CreateServerDialog.CreateServerOrFollowInvitationTab.goToFollowInvitationButton.text')}
                 </Button>
 
                 <Button
@@ -54,7 +54,7 @@ export const CreateServerOrFollowInvitationTab: FC = () => {
                     size='medium'
                     onLeftClick={closeOverlay}
                 >
-                    {t('CreateServerModal.CancelButton.text')}
+                    {t('CreateServerDialog.CancelButton.text')}
                 </Button>
             </DialogBlocks.Base.Content>
         </>

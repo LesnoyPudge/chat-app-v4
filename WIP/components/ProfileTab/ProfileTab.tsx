@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react';
-import { AppSettingsModalTabs, Button, DeleteAccountModal, OverlayContextProvider, Separator, TabContext, TabPanel } from '@components';
+import { AppSettingsDialogTabs, Button, DeleteAccountModal, OverlayContextProvider, Separator, TabContext, TabPanel } from '@components';
 import { ProfileManager } from './components';
 import { HeadingLevel } from '@libs';
 import { SettingsDescription, SettingsGroupTitle } from '..';
@@ -8,7 +8,7 @@ import { TabTitle } from '../../../components';
 
 
 export const ProfileTab: FC = () => {
-    const { tabPanelProps } = useContext<TabContext<AppSettingsModalTabs>>(TabContext);
+    const { tabPanelProps } = useContext<TabContext<AppSettingsDialogTabs>>(TabContext);
 
     return (
         <HeadingLevel>

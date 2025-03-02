@@ -2,7 +2,7 @@ import { Button, Form, Label, DialogBlocks } from '@components';
 import { ApiValidators, Endpoints } from '@fakeShared';
 import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
-import { CreateServerTabContext } from '../../CreateServerModal';
+import { CreateServerTabContext } from '../../CreateServerDialog';
 import { Features } from '@redux/features';
 import { createStyles } from '@utils';
 import { useTrans } from '@hooks';
@@ -48,11 +48,11 @@ export const FollowInvitationTab: FC = () => {
             <Form.Node>
                 <DialogBlocks.Base.Header>
                     <DialogBlocks.Base.Title>
-                        {t('CreateServerModal.FollowInvitationTab.title')}
+                        {t('CreateServerDialog.FollowInvitationTab.title')}
                     </DialogBlocks.Base.Title>
 
                     <DialogBlocks.Base.Subtitle>
-                        {t('CreateServerModal.FollowInvitationTab.subtitle')}
+                        {t('CreateServerDialog.FollowInvitationTab.subtitle')}
                     </DialogBlocks.Base.Subtitle>
                 </DialogBlocks.Base.Header>
 
@@ -61,14 +61,14 @@ export const FollowInvitationTab: FC = () => {
                         {(field) => (
                             <Form.Inputs.TextInput.Provider
                                 field={field}
-                                label={t('CreateServerModal.FollowInvitationTab.invitationCodeInput.label')}
+                                label={t('CreateServerDialog.FollowInvitationTab.invitationCodeInput.label')}
                                 type='text'
                                 placeholder={invitePlaceholder}
                                 required
                             >
                                 <div>
                                     <Label.Node htmlFor={field.name}>
-                                        {t('CreateServerModal.FollowInvitationTab.invitationCodeInput.label')}
+                                        {t('CreateServerDialog.FollowInvitationTab.invitationCodeInput.label')}
 
                                         <Label.Wildcard/>
 
@@ -90,7 +90,7 @@ export const FollowInvitationTab: FC = () => {
                         size='medium'
                         onLeftClick={changeTab.createServerOrFollowInvitation}
                     >
-                        {t('CreateServerModal.FollowInvitationTab.goBackButton.text')}
+                        {t('CreateServerDialog.FollowInvitationTab.goBackButton.text')}
                     </Button>
 
                     <FormApi.Subscribe selector={(s) => s.isSubmitting}>
@@ -101,7 +101,7 @@ export const FollowInvitationTab: FC = () => {
                                 type='submit'
                                 isLoading={isSubmitting}
                             >
-                                {t('CreateServerModal.FollowInvitationTab.joinServerButton.text')}
+                                {t('CreateServerDialog.FollowInvitationTab.joinServerButton.text')}
                             </Button>
                         )}
                     </FormApi.Subscribe>

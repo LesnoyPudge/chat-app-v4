@@ -19,12 +19,12 @@ export const CreateServerTabContext = Tab.createTabContext<typeof tabs>();
 
 const { withDecorator } = withDisplayNameAndDecorator<
     DialogBlocks.Types.PublicProps
->('CreateServerModal', ({ children, controls }) => {
+>('CreateServerDialog', ({ children, controls }) => {
     const { t } = useTrans();
 
     return (
         <DialogBlocks.Provider
-            label={t('CreateServerModal.label')}
+            label={t('CreateServerDialog.label')}
             controls={controls}
         >
             <DialogBlocks.Base.Wrapper>
@@ -34,7 +34,7 @@ const { withDecorator } = withDisplayNameAndDecorator<
     );
 });
 
-export const CreateServerModal = withDecorator(() => {
+export const CreateServerDialog = withDecorator(() => {
     return (
         <Tab.Provider
             context={CreateServerTabContext}

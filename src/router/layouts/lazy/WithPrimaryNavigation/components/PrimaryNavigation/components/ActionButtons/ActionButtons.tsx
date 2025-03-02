@@ -35,7 +35,7 @@ export const ActionButtons: FC = () => {
                 />
             </Button>
 
-            {/* <CreateServerModal controls={controls}/> */}
+            {/* <CreateServerDialog controls={controls}/> */}
 
             <Overlay.Tooltip
                 preferredAlignment='right'

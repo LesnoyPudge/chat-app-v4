@@ -37,5 +37,8 @@
         "**/public": false,
         "**/generated": false
     },
-    "explorerExclude.backup": {}
+    "explorerExclude.backup": {},
+    "cSpell.words": [
+        "UNDEAFEN"
+    ]
 }

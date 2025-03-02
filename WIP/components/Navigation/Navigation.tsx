@@ -1,4 +1,4 @@
-import { AppSettingsModalTabs, Button, SpriteImage, Link, Separator, TabContext, TabList, MoveFocusInside } from '@components';
+import { AppSettingsDialogTabs, Button, SpriteImage, Link, Separator, TabContext, TabList, MoveFocusInside } from '@components';
 import { useKeyboardNavigation } from '@hooks';
 import { objectKeysToIdArray } from '@utils';
 import { FC, useContext, useRef } from 'react';
@@ -16,7 +16,7 @@ const styles = {
 };
 
 export const Navigation: FC = () => {
-    const { changeTab, tabs, isActive, tabProps } = useContext<TabContext<AppSettingsModalTabs>>(TabContext);
+    const { changeTab, tabs, isActive, tabProps } = useContext<TabContext<AppSettingsDialogTabs>>(TabContext);
     const tabsRef = useRef(objectKeysToIdArray(tabs));
     const {
         getIsFocused,

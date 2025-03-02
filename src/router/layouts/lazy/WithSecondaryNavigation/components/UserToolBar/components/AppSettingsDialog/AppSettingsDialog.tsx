@@ -13,11 +13,11 @@ import { Overlay } from '@components';
 //     appearanceTab: <AppearanceTab/>,
 // };
 
-export namespace AppSettingsModal {
+export namespace AppSettingsDialog {
     export type Props = Overlay.Types.WithControls;
 }
 
-export const AppSettingsModal: FC<AppSettingsModal.Props> = ({
+export const AppSettingsDialog: FC<AppSettingsDialog.Props> = ({
     controls,
 }) => {
     return null;

@@ -1,4 +1,4 @@
-import { AppSettingsModalTabs, RadioInputIndicator, Separator, SliderInput, TabContext, TabPanel } from '@components';
+import { AppSettingsDialogTabs, RadioInputIndicator, Separator, SliderInput, TabContext, TabPanel } from '@components';
 import { FormikRadioInput, HeadingLevel } from '@libs';
 import { FC, useContext } from 'react';
 import { SettingsGroupTitle } from '..';
@@ -8,7 +8,7 @@ import { ChatExample } from './components';
 
 
 export const AppearanceTab: FC = () => {
-    const { tabPanelProps } = useContext<TabContext<AppSettingsModalTabs>>(TabContext);
+    const { tabPanelProps } = useContext<TabContext<AppSettingsDialogTabs>>(TabContext);
 
     return (
         <HeadingLevel>

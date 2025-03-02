@@ -154,7 +154,7 @@ export const UserToolBar: FC = () => {
                         {t('COMMON.Settings')}
                     </Overlay.Tooltip>
 
-                    {/* <AppSettingsModal controls={modalControls}/> */}
+                    {/* <AppSettingsDialog controls={modalControls}/> */}
                 </>
             </div>
         </div>
