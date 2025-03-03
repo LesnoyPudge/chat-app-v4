@@ -8,11 +8,11 @@ import { FormApi } from '@tanstack/react-form';
 
 
 type OnSubmitProps<
-    // eslint-disable-next-line @/typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     _ApiTrigger extends TypedMutationTrigger<any, any, CustomQueryFn>,
 > = {
     value: Parameters<_ApiTrigger>[0];
-    // eslint-disable-next-line @/typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     formApi: FormApi<Parameters<_ApiTrigger>[0], any>;
 };
 
@@ -47,10 +47,10 @@ const codeToName = {
 >;
 
 export const apiAdapter = <
-    // eslint-disable-next-line @/typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     _ApiTrigger extends TypedMutationTrigger<any, any, CustomQueryFn>,
     _Result = _ApiTrigger extends TypedMutationTrigger<
-        // eslint-disable-next-line @/typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         infer _Value, any, CustomQueryFn
     > ? _Value : never,
 >(
@@ -76,7 +76,7 @@ export const apiAdapter = <
             return _errorTable.INTERNAL_SERVER_ERROR ?? null;
         }
 
-        // eslint-disable-next-line @/typescript-eslint/no-unsafe-argument
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         options?.onSuccess?.(response.data);
 
         return null;

@@ -1,4 +1,4 @@
-/* eslint-disable @/typescript-eslint/consistent-type-definitions */
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import { NamespacesType } from '@/generated/i18n';
 import { env } from '@/vars';
 

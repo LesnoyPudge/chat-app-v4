@@ -1,5 +1,5 @@
-/* eslint-disable @/typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @/typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { capitalize } from '@lesnoypudge/utils';
 import {

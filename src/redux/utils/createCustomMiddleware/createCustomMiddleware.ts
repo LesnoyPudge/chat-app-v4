@@ -3,7 +3,7 @@ import { Dispatch, Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
 
 
 
-// eslint-disable-next-line @/typescript-eslint/no-empty-object-type
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type TypedMiddleware = Middleware<{}, RootState>;
 
 type TypedApi = MiddlewareAPI<Dispatch, RootState>;

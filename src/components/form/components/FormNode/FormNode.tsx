@@ -49,7 +49,7 @@ export const FormNode: FC<FormNode.Props> = ({
     return (
         <form
             className={className}
-            // eslint-disable-next-line @/typescript-eslint/no-misused-promises
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onSubmit={handleSubmit}
             {...rest}
         >

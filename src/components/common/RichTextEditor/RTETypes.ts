@@ -6,7 +6,7 @@ import { EmojiStore } from '@/features';
 
 
 declare module 'slate' {
-    // eslint-disable-next-line @/typescript-eslint/consistent-type-definitions
+    // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
     interface CustomTypes {
         Editor: RTETypes.Editor;
         Element: RTETypes.Element;

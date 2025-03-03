@@ -9,7 +9,7 @@ import { useRef, useState } from 'react';
 export const useOptimisticQueue = <
     _State,
     _Trigger extends () => (
-        // eslint-disable-next-line @/typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ReturnType<TypedMutationTrigger<any, any, CustomQueryFn>>
     ),
     _PossibleActions extends [

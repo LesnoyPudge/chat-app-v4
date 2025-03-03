@@ -11,7 +11,7 @@ type SoundAssets = typeof SOUNDS;
 
 type AssetItem = T.ValueOf<SoundAssets>;
 
-const DEFAULT_VOLUME = 0.5;
+const DEFAULT_VOLUME = 0.3;
 
 const sounds = {
     [SOUNDS.DISCORD_CALL.NAME]: new Howl({
@@ -62,4 +62,12 @@ class SoundManager {
     constructor() {}
 }
 
-export const soundManager = new SoundManager();
+export const soundManager = (() => {
+    const play = (item: AssetItem) => {
+        sounds[item.NAME].play();
+    };
+
+    return {
+        play,
+    };
+})();

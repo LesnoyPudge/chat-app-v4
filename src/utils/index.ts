@@ -7,5 +7,6 @@ export * from './getHTMLElement';
 export * from './getStatusLabel';
 export * from './localStorageApi';
 export * from './logger';
+export * from './promiseTimeout';
 export * from './sharedAnimationVariants';
 export * from './withDisplayNameAndDecorator';

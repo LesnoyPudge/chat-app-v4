@@ -7,6 +7,7 @@
         "tailwind.config.ts",
         "./twPlugins/**/*",
         "eslint.config.js",
+        "./vitePlugins/**/*",
     ],
     "exclude": [],
     "compilerOptions": {

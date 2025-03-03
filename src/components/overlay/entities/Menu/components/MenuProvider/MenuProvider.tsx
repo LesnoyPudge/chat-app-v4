@@ -1,5 +1,6 @@
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { Overlay } from '@/components';
+import { MenuContext } from '../../context';
 import { withDisplayNameAndDecorator } from '@/utils';
 
 
@@ -32,11 +33,11 @@ export const MenuProvider = withDecorator<
     const popover = ContextSelectable.useSelector(Overlay.Popover.Context);
 
     return (
-        <Overlay.Popover.Context.Provider value={{
+        <MenuContext.Provider value={{
             ...popover,
             ...rest,
         }}>
             {children}
-        </Overlay.Popover.Context.Provider>
+        </MenuContext.Provider>
     );
 });

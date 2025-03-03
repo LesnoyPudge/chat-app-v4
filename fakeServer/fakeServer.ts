@@ -1,5 +1,5 @@
-/* eslint-disable @/typescript-eslint/require-await */
-/* eslint-disable @/typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Endpoints } from '@/fakeShared';
 import { localStorageApi, logger } from '@/utils';
 import {
@@ -620,8 +620,7 @@ const routes: HttpHandler[] = [
 
 class FakeServer {
     async init() {
-        return;
-
+        logger.log('FakeServer starting');
 
         const worker = setupWorker(...this.getRoutes());
 
@@ -631,9 +630,12 @@ class FakeServer {
 
                 print.warning();
             },
+            // findWorker: (scriptUrl, mockServiceWorkerUrl) => {
+            //     return scriptUrl.includes('mockServiceWorker');
+            // },
         });
 
-        logger.log('FakeServer initialized');
+        logger.log('FakeServer started');
     }
 
     getRoutes = () => routes;

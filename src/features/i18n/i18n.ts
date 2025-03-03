@@ -17,6 +17,10 @@ export let t = ((...args) => {
     };
 }) as TFunction;
 
+if (!localStorage.getItem('i18nextLng')) {
+    localStorage.setItem('i18nextLng', env._PUBLIC_DEFAULT_LNG);
+}
+
 const promise = (i18n
     .use(HttpBackend)
     .use(LanguageDetector)

@@ -33,7 +33,7 @@ export const useSliceActions = <
                 // @ts-expect-error
                 acc[cur] = (payload) => {
                     // @ts-expect-error
-                    // eslint-disable-next-line @/typescript-eslint/no-unsafe-assignment, @/typescript-eslint/no-unsafe-call
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
                     const action = slice.actions[cur](payload);
                     dispatch(action);
                 };

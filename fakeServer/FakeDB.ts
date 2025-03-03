@@ -1,4 +1,4 @@
-/* eslint-disable @/typescript-eslint/no-dynamic-delete */
+/* eslint-disable @typescript-eslint/no-dynamic-delete */
 import { socket } from '@/fakeSocket';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { invariant, merge } from '@lesnoypudge/utils';

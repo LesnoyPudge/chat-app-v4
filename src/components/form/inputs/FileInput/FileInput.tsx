@@ -98,7 +98,7 @@ export namespace FileInput {
         & {
             amountLimit: _Amount;
             field: FieldApi<
-                // eslint-disable-next-line @/typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 any, any, any, any,
                 CastedType<_Amount>
             >;

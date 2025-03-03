@@ -1,4 +1,4 @@
-/* eslint-disable @/typescript-eslint/no-misused-spread */
+/* eslint-disable @typescript-eslint/no-misused-spread */
 import { createEnv } from './utils/createEnv';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
 

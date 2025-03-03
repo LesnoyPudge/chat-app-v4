@@ -32,7 +32,7 @@ export const postInit = async () => {
         axeReact();
 
         // @ts-expect-error
-        // eslint-disable-next-line @/typescript-eslint/no-unsafe-assignment
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         window._devtools = {
             // @ts-expect-error
             ...window._devtools,

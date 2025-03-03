@@ -173,7 +173,7 @@ export const createCustomEntityAdapter = <
         createCustomEntityAdapter.ExtraReducers<_State>
     >((acc, cur) => {
         // @ts-expect-error
-        // eslint-disable-next-line @/typescript-eslint/no-unsafe-return
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         acc[cur] = (state, { payload }) => adapter[cur](state, payload);
 
         return acc;
@@ -241,7 +241,7 @@ export const createCustomEntityAdapter = <
 
         // @ts-expect-error
         acc[key] = (entityState, compareWith) => {
-        // eslint-disable-next-line @/typescript-eslint/no-unsafe-argument
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             return baseSelectors.selectAll(entityState).filter((entity) => {
                 if (!(cur in entity)) return false;
 
@@ -270,9 +270,9 @@ export const createCustomEntityAdapter = <
     // @ts-expect-error
         acc[cur] = (rootState, props) => {
         // @ts-expect-error
-        // eslint-disable-next-line @/typescript-eslint/no-unsafe-return, @/typescript-eslint/no-unsafe-call
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
             return entitySelectors[cur](
-            // eslint-disable-next-line @/typescript-eslint/no-unsafe-argument
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 selectSliceState(rootState),
                 props,
             );

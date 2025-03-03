@@ -1,41 +1,43 @@
 import { isProd } from '@/vars';
-import { logger } from '@/utils';
+import { logger, promiseTimeout } from '@/utils';
 import { initI18n } from '@/features';
 import { fakeServer, initDB } from '@/fakeServer';
 
 
 
+const TIMEOUT = 5_000;
+
+const reactScanInit = async () => {
+    if (isProd) return;
+
+    const { scan } = await import('react-scan');
+
+    scan({
+        enabled: false,
+        log: false,
+        animationSpeed: 'off',
+        // alwaysShowLabels: false,
+        showToolbar: false,
+        // trackUnnecessaryRenders: true,s
+        // renderCountThreshold: 1,
+        // smoothlyAnimateOutlines: false,
+    });
+};
+
 export const preInit = async () => {
     logger.log('preInit');
 
+    const i18nPromise = initI18n();
+    const dbPromise = initDB();
+    const fakeServerPromise = fakeServer.init();
+    const reactScanPromise = reactScanInit();
+
     await Promise.all([
-        initI18n(),
-
-        initDB(),
-
-        fakeServer.init(),
-
-        (async () => {
-            if (isProd) return;
-
-            const { scan } = await import('react-scan');
-
-            scan({
-                enabled: false,
-                log: false,
-                animationSpeed: 'off',
-                // alwaysShowLabels: false,
-                showToolbar: false,
-                // trackUnnecessaryRenders: true,s
-                // renderCountThreshold: 1,
-                // smoothlyAnimateOutlines: false,
-            });
-        })(),
-    ]).then(() => {
-        logger.log('preInit resolved');
-    }).catch((e) => {
-        logger.log('preInit rejected', e);
-    });
+        promiseTimeout(i18nPromise, TIMEOUT),
+        promiseTimeout(dbPromise, TIMEOUT),
+        promiseTimeout(fakeServerPromise, TIMEOUT),
+        promiseTimeout(reactScanPromise, TIMEOUT),
+    ]);
 
     logger.log('preInit end');
 };
