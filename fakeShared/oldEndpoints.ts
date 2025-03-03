@@ -1,7 +1,7 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { ENTITY_NAME } from './entity';
 import { HTTP_METHODS } from '@lesnoypudge/utils';
-import { ClientEntities as Entities } from '@types';
+import { ClientEntities as Entities } from '@/types';
 
 
 

@@ -1,5 +1,5 @@
-import { setup } from '@setup';
-import { logger } from '@utils';
+import { setup } from '@/setup';
+import { logger } from '@/utils';
 
 
 

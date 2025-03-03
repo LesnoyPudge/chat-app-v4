@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { UserStatus, Image, FileInput } from '@components';
+import { UserStatus, Image, FileInput } from '@/components';
 import { FormikFileInput } from '@libs';
-import { MBToBytes, getAvatarPath } from '@utils';
-import { MIME } from '@vars';
-import { useMemoSelector } from '@redux/hooks';
-import { AppSelectors } from '@redux/features';
+import { MBToBytes, getAvatarPath } from '@/utils';
+import { MIME } from '@/vars';
+import { useMemoSelector } from '@/redux/hooks';
+import { AppSelectors } from '@/redux/features';
 
 
 

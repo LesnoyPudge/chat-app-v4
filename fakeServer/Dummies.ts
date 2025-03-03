@@ -1,4 +1,4 @@
-import { ClientEntities } from '@types';
+import { ClientEntities } from '@/types';
 import { inRange, invariant } from '@lesnoypudge/utils';
 import { nanoid } from '@reduxjs/toolkit';
 import { T } from '@lesnoypudge/types-utils-base/namespace';

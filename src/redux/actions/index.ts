@@ -1,4 +1,4 @@
-import { socket } from '@fakeSocket';
+import { socket } from '@/fakeSocket';
 import { createAction } from '@reduxjs/toolkit';
 
 

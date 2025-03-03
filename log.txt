@@ -1,0 +1,1518 @@
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\main.ts
+2025-03-03 08:12:15 - Source import line: import { setup } from '@/setup';
+2025-03-03 08:12:15 - Source import line: import { logger } from '@/utils';
+2025-03-03 08:12:15 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\logger\logger.ts
+2025-03-03 08:12:15 - Source import line: import { isProd } from '@/vars';
+2025-03-03 08:12:15 - Transformed import line: import { isProd } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\setup\index.ts
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\setup\postInit.ts
+2025-03-03 08:12:15 - Source import line: import { logger } from '@/utils';
+2025-03-03 08:12:15 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:15 - Source import line: import { isProd } from '@/vars';
+2025-03-03 08:12:15 - Transformed import line: import { isProd } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\setup\preInit.ts
+2025-03-03 08:12:15 - Source import line: import { isProd } from '@/vars';
+2025-03-03 08:12:15 - Transformed import line: import { isProd } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:15 - Source import line: import { logger } from '@/utils';
+2025-03-03 08:12:15 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:15 - Source import line: import { initI18n } from '@/features';
+2025-03-03 08:12:15 - Transformed import line: import { initI18n } from "E:\\Projects\\chat-app-v4\\src\\features\\i18n\\i18n.ts";
+2025-03-03 08:12:15 - Source import line: import { fakeServer, initDB } from '@/fakeServer';
+2025-03-03 08:12:15 - Transformed import line: import { fakeServer } from "E:\\Projects\\chat-app-v4\\fakeServer\\fakeServer.ts";
+2025-03-03 08:12:15 - Transformed import line: import { initDB } from "E:\\Projects\\chat-app-v4\\fakeServer\\FakeDB.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\vars\common.ts
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\setup\init.tsx
+2025-03-03 08:12:15 - Source import line: import { Root } from '@/root';
+2025-03-03 08:12:15 - Transformed import line: import { Root } from "E:\\Projects\\chat-app-v4\\src\\root\\Root.tsx";
+2025-03-03 08:12:15 - Source import line: import { getHTMLElement, logger } from '@/utils';
+2025-03-03 08:12:15 - Transformed import line: import { getHTMLElement } from "E:\\Projects\\chat-app-v4\\src\\utils\\getHTMLElement\\getHTMLElement.ts";
+2025-03-03 08:12:15 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\features\i18n\i18n.ts
+2025-03-03 08:12:15 - Source import line: import { env, isDev } from '@/vars';
+2025-03-03 08:12:15 - Transformed import line: import { env } from "E:\\Projects\\chat-app-v4\\src\\vars\\env.ts";
+2025-03-03 08:12:15 - Transformed import line: import { isDev } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\fakeServer.ts
+2025-03-03 08:12:15 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:15 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:15 - Source import line: import { localStorageApi, logger } from '@/utils';
+2025-03-03 08:12:15 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:15 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:15 - Source import line: import { env } from '@/vars';
+2025-03-03 08:12:15 - Transformed import line: import { env } from "E:\\Projects\\chat-app-v4\\src\\vars\\env.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\FakeDB.ts
+2025-03-03 08:12:15 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:15 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:15 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:15 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:15 - Source import line: import { env } from '@/vars';
+2025-03-03 08:12:15 - Transformed import line: import { env } from "E:\\Projects\\chat-app-v4\\src\\vars\\env.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\vars\env.ts
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\getHTMLElement\getHTMLElement.ts
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\Root.tsx
+2025-03-03 08:12:15 - Source import line: import { isDev } from '@/vars';
+2025-03-03 08:12:15 - Transformed import line: import { isDev } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:15 - Source import line: import { ErrorScreen } from '@/router/screens/bundled';
+2025-03-03 08:12:15 - Transformed import line: import { ErrorScreen } from "E:\\Projects\\chat-app-v4\\src\\router\\screens\\bundled\\ErrorScreen\\ErrorScreen.tsx";
+2025-03-03 08:12:15 - Source import line: import { withDisplayNameAndDecorator } from '@/utils';
+2025-03-03 08:12:15 - Transformed import line: import { withDisplayNameAndDecorator } from "E:\\Projects\\chat-app-v4\\src\\utils\\withDisplayNameAndDecorator\\withDisplayNameAndDecorator.ts";
+2025-03-03 08:12:15 - Source import line: import { Router } from '@/router';
+2025-03-03 08:12:15 - Transformed import line: import { Router } from "E:\\Projects\\chat-app-v4\\src\\router\\Router.tsx";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\endpoints.ts
+2025-03-03 08:12:15 - Source import line: import { ClientEntities as Entities } from '@/types';
+2025-03-03 08:12:15 - Transformed import line: import { ClientEntities as Entities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\localStorageApi\localStorageApi.ts
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\Dummies.ts
+2025-03-03 08:12:15 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:15 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\token.ts
+2025-03-03 08:12:15 - Source import line: import { sharedValidators } from '@/fakeShared';
+2025-03-03 08:12:15 - Transformed import line: import { sharedValidators } from "E:\\Projects\\chat-app-v4\\fakeShared\\validators.ts";
+2025-03-03 08:12:15 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:15 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:15 - Source import line: import { env } from '@/vars';
+2025-03-03 08:12:15 - Transformed import line: import { env } from "E:\\Projects\\chat-app-v4\\src\\vars\\env.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\utils.ts
+2025-03-03 08:12:15 - Source import line: import { Endpoints, ENTITY_NAME } from '@/fakeShared';
+2025-03-03 08:12:15 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:15 - Transformed import line: import { ENTITY_NAME } from "E:\\Projects\\chat-app-v4\\fakeShared\\entity.ts";
+2025-03-03 08:12:15 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:15 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\Scenarios.ts
+2025-03-03 08:12:15 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:15 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:15 - Source import line: import type { RichTextEditor } from '@/components';
+2025-03-03 08:12:16 - Transformed import line: import { RichTextEditor } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\RichTextEditor\\index.ts";
+2025-03-03 08:12:16 - Source import line: import { logger } from '@/utils';
+2025-03-03 08:12:16 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\fakeSocket\fakeSocket.ts
+2025-03-03 08:12:16 - Source import line: import { FakeDB } from '@/fakeServer';
+2025-03-03 08:12:16 - Transformed import line: import { FakeDB } from "E:\\Projects\\chat-app-v4\\fakeServer\\FakeDB.ts";
+2025-03-03 08:12:16 - Source import line: import { Slices } from '@/redux/store';
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\generated\i18n.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\entity.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\index.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\validators.ts
+2025-03-03 08:12:16 - Source import line: import { t, EmojiStore } from '@/features';
+2025-03-03 08:12:16 - Transformed import line: import { t } from "E:\\Projects\\chat-app-v4\\src\\features\\i18n\\i18n.ts";
+2025-03-03 08:12:16 - Transformed import line: import { EmojiStore } from "E:\\Projects\\chat-app-v4\\src\\features\\EmojiStore\\EmojiStore.ts";
+2025-03-03 08:12:16 - Source import line: import type { RichTextEditor } from '@/components';
+2025-03-03 08:12:16 - Transformed import line: import { RichTextEditor } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\RichTextEditor\\index.ts";
+2025-03-03 08:12:16 - Source import line: import type { ClientEntities } from '@/types';
+2025-03-03 08:12:16 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\screens\bundled\ErrorScreen\ErrorScreen.tsx
+2025-03-03 08:12:16 - Source import line: import { Button, Image, Scrollable } from '@/components';
+2025-03-03 08:12:16 - Transformed import line: import { Button } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\Button\\Button.tsx";
+2025-03-03 08:12:16 - Transformed import line: import { Image } from "E:\\Projects\\chat-app-v4\\src\\components\\media\\Image\\Image.tsx";
+2025-03-03 08:12:16 - Transformed import line: import { Scrollable } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\Scrollable\\Scrollable.tsx";
+2025-03-03 08:12:16 - Source import line: import { useTrans } from '@/hooks';
+2025-03-03 08:12:16 - Transformed import line: import { useTrans } from "E:\\Projects\\chat-app-v4\\src\\hooks\\useTrans\\useTrans.ts";
+2025-03-03 08:12:16 - Source import line: import { createStyles, getAssetUrl } from '@/utils';
+2025-03-03 08:12:16 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:16 - Transformed import line: import { getAssetUrl } from "E:\\Projects\\chat-app-v4\\src\\utils\\getAssetUrl\\getAssetUrl.ts";
+2025-03-03 08:12:16 - Source import line: import { CUSTOM_STYLES } from '@/vars';
+2025-03-03 08:12:16 - Transformed import line: import { CUSTOM_STYLES } from "E:\\Projects\\chat-app-v4\\src\\vars\\customStyles.ts";
+2025-03-03 08:12:16 - Source import line: import { Screen } from '@/router/layouts/bundled';
+2025-03-03 08:12:16 - Transformed import line: import { Screen } from "E:\\Projects\\chat-app-v4\\src\\router\\layouts\\bundled\\Screen\\Screen.tsx";
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\hooks\index.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\withDisplayNameAndDecorator\withDisplayNameAndDecorator.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\Router.tsx
+2025-03-03 08:12:16 - Source import line: import { isDev } from '@/vars';
+2025-03-03 08:12:16 - Transformed import line: import { isDev } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:16 - Source import line: import { Navigator } from '@/features';
+2025-03-03 08:12:16 - Transformed import line: import { Navigator } from "E:\\Projects\\chat-app-v4\\src\\features\\Navigator\\index.ts";
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\fakeSocket\fakeSocket.ts
+2025-03-03 08:12:16 - Source import line: import { FakeDB } from '@/fakeServer';
+2025-03-03 08:12:16 - Transformed import line: import { FakeDB } from "E:\\Projects\\chat-app-v4\\fakeServer\\FakeDB.ts";
+2025-03-03 08:12:16 - Source import line: import { Slices } from '@/redux/store';
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\DevTools\index.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\GlobalProviders\index.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\Masks\index.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\SpriteSheet\index.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\GlobalLoader\index.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\features\EmojiStore\EmojiStore.ts
+2025-03-03 08:12:16 - Source import line: import { getAssetUrl } from '@/utils';
+2025-03-03 08:12:16 - Transformed import line: import { getAssetUrl } from "E:\\Projects\\chat-app-v4\\src\\utils\\getAssetUrl\\getAssetUrl.ts";
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\hooks\useFocusTracker\index.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\hooks\usePreventDefault\index.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\vars.ts
+2025-03-03 08:12:16 - Source import line: import { MBToBytes } from '@/utils';
+2025-03-03 08:12:16 - Transformed import line: import { MBToBytes } from "E:\\Projects\\chat-app-v4\\src\\utils\\fileSize\\fileSize.ts";
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\Button\Button.tsx
+2025-03-03 08:12:16 - Source import line: import { PropsWithInnerRef } from '@/types';
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\media\Image\Image.tsx
+2025-03-03 08:12:16 - Source import line: import { cn, createStyles } from '@/utils';
+2025-03-03 08:12:16 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:16 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\Scrollable\Scrollable.tsx
+2025-03-03 08:12:16 - Source import line: import { cn, createStyles } from '@/utils';
+2025-03-03 08:12:16 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:16 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:16 - Source import line: import { PropsWithInnerRef } from '@/types';
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\hooks\useTrans\useTrans.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\getAssetUrl\getAssetUrl.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\createStyles\createStyles.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\vars\customStyles.ts
+2025-03-03 08:12:16 - Source import line: import { createStyles } from '@/utils';
+2025-03-03 08:12:16 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\screens\bundled\ErrorScreen\useErrorScreen.ts
+2025-03-03 08:12:16 - Source import line: import { logger } from '@/utils';
+2025-03-03 08:12:16 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\routes\ProdRoutes\index.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\layouts\bundled\Screen\Screen.tsx
+2025-03-03 08:12:16 - Source import line: import { cn, createStyles } from '@/utils';
+2025-03-03 08:12:16 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:16 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:16 - Source import line: import { CUSTOM_STYLES } from '@/vars';
+2025-03-03 08:12:16 - Transformed import line: import { CUSTOM_STYLES } from "E:\\Projects\\chat-app-v4\\src\\vars\\customStyles.ts";
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\features\Navigator\index.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\generated\ASSETS.ts
+2025-03-03 08:12:16 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:16 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\fileSize\fileSize.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\GlobalLoader\GlobalLoader.tsx
+2025-03-03 08:12:17 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:17 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:17 - Source import line: import { GlobalLoaderScreen } from '@/router/screens/bundled';
+2025-03-03 08:12:17 - Transformed import line: import { GlobalLoaderScreen } from "E:\\Projects\\chat-app-v4\\src\\router\\screens\\bundled\\GlobalLoaderScreen\\GlobalLoaderScreen.tsx";
+2025-03-03 08:12:17 - Source import line: import { getAnimationVariants, logger } from '@/utils';
+2025-03-03 08:12:17 - Transformed import line: import { getAnimationVariants } from "E:\\Projects\\chat-app-v4\\src\\utils\\sharedAnimationVariants\\sharedAnimationVariants.ts";
+2025-03-03 08:12:17 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\hooks\useFocusTracker\useFocusTracker.ts
+2025-03-03 08:12:17 - Source import line: import { logger } from '@/utils';
+2025-03-03 08:12:17 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\SpriteSheet\SpriteSheet.tsx
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\DevTools\DevTools.tsx
+2025-03-03 08:12:17 - Source import line: import { Button, ListVariants, Overlay } from '@/components';
+2025-03-03 08:12:17 - Transformed import line: import { Button } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\Button\\Button.tsx";
+2025-03-03 08:12:17 - Transformed import line: import { ListVariants } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\ListVariants\\index.ts";
+2025-03-03 08:12:17 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:17 - Source import line: import { createStyles, logger } from '@/utils';
+2025-03-03 08:12:17 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:17 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\Masks\Masks.tsx
+2025-03-03 08:12:17 - Source import line: import { MASK_ID } from '@/vars';
+2025-03-03 08:12:17 - Transformed import line: import { MASK_ID } from "E:\\Projects\\chat-app-v4\\src\\vars\\masks.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\GlobalProviders\GlobalProviders.tsx
+2025-03-03 08:12:17 - Source import line: import { store } from '@/redux/store';
+2025-03-03 08:12:17 - Transformed import line: import { store } from "E:\\Projects\\chat-app-v4\\src\\redux\\store\\store.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\features\Navigator\hooks\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\features\Navigator\vars\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\hooks\usePreventDefault\usePreventDefault.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\routes\ProdRoutes\ProdRoutes.tsx
+2025-03-03 08:12:17 - Source import line: import { Navigator } from '@/features';
+2025-03-03 08:12:17 - Transformed import line: import { Navigator } from "E:\\Projects\\chat-app-v4\\src\\features\\Navigator\\index.ts";
+2025-03-03 08:12:17 - Source import line: import { LazyScreens } from '@/router/screens/lazy';
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\cn\cn.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\features\Navigator\hooks\useNavigator\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\Button\Button.tsx
+2025-03-03 08:12:17 - Source import line: import { PropsWithInnerRef } from '@/types';
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\ListVariants\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\vars\masks.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\DevTools\hooks\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\DevTools\actions.ts
+2025-03-03 08:12:17 - Source import line: import { db } from '@/fakeServer';
+2025-03-03 08:12:17 - Transformed import line: import { db } from "E:\\Projects\\chat-app-v4\\fakeServer\\FakeDB.ts";
+2025-03-03 08:12:17 - Source import line: import { localStorageApi, logger } from '@/utils';
+2025-03-03 08:12:17 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:17 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\screens\bundled\GlobalLoaderScreen\GlobalLoaderScreen.tsx
+2025-03-03 08:12:17 - Source import line: import { cn, createStyles, getAssetUrl } from '@/utils';
+2025-03-03 08:12:17 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:17 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:17 - Transformed import line: import { getAssetUrl } from "E:\\Projects\\chat-app-v4\\src\\utils\\getAssetUrl\\getAssetUrl.ts";
+2025-03-03 08:12:17 - Source import line: import { ExternalLink, Scrollable, Sprite } from '@/components';
+2025-03-03 08:12:17 - Transformed import line: import { ExternalLink } from "E:\\Projects\\chat-app-v4\\src\\components\\media\\ExternalLink\\ExternalLink.tsx";
+2025-03-03 08:12:17 - Transformed import line: import { Scrollable } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\Scrollable\\Scrollable.tsx";
+2025-03-03 08:12:17 - Transformed import line: import { Sprite } from "E:\\Projects\\chat-app-v4\\src\\components\\media\\Sprite\\Sprite.tsx";
+2025-03-03 08:12:17 - Source import line: import { useTrans } from '@/hooks';
+2025-03-03 08:12:17 - Transformed import line: import { useTrans } from "E:\\Projects\\chat-app-v4\\src\\hooks\\useTrans\\useTrans.ts";
+2025-03-03 08:12:17 - Source import line: import { Screen } from '@/router/layouts/bundled';
+2025-03-03 08:12:17 - Transformed import line: import { Screen } from "E:\\Projects\\chat-app-v4\\src\\router\\layouts\\bundled\\Screen\\Screen.tsx";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\sharedAnimationVariants\sharedAnimationVariants.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\store\store.ts
+2025-03-03 08:12:17 - Source import line: import { Features } from '@/redux/features';
+2025-03-03 08:12:17 - Transformed import line: import * as Features from "E:\\Projects\\chat-app-v4\\src\\redux\\features\\reExport.ts";
+2025-03-03 08:12:17 - Source import line: import { isDev } from '@/vars';
+2025-03-03 08:12:17 - Transformed import line: import { isDev } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:17 - Source import line: import { useSharedListenerMiddleware } from '@/redux/utils';
+2025-03-03 08:12:17 - Transformed import line: import { useSharedListenerMiddleware } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\useSharedListenerMiddleware\\useSharedListenerMiddleware.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\generated\SPRITE_SHEET.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\routes\components\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\routes\AppRoutes\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\screens\lazy\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\DevTools\hooks\useDevTools\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\features\Navigator\hooks\useNavigator\useNavigator.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\hooks\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\types\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\Scrollable\Scrollable.tsx
+2025-03-03 08:12:17 - Source import line: import { cn, createStyles } from '@/utils';
+2025-03-03 08:12:17 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:17 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:17 - Source import line: import { PropsWithInnerRef } from '@/types';
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\media\ExternalLink\ExternalLink.tsx
+2025-03-03 08:12:17 - Source import line: import { cn, createStyles } from '@/utils';
+2025-03-03 08:12:17 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:17 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\screens\bundled\GlobalLoaderScreen\useGlobalLoaderScreen.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\media\Sprite\Sprite.tsx
+2025-03-03 08:12:17 - Source import line: import { PropsWithInnerRef } from '@/types';
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\useSharedListenerMiddleware\useSharedListenerMiddleware.ts
+2025-03-03 08:12:17 - Source import line: import type { RootState, AppDispatch } from '@/redux/store';
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\routes\AppRoutes\AppRoutes.tsx
+2025-03-03 08:12:17 - Source import line: import { Navigator } from '@/features';
+2025-03-03 08:12:17 - Transformed import line: import { Navigator } from "E:\\Projects\\chat-app-v4\\src\\features\\Navigator\\index.ts";
+2025-03-03 08:12:17 - Source import line: import { LazyLayouts } from '@/router/layouts/lazy';
+2025-03-03 08:12:17 - Source import line: import { LazyPanels } from '@/router/panels';
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\reExport.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\ListVariants\Variant1.tsx
+2025-03-03 08:12:17 - Source import line: import { useKeyboardNavigation } from '@/hooks';
+2025-03-03 08:12:17 - Transformed import line: import { useKeyboardNavigation } from "E:\\Projects\\chat-app-v4\\src\\hooks\\useKeyboardNavigation\\useKeyboardNavigation.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\routes\components\OnlyUnAuthorized\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\routes\components\SuspenseWithGlobalLoader\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\routes\components\OnlyAuthorized\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\DevTools\hooks\useDevTools\useDevTools.ts
+2025-03-03 08:12:17 - Source import line: import { Navigator } from '@/features';
+2025-03-03 08:12:17 - Transformed import line: import { Navigator } from "E:\\Projects\\chat-app-v4\\src\\features\\Navigator\\index.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\hooks\useKeyboardNavigation\useKeyboardNavigation.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\layouts\lazy\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\panels\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\routes\components\OnlyUnAuthorized\OnlyUnAuthorized.tsx
+2025-03-03 08:12:17 - Source import line: import { Navigator } from '@/features';
+2025-03-03 08:12:17 - Transformed import line: import { Navigator } from "E:\\Projects\\chat-app-v4\\src\\features\\Navigator\\index.ts";
+2025-03-03 08:12:17 - Source import line: import { useLocalStorage } from '@/hooks';
+2025-03-03 08:12:17 - Transformed import line: import { useLocalStorage } from "E:\\Projects\\chat-app-v4\\src\\hooks\\useLocalStorage\\useLocalStorage.ts";
+2025-03-03 08:12:17 - Source import line: import { Features } from '@/redux/features';
+2025-03-03 08:12:17 - Transformed import line: import * as Features from "E:\\Projects\\chat-app-v4\\src\\redux\\features\\reExport.ts";
+2025-03-03 08:12:17 - Source import line: import { useSliceSelector } from '@/redux/hooks';
+2025-03-03 08:12:17 - Transformed import line: import { useSliceSelector } from "E:\\Projects\\chat-app-v4\\src\\redux\\hooks\\useSliceSelector\\useSliceActions.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\App\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Channels\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Conversations\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Roles\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Messages\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Servers\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\TextChats\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Users\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\VoiceChats\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\routes\components\OnlyAuthorized\OnlyAuthorized.tsx
+2025-03-03 08:12:17 - Source import line: import { useLocalStorage } from '@/hooks';
+2025-03-03 08:12:17 - Transformed import line: import { useLocalStorage } from "E:\\Projects\\chat-app-v4\\src\\hooks\\useLocalStorage\\useLocalStorage.ts";
+2025-03-03 08:12:17 - Source import line: import { Features } from '@/redux/features';
+2025-03-03 08:12:17 - Transformed import line: import * as Features from "E:\\Projects\\chat-app-v4\\src\\redux\\features\\reExport.ts";
+2025-03-03 08:12:17 - Source import line: import { useSliceSelector } from '@/redux/hooks';
+2025-03-03 08:12:17 - Transformed import line: import { useSliceSelector } from "E:\\Projects\\chat-app-v4\\src\\redux\\hooks\\useSliceSelector\\useSliceActions.ts";
+2025-03-03 08:12:17 - Source import line: import { env } from '@/vars';
+2025-03-03 08:12:17 - Transformed import line: import { env } from "E:\\Projects\\chat-app-v4\\src\\vars\\env.ts";
+2025-03-03 08:12:17 - Source import line: import { Navigator } from '@/features';
+2025-03-03 08:12:17 - Transformed import line: import { Navigator } from "E:\\Projects\\chat-app-v4\\src\\features\\Navigator\\index.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\hooks\useControls\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\routes\components\SuspenseWithGlobalLoader\SuspenseWithGlobalLoader.tsx
+2025-03-03 08:12:17 - Source import line: import { GlobalLoader } from '@/root/components';
+2025-03-03 08:12:17 - Transformed import line: import { GlobalLoader } from "E:\\Projects\\chat-app-v4\\src\\root\\components\\GlobalLoader\\index.ts";
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\index.ts
+2025-03-03 08:12:17 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:17 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Tooltip\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\hooks\useSliceSelector\useSliceActions.ts
+2025-03-03 08:12:18 - Source import line: import type { Slices, RootState } from '@/redux/store';
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\hooks\useLocalStorage\useLocalStorage.ts
+2025-03-03 08:12:18 - Source import line: import { localStorageApi } from '@/utils';
+2025-03-03 08:12:18 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\TextChats\TextChatsApi.ts
+2025-03-03 08:12:18 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:18 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:18 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\TextChats\TextChatsSlice.ts
+2025-03-03 08:12:18 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:18 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:18 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\components\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\context\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\VoiceChats\VoiceChatsApi.ts
+2025-03-03 08:12:18 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:18 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:18 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\types\index.ts
+2025-03-03 08:12:18 - Source import line: import type { Overlay } from '@/components';
+2025-03-03 08:12:18 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:18 - Source import line: import { createVariants } from '@/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createVariants } from "E:\\Projects\\chat-app-v4\\src\\utils\\sharedAnimationVariants\\sharedAnimationVariants.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\VoiceChats\VoiceChatsSlice.ts
+2025-03-03 08:12:18 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:18 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:18 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\components\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\types\index.ts
+2025-03-03 08:12:18 - Source import line: import type { Overlay } from '@/components';
+2025-03-03 08:12:18 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\context\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Roles\RolesApi.ts
+2025-03-03 08:12:18 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:18 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:18 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Roles\RolesSlice.ts
+2025-03-03 08:12:18 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:18 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:18 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Users\UsersApi.ts
+2025-03-03 08:12:18 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:18 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:18 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Users\UsersSlice.ts
+2025-03-03 08:12:18 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:18 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:18 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Messages\MessagesApi.ts
+2025-03-03 08:12:18 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:18 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:18 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Messages\MessagesSlice.ts
+2025-03-03 08:12:18 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:18 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:18 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\App\AppEffects.ts
+2025-03-03 08:12:18 - Source import line: import { createEffects } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createEffects } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEffects\\createEffects.ts";
+2025-03-03 08:12:18 - Source import line: import { MOBILE_SCREEN_QUERY } from '@/vars';
+2025-03-03 08:12:18 - Transformed import line: import { MOBILE_SCREEN_QUERY } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:18 - Source import line: import { localStorageApi } from '@/utils';
+2025-03-03 08:12:18 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:18 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:18 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:18 - Source import line: import { socketActions } from '@/redux/actions';
+2025-03-03 08:12:18 - Source import line: import { scenarios } from '@/fakeServer';
+2025-03-03 08:12:18 - Transformed import line: import { scenarios } from "E:\\Projects\\chat-app-v4\\fakeServer\\Scenarios.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\App\AppSlice.ts
+2025-03-03 08:12:18 - Source import line: import { createCustomSlice } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomSlice } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSlice\\createCustomSlice.ts";
+2025-03-03 08:12:18 - Source import line: import { localStorageApi } from '@/utils';
+2025-03-03 08:12:18 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:18 - Source import line: import { MOBILE_SCREEN_QUERY } from '@/vars';
+2025-03-03 08:12:18 - Transformed import line: import { MOBILE_SCREEN_QUERY } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Servers\ServersApi.ts
+2025-03-03 08:12:18 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:18 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:18 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Servers\ServersSlice.ts
+2025-03-03 08:12:18 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:18 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:18 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:18 - Source import line: import { recalculatePermissions } from '@/fakeShared';
+2025-03-03 08:12:18 - Transformed import line: import { recalculatePermissions } from "E:\\Projects\\chat-app-v4\\fakeShared\\utils\\recalculatePermissions.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\hooks\useControls\useControls.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\components\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\hooks\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\types\index.ts
+2025-03-03 08:12:18 - Source import line: import type { Overlay, RelativelyPositioned } from '@/components';
+2025-03-03 08:12:18 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:18 - Transformed import line: import { RelativelyPositioned } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\RelativelyPositioned\\index.ts";
+2025-03-03 08:12:18 - Source import line: import { createVariants } from '@/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createVariants } from "E:\\Projects\\chat-app-v4\\src\\utils\\sharedAnimationVariants\\sharedAnimationVariants.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\context\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\components\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\context\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\types\index.ts
+2025-03-03 08:12:18 - Source import line: import type { Overlay } from '@/components';
+2025-03-03 08:12:18 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Channels\ChannelsApi.ts
+2025-03-03 08:12:18 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:18 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:18 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Channels\ChannelsSlice.ts
+2025-03-03 08:12:18 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:18 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:18 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Conversations\ConversationsApi.ts
+2025-03-03 08:12:18 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:18 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:18 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Conversations\ConversationsSlice.ts
+2025-03-03 08:12:18 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:18 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:18 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Tooltip\Tooltip.tsx
+2025-03-03 08:12:18 - Source import line: import { Overlay, RelativelyPositioned } from '@/components';
+2025-03-03 08:12:18 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:18 - Transformed import line: import { RelativelyPositioned } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\RelativelyPositioned\\index.ts";
+2025-03-03 08:12:18 - Source import line: import { cn, createStyles, createVariants } from '@/utils';
+2025-03-03 08:12:18 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:18 - Transformed import line: import { createVariants } from "E:\\Projects\\chat-app-v4\\src\\utils\\sharedAnimationVariants\\sharedAnimationVariants.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\customQuery\customQuery.ts
+2025-03-03 08:12:18 - Source import line: import { Features } from '@/redux/features';
+2025-03-03 08:12:18 - Transformed import line: import * as Features from "E:\\Projects\\chat-app-v4\\src\\redux\\features\\reExport.ts";
+2025-03-03 08:12:18 - Source import line: import { CustomQueryError } from '@/types';
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\components\PopoverProvider\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\components\PopoverWrapper\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\endpoints.ts
+2025-03-03 08:12:18 - Source import line: import { ClientEntities as Entities } from '@/types';
+2025-03-03 08:12:18 - Transformed import line: import { ClientEntities as Entities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\components\MenuWrapper\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\components\MenuProvider\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\context\PopoverContext\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\hooks\useContextMenu\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\context\MenuContext\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createCustomEntityAdapter\createCustomEntityAdapter.ts
+2025-03-03 08:12:18 - Source import line: import { RootState, Slices } from '@/redux/store';
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createCustomSliceEntityAdapter\createCustomSliceEntityAdapter.ts
+2025-03-03 08:12:18 - Source import line: import { WithId } from '@/types';
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createEntitySubscription\createEntitySubscription.ts
+2025-03-03 08:12:18 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:18 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:18 - Source import line: import { WithId } from '@/types';
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Users\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createStoreSelectors\createStoreSelectors.ts
+2025-03-03 08:12:18 - Source import line: import { RootState } from '@/redux/store';
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Servers\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\TextChats\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\components\DialogProvider\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\components\DialogWrapper\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\App\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Conversations\index.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createEffects\createEffects.ts
+2025-03-03 08:12:18 - Source import line: import type { AppStore } from '@/redux/store';
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\vars\common.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\localStorageApi\localStorageApi.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\fakeSocket\fakeSocket.ts
+2025-03-03 08:12:18 - Source import line: import { FakeDB } from '@/fakeServer';
+2025-03-03 08:12:18 - Transformed import line: import { FakeDB } from "E:\\Projects\\chat-app-v4\\fakeServer\\FakeDB.ts";
+2025-03-03 08:12:18 - Source import line: import { Slices } from '@/redux/store';
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createCustomSlice\createCustomSlice.ts
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\customQuery\customQuery.ts
+2025-03-03 08:12:18 - Source import line: import { Features } from '@/redux/features';
+2025-03-03 08:12:18 - Transformed import line: import * as Features from "E:\\Projects\\chat-app-v4\\src\\redux\\features\\reExport.ts";
+2025-03-03 08:12:18 - Source import line: import { CustomQueryError } from '@/types';
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Channels\ChannelsApi.ts
+2025-03-03 08:12:18 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:18 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:18 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Conversations\ConversationsApi.ts
+2025-03-03 08:12:18 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:18 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:18 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:18 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:18 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:18 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Users\UsersApi.ts
+2025-03-03 08:12:18 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:19 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:19 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:19 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\App\AppSlice.ts
+2025-03-03 08:12:19 - Source import line: import { createCustomSlice } from '@/redux/utils';
+2025-03-03 08:12:19 - Transformed import line: import { createCustomSlice } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSlice\\createCustomSlice.ts";
+2025-03-03 08:12:19 - Source import line: import { localStorageApi } from '@/utils';
+2025-03-03 08:12:19 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:19 - Source import line: import { MOBILE_SCREEN_QUERY } from '@/vars';
+2025-03-03 08:12:19 - Transformed import line: import { MOBILE_SCREEN_QUERY } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\actions\index.ts
+2025-03-03 08:12:19 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:19 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\components\BaseOverlayWrapper\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\components\BaseOverlayProvider\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\context\BaseOverlayContext\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\context\DialogContext\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Roles\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\cn\cn.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\sharedAnimationVariants\sharedAnimationVariants.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\createStyles\createStyles.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Tooltip\useTooltip.tsx
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Servers\ServersApi.ts
+2025-03-03 08:12:19 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:19 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:19 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:19 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\utils\recalculatePermissions.ts
+2025-03-03 08:12:19 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:19 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\main.ts
+2025-03-03 08:12:19 - Source import line: import { setup } from '@/setup';
+2025-03-03 08:12:19 - Source import line: import { logger } from '@/utils';
+2025-03-03 08:12:19 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\setup\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\types\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\hooks\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\context\PopoverContext\PopoverContext.ts
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\components\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\hooks\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\context\DialogContext\DialogContext.ts
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\components\MenuWrapper\MenuWrapper.tsx
+2025-03-03 08:12:19 - Source import line: import { Overlay, RelativelyPositioned } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Transformed import line: import { RelativelyPositioned } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\RelativelyPositioned\\index.ts";
+2025-03-03 08:12:19 - Source import line: import { cn, createStyles, getAnimationVariants } from '@/utils';
+2025-03-03 08:12:19 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:19 - Transformed import line: import { getAnimationVariants } from "E:\\Projects\\chat-app-v4\\src\\utils\\sharedAnimationVariants\\sharedAnimationVariants.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\customQuery\customQuery.ts
+2025-03-03 08:12:19 - Source import line: import { Features } from '@/redux/features';
+2025-03-03 08:12:19 - Transformed import line: import * as Features from "E:\\Projects\\chat-app-v4\\src\\redux\\features\\reExport.ts";
+2025-03-03 08:12:19 - Source import line: import { CustomQueryError } from '@/types';
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Conversations\ConversationsSlice.ts
+2025-03-03 08:12:19 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:19 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:19 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:19 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\TextChats\TextChatsApi.ts
+2025-03-03 08:12:19 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:19 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:19 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:19 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\TextChats\TextChatsSlice.ts
+2025-03-03 08:12:19 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:19 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:19 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:19 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\App\AppEffects.ts
+2025-03-03 08:12:19 - Source import line: import { createEffects } from '@/redux/utils';
+2025-03-03 08:12:19 - Transformed import line: import { createEffects } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEffects\\createEffects.ts";
+2025-03-03 08:12:19 - Source import line: import { MOBILE_SCREEN_QUERY } from '@/vars';
+2025-03-03 08:12:19 - Transformed import line: import { MOBILE_SCREEN_QUERY } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:19 - Source import line: import { localStorageApi } from '@/utils';
+2025-03-03 08:12:19 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:19 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:19 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:19 - Source import line: import { socketActions } from '@/redux/actions';
+2025-03-03 08:12:19 - Source import line: import { scenarios } from '@/fakeServer';
+2025-03-03 08:12:19 - Transformed import line: import { scenarios } from "E:\\Projects\\chat-app-v4\\fakeServer\\Scenarios.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\components\PopoverWrapper\PopoverWrapper.tsx
+2025-03-03 08:12:19 - Source import line: import { cn, createStyles, getHTMLElement } from '@/utils';
+2025-03-03 08:12:19 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:19 - Transformed import line: import { getHTMLElement } from "E:\\Projects\\chat-app-v4\\src\\utils\\getHTMLElement\\getHTMLElement.ts";
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\components\MenuProvider\MenuProvider.tsx
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Source import line: import { withDisplayNameAndDecorator } from '@/utils';
+2025-03-03 08:12:19 - Transformed import line: import { withDisplayNameAndDecorator } from "E:\\Projects\\chat-app-v4\\src\\utils\\withDisplayNameAndDecorator\\withDisplayNameAndDecorator.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\vars\env.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\logger\logger.ts
+2025-03-03 08:12:19 - Source import line: import { isProd } from '@/vars';
+2025-03-03 08:12:19 - Transformed import line: import { isProd } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\components\PopoverProvider\PopoverProvider.tsx
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\hooks\useContextMenu\useContextMenu.ts
+2025-03-03 08:12:19 - Source import line: import { Overlay, RelativelyPositioned } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Transformed import line: import { RelativelyPositioned } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\RelativelyPositioned\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Users\UsersSlice.ts
+2025-03-03 08:12:19 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:19 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:19 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:19 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\components\DialogWrapper\DialogWrapper.tsx
+2025-03-03 08:12:19 - Source import line: import { cn, createStyles } from '@/utils';
+2025-03-03 08:12:19 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\context\BaseOverlayContext\BaseOverlayContext.ts
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\components\BaseOverlayWrapper\BaseOverlayWrapper.tsx
+2025-03-03 08:12:19 - Source import line: import { cn, createStyles, getHTMLElement } from '@/utils';
+2025-03-03 08:12:19 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:19 - Transformed import line: import { getHTMLElement } from "E:\\Projects\\chat-app-v4\\src\\utils\\getHTMLElement\\getHTMLElement.ts";
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\context\MenuContext\MenuContext.ts
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Servers\ServersSlice.ts
+2025-03-03 08:12:19 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:19 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:19 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:19 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:19 - Source import line: import { recalculatePermissions } from '@/fakeShared';
+2025-03-03 08:12:19 - Transformed import line: import { recalculatePermissions } from "E:\\Projects\\chat-app-v4\\fakeShared\\utils\\recalculatePermissions.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\enhancers\index.ts
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Roles\RolesApi.ts
+2025-03-03 08:12:19 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:19 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:19 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:19 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Roles\RolesSlice.ts
+2025-03-03 08:12:19 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:19 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:19 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:19 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:19 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\components\BaseOverlayProvider\BaseOverlayProvider.tsx
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\components\DialogProvider\DialogProvider.tsx
+2025-03-03 08:12:19 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:19 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:19 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:19 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\entity.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\setup\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\actions\index.ts
+2025-03-03 08:12:20 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:20 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Tooltip\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\endpoints.ts
+2025-03-03 08:12:20 - Source import line: import { ClientEntities as Entities } from '@/types';
+2025-03-03 08:12:20 - Transformed import line: import { ClientEntities as Entities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\customQuery\customQuery.ts
+2025-03-03 08:12:20 - Source import line: import { Features } from '@/redux/features';
+2025-03-03 08:12:20 - Transformed import line: import * as Features from "E:\\Projects\\chat-app-v4\\src\\redux\\features\\reExport.ts";
+2025-03-03 08:12:20 - Source import line: import { CustomQueryError } from '@/types';
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createCustomEntityAdapter\createCustomEntityAdapter.ts
+2025-03-03 08:12:20 - Source import line: import { RootState, Slices } from '@/redux/store';
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createCustomSliceEntityAdapter\createCustomSliceEntityAdapter.ts
+2025-03-03 08:12:20 - Source import line: import { WithId } from '@/types';
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createEntitySubscription\createEntitySubscription.ts
+2025-03-03 08:12:20 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:20 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:20 - Source import line: import { WithId } from '@/types';
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createStoreSelectors\createStoreSelectors.ts
+2025-03-03 08:12:20 - Source import line: import { RootState } from '@/redux/store';
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Users\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Servers\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Conversations\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\App\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Users\UsersApi.ts
+2025-03-03 08:12:20 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:20 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:20 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:20 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Conversations\ConversationsApi.ts
+2025-03-03 08:12:20 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:20 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:20 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:20 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\TextChats\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\cn\cn.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\createStyles\createStyles.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\getHTMLElement\getHTMLElement.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createEffects\createEffects.ts
+2025-03-03 08:12:20 - Source import line: import type { AppStore } from '@/redux/store';
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\App\AppSlice.ts
+2025-03-03 08:12:20 - Source import line: import { createCustomSlice } from '@/redux/utils';
+2025-03-03 08:12:20 - Transformed import line: import { createCustomSlice } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSlice\\createCustomSlice.ts";
+2025-03-03 08:12:20 - Source import line: import { localStorageApi } from '@/utils';
+2025-03-03 08:12:20 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:20 - Source import line: import { MOBILE_SCREEN_QUERY } from '@/vars';
+2025-03-03 08:12:20 - Transformed import line: import { MOBILE_SCREEN_QUERY } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\vars\common.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\localStorageApi\localStorageApi.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\fakeSocket\fakeSocket.ts
+2025-03-03 08:12:20 - Source import line: import { FakeDB } from '@/fakeServer';
+2025-03-03 08:12:20 - Transformed import line: import { FakeDB } from "E:\\Projects\\chat-app-v4\\fakeServer\\FakeDB.ts";
+2025-03-03 08:12:20 - Source import line: import { Slices } from '@/redux/store';
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\sharedAnimationVariants\sharedAnimationVariants.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\withDisplayNameAndDecorator\withDisplayNameAndDecorator.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\context\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Servers\ServersApi.ts
+2025-03-03 08:12:20 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:20 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:20 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:20 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Roles\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\utils\recalculatePermissions.ts
+2025-03-03 08:12:20 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:20 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\components\RelativelyPositionedNode\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\hooks\useRelativePosition\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\enhancers\withConfigReducers.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\enhancers\withConfigSelectors.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\enhancers\withSliceSelectors.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\hooks\useControls\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\setup\init.tsx
+2025-03-03 08:12:20 - Source import line: import { Root } from '@/root';
+2025-03-03 08:12:20 - Transformed import line: import { Root } from "E:\\Projects\\chat-app-v4\\src\\root\\Root.tsx";
+2025-03-03 08:12:20 - Source import line: import { getHTMLElement, logger } from '@/utils';
+2025-03-03 08:12:20 - Transformed import line: import { getHTMLElement } from "E:\\Projects\\chat-app-v4\\src\\utils\\getHTMLElement\\getHTMLElement.ts";
+2025-03-03 08:12:20 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\setup\preInit.ts
+2025-03-03 08:12:20 - Source import line: import { isProd } from '@/vars';
+2025-03-03 08:12:20 - Transformed import line: import { isProd } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:20 - Source import line: import { logger } from '@/utils';
+2025-03-03 08:12:20 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:20 - Source import line: import { initI18n } from '@/features';
+2025-03-03 08:12:20 - Transformed import line: import { initI18n } from "E:\\Projects\\chat-app-v4\\src\\features\\i18n\\i18n.ts";
+2025-03-03 08:12:20 - Source import line: import { fakeServer, initDB } from '@/fakeServer';
+2025-03-03 08:12:20 - Transformed import line: import { fakeServer } from "E:\\Projects\\chat-app-v4\\fakeServer\\fakeServer.ts";
+2025-03-03 08:12:20 - Transformed import line: import { initDB } from "E:\\Projects\\chat-app-v4\\fakeServer\\FakeDB.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\setup\postInit.ts
+2025-03-03 08:12:20 - Source import line: import { logger } from '@/utils';
+2025-03-03 08:12:20 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:20 - Source import line: import { isProd } from '@/vars';
+2025-03-03 08:12:20 - Transformed import line: import { isProd } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\customQuery\customQuery.ts
+2025-03-03 08:12:20 - Source import line: import { Features } from '@/redux/features';
+2025-03-03 08:12:20 - Transformed import line: import * as Features from "E:\\Projects\\chat-app-v4\\src\\redux\\features\\reExport.ts";
+2025-03-03 08:12:20 - Source import line: import { CustomQueryError } from '@/types';
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\vars\env.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\toCurriedSelectors\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\setup\init.tsx
+2025-03-03 08:12:20 - Source import line: import { Root } from '@/root';
+2025-03-03 08:12:20 - Transformed import line: import { Root } from "E:\\Projects\\chat-app-v4\\src\\root\\Root.tsx";
+2025-03-03 08:12:20 - Source import line: import { getHTMLElement, logger } from '@/utils';
+2025-03-03 08:12:20 - Transformed import line: import { getHTMLElement } from "E:\\Projects\\chat-app-v4\\src\\utils\\getHTMLElement\\getHTMLElement.ts";
+2025-03-03 08:12:20 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\hooks\useControls\useControls.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\hooks\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\types\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\context\DialogContext\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\components\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\context\index.ts
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Roles\RolesApi.ts
+2025-03-03 08:12:20 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:20 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:20 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:20 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:20 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:20 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\types\index.ts
+2025-03-03 08:12:20 - Source import line: import type { Overlay } from '@/components';
+2025-03-03 08:12:21 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Roles\RolesSlice.ts
+2025-03-03 08:12:21 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:21 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:21 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:21 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\Root.tsx
+2025-03-03 08:12:21 - Source import line: import { isDev } from '@/vars';
+2025-03-03 08:12:21 - Transformed import line: import { isDev } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:21 - Source import line: import { ErrorScreen } from '@/router/screens/bundled';
+2025-03-03 08:12:21 - Transformed import line: import { ErrorScreen } from "E:\\Projects\\chat-app-v4\\src\\router\\screens\\bundled\\ErrorScreen\\ErrorScreen.tsx";
+2025-03-03 08:12:21 - Source import line: import { withDisplayNameAndDecorator } from '@/utils';
+2025-03-03 08:12:21 - Transformed import line: import { withDisplayNameAndDecorator } from "E:\\Projects\\chat-app-v4\\src\\utils\\withDisplayNameAndDecorator\\withDisplayNameAndDecorator.ts";
+2025-03-03 08:12:21 - Source import line: import { Router } from '@/router';
+2025-03-03 08:12:21 - Transformed import line: import { Router } from "E:\\Projects\\chat-app-v4\\src\\router\\Router.tsx";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\logger\logger.ts
+2025-03-03 08:12:21 - Source import line: import { isProd } from '@/vars';
+2025-03-03 08:12:21 - Transformed import line: import { isProd } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\App\AppEffects.ts
+2025-03-03 08:12:21 - Source import line: import { createEffects } from '@/redux/utils';
+2025-03-03 08:12:21 - Transformed import line: import { createEffects } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEffects\\createEffects.ts";
+2025-03-03 08:12:21 - Source import line: import { MOBILE_SCREEN_QUERY } from '@/vars';
+2025-03-03 08:12:21 - Transformed import line: import { MOBILE_SCREEN_QUERY } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:21 - Source import line: import { localStorageApi } from '@/utils';
+2025-03-03 08:12:21 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:21 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:21 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:21 - Source import line: import { socketActions } from '@/redux/actions';
+2025-03-03 08:12:21 - Source import line: import { scenarios } from '@/fakeServer';
+2025-03-03 08:12:21 - Transformed import line: import { scenarios } from "E:\\Projects\\chat-app-v4\\fakeServer\\Scenarios.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Users\UsersSlice.ts
+2025-03-03 08:12:21 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:21 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:21 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:21 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\TextChats\TextChatsApi.ts
+2025-03-03 08:12:21 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:21 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:21 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:21 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\TextChats\TextChatsSlice.ts
+2025-03-03 08:12:21 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:21 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:21 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:21 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Servers\ServersSlice.ts
+2025-03-03 08:12:21 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:21 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:21 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:21 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:21 - Source import line: import { recalculatePermissions } from '@/fakeShared';
+2025-03-03 08:12:21 - Transformed import line: import { recalculatePermissions } from "E:\\Projects\\chat-app-v4\\fakeShared\\utils\\recalculatePermissions.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\components\RelativelyPositionedNode\RelativelyPositionedNode.tsx
+2025-03-03 08:12:21 - Source import line: import { createStyles } from '@/utils';
+2025-03-03 08:12:21 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Tooltip\Tooltip.tsx
+2025-03-03 08:12:21 - Source import line: import { Overlay, RelativelyPositioned } from '@/components';
+2025-03-03 08:12:21 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:21 - Transformed import line: import { RelativelyPositioned } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\RelativelyPositioned\\index.ts";
+2025-03-03 08:12:21 - Source import line: import { cn, createStyles, createVariants } from '@/utils';
+2025-03-03 08:12:21 - Transformed import line: import { cn } from "E:\\Projects\\chat-app-v4\\src\\utils\\cn\\cn.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createVariants } from "E:\\Projects\\chat-app-v4\\src\\utils\\sharedAnimationVariants\\sharedAnimationVariants.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\context\index.ts
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\components\index.ts
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\types\index.ts
+2025-03-03 08:12:21 - Source import line: import type { Overlay } from '@/components';
+2025-03-03 08:12:21 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\components\index.ts
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\hooks\useRelativePosition\useRelativePosition.tsx
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\context\index.ts
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\hooks\index.ts
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\types\index.ts
+2025-03-03 08:12:21 - Source import line: import type { Overlay, RelativelyPositioned } from '@/components';
+2025-03-03 08:12:21 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:21 - Transformed import line: import { RelativelyPositioned } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\RelativelyPositioned\\index.ts";
+2025-03-03 08:12:21 - Source import line: import { createVariants } from '@/utils';
+2025-03-03 08:12:21 - Transformed import line: import { createVariants } from "E:\\Projects\\chat-app-v4\\src\\utils\\sharedAnimationVariants\\sharedAnimationVariants.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Conversations\ConversationsSlice.ts
+2025-03-03 08:12:21 - Source import line: import { createCustomEntityAdapter, createCustomSliceEntityAdapter, createEntitySubscription, createStoreSelectors } from '@/redux/utils';
+2025-03-03 08:12:21 - Transformed import line: import { createCustomEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomEntityAdapter\\createCustomEntityAdapter.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createCustomSliceEntityAdapter } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSliceEntityAdapter\\createCustomSliceEntityAdapter.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createEntitySubscription } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createEntitySubscription\\createEntitySubscription.ts";
+2025-03-03 08:12:21 - Transformed import line: import { createStoreSelectors } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createStoreSelectors\\createStoreSelectors.ts";
+2025-03-03 08:12:21 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:21 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\components\index.ts
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\types\index.ts
+2025-03-03 08:12:21 - Source import line: import type { Overlay } from '@/components';
+2025-03-03 08:12:21 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:21 - Source import line: import { createVariants } from '@/utils';
+2025-03-03 08:12:21 - Transformed import line: import { createVariants } from "E:\\Projects\\chat-app-v4\\src\\utils\\sharedAnimationVariants\\sharedAnimationVariants.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\components\index.ts
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\hooks\index.ts
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\features\i18n\i18n.ts
+2025-03-03 08:12:21 - Source import line: import { env, isDev } from '@/vars';
+2025-03-03 08:12:21 - Transformed import line: import { env } from "E:\\Projects\\chat-app-v4\\src\\vars\\env.ts";
+2025-03-03 08:12:21 - Transformed import line: import { isDev } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\fakeServer.ts
+2025-03-03 08:12:21 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:21 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:21 - Source import line: import { localStorageApi, logger } from '@/utils';
+2025-03-03 08:12:21 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:21 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:21 - Source import line: import { env } from '@/vars';
+2025-03-03 08:12:21 - Transformed import line: import { env } from "E:\\Projects\\chat-app-v4\\src\\vars\\env.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\FakeDB.ts
+2025-03-03 08:12:21 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:21 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:21 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:21 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:21 - Source import line: import { env } from '@/vars';
+2025-03-03 08:12:21 - Transformed import line: import { env } from "E:\\Projects\\chat-app-v4\\src\\vars\\env.ts";
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createCustomSlice\createCustomSlice.ts
+2025-03-03 08:12:21 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:21 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\entity.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\actions\index.ts
+2025-03-03 08:12:22 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:22 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\toCurriedSelectors\toCurriedSelectors.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\hooks\useControls\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createCustomEntityAdapter\createCustomEntityAdapter.ts
+2025-03-03 08:12:22 - Source import line: import { RootState, Slices } from '@/redux/store';
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createCustomSliceEntityAdapter\createCustomSliceEntityAdapter.ts
+2025-03-03 08:12:22 - Source import line: import { WithId } from '@/types';
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createEntitySubscription\createEntitySubscription.ts
+2025-03-03 08:12:22 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:22 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:22 - Source import line: import { WithId } from '@/types';
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createStoreSelectors\createStoreSelectors.ts
+2025-03-03 08:12:22 - Source import line: import { RootState } from '@/redux/store';
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Users\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Servers\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Tooltip\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\components\RelativelyPositionedNode\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Conversations\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\endpoints.ts
+2025-03-03 08:12:22 - Source import line: import { ClientEntities as Entities } from '@/types';
+2025-03-03 08:12:22 - Transformed import line: import { ClientEntities as Entities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\customQuery\customQuery.ts
+2025-03-03 08:12:22 - Source import line: import { Features } from '@/redux/features';
+2025-03-03 08:12:22 - Transformed import line: import * as Features from "E:\\Projects\\chat-app-v4\\src\\redux\\features\\reExport.ts";
+2025-03-03 08:12:22 - Source import line: import { CustomQueryError } from '@/types';
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\createEffects\createEffects.ts
+2025-03-03 08:12:22 - Source import line: import type { AppStore } from '@/redux/store';
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\App\AppSlice.ts
+2025-03-03 08:12:22 - Source import line: import { createCustomSlice } from '@/redux/utils';
+2025-03-03 08:12:22 - Transformed import line: import { createCustomSlice } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\createCustomSlice\\createCustomSlice.ts";
+2025-03-03 08:12:22 - Source import line: import { localStorageApi } from '@/utils';
+2025-03-03 08:12:22 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:22 - Source import line: import { MOBILE_SCREEN_QUERY } from '@/vars';
+2025-03-03 08:12:22 - Transformed import line: import { MOBILE_SCREEN_QUERY } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\vars\common.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\localStorageApi\localStorageApi.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\App\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\fakeSocket\fakeSocket.ts
+2025-03-03 08:12:22 - Source import line: import { FakeDB } from '@/fakeServer';
+2025-03-03 08:12:22 - Transformed import line: import { FakeDB } from "E:\\Projects\\chat-app-v4\\fakeServer\\FakeDB.ts";
+2025-03-03 08:12:22 - Source import line: import { Slices } from '@/redux/store';
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\hooks\useRelativePosition\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\Root.tsx
+2025-03-03 08:12:22 - Source import line: import { isDev } from '@/vars';
+2025-03-03 08:12:22 - Transformed import line: import { isDev } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:22 - Source import line: import { ErrorScreen } from '@/router/screens/bundled';
+2025-03-03 08:12:22 - Transformed import line: import { ErrorScreen } from "E:\\Projects\\chat-app-v4\\src\\router\\screens\\bundled\\ErrorScreen\\ErrorScreen.tsx";
+2025-03-03 08:12:22 - Source import line: import { withDisplayNameAndDecorator } from '@/utils';
+2025-03-03 08:12:22 - Transformed import line: import { withDisplayNameAndDecorator } from "E:\\Projects\\chat-app-v4\\src\\utils\\withDisplayNameAndDecorator\\withDisplayNameAndDecorator.ts";
+2025-03-03 08:12:22 - Source import line: import { Router } from '@/router';
+2025-03-03 08:12:22 - Transformed import line: import { Router } from "E:\\Projects\\chat-app-v4\\src\\router\\Router.tsx";
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\getHTMLElement\getHTMLElement.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\hooks\useRelativePosition\utils\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\createStyles\createStyles.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Users\UsersApi.ts
+2025-03-03 08:12:22 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:22 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:22 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:22 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Conversations\ConversationsApi.ts
+2025-03-03 08:12:22 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:22 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:22 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:22 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\TextChats\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\logger\logger.ts
+2025-03-03 08:12:22 - Source import line: import { isProd } from '@/vars';
+2025-03-03 08:12:22 - Transformed import line: import { isProd } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\hooks\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\cn\cn.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\common\RelativelyPositioned\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\sharedAnimationVariants\sharedAnimationVariants.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Tooltip\useTooltip.tsx
+2025-03-03 08:12:22 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:22 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Servers\ServersApi.ts
+2025-03-03 08:12:22 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:22 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:22 - Source import line: import { createCustomQuery } from '@/redux/utils';
+2025-03-03 08:12:22 - Transformed import line: import { createCustomQuery } from "E:\\Projects\\chat-app-v4\\src\\redux\\utils\\customQuery\\customQuery.ts";
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\features\Roles\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\fakeShared\utils\recalculatePermissions.ts
+2025-03-03 08:12:22 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:22 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\context\PopoverContext\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\components\DialogProvider\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\components\BaseOverlayProvider\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\components\DialogWrapper\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\components\BaseOverlayWrapper\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Dialog\context\DialogContext\DialogContext.ts
+2025-03-03 08:12:22 - Source import line: import { Overlay } from '@/components';
+2025-03-03 08:12:22 - Transformed import line: import { Overlay } from "E:\\Projects\\chat-app-v4\\src\\components\\overlay\\index.ts";
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\hooks\useContextMenu\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\components\MenuWrapper\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\components\MenuProvider\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\components\PopoverProvider\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Popover\components\PopoverWrapper\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\Menu\context\MenuContext\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\components\overlay\entities\BaseOverlay\context\BaseOverlayContext\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\vars\env.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\components\index.ts
+2025-03-03 08:12:22 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:22 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\screens\bundled\ErrorScreen\ErrorScreen.tsx
+2025-03-03 08:12:22 - Source import line: import { Button, Image, Scrollable } from '@/components';
+2025-03-03 08:12:22 - Transformed import line: import { Button } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\Button\\Button.tsx";
+2025-03-03 08:12:22 - Transformed import line: import { Image } from "E:\\Projects\\chat-app-v4\\src\\components\\media\\Image\\Image.tsx";
+2025-03-03 08:12:22 - Transformed import line: import { Scrollable } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\Scrollable\\Scrollable.tsx";
+2025-03-03 08:12:22 - Source import line: import { useTrans } from '@/hooks';
+2025-03-03 08:12:22 - Transformed import line: import { useTrans } from "E:\\Projects\\chat-app-v4\\src\\hooks\\useTrans\\useTrans.ts";
+2025-03-03 08:12:22 - Source import line: import { createStyles, getAssetUrl } from '@/utils';
+2025-03-03 08:12:23 - Transformed import line: import { createStyles } from "E:\\Projects\\chat-app-v4\\src\\utils\\createStyles\\createStyles.ts";
+2025-03-03 08:12:23 - Transformed import line: import { getAssetUrl } from "E:\\Projects\\chat-app-v4\\src\\utils\\getAssetUrl\\getAssetUrl.ts";
+2025-03-03 08:12:23 - Source import line: import { CUSTOM_STYLES } from '@/vars';
+2025-03-03 08:12:23 - Transformed import line: import { CUSTOM_STYLES } from "E:\\Projects\\chat-app-v4\\src\\vars\\customStyles.ts";
+2025-03-03 08:12:23 - Source import line: import { Screen } from '@/router/layouts/bundled';
+2025-03-03 08:12:23 - Transformed import line: import { Screen } from "E:\\Projects\\chat-app-v4\\src\\router\\layouts\\bundled\\Screen\\Screen.tsx";
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\src\root\hooks\index.ts
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\src\utils\withDisplayNameAndDecorator\withDisplayNameAndDecorator.ts
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\src\router\Router.tsx
+2025-03-03 08:12:23 - Source import line: import { isDev } from '@/vars';
+2025-03-03 08:12:23 - Transformed import line: import { isDev } from "E:\\Projects\\chat-app-v4\\src\\vars\\common.ts";
+2025-03-03 08:12:23 - Source import line: import { Navigator } from '@/features';
+2025-03-03 08:12:23 - Transformed import line: import { Navigator } from "E:\\Projects\\chat-app-v4\\src\\features\\Navigator\\index.ts";
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\FakeDB.ts
+2025-03-03 08:12:23 - Source import line: import { socket } from '@/fakeSocket';
+2025-03-03 08:12:23 - Transformed import line: import { socket } from "E:\\Projects\\chat-app-v4\\fakeSocket\\fakeSocket.ts";
+2025-03-03 08:12:23 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:23 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:23 - Source import line: import { env } from '@/vars';
+2025-03-03 08:12:23 - Transformed import line: import { env } from "E:\\Projects\\chat-app-v4\\src\\vars\\env.ts";
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\utils.ts
+2025-03-03 08:12:23 - Source import line: import { Endpoints, ENTITY_NAME } from '@/fakeShared';
+2025-03-03 08:12:23 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:23 - Transformed import line: import { ENTITY_NAME } from "E:\\Projects\\chat-app-v4\\fakeShared\\entity.ts";
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\Dummies.ts
+2025-03-03 08:12:23 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:23 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\token.ts
+2025-03-03 08:12:23 - Source import line: import { sharedValidators } from '@/fakeShared';
+2025-03-03 08:12:23 - Transformed import line: import { sharedValidators } from "E:\\Projects\\chat-app-v4\\fakeShared\\validators.ts";
+2025-03-03 08:12:23 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:23 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:23 - Source import line: import { env } from '@/vars';
+2025-03-03 08:12:23 - Transformed import line: import { env } from "E:\\Projects\\chat-app-v4\\src\\vars\\env.ts";
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\Scenarios.ts
+2025-03-03 08:12:23 - Source import line: import { ClientEntities } from '@/types';
+2025-03-03 08:12:23 - Transformed import line: import { ClientEntities } from "E:\\Projects\\chat-app-v4\\src\\types\\entities.ts";
+2025-03-03 08:12:23 - Source import line: import type { RichTextEditor } from '@/components';
+2025-03-03 08:12:23 - Transformed import line: import { RichTextEditor } from "E:\\Projects\\chat-app-v4\\src\\components\\common\\RichTextEditor\\index.ts";
+2025-03-03 08:12:23 - Source import line: import { logger } from '@/utils';
+2025-03-03 08:12:23 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\fakeServer\fakeServer.ts
+2025-03-03 08:12:23 - Source import line: import { Endpoints } from '@/fakeShared';
+2025-03-03 08:12:23 - Transformed import line: import { Endpoints } from "E:\\Projects\\chat-app-v4\\fakeShared\\endpoints.ts";
+2025-03-03 08:12:23 - Source import line: import { localStorageApi, logger } from '@/utils';
+2025-03-03 08:12:23 - Transformed import line: import { localStorageApi } from "E:\\Projects\\chat-app-v4\\src\\utils\\localStorageApi\\localStorageApi.ts";
+2025-03-03 08:12:23 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";
+2025-03-03 08:12:23 - Source import line: import { env } from '@/vars';
+2025-03-03 08:12:23 - Transformed import line: import { env } from "E:\\Projects\\chat-app-v4\\src\\vars\\env.ts";
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\generated\i18n.ts
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\src\redux\utils\enhancers\index.ts
+2025-03-03 08:12:23 - Babel-plugin-transform-barrels version: 1.0.23
+2025-03-03 08:12:23 - Processed Javascript file: E:\Projects\chat-app-v4\src\main.ts
+2025-03-03 08:12:23 - Source import line: import { setup } from '@/setup';
+2025-03-03 08:12:23 - Source import line: import { logger } from '@/utils';
+2025-03-03 08:12:23 - Transformed import line: import { logger } from "E:\\Projects\\chat-app-v4\\src\\utils\\logger\\logger.ts";

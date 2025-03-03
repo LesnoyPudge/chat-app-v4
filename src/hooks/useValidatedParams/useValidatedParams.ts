@@ -1,5 +1,5 @@
-import { Navigator } from '@features';
-import { sharedValidators } from '@fakeShared';
+import { Navigator } from '@/features';
+import { sharedValidators } from '@/fakeShared';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { invariant } from '@lesnoypudge/utils';
 import { useRef } from 'react';

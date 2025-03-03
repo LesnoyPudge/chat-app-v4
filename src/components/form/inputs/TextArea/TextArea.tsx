@@ -1,7 +1,7 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { useFunction } from '@lesnoypudge/utils-react';
 import { FieldApi } from '@tanstack/react-form';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { ChangeEventHandler, FC, FocusEventHandler } from 'react';
 
 
@@ -93,7 +93,7 @@ export namespace TextArea {
             | 'label'
         >
         & {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @/typescript-eslint/no-explicit-any
             field: FieldApi<any, any, any, any, string>;
         }
     );

@@ -1,10 +1,10 @@
-import { Button, Sprite } from '@components';
-import { Navigator } from '@features';
-import { ASSETS } from '@generated/ASSETS';
-import { useTrans } from '@hooks';
-import { WithTopBar } from '@router/layouts/bundled';
+import { Button, Sprite } from '@/components';
+import { Navigator } from '@/features';
+import { ASSETS } from '@/generated/ASSETS';
+import { useTrans } from '@/hooks';
+import { WithTopBar } from '@/router/layouts/bundled';
 import { useFunction } from '@lesnoypudge/utils-react';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 
 

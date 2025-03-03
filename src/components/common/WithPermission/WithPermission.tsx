@@ -1,8 +1,8 @@
 import { capitalize } from '@lesnoypudge/utils';
 import { withDisplayName } from '@lesnoypudge/utils-react';
-import { Features } from '@redux/features';
-import { useStoreSelector } from '@redux/hooks';
-import { ClientEntities } from '@types';
+import { Features } from '@/redux/features';
+import { useStoreSelector } from '@/redux/hooks';
+import { ClientEntities } from '@/types';
 import { FC, PropsWithChildren } from 'react';
 
 

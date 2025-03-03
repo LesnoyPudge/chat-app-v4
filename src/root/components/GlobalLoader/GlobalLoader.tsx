@@ -1,7 +1,7 @@
-import { Overlay } from '@components';
+import { Overlay } from '@/components';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { GlobalLoaderScreen } from '@router/screens/bundled';
-import { getAnimationVariants, logger } from '@utils';
+import { GlobalLoaderScreen } from '@/router/screens/bundled';
+import { getAnimationVariants, logger } from '@/utils';
 import { m } from 'motion/react';
 import { FC, PropsWithChildren, useEffect } from 'react';
 

@@ -1,5 +1,5 @@
 import { useEventListener } from '@lesnoypudge/utils-react';
-import { logger } from '@utils';
+import { logger } from '@/utils';
 
 
 

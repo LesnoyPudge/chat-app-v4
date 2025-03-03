@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/prefer-spread */
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { Features } from '@redux/features';
+import { Features } from '@/redux/features';
 import type {
     Action,
     CombinedSliceReducer,
@@ -8,8 +8,8 @@ import type {
 } from '@reduxjs/toolkit';
 import { combineSlices, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { isDev } from '@vars';
-import { useSharedListenerMiddleware } from '@redux/utils';
+import { isDev } from '@/vars';
+import { useSharedListenerMiddleware } from '@/redux/utils';
 
 
 
@@ -125,7 +125,7 @@ export type AppThunk<ThunkReturnType = void> = ThunkAction<
 
 if (isDev) {
     // @ts-expect-error
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    // eslint-disable-next-line @/typescript-eslint/no-unsafe-assignment
     window._devtools = {
         // @ts-expect-error
         ...window._devtools,

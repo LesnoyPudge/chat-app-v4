@@ -1,5 +1,5 @@
-import { createStyles } from '@utils';
-import { WHITESPACE } from '@vars';
+import { createStyles } from '@/utils';
+import { WHITESPACE } from '@/vars';
 import { FC } from 'react';
 
 

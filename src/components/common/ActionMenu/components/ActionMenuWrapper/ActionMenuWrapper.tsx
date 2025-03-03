@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { styles } from '../../vars';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { cn } from '@utils';
-import { Scrollable } from '@components';
+import { cn } from '@/utils';
+import { Scrollable } from '@/components';
 
 
 

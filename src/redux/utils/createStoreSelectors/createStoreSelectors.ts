@@ -1,9 +1,9 @@
-import { RootState } from '@redux/store';
+import { RootState } from '@/redux/store';
 import { toCurriedSelectors } from '../toCurriedSelectors';
 
 
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @/typescript-eslint/no-explicit-any
 type Selector = (state: RootState, props: any) => any;
 
 type Return<_Selectors extends Record<string, Selector>> = {

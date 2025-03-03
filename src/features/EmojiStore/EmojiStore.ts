@@ -1,7 +1,7 @@
-import { ASSETS } from '@generated/ASSETS';
+import { ASSETS } from '@/generated/ASSETS';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { invariant } from '@lesnoypudge/utils';
-import { getAssetUrl } from '@utils';
+import { getAssetUrl } from '@/utils';
 
 
 

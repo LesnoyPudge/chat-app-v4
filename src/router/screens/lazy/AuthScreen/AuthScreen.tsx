@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useAuthScreen } from './useAuthScreen';
-import { createStyles, getAnimationVariants, getAssetUrl } from '@utils';
-import { CUSTOM_STYLES } from '@vars';
-import { Image, Scrollable, Tab } from '@components';
+import { createStyles, getAnimationVariants, getAssetUrl } from '@/utils';
+import { CUSTOM_STYLES } from '@/vars';
+import { Image, Scrollable, Tab } from '@/components';
 import { AnimatePresence, m } from 'motion/react';
 import {
     ContextSelectable,
@@ -10,8 +10,8 @@ import {
     useRefManager,
 } from '@lesnoypudge/utils-react';
 import { LoginForm, RegistrationForm } from './components';
-import { Screen } from '@router/layouts/bundled';
-import { ASSETS } from '@generated/ASSETS';
+import { Screen } from '@/router/layouts/bundled';
+import { ASSETS } from '@/generated/ASSETS';
 
 
 

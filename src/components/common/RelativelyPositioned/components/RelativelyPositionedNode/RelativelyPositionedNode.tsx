@@ -1,5 +1,5 @@
 import { renderFunction, useRefManager } from '@lesnoypudge/utils-react';
-import { createStyles } from '@utils';
+import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { useRelativePosition } from '../../hooks';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';

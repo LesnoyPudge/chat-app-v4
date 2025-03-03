@@ -1,9 +1,9 @@
-import { createStyles } from '@utils';
+import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { Outlet } from 'react-router';
 import { PrimaryNavigation } from './components';
-import { MobileMenu } from '@components';
-import { Screen } from '@router/layouts/bundled';
+import { MobileMenu } from '@/components';
+import { Screen } from '@/router/layouts/bundled';
 
 
 

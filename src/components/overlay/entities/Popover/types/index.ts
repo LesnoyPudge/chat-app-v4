@@ -1,4 +1,4 @@
-import type { Overlay } from '@components';
+import type { Overlay } from '@/components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { PropsWithChildren } from 'react';

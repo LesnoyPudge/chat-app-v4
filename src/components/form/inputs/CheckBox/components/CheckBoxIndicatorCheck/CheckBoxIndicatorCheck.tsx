@@ -1,8 +1,8 @@
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
-import { Sprite } from '@components';
+import { Sprite } from '@/components';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { ASSETS } from '@generated/ASSETS';
+import { ASSETS } from '@/generated/ASSETS';
 
 
 

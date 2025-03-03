@@ -1,6 +1,6 @@
-import { t } from '@features';
+import { t } from '@/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { ClientEntities } from '@types';
+import { ClientEntities } from '@/types';
 
 
 

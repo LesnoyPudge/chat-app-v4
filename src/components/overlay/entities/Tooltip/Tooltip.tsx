@@ -1,5 +1,5 @@
-import { Overlay, RelativelyPositioned } from '@components';
-import { cn, createStyles, createVariants } from '@utils';
+import { Overlay, RelativelyPositioned } from '@/components';
+import { cn, createStyles, createVariants } from '@/utils';
 import { useTooltip } from './useTooltip';
 import {
     createWithDecorator,
@@ -104,9 +104,9 @@ export const Tooltip = withDecorator(withDisplayName('Tooltip', ({
                     className={cn(styles.base, className)}
                     role='tooltip'
                     variants={variants}
-                    initial='hidden'
-                    animate='visible'
-                    exit='hidden'
+                    initial={variants.hidden.key}
+                    animate={variants.visible.key}
+                    exit={variants.hidden.key}
                     custom={alignment}
                     ref={followerElementRef}
                 >

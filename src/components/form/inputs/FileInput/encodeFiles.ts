@@ -1,4 +1,4 @@
-import { ClientEntities } from '@types';
+import { ClientEntities } from '@/types';
 import { ACCEPTED_FILE_TYPE } from './acceptedFileType';
 import { catchErrorAsync } from '@lesnoypudge/utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
@@ -13,7 +13,7 @@ const toBase64 = async (file: File): Promise<string> => {
         reader.addEventListener('load', () => {
             if (!reader.result) return reject();
 
-            // eslint-disable-next-line @typescript-eslint/no-base-to-string
+            // eslint-disable-next-line @/typescript-eslint/no-base-to-string
             resolve(reader.result.toString());
         });
 

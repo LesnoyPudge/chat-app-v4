@@ -1,9 +1,9 @@
 import { FC, PropsWithChildren } from 'react';
-import { cn, createStyles, getHTMLElement } from '@utils';
+import { cn, createStyles, getHTMLElement } from '@/utils';
 import { createPortal } from 'react-dom';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { AnimatePresence } from 'motion/react';
-import { Overlay } from '@components';
+import { Overlay } from '@/components';
 
 
 

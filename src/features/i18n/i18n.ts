@@ -1,9 +1,9 @@
 import i18n, { TFunction } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { env, isDev } from '@vars';
+import { env, isDev } from '@/vars';
 import HttpBackend, { HttpBackendOptions } from 'i18next-http-backend';
-import { namespaces } from '@generated/i18n';
+import { namespaces } from '@/generated/i18n';
 
 
 

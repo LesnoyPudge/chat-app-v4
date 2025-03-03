@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { Button, DialogBlocks } from '@components';
+import { Button, DialogBlocks } from '@/components';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { CreateServerTabContext } from '../../CreateServerDialog';
-import { useTrans } from '@hooks';
-import { createStyles } from '@utils';
+import { useTrans } from '@/hooks';
+import { createStyles } from '@/utils';
 
 
 

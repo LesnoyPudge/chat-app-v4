@@ -1,4 +1,4 @@
-import { createStyles } from '@utils';
+import { createStyles } from '@/utils';
 
 
 

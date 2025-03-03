@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { TextInputContext } from './context';
 import { useTextInput, useTextInputDefaults } from './hooks';

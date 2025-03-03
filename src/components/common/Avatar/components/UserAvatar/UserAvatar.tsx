@@ -1,13 +1,13 @@
 import { FC } from 'react';
-import { cn, getAssetUrl } from '@utils';
-import { ClientEntities, ExtendedRecord } from '@types';
+import { cn, getAssetUrl } from '@/utils';
+import { ClientEntities, ExtendedRecord } from '@/types';
 import { getReadImagePath } from '../../utils';
-import { useTrans } from '@hooks';
+import { useTrans } from '@/hooks';
 import { useBoolean } from '@lesnoypudge/utils-react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { Image } from '@components';
+import { Image } from '@/components';
 import { sharedStyles } from '../../vars';
-import { ASSETS } from '@generated/ASSETS';
+import { ASSETS } from '@/generated/ASSETS';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 

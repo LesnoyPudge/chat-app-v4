@@ -1,11 +1,11 @@
-import { Button, Sprite, Overlay } from '@components';
+import { Button, Sprite, Overlay } from '@/components';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 import { WrapperWithBullet } from '../WrapperWithBullet';
-import { cn } from '@utils';
+import { cn } from '@/utils';
 import { sharedStyles } from '../../sharedStyles';
-import { useTrans } from '@hooks';
-import { ASSETS } from '@generated/ASSETS';
+import { useTrans } from '@/hooks';
+import { ASSETS } from '@/generated/ASSETS';
 
 
 

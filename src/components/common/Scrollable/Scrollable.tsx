@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import css from './Scrollable.module.scss';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { PropsWithInnerRef } from '@types';
-import { isDev } from '@vars';
+import { PropsWithInnerRef } from '@/types';
+import { isDev } from '@/vars';
 import { mergeRefs } from '@lesnoypudge/utils-react';
 import { useScrollable } from './useScrollable';
 

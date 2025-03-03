@@ -1,4 +1,4 @@
-import { Endpoints, ENTITY_NAME } from '@fakeShared';
+import { Endpoints, ENTITY_NAME } from '@/fakeShared';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { db } from './FakeDB';
 import { invariant } from '@lesnoypudge/utils';

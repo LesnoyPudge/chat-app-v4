@@ -7,7 +7,7 @@ import {
 } from '@lesnoypudge/utils-react';
 import { useRef } from 'react';
 import { Types } from './types';
-import { Overlay } from '@components';
+import { Overlay } from '@/components';
 
 
 

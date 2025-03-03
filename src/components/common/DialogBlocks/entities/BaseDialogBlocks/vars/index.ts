@@ -1,5 +1,5 @@
-import { Overlay } from '@components';
-import { getAnimationVariants } from '@utils';
+import { Overlay } from '@/components';
+import { getAnimationVariants } from '@/utils';
 
 
 

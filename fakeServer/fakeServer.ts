@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Endpoints } from '@fakeShared';
-import { localStorageApi, logger } from '@utils';
+/* eslint-disable @/typescript-eslint/require-await */
+/* eslint-disable @/typescript-eslint/no-explicit-any */
+import { Endpoints } from '@/fakeShared';
+import { localStorageApi, logger } from '@/utils';
 import {
     delay,
     DefaultBodyType,
@@ -19,7 +19,7 @@ import {
     HTTP_STATUS_CODES,
     invariant,
 } from '@lesnoypudge/utils';
-import { env } from '@vars';
+import { env } from '@/vars';
 import { token } from './token';
 import { v4 as uuid } from 'uuid';
 import {
@@ -620,6 +620,9 @@ const routes: HttpHandler[] = [
 
 class FakeServer {
     async init() {
+        return;
+
+
         const worker = setupWorker(...this.getRoutes());
 
         await worker.start({

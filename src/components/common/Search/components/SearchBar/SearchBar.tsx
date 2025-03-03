@@ -1,10 +1,10 @@
-import { Button, Form, Sprite } from '@components';
-import { ASSETS } from '@generated/ASSETS';
-import { useTrans } from '@hooks';
+import { Button, Form, Sprite } from '@/components';
+import { ASSETS } from '@/generated/ASSETS';
+import { useTrans } from '@/hooks';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { noop } from '@lesnoypudge/utils';
 import { useFunction } from '@lesnoypudge/utils-react';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { ChangeEventHandler, FC, useRef } from 'react';
 
 

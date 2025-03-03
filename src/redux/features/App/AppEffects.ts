@@ -1,14 +1,14 @@
-import { createEffects } from '@redux/utils';
+import { createEffects } from '@/redux/utils';
 import { Slice } from './AppSlice';
-import { MOBILE_SCREEN_QUERY } from '@vars';
+import { MOBILE_SCREEN_QUERY } from '@/vars';
 import { addEventListener } from '@lesnoypudge/utils-web';
-import { localStorageApi } from '@utils';
+import { localStorageApi } from '@/utils';
 import { Users } from '../Users';
 import { isAnyOf } from '@reduxjs/toolkit';
 import { App } from '.';
-import { socket } from '@fakeSocket';
-import { socketActions } from '@redux/actions';
-import { scenarios } from '@fakeServer';
+import { socket } from '@/fakeSocket';
+import { socketActions } from '@/redux/actions';
+import { scenarios } from '@/fakeServer';
 
 
 

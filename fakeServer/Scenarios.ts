@@ -3,10 +3,10 @@ import { Dummies } from './Dummies';
 import { faker } from '@faker-js/faker';
 import { catchErrorAsync, chance, coinFlip, inRange, invariant } from '@lesnoypudge/utils';
 import { v4 as uuid } from 'uuid';
-import { ClientEntities } from '@types';
-import type { RichTextEditor } from '@components';
+import { ClientEntities } from '@/types';
+import type { RichTextEditor } from '@/components';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
-import { logger } from '@utils';
+import { logger } from '@/utils';
 import { flattenPopulated } from './utils';
 
 

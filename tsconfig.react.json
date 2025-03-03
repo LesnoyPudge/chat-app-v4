@@ -22,97 +22,97 @@
             "./src/declarations/vite-env.d.ts",
         ],
         "paths": {
-            // "@src/*": [
+            // "@/src/*": [
             //     "./src/*"
             // ],
-            "@playground": [
+            "@/playground": [
                 "./src/playground",
             ],
-            "@router": [
+            "@/router": [
                 "./src/router",
             ],
-            "@router/screens/bundled": [
+            "@/router/screens/bundled": [
                 "./src/router/screens/bundled"
             ],
-            "@router/screens/lazy": [
+            "@/router/screens/lazy": [
                 "./src/router/screens/lazy"
             ],
-            "@router/screens/lazy/*": [
+            "@/router/screens/lazy/*": [
                 "./src/router/screens/lazy/*"
             ],
-            "@router/panels": [
+            "@/router/panels": [
                 "./src/router/panels"
             ],
-            "@router/layouts/lazy": [
+            "@/router/layouts/lazy": [
                 "./src/router/layouts/lazy"
             ],
-            "@router/layouts/bundled": [
+            "@/router/layouts/bundled": [
                 "./src/router/layouts/bundled"
             ],
-            "@setup": [
+            "@/setup": [
                 "./src/setup",
             ],
-            "@styles/*": [
+            "@/styles/*": [
                 "./src/styles/*",
             ],
-            "@vars": [
+            "@/vars": [
                 "./src/vars"
             ],
-            "@utils": [
+            "@/utils": [
                 "./src/utils"
             ],
-            "@generated/*": [
+            "@/generated/*": [
                 "./generated/*"
             ],
-            "@root": [
+            "@/root": [
                 "./src/root"
             ],
-            "@root/components": [
+            "@/root/components": [
                 "./src/root/components"
             ],
-            "@components": [
+            "@/components": [
                 "./src/components"
             ],
-            "@types": [
+            "@/types": [
                 "./src/types"
             ],
-            "@hooks": [
+            "@/hooks": [
                 "./src/hooks"
             ],
-            "@fakeServer": [
+            "@/fakeServer": [
                 "./fakeServer"
             ],
-            "@fakeShared": [
+            "@/fakeShared": [
                 "./fakeShared"
             ],
-            "@fakeSocket": [
+            "@/fakeSocket": [
                 "./fakeSocket"
             ],
-            "@redux/features": [
+            "@/redux/features": [
                 "./src/redux/features"
             ],
-            "@redux/store": [
+            "@/redux/store": [
                 "./src/redux/store"
             ],
-            "@redux/hooks": [
+            "@/redux/hooks": [
                 "./src/redux/hooks"
             ],
-            "@redux/utils": [
+            "@/redux/utils": [
                 "./src/redux/utils"
             ],
-            "@redux/actions": [
+            "@/redux/actions": [
                 "./src/redux/actions"
             ],
-            "_@lesnoypudge/utils-react": [
+            "_@/lesnoypudge/utils-react": [
                 "../@lesnoypudge-utils-react/build"
             ],
-            "_@lesnoypudge/utils": [
+            "_@/lesnoypudge/utils": [
                 "../@lesnoypudge-utils/build"
             ],
-            "_@lesnoypudge/utils-web": [
+            "_@/lesnoypudge/utils-web": [
                 "../@lesnoypudge/utils-web/build"
             ],
-            "@features": [
+            "@/features": [
                 "./src/features"
             ]
         },

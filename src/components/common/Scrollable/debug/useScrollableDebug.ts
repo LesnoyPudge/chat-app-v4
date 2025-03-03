@@ -1,5 +1,5 @@
 import { useFunction, useIsFirstRender } from '@lesnoypudge/utils-react';
-import { logger } from '@utils';
+import { logger } from '@/utils';
 import { useLayoutEffect, useRef } from 'react';
 import { getElementFillableSize, getElementObject, mountExpander } from '../utils';
 import { Scrollable } from '../Scrollable';

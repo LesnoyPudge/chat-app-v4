@@ -1,5 +1,5 @@
-import { PropsWithChildrenAndClassName } from '@types';
-import { cn } from '@utils';
+import { PropsWithChildrenAndClassName } from '@/types';
+import { cn } from '@/utils';
 import { FC } from 'react';
 
 

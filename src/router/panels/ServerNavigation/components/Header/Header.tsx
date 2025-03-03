@@ -1,13 +1,13 @@
-import { useValidatedParams, useTrans } from '@hooks';
-import { cn, createStyles } from '@utils';
+import { useValidatedParams, useTrans } from '@/hooks';
+import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 import { ServerMenu } from './components';
 import { useRefManager } from '@lesnoypudge/utils-react';
-import { useSliceSelector } from '@redux/hooks';
-import { Features } from '@redux/features';
-import { Button, Overlay, Placeholder, Sprite } from '@components';
-import { ASSETS } from '@generated/ASSETS';
-import { WithTopBar } from '@router/layouts/bundled';
+import { useSliceSelector } from '@/redux/hooks';
+import { Features } from '@/redux/features';
+import { Button, Overlay, Placeholder, Sprite } from '@/components';
+import { ASSETS } from '@/generated/ASSETS';
+import { WithTopBar } from '@/router/layouts/bundled';
 
 
 

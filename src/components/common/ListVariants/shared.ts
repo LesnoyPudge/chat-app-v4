@@ -1,4 +1,4 @@
-import { useKeyboardNavigation } from '@hooks';
+import { useKeyboardNavigation } from '@/hooks';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
 
@@ -14,11 +14,11 @@ export namespace Base {
             id: string;
         };
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @/typescript-eslint/no-explicit-any
         export type ChildrenProps<_Item = any> = (
             ItemProps<_Item>
             & {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @/typescript-eslint/no-explicit-any
                 itemRef: useRefManager.NullableRefManager<any>;
             }
         );
@@ -35,7 +35,7 @@ export namespace Base {
 
     export namespace Item {
         export type Props<_Extended = object> = (
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @/typescript-eslint/no-explicit-any
             Wrapper.ItemProps<any>
             & Wrapper.WithChildren<Wrapper.ChildrenProps & _Extended>
         );

@@ -1,7 +1,7 @@
-import { Button } from '@components';
+import { Button } from '@/components';
 import { FC } from 'react';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import css from './ColorPicker.module.scss';
 import { Iterate, useFunction, useThrottled } from '@lesnoypudge/utils-react';
@@ -109,7 +109,7 @@ export namespace ColorPicker {
             'className' | 'colorPresets'
         >
         & {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @/typescript-eslint/no-explicit-any
             field: FieldApi<any, any, any, any, string> ;
         }
 );

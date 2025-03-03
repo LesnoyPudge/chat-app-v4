@@ -1,11 +1,11 @@
-import { Avatar, Button, Overlay } from '@components';
+import { Avatar, Button, Overlay } from '@/components';
 import { FC } from 'react';
 import { UserMenu } from './components';
-import { createStyles } from '@utils';
-import { useStoreSelector } from '@redux/hooks';
-import { Features } from '@redux/features';
+import { createStyles } from '@/utils';
+import { useStoreSelector } from '@/redux/hooks';
+import { Features } from '@/redux/features';
 import { useRefManager } from '@lesnoypudge/utils-react';
-import { useTrans } from '@hooks';
+import { useTrans } from '@/hooks';
 
 
 

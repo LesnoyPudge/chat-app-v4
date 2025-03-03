@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { InlineChromiumBugfix } from '../InlineChromiumBugfix';
 import { RenderElementProps } from 'slate-react';
 import { RTETypes } from '../../../../../RTETypes';
-import { createStyles } from '@utils';
+import { createStyles } from '@/utils';
 
 
 

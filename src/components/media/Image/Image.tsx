@@ -1,5 +1,5 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { FC, ReactEventHandler } from 'react';
 
 

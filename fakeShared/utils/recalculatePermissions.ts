@@ -1,4 +1,4 @@
-import { ClientEntities } from '@types';
+import { ClientEntities } from '@/types';
 
 
 

@@ -1,4 +1,4 @@
-import { MBToBytes } from '@utils';
+import { MBToBytes } from '@/utils';
 
 
 

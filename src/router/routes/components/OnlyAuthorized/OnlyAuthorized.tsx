@@ -1,12 +1,12 @@
-import { useLocalStorage } from '@hooks';
-import { Features } from '@redux/features';
-import { useSliceSelector } from '@redux/hooks';
-import { env } from '@vars';
+import { useLocalStorage } from '@/hooks';
+import { Features } from '@/redux/features';
+import { useSliceSelector } from '@/redux/hooks';
+import { env } from '@/vars';
 import { FC, useEffect, useMemo } from 'react';
 import { Outlet } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../SuspenseWithGlobalLoader';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
-import { Navigator } from '@features';
+import { Navigator } from '@/features';
 import { createSleep, ErrorThrower } from '@lesnoypudge/utils-react';
 
 

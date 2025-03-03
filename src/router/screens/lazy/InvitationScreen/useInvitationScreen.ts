@@ -1,6 +1,6 @@
-import { useValidatedParams } from '@hooks';
+import { useValidatedParams } from '@/hooks';
 import { useFunction } from '@lesnoypudge/utils-react';
-import { Features } from '@redux/features';
+import { Features } from '@/redux/features';
 
 
 

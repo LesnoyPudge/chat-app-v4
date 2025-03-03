@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { ConversationListItem, ServerListItem } from './components';
-import { useSliceSelector, useStoreSelector } from '@redux/hooks';
-import { Features } from '@redux/features';
-import { Scrollable, Separator } from '@components';
-import { useKeyboardNavigation } from '@hooks';
+import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
+import { Features } from '@/redux/features';
+import { Scrollable, Separator } from '@/components';
+import { useKeyboardNavigation } from '@/hooks';
 import { Iterate, useRefManager } from '@lesnoypudge/utils-react';
-import { createStyles } from '@utils';
-import { useTrans } from '@hooks';
+import { createStyles } from '@/utils';
+import { useTrans } from '@/hooks';
 
 
 

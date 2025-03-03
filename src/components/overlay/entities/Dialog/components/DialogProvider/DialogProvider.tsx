@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { DialogContext } from '../../context';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { Overlay } from '@components';
+import { Overlay } from '@/components';
 
 
 

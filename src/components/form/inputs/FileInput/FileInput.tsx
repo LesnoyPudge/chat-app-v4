@@ -1,14 +1,14 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { ChangeEventHandler, FC, FocusEventHandler } from 'react';
 import { ACCEPTED_FILE_TYPE } from './acceptedFileType';
-import { CUSTOM_STYLES } from '@vars';
+import { CUSTOM_STYLES } from '@/vars';
 import { FieldApi } from '@tanstack/react-form';
-import { ClientEntities } from '@types';
+import { ClientEntities } from '@/types';
 import { useFileInput } from './useFileInput';
 import { invariant, noop } from '@lesnoypudge/utils';
-import { FILE_MAX_SIZE } from '@fakeShared';
+import { FILE_MAX_SIZE } from '@/fakeShared';
 
 
 
@@ -98,7 +98,7 @@ export namespace FileInput {
         & {
             amountLimit: _Amount;
             field: FieldApi<
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @/typescript-eslint/no-explicit-any
                 any, any, any, any,
                 CastedType<_Amount>
             >;

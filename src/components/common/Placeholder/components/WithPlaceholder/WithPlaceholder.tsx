@@ -1,8 +1,8 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { FC, useState } from 'react';
-import { Placeholder } from '@components';
-import { cn, createStyles } from '@utils';
-import { isDev, isProd } from '@vars';
+import { Placeholder } from '@/components';
+import { cn, createStyles } from '@/utils';
+import { isDev, isProd } from '@/vars';
 import { useTimeout } from '@lesnoypudge/utils-react';
 
 

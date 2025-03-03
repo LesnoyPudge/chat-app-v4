@@ -1,11 +1,11 @@
-import { Tab, DialogBlocks } from '@components';
+import { Tab, DialogBlocks } from '@/components';
 import {
     CreateServerOrFollowInvitationTab,
     FollowInvitationTab,
     CreateServerTab,
 } from './components';
-import { withDisplayNameAndDecorator } from '@utils';
-import { useTrans } from '@hooks';
+import { withDisplayNameAndDecorator } from '@/utils';
+import { useTrans } from '@/hooks';
 
 
 

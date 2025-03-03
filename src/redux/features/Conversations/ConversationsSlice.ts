@@ -3,8 +3,8 @@ import {
     createCustomSliceEntityAdapter,
     createEntitySubscription,
     createStoreSelectors,
-} from '@redux/utils';
-import { ClientEntities } from '@types';
+} from '@/redux/utils';
+import { ClientEntities } from '@/types';
 import { ConversationsApi } from './ConversationsApi';
 import { Users } from '../Users';
 import { TextChats } from '../TextChats';

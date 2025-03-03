@@ -1,5 +1,5 @@
-import { Button, ListVariants, Overlay } from '@components';
-import { createStyles, logger } from '@utils';
+import { Button, ListVariants, Overlay } from '@/components';
+import { createStyles, logger } from '@/utils';
 import { FC } from 'react';
 import { useDevTools } from './hooks';
 import { KEY } from '@lesnoypudge/utils';

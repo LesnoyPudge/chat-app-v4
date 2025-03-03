@@ -1,7 +1,7 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { FieldApi, ValidationError } from '@tanstack/react-form';
-import { PropsWithInnerRef } from '@types';
+import { PropsWithInnerRef } from '@/types';
 import {
     ChangeEventHandler,
     FocusEventHandler,
@@ -61,7 +61,7 @@ export namespace TextInputTypes {
     >;
 
     type WithFieldApi = {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @/typescript-eslint/no-explicit-any
         field: FieldApi<any, any, any, any, string>;
     };
 

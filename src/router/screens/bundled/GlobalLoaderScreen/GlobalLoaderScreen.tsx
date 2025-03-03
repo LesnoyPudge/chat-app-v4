@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { cn, createStyles, getAssetUrl } from '@utils';
+import { cn, createStyles, getAssetUrl } from '@/utils';
 import { useGlobalLoaderScreen } from './useGlobalLoaderScreen';
 import { m } from 'motion/react';
-import { ExternalLink, Scrollable, Sprite } from '@components';
-import { useTrans } from '@hooks';
+import { ExternalLink, Scrollable, Sprite } from '@/components';
+import { useTrans } from '@/hooks';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { Screen } from '@router/layouts/bundled';
-import { ASSETS } from '@generated/ASSETS';
+import { Screen } from '@/router/layouts/bundled';
+import { ASSETS } from '@/generated/ASSETS';
 
 
 

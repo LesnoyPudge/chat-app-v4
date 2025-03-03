@@ -1,5 +1,5 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { animate, m, useMotionValue, useTransform } from 'motion/react';
 import { FC } from 'react';
 import { useUpdateEffect } from '@lesnoypudge/utils-react';

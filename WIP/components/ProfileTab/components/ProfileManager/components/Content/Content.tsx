@@ -1,6 +1,6 @@
-import { Button, ChangeEmailModal, ChangePasswordModal, ChangeUsernameModal, OverlayContextProvider } from '@components';
+import { Button, ChangeEmailModal, ChangePasswordModal, ChangeUsernameModal, OverlayContextProvider } from '@/components';
 import { Heading } from '@libs';
-import { conditional } from '@utils';
+import { conditional } from '@/utils';
 import { FC } from 'react';
 import { useToggle } from 'usehooks-ts';
 

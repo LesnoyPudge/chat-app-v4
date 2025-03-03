@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react';
-import { AppSettingsDialogTabs, Button, DeleteAccountModal, OverlayContextProvider, Separator, TabContext, TabPanel } from '@components';
+import { AppSettingsDialogTabs, Button, DeleteAccountModal, OverlayContextProvider, Separator, TabContext, TabPanel } from '@/components';
 import { ProfileManager } from './components';
 import { HeadingLevel } from '@libs';
 import { SettingsDescription, SettingsGroupTitle } from '..';

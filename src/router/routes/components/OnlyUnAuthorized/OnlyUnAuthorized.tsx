@@ -1,8 +1,8 @@
-import { Navigator } from '@features';
-import { useLocalStorage } from '@hooks';
+import { Navigator } from '@/features';
+import { useLocalStorage } from '@/hooks';
 import { invariant } from '@lesnoypudge/utils';
-import { Features } from '@redux/features';
-import { useSliceSelector } from '@redux/hooks';
+import { Features } from '@/redux/features';
+import { useSliceSelector } from '@/redux/hooks';
 import { FC, useEffect } from 'react';
 import { Outlet } from 'react-router';
 

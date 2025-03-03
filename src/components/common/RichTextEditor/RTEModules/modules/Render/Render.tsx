@@ -1,4 +1,4 @@
-import { logger } from '@utils';
+import { logger } from '@/utils';
 import { ReactElement, ReactNode } from 'react';
 import { Text } from 'slate';
 import {

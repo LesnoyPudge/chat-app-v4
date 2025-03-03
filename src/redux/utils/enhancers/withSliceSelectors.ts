@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @/typescript-eslint/no-explicit-any */
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { Slice } from '@reduxjs/toolkit';
 import { toCurriedSelectors } from '../toCurriedSelectors';

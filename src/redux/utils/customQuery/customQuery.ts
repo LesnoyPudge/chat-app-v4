@@ -1,5 +1,5 @@
 import { HTTP_STATUS_CODES } from '@lesnoypudge/utils';
-import { Features } from '@redux/features';
+import { Features } from '@/redux/features';
 import {
     BaseQueryFn,
     FetchArgs,
@@ -8,9 +8,9 @@ import {
     retry,
     RetryOptions,
 } from '@reduxjs/toolkit/query';
-import { CustomQueryError } from '@types';
-import { localStorageApi } from '@utils';
-import { env, isDev } from '@vars';
+import { CustomQueryError } from '@/types';
+import { localStorageApi } from '@/utils';
+import { env, isDev } from '@/vars';
 
 
 
@@ -20,7 +20,7 @@ export type CustomQueryFn = BaseQueryFn<
     string | FetchArgs,
     unknown,
     CustomQueryError,
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    // eslint-disable-next-line @/typescript-eslint/no-empty-object-type
     {},
     FetchBaseQueryMeta
 >;

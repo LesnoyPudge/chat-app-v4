@@ -5,7 +5,7 @@ import {
 } from '@lesnoypudge/utils-react';
 import { FC, useEffect } from 'react';
 import { createId } from '@lesnoypudge/utils';
-import { Overlay } from '@components';
+import { Overlay } from '@/components';
 
 
 

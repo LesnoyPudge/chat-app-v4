@@ -1,7 +1,7 @@
-import type { Overlay, RelativelyPositioned } from '@components';
+import type { Overlay, RelativelyPositioned } from '@/components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { createVariants } from '@utils';
+import { createVariants } from '@/utils';
 import { PropsWithChildren } from 'react';
 
 

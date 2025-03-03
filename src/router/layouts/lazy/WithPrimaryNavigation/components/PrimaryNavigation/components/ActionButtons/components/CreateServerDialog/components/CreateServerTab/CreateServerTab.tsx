@@ -1,13 +1,13 @@
-import { Button, Form, Image, Label, Sprite, DialogBlocks } from '@components';
-import { ApiValidators, Endpoints } from '@fakeShared';
+import { Button, Form, Image, Label, Sprite, DialogBlocks } from '@/components';
+import { ApiValidators, Endpoints } from '@/fakeShared';
 import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 import { CreateServerTabContext } from '../../CreateServerDialog';
-import { Features } from '@redux/features';
-import { useTrans } from '@hooks';
-import { createStyles } from '@utils';
-import { Navigator } from '@features';
-import { ASSETS } from '@generated/ASSETS';
+import { Features } from '@/redux/features';
+import { useTrans } from '@/hooks';
+import { createStyles } from '@/utils';
+import { Navigator } from '@/features';
+import { ASSETS } from '@/generated/ASSETS';
 
 
 

@@ -1,7 +1,7 @@
-import { Button, SpriteImage, OverlayContextProvider, OverlayItem, RelativelyPositioned,Overlay, AnimatedTransition, Ref } from '@components';
+import { Button, SpriteImage, OverlayContextProvider, OverlayItem, RelativelyPositioned,Overlay, AnimatedTransition, Ref } from '@/components';
 import { FormikColorPicker } from '@libs';
 import { animated } from '@react-spring/web';
-import { getTransitionOptions, cn } from '@utils';
+import { getTransitionOptions, cn } from '@/utils';
 import { FC } from 'react';
 
 

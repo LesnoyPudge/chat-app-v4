@@ -1,4 +1,4 @@
-import { ClientEntities } from '@types';
+import { ClientEntities } from '@/types';
 import { encodeFiles } from './encodeFiles';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { FileInputPure } from './FileInput';

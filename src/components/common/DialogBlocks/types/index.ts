@@ -1,4 +1,4 @@
-import { Overlay } from '@components';
+import { Overlay } from '@/components';
 
 
 

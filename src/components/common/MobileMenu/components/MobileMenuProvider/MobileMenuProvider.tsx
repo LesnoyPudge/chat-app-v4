@@ -1,8 +1,8 @@
 import { FC, PropsWithChildren } from 'react';
 import { MobileMenuContext } from '../MobileMenuContext';
 import { useBoolean } from '@lesnoypudge/utils-react';
-import { useSliceSelector } from '@redux/hooks';
-import { Features } from '@redux/features';
+import { useSliceSelector } from '@/redux/hooks';
+import { Features } from '@/redux/features';
 
 
 

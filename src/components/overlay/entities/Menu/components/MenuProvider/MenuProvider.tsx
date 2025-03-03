@@ -1,6 +1,6 @@
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { Overlay } from '@components';
-import { withDisplayNameAndDecorator } from '@utils';
+import { Overlay } from '@/components';
+import { withDisplayNameAndDecorator } from '@/utils';
 
 
 

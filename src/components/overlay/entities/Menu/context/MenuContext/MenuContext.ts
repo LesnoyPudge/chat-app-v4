@@ -1,5 +1,5 @@
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { Overlay } from '@components';
+import { Overlay } from '@/components';
 
 
 

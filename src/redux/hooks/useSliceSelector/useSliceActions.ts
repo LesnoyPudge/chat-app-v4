@@ -1,4 +1,4 @@
-import type { Slices, RootState } from '@redux/store';
+import type { Slices, RootState } from '@/redux/store';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { useStoreSelector } from '../useStoreSelector';
 

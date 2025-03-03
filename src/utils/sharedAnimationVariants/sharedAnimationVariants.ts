@@ -35,7 +35,32 @@ export const createVariants = <_Shape extends Variants>(
             .reduce<createVariants.VariantsWithKey>((acc, cur) => {
                 const original = variants[cur];
                 invariant(original);
-                invariant(!isCallable(original));
+
+                if (isCallable(original)) {
+                    const fn: typeof original = (...args) => {
+                        const result = original(...args);
+
+                        if (typeof result === 'string') return result;
+
+                        return {
+                            ...result,
+                            transition: {
+                                ...sharedTransition,
+                                ...(
+                                    'transition' in result
+                                        ? result.transition
+                                        : {}
+                                ),
+                            },
+                        };
+                    };
+
+                    (fn as createVariants.VariantWithKey).key = cur;
+
+                    acc[cur] = (fn as createVariants.VariantWithKey);
+
+                    return acc;
+                }
 
                 acc[cur] = {
                     ...original,

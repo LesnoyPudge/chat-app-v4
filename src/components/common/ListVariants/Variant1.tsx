@@ -1,4 +1,4 @@
-import { useKeyboardNavigation } from '@hooks';
+import { useKeyboardNavigation } from '@/hooks';
 import { deepEqual, inArray } from '@lesnoypudge/utils';
 import {
     Focus,

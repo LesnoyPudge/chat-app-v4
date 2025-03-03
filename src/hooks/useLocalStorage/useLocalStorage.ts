@@ -1,5 +1,5 @@
-import { createLocalStorageHook } from '_@lesnoypudge/utils-react';
-import { localStorageApi } from '@utils';
+import { createLocalStorageHook } from '@lesnoypudge/utils-react';
+import { localStorageApi } from '@/utils';
 
 
 

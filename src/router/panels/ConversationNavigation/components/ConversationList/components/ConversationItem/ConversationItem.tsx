@@ -1,11 +1,11 @@
-import { Avatar, Button, ListVariants, Placeholder, Sprite,Overlay } from '@components';
-import { Navigator } from '@features';
-import { ASSETS } from '@generated/ASSETS';
-import { useTrans } from '@hooks';
+import { Avatar, Button, ListVariants, Placeholder, Sprite,Overlay } from '@/components';
+import { Navigator } from '@/features';
+import { ASSETS } from '@/generated/ASSETS';
+import { useTrans } from '@/hooks';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
-import { Features } from '@redux/features';
-import { useSliceSelector } from '@redux/hooks';
-import { cn, createStyles } from '@utils';
+import { Features } from '@/redux/features';
+import { useSliceSelector } from '@/redux/hooks';
+import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 
 

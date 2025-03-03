@@ -1,5 +1,5 @@
-import { List, Message, RTETypes } from '@components';
-import { createSingleMessage, noop, cn } from '@utils';
+import { List, Message, RTETypes } from '@/components';
+import { createSingleMessage, noop, cn } from '@/utils';
 import { FC } from 'react';
 import { Descendant } from 'slate';
 

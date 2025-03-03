@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { RTETypes } from '../../../../../RTETypes';
-import { Emoji } from '@components';
-import { createStyles } from '@utils';
+import { Emoji } from '@/components';
+import { createStyles } from '@/utils';
 
 
 const styles = createStyles({

@@ -6,7 +6,7 @@ import {
     useThrottle,
 } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
-import { Overlay } from '@components';
+import { Overlay } from '@/components';
 
 
 

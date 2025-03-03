@@ -1,6 +1,6 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Heading } from '@lesnoypudge/utils-react';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 
 

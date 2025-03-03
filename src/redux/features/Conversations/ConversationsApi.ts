@@ -1,6 +1,6 @@
-import { Endpoints } from '@fakeShared';
+import { Endpoints } from '@/fakeShared';
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { createCustomQuery } from '@redux/utils';
+import { createCustomQuery } from '@/redux/utils';
 
 
 

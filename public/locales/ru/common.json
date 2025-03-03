@@ -6,7 +6,6 @@
     "ApiError.UNAUTHORIZED": "Не авторизован",
     "Avatar.alt": "аватар",
     "COMMON.Hide": "Скрыть",
-    "COMMON.Loading": "Загрузка",
     "COMMON.Settings": "Настройки",
     "ConversationContextMenu.hideButton.text": "Скрыть сообщения",
     "ConversationContextMenu.label": "Список действий",

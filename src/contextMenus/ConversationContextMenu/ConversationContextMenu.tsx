@@ -1,9 +1,9 @@
-import { ActionMenu, Button, Overlay } from '@components';
-import { useOptimisticQueue, useTrans } from '@hooks';
+import { ActionMenu, Button, Overlay } from '@/components';
+import { useOptimisticQueue, useTrans } from '@/hooks';
 import { useFunction } from '@lesnoypudge/utils-react';
-import { Features } from '@redux/features';
-import { useStoreSelector } from '@redux/hooks';
-import { withDisplayNameAndDecorator } from '@utils';
+import { Features } from '@/redux/features';
+import { useStoreSelector } from '@/redux/hooks';
+import { withDisplayNameAndDecorator } from '@/utils';
 
 
 

@@ -1,5 +1,5 @@
-import { Overlay, RelativelyPositioned } from '@components';
-import { cn, createStyles, getAnimationVariants } from '@utils';
+import { Overlay, RelativelyPositioned } from '@/components';
+import { cn, createStyles, getAnimationVariants } from '@/utils';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { m } from 'motion/react';
 import { FC } from 'react';

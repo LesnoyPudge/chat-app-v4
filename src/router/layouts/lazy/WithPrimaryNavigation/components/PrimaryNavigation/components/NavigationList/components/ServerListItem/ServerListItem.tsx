@@ -1,13 +1,13 @@
-import { Avatar, Button, Overlay } from '@components';
-import { useKeyboardNavigation } from '@hooks';
+import { Avatar, Button, Overlay } from '@/components';
+import { useKeyboardNavigation } from '@/hooks';
 import { Focus, useFunction, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
-import { cn } from '@utils';
+import { cn } from '@/utils';
 import { FC } from 'react';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
-import { Features } from '@redux/features';
-import { useSliceSelector, useStoreSelector } from '@redux/hooks';
+import { Features } from '@/redux/features';
+import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
 import { sharedStyles } from '../../../../sharedStyles';
-import { Navigator } from '@features';
+import { Navigator } from '@/features';
 
 
 

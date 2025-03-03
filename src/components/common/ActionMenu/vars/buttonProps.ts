@@ -1,4 +1,4 @@
-import { Button } from '@components';
+import { Button } from '@/components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 

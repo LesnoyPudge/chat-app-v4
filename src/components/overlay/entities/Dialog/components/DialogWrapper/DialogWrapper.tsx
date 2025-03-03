@@ -1,8 +1,8 @@
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 import { m } from 'motion/react';
-import { cn, createStyles } from '@utils';
-import { Overlay } from '@components';
+import { cn, createStyles } from '@/utils';
+import { Overlay } from '@/components';
 
 
 

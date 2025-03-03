@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { Image } from '@components';
-import { useTrans } from '@hooks';
+import { Image } from '@/components';
+import { useTrans } from '@/hooks';
 import { useBoolean } from '@lesnoypudge/utils-react';
 import { getReadImagePath } from '../../utils';
-import { cn } from '@utils';
+import { cn } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { sharedStyles } from '../../vars';
 

@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { Button, MobileMenu, Sprite } from '@components';
+import { Button, MobileMenu, Sprite } from '@/components';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { createStyles } from '@utils';
-import { useTrans } from '@hooks';
-import { ASSETS } from '@generated/ASSETS';
+import { createStyles } from '@/utils';
+import { useTrans } from '@/hooks';
+import { ASSETS } from '@/generated/ASSETS';
 
 
 

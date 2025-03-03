@@ -1,12 +1,12 @@
-import { createStyles } from '@utils';
+import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { UserInfo } from './components';
-import { useSliceActions, useSliceSelector } from '@redux/hooks';
-import { Features } from '@redux/features';
+import { useSliceActions, useSliceSelector } from '@/redux/hooks';
+import { Features } from '@/redux/features';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
-import { useTrans } from '@hooks';
-import { Button, Sprite, Overlay } from '@components';
-import { ASSETS } from '@generated/ASSETS';
+import { useTrans } from '@/hooks';
+import { Button, Sprite, Overlay } from '@/components';
+import { ASSETS } from '@/generated/ASSETS';
 
 
 

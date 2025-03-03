@@ -10,7 +10,7 @@ import {
 import { withSliceSelectors } from '../enhancers';
 import { isCallable } from '@lesnoypudge/utils';
 import { createCustomEntityAdapter } from '../createCustomEntityAdapter';
-import { WithId } from '@types';
+import { WithId } from '@/types';
 
 
 

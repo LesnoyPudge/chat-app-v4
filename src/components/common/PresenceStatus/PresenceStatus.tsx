@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { Sprite } from '@components';
-import { ClientEntities, ExtendedRecord } from '@types';
-import { cn, createStyles } from '@utils';
+import { Sprite } from '@/components';
+import { ClientEntities, ExtendedRecord } from '@/types';
+import { cn, createStyles } from '@/utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { ASSETS } from '@generated/ASSETS';
+import { ASSETS } from '@/generated/ASSETS';
 
 
 

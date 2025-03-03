@@ -1,5 +1,5 @@
 import { Editor, Transforms } from 'slate';
-import { logger } from '@utils';
+import { logger } from '@/utils';
 import { RTETypes } from '../../../RTETypes';
 import { RTEModules } from '../..';
 

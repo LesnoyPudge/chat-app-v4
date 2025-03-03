@@ -1,5 +1,5 @@
 import { Hidden } from '@lesnoypudge/utils-react';
-import { MASK_ID } from '@vars';
+import { MASK_ID } from '@/vars';
 import { FC } from 'react';
 
 

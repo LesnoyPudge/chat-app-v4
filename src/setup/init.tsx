@@ -1,7 +1,7 @@
-import '@styles/index.scss';
+import '@/styles/index.scss';
 import { createRoot } from 'react-dom/client';
-import { Root } from '@root';
-import { getHTMLElement, logger } from '@utils';
+import { Root } from '@/root';
+import { getHTMLElement, logger } from '@/utils';
 
 
 

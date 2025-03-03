@@ -3,15 +3,15 @@ import {
     createCustomSliceEntityAdapter,
     createEntitySubscription,
     createStoreSelectors,
-} from '@redux/utils';
-import { ClientEntities } from '@types';
+} from '@/redux/utils';
+import { ClientEntities } from '@/types';
 import { ServersApi } from './ServersApi';
 import { TextChats } from '../TextChats';
 import { Users } from '../Users';
 import { isAnyOf } from '@reduxjs/toolkit';
 import { Roles } from '../Roles';
 import { sortFns } from '@lesnoypudge/utils';
-import { recalculatePermissions } from '@fakeShared';
+import { recalculatePermissions } from '@/fakeShared';
 
 
 

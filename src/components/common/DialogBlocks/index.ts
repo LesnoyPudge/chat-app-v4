@@ -1,6 +1,7 @@
 import * as c1 from './entities';
 import * as c2 from './types';
-import { Overlay } from '@components';
+// import { Overlay } from '../../overlay';
+import { Overlay } from '@/components';
 
 
 

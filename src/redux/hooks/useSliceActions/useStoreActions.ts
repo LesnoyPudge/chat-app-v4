@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { Slices, type AppDispatch } from '@redux/store';
+import { Slices, type AppDispatch } from '@/redux/store';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { useConst } from '@lesnoypudge/utils-react';
@@ -33,7 +33,7 @@ export const useSliceActions = <
                 // @ts-expect-error
                 acc[cur] = (payload) => {
                     // @ts-expect-error
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+                    // eslint-disable-next-line @/typescript-eslint/no-unsafe-assignment, @/typescript-eslint/no-unsafe-call
                     const action = slice.actions[cur](payload);
                     dispatch(action);
                 };

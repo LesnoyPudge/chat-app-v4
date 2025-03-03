@@ -1,12 +1,12 @@
-import { Avatar, Button, Image, Placeholder, Scrollable } from '@components';
+import { Avatar, Button, Image, Placeholder, Scrollable } from '@/components';
 import { FC } from 'react';
 import { useInvitationScreen } from './useInvitationScreen';
-import { createStyles, getAssetUrl } from '@utils';
-import { CUSTOM_STYLES } from '@vars';
+import { createStyles, getAssetUrl } from '@/utils';
+import { CUSTOM_STYLES } from '@/vars';
 import { Heading } from '@lesnoypudge/utils-react';
-import { useTrans } from '@hooks';
-import { Screen } from '@router/layouts/bundled';
-import { ASSETS } from '@generated/ASSETS';
+import { useTrans } from '@/hooks';
+import { Screen } from '@/router/layouts/bundled';
+import { ASSETS } from '@/generated/ASSETS';
 
 
 

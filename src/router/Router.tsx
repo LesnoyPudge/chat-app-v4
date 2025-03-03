@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import { ProdRoutes } from './routes/ProdRoutes';
-import { isDev } from '@vars';
-import { Navigator } from '@features';
+import { isDev } from '@/vars';
+import { Navigator } from '@/features';
 
 
 

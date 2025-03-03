@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { PartialFormatter } from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { cn } from '@utils';
+import { cn } from '@/utils';
 import './SliderInput.scss';
 import { FieldApi } from '@tanstack/react-form';
 import { useSliderInput } from './useSliderInput';
@@ -51,7 +51,7 @@ export namespace SliderInput {
             | 'range'
         >
         & {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @/typescript-eslint/no-explicit-any
             field: FieldApi<any, any, any, any, number>;
         }
     );

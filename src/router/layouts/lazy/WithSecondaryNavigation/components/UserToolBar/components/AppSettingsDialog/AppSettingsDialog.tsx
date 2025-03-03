@@ -1,6 +1,6 @@
 import { FC } from 'react';
 // import { AppearanceTab, Navigation, ProfileTab } from './components';
-import { Overlay } from '@components';
+import { Overlay } from '@/components';
 
 
 

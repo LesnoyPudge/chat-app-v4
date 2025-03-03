@@ -1,8 +1,8 @@
-import { Button, Overlay, RelativelyPositioned, Sprite } from '@components';
-import { ASSETS } from '@generated/ASSETS';
-import { useTrans } from '@hooks';
+import { Button, Overlay, RelativelyPositioned, Sprite } from '@/components';
+import { ASSETS } from '@/generated/ASSETS';
+import { useTrans } from '@/hooks';
 import { withDisplayName } from '@lesnoypudge/utils-react';
-import { createStyles, withDisplayNameAndDecorator } from '@utils';
+import { createStyles, withDisplayNameAndDecorator } from '@/utils';
 
 
 

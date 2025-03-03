@@ -1,4 +1,4 @@
-import { isProd } from '@vars';
+import { isProd } from '@/vars';
 import { Editor, Transforms, Element, Range, Text, Node } from 'slate';
 import { RTETypes } from '../../../RTETypes';
 import { RTEModules } from '../..';

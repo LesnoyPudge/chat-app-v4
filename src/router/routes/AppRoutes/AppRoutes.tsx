@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { Route } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../components';
-import { Navigator } from '@features';
-import { LazyLayouts } from '@router/layouts/lazy';
-import { LazyPanels } from '@router/panels';
+import { Navigator } from '@/features';
+import { LazyLayouts } from '@/router/layouts/lazy';
+import { LazyPanels } from '@/router/panels';
 
 
 

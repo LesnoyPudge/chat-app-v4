@@ -1,8 +1,8 @@
-import { Button, Overlay, Sprite } from '@components';
-import { ASSETS } from '@generated/ASSETS';
-import { useTrans } from '@hooks';
+import { Button, Overlay, Sprite } from '@/components';
+import { ASSETS } from '@/generated/ASSETS';
+import { useTrans } from '@/hooks';
 import { Heading, useRefManager } from '@lesnoypudge/utils-react';
-import { createStyles } from '@utils';
+import { createStyles } from '@/utils';
 import { FC } from 'react';
 
 

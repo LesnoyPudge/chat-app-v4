@@ -1,4 +1,4 @@
-import { store } from '@redux/store';
+import { store } from '@/redux/store';
 import { Heading } from '@lesnoypudge/utils-react';
 import { LazyMotion, MotionConfig } from 'motion/react';
 import { FC, PropsWithChildren } from 'react';

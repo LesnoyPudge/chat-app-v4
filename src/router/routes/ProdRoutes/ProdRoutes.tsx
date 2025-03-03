@@ -4,9 +4,9 @@ import {
     OnlyUnAuthorized,
     SuspenseWithGlobalLoader,
 } from '../components';
-import { Navigator } from '@features';
+import { Navigator } from '@/features';
 import { AppRoutes } from '../AppRoutes';
-import { LazyScreens } from '@router/screens/lazy';
+import { LazyScreens } from '@/router/screens/lazy';
 
 
 

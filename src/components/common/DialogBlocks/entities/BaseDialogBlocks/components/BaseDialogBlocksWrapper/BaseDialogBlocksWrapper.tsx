@@ -1,6 +1,6 @@
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
-import { Overlay, Scrollable } from '@components';
+import { Overlay, Scrollable } from '@/components';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 
 

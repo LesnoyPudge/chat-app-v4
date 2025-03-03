@@ -61,7 +61,7 @@ class Paths {
     channel = `${this.server}/channel/${params.channelId}` as const;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-misused-spread
+// eslint-disable-next-line @/typescript-eslint/no-misused-spread
 export const staticNavigatorPath = { ...new Paths() };
 
 export const pathToParams = {

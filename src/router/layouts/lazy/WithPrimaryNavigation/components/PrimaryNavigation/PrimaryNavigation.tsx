@@ -1,6 +1,6 @@
-import { MobileMenu } from '@components';
+import { MobileMenu } from '@/components';
 import { Focus, ContextSelectable, useRefManager } from '@lesnoypudge/utils-react';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import {
     ActionButtons,
     HomePageButton,

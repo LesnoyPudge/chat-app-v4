@@ -1,6 +1,6 @@
-import { AppSettingsDialogTabs, Button, SpriteImage, Link, Separator, TabContext, TabList, MoveFocusInside } from '@components';
-import { useKeyboardNavigation } from '@hooks';
-import { objectKeysToIdArray } from '@utils';
+import { AppSettingsDialogTabs, Button, SpriteImage, Link, Separator, TabContext, TabList, MoveFocusInside } from '@/components';
+import { useKeyboardNavigation } from '@/hooks';
+import { objectKeysToIdArray } from '@/utils';
 import { FC, useContext, useRef } from 'react';
 import { NavigationHeading, NavigationItem } from '../../../components';
 

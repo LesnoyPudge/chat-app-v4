@@ -1,7 +1,7 @@
-import { isProd } from '@vars';
-import { logger } from '@utils';
-import { initI18n } from '@features';
-import { fakeServer, initDB } from '@fakeServer';
+import { isProd } from '@/vars';
+import { logger } from '@/utils';
+import { initI18n } from '@/features';
+import { fakeServer, initDB } from '@/fakeServer';
 
 
 

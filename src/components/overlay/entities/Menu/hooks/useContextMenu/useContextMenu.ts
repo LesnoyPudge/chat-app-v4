@@ -4,7 +4,7 @@ import {
     useFunction,
     useRefManager,
 } from '@lesnoypudge/utils-react';
-import { Overlay, RelativelyPositioned } from '@components';
+import { Overlay, RelativelyPositioned } from '@/components';
 import { isHtmlElement } from '@lesnoypudge/utils-web';
 
 

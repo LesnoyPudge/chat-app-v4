@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { FC } from 'react';
-import { cn, createStyles, getHTMLElement } from '@utils';
+import { cn, createStyles, getHTMLElement } from '@/utils';
 import { Focus, ContextSelectable } from '@lesnoypudge/utils-react';
-import { Overlay } from '@components';
+import { Overlay } from '@/components';
 
 
 

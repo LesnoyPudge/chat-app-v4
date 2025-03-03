@@ -1,10 +1,10 @@
-import { socket } from '@fakeSocket';
+import { socket } from '@/fakeSocket';
 import { useMemoShallow } from '@lesnoypudge/utils-react';
 import { ActionReducerMapBuilder, EntityState } from '@reduxjs/toolkit';
 import { useEffect } from 'react';
 import { createCustomEntityAdapter } from '../createCustomEntityAdapter';
-import { WithId } from '@types';
-import { socketActions } from '@redux/actions';
+import { WithId } from '@/types';
+import { socketActions } from '@/redux/actions';
 import { createId } from '@lesnoypudge/utils';
 
 

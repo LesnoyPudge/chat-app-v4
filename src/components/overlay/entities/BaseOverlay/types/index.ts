@@ -1,4 +1,4 @@
-import type { Overlay } from '@components';
+import type { Overlay } from '@/components';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { MutableRefObject, PropsWithChildren } from 'react';

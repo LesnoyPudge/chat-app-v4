@@ -1,6 +1,6 @@
-import { MobileMenu } from '@components';
+import { MobileMenu } from '@/components';
 import { Focus, ContextSelectable, useRefManager } from '@lesnoypudge/utils-react';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { FC, PropsWithChildren } from 'react';
 import { Outlet } from 'react-router';
 import { UserToolBar } from './components';

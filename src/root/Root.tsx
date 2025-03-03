@@ -3,20 +3,20 @@ import {
     ErrorBoundary,
     Focus,
 } from '@lesnoypudge/utils-react';
-import { isDev } from '@vars';
+import { isDev } from '@/vars';
 import {
     GlobalProviders,
     Masks,
     SpriteSheet,
     GlobalLoader,
 } from './components';
-import { ErrorScreen } from '@router/screens/bundled';
+import { ErrorScreen } from '@/router/screens/bundled';
 import {
     usePreventDefault,
     // useFocusTracker,
 } from './hooks';
-import { withDisplayNameAndDecorator } from '@utils';
-import { Router } from '@router';
+import { withDisplayNameAndDecorator } from '@/utils';
+import { Router } from '@/router';
 
 
 

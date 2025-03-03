@@ -2,7 +2,7 @@ import {
     createListenerMiddleware,
     addListener as _addListener,
 } from '@reduxjs/toolkit';
-import type { RootState, AppDispatch } from '@redux/store';
+import type { RootState, AppDispatch } from '@/redux/store';
 
 
 

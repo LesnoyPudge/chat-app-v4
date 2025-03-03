@@ -1,5 +1,5 @@
-import { Button } from '@components';
-import { useKeyboardNavigation } from '@hooks';
+import { Button } from '@/components';
+import { useKeyboardNavigation } from '@/hooks';
 import { inArray, inRange } from '@lesnoypudge/utils';
 import { useRefManager, useFunction, Focus, Iterate } from '@lesnoypudge/utils-react';
 import { FC, useState } from 'react';

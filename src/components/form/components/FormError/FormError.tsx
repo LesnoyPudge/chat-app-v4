@@ -1,6 +1,6 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 import { UntypedFormContext } from '../../context';
 import { invariant } from '@lesnoypudge/utils';

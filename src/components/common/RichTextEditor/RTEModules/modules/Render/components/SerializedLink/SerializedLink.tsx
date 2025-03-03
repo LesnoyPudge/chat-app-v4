@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
 import { RTETypes } from '../../../../../RTETypes';
-import { ExternalLink } from '@components';
-import { createStyles } from '@utils';
+import { ExternalLink } from '@/components';
+import { createStyles } from '@/utils';
 
 
 const styles = createStyles({

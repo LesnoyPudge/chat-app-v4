@@ -1,6 +1,6 @@
-import { db } from '@fakeServer';
+import { db } from '@/fakeServer';
 import { KEY, toOneLine } from '@lesnoypudge/utils';
-import { localStorageApi, logger } from '@utils';
+import { localStorageApi, logger } from '@/utils';
 
 
 
@@ -53,17 +53,17 @@ export const rawActions = {
 
     softResetReduxStore: () => {
         // @ts-expect-error
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+        // eslint-disable-next-line @/typescript-eslint/no-unsafe-call, @/typescript-eslint/no-unsafe-member-access
         window._devtools?.store?.dispatch(
             // @ts-expect-error
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+            // eslint-disable-next-line @/typescript-eslint/no-unsafe-call, @/typescript-eslint/no-unsafe-member-access
             window._devtools?.softReset(),
         );
     },
 
     runAxe: () => {
         // @ts-expect-error
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+        // eslint-disable-next-line @/typescript-eslint/no-unsafe-call, @/typescript-eslint/no-unsafe-member-access
         window._devtools?.axeReact();
     },
 

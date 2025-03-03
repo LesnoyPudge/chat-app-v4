@@ -27,3 +27,4 @@ PrimaryNavigation, удалить size='hidden'
 перенести в места использования
 -? FIX ALL '../*' inside redux/features and RichTextEditor
 - переименовать переменные в локализации которые используют Modal / ContextMenu
+- replace react-loading-skeleton with custom?

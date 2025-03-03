@@ -1,4 +1,4 @@
-import { Navigator } from '@features';
+import { Navigator } from '@/features';
 // import { capitalize } from '@lesnoypudge/utils';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { rawActions } from '../../actions';

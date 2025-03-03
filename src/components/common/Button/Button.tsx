@@ -1,7 +1,7 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { PropsWithInnerRef } from '@types';
-import { cn } from '@utils';
+import { PropsWithInnerRef } from '@/types';
+import { cn } from '@/utils';
 import { FC } from 'react';
 import { styles } from './styles';
 import { useFunction } from '@lesnoypudge/utils-react';

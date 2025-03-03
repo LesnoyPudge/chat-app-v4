@@ -1,5 +1,5 @@
-import { Endpoints } from '@fakeShared';
-import { env } from '@vars';
+import { Endpoints } from '@/fakeShared';
+import { env } from '@/vars';
 
 
 

@@ -1,6 +1,6 @@
 import { CSSProperties, FC } from 'react';
 import { Editable, useSlate } from 'slate-react';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { PropsWithClassName } from '@lesnoypudge/types-utils-react';
 import { RTEContext } from '../../context';
 import { RTEModules } from '../../RTEModules';

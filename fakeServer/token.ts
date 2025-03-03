@@ -1,7 +1,7 @@
-import { sharedValidators } from '@fakeShared';
+import { sharedValidators } from '@/fakeShared';
 import { parseJSON } from '@lesnoypudge/utils';
-import { ClientEntities } from '@types';
-import { env } from '@vars';
+import { ClientEntities } from '@/types';
+import { env } from '@/vars';
 import * as v from 'valibot';
 
 

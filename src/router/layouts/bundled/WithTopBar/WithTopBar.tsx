@@ -1,5 +1,5 @@
 import { PropsWithChildrenAndClassName } from '@lesnoypudge/types-utils-react';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 import { MobileMenuButton } from './components';
 

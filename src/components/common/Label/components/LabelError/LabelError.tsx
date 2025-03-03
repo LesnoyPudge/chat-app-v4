@@ -1,5 +1,5 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 import { FieldApi, ValidationError } from '@tanstack/react-form';
 
@@ -17,7 +17,7 @@ export namespace LabelError {
         }
         | {
             error?: never;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @/typescript-eslint/no-explicit-any
             field: FieldApi<any, any, any, any>;
         }
     );

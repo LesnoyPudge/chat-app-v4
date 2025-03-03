@@ -1,15 +1,15 @@
-import { ErrorScreenPure, GlobalLoaderScreen } from '@router/screens/bundled';
+import { ErrorScreenPure, GlobalLoaderScreen } from '@/router/screens/bundled';
 import { noop } from '@lesnoypudge/utils';
 import {
     InvitationScreenPure,
-} from '@router/screens/lazy/InvitationScreen/InvitationScreen';
-import { Playground } from '@playground';
-import { AuthScreenPure } from '@router/screens/lazy/AuthScreen/AuthScreen';
+} from '@/router/screens/lazy/InvitationScreen/InvitationScreen';
+import { Playground } from '@/playground';
+import { AuthScreenPure } from '@/router/screens/lazy/AuthScreen/AuthScreen';
 import { Route } from 'react-router';
-import { Dummies } from '@fakeServer';
+import { Dummies } from '@/fakeServer';
 import { SuspenseWithGlobalLoader } from '../components';
 import { createSleep } from '@lesnoypudge/utils-react';
-import { Navigator } from '@features';
+import { Navigator } from '@/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import React from 'react';
 
@@ -57,6 +57,7 @@ const Sleep = createSleep(1_000);
 const DevElements = Object.values(Navigator.navigatorDevPath).map((path) => {
     return (
         <Route
+            key={path}
             path={path}
             element={(
                 <SuspenseWithGlobalLoader>

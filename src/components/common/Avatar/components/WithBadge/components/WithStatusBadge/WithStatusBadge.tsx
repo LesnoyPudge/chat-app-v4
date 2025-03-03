@@ -1,9 +1,9 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { useRefManager } from '@lesnoypudge/utils-react';
-import { cn, createStyles, getStatusLabel } from '@utils';
-import { MASK_ID } from '@vars';
+import { cn, createStyles, getStatusLabel } from '@/utils';
+import { MASK_ID } from '@/vars';
 import { CSSProperties, FC, useMemo } from 'react';
-import { PresenceStatus, Overlay } from '@components';
+import { PresenceStatus, Overlay } from '@/components';
 
 
 

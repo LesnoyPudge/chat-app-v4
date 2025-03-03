@@ -1,4 +1,4 @@
-import type { AppStore } from '@redux/store';
+import type { AppStore } from '@/redux/store';
 import {
     useSharedListenerMiddleware,
 } from '../useSharedListenerMiddleware';

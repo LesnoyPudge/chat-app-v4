@@ -3,8 +3,8 @@ import {
     createCustomSliceEntityAdapter,
     createEntitySubscription,
     createStoreSelectors,
-} from '@redux/utils';
-import { ClientEntities } from '@types';
+} from '@/redux/utils';
+import { ClientEntities } from '@/types';
 import { MessagesApi } from './MessagesApi';
 import { isAnyOf } from '@reduxjs/toolkit';
 import { Users } from '../Users';

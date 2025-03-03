@@ -1,4 +1,4 @@
-import { cn, createStyles } from '@utils';
+import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 import Skeleton, { SkeletonProps } from 'react-loading-skeleton';
 import css from './PlaceholderNode.module.scss';

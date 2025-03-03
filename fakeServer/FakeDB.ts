@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-dynamic-delete */
-import { socket } from '@fakeSocket';
+/* eslint-disable @/typescript-eslint/no-dynamic-delete */
+import { socket } from '@/fakeSocket';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { invariant, merge } from '@lesnoypudge/utils';
-import { ClientEntities } from '@types';
-import { env } from '@vars';
+import { ClientEntities } from '@/types';
+import { env } from '@/vars';
 import localforage from 'localforage';
 
 

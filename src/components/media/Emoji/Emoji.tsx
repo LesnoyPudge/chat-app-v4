@@ -1,8 +1,8 @@
 import { FC, useMemo } from 'react';
-import { Image } from '@components';
-import { cn, createStyles } from '@utils';
+import { Image } from '@/components';
+import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { EmojiStore } from '@features';
+import { EmojiStore } from '@/features';
 
 
 

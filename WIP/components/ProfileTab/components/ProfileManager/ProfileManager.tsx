@@ -1,6 +1,6 @@
 import { HeadingLevel } from '@libs';
-import { PropsWithClassName } from '@types';
-import { cn } from '@utils';
+import { PropsWithClassName } from '@/types';
+import { cn } from '@/utils';
 import { FC } from 'react';
 import { Banner, Header, Content } from './components';
 

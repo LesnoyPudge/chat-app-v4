@@ -1,9 +1,9 @@
-import { Button, Form, Label } from '@components';
-import { Endpoints, ApiValidators } from '@fakeShared';
-import { useTrans } from '@hooks';
+import { Button, Form, Label } from '@/components';
+import { Endpoints, ApiValidators } from '@/fakeShared';
+import { useTrans } from '@/hooks';
 import { Heading, ContextSelectable } from '@lesnoypudge/utils-react';
-import { Features } from '@redux/features';
-import { createStyles } from '@utils';
+import { Features } from '@/redux/features';
+import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { AuthTabContext } from '../../AuthScreen';
 import { WithLoadingIndicator } from '../LoadingIndicator';

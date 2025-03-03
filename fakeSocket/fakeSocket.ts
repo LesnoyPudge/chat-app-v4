@@ -1,7 +1,7 @@
-import { FakeDB } from '@fakeServer';
+import { FakeDB } from '@/fakeServer';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { never } from '@lesnoypudge/utils';
-import { Slices } from '@redux/store';
+import { Slices } from '@/redux/store';
 import { EntityState } from '@reduxjs/toolkit';
 
 

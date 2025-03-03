@@ -1,7 +1,7 @@
-import { createCustomSlice } from '@redux/utils';
+import { createCustomSlice } from '@/redux/utils';
 import { isAnyOf } from '@reduxjs/toolkit';
-import { localStorageApi } from '@utils';
-import { MOBILE_SCREEN_QUERY } from '@vars';
+import { localStorageApi } from '@/utils';
+import { MOBILE_SCREEN_QUERY } from '@/vars';
 import { Users } from '../Users';
 
 

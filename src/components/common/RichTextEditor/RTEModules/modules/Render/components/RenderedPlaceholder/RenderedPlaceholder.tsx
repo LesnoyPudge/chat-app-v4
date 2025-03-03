@@ -1,4 +1,4 @@
-import { createStyles } from '@utils';
+import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { RenderPlaceholderProps } from 'slate-react';
 

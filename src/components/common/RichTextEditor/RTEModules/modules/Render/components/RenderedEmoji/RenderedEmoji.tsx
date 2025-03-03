@@ -1,5 +1,5 @@
-import { Emoji } from '@components';
-import { createStyles } from '@utils';
+import { Emoji } from '@/components';
+import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { InlineChromiumBugfix } from '../InlineChromiumBugfix';
 import { RenderElementProps } from 'slate-react';

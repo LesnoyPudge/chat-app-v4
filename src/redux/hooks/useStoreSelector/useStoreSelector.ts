@@ -1,7 +1,7 @@
 import { useConst } from '@lesnoypudge/utils-react';
-import { RootState } from '@redux/store';
-import { logger } from '@utils';
-import { isDev } from '@vars';
+import { RootState } from '@/redux/store';
+import { logger } from '@/utils';
+import { isDev } from '@/vars';
 import { memoize } from 'proxy-memoize';
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';

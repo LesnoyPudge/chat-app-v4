@@ -1,6 +1,6 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { cn, createStyles, formatNotificationCount } from '@utils';
-import { MASK_ID } from '@vars';
+import { cn, createStyles, formatNotificationCount } from '@/utils';
+import { MASK_ID } from '@/vars';
 import { CSSProperties, FC, useMemo } from 'react';
 
 

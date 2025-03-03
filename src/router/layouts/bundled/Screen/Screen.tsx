@@ -1,7 +1,7 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Focus, useRefManager } from '@lesnoypudge/utils-react';
-import { cn, createStyles } from '@utils';
-import { CUSTOM_STYLES } from '@vars';
+import { cn, createStyles } from '@/utils';
+import { CUSTOM_STYLES } from '@/vars';
 import { FC } from 'react';
 
 

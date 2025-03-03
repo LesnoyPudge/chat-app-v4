@@ -1,5 +1,5 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { RelativelyPositioned } from '@components';
+import { RelativelyPositioned } from '@/components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 

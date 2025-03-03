@@ -1,10 +1,10 @@
-import { ListVariants, Scrollable } from '@components';
+import { ListVariants, Scrollable } from '@/components';
 import { FC } from 'react';
-import { createStyles } from '@utils';
+import { createStyles } from '@/utils';
 import { Heading, useRefManager } from '@lesnoypudge/utils-react';
-import { useTrans } from '@hooks';
-import { Features } from '@redux/features';
-import { useSliceSelector, useStoreSelector } from '@redux/hooks';
+import { useTrans } from '@/hooks';
+import { Features } from '@/redux/features';
+import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
 import { ConversationItem } from './components';
 
 

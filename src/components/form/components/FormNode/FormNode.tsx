@@ -1,6 +1,6 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { ContextSelectable, useFunction } from '@lesnoypudge/utils-react';
-import { PropsWithInnerRef } from '@types';
+import { PropsWithInnerRef } from '@/types';
 import { ComponentPropsWithoutRef, FC, FormEvent } from 'react';
 import { UntypedFormContext } from '../../context';
 import { invariant } from '@lesnoypudge/utils';
@@ -49,7 +49,7 @@ export const FormNode: FC<FormNode.Props> = ({
     return (
         <form
             className={className}
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            // eslint-disable-next-line @/typescript-eslint/no-misused-promises
             onSubmit={handleSubmit}
             {...rest}
         >
