@@ -9,13 +9,16 @@ import { withDisplayNameAndDecorator } from '@/utils';
 
 const {
     withDecorator,
-} = withDisplayNameAndDecorator<Overlay.Menu.Types.PublicProps>(
+} = withDisplayNameAndDecorator<Overlay.Menu.Types.PublicPropsContextMenu>(
     'ConversationContextMenu',
     ({
         children,
-        controls,
-        leaderElementOrRectRef,
+        leaderElementRef,
     }) => {
+        const {
+            controls,
+            leaderElementOrRectRef,
+        } = Overlay.Menu.useContextMenuControls({ leaderElementRef });
         const { t } = useTrans();
 
         return (

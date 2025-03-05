@@ -8,6 +8,7 @@ import { Features } from '@/redux/features';
 import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
 import { sharedStyles } from '../../../../sharedStyles';
 import { Navigator } from '@/features';
+import { ServerContextMenu } from './components';
 
 
 
@@ -98,12 +99,10 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
                     {server?.name}
                 </Overlay.Tooltip>
 
-                {/* <ContextMenu.Wrapper
+                <ServerContextMenu
+                    serverId={serverId}
                     leaderElementRef={buttonRef}
-                    preferredAlignment='right'
-                >
-                    <ServerContextMenu serverId={serverId}/>
-                </ContextMenu.Wrapper> */}
+                />
             </If>
         </WrapperWithBullet>
     );

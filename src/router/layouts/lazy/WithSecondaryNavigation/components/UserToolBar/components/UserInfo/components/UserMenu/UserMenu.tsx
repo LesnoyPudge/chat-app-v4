@@ -1,4 +1,4 @@
-import { Button, Overlay, PresenceStatus, RelativelyPositioned } from '@/components';
+import { Button, Overlay, PresenceStatus } from '@/components';
 import { useTrans } from '@/hooks';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { noop } from '@lesnoypudge/utils';
@@ -55,17 +55,9 @@ const styles = createStyles({
 
 const { animationVariants } = getAnimationVariants.withOpacity();
 
-export namespace UserMenu {
-    export type DecoratorProps = (
-        Overlay.Types.WithControls
-        & Pick<
-            RelativelyPositioned.Node.RequiredProps,
-            'leaderElementOrRectRef'
-        >
-    );
-}
-
-const { withDecorator } = createWithDecorator<UserMenu.DecoratorProps>(({
+const { withDecorator } = createWithDecorator<
+    Overlay.Menu.Types.PublicProps
+>(({
     controls,
     leaderElementOrRectRef,
     children,
@@ -95,7 +87,7 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
         extraStatus,
     } = useStoreSelector(Features.Users.StoreSelectors.selectMe());
     const { throttle, isThrottling } = useThrottle();
-    const { closeOverlay } = ContextSelectable.useProxy(Overlay.Dialog.Context);
+    const { closeOverlay } = ContextSelectable.useProxy(Overlay.Menu.Context);
     const { mounted } = useMountedWrapper();
     const { t } = useTrans();
 
@@ -104,9 +96,7 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
         updateHelpers,
     ] = Features.Users.Api.useProfileUpdateMutation();
 
-    const getSetStatus = (
-        newStatus: ExtraStatusNames,
-    ) => {
+    const getSetStatus = (newStatus: ExtraStatusNames) => {
         return () => {
             if (updateHelpers.isLoading) return;
 

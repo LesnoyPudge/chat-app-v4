@@ -23,14 +23,14 @@ const { withDecorator } = withDisplayNameAndDecorator<
     const { t } = useTrans();
 
     return (
-        <DialogBlocks.Provider
+        <DialogBlocks.Base.Provider
             label={t('CreateServerDialog.label')}
             controls={controls}
         >
             <DialogBlocks.Base.Wrapper>
                 {children}
             </DialogBlocks.Base.Wrapper>
-        </DialogBlocks.Provider>
+        </DialogBlocks.Base.Provider>
     );
 });
 

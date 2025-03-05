@@ -8,6 +8,7 @@ import { Features } from '@/redux/features';
 import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
 import { sharedStyles } from '../../../../sharedStyles';
 import { Navigator } from '@/features';
+import { ConversationContextMenu } from './components';
 
 
 
@@ -122,12 +123,10 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
                     {userTarget?.name}
                 </Overlay.Tooltip>
 
-                {/* <ContextMenu.Wrapper
+                <ConversationContextMenu
+                    conversationId={conversationId}
                     leaderElementRef={buttonRef}
-                    preferredAlignment='right'
-                >
-                    <ConversationContextMenu conversationId={conversationId}/>
-                </ContextMenu.Wrapper> */}
+                />
             </If>
         </WrapperWithBullet>
     );

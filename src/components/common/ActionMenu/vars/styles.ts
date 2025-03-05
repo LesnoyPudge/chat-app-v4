@@ -4,18 +4,17 @@ import { createStyles } from '@/utils';
 
 export const styles = createStyles({
     wrapper: `
-        h-[90dvh] 
-        min-w-[min(200px,100dvw)]
-        rounded-sm 
-        bg-primary-600 
-        px-2
-        py-1.5 
+        max-h-[90dvh] 
+        min-w-[min(200px,100dvw)] 
+        rounded-sm
+        bg-primary-600
         shadow-elevation-high
     `,
     scrollable: `
         flex
         flex-col 
         gap-1 
+        py-2.5 
     `,
     button: `
         group/button 

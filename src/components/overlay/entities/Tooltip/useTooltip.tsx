@@ -1,5 +1,4 @@
 import {
-    ContextSelectable,
     useEventListener,
     useFunction,
     useIntersectionObserver,
@@ -14,18 +13,15 @@ import { Overlay } from '@/components';
 export const useTooltip = ({
     leaderElementRef,
     within = false,
-}: Types.useTooltip.Props) => {
+}: Types.useTooltip.Props): Types.useTooltip.Return => {
+    const controls = Overlay.useControls();
     const withKeyboardRef = useRef(false);
     const withMouseRef = useRef(false);
-    const {
-        isOverlayExistRef,
-        setOverlay,
-    } = ContextSelectable.useProxy(Overlay.BaseOverlay.Context);
 
     const changeState = useFunction(() => {
         const newState = withKeyboardRef.current || withMouseRef.current;
 
-        setOverlay(newState);
+        controls.set(newState);
     });
 
     const handleFocusIn = useFunction((target: Element) => {
@@ -68,9 +64,13 @@ export const useTooltip = ({
     useEventListener(leaderElementRef, 'pointerleave', handleMouseLeave);
 
     useIntersectionObserver(leaderElementRef, ({ isIntersecting }) => {
-        if (isIntersecting === isOverlayExistRef.current) return;
+        if (isIntersecting === controls.isOpen) return;
         if (!withKeyboardRef.current && !withMouseRef.current) return;
 
-        setOverlay(isIntersecting);
+        controls.set(isIntersecting);
     });
+
+    return {
+        controls,
+    };
 };

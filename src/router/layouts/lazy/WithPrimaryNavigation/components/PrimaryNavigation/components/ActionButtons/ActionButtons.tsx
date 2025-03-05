@@ -6,6 +6,7 @@ import { cn } from '@/utils';
 import { sharedStyles } from '../../sharedStyles';
 import { useTrans } from '@/hooks';
 import { ASSETS } from '@/generated/ASSETS';
+import { CreateServerDialog } from './components';
 
 
 
@@ -35,7 +36,7 @@ export const ActionButtons: FC = () => {
                 />
             </Button>
 
-            {/* <CreateServerDialog controls={controls}/> */}
+            <CreateServerDialog controls={controls}/>
 
             <Overlay.Tooltip
                 preferredAlignment='right'

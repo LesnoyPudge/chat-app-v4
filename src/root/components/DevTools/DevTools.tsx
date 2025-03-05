@@ -1,4 +1,4 @@
-import { Button, ListVariants, Overlay } from '@/components';
+import { Button, DialogBlocks, ListVariants, Overlay } from '@/components';
 import { createStyles, logger } from '@/utils';
 import { FC } from 'react';
 import { useDevTools } from './hooks';
@@ -43,11 +43,14 @@ const { withDecorator } = createWithDecorator(({ children }) => {
     );
 
     return (
-        <Overlay.Dialog.Provider controls={controls} label='devtools'>
-            <Overlay.Dialog.Wrapper>
+        <DialogBlocks.Base.Provider
+            controls={controls}
+            label='devtools'
+        >
+            <DialogBlocks.Base.Wrapper>
                 {children}
-            </Overlay.Dialog.Wrapper>
-        </Overlay.Dialog.Provider>
+            </DialogBlocks.Base.Wrapper>
+        </DialogBlocks.Base.Provider>
     );
 });
 

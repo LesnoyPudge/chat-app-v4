@@ -37,19 +37,10 @@ const jsonExt = '.json';
 const namespacesSet = new Set<string>();
 let namespacesObj = {};
 
-const main = async () => {
+const main = () => {
     const startTime = performance.now();
 
-    await new Promise<void>((res, rej) => {
-        childProcess.exec(
-            `i18next -c ${parserConfigPath}`,
-            (err) => {
-                if (err) rej(err.message);
-
-                res();
-            },
-        );
-    });
+    childProcess.execSync(`i18next -c ${parserConfigPath}`);
     console.log('locales generated');
 
     invariant(
@@ -126,9 +117,9 @@ const main = async () => {
     console.log('i18n data generated');
 
     const diffTime = performance.now() - startTime;
-    console.log(`translated in ${
+    console.log(`localization generated in ${
         (diffTime / 1_000).toFixed(2)
     } seconds`);
 };
 
-await main();
+main();

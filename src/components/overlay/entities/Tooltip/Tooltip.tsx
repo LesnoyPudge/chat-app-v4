@@ -60,9 +60,20 @@ const variants = createVariants({
     }),
 });
 
-const { withDecorator } = createWithDecorator(({ children }) => {
+const { withDecorator } = createWithDecorator<
+    Pick<Types.Node.Props, 'within' | 'leaderElementRef'>
+>(({
+    within = false,
+    leaderElementRef,
+    children,
+}) => {
+    const { controls } = useTooltip({
+        leaderElementRef,
+        within,
+    });
+
     return (
-        <Overlay.BaseOverlay.Provider>
+        <Overlay.BaseOverlay.Provider controls={controls}>
             <Overlay.BaseOverlay.Wrapper>
                 {children}
             </Overlay.BaseOverlay.Wrapper>
@@ -77,17 +88,11 @@ export const Tooltip = withDecorator(withDisplayName('Tooltip', ({
     centered = true,
     spacing = 20,
     swappableAlignment = true,
-    within = false,
     unbounded = false,
     children,
     ...rest
 }: Types.Node.Props) => {
     const followerElementRef = useRefManager<HTMLDivElement>(null);
-
-    useTooltip({
-        leaderElementRef,
-        within,
-    });
 
     return (
         <RelativelyPositioned.Node

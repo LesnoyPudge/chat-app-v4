@@ -1,4 +1,4 @@
-import { Button, Overlay, RelativelyPositioned, Sprite } from '@/components';
+import { Button, Overlay, Sprite } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
 import { withDisplayName } from '@lesnoypudge/utils-react';
@@ -65,16 +65,6 @@ const {
         );
     },
 );
-
-export namespace ServerMenu {
-    export type DecoratorProps = (
-        Overlay.Types.WithControls
-        & Pick<
-            RelativelyPositioned.Node.RequiredProps,
-            'leaderElementOrRectRef'
-        >
-    );
-}
 
 export const ServerMenu = withDisplayName(
     'ServerMenu',

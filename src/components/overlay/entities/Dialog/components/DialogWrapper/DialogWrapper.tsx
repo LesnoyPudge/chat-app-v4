@@ -10,10 +10,10 @@ const styles = createStyles({
     popover: 'relative',
     dialog: 'pointer-events-auto',
     backdrop: `
-        pointer-events-auto
-        absolute 
-        inset-0
-        -z-10 
+        pointer-events-auto 
+        absolute
+        inset-0 
+        -z-10
         bg-black/70
     `,
 });

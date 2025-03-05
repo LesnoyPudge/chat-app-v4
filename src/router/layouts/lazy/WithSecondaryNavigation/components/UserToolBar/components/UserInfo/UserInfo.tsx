@@ -49,7 +49,7 @@ export const UserInfo: FC = () => {
                 hasPopup='dialog'
                 label={t('UserInfo.openMenuButton.label')}
                 isActive={controls.isOpen}
-                onLeftClick={controls.toggle}
+                onLeftClick={controls.open}
             >
                 <Avatar.WithBadge.Status
                     className={styles.avatar}

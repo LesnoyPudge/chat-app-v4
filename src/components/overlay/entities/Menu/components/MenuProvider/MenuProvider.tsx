@@ -1,43 +1,38 @@
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { Overlay } from '@/components';
 import { MenuContext } from '../../context';
-import { withDisplayNameAndDecorator } from '@/utils';
+import { FC } from 'react';
 
 
 
-const { withDecorator } = withDisplayNameAndDecorator(
-    'MenuProvider',
-    ({ children }) => {
-        return (
-            <Overlay.BaseOverlay.Provider>
-                <Overlay.Popover.Provider
-                    blockable
-                    blocking
-                    closeOnClickOutside
-                    closeOnEscape
-                    focused
-                >
-                    {children}
-                </Overlay.Popover.Provider>
-            </Overlay.BaseOverlay.Provider>
-        );
-    },
-);
-
-export const MenuProvider = withDecorator<
-    Overlay.Menu.Types.Provider.Props
->(({
+export const MenuProvider: FC<Overlay.Menu.Types.Provider.Props> = ({
+    controls,
     children,
     ...rest
 }) => {
-    const popover = ContextSelectable.useSelector(Overlay.Popover.Context);
-
     return (
-        <MenuContext.Provider value={{
-            ...popover,
-            ...rest,
-        }}>
-            {children}
-        </MenuContext.Provider>
+        <Overlay.BaseOverlay.Provider controls={controls}>
+            <Overlay.Popover.Provider
+                blockable
+                blocking
+                closeOnClickOutside
+                closeOnEscape
+                focused
+            >
+                <ContextSelectable.ConsumerSelector
+                    context={Overlay.Popover.Context}
+                >
+                    {(popover) => (
+                        <MenuContext.Provider value={{
+                            controls,
+                            ...popover,
+                            ...rest,
+                        }}>
+                            {children}
+                        </MenuContext.Provider>
+                    )}
+                </ContextSelectable.ConsumerSelector>
+            </Overlay.Popover.Provider>
+        </Overlay.BaseOverlay.Provider>
     );
-});
+};

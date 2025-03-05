@@ -48,12 +48,16 @@ export namespace Types {
         & Pick<Context, 'leaderElementOrRectRef'>
     );
 
+    type WithLeaderElementRef = {
+        leaderElementRef: (
+            RelativelyPositioned.useRelativePosition.LeaderElementRef
+        );
+    };
+
+    export type PublicPropsContextMenu = WithLeaderElementRef;
+
     export namespace useContextMenuControls {
-        export type Props = {
-            leaderElementRef: (
-                RelativelyPositioned.useRelativePosition.LeaderElementRef
-            );
-        };
+        export type Props = WithLeaderElementRef;
 
         export type Return = Pick<
             Context,

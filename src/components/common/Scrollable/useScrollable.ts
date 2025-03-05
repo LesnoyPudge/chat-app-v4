@@ -51,10 +51,14 @@ export const useScrollable = ({
         within: true,
         stateless: true,
         onFocus: () => {
+            if (!autoHide) return;
+
             isFocusedRef.current = true;
             on();
         },
         onBlur: () => {
+            if (!autoHide) return;
+
             focusEndDebounce(() => {
                 isFocusedRef.current = false;
                 off();

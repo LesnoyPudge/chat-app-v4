@@ -16,12 +16,14 @@ export const TMP: FC = () => {
 
     return (
         <div className='flex h-dvh flex-col gap-4'>
+            <div>{Math.random() + 2}</div>
+
             <button onClick={() => {
                 state.toggle();
 
                 (
                     state.value
-                        ? soundManager.play('', ASSETS.SOUNDS.DISCORD_MUTE)
+                        ? soundManager.play('1', ASSETS.SOUNDS.DISCORD_MUTE)
                         : soundManager.play('', ASSETS.SOUNDS.DISCORD_UNMUTE)
                 );
             }}>

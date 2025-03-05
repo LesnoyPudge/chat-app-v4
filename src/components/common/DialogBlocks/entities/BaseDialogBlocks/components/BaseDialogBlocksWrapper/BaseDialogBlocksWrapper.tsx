@@ -6,8 +6,9 @@ import { RT } from '@lesnoypudge/types-utils-react/namespace';
 
 
 const styles = createStyles({
-    wrapper: `
-        m-auto
+    wrapper: 'pointer-events-none absolute inset-0 grid place-items-center',
+    inner: `
+        pointer-events-auto
         flex
         max-h-[90dvh]
         w-[min(440px,100%)]
@@ -29,13 +30,15 @@ export const BaseDialogBlocksWrapper: FC<
 }) => {
     return (
         <Overlay.Dialog.Wrapper className={cn(styles.wrapper, className)}>
-            <Scrollable
-                className={cn(styles.scrollable)}
-                size='small'
-                withoutGutter
-            >
-                {children}
-            </Scrollable>
+            <div className={styles.inner}>
+                <Scrollable
+                    className={cn(styles.scrollable)}
+                    size='small'
+                    withoutGutter
+                >
+                    {children}
+                </Scrollable>
+            </div>
         </Overlay.Dialog.Wrapper>
     );
 };

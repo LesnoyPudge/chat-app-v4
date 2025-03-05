@@ -3,7 +3,8 @@
     "author": "LesnoyPudge",
     "type": "module",
     "scripts": {
-        "dev": "npm run scripts:i18n && concurrently \"nodemon --config nodemon.i18n.json\" \"nodemon --config nodemon.vite.json\"",
+        "dev": "vite --force",
+        "_dev": "npm run scripts:i18n && concurrently \"nodemon --config nodemon.i18n.json\" \"nodemon --config nodemon.vite.json\"",
         "prod": "echo \"Not implemented\" && exit 1",
         "build": "npm run type:check && vite build",
         "deploy": "git add . && git commit -m 'update' && git push && git status",
@@ -86,6 +87,7 @@
         "vite-plugin-checker": "^0.8.0",
         "vite-plugin-pwa": "^0.21.1",
         "vite-plugin-restart": "^0.4.2",
+        "vite-plugin-run": "^0.6.1",
         "vite-tsconfig-paths": "^5.1.4"
     },
     "msw": {

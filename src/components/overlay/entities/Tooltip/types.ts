@@ -1,5 +1,5 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { RelativelyPositioned } from '@/components';
+import { Overlay, RelativelyPositioned } from '@/components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
@@ -23,5 +23,10 @@ export namespace Types {
             Node.Props,
             'leaderElementRef' | 'within'
         >>;
+
+        export type Return = Pick<
+            Overlay.BaseOverlay.Types.PublicProps,
+            'controls'
+        >;
     }
 }
