@@ -1,13 +1,25 @@
-import { Button, Overlay, PresenceStatus } from '@/components';
+import { ActionMenu, Button, Overlay, PresenceStatus } from '@/components';
 import { useTrans } from '@/hooks';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { noop } from '@lesnoypudge/utils';
-import { useConst, ContextSelectable, useFunction, useMountedWrapper, useThrottle, withDisplayName, createWithDecorator, Iterate } from '@lesnoypudge/utils-react';
+import {
+    useConst,
+    useFunction,
+    useThrottle,
+    withDisplayName,
+    createWithDecorator,
+    Iterate,
+} from '@lesnoypudge/utils-react';
 import { copyToClipboard } from '@lesnoypudge/utils-web';
 import { Features } from '@/redux/features';
 import { useStoreSelector } from '@/redux/hooks';
 import { ClientEntities } from '@/types';
-import { cn, createStyles, getAnimationVariants, getStatusLabel } from '@/utils';
+import {
+    cn,
+    createStyles,
+    getAnimationVariants,
+    getStatusLabel,
+} from '@/utils';
 
 
 
@@ -23,27 +35,9 @@ const extraStatusNames = Object.keys<TMPNames>({
 type ExtraStatusNames = T.ArrayValues<typeof extraStatusNames>;
 
 const styles = createStyles({
-    wrapper: `
-        flex 
-        min-w-[min(200px,100dvw)] 
-        flex-col 
-        gap-1 
-        rounded-sm 
-        bg-primary-600 
-        p-2.5 
-        shadow-elevation-high
-    `,
-    button: `
-        group/button
-        flex
-        w-full
-        items-center justify-start 
-        gap-3 
-    `,
+    button: 'justify-start',
     status: `
         size-3.5
-        group-hover/button:fill-white
-        group-focus-visible/button:fill-white
         group-data-[loading=true]/button:fill-white
     `,
     copyButton: `
@@ -87,8 +81,6 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
         extraStatus,
     } = useStoreSelector(Features.Users.StoreSelectors.selectMe());
     const { throttle, isThrottling } = useThrottle();
-    const { closeOverlay } = ContextSelectable.useProxy(Overlay.Menu.Context);
-    const { mounted } = useMountedWrapper();
     const { t } = useTrans();
 
     const [
@@ -100,12 +92,7 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
         return () => {
             if (updateHelpers.isLoading) return;
 
-            void updateTrigger({
-                extraStatus: newStatus,
-            }).then(({ error }) => {
-                if (error) return;
-                mounted(closeOverlay);
-            });
+            void updateTrigger({ extraStatus: newStatus });
         };
     };
 
@@ -128,7 +115,7 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
     );
 
     return (
-        <div className={styles.wrapper}>
+        <ActionMenu.Wrapper>
             <Iterate items={extraStatusNames}>
                 {(extraStatusItem) => {
                     const label = getStatusLabel({
@@ -140,18 +127,22 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
 
                     return (
                         <Button
-                            className={styles.button}
-                            stylingPreset='invisibleBrand'
-                            size='small'
+                            className={cn(
+                                ActionMenu.styles.button,
+                                styles.button,
+                            )}
+                            {...ActionMenu.buttonProps}
                             label={label}
                             isDisabled={isCurrentStatus}
                             isLoading={updateHelpers.isLoading}
                             onLeftClick={statusToFn[extraStatusItem]}
-                            role='menuitem'
                             key={extraStatusItem}
                         >
                             <PresenceStatus
-                                className={styles.status}
+                                className={cn(
+                                    ActionMenu.styles.icon.fill,
+                                    styles.status,
+                                )}
                                 precalculatedStatus={extraStatusItem}
                             />
 
@@ -162,15 +153,16 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
             </Iterate>
 
             <Button
-                className={cn(styles.button, styles.copyButton)}
-                stylingPreset='invisibleBrand'
-                size='small'
+                className={cn(
+                    ActionMenu.styles.button,
+                    styles.copyButton,
+                )}
+                {...ActionMenu.buttonProps}
                 onLeftClick={copyName}
-                role='menuitem'
                 isActive={isThrottling}
             >
                 {copyNameText}
             </Button>
-        </div>
+        </ActionMenu.Wrapper>
     );
 }));

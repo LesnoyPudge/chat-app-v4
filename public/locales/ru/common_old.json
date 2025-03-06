@@ -1,3 +1,4 @@
 {
-    "COMMON.Loading": "Загрузка"
+    "COMMON.Loading": "Загрузка",
+    "ServerMenu.actionListLabel": "Меню действий"
 }

@@ -35,12 +35,10 @@ export const styles = createStyles({
         text-sm 
         font-medium 
         text-color-secondary 
-        hover-focus-visible:bg-brand
-        hover-focus-visible:text-white 
     `,
-    icon: `
-        size-5
-        fill-icon-300 
-        hover-focus-visible/button:fill-white 
-    `,
+    icon: {
+        size: 'size-5',
+        baseFill: 'fill-icon-300',
+        fill: 'group-hover-focus-visible/button:fill-white',
+    },
 });

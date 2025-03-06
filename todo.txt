@@ -12,15 +12,11 @@ https://fluid.tw/
 -? стоит ли оставлять useOptimisticQueue? или сделать через rtkquery (
 составить таблицу запросов id запроса, при успешном убивать все записи до.
 при ошибке возвращать последнее валидное значение из таблицы)
--? добавить autoHide к Scrollable и сделать такой скролл у 
-PrimaryNavigation, удалить size='hidden'
 -? PrimaryNavigation role 'menu'??? change to ul?
 -? remove useGetManyDeepQuery for entities that is received through socket
 - add sorting by createTimestamp to all EntityAdapters
 -? populate VoiceChats
 -? change JsonView на https://www.npmjs.com/package/@microlink/react-json-view
-- ПРОВЕРИТЬ ЧТО У КНОПОК СТОИТ ПРАВИЛЬНЫЙ hasPopup
 -? FIX ALL '../*' inside redux/features and RichTextEditor
-- replace react-loading-skeleton with custom?
-- add ActionMenu to UserMenu and ServerMenu
+-? replace react-loading-skeleton with custom?
 - добавить обработчики эндпоинтов из контекстных меню

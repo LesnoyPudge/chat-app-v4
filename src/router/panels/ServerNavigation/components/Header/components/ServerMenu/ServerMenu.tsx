@@ -1,44 +1,10 @@
-import { Button, Overlay, Sprite } from '@/components';
+import { ActionMenu, Button, Overlay, Sprite } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
 import { withDisplayName } from '@lesnoypudge/utils-react';
-import { createStyles, withDisplayNameAndDecorator } from '@/utils';
+import { cn, withDisplayNameAndDecorator } from '@/utils';
 
 
-
-const styles = createStyles({
-    wrapper: `
-        flex 
-        w-full
-        max-w-[220px] 
-        flex-col 
-        gap-1 
-        rounded-md 
-        bg-primary-500 
-        px-2 
-        py-1.5
-    `,
-    button: `
-        flex 
-        h-8 
-        w-full 
-        shrink-0 
-        items-center 
-        justify-between 
-        gap-1 
-        rounded
-        fill-icon-300 
-        px-2 
-        py-1.5 
-        text-start 
-        text-color-secondary 
-        hover-focus-visible:bg-brand
-        hover-focus-visible:fill-white 
-        hover-focus-visible:text-white 
-    `,
-    buttonText: 'truncate text-sm font-medium',
-    buttonIcon: 'h-5 w-5 transition-none',
-});
 
 const {
     withDecorator,
@@ -57,6 +23,7 @@ const {
                 controls={controls}
                 preferredAlignment='right'
                 leaderElementOrRectRef={leaderElementOrRectRef}
+                centered
             >
                 <Overlay.Menu.Wrapper>
                     {children}
@@ -76,26 +43,26 @@ export const ServerMenu = withDisplayName(
         const deleteServerControls = Overlay.useControls();
 
         return (
-            <div
-                className={styles.wrapper}
-                role='menu'
-                aria-label={t('ServerMenu.actionListLabel')}
-            >
+            <ActionMenu.Wrapper>
                 <>
                     <Button
-                        className={styles.button}
-                        role='menuitem'
+                        className={ActionMenu.styles.button}
+                        {...ActionMenu.buttonProps}
                         hasPopup='dialog'
                         isActive={inviteFriendsControls.isOpen}
                         label={t('ServerMenu.inviteFriends')}
                         onLeftClick={inviteFriendsControls.open}
                     >
-                        <span className={styles.buttonText}>
+                        <span>
                             {t('ServerMenu.inviteFriends')}
                         </span>
 
                         <Sprite
-                            className={styles.buttonIcon}
+                            className={cn(
+                                ActionMenu.styles.icon.size,
+                                ActionMenu.styles.icon.baseFill,
+                                ActionMenu.styles.icon.fill,
+                            )}
                             sprite={ASSETS.IMAGES.SPRITE.FRIEND_ICON}
                         />
                     </Button>
@@ -105,19 +72,23 @@ export const ServerMenu = withDisplayName(
 
                 <>
                     <Button
-                        className={styles.button}
-                        role='menuitem'
+                        className={ActionMenu.styles.button}
+                        {...ActionMenu.buttonProps}
                         hasPopup='dialog'
                         isActive={serverSettingsControls.isOpen}
                         label={t('ServerMenu.settings')}
                         onLeftClick={serverSettingsControls.open}
                     >
-                        <span className={styles.buttonText}>
+                        <span>
                             {t('ServerMenu.settings')}
                         </span>
 
                         <Sprite
-                            className={styles.buttonIcon}
+                            className={cn(
+                                ActionMenu.styles.icon.size,
+                                ActionMenu.styles.icon.baseFill,
+                                ActionMenu.styles.icon.fill,
+                            )}
                             sprite={ASSETS.IMAGES.SPRITE.SETTINGS_GEAR}
                         />
                     </Button>
@@ -127,19 +98,23 @@ export const ServerMenu = withDisplayName(
 
                 <>
                     <Button
-                        className={styles.button}
-                        role='menuitem'
+                        className={ActionMenu.styles.button}
+                        {...ActionMenu.buttonProps}
                         hasPopup='dialog'
                         isActive={leaveServerControls.isOpen}
                         label={t('ServerMenu.leave')}
                         onLeftClick={leaveServerControls.open}
                     >
-                        <span className={styles.buttonText}>
+                        <span>
                             {t('ServerMenu.leave')}
                         </span>
 
                         <Sprite
-                            className={styles.buttonIcon}
+                            className={cn(
+                                ActionMenu.styles.icon.size,
+                                ActionMenu.styles.icon.baseFill,
+                                ActionMenu.styles.icon.fill,
+                            )}
                             sprite={ASSETS.IMAGES.SPRITE.DOORWAY_ICON}
                         />
                     </Button>
@@ -149,26 +124,30 @@ export const ServerMenu = withDisplayName(
 
                 <>
                     <Button
-                        className={styles.button}
-                        role='menuitem'
+                        className={ActionMenu.styles.button}
+                        {...ActionMenu.buttonProps}
                         hasPopup='dialog'
                         isActive={deleteServerControls.isOpen}
                         label={t('ServerMenu.delete')}
                         onLeftClick={deleteServerControls.open}
                     >
-                        <span className={styles.buttonText}>
+                        <span>
                             {t('ServerMenu.delete')}
                         </span>
 
                         <Sprite
-                            className={styles.buttonIcon}
+                            className={cn(
+                                ActionMenu.styles.icon.size,
+                                ActionMenu.styles.icon.baseFill,
+                                ActionMenu.styles.icon.fill,
+                            )}
                             sprite={ASSETS.IMAGES.SPRITE.GARBAGE_CAN_ICON}
                         />
                     </Button>
 
                     {/* <DeleteChannelDialog/> */}
                 </>
-            </div>
+            </ActionMenu.Wrapper>
         );
     }),
 );

@@ -83,7 +83,6 @@
     "ServerContextMenu.NotificationButton.text.mute": "Отключить уведомления",
     "ServerContextMenu.NotificationButton.text.unmute": "Включить уведомления",
     "ServerContextMenu.readNotificationsButton.text": "Очистить уведомления",
-    "ServerMenu.actionListLabel": "Меню действий",
     "ServerMenu.delete": "Удалить сервер",
     "ServerMenu.inviteFriends": "Пригласить друзей",
     "ServerMenu.label": "Меню действий сервера",
