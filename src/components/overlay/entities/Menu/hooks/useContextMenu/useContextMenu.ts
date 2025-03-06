@@ -13,6 +13,9 @@ type Props = Overlay.Menu.Types.useContextMenuControls.Props;
 
 type Return = Overlay.Menu.Types.useContextMenuControls.Return;
 
+const CURSOR_SIZE = 1;
+const CURSOR_MARGIN = 2;
+
 export const useContextMenuControls = ({
     leaderElementRef,
 }: Props): Return => {
@@ -29,15 +32,13 @@ export const useContextMenuControls = ({
         const withKeyboard = !withMouse;
 
         if (withMouse) {
-            const cursorSize = 1;
-
             mutate(leaderElementOrRectRef, 'current', {
                 top: e.clientY,
-                bottom: e.clientY + cursorSize,
+                bottom: e.clientY + CURSOR_SIZE + CURSOR_MARGIN,
                 left: e.clientX,
-                right: e.clientX + cursorSize,
-                width: cursorSize,
-                height: cursorSize,
+                right: e.clientX + CURSOR_SIZE + CURSOR_MARGIN,
+                width: CURSOR_SIZE,
+                height: CURSOR_SIZE,
             });
         }
 

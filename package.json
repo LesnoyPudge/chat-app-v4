@@ -3,7 +3,7 @@
     "author": "LesnoyPudge",
     "type": "module",
     "scripts": {
-        "dev": "vite --force",
+        "dev": "vite",
         "_dev": "npm run scripts:i18n && concurrently \"nodemon --config nodemon.i18n.json\" \"nodemon --config nodemon.vite.json\"",
         "prod": "echo \"Not implemented\" && exit 1",
         "build": "npm run type:check && vite build",

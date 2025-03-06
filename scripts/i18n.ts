@@ -32,13 +32,13 @@ const parserConfigPath = path.join(
 );
 invariant(fs.existsSync(parserConfigPath));
 
-const resources: Locales = {};
 const jsonExt = '.json';
 const namespacesSet = new Set<string>();
-let namespacesObj = {};
 
 const main = () => {
     const startTime = performance.now();
+    let namespacesObj = {};
+    const resources: Locales = {};
 
     childProcess.execSync(`i18next -c ${parserConfigPath}`);
     console.log('locales generated');

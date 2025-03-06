@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react';
-import { AppSettingsDialogTabs, Button, DeleteAccountModal, OverlayContextProvider, Separator, TabContext, TabPanel } from '@/components';
+import { AppSettingsDialogTabs, Button, DeleteAccountDialog, OverlayContextProvider, Separator, TabContext, TabPanel } from '@/components';
 import { ProfileManager } from './components';
 import { HeadingLevel } from '@libs';
 import { SettingsDescription, SettingsGroupTitle } from '..';
@@ -42,7 +42,7 @@ export const ProfileTab: FC = () => {
                                     <>Удалить учётную запись</>
                                 </Button>
 
-                                <DeleteAccountModal/>
+                                <DeleteAccountDialog/>
                             </>
                         )}
                     </OverlayContextProvider>

@@ -98,7 +98,7 @@ const factory = (
 };
 
 export const getAnimationVariants = {
-    baseModal: factory({
+    baseDialog: factory({
         initial: {
             opacity: 0,
             scale: 0.1,
@@ -125,7 +125,7 @@ export const getAnimationVariants = {
         },
     }),
 
-    baseModalBackdrop: factory({
+    baseDialogBackdrop: factory({
         initial: {
             opacity: 0,
             transition: {
@@ -149,7 +149,7 @@ export const getAnimationVariants = {
         },
     }),
 
-    fullScreenModal: factory({
+    fullScreenDialog: factory({
         initial: {
             opacity: 0,
             scale: 1.2,
@@ -179,6 +179,9 @@ export const getAnimationVariants = {
             scale: 0.95,
             opacity: 0,
         },
+    }, {
+        duration: 0.15,
+        ease: 'backOut',
     }),
 
     custom: <_Shape extends Variants>(

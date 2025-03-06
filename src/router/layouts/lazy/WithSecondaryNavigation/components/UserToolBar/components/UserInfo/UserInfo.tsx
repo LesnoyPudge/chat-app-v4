@@ -46,7 +46,7 @@ export const UserInfo: FC = () => {
             <Button
                 className={styles.userInfo}
                 innerRef={buttonRef}
-                hasPopup='dialog'
+                hasPopup='menu'
                 label={t('UserInfo.openMenuButton.label')}
                 isActive={controls.isOpen}
                 onLeftClick={controls.open}

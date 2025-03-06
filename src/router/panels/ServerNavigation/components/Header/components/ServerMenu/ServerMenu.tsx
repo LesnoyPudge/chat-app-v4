@@ -100,7 +100,7 @@ export const ServerMenu = withDisplayName(
                         />
                     </Button>
 
-                    {/* <InviteToChannelModal/> */}
+                    {/* <InviteToChannelDialog/> */}
                 </>
 
                 <>
@@ -122,7 +122,7 @@ export const ServerMenu = withDisplayName(
                         />
                     </Button>
 
-                    {/* <ChannelSettingsModal/> */}
+                    {/* <ChannelSettingsDialog/> */}
                 </>
 
                 <>
@@ -144,7 +144,7 @@ export const ServerMenu = withDisplayName(
                         />
                     </Button>
 
-                    {/* <LeaveChannelModal/> */}
+                    {/* <LeaveChannelDialog/> */}
                 </>
 
                 <>
@@ -166,7 +166,7 @@ export const ServerMenu = withDisplayName(
                         />
                     </Button>
 
-                    {/* <DeleteChannelModal/> */}
+                    {/* <DeleteChannelDialog/> */}
                 </>
             </div>
         );

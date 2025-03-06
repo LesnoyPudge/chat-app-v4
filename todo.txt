@@ -19,16 +19,8 @@ PrimaryNavigation, удалить size='hidden'
 - add sorting by createTimestamp to all EntityAdapters
 -? populate VoiceChats
 -? change JsonView на https://www.npmjs.com/package/@microlink/react-json-view
-- ИСПРАВИТЬ ВСЕ ОВЕРЛЕИ И ПРОВЕРИТЬ ЧТО У КНОПОК СТОИТ ПРАВИЛЬНЫЙ hasPopup
-- разобрать ContextMenu на Menu, useContextMenu (click handler), ActionMenu (стилизованное меню с кнопками и тд)
-- создать все модалки которые сейчас закомментированы
-- заменить все createWithDecorator и withDisplayName на withDisplayNameAndDecorator 
-- все оверлеи которые созданы в отдельных папках (modals, contextMenus, etc)
-перенести в места использования
+- ПРОВЕРИТЬ ЧТО У КНОПОК СТОИТ ПРАВИЛЬНЫЙ hasPopup
 -? FIX ALL '../*' inside redux/features and RichTextEditor
-- переименовать переменные в локализации которые используют Modal / ContextMenu
 - replace react-loading-skeleton with custom?
 - add ActionMenu to UserMenu and ServerMenu
-- ПОФИКСИТЬ VITE
-- контекстные меню оверфловят, пофиксить
 - добавить обработчики эндпоинтов из контекстных меню

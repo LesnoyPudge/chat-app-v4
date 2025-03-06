@@ -4,8 +4,10 @@ import { createStyles } from '@/utils';
 
 export const styles = createStyles({
     wrapper: `
-        max-h-[90dvh] 
+        flex
+        max-h-[90dvh]
         min-w-[min(200px,100dvw)] 
+        flex-col 
         rounded-sm
         bg-primary-600
         shadow-elevation-high

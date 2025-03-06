@@ -1,4 +1,4 @@
-import { Button, ChangeEmailModal, ChangePasswordModal, ChangeUsernameModal, OverlayContextProvider } from '@/components';
+import { Button, ChangeEmailDialog, ChangePasswordDialog, ChangeUsernameDialog, OverlayContextProvider } from '@/components';
 import { Heading } from '@libs';
 import { conditional } from '@/utils';
 import { FC } from 'react';
@@ -54,7 +54,7 @@ export const Content: FC = () => {
                                 <>Изменить</>
                             </Button>
 
-                            <ChangeUsernameModal/>
+                            <ChangeUsernameDialog/>
                         </>
                     )}
                 </OverlayContextProvider>
@@ -94,7 +94,7 @@ export const Content: FC = () => {
                                 <>Изменить</>
                             </Button>
 
-                            <ChangeEmailModal/>
+                            <ChangeEmailDialog/>
                         </>
                     )}
                 </OverlayContextProvider>
@@ -126,7 +126,7 @@ export const Content: FC = () => {
                                 <>Изменить</>
                             </Button>
 
-                            <ChangePasswordModal/>
+                            <ChangePasswordDialog/>
                         </>
                     )}
                 </OverlayContextProvider>

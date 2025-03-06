@@ -5,12 +5,12 @@ import { Overlay } from '@/components';
 
 
 const {
-    animationVariants: baseModalVariants,
-} = getAnimationVariants.baseModal();
+    animationVariants: baseDialogVariants,
+} = getAnimationVariants.baseDialog();
 
 const {
-    animationVariants: baseModalBackdropVariants,
-} = getAnimationVariants.baseModalBackdrop();
+    animationVariants: baseDialogBackdropVariants,
+} = getAnimationVariants.baseDialogBackdrop();
 
 export namespace BaseDialogBlocksProvider {
     export type Props = Pick<
@@ -29,8 +29,8 @@ export const BaseDialogBlocksProvider: FC<BaseDialogBlocksProvider.Props> = ({
         <Overlay.Dialog.Provider
             {...rest}
             withBackdrop
-            animationVariants={baseModalVariants}
-            backdropAnimationVariants={baseModalBackdropVariants}
+            animationVariants={baseDialogVariants}
+            backdropAnimationVariants={baseDialogBackdropVariants}
         >
             {children}
         </Overlay.Dialog.Provider>

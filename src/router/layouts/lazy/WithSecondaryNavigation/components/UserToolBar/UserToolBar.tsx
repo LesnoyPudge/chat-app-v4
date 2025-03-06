@@ -41,7 +41,7 @@ export const UserToolBar: FC = () => {
     const microphoneButtonRef = useRefManager<HTMLButtonElement>(null);
     const headphoneButtonRef = useRefManager<HTMLButtonElement>(null);
     const settingsButtonRef = useRefManager<HTMLButtonElement>(null);
-    const modalControls = Overlay.useControls();
+    const controls = Overlay.useControls();
 
     const {
         isDeaf,
@@ -137,9 +137,9 @@ export const UserToolBar: FC = () => {
                         className={styles.button}
                         label='Открыть настройки'
                         hasPopup='dialog'
-                        isActive={modalControls.isOpen}
+                        isActive={controls.isOpen}
                         innerRef={settingsButtonRef}
-                        onLeftClick={modalControls.open}
+                        onLeftClick={controls.open}
                     >
                         <Sprite
                             className={styles.icon}
@@ -154,7 +154,7 @@ export const UserToolBar: FC = () => {
                         {t('COMMON.Settings')}
                     </Overlay.Tooltip>
 
-                    {/* <AppSettingsDialog controls={modalControls}/> */}
+                    {/* <AppSettingsDialog controls={controls}/> */}
                 </>
             </div>
         </div>

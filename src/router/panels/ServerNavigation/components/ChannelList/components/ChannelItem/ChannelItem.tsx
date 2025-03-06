@@ -146,7 +146,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
                         />
                     </Button>
 
-                    {/* <ChannelSettingsModal/> */}
+                    {/* <ChannelSettingsDialog/> */}
 
                     <Overlay.Tooltip
                         preferredAlignment='right'

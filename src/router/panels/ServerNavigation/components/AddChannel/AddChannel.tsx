@@ -46,7 +46,7 @@ export const AddChannel: FC = () => {
                 {t('ServerNavigation.AddChannel.tooltip')}
             </Overlay.Tooltip>
 
-            {/* <CreateRoomModal/> */}
+            {/* <CreateRoomDialog/> */}
         </div>
     );
 };

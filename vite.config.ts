@@ -7,7 +7,7 @@ import path from 'node:path';
 import { Env } from './generated/env';
 import url from 'node:url';
 import { debarrelPlugin } from './vitePlugins';
-// import ViteRestart from 'vite-plugin-restart';
+import ViteRestart from 'vite-plugin-restart';
 import { run } from 'vite-plugin-run';
 
 
@@ -35,7 +35,7 @@ const config: UserConfigFn = ({ mode }) => {
             watch: {
                 ignored: ['**/generated/**/*'],
             },
-            // hmr: false,
+            hmr: false,
         },
         preview: {
             port: Number.parseInt(env._PUBLIC_CLIENT_PORT),
@@ -52,41 +52,46 @@ const config: UserConfigFn = ({ mode }) => {
         //     force: true,
         // },
         plugins: [
-            // ViteRestart({
-            //     restart: [
-            //         // './src/**/*',
-            //         './fakeServer/**/*',
-            //         './fakeShared/**/*',
-            //         './fakeSocket/**/*',
-            //         './public/**/*',
-            //         './rawAssets/**/*',
-            //         './twPlugins/**/*',
-            //         '!**/generated/**/*',
-            //         '../../.env',
-            //         '../shared/build/**/*',
-            //     ],
-            // }),
-            // run({
-            //     input: [{
-            //         name: 'generate localization',
-            //         run: ['npm', 'run', 'scripts:i18n'],
-            //         pattern: ['./src/**/*.{ts,tsx,js,jsx}'],
-            //     }, {
-            //         name: 'track other files',
-            //         pattern: [
-            //             './fakeServer/**/*',
-            //             './fakeShared/**/*',
-            //             './fakeSocket/**/*',
-            //             // './public/**/*',
-            //             './rawAssets/**/*',
-            //             './twPlugins/**/*',
-            //             '!**/generated/**/*',
-            //             '../../.env',
-            //             '../shared/build/**/*',
-            //         ],
-            //     }],
-            //     silent: false,
-            // }),
+            ViteRestart({
+                restart: [
+                    './src/**/*',
+                    './fakeServer/**/*',
+                    './fakeShared/**/*',
+                    './fakeSocket/**/*',
+                    // './public/**/*',
+                    './rawAssets/**/*',
+                    './twPlugins/**/*',
+                    './tailwind.config.ts',
+                    './index.html',
+                    // '!./generated/**/*',
+                    '../../.env',
+                    '../shared/build/**/*',
+                ],
+            }),
+            run({
+                input: [{
+                    name: 'generate localization',
+                    run: ['npm', 'run', 'scripts:i18n'],
+                    pattern: [
+                        './src/**/*.{ts,tsx,js,jsx}',
+                    ],
+                }, {
+                    name: 'track all files',
+                    pattern: [
+                        // './src/**/*',
+                        // './fakeServer/**/*',
+                        // './fakeShared/**/*',
+                        // './fakeSocket/**/*',
+                        // // './public/**/*',
+                        // './rawAssets/**/*',
+                        // './twPlugins/**/*',
+                        // // '!./generated/**/*',
+                        // '../../.env',
+                        // '../shared/build/**/*',
+                    ],
+                }],
+                silent: false,
+            }),
             debarrelPlugin(),
             react({
                 babel: {

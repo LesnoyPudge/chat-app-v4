@@ -36,7 +36,7 @@ export const BaseDialogBlocksHeader: FC<RT.PropsWithChildrenAndClassName> = ({
             <Button
                 className={styles.button}
                 onLeftClick={closeOverlay}
-                label={t('Modal.closeButton.text')}
+                label={t('Dialog.closeButton.text')}
             >
                 <Sprite
                     className={styles.icon}

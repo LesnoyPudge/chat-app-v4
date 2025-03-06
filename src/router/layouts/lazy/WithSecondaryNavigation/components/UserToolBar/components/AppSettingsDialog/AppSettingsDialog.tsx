@@ -4,9 +4,9 @@ import { Overlay } from '@/components';
 
 
 
-// export type AppSettingsFullScreenModalTabs = typeof tabs;
+// export type AppSettingsFullScreenDialogTabs = typeof tabs;
 
-// const transitionOptions = getTransitionOptions.fullScreenModal();
+// const transitionOptions = getTransitionOptions.fullScreenDialog();
 
 // const tabs = {
 //     profileTab: <ProfileTab/>,
@@ -32,12 +32,12 @@ export const AppSettingsDialog: FC<AppSettingsDialog.Props> = ({
     // };
 
     // return (
-    //     <ModalWindow
+    //     <DialogWindow
     //         label='Настройки приложения'
     //         transitionOptions={transitionOptions}
     //     >
-    //         <FullScreenModalContextProvider>
-    //             <ContextConsumerProxy context={FullScreenModalContext}>
+    //         <FullScreenDialogContextProvider>
+    //             <ContextConsumerProxy context={FullScreenDialogContext}>
     //                 {({
     //                     resetShakeStacks, triggerScreenShake,
     //                     closeMobileMenu, withResetShakeStacks,
@@ -64,15 +64,15 @@ export const AppSettingsDialog: FC<AppSettingsDialog.Props> = ({
     //                                 >
     //                                     {({ currentTab }) => (
     //                                         <Form>
-    //                                             <FullScreenModalWrapper>
-    //                                                 <FullScreenModalNavigationSide>
+    //                                             <FullScreenDialogWrapper>
+    //                                                 <FullScreenDialogNavigationSide>
     //                                                     <Navigation/>
-    //                                                 </FullScreenModalNavigationSide>
+    //                                                 </FullScreenDialogNavigationSide>
 
-    //                                                 <FullScreenModalContentSide>
+    //                                                 <FullScreenDialogContentSide>
     //                                                     {currentTab.tab}
-    //                                                 </FullScreenModalContentSide>
-    //                                             </FullScreenModalWrapper>
+    //                                                 </FullScreenDialogContentSide>
+    //                                             </FullScreenDialogWrapper>
     //                                         </Form>
     //                                     )}
     //                                 </TabContextProvider>
@@ -81,7 +81,7 @@ export const AppSettingsDialog: FC<AppSettingsDialog.Props> = ({
     //                     </Formik>
     //                 )}
     //             </ContextConsumerProxy>
-    //         </FullScreenModalContextProvider>
-    //     </ModalWindow>
+    //         </FullScreenDialogContextProvider>
+    //     </DialogWindow>
     // );
 };

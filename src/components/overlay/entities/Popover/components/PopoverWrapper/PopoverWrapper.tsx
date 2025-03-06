@@ -42,6 +42,8 @@ export const PopoverWrapper: FC<Overlay.Popover.Types.Wrapper.Props> = ({
                 <div
                     className={styles.clickProtector}
                     onClick={closeOverlay}
+                    onContextMenu={closeOverlay}
+                    onAuxClick={closeOverlay}
                 >
                 </div>
             </If>

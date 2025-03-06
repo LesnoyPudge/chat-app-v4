@@ -82,11 +82,11 @@ const useScrollableDebug = ({
                 { parentElement },
                 getElementFillableSize(parentElement),
             );
-        } else {
-            remove();
-
-            parentElement.style.overflow = originalParentOverflow;
         }
+
+        if (!isOverflowingParent) remove();
+
+        parentElement.style.overflow = originalParentOverflow;
     });
 
     useLayoutEffect(checkWindowOverflow);
