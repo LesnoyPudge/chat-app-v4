@@ -20,3 +20,4 @@ https://fluid.tw/
 -? FIX ALL '../*' inside redux/features and RichTextEditor
 -? replace react-loading-skeleton with custom?
 - добавить обработчики эндпоинтов из контекстных меню
+- при переключении мобильного меню на меню, фокусируется элемент списка с tabindex=0 вместо первого доступного элемента (кнопки HomePageButton) вероятно из за автофокуса который навешивается в KeyboardNavigation

@@ -1,4 +1,4 @@
-import { Button, Sprite,Overlay } from '@/components';
+import { Button, Sprite, Overlay, MobileMenu } from '@/components';
 import { useTrans } from '@/hooks';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
@@ -14,8 +14,11 @@ export const HomePageButton: FC = () => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { t } = useTrans();
     const { navigateTo, myLocationIs } = Navigator.useNavigator();
+    const { closeMenu } = MobileMenu.useMobileMenu();
 
     const handleClick = useFunction(() => {
+        if (myLocationIs.root()) closeMenu();
+
         void navigateTo.root();
     });
 

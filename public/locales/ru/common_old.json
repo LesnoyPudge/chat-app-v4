@@ -1,4 +1,7 @@
 {
     "COMMON.Loading": "Загрузка",
+    "FriendsPanel.Navigation.allFriends.button.label": "Все",
+    "FriendsPanel.Navigation.blockedUsers.button.label": "Заблокированные",
+    "FriendsPanel.Navigation.friendRequests.button.label": "Ожидание",
     "ServerMenu.actionListLabel": "Меню действий"
 }

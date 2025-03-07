@@ -1,70 +1,44 @@
-import { ContextSelectable, useConst, useFunction } from '@lesnoypudge/utils-react';
-import { PropsWithChildren, ReactNode, useMemo, useState } from 'react';
-import { createTabContext } from '../../utils';
-import { invariant } from '@lesnoypudge/utils';
+import { useConst, useFunction, useRefManager } from '@lesnoypudge/utils-react';
+import { useMemo, useState } from 'react';
+import { Types } from '../../types';
+import { createProps } from '../../utils';
 
 
-
-export namespace TabContextProvider {
-    export type GenericTabs = Record<string, ReactNode>;
-
-    export type TabProps<KEY extends keyof GenericTabs> = {
-        role: 'tab';
-        controls: `tabPanel-${KEY}`;
-        id: `tab-${KEY}`;
-    };
-
-    export type TabPanelProps<KEY extends keyof GenericTabs> = {
-        id: `tabPanel-${KEY}`;
-        labelledBy: `tab-${KEY}`;
-    };
-
-    export type Tab<VALUES> = {
-        identifier: keyof VALUES;
-        tab: ReactNode;
-    };
-
-    export type Props<_Tabs extends GenericTabs> = (
-        PropsWithChildren
-        & {
-            context: ContextSelectable.createContext.ContextSelectable<
-                createTabContext.Context<_Tabs>
-            >;
-            tabs: _Tabs;
-            initialTab: keyof _Tabs;
-            onTabChange?: (prevent: VoidFunction) => void;
-        }
-    );
-}
 
 export const TabContextProvider = <
-    _Tabs extends TabContextProvider.GenericTabs,
+    _Tabs extends Types.GenericTabs,
 >({
     context,
     tabs,
+    orientation,
     initialTab,
     onTabChange,
     children,
-}: TabContextProvider.Props<_Tabs>) => {
-    const tabsArray = useConst(() => Object.keys<_Tabs>(tabs));
+}: Types.TabContextProvider.Props<_Tabs>) => {
+    const {
+        tabNames,
+        tabPanelProps,
+        tabProps,
+        tabName,
+    } = useConst(() => createProps(tabs));
+
+    const listRef = useRefManager<HTMLDivElement>(null);
 
     const getCurrentTab = useFunction((
         identifier: keyof _Tabs,
-    ): TabContextProvider.Tab<_Tabs> => ({
+    ): Types.Tab<_Tabs> => ({
         identifier: identifier.toString(),
         tab: tabs[identifier],
     }));
 
     const [currentTab, setCurrentTab] = useState<
-        TabContextProvider.Tab<_Tabs>
-    >(() => {
-        invariant(tabsArray[0], 'Tabs not provided');
-
-        return getCurrentTab(initialTab);
-    });
+        Types.Tab<_Tabs>
+    >(() => getCurrentTab(initialTab));
 
     const changeTab = useConst(() => {
-        return tabsArray.reduce<Record<keyof _Tabs, VoidFunction>>((acc, key) => {
+        return tabNames.reduce<
+            Types.Context<_Tabs>['changeTab']
+        >((acc, key) => {
             acc[key] = () => {
                 if (!onTabChange) return setCurrentTab(getCurrentTab(key));
 
@@ -76,7 +50,6 @@ export const TabContextProvider = <
 
                 onTabChange(prevent);
 
-
                 if (!isPrevented) setCurrentTab(getCurrentTab(key));
             };
 
@@ -85,8 +58,8 @@ export const TabContextProvider = <
     });
 
     const transformedTabs = useConst(() => {
-        return tabsArray.reduce<
-            Record<keyof _Tabs, TabContextProvider.Tab<_Tabs>>
+        return tabNames.reduce<
+            Types.Context<_Tabs>['transformedTabs']
         >((acc, key) => {
             acc[key] = {
                 identifier: key,
@@ -99,7 +72,7 @@ export const TabContextProvider = <
 
     const isActive = useMemo(() => {
         return Object.keys<_Tabs>(tabs).reduce<
-            Record<keyof _Tabs, boolean>
+            Types.Context<_Tabs>['isActive']
         >((acc, key) => {
             acc[key] = currentTab.identifier === key;
 
@@ -107,41 +80,19 @@ export const TabContextProvider = <
         }, {});
     }, [currentTab.identifier, tabs]);
 
-    const tabProps = useConst(() => {
-        return tabsArray.reduce<
-            Record<keyof _Tabs, TabContextProvider.TabProps<string>>
-        >((acc, key) => {
-            acc[key] = {
-                role: 'tab',
-                controls: `tabPanel-${key.toString()}`,
-                id: `tab-${key.toString()}`,
-            };
-
-            return acc;
-        }, {});
-    });
-
-    const tabPanelProps = useConst(() => {
-        return tabsArray.reduce<
-            Record<keyof _Tabs, TabContextProvider.TabPanelProps<string>>
-        >((acc, key) => {
-            acc[key] = {
-                id: `tabPanel-${key.toString()}`,
-                labelledBy: `tab-${key.toString()}`,
-            };
-
-            return acc;
-        }, {});
-    });
-
     const contextValues = {
+        initialTabName: initialTab,
         transformedTabs,
         currentTab,
         changeTab,
         isActive,
+        tabNames,
+        tabName,
+        _listRef: listRef,
+        orientation,
         tabProps,
-        tabPanelProps,
-    } as createTabContext.Context<_Tabs>;
+        _tabPanelProps: tabPanelProps,
+    } satisfies Types.Context<_Tabs>;
 
     const TabContext = context;
 

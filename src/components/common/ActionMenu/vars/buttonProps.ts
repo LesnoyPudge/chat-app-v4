@@ -3,13 +3,13 @@ import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
-export const buttonProps: T.Simplify<Pick<
+export const buttonProps = {
+    stylingPreset: 'invisibleBrand',
+    size: 'small',
+    role: 'menuitem',
+} satisfies T.Simplify<Pick<
     Required<Button.Props>,
     'stylingPreset'
     | 'size'
     | 'role'
->> = {
-    stylingPreset: 'invisibleBrand',
-    size: 'small',
-    role: 'menuitem',
-};
+>>;

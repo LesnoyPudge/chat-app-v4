@@ -1,5 +1,5 @@
 import { MobileMenu } from '@/components';
-import { Focus, ContextSelectable, useRefManager } from '@lesnoypudge/utils-react';
+import { Focus, useRefManager } from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@/utils';
 import {
     ActionButtons,
@@ -30,8 +30,10 @@ export const PrimaryNavigation: FC = () => {
     const {
         shouldShowMenu,
         shouldShowContent,
-    } = ContextSelectable.useProxy(MobileMenu.Context);
+    } = MobileMenu.useMobileMenu();
     const containerRef = useRefManager<HTMLDivElement>(null);
+
+    if (shouldShowContent) return null;
 
     return (
         <Focus.Inside

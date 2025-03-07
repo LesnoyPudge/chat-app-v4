@@ -131,7 +131,7 @@ const createServer = (
 
     owner.servers.push(serverId);
 
-    const members = createArray(inRange(mul(3), mul(10))).map(() => {
+    const members = createArray(inRange(0, mul(5))).map(() => {
         const user = createUser();
 
         user.servers = [serverId];
@@ -139,7 +139,7 @@ const createServer = (
         return user;
     });
 
-    const roles = createArray(inRange(mul(2), mul(5))).map(() => {
+    const roles = createArray(inRange(0, mul(5))).map(() => {
         return Dummies.role({
             avatar: null,
             color: faker.color.rgb(),
@@ -169,7 +169,7 @@ const createServer = (
         const id = textChatIds[index];
         invariant(id);
 
-        const messages = createArray(inRange(0, mul(25))).map((_, index) => {
+        const messages = createArray(inRange(0, mul(15))).map((_, index) => {
             const member = members[inRange(0, members.length - 1)];
             invariant(member);
 
@@ -347,7 +347,7 @@ class Scenarios {
         await catchErrorAsync(() => db.set(originalState));
     }
 
-    async _populate({ myId }: PopulateOptions) {
+    private async _populate({ myId }: PopulateOptions) {
         const oldMe = db.getById('user', myId);
         invariant(oldMe);
 
@@ -548,6 +548,7 @@ class Scenarios {
                 ...friendsWithHiddenConv,
                 ...servers_members,
                 ...my_servers_members,
+                ...my_servers_owner,
                 ...servers_owner,
                 ...mutedServers_owner,
                 ...mutedServers_members,

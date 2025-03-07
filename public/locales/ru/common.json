@@ -42,6 +42,13 @@
     "ErrorScreen.button": "Перезагрузить",
     "ErrorScreen.heading": "Как-то неловко получается",
     "ErrorScreen.text": "В приложении возник неожиданный сбой.... Мы отследили ошибку и вскоре ей займёмся.",
+    "FriendsPanel.Navigation.addFriendButton": "Добавить друзей",
+    "FriendsPanel.Navigation.all.button.label": "Все",
+    "FriendsPanel.Navigation.blocked.button.label": "Заблокированные",
+    "FriendsPanel.Navigation.heading": "Друзья",
+    "FriendsPanel.Navigation.online.button.label": "В сети",
+    "FriendsPanel.Navigation.pending.button.label": "Ожидание",
+    "FriendsPanel.Navigation.tablist.label": "Выбор категории для сортировки пользователей",
     "GlobalLoaderScreen.problems": "Проблемы с подключением? Сообщите нам!",
     "GlobalLoaderScreen.statusLink": "Состояние сервера",
     "GlobalLoaderScreen.textUsLink": "Напишите нам в Твиттере",
@@ -102,12 +109,12 @@
     "STATUS.online": "В сети",
     "TextInputPasswordToggle.hideText": "Скрыть пароль",
     "TextInputPasswordToggle.showText": "Показать пароль",
+    "TopBar.MobileMenuButton.label": "Перейти к меню",
     "UserInfo.openMenuButton.label": "Открыть меню действий пользователя",
     "UserMenu.copyNameButton.text.copied": "Скопировано!",
     "UserMenu.copyNameButton.text.copy": "Скопировать имя",
     "UserMenu.label": "Меню действий пользователя",
     "ValidationErrors.badValue": "Указано некорректное значение",
     "ValidationErrors.invalidEmail": "Некорректный e-mail",
-    "ValidationErrors.required": "Значение не указано",
-    "WithTopBar.MobileMenuButton.label": "Перейти к меню"
+    "ValidationErrors.required": "Значение не указано"
 }

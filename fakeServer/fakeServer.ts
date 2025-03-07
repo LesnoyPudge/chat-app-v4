@@ -41,6 +41,7 @@ import E_Role = Endpoints.V1.Role;
 import E_Server = Endpoints.V1.Server;
 import E_TextChat = Endpoints.V1.TextChat;
 import E_User = Endpoints.V1.User;
+import { copyToClipboard } from '@lesnoypudge/utils-web';
 
 const _res = HttpResponse;
 
@@ -91,6 +92,7 @@ const toError = (status: number) => {
 
 const populateIfNeeded = async (myId: string) => {
     const populationSize = localStorageApi.get('shouldPopulate');
+
     if (populationSize && populationSize !== 'none') {
         localStorageApi.set('shouldPopulate', 'none');
 

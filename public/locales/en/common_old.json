@@ -1,4 +1,7 @@
 {
     "COMMON.Loading": "__NOT_TRANSLATED__",
+    "FriendsPanel.Navigation.allFriends.button.label": "__NOT_TRANSLATED__",
+    "FriendsPanel.Navigation.blockedUsers.button.label": "__NOT_TRANSLATED__",
+    "FriendsPanel.Navigation.friendRequests.button.label": "__NOT_TRANSLATED__",
     "ServerMenu.actionListLabel": "__NOT_TRANSLATED__"
 }

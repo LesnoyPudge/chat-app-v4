@@ -1,1 +1,0 @@
-export { ConversationNavigation as default } from './ConversationNavigation';

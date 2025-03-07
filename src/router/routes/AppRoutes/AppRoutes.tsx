@@ -21,16 +21,7 @@ export const AppRoutes: FC = () => {
             )}>
                 <Route
                     index
-                    element={(
-                        <>
-                            <>index</>
-                        </>
-                        // <Suspense fallback={<SubPageSkeleton/>}>
-                        //     <GlobalLoader.Loaded>
-                        //         <AppSubPage/>
-                        //     </GlobalLoader.Loaded>
-                        // </Suspense>
-                    )}
+                    element={<LazyPanels.Friends/>}
                 />
 
                 <Route

@@ -1,2 +1,2 @@
 export * from './Screen';
-export * from './WithTopBar';
+export * from './TopBar';

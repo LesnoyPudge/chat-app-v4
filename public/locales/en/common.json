@@ -42,6 +42,13 @@
     "ErrorScreen.button": "__NOT_TRANSLATED__",
     "ErrorScreen.heading": "__NOT_TRANSLATED__",
     "ErrorScreen.text": "__NOT_TRANSLATED__",
+    "FriendsPanel.Navigation.addFriendButton": "__NOT_TRANSLATED__",
+    "FriendsPanel.Navigation.all.button.label": "__NOT_TRANSLATED__",
+    "FriendsPanel.Navigation.blocked.button.label": "__NOT_TRANSLATED__",
+    "FriendsPanel.Navigation.heading": "__NOT_TRANSLATED__",
+    "FriendsPanel.Navigation.online.button.label": "__NOT_TRANSLATED__",
+    "FriendsPanel.Navigation.pending.button.label": "__NOT_TRANSLATED__",
+    "FriendsPanel.Navigation.tablist.label": "__NOT_TRANSLATED__",
     "GlobalLoaderScreen.problems": "__NOT_TRANSLATED__",
     "GlobalLoaderScreen.statusLink": "__NOT_TRANSLATED__",
     "GlobalLoaderScreen.textUsLink": "__NOT_TRANSLATED__",
@@ -98,12 +105,12 @@
     "STATUS.online": "__NOT_TRANSLATED__",
     "TextInputPasswordToggle.hideText": "__NOT_TRANSLATED__",
     "TextInputPasswordToggle.showText": "__NOT_TRANSLATED__",
+    "TopBar.MobileMenuButton.label": "__NOT_TRANSLATED__",
     "UserInfo.openMenuButton.label": "__NOT_TRANSLATED__",
     "UserMenu.copyNameButton.text.copied": "__NOT_TRANSLATED__",
     "UserMenu.copyNameButton.text.copy": "__NOT_TRANSLATED__",
     "UserMenu.label": "__NOT_TRANSLATED__",
     "ValidationErrors.badValue": "__NOT_TRANSLATED__",
     "ValidationErrors.invalidEmail": "__NOT_TRANSLATED__",
-    "ValidationErrors.required": "__NOT_TRANSLATED__",
-    "WithTopBar.MobileMenuButton.label": "__NOT_TRANSLATED__"
+    "ValidationErrors.required": "__NOT_TRANSLATED__"
 }

@@ -1,5 +1,5 @@
 import { MobileMenu } from '@/components';
-import { Focus, ContextSelectable, useRefManager } from '@lesnoypudge/utils-react';
+import { Focus, useRefManager } from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@/utils';
 import { FC, PropsWithChildren } from 'react';
 import { Outlet } from 'react-router';
@@ -42,35 +42,39 @@ export const WithSecondaryNavigation: FC<PropsWithChildren> = ({
     const {
         shouldShowMenu,
         shouldShowContent,
-    } = ContextSelectable.useProxy(MobileMenu.Context);
+    } = MobileMenu.useMobileMenu();
     const containerRef = useRefManager<HTMLDivElement>(null);
 
     return (
         <div className={styles.wrapper}>
-            <div className={cn(
-                styles.navigation.base,
-                shouldShowMenu && styles.navigation.wide,
-                shouldShowContent && styles.navigation.hidden,
-            )}>
-                {children}
+            <If condition={!shouldShowContent}>
+                <div className={cn(
+                    styles.navigation.base,
+                    shouldShowMenu && styles.navigation.wide,
+                    shouldShowContent && styles.navigation.hidden,
+                )}>
+                    {children}
 
-                <UserToolBar/>
-            </div>
-
-            <Focus.Inside
-                isEnabled={shouldShowContent}
-                containerRef={containerRef}
-            >
-                <div
-                    className={cn(
-                        styles.content.base,
-                        shouldShowMenu && styles.content.hidden,
-                    )}
-                    ref={containerRef}
-                >
-                    <Outlet/>
+                    <UserToolBar/>
                 </div>
-            </Focus.Inside>
+            </If>
+
+            <If condition={!shouldShowMenu}>
+                <Focus.Inside
+                    isEnabled={shouldShowContent}
+                    containerRef={containerRef}
+                >
+                    <div
+                        className={cn(
+                            styles.content.base,
+                            shouldShowMenu && styles.content.hidden,
+                        )}
+                        ref={containerRef}
+                    >
+                        <Outlet/>
+                    </div>
+                </Focus.Inside>
+            </If>
         </div>
     );
 };

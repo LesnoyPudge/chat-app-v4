@@ -52,10 +52,10 @@ const { animationVariants } = getAnimationVariants.custom({
     },
 });
 
-const tabs = {
+const tabs = Tab.createTabs({
     login: <LoginForm/>,
     registration: <RegistrationForm/>,
-} satisfies Tab.Provider.GenericTabs;
+});
 
 export const AuthTabContext = Tab.createTabContext<typeof tabs>();
 

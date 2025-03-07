@@ -18,6 +18,10 @@ export namespace Variant1 {
         & Features.ChildrenProps.WithKeyboardNavigation
     );
 
+    export type WithChildren<_Item> = (
+        Base.Wrapper.WithChildren<ChildrenProps<_Item>>
+    );
+
     export namespace Wrapper {
         export type Props<_Item> = (
             Base.Wrapper.BasicProps<_Item>

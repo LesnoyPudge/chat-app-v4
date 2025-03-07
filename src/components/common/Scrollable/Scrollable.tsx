@@ -4,14 +4,15 @@ import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { PropsWithInnerRef } from '@/types';
 import { isDev } from '@/vars';
-import { mergeRefs } from '@lesnoypudge/utils-react';
-import { useScrollable } from './useScrollable';
+import { mergeRefs, useRefManager } from '@lesnoypudge/utils-react';
+import { useScrollable } from './hooks';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
 const useScrollableDebug = (
     isDev
-        ? await import('./debug/useScrollableDebug').then((v) => v.default)
+        ? await import('./debug/useScrollableDebug/useScrollableDebug').then((v) => v.default)
         : () => null
 );
 
@@ -25,9 +26,11 @@ export namespace Scrollable {
         autoHide?: boolean;
         withoutGutter?: boolean;
         size?: 'default' | 'small' | 'hidden';
+        direction?: 'vertical' | 'horizontal' | 'both';
+        withOppositeGutter?: boolean;
     };
 
-    type StableProps = (
+    export type Props = (
         RT.PropsWithChildrenAndClassName
         & PropsWithInnerRef<'div'>
         & Options
@@ -36,21 +39,38 @@ export namespace Scrollable {
         }
     );
 
-    type ConditionalProps = (
-        {
-            direction?: 'vertical' | 'both';
-            withOppositeGutter?: boolean;
-        }
-        | {
-            direction?: 'horizontal';
-            withOppositeGutter?: false;
-        }
-    );
+    export namespace useScrollable {
+        export type Props = Required<Options>;
 
-    export type Props = (
-        StableProps
-        & ConditionalProps
-    );
+        export type Return = {
+            scrollableRef: useRefManager.NullableRefManager<HTMLDivElement>;
+        };
+
+        export namespace Hooks {
+            export type Props = (
+                useScrollable.Props
+                & useScrollable.Return
+            );
+        }
+    }
+
+    // type ConditionalProps = (
+    //     {
+    //         direction?: 'vertical' | 'both';
+    //         withOppositeGutter?: boolean;
+    //     }
+    //     | {
+    //         direction?: 'horizontal';
+    //         withOppositeGutter?: never;
+    //     }
+    // );
+
+    // type ConditionalProps = {
+    // direction?: 'vertical' | 'horizontal' | 'both';
+    // withOppositeGutter?: boolean;
+    // };
+
+    // export type Props = StableProps;
 }
 
 export const Scrollable: FC<Scrollable.Props> = ({
@@ -72,6 +92,8 @@ export const Scrollable: FC<Scrollable.Props> = ({
         autoHide,
         size,
         withoutGutter,
+        direction,
+        withOppositeGutter,
     });
 
     const notHorizontal = direction !== 'horizontal';
@@ -80,12 +102,15 @@ export const Scrollable: FC<Scrollable.Props> = ({
     const data = {
         'data-with-opposite-gutter': (
             withGutter
-            && notHorizontal
+            // && notHorizontal
             && withOppositeGutter
         ),
         'data-size': size,
         'data-direction': direction,
-        'data-with-gutter': withGutter && notHorizontal,
+        'data-with-gutter': (
+            withGutter
+            // && notHorizontal
+        ),
     };
 
     return (
