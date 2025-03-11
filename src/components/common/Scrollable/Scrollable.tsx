@@ -53,24 +53,6 @@ export namespace Scrollable {
             );
         }
     }
-
-    // type ConditionalProps = (
-    //     {
-    //         direction?: 'vertical' | 'both';
-    //         withOppositeGutter?: boolean;
-    //     }
-    //     | {
-    //         direction?: 'horizontal';
-    //         withOppositeGutter?: never;
-    //     }
-    // );
-
-    // type ConditionalProps = {
-    // direction?: 'vertical' | 'horizontal' | 'both';
-    // withOppositeGutter?: boolean;
-    // };
-
-    // export type Props = StableProps;
 }
 
 export const Scrollable: FC<Scrollable.Props> = ({

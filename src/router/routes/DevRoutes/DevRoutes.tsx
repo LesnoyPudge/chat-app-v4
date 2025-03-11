@@ -7,7 +7,7 @@ import { Playground } from '@/playground';
 import { AuthScreenPure } from '@/router/screens/lazy/AuthScreen/AuthScreen';
 import { Route } from 'react-router';
 import { Dummies } from '@/fakeServer';
-import { SuspenseWithGlobalLoader } from '../components';
+import { OnlyAuthorized, SuspenseWithGlobalLoader } from '../components';
 import { createSleep } from '@lesnoypudge/utils-react';
 import { Navigator } from '@/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
@@ -47,6 +47,10 @@ const pathNameToComponent = {
     [Navigator.navigatorDevPath.playground]: (
         <Playground/>
     ),
+
+    [Navigator.navigatorDevPath.playgroundAuthorized]: (
+        <Playground/>
+    ),
 } satisfies Record<
     T.ValueOf<typeof Navigator.navigatorDevPath>,
     React.JSX.Element
@@ -55,6 +59,41 @@ const pathNameToComponent = {
 const Sleep = createSleep(1_000);
 
 const DevElements = Object.values(Navigator.navigatorDevPath).map((path) => {
+    const element = (
+        <Route
+            key={path}
+            path={path}
+            element={(
+                <SuspenseWithGlobalLoader>
+                    <Sleep>
+                        {/* {pathNameToComponent[path]} */}
+                    </Sleep>
+                </SuspenseWithGlobalLoader>
+            )}
+        />
+    );
+
+    if (path === Navigator.navigatorDevPath.playgroundAuthorized) {
+        return (
+            <Route
+                key={path}
+                path={path}
+                element={<OnlyAuthorized/>}
+            >
+                <Route
+                    index
+                    element={(
+                        <SuspenseWithGlobalLoader>
+                            <Sleep>
+                                {pathNameToComponent[path]}
+                            </Sleep>
+                        </SuspenseWithGlobalLoader>
+                    )}
+                />
+            </Route>
+        );
+    }
+
     return (
         <Route
             key={path}

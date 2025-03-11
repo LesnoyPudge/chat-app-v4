@@ -15,6 +15,8 @@ const tabs = Tab.createTabs({
     createServer: <CreateServerTab/>,
 });
 
+const { tabName } = Tab.createProps(tabs);
+
 export const CreateServerTabContext = Tab.createTabContext<typeof tabs>();
 
 const { withDecorator } = withDisplayNameAndDecorator<
@@ -39,7 +41,7 @@ export const CreateServerDialog = withDecorator(() => {
         <Tab.Provider
             context={CreateServerTabContext}
             tabs={tabs}
-            initialTab='createServerOrFollowInvitation'
+            initialTab={tabName.createServerOrFollowInvitation}
         >
             <Tab.Current context={CreateServerTabContext}/>
         </Tab.Provider>

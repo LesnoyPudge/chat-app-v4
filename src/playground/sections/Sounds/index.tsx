@@ -5,7 +5,7 @@ import { ASSETS } from '@/generated/ASSETS';
 
 
 
-export const TMP: FC = () => {
+export const Sounds: FC = () => {
     const state = useBoolean(false);
 
     return (

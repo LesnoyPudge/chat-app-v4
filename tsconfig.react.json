@@ -103,13 +103,13 @@
             "@/redux/actions": [
                 "./src/redux/actions"
             ],
-            "_@/lesnoypudge/utils-react": [
+            "_@lesnoypudge/utils-react": [
                 "../@lesnoypudge-utils-react/build"
             ],
-            "_@/lesnoypudge/utils": [
+            "_@lesnoypudge/utils": [
                 "../@lesnoypudge-utils/build"
             ],
-            "_@/lesnoypudge/utils-web": [
+            "_@lesnoypudge/utils-web": [
                 "../@lesnoypudge/utils-web/build"
             ],
             "@/features": [

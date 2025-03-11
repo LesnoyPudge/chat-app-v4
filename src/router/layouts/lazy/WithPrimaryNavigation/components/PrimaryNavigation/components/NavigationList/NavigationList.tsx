@@ -3,10 +3,9 @@ import { ConversationListItem, ServerListItem } from './components';
 import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
 import { Features } from '@/redux/features';
 import { Scrollable, Separator } from '@/components';
-import { useKeyboardNavigation } from '@/hooks';
+import { useKeyboardNavigation, useTrans } from '@/hooks';
 import { Iterate, useRefManager } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
-import { useTrans } from '@/hooks';
 
 
 
@@ -89,7 +88,6 @@ export const NavigationList: FC = () => {
 
     const showServersOrConversations = !!ids.length;
     const showConversations = !!sortedConversationIds.length;
-
     const separatorProps: Separator.Props = {
         length: 32,
         spacing: 0,

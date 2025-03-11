@@ -1,34 +1,50 @@
-import { useConst } from '@lesnoypudge/utils-react';
+import { useFunction } from '@lesnoypudge/utils-react';
 import { RootState } from '@/redux/store';
 import { logger } from '@/utils';
-import { isDev } from '@/vars';
-import { memoize } from 'proxy-memoize';
-import { useCallback } from 'react';
+import { isProd } from '@/vars';
 import { useSelector } from 'react-redux';
+import { deepEqual } from '@lesnoypudge/utils';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
+
+const SLOW_SELECTOR_THRESHOLD = 10;
 
 const useTypedSelector = useSelector.withTypes<RootState>();
+
+const getSelectorName = (selector: T.AnyFunction) => {
+    if ('selectorName' in selector) return String(selector.selectorName);
+
+    return selector.name ?? 'unknown';
+};
 
 export const useStoreSelector = <
     _Return,
 >(
     selector: (state: RootState) => _Return,
 ): _Return => {
-    const _selector = useConst(() => memoize((state: RootState) => {
-        return selector(state);
-    }));
+    const memoizedSelector = useFunction((state: RootState) => {
+        if (isProd) return selector(state);
 
-    const memoizedSelector = useCallback((state: RootState) => {
-        if (isDev) {
-            const firstResult = _selector(state);
-            const secondResult = _selector(state);
-            const notEqual = firstResult !== secondResult;
-            notEqual && logger.warn('selector returned different reference');
+        const firstResult = selector(state);
+        const secondResult = selector(state);
+        const notEqual = firstResult !== secondResult;
+        const selectorName = getSelectorName(selector);
+
+        if (notEqual) {
+            logger.log(`Selector ${selectorName} returned different reference`);
         }
 
-        return _selector(state);
-    }, [_selector]);
+        const startTime = performance.now();
+        const result = selector(state);
+        const diff = performance.now() - startTime;
 
-    return useTypedSelector(memoizedSelector);
+        if (diff >= SLOW_SELECTOR_THRESHOLD) {
+            console.log(`Found slow selector ${selectorName}: ${diff}ms`);
+        }
+
+        return result;
+    });
+
+    return useTypedSelector(memoizedSelector, deepEqual);
 };

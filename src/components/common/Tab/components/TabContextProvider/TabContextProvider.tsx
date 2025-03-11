@@ -10,7 +10,7 @@ export const TabContextProvider = <
 >({
     context,
     tabs,
-    orientation,
+    orientation = 'horizontal',
     initialTab,
     onTabChange,
     children,

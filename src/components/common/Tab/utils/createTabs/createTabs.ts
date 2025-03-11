@@ -1,9 +1,9 @@
-import { TabContextProvider } from '../../components';
+import { Types } from '../../types';
 
 
 
 export const createTabs = <
-    _Tabs extends TabContextProvider.GenericTabs,
+    _Tabs extends Types.GenericTabs,
 >(tabs: _Tabs): _Tabs => {
     return tabs;
 };

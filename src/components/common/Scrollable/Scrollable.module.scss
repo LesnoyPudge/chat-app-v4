@@ -106,14 +106,18 @@
         overflow-y: auto;
     }
 
-    &[data-direction=vertical],
-    &[data-direction=both] {
+    // &[data-direction=vertical],
+    // &[data-direction=both] {
         &[data-with-gutter=true] {
             --gutter: stable;
-        }
+        
+            &[data-with-opposite-gutter=true] {
+                --gutter: stable both-edges;
 
-        &[data-with-opposite-gutter=true] {
-            --gutter: stable both-edges;
+                // for some reason there is no opposite gutter for
+                // horizontal scrollbar (at least in chrome)
+                padding-top: var(--scrollbar-thickness);
+            }
         }
-    }
+    // }
 }

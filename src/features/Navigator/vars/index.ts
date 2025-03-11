@@ -2,6 +2,7 @@ import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 export const navigatorDevPath = {
     playground: '/dev',
+    playgroundAuthorized: '/dev-auth',
     errorScreen: '/dev/error-screen',
     authScreen: '/dev/auth-screen',
     invitationScreen: '/dev/invitation-screen',

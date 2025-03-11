@@ -72,6 +72,10 @@ export const useDevTools = () => {
             void navigate(Navigator.navigatorDevPath.playground);
         },
 
+        nav_to_playground_auth: () => {
+            void navigate(Navigator.navigatorDevPath.playgroundAuthorized);
+        },
+
         nav_to_root: () => {
             void navigate(Navigator.navigatorPath.root());
         },

@@ -49,10 +49,13 @@ export const useOppositeGutter = ({
         const scrollable = scrollableRef.current;
         if (!scrollable) return;
 
-        console.log(scrollable.getBoundingClientRect());
+        // fixed in css?
+        return;
+
+        // console.log(scrollable.getBoundingClientRect());
 
         // const size = getHorizontalScrollbarSize(scrollable);
-        return;
+        // return;
         return scrollableRef.effect((scrollable) => {
             if (!scrollable) return;
 

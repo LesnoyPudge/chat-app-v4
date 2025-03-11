@@ -8,7 +8,7 @@ import {
     useMemoShallow,
     useUpdateEffect,
 } from '@lesnoypudge/utils-react';
-import { invariant } from '@lesnoypudge/utils';
+import { invariant, sortFns } from '@lesnoypudge/utils';
 import { addEventListener, isHtmlElement } from '@lesnoypudge/utils-web';
 
 
@@ -25,7 +25,7 @@ const defaultFormat = {
 } satisfies PartialFormatter;
 
 const toValidRange = (invalidRange: number[]) => {
-    invalidRange = invalidRange.sort((a, b) => a - b);
+    invalidRange = invalidRange.sort(sortFns.smallToBig);
 
     const minValue = invalidRange[0];
     invariant(minValue);

@@ -10,7 +10,7 @@ export const createProps = <
     invariant(tabNames.length);
 
     const tabProps = tabNames.reduce<
-        Types.Context<_Tabs>['_tabProps']
+        Types.Context<_Tabs>['tabProps']
     >((acc, name) => {
         acc[name] = {
             role: 'tab',

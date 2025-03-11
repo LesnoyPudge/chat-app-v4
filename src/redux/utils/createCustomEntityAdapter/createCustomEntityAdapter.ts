@@ -3,6 +3,7 @@ import { pick, capitalize } from '@lesnoypudge/utils';
 import { RootState, Slices } from '@/redux/store';
 import {
     createEntityAdapter,
+    createSelector,
     EntityAdapter,
     EntityState,
     PayloadAction,
@@ -187,51 +188,96 @@ export const createCustomEntityAdapter = <
         >;
     };
 
+    const adaptedSelectors = adapter.getSelectors();
+
     const baseSelectors: createCustomEntityAdapter.BaseEntitySelectors<
         _State
     > = {
-        selectIds: (entityState) => {
-            return entityState.ids;
-        },
+        // selectIds: (entityState) => {
+        //     return entityState.ids;
+        // },
 
-        selectEntities: (entityState) => {
-            return entityState.entities;
-        },
+        selectIds: adaptedSelectors.selectIds,
 
-        selectAll: (entityState) => {
-            const ids = baseSelectors.selectIds(entityState);
-            const entities = baseSelectors.selectEntities(entityState);
+        // selectEntities: (entityState) => {
+        //     return entityState.entities;
+        // },
 
-            return ids.map((id) => entities[id]);
-        },
+        selectEntities: adaptedSelectors.selectEntities,
 
-        selectById: (entityState, id) => {
+        // selectAll: (entityState) => {
+        //     const ids = baseSelectors.selectIds(entityState);
+        //     const entities = baseSelectors.selectEntities(entityState);
+
+        //     return ids.map((id) => entities[id]);
+        // },
+
+        selectAll: adaptedSelectors.selectAll,
+
+
+        selectById: createSelector([
+            adaptedSelectors.selectEntities,
+            (_, id: _State['id'] | undefined) => id,
+        ], (entities, id) => {
             if (!id) return;
 
-            const entities = baseSelectors.selectEntities(entityState);
-
             return entities[id];
-        },
+            // const entities = baseSelectors.selectEntities(entityState);
 
-        selectByIds: (entityState, ids) => {
+            // return entities[id];
+        }),
+
+        // selectById: (entityState, id) => {
+        //     if (!id) return;
+
+        //     const entities = baseSelectors.selectEntities(entityState);
+
+        //     return entities[id];
+        // },
+
+        selectByIds: createSelector([
+            adaptedSelectors.selectEntities,
+            (_, ids: _State['id'][] | undefined) => ids,
+        ], (entities, ids) => {
             if (!ids) return [];
 
-            const entities = baseSelectors.selectEntities(entityState);
+            // const entities = baseSelectors.selectEntities(entityState);
 
             return ids.map((id) => entities[id]);
-        },
+        }),
 
-        selectTotal: (entityState) => {
-            const ids = baseSelectors.selectIds(entityState);
+        // selectByIds: (entityState, ids) => {
+        //     if (!ids) return [];
 
-            return ids.length;
-        },
+        //     const entities = baseSelectors.selectEntities(entityState);
 
-        selectUndefinedIdsByIds: (entityState, ids) => {
+        //     return ids.map((id) => entities[id]);
+        // },
+
+        // selectTotal: (entityState) => {
+        //     const ids = baseSelectors.selectIds(entityState);
+
+        //     return ids.length;
+        // },
+
+        selectTotal: adaptedSelectors.selectTotal,
+
+        selectUndefinedIdsByIds: createSelector([
+            adaptedSelectors.selectEntities,
+            (_, ids: _State['id'][] | undefined) => ids,
+        ], (entities, ids) => {
             if (!ids) return [];
 
-            return ids.filter((id) => !entityState.entities[id]);
-        },
+            return ids.filter((id) => !entities[id]);
+        }),
+
+        // selectUndefinedIdsByIds: (entityState, ids) => {
+        //     if (!ids) return [];
+
+        //     const entities = baseSelectors.selectEntities(entityState);
+
+        //     return ids.filter((id) => !entities[id]);
+        // },
     };
 
     const stateSelectors = keys.reduce<

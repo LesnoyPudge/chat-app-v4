@@ -16,8 +16,8 @@ https://fluid.tw/
 -? remove useGetManyDeepQuery for entities that is received through socket
 - add sorting by createTimestamp to all EntityAdapters
 -? populate VoiceChats
--? change JsonView на https://www.npmjs.com/package/@microlink/react-json-view
 -? FIX ALL '../*' inside redux/features and RichTextEditor
 -? replace react-loading-skeleton with custom?
 - добавить обработчики эндпоинтов из контекстных меню
 - при переключении мобильного меню на меню, фокусируется элемент списка с tabindex=0 вместо первого доступного элемента (кнопки HomePageButton) вероятно из за автофокуса который навешивается в KeyboardNavigation
+-? сделать кастомный скроллбар? в firefox текущий сломан

@@ -19,21 +19,17 @@ const styles = createStyles({
             overflow-hidden 
             bg-primary-300
         `,
-        hidden: 'hidden',
         wide: 'max-w-full',
     },
-    content: {
-        base: `
-            flex
-            h-full 
-            w-full 
-            flex-1 
-            flex-col 
-            overflow-hidden 
-            bg-primary-200
-        `,
-        hidden: 'hidden',
-    },
+    content: `
+        flex
+        h-full 
+        w-full 
+        flex-1 
+        flex-col 
+        overflow-hidden 
+        bg-primary-200
+    `,
 });
 
 export const WithSecondaryNavigation: FC<PropsWithChildren> = ({
@@ -51,7 +47,6 @@ export const WithSecondaryNavigation: FC<PropsWithChildren> = ({
                 <div className={cn(
                     styles.navigation.base,
                     shouldShowMenu && styles.navigation.wide,
-                    shouldShowContent && styles.navigation.hidden,
                 )}>
                     {children}
 
@@ -65,10 +60,7 @@ export const WithSecondaryNavigation: FC<PropsWithChildren> = ({
                     containerRef={containerRef}
                 >
                     <div
-                        className={cn(
-                            styles.content.base,
-                            shouldShowMenu && styles.content.hidden,
-                        )}
+                        className={styles.content}
                         ref={containerRef}
                     >
                         <Outlet/>

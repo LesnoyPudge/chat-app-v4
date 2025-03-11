@@ -13,18 +13,17 @@ export namespace toCurriedSelectors {
     export type CurriedSelectors<
         _Selectors extends GenericSelectors,
     > = {
-        [_Key in keyof _Selectors]: (
-            (props: (
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                Parameters<_Selectors[_Key]> extends [any, infer _Props]
-                    ? _Props
-                    : void
-            )) => (
-                (state: Parameters<_Selectors[_Key]>[0]) => (
-                    ReturnType<_Selectors[_Key]>
-                )
-            )
-        )
+        [_Key in keyof _Selectors]: (props: (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            Parameters<_Selectors[_Key]> extends [any, infer _Props]
+                ? _Props
+                : void
+        )) => {
+            (state: Parameters<_Selectors[_Key]>[0]): (
+                ReturnType<_Selectors[_Key]>
+            );
+            selectorName: string;
+        }
     };
 }
 
@@ -39,9 +38,17 @@ export const toCurriedSelectors = <
         const selector = selectors[key];
         if (!selector) continue;
 
-        result[key] = (props) => (state) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return selector(state, props);
+        result[key] = (props) => {
+            const innerSelector = (
+                state: Parameters<_Selectors[T.StringKeyOf<_Selectors>]>[0],
+            ) => {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                return selector(state, props);
+            };
+
+            innerSelector.selectorName = key;
+
+            return innerSelector;
         };
     }
 

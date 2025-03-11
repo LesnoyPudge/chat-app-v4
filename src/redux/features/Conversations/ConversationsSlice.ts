@@ -8,7 +8,9 @@ import { ClientEntities } from '@/types';
 import { ConversationsApi } from './ConversationsApi';
 import { Users } from '../Users';
 import { TextChats } from '../TextChats';
-import { isAnyOf } from '@reduxjs/toolkit';
+import { createSelector, isAnyOf } from '@reduxjs/toolkit';
+import { sortFns } from '@lesnoypudge/utils';
+import { RootState } from '@/redux/store';
 
 
 
@@ -46,6 +48,88 @@ export const Slice = createCustomSliceEntityAdapter({
     },
     selectors: {},
 }, adapter);
+
+const selectIsMutedById = createSelector(
+    (state: RootState) => state,
+    (state: RootState, id: string) => id,
+    (state, id): boolean => {
+        const { mutedConversations } = Users.StoreSelectors.selectMe()(state);
+        // const mutedConversationIdSet = new Set(mutedConversations);
+
+        // const isMuted = mutedConversationIdSet.has(id);
+
+        const isMuted = mutedConversations.includes(id);
+
+        return isMuted;
+    },
+);
+
+const selectNotificationCountById = createSelector(
+    (state: RootState) => state,
+    (state: RootState, id: string) => id,
+    (state: RootState, id: string) => TextChats.StoreSelectors.selectFilteredByConversation(
+        id,
+    )(state)[0],
+    (state: RootState) => Users.StoreSelectors.selectMe()(state).lastSeenMessages,
+    (
+        state,
+        conversationId: string,
+        textChat,
+        lastSeenMessages,
+    ): number => {
+        const isMuted = selectIsMutedById(state, conversationId);
+        if (isMuted) return 0;
+
+        // const { lastSeenMessages } = Users.StoreSelectors.selectMe()(state);
+
+        // const [
+        //     textChat,
+        // ] = TextChats.StoreSelectors.selectFilteredByConversation(
+        //     conversationId,
+        // )(state);
+
+        if (!textChat) return 0;
+
+        const lastSeenMessageIndex = lastSeenMessages.find((item) => {
+            return item.textChatId === textChat.id;
+        })?.lastIndex;
+
+        if (lastSeenMessageIndex === undefined) {
+            return textChat.messageCount;
+        }
+
+        const diff = Math.max(
+            0,
+            textChat.messageCount - (lastSeenMessageIndex + 1),
+        );
+
+        return diff;
+    },
+);
+
+const selectIdsWithUnreadNotificationCountSortedByCount = createSelector(
+    createSelector(
+        (state: RootState) => state,
+        (state: RootState) => Users.StoreSelectors.selectMe()(state).conversations,
+        (state, conversations) => conversations.map((conversationId) => {
+            const count = selectNotificationCountById(state, conversationId);
+
+            if (count === 0) return;
+
+            return [conversationId, count] as const;
+        }).filter(Boolean),
+    ),
+    (conversationsWithCount) => {
+        const result = conversationsWithCount.sort(
+            sortFns.bigToSmall.select(([_, count]) => count),
+        );
+
+        console.log(result);
+
+        return result;
+    },
+);
+
 
 export const { StoreSelectors } = createStoreSelectors({
     ...adapter.storeSelectors,
@@ -89,21 +173,36 @@ export const { StoreSelectors } = createStoreSelectors({
         return diff;
     },
 
-    selectIdsWithUnreadNotificationCountSortedByCount: (state) => {
-        const { conversations } = Users.StoreSelectors.selectMe()(state);
+    // selectIdsWithUnreadNotificationCountSortedByCount: createSelector(
+    //     [
+    //         (state: RootState) => Users.StoreSelectors.selectMe()(state).conversations,
+    //     ],
+    //     (_) => {
+    //         return ['sa'];
+    //     },
+    // ),
 
-        return conversations.map((conversationId) => {
-            const count = StoreSelectors.selectNotificationCountById(
-                conversationId,
-            )(state);
+    // selectIdsWithUnreadNotificationCountSortedByCount: (state) => {
+    //     const { conversations } = Users.StoreSelectors.selectMe()(state);
 
-            if (count === 0) return;
+    //     const result = conversations.map((conversationId) => {
+    //         const count = StoreSelectors.selectNotificationCountById(
+    //             conversationId,
+    //         )(state);
 
-            return [conversationId, count] as const;
-        }).filter(Boolean).sort((a, b) => {
-            return b[1] - a[1];
-        });
-    },
+    //         if (count === 0) return;
+
+    //         return [conversationId, count] as const;
+    //     }).filter(Boolean).sort(
+    //         sortFns.bigToSmall.select(([_, count]) => count),
+    //     );
+
+    //     console.log(result);
+
+    //     return result;
+    // },
+
+    selectIdsWithUnreadNotificationCountSortedByCount,
 
     selectVisibleIds: (state) => {
         const {

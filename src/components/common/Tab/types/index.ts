@@ -18,7 +18,7 @@ export namespace Types {
                 context: ContextSelectable.createContext.ContextSelectable<
                     Context<_Tabs>
                 >;
-                orientation: Orientation;
+                orientation?: Orientation;
                 tabs: _Tabs;
                 initialTab: keyof _Tabs;
                 onTabChange?: (prevent: VoidFunction) => void;

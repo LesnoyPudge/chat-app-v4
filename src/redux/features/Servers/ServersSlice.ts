@@ -125,9 +125,9 @@ export const { StoreSelectors } = createStoreSelectors({
             if (count === 0) return;
 
             return [serverId, count] as const;
-        }).filter(Boolean).sort((a, b) => {
-            return b[1] - a[1];
-        });
+        }).filter(Boolean).sort(
+            sortFns.bigToSmall.select(([_, count]) => count),
+        );
     },
 
     selectIdsWithoutUnreadNotifications: (state) => {
@@ -174,7 +174,7 @@ export const { StoreSelectors } = createStoreSelectors({
             const roles = Roles.StoreSelectors.selectByIds(server.roles)(state);
             const [highestRole] = roles.filter((role) => {
                 return role.users.includes(userId);
-            }).sort((a, b) => sortFns.descending(a.weight, b.weight));
+            }).sort(sortFns.bigToSmall.select(({ weight }) => weight));
 
             if (!highestRole) return permissionPresets.rejected;
 

@@ -6,7 +6,7 @@ import { FC } from 'react';
 
 export const Masks: FC = () => {
     return (
-        <Hidden>
+        <Hidden.Fully>
             <svg viewBox='0 0 1 1'>
                 <mask
                     id={MASK_ID.STATUS_BADGE}
@@ -100,6 +100,6 @@ export const Masks: FC = () => {
                     />
                 </mask>
             </svg>
-        </Hidden>
+        </Hidden.Fully>
     );
 };

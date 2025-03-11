@@ -10,11 +10,11 @@ const html = {
 
 export const SpriteSheet: FC = () => {
     return (
-        <Hidden>
+        <Hidden.Fully>
             <svg
                 xmlns='http://www.w3.org/2000/svg'
                 dangerouslySetInnerHTML={html}
             />
-        </Hidden>
+        </Hidden.Fully>
     );
 };
