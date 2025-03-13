@@ -5,23 +5,23 @@ import { fakeServer, initDB } from '@/fakeServer';
 
 
 
-const TIMEOUT = 5_000;
+const TIMEOUT = 15_000;
 
 const reactScanInit = async () => {
     if (isProd) return;
 
-    const { scan } = await import('react-scan');
+    // const { scan } = await import('react-scan');
 
-    scan({
-        enabled: false,
-        log: false,
-        animationSpeed: 'off',
-        // alwaysShowLabels: false,
-        showToolbar: false,
-        // trackUnnecessaryRenders: true,s
-        // renderCountThreshold: 1,
-        // smoothlyAnimateOutlines: false,
-    });
+    // scan({
+    //     enabled: true,
+    //     log: false,
+    //     animationSpeed: 'off',
+    //     // alwaysShowLabels: false,
+    //     showToolbar: false,
+    //     // trackUnnecessaryRenders: true,s
+    //     // renderCountThreshold: 1,
+    //     // smoothlyAnimateOutlines: false,
+    // });
 };
 
 export const preInit = async () => {

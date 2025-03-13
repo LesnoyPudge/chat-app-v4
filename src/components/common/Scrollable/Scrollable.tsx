@@ -1,40 +1,43 @@
-import { FC } from 'react';
-import css from './Scrollable.module.scss';
+import { PropsWithInnerRef } from '@/types';
 import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { PropsWithInnerRef } from '@/types';
-import { isDev } from '@/vars';
-import { mergeRefs, useRefManager } from '@lesnoypudge/utils-react';
-import { useScrollable } from './hooks';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { mutate, useRefManager } from '@lesnoypudge/utils-react';
+import {
+    OverlayScrollbars,
+    ClickScrollPlugin,
+    ScrollbarsHidingPlugin,
+} from 'overlayscrollbars';
+import { FC, useRef, useLayoutEffect } from 'react';
 
 
 
-const useScrollableDebug = (
-    isDev
-        ? await import('./debug/useScrollableDebug/useScrollableDebug').then((v) => v.default)
-        : () => null
-);
+OverlayScrollbars.plugin(ClickScrollPlugin);
+OverlayScrollbars.plugin(ScrollbarsHidingPlugin);
+
+const createApi = (instance: OverlayScrollbars): Scrollable.Api => {
+    return {};
+};
 
 const styles = createStyles({
-    // scrollable: 'max-h-[min(100%,100dvh)] max-w-[min(100%,100dvw)]',
-    scrollable: 'max-h-full max-w-full',
+    wrapper: 'max-h-full max-w-full',
 });
 
 export namespace Scrollable {
     export type Options = {
         autoHide?: boolean;
         withoutGutter?: boolean;
-        size?: 'default' | 'small' | 'hidden';
+        size?: 'default' | 'small';
         direction?: 'vertical' | 'horizontal' | 'both';
-        withOppositeGutter?: boolean;
+        withoutOppositeGutter?: boolean;
     };
+
+    export type Api = {};
 
     export type Props = (
         RT.PropsWithChildrenAndClassName
-        & PropsWithInnerRef<'div'>
         & Options
         & {
+            apiRef?: useRefManager.NullableRefManager<Api>;
             label?: string;
         }
     );
@@ -57,63 +60,100 @@ export namespace Scrollable {
 
 export const Scrollable: FC<Scrollable.Props> = ({
     className = '',
-    innerRef,
-    label = 'Scrollable region',
+    autoHide = false,
     direction = 'vertical',
     size = 'default',
-    withOppositeGutter = false,
+    withoutOppositeGutter = false,
     withoutGutter = false,
-    autoHide = false,
+    apiRef,
+    label,
     children,
 }) => {
-    const debugRef = useScrollableDebug({
-        autoHide,
-        size,
-    });
-    const { scrollableRef } = useScrollable({
-        autoHide,
-        size,
-        withoutGutter,
-        direction,
-        withOppositeGutter,
-    });
+    const instanceRef = useRef<OverlayScrollbars>(null);
+    const scrollableWrapper = useRef<HTMLDivElement>(null);
+    const scrollableViewport = useRef<HTMLDivElement>(null);
 
-    const notHorizontal = direction !== 'horizontal';
-    const withGutter = !withoutGutter;
+    // initialization
+    useLayoutEffect(() => {
+        const wrapper = scrollableWrapper.current;
+        const viewport = scrollableViewport.current;
+        if (!wrapper || !viewport) return;
 
-    const data = {
-        'data-with-opposite-gutter': (
-            withGutter
-            // && notHorizontal
-            && withOppositeGutter
-        ),
-        'data-size': size,
-        'data-direction': direction,
-        'data-with-gutter': (
-            withGutter
-            // && notHorizontal
-        ),
-    };
+        const instance = OverlayScrollbars({
+            target: wrapper,
+            elements: {
+                host: wrapper,
+                content: viewport,
+                viewport,
+            },
+        }, {});
+
+        instanceRef.current = instance;
+
+        return () => {
+            instance.destroy();
+            instanceRef.current = null;
+        };
+    }, [apiRef]);
+
+    // option update
+    useLayoutEffect(() => {
+        const instance = instanceRef.current;
+        if (!instance) return;
+
+        const showXAxis = direction === 'horizontal' || direction === 'both';
+        const showYAxis = direction === 'vertical' || direction === 'both';
+
+        instance.options({
+            overflow: {
+                x: showXAxis ? 'scroll' : 'hidden',
+                y: showYAxis ? 'scroll' : 'hidden',
+            },
+            paddingAbsolute: true,
+            scrollbars: {
+                clickScroll: true,
+                dragScroll: true,
+                visibility: 'auto',
+                autoHideSuspend: false,
+                autoHideDelay: 3_000,
+                autoHide: autoHide ? 'leave' : 'never',
+                theme: 'os-theme-custom',
+            },
+        });
+    }, [autoHide, direction]);
+
+    // api exposure
+    useLayoutEffect(() => {
+        if (!apiRef) return;
+
+        const instance = instanceRef.current;
+        if (!instance) return;
+
+        mutate(apiRef, 'current', createApi(instance));
+
+        return () => {
+            mutate(apiRef, 'current', null);
+        };
+    }, [apiRef]);
 
     return (
         <div
-            className={cn(
-                css.Scrollable,
-                styles.scrollable,
-                className,
-            )}
-            role='region'
-            aria-label={label}
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={0}
-            ref={mergeRefs(
-                debugRef,
-                scrollableRef,
-                innerRef,
-            )}
-            {...data}
+            className={cn(styles.wrapper, className)}
+            ref={scrollableWrapper}
+            data-scrollable={true}
+            data-with-gutter={!withoutGutter}
+            data-with-opposite-gutter={!withoutOppositeGutter}
+            data-size={size}
+            data-direction={direction}
         >
-            {children}
+            <div
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                tabIndex={0}
+                aria-label={label}
+                ref={scrollableViewport}
+            >
+                {children}
+            </div>
         </div>
     );
 };

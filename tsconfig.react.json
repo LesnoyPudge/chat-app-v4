@@ -7,6 +7,7 @@
         "./fakeShared/**/*",
         "./fakeSocket/**/*",
         "./WIP/**/*",
+        "./OLD/**/*",
     ],
     "exclude": [
         // "./generated/**/*",

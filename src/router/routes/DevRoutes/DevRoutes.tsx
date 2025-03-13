@@ -5,13 +5,14 @@ import {
 } from '@/router/screens/lazy/InvitationScreen/InvitationScreen';
 import { Playground } from '@/playground';
 import { AuthScreenPure } from '@/router/screens/lazy/AuthScreen/AuthScreen';
-import { Route } from 'react-router';
+import { Outlet, Route } from 'react-router';
 import { Dummies } from '@/fakeServer';
-import { OnlyAuthorized, SuspenseWithGlobalLoader } from '../components';
+import { OnlyAuthorized } from '../components';
 import { createSleep } from '@lesnoypudge/utils-react';
 import { Navigator } from '@/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import React from 'react';
+import React, { Suspense } from 'react';
+import { GlobalLoader } from '@/root/components';
 
 
 
@@ -59,20 +60,6 @@ const pathNameToComponent = {
 const Sleep = createSleep(1_000);
 
 const DevElements = Object.values(Navigator.navigatorDevPath).map((path) => {
-    const element = (
-        <Route
-            key={path}
-            path={path}
-            element={(
-                <SuspenseWithGlobalLoader>
-                    <Sleep>
-                        {/* {pathNameToComponent[path]} */}
-                    </Sleep>
-                </SuspenseWithGlobalLoader>
-            )}
-        />
-    );
-
     if (path === Navigator.navigatorDevPath.playgroundAuthorized) {
         return (
             <Route
@@ -83,11 +70,11 @@ const DevElements = Object.values(Navigator.navigatorDevPath).map((path) => {
                 <Route
                     index
                     element={(
-                        <SuspenseWithGlobalLoader>
+                        <Suspense>
                             <Sleep>
                                 {pathNameToComponent[path]}
                             </Sleep>
-                        </SuspenseWithGlobalLoader>
+                        </Suspense>
                     )}
                 />
             </Route>
@@ -99,11 +86,11 @@ const DevElements = Object.values(Navigator.navigatorDevPath).map((path) => {
             key={path}
             path={path}
             element={(
-                <SuspenseWithGlobalLoader>
+                <Suspense>
                     <Sleep>
                         {pathNameToComponent[path]}
                     </Sleep>
-                </SuspenseWithGlobalLoader>
+                </Suspense>
             )}
         />
     );
@@ -111,7 +98,11 @@ const DevElements = Object.values(Navigator.navigatorDevPath).map((path) => {
 
 export const DevRoutes = () => {
     return (
-        <Route>
+        <Route element={(
+            <GlobalLoader.Disable>
+                <Outlet/>
+            </GlobalLoader.Disable>
+        )}>
             {DevElements}
         </Route>
     );

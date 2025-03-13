@@ -44,6 +44,8 @@ const config: UserConfigFn = ({ mode }) => {
             outDir: 'build',
             emptyOutDir: true,
             assetsInlineLimit: 0,
+            // minify: false,
+            // cssMinify: false,
         },
         envPrefix: env._PUBLIC_SAFE_ENV_PREFIX,
         envDir,

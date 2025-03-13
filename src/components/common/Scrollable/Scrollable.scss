@@ -1,0 +1,192 @@
+// data attributes
+// 'data-scrollable': true,
+// 'data-with-gutter': true | false,
+// 'data-with-opposite-gutter': true | false,
+// 'data-size': 'default' | 'small',
+// 'data-direction': 'vertical' | 'horizontal' | 'both',
+
+// https://kingsora.github.io/OverlayScrollbars/
+[data-scrollable=true] {
+    --thumb-accessible-length: 44px;
+    
+    --scrollbar-thickness: 0px;
+    
+    --track-thickness: var(--scrollbar-thickness);
+    --thumb-thickness: var(--scrollbar-thickness);
+
+    --track-border-radius: var(--track-thickness);
+    --thumb-border-radius: var(--thumb-thickness);
+
+    --track-bg-color: var(--scrollbar-track);
+    --thumb-bg-color: var(--scrollbar-thumb);
+
+    --scrollbar-transition: none;
+    --track-transition: none;
+    --thumb-transition: none;
+    // --scrollbar-transition: (
+    //     opacity 0.15s, 
+    //     visibility 0.15s, 
+    //     top 0.15s, 
+    //     right 0.15s, 
+    //     bottom 0.15s, 
+    //     left 0.15s
+    // );
+    // --track-transition: (
+    //     opacity 0.15s, 
+    //     background-color 0.15s, 
+    //     border-color 0.15s
+    // );
+    // --thumb-transition: (
+    //     opacity 0.15s, 
+    //     background-color 0.15s, 
+    //     border-color 0.15s, 
+    //     width 0.15s
+    // );
+
+    &[data-direction=both],
+    &[data-direction=vertical] {
+        &[data-with-gutter=true] {
+            padding-right: var(--scrollbar-thickness);
+        }
+
+        &[data-with-opposite-gutter=true] {
+            padding-left: var(--scrollbar-thickness);
+        }
+    }
+    
+    &[data-direction=both],
+    &[data-direction=horizontal] {
+        &[data-with-gutter=true] {
+            padding-bottom: var(--scrollbar-thickness);
+        }
+
+        &[data-with-opposite-gutter=true] {
+            padding-top: var(--scrollbar-thickness);
+        }
+    }  
+
+    &[data-size=default] {
+        --scrollbar-thickness: 10px;
+    }
+
+    &[data-size=small] {
+        --scrollbar-thickness: 8px;
+    }
+
+    // The size of the scrollbar
+    --custom-size: var(--scrollbar-thickness);
+
+    // The axis-perpendicular padding of the scrollbar (horizontal: padding-y, vertical: padding-x)
+    --custom-padding-perpendicular: 0;
+
+    // The axis padding of the scrollbar (horizontal: padding-x, vertical: padding-y)
+    --custom-padding-axis: 0;
+
+    // The border radius of the scrollbar track
+    --custom-track-border-radius: var(--track-border-radius);
+
+    // The background of the scrollbar track
+    --custom-track-bg: var(--track-bg-color);
+
+    // The :hover background of the scrollbar track
+    --custom-track-bg-hover: var(--custom-track-bg);
+
+    // The :active background of the scrollbar track
+    --custom-track-bg-active: var(--custom-track-bg);
+
+    // UNUSABLE
+    // The border of the scrollbar track
+    --custom-track-border: none;
+
+    // UNUSABLE
+    // The :hover background of the scrollbar track
+    --custom-track-border-hover: none;
+
+    // UNUSABLE
+    // The :active background of the scrollbar track
+    --custom-track-border-active: none;
+
+    // The border radius of the scrollbar handle
+    --custom-handle-border-radius: var(--thumb-border-radius);
+
+    // The background of the scrollbar handle
+    --custom-handle-bg: var(--thumb-bg-color);
+
+    // The :hover background of the scrollbar handle
+    --custom-handle-bg-hover: var(--custom-handle-bg);
+
+    // The :active background of the scrollbar handle
+    --custom-handle-bg-active: var(--custom-handle-bg);
+
+    // The border of the scrollbar handle
+    --custom-handle-border: none;
+
+    // The :hover border of the scrollbar handle
+    --custom-handle-border-hover: none;
+
+    // The :active border of the scrollbar handle
+    --custom-handle-border-active: none;
+
+    // The min size of the scrollbar handle
+    --custom-handle-min-size: var(--thumb-accessible-length);
+
+    // The max size of the scrollbar handle
+    --custom-handle-max-size: none;
+
+    // The axis-perpendicular size of the scrollbar handle (horizontal: height, vertical: width)
+    --custom-handle-perpendicular-size: var(--scrollbar-thickness);
+
+    // The :hover axis-perpendicular size of the scrollbar handle (horizontal: height, vertical: width)
+    --custom-handle-perpendicular-size-hover: var(--scrollbar-thickness);
+
+    // The :active axis-perpendicular size of the scrollbar handle (horizontal: height, vertical: width)
+    --custom-handle-perpendicular-size-active: var(--scrollbar-thickness);
+
+    // Increases the interactive area of the scrollbar handle.
+    --custom-handle-interactive-area-offset: 0;
+
+    .os-theme-custom {
+        // bindings
+        --os-size: var(--custom-size);
+        --os-padding-perpendicular: var(--custom-padding-perpendicular);
+        --os-padding-axis: var(--custom-padding-axis);
+        --os-track-border-radius: var(--custom-track-border-radius);
+        --os-track-bg: var(--custom-track-bg);
+        --os-track-bg-hover: var(--custom-track-bg-hover);
+        --os-track-bg-active: var(--custom-track-bg-active);
+        --os-track-border: var(--custom-track-border);
+        --os-track-border-hover: var(--custom-track-border-hover);
+        --os-track-border-active: var(--custom-track-border-active);
+        --os-handle-border-radius: var(--custom-handle-border-radius);
+        --os-handle-bg: var(--custom-handle-bg);
+        --os-handle-bg-hover: var(--custom-handle-bg-hover);
+        --os-handle-bg-active: var(--custom-handle-bg-active);
+        --os-handle-border: var(--custom-handle-border);
+        --os-handle-border-hover: var(--custom-handle-border-hover);
+        --os-handle-border-active: var(--custom-handle-border-active);
+        --os-handle-min-size: var(--custom-handle-min-size);
+        --os-handle-max-size: var(--custom-handle-max-size);
+        --os-handle-perpendicular-size: var(--custom-handle-perpendicular-size);
+        --os-handle-perpendicular-size-hover: var(
+            --custom-handle-perpendicular-size-hover
+        );
+        --os-handle-perpendicular-size-active: var(
+            --custom-handle-perpendicular-size-active
+        );
+        --os-handle-interactive-area-offset: var(
+            --custom-handle-interactive-area-offset
+        );
+
+        &.os-scrollbar {
+            transition: var(--scrollbar-transition);
+        }
+
+        .os-scrollbar-track {
+            transition: var(--track-transition);
+        }
+
+        .os-scrollbar-handle {
+            transition: var(--thumb-transition);
+        }
+    }
+}
