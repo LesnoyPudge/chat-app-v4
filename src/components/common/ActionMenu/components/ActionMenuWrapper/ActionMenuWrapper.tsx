@@ -26,7 +26,6 @@ export const ActionMenuWrapper: FC<ActionMenuWrapper.Props> = ({
                 className={cn(styles.scrollable, scrollableClassName)}
                 size='small'
                 direction='vertical'
-                withOppositeGutter
             >
                 {children}
             </Scrollable>

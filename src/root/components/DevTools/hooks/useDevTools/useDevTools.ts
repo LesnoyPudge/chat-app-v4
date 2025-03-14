@@ -7,7 +7,7 @@ import { rawActions } from '../../actions';
 
 export const useDevTools = () => {
     const wrapperRef = useRefManager<HTMLDivElement>(null);
-    const { navigateTo, navigate } = Navigator.useNavigator();
+    const { navigate } = Navigator.useNavigateTo();
 
     // const navigateToDev = Object.entries({
     //     playground: () => navigate(Navigator.navigatorDevPath.playground),
@@ -69,15 +69,15 @@ export const useDevTools = () => {
 
     const navigatorActions = {
         nav_to_playground: () => {
-            void navigate(Navigator.navigatorDevPath.playground);
+            navigate(Navigator.navigatorDevPath.playground);
         },
 
         nav_to_playground_auth: () => {
-            void navigate(Navigator.navigatorDevPath.playgroundAuthorized);
+            navigate(Navigator.navigatorDevPath.playgroundAuthorized);
         },
 
         nav_to_root: () => {
-            void navigate(Navigator.navigatorPath.root());
+            navigate(Navigator.navigatorPath.root());
         },
     };
 

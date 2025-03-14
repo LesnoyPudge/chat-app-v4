@@ -1,3 +1,4 @@
+import { Navigator } from '@/features';
 import { store } from '@/redux/store';
 import { Heading } from '@lesnoypudge/utils-react';
 import { LazyMotion, MotionConfig } from 'motion/react';
@@ -17,18 +18,20 @@ export const GlobalProviders: FC<PropsWithChildren> = ({
 }) => {
     return (
         <BrowserRouter>
-            <ReduxProvider store={store}>
-                <Heading.Provider>
-                    <LazyMotion
-                        features={loadDomAnimation}
-                        strict
-                    >
-                        <MotionConfig reducedMotion='user'>
-                            {children}
-                        </MotionConfig>
-                    </LazyMotion>
-                </Heading.Provider>
-            </ReduxProvider>
+            <Navigator.Provider>
+                <ReduxProvider store={store}>
+                    <Heading.Provider>
+                        <LazyMotion
+                            features={loadDomAnimation}
+                            strict
+                        >
+                            <MotionConfig reducedMotion='user'>
+                                {children}
+                            </MotionConfig>
+                        </LazyMotion>
+                    </Heading.Provider>
+                </ReduxProvider>
+            </Navigator.Provider>
         </BrowserRouter>
     );
 };

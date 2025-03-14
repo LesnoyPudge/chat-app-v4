@@ -29,7 +29,7 @@
     }
 
     * {
-        // min-width: 0;
+        min-width: 0;
         color: inherit;
         box-sizing: border-box;
     }
@@ -43,14 +43,19 @@
         outline-style: solid;
         outline-color: transparent;
 
-        &:focus:not(:focus-visible) {
-            outline-color: transparent;
-        }
-
         &:focus-visible {
             outline-width: 3px;
             outline-style: solid;
             outline-color: theme('colors.focus');
+        }
+
+        &:focus:not(:focus-visible) {
+            outline-color: transparent;
+        }
+        
+        // react-focus-lock's focus guards
+        &[data-focus-guard=true] {
+            outline-color: transparent;
         }
 
         &:disabled,
@@ -61,11 +66,6 @@
         &[type=hidden] {
             @apply sr-only;
         }
-    }
-
-    // react-focus-lock's focus guards
-    [data-focus-guard=true] {
-        outline-color: transparent;
     }
 
     // Optional defaults to change display value from block to flex.

@@ -98,6 +98,11 @@ const config: UserConfigFn = ({ mode }) => {
             react({
                 babel: {
                     plugins: [
+                        // unstable, multiple crashes
+                        // [
+                        //     'babel-plugin-react-compiler',
+                        //     { target: '18' },
+                        // ],
                         [
                             '@babel/plugin-transform-react-jsx',
                             { runtime: 'automatic' },

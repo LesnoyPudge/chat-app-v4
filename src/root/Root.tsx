@@ -30,7 +30,7 @@ const { withDecorator } = withDisplayNameAndDecorator(
     'Root',
     ({ children }) => {
         return (
-            <ControllableStrictMode isEnabled={false}>
+            <ControllableStrictMode isEnabled={true}>
                 <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
                     <GlobalProviders>
                         {children}

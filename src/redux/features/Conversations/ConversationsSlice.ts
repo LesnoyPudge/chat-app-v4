@@ -124,8 +124,6 @@ const selectIdsWithUnreadNotificationCountSortedByCount = createSelector(
             sortFns.bigToSmall.select(([_, count]) => count),
         );
 
-        console.log(result);
-
         return result;
     },
 );

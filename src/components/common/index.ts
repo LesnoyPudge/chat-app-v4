@@ -9,6 +9,7 @@ export * from './Placeholder';
 export * from './PresenceStatus';
 export * from './RelativelyPositioned';
 export * from './RichTextEditor';
+export * from './Scrollable';
 export * from './Search';
 export * from './Separator';
 export * from './Tab';

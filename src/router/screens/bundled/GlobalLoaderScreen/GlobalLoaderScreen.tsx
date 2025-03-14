@@ -60,11 +60,7 @@ export const GlobalLoaderScreenPure: FC<GlobalLoaderScreenPure.Props> = ({
 
     return (
         <Screen className={cn(styles.screen, className)}>
-            <Scrollable
-                className={styles.scrollable}
-                withOppositeGutter
-                label='Loader'
-            >
+            <Scrollable className={styles.scrollable}>
                 <div className={styles.content}>
                     <video
                         className={styles.logo}

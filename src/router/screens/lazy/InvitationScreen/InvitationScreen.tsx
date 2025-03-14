@@ -68,11 +68,7 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
                 src={getAssetUrl(ASSETS.IMAGES.COMMON.FANCY_BG)}
             />
 
-            <Scrollable
-                className={styles.scrollable}
-                withOppositeGutter
-                label='Invitation page'
-            >
+            <Scrollable className={styles.scrollable}>
                 <div className={styles.inner}>
                     <div className={styles.contentWrapper}>
                         <Avatar.Server

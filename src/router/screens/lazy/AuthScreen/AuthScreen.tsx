@@ -69,11 +69,7 @@ export const AuthScreenPure: FC = () => {
                 src={getAssetUrl(ASSETS.IMAGES.COMMON.FANCY_BG)}
             />
 
-            <Scrollable
-                className={styles.scrollable}
-                withOppositeGutter
-                label='Authentication page'
-            >
+            <Scrollable className={styles.scrollable}>
                 <div className={styles.content}>
                     <AnimatePresence mode='wait'>
                         <Tab.Provider

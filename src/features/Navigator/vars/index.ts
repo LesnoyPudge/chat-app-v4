@@ -44,7 +44,10 @@ export const navigatorPath = {
             props.channelId,
         );
     },
-} satisfies Record<keyof typeof staticNavigatorPath, T.AnyFunction>;
+} satisfies Record<
+    keyof typeof staticNavigatorPath,
+    T.AnyFunction
+>;
 
 export const params = {
     invitationCode: ':invitationCode',

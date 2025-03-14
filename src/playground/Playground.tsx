@@ -8,7 +8,8 @@ export const Playground: FC = () => {
     return (
         <Screen className='flex flex-col'>
             {/* <Sections.TMP/> */}
-            <Sections.ScrollableSection/>
+            {/* <Sections.ScrollableSection/> */}
+            <Sections.RouterContextRerenders/>
         </Screen>
     );
 };

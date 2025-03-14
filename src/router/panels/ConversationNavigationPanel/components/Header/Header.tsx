@@ -37,15 +37,14 @@ const styles = createStyles({
 
 export const Header: FC = () => {
     const { t } = useTrans();
-    const { navigateTo, myLocationIs } = Navigator.useNavigator();
+    const { navigateTo } = Navigator.useNavigateTo();
+    const isInRoot = Navigator.useIsLocation((v) => v.root());
     const { closeMenu } = MobileMenu.useMobileMenu();
 
-    const isActive = myLocationIs.root();
-
     const handleClick = useFunction(() => {
-        if (isActive) closeMenu();
+        if (isInRoot) closeMenu();
 
-        void navigateTo.root();
+        navigateTo.root();
     });
 
     return (
@@ -53,16 +52,16 @@ export const Header: FC = () => {
             <Button
                 className={cn(
                     styles.button.base,
-                    isActive && styles.button.active,
+                    isInRoot && styles.button.active,
                 )}
-                isActive={isActive}
+                isActive={isInRoot}
                 onLeftClick={handleClick}
                 label={t('ConversationNavigation.Header.navigationButton.label')}
             >
                 <Sprite
                     className={cn(
                         styles.icon.base,
-                        isActive && styles.icon.active,
+                        isInRoot && styles.icon.active,
                     )}
                     sprite={ASSETS.IMAGES.SPRITE.FRIEND_ICON}
                 />

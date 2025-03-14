@@ -1,6 +1,5 @@
 import { Scrollable } from '@/components';
 import { FC, PropsWithChildren, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
-import { OverlayScrollbarsComponent, useOverlayScrollbars } from 'overlayscrollbars-react';
 import 'overlayscrollbars/overlayscrollbars.css';
 import {
     OverlayScrollbars,
@@ -12,8 +11,6 @@ import { PropsWithInnerRef } from '@/types';
 import { mergeRefs, useCounter, useMergeRefs, useRefManager } from '@lesnoypudge/utils-react';
 import './ScrollableV2.scss';
 import { cn } from '@/utils';
-import SimpleBar from 'simplebar-react';
-import 'simplebar-react/dist/simplebar.min.css';
 
 OverlayScrollbars.plugin(ClickScrollPlugin);
 OverlayScrollbars.plugin(ScrollbarsHidingPlugin);
@@ -257,16 +254,16 @@ export const ScrollableSection: FC = () => {
             </Scrollable> */}
 
             {/* fix flickering */}
-            <ScrollableV2
+            <Scrollable
                 className='size-[300px]'
                 size='default'
                 direction='both'
                 key={counter.count}
-                // autoHide
+                autoHide
                 // withoutOppositeGutter
             >
                 {content}
-            </ScrollableV2>
+            </Scrollable>
 
             {/* <OverlayScrollbarsComponent
                 key={counter.count}

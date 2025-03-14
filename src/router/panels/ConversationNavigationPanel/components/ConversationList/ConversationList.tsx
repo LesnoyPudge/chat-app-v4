@@ -43,7 +43,6 @@ export const ConversationList: FC = () => {
             <Heading.Provider>
                 <If condition={!!conversationIds.length}>
                     <Scrollable
-                        withOppositeGutter
                         size='small'
                         autoHide
                     >
@@ -61,7 +60,7 @@ export const ConversationList: FC = () => {
                                     loop: false,
                                 }}
                             >
-                                {ConversationItem}
+                                {(props) => <ConversationItem {...props}/>}
                             </ListVariants.Variant1.List>
                         </ul>
                     </Scrollable>

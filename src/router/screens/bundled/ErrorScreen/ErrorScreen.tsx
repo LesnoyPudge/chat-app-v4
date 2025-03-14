@@ -46,11 +46,7 @@ export const ErrorScreenPure: FC<ErrorScreenPure.Props> = ({
                 src={getAssetUrl(ASSETS.IMAGES.COMMON.ERROR_BOUNDARY_BG)}
             />
 
-            <Scrollable
-                className={styles.scrollable}
-                withOppositeGutter
-                label='Error page'
-            >
+            <Scrollable className={styles.scrollable}>
                 <div className={styles.content}>
                     <Image
                         className={styles.image}

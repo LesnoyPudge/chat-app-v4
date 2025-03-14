@@ -1,28 +1,33 @@
-import { useMemo, useRef } from 'react';
-import { NavigateOptions, useLocation, useNavigate } from 'react-router';
+import { NavigateOptions } from 'react-router';
 import {
+    ContextSelectable,
     useConst,
-    useFunction,
-    useLatest,
+    usePropsChange,
 } from '@lesnoypudge/utils-react';
-import { navigatorPath, params, staticNavigatorPath } from '../../vars';
+import { navigatorDevPath, navigatorPath, params, staticNavigatorPath } from '../../vars';
+import { NavigatorContext } from '../../context';
 
 
 
 type NavigatorPath = typeof navigatorPath;
+type NavigatorPathDev = typeof navigatorDevPath;
 
 /* eslint-disable @stylistic/indent */
 type NavigateTo = {
     [_Key in keyof NavigatorPath]: (
         Parameters<NavigatorPath[_Key]>[0] extends void
-            ? (options?: NavigateOptions) => Promise<void> | void
+            ? (options?: NavigateOptions) => void
             : (
                 (
                     props: Parameters<NavigatorPath[_Key]>[0],
                     options?: NavigateOptions
-                ) => Promise<void> | void
+                ) => void
             )
     )
+};
+
+type NavigateToDev = {
+    [_Key in keyof NavigatorPathDev]: VoidFunction;
 };
 
 type MyLocationIs = (
@@ -31,23 +36,20 @@ type MyLocationIs = (
             (props: Parameters<NavigatorPath[_Key]>[0]) => boolean
         );
     }
-    & {
-        anyConversation: () => boolean;
-    }
 );
 
-export const useNavigator = () => {
-    const _navigate = useNavigate();
-    const { pathname } = useLocation();
-    const latestPathRef = useLatest(pathname);
-    const previousLocationRef = useRef(pathname);
+export const useNavigateTo = () => {
+    const navigate = ContextSelectable.useSelector(
+        NavigatorContext,
+        (v) => v.navigate,
+    );
+    const pathnameRef = ContextSelectable.useSelector(
+        NavigatorContext,
+        (v) => v.pathnameRef,
+    );
 
-    const getLocationResolver = useFunction((path?: string) => {
-        const pathToUse = (
-            path === undefined
-                ? latestPathRef
-                : { current: path }
-        );
+    const stableMyLocationIs = useConst(() => {
+        const pathToUse = pathnameRef;
 
         return {
             root: () => pathToUse.current === navigatorPath.root(),
@@ -56,17 +58,6 @@ export const useNavigator = () => {
 
             conversation: (props) => {
                 return pathToUse.current === navigatorPath.conversation(props);
-            },
-
-            anyConversation: () => {
-                const conversationPath = (
-                    staticNavigatorPath.conversation.replace(
-                        params.conversationId,
-                        '',
-                    )
-                );
-
-                return pathToUse.current.startsWith(conversationPath);
             },
 
             invitation: (props) => {
@@ -88,18 +79,6 @@ export const useNavigator = () => {
         } satisfies MyLocationIs;
     });
 
-    const stableMyLocationIs = useConst(() => getLocationResolver());
-
-    const myLocationIs = useMemo(() => {
-        return getLocationResolver(pathname);
-    }, [getLocationResolver, pathname]);
-
-    const navigate = useFunction((to: string, options?: NavigateOptions) => {
-        previousLocationRef.current = pathname;
-
-        return _navigate(to, options);
-    });
-
     const navigateTo: NavigateTo = useConst(() => ({
         root: (options) => {
             if (stableMyLocationIs.root()) return;
@@ -119,20 +98,17 @@ export const useNavigator = () => {
             return navigate(navigatorPath.invitation(props), options);
         },
 
-
         conversation: (props, options) => {
             if (stableMyLocationIs.conversation(props)) return;
 
             return navigate(navigatorPath.conversation(props), options);
         },
 
-
         channel: (props, options) => {
             if (stableMyLocationIs.channel(props)) return;
 
             return navigate(navigatorPath.channel(props), options);
         },
-
 
         server: (props, options) => {
             if (stableMyLocationIs.server(props)) return;
@@ -141,10 +117,22 @@ export const useNavigator = () => {
         },
     }));
 
+    const navigateToDev: NavigateToDev = useConst(() => ({
+        authScreen: () => navigate(navigatorDevPath.authScreen),
+        errorScreen: () => navigate(navigatorDevPath.errorScreen),
+        globalLoaderScreen: () => navigate(navigatorDevPath.globalLoaderScreen),
+        invitationScreen: () => navigate(navigatorDevPath.invitationScreen),
+        playground: () => navigate(navigatorDevPath.playground),
+        playgroundAuthorized: () => navigate(
+            navigatorDevPath.playgroundAuthorized,
+        ),
+    }));
+
+    usePropsChange({ navigate });
+
     return {
-        stableMyLocationIs,
-        myLocationIs,
         navigateTo,
+        navigateToDev,
         navigate,
     };
 };

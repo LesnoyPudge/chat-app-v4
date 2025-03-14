@@ -5,6 +5,11 @@
 // 'data-size': 'default' | 'small',
 // 'data-direction': 'vertical' | 'horizontal' | 'both',
 
+// allows scrollable parents to shrink
+* > :has([data-scrollable=true]) {
+    min-height: 0;
+}
+
 // https://kingsora.github.io/OverlayScrollbars/
 [data-scrollable=true] {
     --thumb-accessible-length: 44px;
@@ -20,28 +25,26 @@
     --track-bg-color: var(--scrollbar-track);
     --thumb-bg-color: var(--scrollbar-thumb);
 
-    --scrollbar-transition: none;
-    --track-transition: none;
-    --thumb-transition: none;
-    // --scrollbar-transition: (
-    //     opacity 0.15s, 
-    //     visibility 0.15s, 
-    //     top 0.15s, 
-    //     right 0.15s, 
-    //     bottom 0.15s, 
-    //     left 0.15s
-    // );
-    // --track-transition: (
-    //     opacity 0.15s, 
-    //     background-color 0.15s, 
-    //     border-color 0.15s
-    // );
-    // --thumb-transition: (
-    //     opacity 0.15s, 
-    //     background-color 0.15s, 
-    //     border-color 0.15s, 
-    //     width 0.15s
-    // );
+    --scrollbar-transition: 
+        opacity 0.15s, 
+        top 0.15s, 
+        right 0.15s, 
+        bottom 0.15s, 
+        left 0.15s
+    ;
+
+    --track-transition: 
+        opacity 0.15s, 
+        background-color 0.15s, 
+        border-color 0.15s
+    ;
+
+    --thumb-transition: 
+        opacity 0.15s, 
+        background-color 0.15s, 
+        border-color 0.15s, 
+        width 0.15s
+    ;
 
     &[data-direction=both],
     &[data-direction=vertical] {
@@ -179,6 +182,17 @@
 
         &.os-scrollbar {
             transition: var(--scrollbar-transition);
+            visibility: visible;
+            opacity: 1;
+
+            &.os-scrollbar-auto-hide-hidden {
+                opacity: 0;
+            }
+
+            &.os-scrollbar-unusable {
+                visibility: hidden;
+                opacity: 0;
+            }
         }
 
         .os-scrollbar-track {

@@ -1,22 +1,13 @@
-import { PropsWithInnerRef } from '@/types';
 import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { mutate, useRefManager } from '@lesnoypudge/utils-react';
-import {
-    OverlayScrollbars,
-    ClickScrollPlugin,
-    ScrollbarsHidingPlugin,
-} from 'overlayscrollbars';
-import { FC, useRef, useLayoutEffect } from 'react';
+import { useRefManager } from '@lesnoypudge/utils-react';
+import { OverlayScrollbars } from 'overlayscrollbars';
+import { FC, MutableRefObject } from 'react';
+import { useInit, useDebug } from './hooks';
+import 'overlayscrollbars/overlayscrollbars.css';
+import './Scrollable.scss';
 
 
-
-OverlayScrollbars.plugin(ClickScrollPlugin);
-OverlayScrollbars.plugin(ScrollbarsHidingPlugin);
-
-const createApi = (instance: OverlayScrollbars): Scrollable.Api => {
-    return {};
-};
 
 const styles = createStyles({
     wrapper: 'max-h-full max-w-full',
@@ -31,30 +22,29 @@ export namespace Scrollable {
         withoutOppositeGutter?: boolean;
     };
 
+    export type Instance = OverlayScrollbars;
+
     export type Api = {};
+
+    export type WithExposedApi = {
+        apiRef?: useRefManager.NullableRefManager<Api>;
+    };
 
     export type Props = (
         RT.PropsWithChildrenAndClassName
         & Options
+        & WithExposedApi
         & {
-            apiRef?: useRefManager.NullableRefManager<Api>;
             label?: string;
         }
     );
 
-    export namespace useScrollable {
-        export type Props = Required<Options>;
+    export namespace Hooks {
+        export type Options = Required<Scrollable.Options>;
 
-        export type Return = {
-            scrollableRef: useRefManager.NullableRefManager<HTMLDivElement>;
+        export type WithInstanceRef = {
+            instanceRef: MutableRefObject<Scrollable.Instance | null>;
         };
-
-        export namespace Hooks {
-            export type Props = (
-                useScrollable.Props
-                & useScrollable.Return
-            );
-        }
     }
 }
 
@@ -69,77 +59,26 @@ export const Scrollable: FC<Scrollable.Props> = ({
     label,
     children,
 }) => {
-    const instanceRef = useRef<OverlayScrollbars>(null);
-    const scrollableWrapper = useRef<HTMLDivElement>(null);
-    const scrollableViewport = useRef<HTMLDivElement>(null);
+    const options: Scrollable.Hooks.Options = {
+        autoHide,
+        direction,
+        size,
+        withoutGutter,
+        withoutOppositeGutter,
+    };
 
-    // initialization
-    useLayoutEffect(() => {
-        const wrapper = scrollableWrapper.current;
-        const viewport = scrollableViewport.current;
-        if (!wrapper || !viewport) return;
+    const {
+        instanceRef,
+        scrollableViewportRef,
+        scrollableWrapperRef,
+    } = useInit({ ...options, apiRef });
 
-        const instance = OverlayScrollbars({
-            target: wrapper,
-            elements: {
-                host: wrapper,
-                content: viewport,
-                viewport,
-            },
-        }, {});
-
-        instanceRef.current = instance;
-
-        return () => {
-            instance.destroy();
-            instanceRef.current = null;
-        };
-    }, [apiRef]);
-
-    // option update
-    useLayoutEffect(() => {
-        const instance = instanceRef.current;
-        if (!instance) return;
-
-        const showXAxis = direction === 'horizontal' || direction === 'both';
-        const showYAxis = direction === 'vertical' || direction === 'both';
-
-        instance.options({
-            overflow: {
-                x: showXAxis ? 'scroll' : 'hidden',
-                y: showYAxis ? 'scroll' : 'hidden',
-            },
-            paddingAbsolute: true,
-            scrollbars: {
-                clickScroll: true,
-                dragScroll: true,
-                visibility: 'auto',
-                autoHideSuspend: false,
-                autoHideDelay: 3_000,
-                autoHide: autoHide ? 'leave' : 'never',
-                theme: 'os-theme-custom',
-            },
-        });
-    }, [autoHide, direction]);
-
-    // api exposure
-    useLayoutEffect(() => {
-        if (!apiRef) return;
-
-        const instance = instanceRef.current;
-        if (!instance) return;
-
-        mutate(apiRef, 'current', createApi(instance));
-
-        return () => {
-            mutate(apiRef, 'current', null);
-        };
-    }, [apiRef]);
+    useDebug({ instanceRef });
 
     return (
         <div
             className={cn(styles.wrapper, className)}
-            ref={scrollableWrapper}
+            ref={scrollableWrapperRef}
             data-scrollable={true}
             data-with-gutter={!withoutGutter}
             data-with-opposite-gutter={!withoutOppositeGutter}
@@ -150,7 +89,7 @@ export const Scrollable: FC<Scrollable.Props> = ({
                 // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
                 tabIndex={0}
                 aria-label={label}
-                ref={scrollableViewport}
+                ref={scrollableViewportRef}
             >
                 {children}
             </div>

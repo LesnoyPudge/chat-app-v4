@@ -1,29 +1,28 @@
 import { useFunction } from '@lesnoypudge/utils-react';
 import { logger } from '@/utils';
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import {
     getElementFillableSize,
     getElementObject,
     mountExpander,
 } from './utils';
-import { Scrollable } from '../../../../Scrollable';
+import { Scrollable } from '@/components';
 
 
 
-const useScrollableDebug = ({
-    scrollableRef,
-}: Scrollable.useScrollable.Hooks.Props) => {
+export const useDebug = ({
+    instanceRef,
+}: Scrollable.Hooks.WithInstanceRef) => {
     const shouldReportCheckWindowOverflowRef = useRef(true);
     const shouldReportCheckParentOverflowRef = useRef(true);
 
     const checkWindowOverflow = useFunction(() => {
         if (!shouldReportCheckWindowOverflowRef.current) return;
 
-        const scrollableElement = scrollableRef.current;
-        if (!scrollableElement) return;
+        const instance = instanceRef.current;
+        if (!instance) return;
 
-        const parentElement = scrollableElement.parentElement;
-        if (!parentElement) return;
+        const scrollableElement = instance.elements().viewport;
 
         const { remove } = mountExpander(scrollableElement);
 
@@ -46,10 +45,14 @@ const useScrollableDebug = ({
     const checkParentOverflow = useFunction(() => {
         if (!shouldReportCheckParentOverflowRef.current) return;
 
-        const scrollableElement = scrollableRef.current;
-        if (!scrollableElement) return;
+        const instance = instanceRef.current;
+        if (!instance) return;
 
-        const parentElement = scrollableElement.parentElement;
+        const elements = instance.elements();
+
+        const scrollableElement = elements.viewport;
+
+        const parentElement = elements.host.parentElement;
         if (!parentElement) return;
 
         const originalParentOverflow = parentElement.style.overflow;
@@ -85,5 +88,3 @@ const useScrollableDebug = ({
 
     useEffect(checkParentOverflow);
 };
-
-export default useScrollableDebug;

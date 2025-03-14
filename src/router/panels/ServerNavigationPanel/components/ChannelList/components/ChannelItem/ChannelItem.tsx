@@ -67,8 +67,11 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
 }) => {
     const channelId = id;
 
-    const { navigateTo, myLocationIs } = Navigator.useNavigator();
+    const { navigateTo } = Navigator.useNavigateTo();
     const { serverId } = useValidatedParams('server');
+    const isInChannel = Navigator.useIsLocation((v) => {
+        return v.channel({ serverId, channelId });
+    });
     const controls = Overlay.useControls();
     const settingsButtonRef = useRefManager<HTMLButtonElement>(null);
     const { t } = useTrans();
@@ -79,10 +82,8 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
     );
 
     const handleNavigation = useFunction(() => {
-        void navigateTo.channel({ serverId, channelId });
+        navigateTo.channel({ serverId, channelId });
     });
-
-    const isInChannel = myLocationIs.channel({ serverId, channelId });
 
     const isTextChannel = channel?.voiceChat === null;
     const channelTypeSprite = (

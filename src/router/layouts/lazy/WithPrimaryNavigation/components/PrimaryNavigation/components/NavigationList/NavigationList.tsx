@@ -10,8 +10,7 @@ import { createStyles } from '@/utils';
 
 
 const styles = createStyles({
-    scrollable: 'py-2',
-    list: 'flex flex-col gap-2',
+    list: 'flex flex-col gap-2 py-2',
     scrollableSeparator: 'ml-5',
 });
 
@@ -101,8 +100,8 @@ export const NavigationList: FC = () => {
             <Separator {...separatorProps}/>
 
             <Scrollable
-                className={styles.scrollable}
                 size='small'
+                withoutOppositeGutter
                 autoHide
             >
                 <div

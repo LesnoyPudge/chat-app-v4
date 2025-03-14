@@ -13,18 +13,20 @@ import { ASSETS } from '@/generated/ASSETS';
 export const HomePageButton: FC = () => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { t } = useTrans();
-    const { navigateTo, myLocationIs } = Navigator.useNavigator();
+    const { navigateTo } = Navigator.useNavigateTo();
+    const isInRoot = Navigator.useIsLocation((v) => v.root());
+    const isInAnyConversation = Navigator.useIsLocation((v) => {
+        return v.anyConversation();
+    });
     const { closeMenu } = MobileMenu.useMobileMenu();
 
     const handleClick = useFunction(() => {
-        if (myLocationIs.root()) closeMenu();
+        if (isInRoot) closeMenu();
 
-        void navigateTo.root();
+        navigateTo.root();
     });
 
-    const isInRootOrConversation = (
-        myLocationIs.root() || myLocationIs.anyConversation()
-    );
+    const isInRootOrConversation = isInRoot || isInAnyConversation;
 
     return (
         <WrapperWithBullet isActive={isInRootOrConversation}>

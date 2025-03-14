@@ -19,7 +19,7 @@ const styles = createStyles({
         [@media(max-width:440px)]:max-h-[100dvh]
         [@media(max-width:440px)]:rounded-none
     `,
-    scrollable: 'flex flex-col justify-between',
+    content: 'flex flex-col justify-between',
 });
 
 export const BaseDialogBlocksWrapper: FC<
@@ -32,11 +32,12 @@ export const BaseDialogBlocksWrapper: FC<
         <Overlay.Dialog.Wrapper className={cn(styles.wrapper, className)}>
             <div className={styles.inner}>
                 <Scrollable
-                    className={cn(styles.scrollable)}
                     size='small'
                     withoutGutter
                 >
-                    {children}
+                    <div className={styles.content}>
+                        {children}
+                    </div>
                 </Scrollable>
             </div>
         </Overlay.Dialog.Wrapper>

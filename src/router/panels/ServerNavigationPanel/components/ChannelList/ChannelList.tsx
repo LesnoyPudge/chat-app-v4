@@ -1,12 +1,11 @@
 import { FC } from 'react';
 import { ChannelItem } from './components';
 import { createStyles } from '@/utils';
-import { useValidatedParams } from '@/hooks';
+import { useValidatedParams, useTrans } from '@/hooks';
 import { useSliceSelector } from '@/redux/hooks';
 import { Features } from '@/redux/features';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { ListVariants, Scrollable } from '@/components';
-import { useTrans } from '@/hooks';
 
 
 
@@ -28,7 +27,6 @@ export const ChannelList: FC = () => {
     return (
         <Scrollable
             className={styles.wrapper}
-            withOppositeGutter
             size='small'
             autoHide
         >

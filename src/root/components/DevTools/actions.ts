@@ -114,8 +114,8 @@ export const rawActions = {
         location.reload();
     },
 
-    populateDB_Large_HUGE_FREEZE: () => {
-        logger.log('HALF MINUTE LAG IS EXPECTED');
+    populateDB_Large: () => {
+        logger.log('LONG LOADING IS EXPECTED');
         localStorageApi.set('shouldPopulate', 'large');
         // eslint-disable-next-line no-restricted-globals
         location.reload();

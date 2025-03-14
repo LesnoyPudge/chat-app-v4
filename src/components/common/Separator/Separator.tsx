@@ -1,6 +1,6 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { cn, createStyles } from '@/utils';
-import { CSSProperties, FC, useMemo } from 'react';
+import { CSSProperties, FC, memo } from 'react';
 
 
 
@@ -38,18 +38,18 @@ export namespace Separator {
     );
 }
 
-export const Separator: FC<Separator.Props> = ({
+export const Separator: FC<Separator.Props> = memo(({
     className = '',
     spacing,
     thickness,
     length,
     orientation = 'horizontal',
 }) => {
-    const style = useMemo(() => ({
+    const style = {
         '--spacing': numToPx(spacing),
         '--thickness': numToPx(thickness),
         '--length': numToPx(length),
-    } as CSSProperties), [length, spacing, thickness]);
+    } as CSSProperties;
 
     return (
         <div
@@ -62,4 +62,4 @@ export const Separator: FC<Separator.Props> = ({
         >
         </div>
     );
-};
+});

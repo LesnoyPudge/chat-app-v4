@@ -28,7 +28,7 @@ export const OnlyAuthorized: FC = () => {
         isRefreshing,
         isAuthorized: !!userId,
     }));
-    const { navigateTo } = Navigator.useNavigator();
+    const { navigateTo } = Navigator.useNavigateTo();
     const { refreshToken } = useLocalStorage('refreshToken');
 
     // consider duration to be 2 min less then actual duration
@@ -85,7 +85,7 @@ export const OnlyAuthorized: FC = () => {
     useEffect(() => {
         if (!shouldNavigateToAuth) return;
 
-        void navigateTo.auth({ replace: true });
+        navigateTo.auth({ replace: true });
     }, [navigateTo, shouldNavigateToAuth]);
 
     const Sleep = useMemo(() => createSleep(hoursToMilliseconds(12)), []);

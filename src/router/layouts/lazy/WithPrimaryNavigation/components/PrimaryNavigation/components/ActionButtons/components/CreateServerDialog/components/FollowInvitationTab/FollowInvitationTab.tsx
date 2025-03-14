@@ -26,7 +26,7 @@ const styles = createStyles({
 export const FollowInvitationTab: FC = () => {
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
     const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
-    const { navigateTo } = Navigator.useNavigator();
+    const { navigateTo } = Navigator.useNavigateTo();
     const { mounted } = useMountedWrapper();
     const [accept] = Features.Servers.Api.useAcceptInvitationMutation();
     const { t } = useTrans();
@@ -36,7 +36,7 @@ export const FollowInvitationTab: FC = () => {
         onSubmit: Form.apiAdapter(accept, {
             onSuccess: (server) => mounted(() => {
                 closeOverlay();
-                void navigateTo.server({ serverId: server.id });
+                navigateTo.server({ serverId: server.id });
             }),
         }),
     });

@@ -2,7 +2,7 @@ import { Avatar, Button, Overlay } from '@/components';
 import { useKeyboardNavigation } from '@/hooks';
 import { Focus, useFunction, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
 import { Features } from '@/redux/features';
 import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
@@ -26,15 +26,17 @@ export namespace ServerListItem {
     );
 }
 
-export const ServerListItem: FC<ServerListItem.Props> = ({
+export const ServerListItem: FC<ServerListItem.Props> = memo(({
     serverId,
     isFocused,
     tabIndex,
     setCurrentFocusedId,
 }) => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
-    const { myLocationIs, navigateTo } = Navigator.useNavigator();
-    const isInServer = myLocationIs.server({ serverId });
+    const { navigateTo } = Navigator.useNavigateTo();
+    const isInServer = Navigator.useIsLocation((v) => {
+        return v.server({ serverId });
+    });
 
     const server = useSliceSelector(
         Features.Servers.Slice,
@@ -60,7 +62,7 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
 
     const navigateToServer = useFunction(() => {
         setFocused();
-        void navigateTo.server({ serverId });
+        navigateTo.server({ serverId });
     });
 
     return (
@@ -106,4 +108,4 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
             </If>
         </WrapperWithBullet>
     );
-};
+});

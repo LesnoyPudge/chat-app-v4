@@ -11,7 +11,7 @@ import { ASSETS } from '@/generated/ASSETS';
 
 
 const styles = createStyles({
-    scrollable: 'flex items-center px-2',
+    content: 'flex items-center px-2',
     icon: 'size-6 fill-icon-300',
     heading: 'ml-2 shrink-0 text-17-22 font-semibold text-color-primary',
     tabList: 'flex shrink-0 gap-4',
@@ -58,57 +58,58 @@ export const Navigation: FC = () => {
     return (
         <TopBar withMobileButton>
             <Scrollable
-                className={styles.scrollable}
                 direction={orientation}
-                withOppositeGutter
                 autoHide
+                withoutOppositeGutter
                 size='small'
             >
-                <Sprite
-                    className={styles.icon}
-                    sprite={ASSETS.IMAGES.SPRITE.FRIEND_ICON}
-                />
+                <div className={styles.content}>
+                    <Sprite
+                        className={styles.icon}
+                        sprite={ASSETS.IMAGES.SPRITE.FRIEND_ICON}
+                    />
 
-                <Heading.Node className={styles.heading}>
-                    {t('FriendsPanel.Navigation.heading')}
-                </Heading.Node>
+                    <Heading.Node className={styles.heading}>
+                        {t('FriendsPanel.Navigation.heading')}
+                    </Heading.Node>
 
-                <Separator {...separatorProps}/>
+                    <Separator {...separatorProps}/>
 
-                <Tab.List
-                    className={styles.tabList}
-                    label={t('FriendsPanel.Navigation.tablist.label')}
-                    context={FriendsPanelTabsContext}
-                >
-                    {(itemProps) => (
-                        <Button
-                            className={styles.button}
-                            size='small'
-                            innerRef={itemProps.itemRef}
-                            tabIndex={itemProps.tabIndex}
-                            isActive={isActive[itemProps.item]}
-                            {...tabProps[itemProps.item]}
-                            onLeftClick={changeTab[itemProps.item]}
-                        >
-                            {buttonText[itemProps.item]}
-                        </Button>
-                    )}
-                </Tab.List>
+                    <Tab.List
+                        className={styles.tabList}
+                        label={t('FriendsPanel.Navigation.tablist.label')}
+                        context={FriendsPanelTabsContext}
+                    >
+                        {(itemProps) => (
+                            <Button
+                                className={styles.button}
+                                size='small'
+                                innerRef={itemProps.itemRef}
+                                tabIndex={itemProps.tabIndex}
+                                isActive={isActive[itemProps.item]}
+                                {...tabProps[itemProps.item]}
+                                onLeftClick={changeTab[itemProps.item]}
+                            >
+                                {buttonText[itemProps.item]}
+                            </Button>
+                        )}
+                    </Tab.List>
 
 
-                <Separator {...separatorProps}/>
+                    <Separator {...separatorProps}/>
 
-                <Button
-                    stylingPreset='brand'
-                    size='small'
-                    hasPopup='dialog'
-                    isActive={controls.isOpen}
-                    onLeftClick={controls.open}
-                >
-                    {t('FriendsPanel.Navigation.addFriendButton')}
-                </Button>
+                    <Button
+                        stylingPreset='brand'
+                        size='small'
+                        hasPopup='dialog'
+                        isActive={controls.isOpen}
+                        onLeftClick={controls.open}
+                    >
+                        {t('FriendsPanel.Navigation.addFriendButton')}
+                    </Button>
 
-                {/* <AddFriendModal/> */}
+                    {/* <AddFriendModal/> */}
+                </div>
             </Scrollable>
         </TopBar>
     );

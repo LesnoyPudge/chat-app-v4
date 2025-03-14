@@ -68,7 +68,7 @@ const CreateServerForm = Form.createForm<CreateServerFormValues>({
 export const CreateServerTab: FC = () => {
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
     const [create] = Features.Servers.Api.useCreateMutation();
-    const { navigateTo } = Navigator.useNavigator();
+    const { navigateTo } = Navigator.useNavigateTo();
     const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
     const { mounted } = useMountedWrapper();
     const { t } = useTrans();
@@ -78,7 +78,7 @@ export const CreateServerTab: FC = () => {
         onSubmit: Form.apiAdapter(create, {
             onSuccess: (server) => mounted(() => {
                 closeOverlay();
-                void navigateTo.server({ serverId: server.id });
+                navigateTo.server({ serverId: server.id });
             }),
         }),
     });

@@ -16,7 +16,7 @@ export const OnlyUnAuthorized: FC = () => {
     }) => ({
         isAuthorized: !!userId,
     }));
-    const { navigateTo } = Navigator.useNavigator();
+    const { navigateTo } = Navigator.useNavigateTo();
     const { refreshToken } = useLocalStorage('refreshToken');
 
     const shouldShowOutlet = !isAuthorized;
@@ -27,7 +27,7 @@ export const OnlyUnAuthorized: FC = () => {
     useEffect(() => {
         if (!shouldNavigateToRoot) return;
 
-        void navigateTo.root({ replace: true });
+        navigateTo.root({ replace: true });
     }, [navigateTo, shouldNavigateToRoot]);
 
     return (

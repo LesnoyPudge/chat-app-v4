@@ -1,4 +1,4 @@
-import { Avatar, Button, ListVariants, Placeholder, Sprite,Overlay } from '@/components';
+import { Avatar, Button, ListVariants, Placeholder, Sprite, Overlay } from '@/components';
 import { Navigator } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
@@ -6,7 +6,8 @@ import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { Features } from '@/redux/features';
 import { useSliceSelector } from '@/redux/hooks';
 import { cn, createStyles } from '@/utils';
-import { FC } from 'react';
+import { FC, memo } from 'react';
+import { shallowEqual } from '@lesnoypudge/utils';
 
 
 
@@ -60,7 +61,7 @@ export namespace ConversationItem {
     export type Props = ListVariants.Variant1.Types.ChildrenProps<string>;
 }
 
-export const ConversationItem: FC<ConversationItem.Props> = ({
+export const ConversationItem: FC<ConversationItem.Props> = memo(({
     isFocused,
     tabIndex,
     id,
@@ -71,7 +72,10 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
 
     const { t } = useTrans();
     const hideButtonRef = useRefManager<HTMLButtonElement>(null);
-    const { navigateTo, myLocationIs } = Navigator.useNavigator();
+    const { navigateTo } = Navigator.useNavigateTo();
+    const isInConversation = Navigator.useIsLocation((v) => {
+        return v.conversation({ conversationId });
+    });
 
     const conversation = useSliceSelector(
         Features.Conversations.Slice,
@@ -95,16 +99,15 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
         hideHelpers,
     ] = Features.Users.Api.useHideConversationMutation();
 
-    const isActive = myLocationIs.conversation({ conversationId });
-    const shouldHighlight = isActive || isFocused;
-
     const handleNavigate = useFunction(() => {
-        void navigateTo.conversation({ conversationId });
+        navigateTo.conversation({ conversationId });
     });
 
     const handleHide = useFunction(() => {
         void hideTrigger({ conversationId });
     });
+
+    const shouldHighlight = isInConversation || isFocused;
 
     return (
         <li className={styles.wrapper}>
@@ -169,4 +172,4 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
             </Overlay.Tooltip>
         </li>
     );
-};
+});

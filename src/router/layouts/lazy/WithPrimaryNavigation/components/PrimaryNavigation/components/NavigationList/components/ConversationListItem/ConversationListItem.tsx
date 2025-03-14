@@ -2,7 +2,7 @@ import { Avatar, Button, Overlay } from '@/components';
 import { useKeyboardNavigation } from '@/hooks';
 import { Focus, useFunction, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
 import { Features } from '@/redux/features';
 import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
@@ -26,15 +26,17 @@ export namespace ConversationListItem {
     );
 }
 
-export const ConversationListItem: FC<ConversationListItem.Props> = ({
+export const ConversationListItem: FC<ConversationListItem.Props> = memo(({
     conversationId,
     isFocused,
     tabIndex,
     setCurrentFocusedId,
 }) => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
-    const { myLocationIs, navigateTo } = Navigator.useNavigator();
-    const isInConversation = myLocationIs.conversation({ conversationId });
+    const { navigateTo } = Navigator.useNavigateTo();
+    const isInConversation = Navigator.useIsLocation((v) => {
+        return v.conversation({ conversationId });
+    });
 
     const conversation = useSliceSelector(
         Features.Conversations.Slice,
@@ -78,7 +80,7 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
 
     const navigateToServer = useFunction(() => {
         setFocused();
-        void navigateTo.conversation({ conversationId });
+        navigateTo.conversation({ conversationId });
     });
 
     const isUserAndConversationExist = !!userTarget && !!conversation;
@@ -130,4 +132,4 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
             </If>
         </WrapperWithBullet>
     );
-};
+});
