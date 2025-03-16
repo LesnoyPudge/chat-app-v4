@@ -117,7 +117,7 @@
                 "./src/features"
             ]
         },
-        "jsx": "react-jsx",
+        "jsx": "preserve",
         "lib": [
             "ES2023",
             "DOM",

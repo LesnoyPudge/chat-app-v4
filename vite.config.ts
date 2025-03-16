@@ -7,8 +7,12 @@ import path from 'node:path';
 import { Env } from './generated/env';
 import url from 'node:url';
 import { debarrelPlugin } from './vitePlugins';
-import ViteRestart from 'vite-plugin-restart';
-import { run } from 'vite-plugin-run';
+// import ViteRestart from 'vite-plugin-restart';
+// import { run } from 'vite-plugin-run';
+// @ts-ignore
+import fasterJs from 'faster.js';
+import babel from 'vite-plugin-babel';
+import reactControlStatements from 'vite-plugin-react-control-statements';
 
 
 
@@ -22,7 +26,19 @@ const config: UserConfigFn = ({ mode }) => {
         ...loadEnv(mode, envDir, ''),
     } as Env;
 
+    const isProd = env.NODE_ENV === 'production';
+    const isDev = !isProd;
+
     return defineConfig({
+        // worker: {
+        //     format: 'es',
+        //     plugins() {
+        //         return [
+        //             debarrelPlugin(),
+        //             tsconfigPaths(),
+        //         ];
+        //     },
+        // },
         css: {
             preprocessorOptions: {
                 scss: {
@@ -44,7 +60,7 @@ const config: UserConfigFn = ({ mode }) => {
             outDir: 'build',
             emptyOutDir: true,
             assetsInlineLimit: 0,
-            // minify: false,
+            minify: false,
             // cssMinify: false,
         },
         envPrefix: env._PUBLIC_SAFE_ENV_PREFIX,
@@ -54,47 +70,80 @@ const config: UserConfigFn = ({ mode }) => {
         //     force: true,
         // },
         plugins: [
-            ViteRestart({
-                restart: [
-                    './src/**/*',
-                    './fakeServer/**/*',
-                    './fakeShared/**/*',
-                    './fakeSocket/**/*',
-                    // './public/**/*',
-                    './rawAssets/**/*',
-                    './twPlugins/**/*',
-                    './tailwind.config.ts',
-                    './index.html',
-                    // '!./generated/**/*',
-                    '../../.env',
-                    '../shared/build/**/*',
-                ],
-            }),
-            run({
-                input: [{
-                    name: 'generate localization',
-                    run: ['npm', 'run', 'scripts:i18n'],
-                    pattern: [
-                        './src/**/*.{ts,tsx,js,jsx}',
-                    ],
-                }, {
-                    name: 'track all files',
-                    pattern: [
-                        // './src/**/*',
-                        // './fakeServer/**/*',
-                        // './fakeShared/**/*',
-                        // './fakeSocket/**/*',
-                        // // './public/**/*',
-                        // './rawAssets/**/*',
-                        // './twPlugins/**/*',
-                        // // '!./generated/**/*',
-                        // '../../.env',
-                        // '../shared/build/**/*',
-                    ],
-                }],
-                silent: false,
-            }),
+            // ViteRestart({
+            //     restart: [
+            //         './src/**/*',
+            //         './fakeServer/**/*',
+            //         './fakeShared/**/*',
+            //         './fakeSocket/**/*',
+            //         // './public/**/*',
+            //         './rawAssets/**/*',
+            //         './twPlugins/**/*',
+            //         './tailwind.config.ts',
+            //         './index.html',
+            //         // '!./generated/**/*',
+            //         '../../.env',
+            //         '../shared/build/**/*',
+            //     ],
+            // }),
+            // run({
+            //     input: [{
+            //         name: 'generate localization',
+            //         run: ['npm', 'run', 'scripts:i18n'],
+            //         pattern: [
+            //             './src/**/*.{ts,tsx,js,jsx}',
+            //         ],
+            //     }, {
+            //         name: 'track all files',
+            //         pattern: [
+            //             // './src/**/*',
+            //             // './fakeServer/**/*',
+            //             // './fakeShared/**/*',
+            //             // './fakeSocket/**/*',
+            //             // // './public/**/*',
+            //             // './rawAssets/**/*',
+            //             // './twPlugins/**/*',
+            //             // // '!./generated/**/*',
+            //             // '../../.env',
+            //             // '../shared/build/**/*',
+            //         ],
+            //     }],
+            //     silent: false,
+            // }),
+            tsconfigPaths(),
             debarrelPlugin(),
+            // babel({
+            //     babelConfig: {
+            //         babelrc: false,
+            //         configFile: false,
+            //         // include: /\.(js|jsx|ts|tsx)$/,
+            //         plugins: [
+            //             [
+            //                 '@babel/plugin-transform-react-jsx',
+            //                 { runtime: 'automatic' },
+            //             ],
+            //             'jsx-control-statements',
+            //             '@babel/plugin-transform-react-constant-elements',
+            //             'macros',
+            //             fasterJs,
+            //             'closure-elimination',
+
+
+
+            //             // [
+            //             //     '@babel/plugin-transform-react-jsx',
+            //             //     { runtime: 'automatic' },
+            //             // ],
+            //             // 'jsx-control-statements',
+            //             // '@babel/plugin-transform-react-constant-elements',
+            //             // 'minify-dead-code-elimination',
+            //             // 'minify-guarded-expressions',
+            //             // 'macros',
+            //             // fasterJs,
+            //             // 'closure-elimination',
+            //         ],
+            //     },
+            // }),
             react({
                 babel: {
                     plugins: [
@@ -103,15 +152,39 @@ const config: UserConfigFn = ({ mode }) => {
                         //     'babel-plugin-react-compiler',
                         //     { target: '18' },
                         // ],
-                        [
-                            '@babel/plugin-transform-react-jsx',
-                            { runtime: 'automatic' },
-                        ],
-                        'jsx-control-statements',
+                        ['babel-plugin-hoist-constant-jsx-attributes', {
+                            include: '*',
+                            freezeObjects: 'development',
+                        }],
+                        '@babel/plugin-transform-react-constant-elements',
+                        'macros',
+                        'minify-dead-code-elimination',
+                        'minify-guarded-expressions',
+                        fasterJs,
+                        'closure-elimination',
+                        'transform-inline-consecutive-adds',
+                        'minify-builtins',
+                        'transform-regexp-constructors',
+                        'transform-minify-booleans',
+                        'minify-flip-comparisons',
+                        'minify-infinity',
+                        'transform-member-expression-literals',
+                        'transform-merge-sibling-variables',
+                        'minify-numeric-literals',
+                        'transform-property-literals',
+                        'babel-plugin-transform-remove-undefined',
+                        'minify-simplify',
+                        'minify-type-constructors',
+                        'transform-undefined-to-void',
+                        'tailcall-optimization', ['transform-hoist-nested-functions', {
+                            'methods': true,
+                        }],
+                        'transform-class-properties',
+                        'autobind-class-methods',
                     ],
                 },
             }),
-            tsconfigPaths(),
+            reactControlStatements(),
             checker({ typescript: true }),
             // FOR SOME REASON PREVENTS MSW FROM WORKING AFTER RELOAD
             // SHOULD PROBABLY ADD AN EXCEPTION FOR MSW

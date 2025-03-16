@@ -2,6 +2,8 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { invariant } from '@lesnoypudge/utils';
 import childProcess from 'node:child_process';
+import { createTsData } from './utils/createTsData';
+import { override } from './utils/override';
 
 
 
@@ -48,10 +50,10 @@ const main = () => {
         `locales not found on path ${localesDirPath}`,
     );
 
-    fs.mkdirSync(
-        generatedDirPath,
-        { recursive: true },
-    );
+    // fs.mkdirSync(
+    //     generatedDirPath,
+    //     { recursive: true },
+    // );
 
     for (const locale of localeNames) {
         const namespacesFolder = path.join(
@@ -97,23 +99,28 @@ const main = () => {
         namespacesObj = ns;
     }
 
-    const i18nData = [
+    const i18nData = createTsData([
         `// GENERATED IN ${path.basename(import.meta.filename)}`,
-        '',
+
         `export const namespaces = ${
             JSON.stringify([...namespacesSet])
         } as const;`,
-        '',
-        `export type NamespacesType = ${
-            JSON.stringify(namespacesObj, null, 4)
-        };`,
-    ].join('\n');
 
-    fs.writeFileSync(
-        i18nGeneratedPath,
-        i18nData,
-        'utf8',
-    );
+        `export type NamespacesType = ${
+            JSON.stringify({ name: '', obj: namespacesObj }, null, 4)
+        };`,
+    ]);
+
+    override({
+        data: i18nData,
+        pathToFile: i18nGeneratedPath,
+    });
+
+    // fs.writeFileSync(
+    //     i18nGeneratedPath,
+    //     i18nData,
+    //     'utf8',
+    // );
     console.log('i18n data generated');
 
     const diffTime = performance.now() - startTime;

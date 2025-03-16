@@ -8,7 +8,6 @@ import { isAnyOf } from '@reduxjs/toolkit';
 import { App } from '.';
 import { socket } from '@/fakeSocket';
 import { socketActions } from '@/redux/actions';
-import { scenarios } from '@/fakeServer';
 
 
 

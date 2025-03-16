@@ -7,12 +7,22 @@ import {
     mountExpander,
 } from './utils';
 import { Scrollable } from '@/components';
+import { toOneLine } from '@lesnoypudge/utils';
 
 
+
+type Props = (
+    Scrollable.Hooks.WithInstanceRef
+    & Pick<
+        Required<Scrollable.Props>,
+        'className'
+    >
+);
 
 export const useDebug = ({
     instanceRef,
-}: Scrollable.Hooks.WithInstanceRef) => {
+    className,
+}: Props) => {
     const shouldReportCheckWindowOverflowRef = useRef(true);
     const shouldReportCheckParentOverflowRef = useRef(true);
 
@@ -84,7 +94,27 @@ export const useDebug = ({
         parentElement.style.overflow = originalParentOverflow;
     });
 
-    useEffect(checkWindowOverflow);
+    const checkInvalidClassName = useFunction(() => {
+        const invalidClasses: string[] = [
+            'flex', 'grid', 'gap-', 'p-',
+        ];
 
+        const isInvalid = toOneLine(
+            className,
+        ).split(' ').some((appliedClass) => {
+            return invalidClasses.some((invalidClass) => {
+                return appliedClass.startsWith(invalidClass);
+            });
+        });
+
+        if (isInvalid) {
+            logger.warn(toOneLine(`
+                Scrollable: found invalid classes in ${className}`,
+            ));
+        }
+    });
+
+    useEffect(checkWindowOverflow);
     useEffect(checkParentOverflow);
+    useEffect(checkInvalidClassName);
 };

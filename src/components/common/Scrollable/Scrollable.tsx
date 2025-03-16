@@ -73,7 +73,7 @@ export const Scrollable: FC<Scrollable.Props> = ({
         scrollableWrapperRef,
     } = useInit({ ...options, apiRef });
 
-    useDebug({ instanceRef });
+    useDebug({ instanceRef, className });
 
     return (
         <div

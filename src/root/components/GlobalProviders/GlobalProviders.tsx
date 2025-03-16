@@ -1,16 +1,15 @@
 import { Navigator } from '@/features';
-import { store } from '@/redux/store';
 import { Heading } from '@lesnoypudge/utils-react';
 import { LazyMotion, MotionConfig } from 'motion/react';
 import { FC, PropsWithChildren } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { BrowserRouter } from 'react-router';
+import { store } from '@/redux/store';
 
 
 
 const loadDomAnimation = async () => {
-    const res = await import('./lazy/lazyDomAnimations');
-    return res.default;
+    return await import('./lazy/lazyDomAnimations').then((v) => v.default);
 };
 
 export const GlobalProviders: FC<PropsWithChildren> = ({

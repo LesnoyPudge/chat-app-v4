@@ -128,9 +128,6 @@ const Inner: FC = () => {
     // ));
 };
 
-// renderToString(<Inner/>);
-
-
 const measure = <_Name extends string, _Result>(
     name: _Name,
     log: boolean,
@@ -157,6 +154,7 @@ const measure = <_Name extends string, _Result>(
 };
 
 const resultHolder: unknown[] = [];
+(window as any)._resultHolder = resultHolder;
 
 const fnToMeasure = (log: boolean) => {
     const {
@@ -265,7 +263,7 @@ export const TMP: FC = () => {
     const counter = useCounter();
 
     useEffect(() => {
-        console.clear();
+        // console.clear();
         return;
         const results: number[] = [];
 
@@ -284,24 +282,26 @@ export const TMP: FC = () => {
     }, []);
 
     return (
-        <Scrollable className='flex flex-col gap-2'>
-            <div>wow</div>
+        <Scrollable>
+            <div className='flex flex-col gap-2'>
+                <div>wow</div>
 
-            <button onClick={startMeasure}>
-                <>measure</>
-            </button>
+                <button onClick={startMeasure}>
+                    <>measure</>
+                </button>
 
-            <button onClick={state.toggle}>toggle</button>
+                <button onClick={state.toggle}>toggle</button>
 
-            <button onClick={() => counter.inc()}>recreate</button>
+                <button onClick={() => counter.inc()}>recreate</button>
 
-            <If condition={state.value}>
-                <Inner key={counter.count}/>
-            </If>
+                <If condition={state.value}>
+                    <Inner key={counter.count}/>
+                </If>
 
-            <If condition={!state.value}>
-                <div>hidden</div>
-            </If>
+                <If condition={!state.value}>
+                    <div>hidden</div>
+                </If>
+            </div>
         </Scrollable>
     );
 };
