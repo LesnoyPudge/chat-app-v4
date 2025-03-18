@@ -1,6 +1,10 @@
 import type { FlatNamespace, KeyPrefix } from 'i18next';
 import type { $Tuple } from 'node_modules/react-i18next/helpers';
-import { FallbackNs, useTranslation, UseTranslationOptions } from 'react-i18next';
+import {
+    FallbackNs,
+    useTranslation,
+    UseTranslationOptions,
+} from 'react-i18next';
 
 
 

@@ -9,9 +9,6 @@ import url from 'node:url';
 import { debarrelPlugin } from './vitePlugins';
 // import ViteRestart from 'vite-plugin-restart';
 // import { run } from 'vite-plugin-run';
-// @ts-ignore
-import fasterJs from 'faster.js';
-import babel from 'vite-plugin-babel';
 import reactControlStatements from 'vite-plugin-react-control-statements';
 
 
@@ -27,18 +24,8 @@ const config: UserConfigFn = ({ mode }) => {
     } as Env;
 
     const isProd = env.NODE_ENV === 'production';
-    const isDev = !isProd;
 
     return defineConfig({
-        // worker: {
-        //     format: 'es',
-        //     plugins() {
-        //         return [
-        //             debarrelPlugin(),
-        //             tsconfigPaths(),
-        //         ];
-        //     },
-        // },
         css: {
             preprocessorOptions: {
                 scss: {
@@ -158,30 +145,28 @@ const config: UserConfigFn = ({ mode }) => {
                         }],
                         '@babel/plugin-transform-react-constant-elements',
                         'macros',
-                        'minify-dead-code-elimination',
-                        'minify-guarded-expressions',
-                        fasterJs,
+                        isProd && 'minify-dead-code-elimination',
+                        isProd && 'minify-guarded-expressions',
                         'closure-elimination',
                         'transform-inline-consecutive-adds',
-                        'minify-builtins',
-                        'transform-regexp-constructors',
-                        'transform-minify-booleans',
-                        'minify-flip-comparisons',
-                        'minify-infinity',
+                        isProd && 'transform-regexp-constructors',
+                        isProd && 'transform-minify-booleans',
+                        isProd && 'minify-flip-comparisons',
+                        isProd && 'minify-infinity',
                         'transform-member-expression-literals',
-                        'transform-merge-sibling-variables',
-                        'minify-numeric-literals',
+                        isProd && 'transform-merge-sibling-variables',
+                        isProd && 'minify-numeric-literals',
                         'transform-property-literals',
-                        'babel-plugin-transform-remove-undefined',
-                        'minify-simplify',
-                        'minify-type-constructors',
-                        'transform-undefined-to-void',
-                        'tailcall-optimization', ['transform-hoist-nested-functions', {
+                        isProd && 'babel-plugin-transform-remove-undefined',
+                        isProd && 'minify-simplify',
+                        isProd && 'minify-type-constructors',
+                        isProd && 'transform-undefined-to-void',
+                        isProd && 'tailcall-optimization', ['transform-hoist-nested-functions', {
                             'methods': true,
                         }],
                         'transform-class-properties',
                         'autobind-class-methods',
-                    ],
+                    ].filter(Boolean),
                 },
             }),
             reactControlStatements(),

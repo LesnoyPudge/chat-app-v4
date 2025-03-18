@@ -50,11 +50,6 @@ const main = () => {
         `locales not found on path ${localesDirPath}`,
     );
 
-    // fs.mkdirSync(
-    //     generatedDirPath,
-    //     { recursive: true },
-    // );
-
     for (const locale of localeNames) {
         const namespacesFolder = path.join(
             localesDirPath,
@@ -107,7 +102,7 @@ const main = () => {
         } as const;`,
 
         `export type NamespacesType = ${
-            JSON.stringify({ name: '', obj: namespacesObj }, null, 4)
+            JSON.stringify(namespacesObj, null, 4)
         };`,
     ]);
 
@@ -116,14 +111,8 @@ const main = () => {
         pathToFile: i18nGeneratedPath,
     });
 
-    // fs.writeFileSync(
-    //     i18nGeneratedPath,
-    //     i18nData,
-    //     'utf8',
-    // );
-    console.log('i18n data generated');
-
     const diffTime = performance.now() - startTime;
+
     console.log(`localization generated in ${
         (diffTime / 1_000).toFixed(2)
     } seconds`);
