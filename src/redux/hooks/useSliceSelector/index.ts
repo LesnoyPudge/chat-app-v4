@@ -1,1 +1,1 @@
-export * from './useSliceActions';
+export * from './useSliceSelector';
