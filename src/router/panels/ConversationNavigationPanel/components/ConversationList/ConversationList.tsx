@@ -1,4 +1,4 @@
-import { ListVariants, Scrollable } from '@/components';
+import { ListVariants, Scrollable, VirtualRender } from '@/components';
 import { FC } from 'react';
 import { createStyles } from '@/utils';
 import { Heading, useRefManager } from '@lesnoypudge/utils-react';
@@ -51,7 +51,21 @@ export const ConversationList: FC = () => {
                             aria-label={t('ConversationNavigation.ConversationList.label')}
                             ref={listRef}
                         >
-                            <ListVariants.Variant1.List
+                            <VirtualRender
+                                items={conversationIds}
+                                getId={(id) => id}
+                                indexesShift={0}
+                            >
+                                {(id) => (
+                                    <ConversationItem
+                                        id={id}
+                                        isFocused={false}
+                                        setFocusId={() => {}}
+                                        tabIndex={0}
+                                    />
+                                )}
+                            </VirtualRender>
+                            {/* <ListVariants.Variant1.List
                                 items={conversationIds}
                                 getId={(item) => item}
                                 keyboardNavigation={{
@@ -61,7 +75,7 @@ export const ConversationList: FC = () => {
                                 }}
                             >
                                 {(props) => <ConversationItem {...props}/>}
-                            </ListVariants.Variant1.List>
+                            </ListVariants.Variant1.List> */}
                         </ul>
                     </Scrollable>
                 </If>

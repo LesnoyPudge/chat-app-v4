@@ -28,3 +28,9 @@ export type CustomQueryError = T.Simplify<
         };
     }
 >;
+
+export namespace Direction {
+    export type Single = 'horizontal' | 'vertical';
+
+    export type All = 'horizontal' | 'vertical' | 'both';
+}

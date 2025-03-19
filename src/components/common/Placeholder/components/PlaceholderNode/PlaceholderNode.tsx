@@ -27,7 +27,7 @@ export const PlaceholderNode: FC<PlaceholderNode.Props> = ({
     return (
         <Skeleton
             className={cn(css.PlaceholderNode, styles.base, className)}
-            enableAnimation={false}
+            enableAnimation={true}
             baseColor={undefined}
             {...props}
         />

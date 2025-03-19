@@ -1,8 +1,8 @@
 import { Avatar, Button, Overlay } from '@/components';
 import { useKeyboardNavigation } from '@/hooks';
-import { Focus, useFunction, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
-import { cn } from '@/utils';
-import { FC, memo } from 'react';
+import { Focus, useFunction, useRefManager, useScrollIntoView, withDisplayName } from '@lesnoypudge/utils-react';
+import { cn, withDisplayNameAndMemo } from '@/utils';
+import { FC } from 'react';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
 import { Features } from '@/redux/features';
 import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
@@ -26,86 +26,89 @@ export namespace ServerListItem {
     );
 }
 
-export const ServerListItem: FC<ServerListItem.Props> = memo(({
-    serverId,
-    isFocused,
-    tabIndex,
-    setCurrentFocusedId,
-}) => {
-    const buttonRef = useRefManager<HTMLButtonElement>(null);
-    const { navigateTo } = Navigator.useNavigateTo();
-    const isInServer = Navigator.useIsLocation((v) => {
-        return v.server({ serverId });
-    });
+export const ServerListItem = withDisplayNameAndMemo(
+    'ServerListItem',
+    ({
+        serverId,
+        isFocused,
+        tabIndex,
+        setCurrentFocusedId,
+    }: ServerListItem.Props) => {
+        const buttonRef = useRefManager<HTMLButtonElement>(null);
+        const { navigateTo } = Navigator.useNavigateTo();
+        const isInServer = Navigator.useIsLocation((v) => {
+            return v.server({ serverId });
+        });
 
-    const server = useSliceSelector(
-        Features.Servers.Slice,
-        Features.Servers.Slice.selectors.selectById(serverId),
-    );
+        const server = useSliceSelector(
+            Features.Servers.Slice,
+            Features.Servers.Slice.selectors.selectById(serverId),
+        );
 
-    const hasNotifications = useStoreSelector(
-        Features.Servers.StoreSelectors.selectHasNotificationsById(serverId),
-    );
+        const hasNotifications = useStoreSelector(
+            Features.Servers.StoreSelectors.selectHasNotificationsById(serverId),
+        );
 
-    Focus.useMoveFocusInside({
-        containerRef: buttonRef,
-        isEnabled: isFocused,
-    });
+        Focus.useMoveFocusInside({
+            containerRef: buttonRef,
+            isEnabled: isFocused,
+        });
 
-    useScrollIntoView(buttonRef, {
-        enabled: isFocused,
-    });
+        useScrollIntoView(buttonRef, {
+            enabled: isFocused,
+        });
 
-    const setFocused = useFunction(() => {
-        setCurrentFocusedId(serverId);
-    });
+        const setFocused = useFunction(() => {
+            setCurrentFocusedId(serverId);
+        });
 
-    const navigateToServer = useFunction(() => {
-        setFocused();
-        navigateTo.server({ serverId });
-    });
+        const navigateToServer = useFunction(() => {
+            setFocused();
+            navigateTo.server({ serverId });
+        });
 
-    return (
-        <WrapperWithBullet
-            isActive={isInServer}
-            withNotifications={hasNotifications}
-        >
-            <Button
-                className={cn(
-                    sharedStyles.button.base,
-                    isInServer && sharedStyles.button.active,
-                )}
-                tabIndex={tabIndex}
-                label={server?.name}
-                role='menuitem'
+        return (
+            <WrapperWithBullet
                 isActive={isInServer}
-                innerRef={buttonRef}
-                onLeftClick={navigateToServer}
-                onAnyClick={setFocused}
+                withNotifications={hasNotifications}
             >
-                <Avatar.Server
+                <Button
                     className={cn(
-                        sharedStyles.avatar.base,
-                        isInServer && sharedStyles.avatar.active,
+                        sharedStyles.button.base,
+                        isInServer && sharedStyles.button.active,
                     )}
-                    name={server?.name}
-                    avatar={server?.avatar}
-                />
-            </Button>
-
-            <If condition={!!server}>
-                <Overlay.Tooltip
-                    preferredAlignment='right'
-                    leaderElementRef={buttonRef}
+                    tabIndex={tabIndex}
+                    label={server?.name}
+                    role='menuitem'
+                    isActive={isInServer}
+                    innerRef={buttonRef}
+                    onLeftClick={navigateToServer}
+                    onAnyClick={setFocused}
                 >
-                    {server?.name}
-                </Overlay.Tooltip>
+                    <Avatar.Server
+                        className={cn(
+                            sharedStyles.avatar.base,
+                            isInServer && sharedStyles.avatar.active,
+                        )}
+                        name={server?.name}
+                        avatar={server?.avatar}
+                    />
+                </Button>
 
-                <ServerContextMenu
-                    serverId={serverId}
-                    leaderElementRef={buttonRef}
-                />
-            </If>
-        </WrapperWithBullet>
-    );
-});
+                <If condition={!!server}>
+                    <Overlay.Tooltip
+                        preferredAlignment='right'
+                        leaderElementRef={buttonRef}
+                    >
+                        {server?.name}
+                    </Overlay.Tooltip>
+
+                    <ServerContextMenu
+                        serverId={serverId}
+                        leaderElementRef={buttonRef}
+                    />
+                </If>
+            </WrapperWithBullet>
+        );
+    },
+);

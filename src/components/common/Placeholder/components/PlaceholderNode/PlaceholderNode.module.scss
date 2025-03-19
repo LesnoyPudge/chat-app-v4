@@ -10,4 +10,8 @@
     position: relative;
     user-select: none;
     overflow: hidden;
+
+    &::before {
+        display: none;
+    }
 }

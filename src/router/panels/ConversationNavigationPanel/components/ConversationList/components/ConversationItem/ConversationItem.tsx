@@ -2,12 +2,10 @@ import { Avatar, Button, ListVariants, Placeholder, Sprite, Overlay } from '@/co
 import { Navigator } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
-import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
+import { Focus, useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { Features } from '@/redux/features';
 import { useSliceSelector } from '@/redux/hooks';
-import { cn, createStyles } from '@/utils';
-import { FC, memo } from 'react';
-import { shallowEqual } from '@lesnoypudge/utils';
+import { cn, createStyles, withDisplayNameAndMemo } from '@/utils';
 
 
 
@@ -58,23 +56,34 @@ const styles = createStyles({
 });
 
 export namespace ConversationItem {
-    export type Props = ListVariants.Variant1.Types.ChildrenProps<string>;
+    // export type Props = ListVariants.Variant1.Types.ChildrenProps<string>;
+    export type Props = {
+        isFocused: boolean;
+        tabIndex: number;
+        id: string;
+        setFocusId: VoidFunction;
+    };
 }
 
-export const ConversationItem: FC<ConversationItem.Props> = memo(({
+export const ConversationItem = withDisplayNameAndMemo('ConversationItem', ({
     isFocused,
     tabIndex,
     id,
-    itemRef,
     setFocusId,
-}) => {
+}: ConversationItem.Props) => {
     const conversationId = id;
 
     const { t } = useTrans();
+    const mainButtonRef = useRefManager<HTMLButtonElement>(null);
     const hideButtonRef = useRefManager<HTMLButtonElement>(null);
     const { navigateTo } = Navigator.useNavigateTo();
     const isInConversation = Navigator.useIsLocation((v) => {
         return v.conversation({ conversationId });
+    });
+
+    Focus.useMoveFocusInside({
+        containerRef: mainButtonRef,
+        isEnabled: isFocused,
     });
 
     const conversation = useSliceSelector(
@@ -119,7 +128,7 @@ export const ConversationItem: FC<ConversationItem.Props> = memo(({
                 isActive={shouldHighlight}
                 onAnyClick={setFocusId}
                 onLeftClick={handleNavigate}
-                innerRef={itemRef}
+                innerRef={mainButtonRef}
                 label={t('ConversationNavigation.Item.navigateToMessagesButton.label', { name: userTarget?.name })}
                 tabIndex={tabIndex}
             >

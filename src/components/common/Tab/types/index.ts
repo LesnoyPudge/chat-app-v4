@@ -3,11 +3,12 @@ import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { ContextSelectable, useRefManager } from '@lesnoypudge/utils-react';
 import { PropsWithChildren, ReactNode } from 'react';
 import { ListVariants } from '@/components';
+import { Direction } from '@/types';
 
 
 
 export namespace Types {
-    type Orientation = 'vertical' | 'horizontal';
+    type Orientation = Direction.Single;
 
     export type GenericTabs = Record<string, ReactNode>;
 

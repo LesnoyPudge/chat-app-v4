@@ -1,6 +1,7 @@
 export * from './createCustomAsyncThunk';
 export * from './createCustomEntityAdapter';
 export * from './createCustomMiddleware';
+export * from './createCustomSelector';
 export * from './createCustomSlice';
 export * from './createCustomSliceEntityAdapter';
 export * from './createEffects';

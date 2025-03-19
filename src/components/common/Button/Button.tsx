@@ -1,8 +1,7 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { PropsWithInnerRef } from '@/types';
-import { cn } from '@/utils';
-import { FC } from 'react';
+import { cn, withDisplayNameAndMemo } from '@/utils';
 import { styles } from './styles';
 import { useFunction } from '@lesnoypudge/utils-react';
 
@@ -47,7 +46,7 @@ export namespace Button {
     >;
 }
 
-export const Button: FC<Button.Props> = ({
+export const Button = withDisplayNameAndMemo('Button', ({
     className = '',
     id,
     style,
@@ -71,7 +70,7 @@ export const Button: FC<Button.Props> = ({
     onRightClick,
     onMouseEnter,
     onFocus,
-}) => {
+}: Button.Props) => {
     const withExpanded = !!hasPopup;
     const withPressed = role === 'button';
     const withSelected = role === 'tab';
@@ -163,4 +162,5 @@ export const Button: FC<Button.Props> = ({
             {children}
         </button>
     );
-};
+},
+);

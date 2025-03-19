@@ -11,13 +11,12 @@ import { ASSETS } from '@/generated/ASSETS';
 
 
 const styles = createStyles({
-    content: 'flex items-center px-2',
+    content: 'flex h-8 min-w-max items-center px-2',
     icon: 'size-6 fill-icon-300',
-    heading: 'ml-2 shrink-0 text-17-22 font-semibold text-color-primary',
-    tabList: 'flex shrink-0 gap-4',
+    heading: 'ml-2 text-17-22 font-semibold text-color-primary',
+    tabList: 'flex gap-4',
     button: `
-        _py-0.5
-        shrink-0 
+        h-full
         rounded 
         px-2
         font-medium
@@ -60,7 +59,6 @@ export const Navigation: FC = () => {
             <Scrollable
                 direction={orientation}
                 autoHide
-                withoutOppositeGutter
                 size='small'
             >
                 <div className={styles.content}>
@@ -94,7 +92,6 @@ export const Navigation: FC = () => {
                             </Button>
                         )}
                     </Tab.List>
-
 
                     <Separator {...separatorProps}/>
 

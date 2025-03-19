@@ -105,6 +105,7 @@
 
     img[alt] {
         text-indent: -9999px;
+        user-select: none;
     }
 
     #app-root,

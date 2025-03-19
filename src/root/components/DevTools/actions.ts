@@ -14,6 +14,7 @@ const logConsoleHint = () => {
     logger.log(`${KEY.F1} to clear console`);
     logger.log(`${KEY.F2} to log activeElement`);
     logger.log(`${KEY.F3} to open devtools`);
+    logger.log(`${KEY.F4} to log element count`);
 };
 
 logConsoleHint();
@@ -96,7 +97,7 @@ export const rawActions = {
     },
 
     clearDatabase: () => {
-        void db.clearStorage().finally(() => {
+        void db.clearStorage().then(() => {
             // eslint-disable-next-line no-restricted-globals
             location.reload();
         });

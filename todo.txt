@@ -17,6 +17,22 @@ https://fluid.tw/
 - add sorting by createTimestamp to all EntityAdapters
 -? populate VoiceChats
 -? FIX ALL '../*' inside redux/features and RichTextEditor
--? replace react-loading-skeleton with custom?
 - добавить обработчики эндпоинтов из контекстных меню
 - при переключении мобильного меню на меню, фокусируется элемент списка с tabindex=0 вместо первого доступного элемента (кнопки HomePageButton) вероятно из за автофокуса который навешивается в KeyboardNavigation
+-??? (ДЛЯ VirtualRender???) СДЕЛАТЬ ДЛЯ SCROLLABLE КОНТЕКСТ
+- ПРОТЕСТИРОВАТЬ (СКОРЕЕ ВСЕГО УДАЧНО) И ЗАМЕНИТЬ СЕЛЕКТОРЫ
+НА https://github.com/taskworld/rereselect
+- СДЕЛАТЬ КОНТЕКСТ ДЛЯ KeyboardNavigation И ИСПОЛЬЗОВАТЬ ЕГО ВМЕСТО ПРОПСОВ
+-? ЗАМЕНИТЬ ВСЕ ИСПОЛЬЗОВАНИЯ ListVariant НА KeyboardNavigation КОНТЕКСТ
+И Focus.useFocusInside
+- ЗАМЕНИТЬ react-loading-skeleton НА СВОЮ ВЕРСИЮ ДЛЯ СИНХРОНИЗАЦИИ
+АНИМАЦИЙ
+- ЗАМЕНИТЬ useSliceSelector И useStoreSelector НА ОДИН ХУК, ОПРЕДЕЛЯТЬ КАКОЙ
+СЛЕКТОР ПОДАН ЧЕРЕЗ СКРЫТОЕ ПОЛЕ НА ФУНКЦИИ
+- ДОБАВИТЬ itemSize И itemMargin??? ВСЕМ ВИРТУАЛЬНЫМ СПИСКАМ
+- СДЕЛАТЬ ОТСТУПЫ У ВИРТУАЛЬНЫХ СПИСКОВ ЧЕРЕЗ ПАДДИНГИ А НЕ ГАПЫ 
+- ДОБАВИТЬ ТРАНФОРМЕР ФУНКЦИЮ В ХУК СЕЛЕКТОР, ЭТА ФУНКЦИЯ ДОЛЖНА 
+ТРАНСФОРМИРОВАТЬ РЕЗУЛЬТАТ СЕЛЕКТОРА НО ТОЛЬКО ЕСЛИ ОН ИЗМЕНИЛСЯ
+- ПЕРЕПРОВЕРИТЬ ВСЕ ВЫЗОВИ СЕЛЕКТОРОВ ЧЕРЕЗ ХУК
+- ВСЕ КАСТОМНЫЕ SCSS КОМПОНЕНТЫ ПЕРЕНЕСТИ НА СЛОЙ КОМПОНЕНТОВ ЧТО БЫ
+ИХ СТИЛИ МОЖНО БЫЛО ПЕРЕПИСАТЬ С ПОМОЩЬЮ ЮТИЛИТИ КЛАССОВ

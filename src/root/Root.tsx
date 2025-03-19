@@ -11,10 +11,7 @@ import {
     GlobalLoader,
 } from './components';
 import { ErrorScreen } from '@/router/screens/bundled';
-import {
-    usePreventDefault,
-    // useFocusTracker,
-} from './hooks';
+import { useDebug, usePreventDefault } from './hooks';
 import { withDisplayNameAndDecorator } from '@/utils';
 import { Router } from '@/router';
 
@@ -42,8 +39,8 @@ const { withDecorator } = withDisplayNameAndDecorator(
 );
 
 export const Root = withDecorator(() => {
+    useDebug();
     usePreventDefault();
-    // useFocusTracker();
 
     return (
         <Focus.Lock autoFocus enabled noIsolation>

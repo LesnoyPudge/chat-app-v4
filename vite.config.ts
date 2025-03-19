@@ -24,6 +24,8 @@ const config: UserConfigFn = ({ mode }) => {
     } as Env;
 
     const isProd = env.NODE_ENV === 'production';
+    // const isProd = false;
+    const isDev = !isProd;
 
     return defineConfig({
         css: {
@@ -47,8 +49,8 @@ const config: UserConfigFn = ({ mode }) => {
             outDir: 'build',
             emptyOutDir: true,
             assetsInlineLimit: 0,
-            minify: false,
-            // cssMinify: false,
+            minify: isProd,
+            cssMinify: isProd,
         },
         envPrefix: env._PUBLIC_SAFE_ENV_PREFIX,
         envDir,
@@ -133,6 +135,7 @@ const config: UserConfigFn = ({ mode }) => {
             // }),
             react({
                 babel: {
+                    comments: isDev,
                     plugins: [
                         // unstable, multiple crashes
                         // [
@@ -149,10 +152,8 @@ const config: UserConfigFn = ({ mode }) => {
                         isProd && 'minify-guarded-expressions',
                         'closure-elimination',
                         'transform-inline-consecutive-adds',
-                        isProd && 'transform-regexp-constructors',
-                        isProd && 'transform-minify-booleans',
+                        'transform-regexp-constructors',
                         isProd && 'minify-flip-comparisons',
-                        isProd && 'minify-infinity',
                         'transform-member-expression-literals',
                         isProd && 'transform-merge-sibling-variables',
                         isProd && 'minify-numeric-literals',
@@ -161,12 +162,15 @@ const config: UserConfigFn = ({ mode }) => {
                         isProd && 'minify-simplify',
                         isProd && 'minify-type-constructors',
                         isProd && 'transform-undefined-to-void',
-                        isProd && 'tailcall-optimization', ['transform-hoist-nested-functions', {
-                            'methods': true,
-                        }],
-                        'transform-class-properties',
+                        'tailcall-optimization',
+                        // similar to closure-elimination but
+                        // outputs incorrect code in some cases
+                        // // ['transform-hoist-nested-functions', {
+                        // //     // 'methods': true,
+                        // // }],
+                        // 'transform-class-properties',
                         'autobind-class-methods',
-                    ].filter(Boolean),
+                    ].filter((item) => typeof item !== 'boolean'),
                 },
             }),
             reactControlStatements(),

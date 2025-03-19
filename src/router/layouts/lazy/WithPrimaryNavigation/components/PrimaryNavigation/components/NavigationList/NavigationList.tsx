@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { ConversationListItem, ServerListItem } from './components';
 import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
 import { Features } from '@/redux/features';
-import { Scrollable, Separator } from '@/components';
+import { Scrollable, Separator, VirtualRender } from '@/components';
 import { useKeyboardNavigation, useTrans } from '@/hooks';
-import { Iterate, useRefManager } from '@lesnoypudge/utils-react';
+import { useRefManager } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
 
 
@@ -111,7 +111,11 @@ export const NavigationList: FC = () => {
                     role='menu'
                 >
                     <If condition={showConversations}>
-                        <Iterate items={sortedConversationIds}>
+                        <VirtualRender
+                            items={sortedConversationIds}
+                            getId={(item) => item}
+                            indexesShift={0}
+                        >
                             {(conversationId) => (
                                 <ConversationListItem
                                     key={conversationId}
@@ -121,7 +125,7 @@ export const NavigationList: FC = () => {
                                     tabIndex={getTabIndex(conversationId)}
                                 />
                             )}
-                        </Iterate>
+                        </VirtualRender>
 
                         <Separator
                             className={styles.scrollableSeparator}
@@ -129,7 +133,11 @@ export const NavigationList: FC = () => {
                         />
                     </If>
 
-                    <Iterate items={serverIds}>
+                    <VirtualRender
+                        items={serverIds}
+                        getId={(item) => item}
+                        indexesShift={0}
+                    >
                         {(serverId) => (
                             <ServerListItem
                                 key={serverId}
@@ -139,7 +147,7 @@ export const NavigationList: FC = () => {
                                 tabIndex={getTabIndex(serverId)}
                             />
                         )}
-                    </Iterate>
+                    </VirtualRender>
                 </div>
             </Scrollable>
 

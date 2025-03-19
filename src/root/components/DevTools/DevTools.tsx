@@ -42,6 +42,13 @@ const { withDecorator } = createWithDecorator(({ children }) => {
         { hotKeyOptions: { prevent: true } },
     );
 
+    useHotKey(
+        document,
+        [KEY.F4],
+        rawActions.logElementsCount,
+        { hotKeyOptions: { prevent: true } },
+    );
+
     return (
         <DialogBlocks.Base.Provider
             controls={controls}
