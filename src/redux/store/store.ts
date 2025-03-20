@@ -86,7 +86,7 @@ const listenerMiddleware = (
     useSharedListenerMiddleware().middleware
 ) as T.AnyFunction;
 
-export const makeStore = (preloadedState?: Partial<RootState>) => {
+const makeStore = (preloadedState?: Partial<RootState>) => {
     const store = configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) => (
@@ -96,6 +96,8 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
         ),
         preloadedState,
     });
+
+    // store.replaceReducer(rootReducer);
 
     setupListeners(store.dispatch);
 

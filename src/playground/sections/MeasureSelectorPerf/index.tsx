@@ -61,11 +61,12 @@ const Inner: FC = () => {
     console.time('render');
     // start();
 
-    useStoreSelector(
+    const res = useStoreSelector(
         Features
             .Conversations
             .StoreSelectors
             .selectIdsWithUnreadNotificationCountSortedByCount(),
+        // (state) => state.map(([v]) => v),
     );
 
     // const sortedConversationIds = useStoreSelector(
