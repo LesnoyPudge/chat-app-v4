@@ -3,10 +3,8 @@ import { useKeyboardNavigation } from '@/hooks';
 import { Focus, useFunction, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
 import { cn, withDisplayNameAndMemo } from '@/utils';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
-import { Features } from '@/redux/features';
-import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
 import { sharedStyles } from '../../../../sharedStyles';
-import { Navigator } from '@/features';
+import { Navigator, Store } from '@/features';
 import { ConversationContextMenu } from './components';
 
 
@@ -39,18 +37,15 @@ export const ConversationListItem = withDisplayNameAndMemo(
             return v.conversation({ conversationId });
         });
 
-        const conversation = useSliceSelector(
-            Features.Conversations.Slice,
-            Features.Conversations.Slice.selectors.selectById(conversationId),
+        const conversation = Store.useSelector(
+            Store.Conversations.Selectors.selectById(conversationId),
         );
 
-        const myId = useSliceSelector(
-            Features.App.Slice,
-            Features.App.Slice.selectors.selectUserId(),
+        const myId = Store.useSelector(
+            Store.App.Selectors.selectUserId,
         );
 
-        const userTarget = useSliceSelector(
-            Features.Users.Slice,
+        const userTarget = Store.useSelector(
             (state) => {
                 if (!conversation) return;
                 if (!myId) return;
@@ -58,12 +53,12 @@ export const ConversationListItem = withDisplayNameAndMemo(
                 const targetId = conversation.members.find((id) => id !== myId);
                 if (!targetId) return;
 
-                return Features.Users.Slice.selectors.selectById(targetId)(state);
+                return Store.Users.Selectors.selectById(targetId)(state);
             },
         );
 
-        const notificationsCount = useStoreSelector(
-            Features.Conversations.StoreSelectors.selectNotificationCountById(conversationId),
+        const notificationsCount = Store.useSelector(
+            Store.Conversations.Selectors.selectNotificationCountById(conversationId),
         );
 
         Focus.useMoveFocusInside({

@@ -1,9 +1,8 @@
 import { Button, ActionMenu, Overlay } from '@/components';
 import { useOptimisticQueue, useTrans } from '@/hooks';
 import { useFunction } from '@lesnoypudge/utils-react';
-import { Features } from '@/redux/features';
-import { useStoreSelector } from '@/redux/hooks';
 import { withDisplayNameAndDecorator } from '@/utils';
+import { Store } from '@/features';
 
 
 
@@ -46,12 +45,12 @@ export const ServerContextMenu = withDecorator<
     ServerContextMenu.Props
 >(({ serverId }) => {
     const { t } = useTrans();
-    const [mute] = Features.Users.Api.useMuteServerMutation();
-    const [unmute] = Features.Users.Api.useUnmuteServerMutation();
+    const [mute] = Store.Users.Api.useMuteServerMutation();
+    const [unmute] = Store.Users.Api.useUnmuteServerMutation();
     const [
         leaveTrigger,
         leaveHelpers,
-    ] = Features.Servers.Api.useLeaveMutation();
+    ] = Store.Servers.Api.useLeaveMutation();
 
     const leave = useFunction(() => {
         void leaveTrigger({ serverId });
@@ -60,20 +59,20 @@ export const ServerContextMenu = withDecorator<
     const [
         markAsReadTrigger,
         markAsReadHelpers,
-    ] = Features.Users.Api.useMarkServerNotificationsAsReadMutation();
+    ] = Store.Users.Api.useMarkServerNotificationsAsReadMutation();
 
     const markAsRead = useFunction(() => {
         void markAsReadTrigger({ serverId });
     });
 
-    const hasNotifications = !!useStoreSelector(
-        Features.Servers.StoreSelectors.selectNotificationCountById(
+    const hasNotifications = Store.useSelector(
+        Store.Servers.Selectors.selectHasNotificationsById(
             serverId,
         ),
     );
 
-    const isMuted = useStoreSelector(
-        Features.Servers.StoreSelectors.selectIsMutedById(serverId),
+    const isMuted = Store.useSelector(
+        Store.Servers.Selectors.selectIsMutedById(serverId),
     );
 
     const isMutedOptimistic = useOptimisticQueue(isMuted, [

@@ -26,6 +26,9 @@
             // "@/src/*": [
             //     "./src/*"
             // ],
+            "@/libs": [
+                "./src/libs"
+            ],
             "@/playground": [
                 "./src/playground",
             ],
@@ -89,20 +92,23 @@
             "@/fakeSocket": [
                 "./fakeSocket"
             ],
-            "@/redux/features": [
-                "./src/redux/features"
+            "@/store/features": [
+                "src/features/Store/features"
             ],
-            "@/redux/store": [
-                "./src/redux/store"
+            "@/store/features/nested/*": [
+                "src/features/Store/features/*"
             ],
-            "@/redux/hooks": [
-                "./src/redux/hooks"
+            "@/store/hooks": [
+                "./src/features/Store/hooks"
             ],
-            "@/redux/utils": [
-                "./src/redux/utils"
+            "@/store/utils": [
+                "src/features/Store/utils"
             ],
-            "@/redux/actions": [
-                "./src/redux/actions"
+            "@/store/globalActions": [
+                "./src/features/Store/globalActions"
+            ],
+            "@/store/types": [
+                "./src/features/Store/types"
             ],
             "_@lesnoypudge/utils-react": [
                 "../@lesnoypudge-utils-react/build"

@@ -1,15 +1,28 @@
 import { db } from './FakeDB';
 import { Dummies } from './Dummies';
 import { faker } from '@faker-js/faker';
-import { catchErrorAsync, chance, coinFlip, inRange, invariant } from '@lesnoypudge/utils';
+import { catchErrorAsync, chance, coinFlip, inRange, invariant, toOneLine } from '@lesnoypudge/utils';
 import { v4 as uuid } from 'uuid';
 import { ClientEntities } from '@/types';
 import type { RichTextEditor } from '@/components';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
 import { logger } from '@/utils';
 import { flattenPopulated } from './utils';
+import { defer } from '@lesnoypudge/utils-web';
 
 
+
+let deferredCounter = 0;
+
+const deferred = <
+    _Args extends any[],
+    _Return,
+>(fn: (...args: _Args) => _Return) => {
+    return (...args: _Args) => {
+        deferredCounter++;
+        return defer(() => fn(...args));
+    };
+};
 
 const createArray = (len: number) => Array.from({ length: len });
 
@@ -23,7 +36,7 @@ const combineToTable = <_Item extends { id: string }>(items: _Item[]) => {
     }, {});
 };
 
-const createUser = () => {
+const createUser = deferred(() => {
     const user = Dummies.user({
         id: uuid(),
         accessToken: '',
@@ -53,16 +66,33 @@ const createUser = () => {
     user.extraStatus = 'default';
 
     return user;
+});
+
+const randomParagraphs: string[] = [];
+
+const initParagraphs = async () => {
+    for (let i = 0; i < 30; i++) {
+        randomParagraphs.push(await defer(() => {
+            return faker.lorem.paragraph(inRange(1, 3));
+        }));
+    }
 };
 
-const createMessage = (props: Pick<
+const createMessage = deferred(async (props: Pick<
     ClientEntities.Message.Base,
     'author' | 'conversation' | 'channel' | 'server' | 'index' | 'textChat'
 >) => {
+    if (randomParagraphs.length === 0) {
+        await initParagraphs();
+    }
+
+    const text = randomParagraphs[inRange(0, randomParagraphs.length - 1)];
+    invariant(text);
+
     const content = JSON.stringify(
         [{
             type: 'paragraph',
-            children: [{ text: faker.lorem.paragraph(inRange(1, 3)) }],
+            children: [{ text }],
         }] satisfies RichTextEditor.Types.Nodes,
     );
 
@@ -120,26 +150,26 @@ const createMessage = (props: Pick<
     message.updatedAt = timestamp;
 
     return message;
-};
+});
 
-const createServer = (
+const createServer = deferred(async (
     myId: string,
     providedOwner?: ClientEntities.User.Base,
 ) => {
     const serverId = uuid();
-    const owner = providedOwner ?? createUser();
+    const owner = providedOwner ?? await createUser();
 
     owner.servers.push(serverId);
 
-    const members = createArray(inRange(0, mul(5))).map(() => {
-        const user = createUser();
+    const members: ClientEntities.User.Base[] = [];
 
+    for (let i = 0; i < inRange(1, mul(5)); i++) {
+        const user = await createUser();
         user.servers = [serverId];
+        members.push(user);
+    }
 
-        return user;
-    });
-
-    const roles = createArray(inRange(0, mul(5))).map(() => {
+    const roles = createArray(inRange(1, mul(5))).map(() => {
         return Dummies.role({
             avatar: null,
             color: faker.color.rgb(),
@@ -147,7 +177,7 @@ const createServer = (
             isDefault: false,
             name: faker.hacker.noun(),
             server: serverId,
-            users: extractIds(members.slice(0, inRange(0, members.length))),
+            users: extractIds(members.slice(0, inRange(1, members.length))),
             permissions: {
                 admin: chance(0.1),
                 banMember: chance(0.1),
@@ -165,15 +195,23 @@ const createServer = (
     const textChannelIds = createArray(textChatIds.length).map(() => uuid());
     const voiceChannelIds = createArray(voiceChatIds.length).map(() => uuid());
 
-    const textChats = textChannelIds.map((channelId, index) => {
+    const textChats: {
+        chat: ClientEntities.TextChat.Base;
+        messages: ClientEntities.Message.Base[];
+    }[] = [];
+
+    for (const [index, channelId] of textChannelIds.entries()) {
         const id = textChatIds[index];
         invariant(id);
+        invariant(channelId);
 
-        const messages = createArray(inRange(0, mul(15))).map((_, index) => {
+        const messages: ClientEntities.Message.Base[] = [];
+
+        for (let index = 0; index < inRange(0, mul(15)); index++) {
             const member = members[inRange(0, members.length - 1)];
             invariant(member);
 
-            return createMessage({
+            const message = await createMessage({
                 author: member.id,
                 channel: channelId,
                 server: serverId,
@@ -181,7 +219,9 @@ const createServer = (
                 index,
                 textChat: id,
             });
-        });
+
+            messages.push(message);
+        }
 
         const chat = Dummies.textChatChannel({
             id,
@@ -190,11 +230,11 @@ const createServer = (
             messages: extractIds(messages),
         });
 
-        return {
+        textChats.push({
             chat,
             messages,
-        };
-    });
+        });
+    }
 
     const voiceChats = voiceChatIds.map((channelId, index) => {
         const id = voiceChannelIds[index];
@@ -263,16 +303,18 @@ const createServer = (
         voiceChannels,
         messages: textChats.flatMap(({ messages }) => messages),
     };
-};
+});
 
-const createConversation = (myId: string, userId: string) => {
+const createConversation = deferred(async (myId: string, userId: string) => {
     const id = uuid();
     const textChatId = uuid();
 
-    const messages = createArray(inRange(0, mul(15))).map((_, index) => {
+    const messages: ClientEntities.Message.Base[] = [];
+
+    for (let index = 0; index <= inRange(0, mul(15)); index++) {
         const author = chance(0.5) ? myId : userId;
 
-        return createMessage({
+        const message = await createMessage({
             author,
             channel: null,
             server: null,
@@ -280,7 +322,9 @@ const createConversation = (myId: string, userId: string) => {
             index,
             textChat: textChatId,
         });
-    });
+
+        messages.push(message);
+    }
 
     const textChat = Dummies.textChatConversation({
         id: textChatId,
@@ -306,7 +350,7 @@ const createConversation = (myId: string, userId: string) => {
         conversation,
         messages,
     };
-};
+});
 
 type PopulateOptions = {
     myId: string;
@@ -332,7 +376,31 @@ class Scenarios {
 
         logger.log(`Database is populating with size: ${options.size}`);
 
-        const [_, error] = await catchErrorAsync(() => this._populate(options));
+        if (options.size === 'large') {
+            logger.log('Long loading is expected');
+        }
+
+        const startTime = performance.now();
+        deferredCounter = 0;
+
+        const [_, error] = await catchErrorAsync(() => {
+            return defer(() => this._populate(options));
+        });
+
+        const finalDeferredCount = deferredCounter;
+        deferredCounter = 0;
+        const timeDiff = performance.now() - startTime;
+        const timeMs = timeDiff.toFixed(0);
+        const timeSec = (timeDiff / 1_000).toFixed(2);
+
+        logger.log(toOneLine(`
+            Population duration: ${timeMs}ms = ${timeSec}sec`,
+        ));
+
+        logger.log(toOneLine(`
+            Times deferred function called 
+            during population: ${finalDeferredCount}    
+        `));
 
         if (!error) {
             logger.log(`Database successfully populated`);
@@ -355,74 +423,85 @@ class Scenarios {
 
         const me = Dummies.user(oldMe);
 
-        const friends = createArray(mul(3)).map(() => {
-            const user = createUser();
+        const friends = await defer(() => Promise.all(
+            createArray(mul(3)).map(async () => {
+                const user = await createUser();
 
-            user.friends = [me.id];
-            me.friends.push(user.id);
+                user.friends = [me.id];
+                me.friends.push(user.id);
 
-            return user;
-        });
+                return user;
+            }),
+        ));
 
         const {
             blocked_user = [],
-        } = flattenPopulated('blocked_', createArray(mul(3)).map(() => {
-            const user = createUser();
+        } = await defer(() => flattenPopulated(
+            'blocked_',
+            Promise.all(createArray(mul(3)).map(async () => {
+                const user = await createUser();
 
-            me.blocked.push(user.id);
+                me.blocked.push(user.id);
 
-            return {
-                user,
-            };
-        }));
+                return {
+                    user,
+                };
+            })),
+        ));
 
         const {
             IFR_user = [],
-        } = flattenPopulated('IFR_', createArray(mul(3)).map(() => {
-            const user = createUser();
-            const time = Date.now() - hoursToMilliseconds(inRange(1, 100));
+        } = await defer(() => flattenPopulated(
+            'IFR_',
+            Promise.all(createArray(mul(3)).map(async () => {
+                const user = await createUser();
+                const time = Date.now() - hoursToMilliseconds(inRange(1, 100));
 
-            user.outgoingFriendRequests = [{
-                to: me.id,
-                createdAt: time,
-            }];
+                user.outgoingFriendRequests = [{
+                    to: me.id,
+                    createdAt: time,
+                }];
 
-            const request: ClientEntities.User.IncomingFriendRequest = {
-                from: user.id,
-                createdAt: time,
-            };
+                const request: ClientEntities.User.IncomingFriendRequest = {
+                    from: user.id,
+                    createdAt: time,
+                };
 
-            me.incomingFriendRequests.push(request);
+                me.incomingFriendRequests.push(request);
 
-            return {
-                request,
-                user,
-            };
-        }));
+                return {
+                    request,
+                    user,
+                };
+            })),
+        ));
 
         const {
             OFR_user = [],
-        } = flattenPopulated('OFR_', createArray(mul(3)).map(() => {
-            const user = createUser();
-            const time = Date.now() - hoursToMilliseconds(inRange(1, 100));
+        } = await defer(() => flattenPopulated(
+            'OFR_',
+            Promise.all(createArray(mul(3)).map(async () => {
+                const user = await createUser();
+                const time = Date.now() - hoursToMilliseconds(inRange(1, 100));
 
-            user.incomingFriendRequests = [{
-                from: me.id,
-                createdAt: time,
-            }];
+                user.incomingFriendRequests = [{
+                    from: me.id,
+                    createdAt: time,
+                }];
 
-            const request: ClientEntities.User.OutgoingFriendRequest = {
-                to: user.id,
-                createdAt: time,
-            };
+                const request: ClientEntities.User.OutgoingFriendRequest = {
+                    to: user.id,
+                    createdAt: time,
+                };
 
-            me.outgoingFriendRequests.push(request);
+                me.outgoingFriendRequests.push(request);
 
-            return {
-                user,
-                request,
-            };
-        }));
+                return {
+                    user,
+                    request,
+                };
+            })),
+        ));
 
         const {
             servers_members = [],
@@ -434,13 +513,16 @@ class Scenarios {
             servers_textChats = [],
             servers_voiceChannels = [],
             servers_voiceChats = [],
-        } = flattenPopulated('servers_', createArray(mul(3)).map(() => {
-            const server = createServer(me.id);
+        } = await defer(() => flattenPopulated(
+            'servers_',
+            Promise.all(createArray(mul(3)).map(async () => {
+                const server = await createServer(me.id);
 
-            me.servers.push(server.server.id);
+                me.servers.push(server.server.id);
 
-            return server;
-        }));
+                return server;
+            })),
+        ));
 
         const {
             my_servers_members = [],
@@ -452,9 +534,12 @@ class Scenarios {
             my_servers_textChats = [],
             my_servers_voiceChannels = [],
             my_servers_voiceChats = [],
-        } = flattenPopulated('my_servers_', createArray(mul(1)).map(() => {
-            return createServer(me.id, me);
-        }));
+        } = await defer(() => flattenPopulated(
+            'my_servers_',
+            Promise.all(createArray(mul(1)).map(() => {
+                return createServer(me.id, me);
+            })),
+        ));
 
         const {
             mutedServers_members = [],
@@ -466,21 +551,26 @@ class Scenarios {
             mutedServers_textChats = [],
             mutedServers_voiceChannels = [],
             mutedServers_voiceChats = [],
-        } = flattenPopulated('mutedServers_', createArray(mul(2)).map(() => {
-            const server = createServer(me.id);
+        } = await defer(() => flattenPopulated(
+            'mutedServers_',
+            Promise.all(createArray(mul(2)).map(async () => {
+                const server = await createServer(me.id);
 
-            me.mutedServers.push(server.server.id);
+                me.mutedServers.push(server.server.id);
 
-            return server;
-        }));
+                return server;
+            })),
+        ));
 
-        const friendsWithConv = createArray(mul(3)).map(() => {
-            const user = createUser();
+        const friendsWithConv = await defer(() => {
+            return Promise.all(createArray(mul(3)).map(async () => {
+                const user = await createUser();
 
-            user.friends = [me.id];
-            me.friends.push(user.id);
+                user.friends = [me.id];
+                me.friends.push(user.id);
 
-            return user;
+                return user;
+            }));
         });
 
         const {
@@ -488,21 +578,26 @@ class Scenarios {
             conv_messages = [],
             conv_textChat = [],
             conv_voiceChat = [],
-        } = flattenPopulated('conv_', friendsWithConv.map(({ id }) => {
-            const conversation = createConversation(myId, id);
+        } = await defer(() => flattenPopulated(
+            'conv_',
+            Promise.all(friendsWithConv.map(async ({ id }) => {
+                const conversation = await createConversation(myId, id);
 
-            me.conversations.push(conversation.conversation.id);
+                me.conversations.push(conversation.conversation.id);
 
-            return conversation;
-        }));
+                return conversation;
+            })),
+        ));
 
-        const friendsWithMutedConv = createArray(mul(3)).map(() => {
-            const user = createUser();
+        const friendsWithMutedConv = await defer(() => {
+            return Promise.all(createArray(mul(3)).map(async () => {
+                const user = await createUser();
 
-            user.friends = [me.id];
-            me.friends.push(user.id);
+                user.friends = [me.id];
+                me.friends.push(user.id);
 
-            return user;
+                return user;
+            }));
         });
 
         const {
@@ -510,21 +605,26 @@ class Scenarios {
             mutedConv_messages = [],
             mutedConv_textChat = [],
             mutedConv_voiceChat = [],
-        } = flattenPopulated('mutedConv_', friendsWithMutedConv.map(({ id }) => {
-            const conversation = createConversation(myId, id);
+        } = await defer(() => flattenPopulated(
+            'mutedConv_',
+            Promise.all(friendsWithMutedConv.map(async ({ id }) => {
+                const conversation = await createConversation(myId, id);
 
-            me.mutedConversations.push(conversation.conversation.id);
+                me.mutedConversations.push(conversation.conversation.id);
 
-            return conversation;
-        }));
+                return conversation;
+            })),
+        ));
 
-        const friendsWithHiddenConv = createArray(mul(3)).map(() => {
-            const user = createUser();
+        const friendsWithHiddenConv = await defer(() => {
+            return Promise.all(createArray(mul(3)).map(async () => {
+                const user = await createUser();
 
-            user.friends = [me.id];
-            me.friends.push(user.id);
+                user.friends = [me.id];
+                me.friends.push(user.id);
 
-            return user;
+                return user;
+            }));
         });
 
         const {
@@ -532,13 +632,16 @@ class Scenarios {
             hiddenConv_messages = [],
             hiddenConv_textChat = [],
             hiddenConv_voiceChat = [],
-        } = flattenPopulated('hiddenConv_', friendsWithHiddenConv.map(({ id }) => {
-            const conversation = createConversation(myId, id);
+        } = await defer(() => flattenPopulated(
+            'hiddenConv_',
+            Promise.all(friendsWithHiddenConv.map(async ({ id }) => {
+                const conversation = await createConversation(myId, id);
 
-            me.mutedConversations.push(conversation.conversation.id);
+                me.mutedConversations.push(conversation.conversation.id);
 
-            return conversation;
-        }));
+                return conversation;
+            })),
+        ));
 
         await db.set({
             user: combineToTable([

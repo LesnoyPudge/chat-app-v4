@@ -1,10 +1,8 @@
 import { Button, ListVariants, Overlay, Placeholder, Sprite, WithPermission } from '@/components';
-import { Navigator } from '@/features';
+import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useValidatedParams, useTrans } from '@/hooks';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
-import { Features } from '@/redux/features';
-import { useSliceSelector } from '@/redux/hooks';
 import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 
@@ -76,9 +74,8 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
     const settingsButtonRef = useRefManager<HTMLButtonElement>(null);
     const { t } = useTrans();
 
-    const channel = useSliceSelector(
-        Features.Channels.Slice,
-        Features.Channels.Slice.selectors.selectById(channelId),
+    const channel = Store.useSelector(
+        Store.Channels.Selectors.selectById(channelId),
     );
 
     const handleNavigation = useFunction(() => {

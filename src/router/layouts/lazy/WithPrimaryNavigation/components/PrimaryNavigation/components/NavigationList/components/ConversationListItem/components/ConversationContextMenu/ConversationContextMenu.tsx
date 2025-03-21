@@ -1,9 +1,8 @@
 import { ActionMenu, Button, Overlay } from '@/components';
 import { useOptimisticQueue, useTrans } from '@/hooks';
 import { useFunction } from '@lesnoypudge/utils-react';
-import { Features } from '@/redux/features';
-import { useStoreSelector } from '@/redux/hooks';
 import { withDisplayNameAndDecorator } from '@/utils';
+import { Store } from '@/features';
 
 
 
@@ -46,12 +45,12 @@ export const ConversationContextMenu = withDecorator<
     ConversationContextMenu.Props
 >(({ conversationId }) => {
     const { t } = useTrans();
-    const [mute] = Features.Users.Api.useMuteConversationMutation();
-    const [unmute] = Features.Users.Api.useUnmuteConversationMutation();
+    const [mute] = Store.Users.Api.useMuteConversationMutation();
+    const [unmute] = Store.Users.Api.useUnmuteConversationMutation();
     const [
         hideTrigger,
         hideHelpers,
-    ] = Features.Users.Api.useHideConversationMutation();
+    ] = Store.Users.Api.useHideConversationMutation();
 
     const hide = useFunction(() => {
         void hideTrigger({ conversationId });
@@ -60,20 +59,20 @@ export const ConversationContextMenu = withDecorator<
     const [
         markAsReadTrigger,
         markAsReadHelpers,
-    ] = Features.Users.Api.useMarkConversationNotificationsAsReadMutation();
+    ] = Store.Users.Api.useMarkConversationNotificationsAsReadMutation();
 
     const markAsRead = useFunction(() => {
         void markAsReadTrigger({ conversationId });
     });
 
-    const hasNotifications = !!useStoreSelector(
-        Features.Conversations.StoreSelectors.selectNotificationCountById(
+    const hasNotifications = !!Store.useSelector(
+        Store.Conversations.Selectors.selectNotificationCountById(
             conversationId,
         ),
     );
 
-    const isMuted = useStoreSelector(
-        Features.Conversations.StoreSelectors.selectIsMutedById(conversationId),
+    const isMuted = Store.useSelector(
+        Store.Conversations.Selectors.selectIsMutedById(conversationId),
     );
 
     const isMutedOptimistic = useOptimisticQueue(isMuted, [

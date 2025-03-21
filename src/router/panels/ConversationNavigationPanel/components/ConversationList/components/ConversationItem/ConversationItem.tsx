@@ -1,10 +1,8 @@
-import { Avatar, Button, ListVariants, Placeholder, Sprite, Overlay } from '@/components';
-import { Navigator } from '@/features';
+import { Avatar, Button, Placeholder, Sprite, Overlay } from '@/components';
+import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
 import { Focus, useFunction, useRefManager } from '@lesnoypudge/utils-react';
-import { Features } from '@/redux/features';
-import { useSliceSelector } from '@/redux/hooks';
 import { cn, createStyles, withDisplayNameAndMemo } from '@/utils';
 
 
@@ -86,19 +84,16 @@ export const ConversationItem = withDisplayNameAndMemo('ConversationItem', ({
         isEnabled: isFocused,
     });
 
-    const conversation = useSliceSelector(
-        Features.Conversations.Slice,
-        Features.Conversations.Slice.selectors.selectById(conversationId),
+    const conversation = Store.useSelector(
+        Store.Conversations.Selectors.selectById(conversationId),
     );
 
-    const userId = useSliceSelector(
-        Features.App.Slice,
-        Features.App.Slice.selectors.selectUserId(),
+    const userId = Store.useSelector(
+        Store.App.Selectors.selectUserId,
     );
 
-    const userTarget = useSliceSelector(
-        Features.Users.Slice,
-        Features.Users.Slice.selectors.selectById(
+    const userTarget = Store.useSelector(
+        Store.Users.Selectors.selectById(
             conversation?.members.find((id) => id !== userId),
         ),
     );
@@ -106,7 +101,7 @@ export const ConversationItem = withDisplayNameAndMemo('ConversationItem', ({
     const [
         hideTrigger,
         hideHelpers,
-    ] = Features.Users.Api.useHideConversationMutation();
+    ] = Store.Users.Api.useHideConversationMutation();
 
     const handleNavigate = useFunction(() => {
         navigateTo.conversation({ conversationId });

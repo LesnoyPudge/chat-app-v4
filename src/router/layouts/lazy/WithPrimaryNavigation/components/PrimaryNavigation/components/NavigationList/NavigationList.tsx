@@ -1,11 +1,10 @@
 import { FC } from 'react';
 import { ConversationListItem, ServerListItem } from './components';
-import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
-import { Features } from '@/redux/features';
 import { Scrollable, Separator, VirtualRender } from '@/components';
 import { useKeyboardNavigation, useTrans } from '@/hooks';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
+import { Store } from '@/features';
 
 
 
@@ -18,50 +17,44 @@ export const NavigationList: FC = () => {
     const { t } = useTrans();
     const wrapperRef = useRefManager<HTMLDivElement>(null);
 
-    const sortedConversationIds = useStoreSelector(
-        (state) => (
-            Features
-                .Conversations
-                .StoreSelectors
-                .selectIdsWithUnreadNotificationCountSortedByCount()(state)
-                .map((v) => v[0])
+    const sortedConversationIds = Store.useSelector(
+        Store
+            .Conversations
+            .Selectors
+            .selectIdsWithUnreadNotificationCountSortedByCount,
+        (state) => state.map((v) => v[0]),
+    );
+
+    const conversationIdsToFetch = Store.useSelector(
+        Store.Conversations.Selectors.selectUndefinedIdsByIds(
+            ...sortedConversationIds,
         ),
     );
 
-    const conversationIdsToFetch = useSliceSelector(
-        Features.Conversations.Slice,
-        Features.Conversations.Slice.selectors.selectUndefinedIdsByIds(
-            sortedConversationIds,
-        ),
-    );
-
-    Features.Conversations.Api.useGetManyDeepQuery({
+    Store.Conversations.Api.useGetManyDeepQuery({
         conversationIds: conversationIdsToFetch,
     }, { skip: !conversationIdsToFetch.length });
 
-    const sortedServerIds = useStoreSelector(
-        (state) => (
-            Features
-                .Servers
-                .StoreSelectors
-                .selectIdsWithUnreadNotificationCountSortedByCount()(state)
-                .map((v) => v[0])
+    const sortedServerIds = Store.useSelector(
+        Store
+            .Servers
+            .Selectors
+            .selectIdsWithUnreadNotificationCountSortedByCount,
+        (state) => state.map((v) => v[0]),
+    );
+
+    const serverIdsWithoutNotifications = Store.useSelector(
+        Store.Servers.Selectors.selectIdsWithoutUnreadNotifications,
+    );
+
+    const serverIdsToFetch = Store.useSelector(
+        Store.Servers.Selectors.selectUndefinedIdsByIds(
+            ...sortedServerIds,
+            ...serverIdsWithoutNotifications,
         ),
     );
 
-    const serverIdsWithoutNotifications = useStoreSelector(
-        Features.Servers.StoreSelectors.selectIdsWithoutUnreadNotifications(),
-    );
-
-    const serverIdsToFetch = useSliceSelector(
-        Features.Servers.Slice,
-        Features.Servers.Slice.selectors.selectUndefinedIdsByIds([
-            ...sortedServerIds,
-            ...serverIdsWithoutNotifications,
-        ]),
-    );
-
-    Features.Servers.Api.useGetManyDeepQuery({
+    Store.Servers.Api.useGetManyDeepQuery({
         serverIds: serverIdsToFetch,
     }, { skip: !serverIdsToFetch.length });
 

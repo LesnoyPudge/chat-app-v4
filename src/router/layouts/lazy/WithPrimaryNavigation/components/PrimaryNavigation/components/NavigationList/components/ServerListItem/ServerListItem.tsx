@@ -1,13 +1,10 @@
 import { Avatar, Button, Overlay } from '@/components';
 import { useKeyboardNavigation } from '@/hooks';
-import { Focus, useFunction, useRefManager, useScrollIntoView, withDisplayName } from '@lesnoypudge/utils-react';
+import { Focus, useFunction, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
 import { cn, withDisplayNameAndMemo } from '@/utils';
-import { FC } from 'react';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
-import { Features } from '@/redux/features';
-import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
 import { sharedStyles } from '../../../../sharedStyles';
-import { Navigator } from '@/features';
+import { Navigator, Store } from '@/features';
 import { ServerContextMenu } from './components';
 
 
@@ -40,13 +37,12 @@ export const ServerListItem = withDisplayNameAndMemo(
             return v.server({ serverId });
         });
 
-        const server = useSliceSelector(
-            Features.Servers.Slice,
-            Features.Servers.Slice.selectors.selectById(serverId),
+        const server = Store.useSelector(
+            Store.Servers.Selectors.selectById(serverId),
         );
 
-        const hasNotifications = useStoreSelector(
-            Features.Servers.StoreSelectors.selectHasNotificationsById(serverId),
+        const hasNotifications = Store.useSelector(
+            Store.Servers.Selectors.selectHasNotificationsById(serverId),
         );
 
         Focus.useMoveFocusInside({

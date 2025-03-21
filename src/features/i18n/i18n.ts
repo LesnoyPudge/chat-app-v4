@@ -48,31 +48,7 @@ const promise = (i18n
 });
 
 export const initI18n = async () => {
-    await promise;
-
-    // const result = await (i18n
-    //     .use(HttpBackend)
-    //     .use(LanguageDetector)
-    //     .use(initReactI18next)
-    //     .init<HttpBackendOptions>({
-    //         // debug: true,
-    //         partialBundledLanguages: true,
-    //         interpolation: {
-    //             escapeValue: false,
-    //         },
-    //         load: 'languageOnly',
-    //         ns: namespaces,
-    //         supportedLngs: JSON.parse(env._PUBLIC_SUPPORTED_LNGS) as string[],
-    //         fallbackLng: env._PUBLIC_DEFAULT_LNG,
-    //         defaultNS: env._PUBLIC_DEFAULT_LNG_NS,
-    //         backend: {
-    //             loadPath: '/locales/{{lng}}/{{ns}}.json',
-    //         },
-    //     })
-    // );
-
-    // resolvedT = result;
-    // t = result;
+    return await promise;
 };
 
 if (isDev) {

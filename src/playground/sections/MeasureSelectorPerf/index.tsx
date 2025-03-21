@@ -1,8 +1,6 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { Scrollable } from '@/components';
-import { Features } from '@/redux/features';
-import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
-import { store } from '@/redux/store';
+import { Store } from '@/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { deepEqual } from '@lesnoypudge/utils';
 import { Focus, useBoolean, useCounter, useForceUpdate, useRefManager } from '@lesnoypudge/utils-react';
@@ -61,21 +59,21 @@ const Inner: FC = () => {
     console.time('render');
     // start();
 
-    const res = useStoreSelector(
-        Features
+    const res = Store.useSelector(
+        Store
             .Conversations
-            .StoreSelectors
-            .selectIdsWithUnreadNotificationCountSortedByCount(),
+            .Selectors
+            .selectIdsWithUnreadNotificationCountSortedByCount,
         // (state) => state.map(([v]) => v),
     );
 
-    // const sortedConversationIds = useStoreSelector(
+    // const sortedConversationIds = Store.useSelector(
     //     (state) => (
     //         measure('sortedConversationIds', true, () => (
     //             Features
     //                 .Conversations
-    //                 // .Slice.selectors.selectAll()(state.Conversations)
-    //                 .StoreSelectors
+    //                 // .Selectors.selectAll()(state.Conversations)
+    //                 .Selectors
     //                 .selectIdsWithUnreadNotificationCountSortedByCount()(state)
     //                 // .map((v) => v[0])
     //         )).sortedConversationIds
@@ -84,9 +82,9 @@ const Inner: FC = () => {
 
     // resultHolder.push(sortedConversationIds);
 
-    // const conversationIdsToFetch = useSliceSelector(
+    // const conversationIdsToFetch = Store.useSelector(
     //     Features.Conversations.Slice,
-    //     Features.Conversations.Slice.selectors.selectUndefinedIdsByIds(
+    //     Features.Conversations.Selectors.selectUndefinedIdsByIds(
     //         sortedConversationIds,
     //     ),
     // );
@@ -95,23 +93,23 @@ const Inner: FC = () => {
     //     conversationIds: conversationIdsToFetch,
     // }, { skip: !conversationIdsToFetch.length });
 
-    // const sortedServerIds = useStoreSelector(
+    // const sortedServerIds = Store.useSelector(
     //     (state) => (
     //         Features
     //             .Servers
-    //             .StoreSelectors
+    //             .Selectors
     //             .selectIdsWithUnreadNotificationCountSortedByCount()(state)
     //             .map((v) => v[0])
     //     ),
     // );
 
-    // const serverIdsWithoutNotifications = useStoreSelector(
-    //     Features.Servers.StoreSelectors.selectIdsWithoutUnreadNotifications(),
+    // const serverIdsWithoutNotifications = Store.useSelector(
+    //     Features.Servers.Selectors.selectIdsWithoutUnreadNotifications(),
     // );
 
-    // const serverIdsToFetch = useSliceSelector(
+    // const serverIdsToFetch = Store.useSelector(
     //     Features.Servers.Slice,
-    //     Features.Servers.Slice.selectors.selectUndefinedIdsByIds([
+    //     Features.Servers.Selectors.selectUndefinedIdsByIds([
     //         ...sortedServerIds,
     //         ...serverIdsWithoutNotifications,
     //     ]),
@@ -165,11 +163,11 @@ const fnToMeasure = (log: boolean) => {
         log,
         function sortedConversationIds() {
             return (
-                Features
+                Store
                     .Conversations
-                    .StoreSelectors
-                    .selectIdsWithUnreadNotificationCountSortedByCount()(
-                        store.getState(),
+                    .Selectors
+                    .selectIdsWithUnreadNotificationCountSortedByCount(
+                        Store.Utils.injectedStore.getStore().getState(),
                     )
                     // .map((v) => v[0])
             );
@@ -183,7 +181,7 @@ const fnToMeasure = (log: boolean) => {
     //     log,
     //     function conversationIdsToFetch() {
     //         return (
-    //             Features.Conversations.Slice.selectors.selectUndefinedIdsByIds(
+    //             Features.Conversations.Selectors.selectUndefinedIdsByIds(
     //                 sortedConversationIds,
     //             )(store.getState().Conversations)
     //         );
@@ -201,7 +199,7 @@ const fnToMeasure = (log: boolean) => {
     //         return (
     //             Features
     //                 .Servers
-    //                 .StoreSelectors
+    //                 .Selectors
     //                 .selectIdsWithUnreadNotificationCountSortedByCount()(
     //                     store.getState(),
     //                 ).map((v) => v[0])
@@ -216,7 +214,7 @@ const fnToMeasure = (log: boolean) => {
     //     log,
     //     function serverIdsWithoutNotifications() {
     //         return (
-    //             Features.Servers.StoreSelectors.selectIdsWithoutUnreadNotifications()
+    //             Features.Servers.Selectors.selectIdsWithoutUnreadNotifications()
     //         )(store.getState());
     //     },
     // );
@@ -229,7 +227,7 @@ const fnToMeasure = (log: boolean) => {
     //     log,
     //     function serverIdsToFetch() {
     //         return (
-    //             Features.Servers.Slice.selectors.selectUndefinedIdsByIds([
+    //             Features.Servers.Selectors.selectUndefinedIdsByIds([
     //                 ...sortedServerIds,
     //                 ...serverIdsWithoutNotifications,
     //             ])(store.getState().Servers)

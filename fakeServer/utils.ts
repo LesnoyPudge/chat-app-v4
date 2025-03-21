@@ -5,12 +5,12 @@ import { invariant } from '@lesnoypudge/utils';
 
 
 
-export const flattenPopulated = <
+export const flattenPopulated = async <
     _Prefix extends string,
     _Input extends Record<string, T.UnknownRecord | T.UnknownRecord[]>,
 >(
     prefix: _Prefix,
-    input: _Input[],
+    input: _Input[] | Promise<_Input[]>,
 ) => {
     const result = {} as {
         [_Key in keyof _Input as _Key extends string ? (
@@ -22,7 +22,7 @@ export const flattenPopulated = <
         ) | undefined
     };
 
-    for (const obj of input) {
+    for (const obj of await input) {
         for (const key of Object.keys(obj)) {
             const newKey = `${prefix}${key}` as keyof typeof result;
             const value = obj[key];
@@ -119,9 +119,9 @@ export const getDeepConversation = ({
     };
 };
 
-export const getAppData = (
+export const getAppData = async (
     userId: string,
-): T.Except<Endpoints.V1.User.Refresh.Response, 'userData'> => {
+): Promise<T.Except<Endpoints.V1.User.Refresh.Response, 'userData'>> => {
     const user = db.getById('user', userId);
     invariant(user);
 
@@ -130,7 +130,7 @@ export const getAppData = (
         conv_TextChat,
         conv_User,
         conv_VoiceChat,
-    } = flattenPopulated('conv_', user.conversations.map((id) => {
+    } = await flattenPopulated('conv_', user.conversations.map((id) => {
         return getDeepConversation({ userId: user.id, conversationId: id });
     }));
 
@@ -141,7 +141,7 @@ export const getAppData = (
         server_TextChat,
         server_User,
         server_VoiceChat,
-    } = flattenPopulated('server_', user.servers.map((id) => {
+    } = await flattenPopulated('server_', user.servers.map((id) => {
         return getDeepServer({ userId: user.id, serverId: id });
     }));
 

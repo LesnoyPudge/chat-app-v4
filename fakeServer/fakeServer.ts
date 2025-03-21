@@ -188,7 +188,7 @@ const routes: HttpHandler[] = [
 
             return jsonResponse({
                 userData: populatedUser,
-                ...getAppData(populatedUser.id),
+                ...await getAppData(populatedUser.id),
             });
         },
     ),
@@ -229,7 +229,7 @@ const routes: HttpHandler[] = [
 
             return jsonResponse({
                 userData: populatedUser,
-                ...getAppData(populatedUser.id),
+                ...await getAppData(populatedUser.id),
             });
         },
     ),
@@ -262,7 +262,7 @@ const routes: HttpHandler[] = [
 
             return jsonResponse({
                 userData: populatedUser,
-                ...getAppData(populatedUser.id),
+                ...await getAppData(populatedUser.id),
             });
         },
     ),
@@ -574,7 +574,7 @@ const routes: HttpHandler[] = [
                 TextChat = [],
                 User = [],
                 VoiceChat = [],
-            } = flattenPopulated('', body.serverIds.map((id) => {
+            } = await flattenPopulated('', body.serverIds.map((id) => {
                 return getDeepServer({
                     userId: auth.id,
                     serverId: id,
@@ -603,7 +603,7 @@ const routes: HttpHandler[] = [
                 TextChat = [],
                 User = [],
                 VoiceChat = [],
-            } = flattenPopulated('', body.conversationIds.map((id) => {
+            } = await flattenPopulated('', body.conversationIds.map((id) => {
                 return getDeepConversation({
                     userId: auth.id,
                     conversationId: id,

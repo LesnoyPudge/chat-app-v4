@@ -1,13 +1,11 @@
 import { useLocalStorage } from '@/hooks';
-import { Features } from '@/redux/features';
-import { useSliceSelector } from '@/redux/hooks';
 import { env } from '@/vars';
 import { FC, useEffect, useMemo } from 'react';
 import { Outlet } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../SuspenseWithGlobalLoader';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
-import { Navigator } from '@/features';
-import { createSleep, ErrorThrower } from '@lesnoypudge/utils-react';
+import { Navigator, Store } from '@/features';
+import { createSleep, ErrorThrower, usePropsChange } from '@lesnoypudge/utils-react';
 
 
 
@@ -17,17 +15,21 @@ export const OnlyAuthorized: FC = () => {
         lastSuccessfulRefreshTimestamp,
         isRefreshing,
         isAuthorized,
-    } = useSliceSelector(Features.App.Slice, ({
-        isAttemptedToRefresh,
-        isRefreshing,
-        lastSuccessfulRefreshTimestamp,
-        userId,
-    }) => ({
-        isAttemptedToRefresh,
-        lastSuccessfulRefreshTimestamp,
-        isRefreshing,
-        isAuthorized: !!userId,
-    }));
+    } = Store.useSliceSelector(
+        Store.App,
+        ({
+            isAttemptedToRefresh,
+            lastSuccessfulRefreshTimestamp,
+            isRefreshing,
+            userId,
+        }) => ({
+            isAttemptedToRefresh,
+            lastSuccessfulRefreshTimestamp,
+            isRefreshing,
+            isAuthorized: !!userId,
+        }),
+    );
+
     const { navigateTo } = Navigator.useNavigateTo();
     const { refreshToken } = useLocalStorage('refreshToken');
 
@@ -55,7 +57,7 @@ export const OnlyAuthorized: FC = () => {
         || !haveRefreshToken
     );
 
-    Features.Users.Api.useRefreshQuery({
+    Store.Users.Api.useRefreshQuery({
         refreshToken: refreshToken.value ?? '',
         withData: true,
     }, {

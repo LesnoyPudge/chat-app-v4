@@ -1,17 +1,15 @@
 import { FC, PropsWithChildren } from 'react';
 import { MobileMenuContext } from '../MobileMenuContext';
 import { useBoolean } from '@lesnoypudge/utils-react';
-import { useSliceSelector } from '@/redux/hooks';
-import { Features } from '@/redux/features';
+import { Store } from '@/features';
 
 
 
 export const MobileMenuProvider: FC<PropsWithChildren> = ({
     children,
 }) => {
-    const isMobile = useSliceSelector(
-        Features.App.Slice,
-        (s) => s.isMobileScreen,
+    const isMobile = Store.useSelector(
+        Store.App.Selectors.selectIsMobileScreen,
     );
     const menuState = useBoolean(isMobile);
 

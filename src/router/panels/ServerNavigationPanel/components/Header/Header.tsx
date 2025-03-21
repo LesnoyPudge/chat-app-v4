@@ -3,11 +3,10 @@ import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 import { ServerMenu } from './components';
 import { useRefManager } from '@lesnoypudge/utils-react';
-import { useSliceSelector } from '@/redux/hooks';
-import { Features } from '@/redux/features';
 import { Button, Overlay, Placeholder, Sprite } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
 import { TopBar } from '@/router/layouts/bundled';
+import { Store } from '@/features';
 
 
 
@@ -27,9 +26,8 @@ export const Header: FC = () => {
     const { serverId } = useValidatedParams('server');
     const controls = Overlay.useControls();
 
-    const server = useSliceSelector(
-        Features.Servers.Slice,
-        Features.Servers.Slice.selectors.selectById(serverId),
+    const server = Store.useSelector(
+        Store.Servers.Selectors.selectById(serverId),
     );
 
     const sprite = (

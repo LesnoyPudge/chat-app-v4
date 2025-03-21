@@ -2,10 +2,9 @@ import { FC } from 'react';
 import { ChannelItem } from './components';
 import { createStyles } from '@/utils';
 import { useValidatedParams, useTrans } from '@/hooks';
-import { useSliceSelector } from '@/redux/hooks';
-import { Features } from '@/redux/features';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { ListVariants, Scrollable } from '@/components';
+import { Store } from '@/features';
 
 
 
@@ -19,9 +18,8 @@ export const ChannelList: FC = () => {
     const { serverId } = useValidatedParams('server');
     const { t } = useTrans();
 
-    const server = useSliceSelector(
-        Features.Servers.Slice,
-        Features.Servers.Slice.selectors.selectById(serverId),
+    const server = Store.useSelector(
+        Store.Servers.Selectors.selectById(serverId),
     );
 
     return (

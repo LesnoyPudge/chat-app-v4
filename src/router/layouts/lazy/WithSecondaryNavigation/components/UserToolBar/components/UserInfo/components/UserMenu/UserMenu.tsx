@@ -11,8 +11,6 @@ import {
     Iterate,
 } from '@lesnoypudge/utils-react';
 import { copyToClipboard } from '@lesnoypudge/utils-web';
-import { Features } from '@/redux/features';
-import { useStoreSelector } from '@/redux/hooks';
 import { ClientEntities } from '@/types';
 import {
     cn,
@@ -20,6 +18,7 @@ import {
     getAnimationVariants,
     getStatusLabel,
 } from '@/utils';
+import { Store } from '@/features';
 
 
 
@@ -79,14 +78,14 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
     const {
         name,
         extraStatus,
-    } = useStoreSelector(Features.Users.StoreSelectors.selectMe());
+    } = Store.useSelector(Store.Users.Selectors.selectCurrentUser);
     const { throttle, isThrottling } = useThrottle();
     const { t } = useTrans();
 
     const [
         updateTrigger,
         updateHelpers,
-    ] = Features.Users.Api.useProfileUpdateMutation();
+    ] = Store.Users.Api.useProfileUpdateMutation();
 
     const getSetStatus = (newStatus: ExtraStatusNames) => {
         return () => {

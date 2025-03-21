@@ -2,11 +2,11 @@ import { Button, Form, Label } from '@/components';
 import { Endpoints, ApiValidators } from '@/fakeShared';
 import { useTrans } from '@/hooks';
 import { Heading, ContextSelectable } from '@lesnoypudge/utils-react';
-import { Features } from '@/redux/features';
 import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { AuthTabContext } from '../../AuthScreen';
 import { WithLoadingIndicator } from '../LoadingIndicator';
+import { Store } from '@/features';
 
 
 
@@ -35,7 +35,7 @@ const RegistrationFormOptions = Form.createForm<
 });
 
 export const RegistrationForm: FC = () => {
-    const [registration] = Features.Users.Api.useRegistrationMutation();
+    const [registration] = Store.Users.Api.useRegistrationMutation();
     const { t } = useTrans();
     const { changeTab } = ContextSelectable.useProxy(AuthTabContext);
 

@@ -2,11 +2,11 @@ import { Button, Form, Label } from '@/components';
 import { Endpoints, ApiValidators } from '@/fakeShared';
 import { useTrans } from '@/hooks';
 import { Heading, ContextSelectable } from '@lesnoypudge/utils-react';
-import { Features } from '@/redux/features';
 import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { AuthTabContext } from '../../AuthScreen';
 import { WithLoadingIndicator } from '../LoadingIndicator';
+import { Store } from '@/features';
 
 
 
@@ -34,7 +34,7 @@ const LoginFormOptions = Form.createForm<Endpoints.V1.User.Login.RequestBody>({
 });
 
 export const LoginForm: FC = () => {
-    const [login] = Features.Users.Api.useLoginMutation();
+    const [login] = Store.Users.Api.useLoginMutation();
     const { t } = useTrans();
     const { changeTab } = ContextSelectable.useProxy(AuthTabContext);
 

@@ -1,13 +1,13 @@
 import { useValidatedParams } from '@/hooks';
 import { useFunction } from '@lesnoypudge/utils-react';
-import { Features } from '@/redux/features';
+import { Store } from '@/features';
 
 
 
 export const useInvitationScreen = () => {
     const { invitationCode } = useValidatedParams('invitation');
-    const [accept] = Features.Servers.Api.useAcceptInvitationMutation();
-    const { data } = Features.Servers.Api.useGetByInvitationCodeQuery({
+    const [accept] = Store.Servers.Api.useAcceptInvitationMutation();
+    const { data } = Store.Servers.Api.useGetByInvitationCodeQuery({
         invitationCode,
     });
 

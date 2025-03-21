@@ -1,15 +1,17 @@
 import { t } from '@/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { merge, HTTP_STATUS_CODES } from '@lesnoypudge/utils';
-import { CustomQueryFn } from '@/redux/utils';
-import { TypedMutationTrigger } from '@reduxjs/toolkit/query/react';
+import { CustomQueryFn } from '@/store/utils';
 import { FormApi } from '@tanstack/react-form';
+import { ReduxToolkitQueryReact } from '@/libs';
 
 
 
 type OnSubmitProps<
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    _ApiTrigger extends TypedMutationTrigger<any, any, CustomQueryFn>,
+    _ApiTrigger extends ReduxToolkitQueryReact.TypedMutationTrigger<
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        any, any, CustomQueryFn
+    >,
 > = {
     value: Parameters<_ApiTrigger>[0];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,9 +49,11 @@ const codeToName = {
 >;
 
 export const apiAdapter = <
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    _ApiTrigger extends TypedMutationTrigger<any, any, CustomQueryFn>,
-    _Result = _ApiTrigger extends TypedMutationTrigger<
+    _ApiTrigger extends ReduxToolkitQueryReact.TypedMutationTrigger<
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        any, any, CustomQueryFn
+    >,
+    _Result = _ApiTrigger extends ReduxToolkitQueryReact.TypedMutationTrigger<
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         infer _Value, any, CustomQueryFn
     > ? _Value : never,

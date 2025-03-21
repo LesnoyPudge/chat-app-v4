@@ -1,9 +1,8 @@
 import { capitalize } from '@lesnoypudge/utils';
 import { withDisplayName } from '@lesnoypudge/utils-react';
-import { Features } from '@/redux/features';
-import { useStoreSelector } from '@/redux/hooks';
 import { ClientEntities } from '@/types';
 import { FC, PropsWithChildren } from 'react';
+import { Store } from '@/features';
 
 
 
@@ -19,8 +18,8 @@ const createPermissionComponent = ({
         forcedState,
         children,
     }) => {
-        const permissions = useStoreSelector(
-            Features.Servers.StoreSelectors.selectMyPermissionsByServerId(serverId),
+        const permissions = Store.useSelector(
+            Store.Servers.Selectors.selectMyPermissionsByServerId(serverId),
         );
 
         if (forcedState === true) return children;

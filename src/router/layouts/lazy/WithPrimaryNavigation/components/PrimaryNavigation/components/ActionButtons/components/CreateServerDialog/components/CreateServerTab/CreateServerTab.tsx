@@ -3,10 +3,9 @@ import { ApiValidators, Endpoints } from '@/fakeShared';
 import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 import { CreateServerTabContext } from '../../CreateServerDialog';
-import { Features } from '@/redux/features';
 import { useTrans } from '@/hooks';
 import { createStyles } from '@/utils';
-import { Navigator } from '@/features';
+import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 
 
@@ -67,7 +66,7 @@ const CreateServerForm = Form.createForm<CreateServerFormValues>({
 
 export const CreateServerTab: FC = () => {
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
-    const [create] = Features.Servers.Api.useCreateMutation();
+    const [create] = Store.Servers.Api.useCreateMutation();
     const { navigateTo } = Navigator.useNavigateTo();
     const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
     const { mounted } = useMountedWrapper();

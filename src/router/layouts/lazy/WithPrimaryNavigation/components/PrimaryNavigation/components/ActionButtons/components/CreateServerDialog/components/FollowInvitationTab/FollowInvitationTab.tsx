@@ -3,10 +3,9 @@ import { ApiValidators, Endpoints } from '@/fakeShared';
 import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 import { CreateServerTabContext } from '../../CreateServerDialog';
-import { Features } from '@/redux/features';
 import { createStyles } from '@/utils';
 import { useTrans } from '@/hooks';
-import { Navigator } from '@/features';
+import { Navigator, Store } from '@/features';
 
 
 
@@ -28,7 +27,7 @@ export const FollowInvitationTab: FC = () => {
     const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
     const { navigateTo } = Navigator.useNavigateTo();
     const { mounted } = useMountedWrapper();
-    const [accept] = Features.Servers.Api.useAcceptInvitationMutation();
+    const [accept] = Store.Servers.Api.useAcceptInvitationMutation();
     const { t } = useTrans();
 
     const { FormApi, submitError } = Form.useForm({

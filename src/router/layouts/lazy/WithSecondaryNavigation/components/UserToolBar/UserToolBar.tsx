@@ -1,12 +1,11 @@
 import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { UserInfo } from './components';
-import { useSliceActions, useSliceSelector } from '@/redux/hooks';
-import { Features } from '@/redux/features';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
 import { Button, Sprite, Overlay } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
+import { Store } from '@/features';
 
 
 
@@ -46,15 +45,15 @@ export const UserToolBar: FC = () => {
     const {
         isDeaf,
         isMute,
-    } = useSliceSelector(
-        Features.App.Slice,
+    } = Store.useSliceSelector(
+        Store.App,
         ({ isDeaf, isMute }) => ({ isDeaf, isMute }),
     );
 
     const {
         setIsDeaf,
         setIsMute,
-    } = useSliceActions(Features.App.Slice);
+    } = Store.useActions(Store.App);
 
     const toggleMute = useFunction(() => setIsMute(!isMute));
     const toggleDeaf = useFunction(() => setIsDeaf(!isDeaf));

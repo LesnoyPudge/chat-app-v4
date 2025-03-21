@@ -1,11 +1,10 @@
-import { ListVariants, Scrollable, VirtualRender } from '@/components';
+import { Scrollable, VirtualRender } from '@/components';
 import { FC } from 'react';
 import { createStyles } from '@/utils';
 import { Heading, useRefManager } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
-import { Features } from '@/redux/features';
-import { useSliceSelector, useStoreSelector } from '@/redux/hooks';
 import { ConversationItem } from './components';
+import { Store } from '@/features';
 
 
 
@@ -19,18 +18,17 @@ export const ConversationList: FC = () => {
     const listRef = useRefManager<HTMLUListElement>(null);
     const { t } = useTrans();
 
-    const conversationIds = useStoreSelector(
-        Features.Conversations.StoreSelectors.selectVisibleIds(),
+    const conversationIds = Store.useSelector(
+        Store.Conversations.Selectors.selectVisibleIds,
     );
 
-    const conversationIdsToFetch = useSliceSelector(
-        Features.Conversations.Slice,
-        Features.Conversations.Slice.selectors.selectUndefinedIdsByIds(
-            conversationIds,
+    const conversationIdsToFetch = Store.useSelector(
+        Store.Conversations.Selectors.selectUndefinedIdsByIds(
+            ...conversationIds,
         ),
     );
 
-    Features.Conversations.Api.useGetManyDeepQuery({
+    Store.Conversations.Api.useGetManyDeepQuery({
         conversationIds: conversationIdsToFetch,
     }, { skip: !conversationIdsToFetch.length });
 

@@ -1,16 +1,18 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { useFunction, useIsMounted } from '@lesnoypudge/utils-react';
-import { CustomQueryFn } from '@/redux/utils';
-import { TypedMutationTrigger } from '@reduxjs/toolkit/query/react';
+import { CustomQueryFn } from '@/store/utils';
 import { useRef, useState } from 'react';
+import { ReduxToolkitQueryReact } from '@/libs';
 
 
 
 export const useOptimisticQueue = <
     _State,
     _Trigger extends () => (
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ReturnType<TypedMutationTrigger<any, any, CustomQueryFn>>
+        ReturnType<ReduxToolkitQueryReact.TypedMutationTrigger<
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            any, any, CustomQueryFn
+        >>
     ),
     _PossibleActions extends [
         id: string,

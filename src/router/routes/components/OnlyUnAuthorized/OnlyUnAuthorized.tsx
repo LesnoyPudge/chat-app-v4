@@ -1,8 +1,6 @@
-import { Navigator } from '@/features';
+import { Navigator, Store } from '@/features';
 import { useLocalStorage } from '@/hooks';
 import { invariant } from '@lesnoypudge/utils';
-import { Features } from '@/redux/features';
-import { useSliceSelector } from '@/redux/hooks';
 import { FC, useEffect } from 'react';
 import { Outlet } from 'react-router';
 
@@ -11,11 +9,10 @@ import { Outlet } from 'react-router';
 export const OnlyUnAuthorized: FC = () => {
     const {
         isAuthorized,
-    } = useSliceSelector(Features.App.Slice, ({
-        userId,
-    }) => ({
-        isAuthorized: !!userId,
-    }));
+    } = Store.useSliceSelector(
+        Store.App,
+        ({ userId }) => ({ isAuthorized: !!userId }),
+    );
     const { navigateTo } = Navigator.useNavigateTo();
     const { refreshToken } = useLocalStorage('refreshToken');
 

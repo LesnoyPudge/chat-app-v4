@@ -1,7 +1,6 @@
 import { FakeDB } from '@/fakeServer';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { never } from '@lesnoypudge/utils';
-import { Slices } from '@/redux/store';
+import { Store } from '@/features';
 import { EntityState } from '@reduxjs/toolkit';
 
 
@@ -55,8 +54,12 @@ class FakeSocket {
                 ...(data[key] ?? []),
             ])];
 
-            // @ts-expect-error
-            result[key] = list;
+            Object.assign(
+                result,
+                {
+                    [key]: list,
+                },
+            );
         }
 
         this.addDataBroadcastBuffer = result;
@@ -266,15 +269,12 @@ class FakeSocket {
 }
 
 export namespace socket {
-    export type Names = keyof T.Except<
-        Slices,
-        'App'
-    >;
+    export type Names = keyof Store.Types.SlicesWithEntityAdapter;
 
     export type AddedData = {
         [_Name in Names]?: (
             ReturnType<
-                Slices[_Name]['getInitialState']
+                Store.Types.SlicesWithEntityAdapter[_Name]['getInitialState']
             > extends EntityState<infer _State, string>
                 ? _State[]
                 : never

@@ -2,10 +2,9 @@ import { Avatar, Button, Overlay } from '@/components';
 import { FC } from 'react';
 import { UserMenu } from './components';
 import { createStyles } from '@/utils';
-import { useStoreSelector } from '@/redux/hooks';
-import { Features } from '@/redux/features';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
+import { Store } from '@/features';
 
 
 
@@ -36,7 +35,7 @@ export const UserInfo: FC = () => {
         name,
         status,
         extraStatus,
-    } = useStoreSelector(Features.Users.StoreSelectors.selectMe());
+    } = Store.useSelector(Store.Users.Selectors.selectCurrentUser);
     const controls = Overlay.useControls();
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { t } = useTrans();

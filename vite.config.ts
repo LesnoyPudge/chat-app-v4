@@ -146,7 +146,6 @@ const config: UserConfigFn = ({ mode }) => {
                             include: '*',
                             freezeObjects: 'development',
                         }],
-                        '@babel/plugin-transform-react-constant-elements',
                         'macros',
                         isProd && 'minify-dead-code-elimination',
                         isProd && 'minify-guarded-expressions',
