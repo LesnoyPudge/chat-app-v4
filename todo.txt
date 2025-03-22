@@ -41,3 +41,4 @@ https://fluid.tw/
 - ПЕРЕНЕСТИ ВСЕ (почти) БИБЛИОТЕКИ В src/libs
 - ИСПОЛЬЗОВАТЬ scripts:check-relative-imports И ИСПРАВИТЬ ВСЕ РЕЛАТИВНЫЕ ПУТИ
 -? fix all eslint violations :)
+- UPDATE ALL FORM RELATED CODE TO TANSTACK FORM VERSION 1+
