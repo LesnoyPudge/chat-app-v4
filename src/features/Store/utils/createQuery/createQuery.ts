@@ -4,6 +4,7 @@ import { localStorageApi } from '@/utils';
 import { env, isDev } from '@/vars';
 import { ReduxToolkitQuery } from '@/libs';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { globalActions } from '@/store/globalActions';
 
 
 
@@ -67,32 +68,27 @@ const withReAuthorization = (baseQuery: CustomQueryFn): CustomQueryFn => {
 
         const refreshToken = localStorageApi.get('refreshToken');
 
-        // Lazily taking user api and app slice to prevent circular deps
-        // since we use query in api and api in slice.
+        // Lazily taking user api to prevent circular deps
+        // since we use query in rootApi and rootApi in UsersApi.
         // It will return resolved promise.
-
         const {
-            UsersApi,
-        } = await import('@/store/features/nested/Users/UsersApi');
-
-        const {
-            AppSlice,
-        } = await import('@/store/features/nested/App/AppSlice');
+            Users,
+        } = await import('@/store/features');
 
         if (!refreshToken) {
-            api.dispatch(AppSlice.actions.softReset());
+            api.dispatch(globalActions.softReset());
             return result;
         }
 
         const refreshResponse = await api.dispatch(
-            UsersApi.endpoints.refresh.initiate({
+            Users.Api.endpoints.UserRefresh.initiate({
                 refreshToken,
             }, { forceRefetch: true, subscribe: false }),
         );
 
         if (!refreshResponse.error) return baseQuery(...args);
 
-        api.dispatch(AppSlice.actions.softReset());
+        api.dispatch(globalActions.softReset());
 
         return result;
     };

@@ -20,9 +20,9 @@ export const MessagesSlice = createSlice({
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
-                Users.Api.endpoints.login.matchFulfilled,
-                Users.Api.endpoints.registration.matchFulfilled,
-                Users.Api.endpoints.refresh.matchFulfilled,
+                Users.Api.endpoints.UserLogin.matchFulfilled,
+                Users.Api.endpoints.UserRegistration.matchFulfilled,
+                Users.Api.endpoints.UserRefresh.matchFulfilled,
             ),
             (state, { payload }) => {
                 adapter.upsertMany(state, payload.Message);

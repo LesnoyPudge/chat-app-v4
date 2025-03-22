@@ -15,7 +15,7 @@ const FollowInvitationForm = Form.createForm<FollowInvitationFormValues>({
     defaultValues: {
         invitationCode: '',
     },
-    validator: ApiValidators.V1.Server.acceptInvitation,
+    validator: ApiValidators.ServerAcceptInvitation,
 });
 
 const styles = createStyles({
@@ -27,7 +27,7 @@ export const FollowInvitationTab: FC = () => {
     const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
     const { navigateTo } = Navigator.useNavigateTo();
     const { mounted } = useMountedWrapper();
-    const [accept] = Store.Servers.Api.useAcceptInvitationMutation();
+    const [accept] = Store.Servers.Api.useServerAcceptInvitationMutation();
     const { t } = useTrans();
 
     const { FormApi, submitError } = Form.useForm({

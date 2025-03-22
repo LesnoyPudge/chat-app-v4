@@ -26,7 +26,7 @@ const styles = createStyles({
 });
 
 const LoginFormOptions = Form.createForm<Endpoints.V1.User.Login.RequestBody>({
-    validator: ApiValidators.V1.User.login,
+    validator: ApiValidators.UserLogin,
     defaultValues: {
         login: '',
         password: '',
@@ -34,7 +34,7 @@ const LoginFormOptions = Form.createForm<Endpoints.V1.User.Login.RequestBody>({
 });
 
 export const LoginForm: FC = () => {
-    const [login] = Store.Users.Api.useLoginMutation();
+    const [login] = Store.Users.Api.useUserLoginMutation();
     const { t } = useTrans();
     const { changeTab } = ContextSelectable.useProxy(AuthTabContext);
 

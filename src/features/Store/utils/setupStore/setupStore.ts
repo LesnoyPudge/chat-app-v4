@@ -1,7 +1,14 @@
 import { StoreTypes } from '@/store/types';
 import * as features from '@/store/features';
-import { createSharedListenerMiddleware, injectedStore } from '@/store/utils';
+import {
+    createSharedListenerMiddleware,
+    getRootApi,
+    injectedStore,
+} from '@/store/utils';
 import { ReduxToolkit, ReduxToolkitQueryReact } from '@/libs';
+import { isDev } from '@/vars';
+import { devtools } from '@/features';
+import { globalActions } from '@/store/globalActions';
 
 
 
@@ -17,34 +24,36 @@ const slices = [
     features.VoiceChats._Slice,
 ] as const;
 
-const apis = [
-    features.Channels.Api,
-    features.Conversations.Api,
-    features.Messages.Api,
-    features.Roles.Api,
-    features.Servers.Api,
-    features.TextChats.Api,
-    features.Users.Api,
-    features.VoiceChats.Api,
-] as const;
-
-const rootReducer = ReduxToolkit.combineSlices(
-    ...slices,
-    ...apis,
-);
-
-const setupEffects = (store: StoreTypes.Store) => {
-    features.App.Effects.setupEffects(store);
-};
+// const apis = [
+//     features.Channels.Api,
+//     features.Conversations.Api,
+//     features.Messages.Api,
+//     features.Roles.Api,
+//     features.Servers.Api,
+//     features.TextChats.Api,
+//     features.Users.Api,
+//     features.VoiceChats.Api,
+// ] as const;
 
 export const setupStore = (preloadedState?: Partial<StoreTypes.State>) => {
+    const rootReducer = ReduxToolkit.combineSlices(
+        ...slices,
+        getRootApi(),
+        // ...apis,
+    );
+
+    const setupEffects = (store: StoreTypes.Store) => {
+        features.App.Effects.setupEffects(store);
+    };
+
     const store = ReduxToolkit.configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) => (
             getDefaultMiddleware()
                 .prepend([
                     createSharedListenerMiddleware().middleware,
-                    ...apis.map((api) => api.middleware),
+                    getRootApi().middleware,
+                    // ...apis.map((api) => api.middleware),
                 ])
         ),
         preloadedState,
@@ -55,6 +64,11 @@ export const setupStore = (preloadedState?: Partial<StoreTypes.State>) => {
     ReduxToolkitQueryReact.setupListeners(store.dispatch);
 
     setupEffects(store);
+
+    if (isDev) {
+        devtools.append('reduxStore', store);
+        devtools.append('softReset', globalActions.softReset);
+    }
 
     return store;
 };

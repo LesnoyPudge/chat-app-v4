@@ -26,7 +26,7 @@ const styles = createStyles({
 const RegistrationFormOptions = Form.createForm<
     Endpoints.V1.User.Registration.RequestBody
 >({
-    validator: ApiValidators.V1.User.registration,
+    validator: ApiValidators.UserRegistration,
     defaultValues: {
         login: '',
         password: '',
@@ -35,7 +35,7 @@ const RegistrationFormOptions = Form.createForm<
 });
 
 export const RegistrationForm: FC = () => {
-    const [registration] = Store.Users.Api.useRegistrationMutation();
+    const [registration] = Store.Users.Api.useUserRegistrationMutation();
     const { t } = useTrans();
     const { changeTab } = ContextSelectable.useProxy(AuthTabContext);
 

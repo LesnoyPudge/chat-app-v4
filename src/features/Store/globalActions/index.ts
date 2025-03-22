@@ -1,1 +1,1 @@
-export * from './socketActions';
+export * from './globalActions';

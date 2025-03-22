@@ -1,16 +1,12 @@
 import { Endpoints } from '@/fakeShared';
-import { createQuery } from '@/store/utils';
-import { ReduxToolkitQueryReact } from '@/libs';
+import { getRootApi } from '@/store/utils';
 import Conversation = Endpoints.V1.Conversation;
 
 
 
-export const ConversationsApi = ReduxToolkitQueryReact.createApi({
-    baseQuery: createQuery(),
-    reducerPath: 'ConversationsApi',
-    tagTypes: ['Conversations'],
+export const ConversationsApi = getRootApi().injectEndpoints({
     endpoints: (build) => ({
-        [Conversation.GetMany.ActionName]: (
+        [Conversation.GetMany.NamedAction]: (
             build.query<
                 Conversation.GetMany.Response,
                 Conversation.GetMany.RequestBody
@@ -21,13 +17,13 @@ export const ConversationsApi = ReduxToolkitQueryReact.createApi({
                     body,
                 }),
                 providesTags: (result) => result?.map(({ id }) => ({
-                    type: 'Conversations',
+                    type: 'Conversation',
                     id,
-                })) ?? [{ type: 'Conversations', id: 'LIST' }],
+                })) ?? [{ type: 'Conversation', id: 'LIST' }],
             })
         ),
 
-        [Conversation.GetManyDeep.ActionName]: (
+        [Conversation.GetManyDeep.NamedAction]: (
             build.query<
                 Conversation.GetManyDeep.Response,
                 Conversation.GetManyDeep.RequestBody

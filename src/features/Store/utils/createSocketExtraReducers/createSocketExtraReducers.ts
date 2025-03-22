@@ -1,4 +1,4 @@
-import { socketActions } from '@/store/globalActions';
+import { globalActions } from '@/store/globalActions';
 import { WithId } from '@/types';
 import { socket } from '@/fakeSocket';
 import { ReduxToolkit } from '@/libs';
@@ -15,7 +15,7 @@ export const createSocketExtraReducers = <
     >,
 ) => {
     builder.addCase(
-        socketActions.addSocketData,
+        globalActions.addSocketData,
         (state, { payload }) => {
             const newEntities = payload[entityName] as unknown as _State[];
 
@@ -24,7 +24,7 @@ export const createSocketExtraReducers = <
     );
 
     builder.addCase(
-        socketActions.removeSocketData,
+        globalActions.removeSocketData,
         (state, { payload }) => {
             const idsToRemove = payload[entityName];
             if (!idsToRemove) return;

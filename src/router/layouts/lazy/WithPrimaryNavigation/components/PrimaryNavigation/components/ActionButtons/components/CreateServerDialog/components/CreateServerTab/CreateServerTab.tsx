@@ -61,12 +61,12 @@ const CreateServerForm = Form.createForm<CreateServerFormValues>({
         name: '',
         avatar: null,
     },
-    validator: ApiValidators.V1.Server.create,
+    validator: ApiValidators.ServerCreate,
 });
 
 export const CreateServerTab: FC = () => {
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
-    const [create] = Store.Servers.Api.useCreateMutation();
+    const [create] = Store.Servers.Api.useServerCreateMutation();
     const { navigateTo } = Navigator.useNavigateTo();
     const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
     const { mounted } = useMountedWrapper();

@@ -4,7 +4,7 @@ import { MOBILE_SCREEN_QUERY } from '@/vars';
 import { addEventListener } from '@lesnoypudge/utils-web';
 import { localStorageApi } from '@/utils';
 import { socket } from '@/fakeSocket';
-import { socketActions } from '@/store/globalActions';
+import { globalActions } from '@/store/globalActions';
 import { Users } from '@/store/features';
 import { ReduxToolkit } from '@/libs';
 
@@ -38,7 +38,7 @@ export const AppEffects = createEffects({
 
     listenerMiddlewares: [
         ({ startListening }) => startListening({
-            actionCreator: AppSlice.actions.softReset,
+            actionCreator: globalActions.softReset,
             effect: () => {
                 localStorageApi.remove('isDeaf');
                 localStorageApi.remove('isMute');
@@ -48,7 +48,6 @@ export const AppEffects = createEffects({
                 // localStorageApi.remove('savedMessageDrafts');
 
                 socket.disconnect();
-
                 socket.removeOnAddData();
                 socket.removeOnRemoveData();
             },
@@ -56,9 +55,9 @@ export const AppEffects = createEffects({
 
         ({ startListening }) => {
             const matcher = ReduxToolkit.isAnyOf(
-                Users.Api.endpoints.login.matchFulfilled,
-                Users.Api.endpoints.registration.matchFulfilled,
-                Users.Api.endpoints.refresh.matchFulfilled,
+                Users.Api.endpoints.UserLogin.matchFulfilled,
+                Users.Api.endpoints.UserRegistration.matchFulfilled,
+                Users.Api.endpoints.UserRefresh.matchFulfilled,
             );
 
             startListening({
@@ -82,11 +81,11 @@ export const AppEffects = createEffects({
                     socket.connect();
 
                     socket.onAddData((data) => {
-                        dispatch(socketActions.addSocketData(data));
+                        dispatch(globalActions.addSocketData(data));
                     });
 
                     socket.onRemoveData((data) => {
-                        dispatch(socketActions.removeSocketData(data));
+                        dispatch(globalActions.removeSocketData(data));
                     });
                 },
             });

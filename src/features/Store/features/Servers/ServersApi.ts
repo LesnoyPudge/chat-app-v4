@@ -1,16 +1,12 @@
 import { Endpoints } from '@/fakeShared';
-import { createQuery } from '@/store/utils';
+import { getRootApi } from '@/store/utils';
 import Server = Endpoints.V1.Server;
-import { ReduxToolkitQueryReact } from '@/libs';
 
 
 
-export const ServersApi = ReduxToolkitQueryReact.createApi({
-    baseQuery: createQuery(),
-    reducerPath: 'ServersApi',
-    tagTypes: ['Servers'],
+export const ServersApi = getRootApi().injectEndpoints({
     endpoints: (build) => ({
-        [Server.GetByInvitationCode.ActionName]: (
+        [Server.GetByInvitationCode.NamedAction]: (
             build.query<
                 Server.GetByInvitationCode.Response,
                 Server.GetByInvitationCode.RequestBody
@@ -21,12 +17,12 @@ export const ServersApi = ReduxToolkitQueryReact.createApi({
                     body,
                 }),
                 providesTags: (result) => [
-                    { type: 'Servers', id: result?.id },
+                    { type: 'Server', id: result?.id },
                 ],
             })
         ),
 
-        [Server.AcceptInvitation.ActionName]: (
+        [Server.AcceptInvitation.NamedAction]: (
             build.mutation<
                 Server.AcceptInvitation.Response,
                 Server.AcceptInvitation.RequestBody
@@ -37,12 +33,12 @@ export const ServersApi = ReduxToolkitQueryReact.createApi({
                     body,
                 }),
                 invalidatesTags: (result) => [
-                    { type: 'Servers', id: result?.id },
+                    { type: 'Server', id: result?.id },
                 ],
             })
         ),
 
-        [Server.Create.ActionName]: (
+        [Server.Create.NamedAction]: (
             build.mutation<
                 Server.Create.Response,
                 Server.Create.RequestBody
@@ -53,12 +49,12 @@ export const ServersApi = ReduxToolkitQueryReact.createApi({
                     body,
                 }),
                 invalidatesTags: (result) => [
-                    { type: 'Servers', id: result?.id },
+                    { type: 'Server', id: result?.id },
                 ],
             })
         ),
 
-        [Server.Leave.ActionName]: (
+        [Server.Leave.NamedAction]: (
             build.mutation<
                 Server.Leave.Response,
                 Server.Leave.RequestBody
@@ -71,7 +67,7 @@ export const ServersApi = ReduxToolkitQueryReact.createApi({
             })
         ),
 
-        [Server.GetMany.ActionName]: (
+        [Server.GetMany.NamedAction]: (
             build.query<
                 Server.GetMany.Response,
                 Server.GetMany.RequestBody
@@ -82,13 +78,13 @@ export const ServersApi = ReduxToolkitQueryReact.createApi({
                     body,
                 }),
                 providesTags: (result) => result?.map(({ id }) => ({
-                    type: 'Servers',
+                    type: 'Server',
                     id,
-                })) ?? [{ type: 'Servers', id: 'LIST' }],
+                })) ?? [{ type: 'Server', id: 'LIST' }],
             })
         ),
 
-        [Server.GetManyDeep.ActionName]: (
+        [Server.GetManyDeep.NamedAction]: (
             build.query<
                 Server.GetManyDeep.Response,
                 Server.GetManyDeep.RequestBody

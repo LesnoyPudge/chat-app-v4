@@ -7,6 +7,7 @@ export * from './createSharedListenerMiddleware';
 export * from './createSlice';
 export * from './createSocketExtraReducers';
 export * from './extractReducersFromAdapter';
+export * from './getRootApi';
 export * from './injectedStore';
 export * from './setupStore';
 export * from './toCurriedSelector';

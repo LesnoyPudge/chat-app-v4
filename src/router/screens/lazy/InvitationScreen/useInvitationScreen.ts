@@ -6,8 +6,8 @@ import { Store } from '@/features';
 
 export const useInvitationScreen = () => {
     const { invitationCode } = useValidatedParams('invitation');
-    const [accept] = Store.Servers.Api.useAcceptInvitationMutation();
-    const { data } = Store.Servers.Api.useGetByInvitationCodeQuery({
+    const [accept] = Store.Servers.Api.useServerAcceptInvitationMutation();
+    const { data } = Store.Servers.Api.useServerGetByInvitationCodeQuery({
         invitationCode,
     });
 

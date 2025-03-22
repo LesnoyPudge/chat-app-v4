@@ -28,7 +28,7 @@ export const ConversationList: FC = () => {
         ),
     );
 
-    Store.Conversations.Api.useGetManyDeepQuery({
+    Store.Conversations.Api.useConversationGetManyDeepQuery({
         conversationIds: conversationIdsToFetch,
     }, { skip: !conversationIdsToFetch.length });
 

@@ -31,7 +31,7 @@ export const NavigationList: FC = () => {
         ),
     );
 
-    Store.Conversations.Api.useGetManyDeepQuery({
+    Store.Conversations.Api.useConversationGetManyDeepQuery({
         conversationIds: conversationIdsToFetch,
     }, { skip: !conversationIdsToFetch.length });
 
@@ -54,7 +54,7 @@ export const NavigationList: FC = () => {
         ),
     );
 
-    Store.Servers.Api.useGetManyDeepQuery({
+    Store.Servers.Api.useServerGetManyDeepQuery({
         serverIds: serverIdsToFetch,
     }, { skip: !serverIdsToFetch.length });
 

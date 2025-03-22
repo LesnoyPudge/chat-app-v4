@@ -1,5 +1,7 @@
+import { devtools } from '@/features';
 import { logger } from '@/utils';
 import { isProd } from '@/vars';
+import { defer } from '@lesnoypudge/utils-web';
 
 
 
@@ -11,7 +13,7 @@ export const postInit = async () => {
     const ReactDOM = await import('react-dom');
     const React = await import('react');
 
-    await import('@axe-core/react').then((axe) => {
+    void import('@axe-core/react').then((axe) => {
         const axeReact = () => {
             void axe.default(React, ReactDOM, 1_000, {
                 disableDeduplicate: true,
@@ -29,14 +31,8 @@ export const postInit = async () => {
             });
         };
 
-        axeReact();
+        void defer(() => axeReact());
 
-        // @ts-expect-error
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        window._devtools = {
-            // @ts-expect-error
-            ...window._devtools,
-            axeReact,
-        };
+        devtools.append('axeReact', axeReact);
     });
 };

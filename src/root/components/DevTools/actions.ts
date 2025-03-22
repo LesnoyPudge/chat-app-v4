@@ -1,14 +1,9 @@
 import { db } from '@/fakeServer';
 import { KEY, toOneLine } from '@lesnoypudge/utils';
 import { localStorageApi, logger } from '@/utils';
+import { devtools } from '@/features';
 
 
-
-// @ts-expect-error
-if (!window._devtools) {
-    // @ts-expect-error
-    window._devtools = {};
-}
 
 const logConsoleHint = () => {
     logger.log(`${KEY.F1} to clear console`);
@@ -53,19 +48,16 @@ export const rawActions = {
     },
 
     softResetReduxStore: () => {
-        // @ts-expect-error
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        window._devtools?.store?.dispatch(
-            // @ts-expect-error
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-            window._devtools?.softReset(),
-        );
+        const store = devtools.get('reduxStore');
+        const softReset = devtools.get('softReset');
+        if (!store) return;
+        if (!softReset) return;
+
+        store.dispatch(softReset());
     },
 
     runAxe: () => {
-        // @ts-expect-error
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        window._devtools?.axeReact();
+        devtools.get('axeReact')?.();
     },
 
     clearConsole: () => {

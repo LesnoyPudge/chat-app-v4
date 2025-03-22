@@ -101,7 +101,7 @@ export const ConversationItem = withDisplayNameAndMemo('ConversationItem', ({
     const [
         hideTrigger,
         hideHelpers,
-    ] = Store.Users.Api.useHideConversationMutation();
+    ] = Store.Users.Api.useUserHideConversationMutation();
 
     const handleNavigate = useFunction(() => {
         navigateTo.conversation({ conversationId });

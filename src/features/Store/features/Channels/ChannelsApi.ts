@@ -1,17 +1,12 @@
 import { Endpoints } from '@/fakeShared';
-import { createQuery } from '@/store/utils';
-
-
-
+import { getRootApi } from '@/store/utils';
 import Channel = Endpoints.V1.Channel;
-import { ReduxToolkitQueryReact } from '@/libs';
 
-export const ChannelsApi = ReduxToolkitQueryReact.createApi({
-    baseQuery: createQuery(),
-    reducerPath: 'ChannelsApi',
-    tagTypes: ['Channels'],
+
+
+export const ChannelsApi = getRootApi().injectEndpoints({
     endpoints: (build) => ({
-        [Channel.GetMany.ActionName]: (
+        [Channel.GetMany.NamedAction]: (
             build.query<
                 Channel.GetMany.Response,
                 Channel.GetMany.RequestBody
@@ -22,9 +17,9 @@ export const ChannelsApi = ReduxToolkitQueryReact.createApi({
                     body,
                 }),
                 providesTags: (result) => result?.map(({ id }) => ({
-                    type: 'Channels',
+                    type: 'Channel',
                     id,
-                })) ?? [{ type: 'Channels', id: 'LIST' }],
+                })) ?? [{ type: 'Channel', id: 'LIST' }],
             })
         ),
     }),

@@ -85,7 +85,7 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
     const [
         updateTrigger,
         updateHelpers,
-    ] = Store.Users.Api.useProfileUpdateMutation();
+    ] = Store.Users.Api.useUserProfileUpdateMutation();
 
     const getSetStatus = (newStatus: ExtraStatusNames) => {
         return () => {

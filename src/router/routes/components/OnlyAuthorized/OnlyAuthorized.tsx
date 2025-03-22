@@ -57,7 +57,7 @@ export const OnlyAuthorized: FC = () => {
         || !haveRefreshToken
     );
 
-    Store.Users.Api.useRefreshQuery({
+    Store.Users.Api.useUserRefreshQuery({
         refreshToken: refreshToken.value ?? '',
         withData: true,
     }, {

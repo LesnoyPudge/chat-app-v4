@@ -87,7 +87,7 @@ export const Scrollable: FC<Scrollable.Props> = ({
 
     useDebug({ instanceRef, className });
 
-    const mergedScrollableRef = useMergeRefs([
+    const mergedWrapperRef = useMergeRefs([
         scrollableWrapperRef,
         scrollableRef,
     ]);
@@ -100,18 +100,22 @@ export const Scrollable: FC<Scrollable.Props> = ({
     return (
         <div
             className={cn(styles.wrapper, className)}
-            ref={mergedScrollableRef}
+            ref={mergedWrapperRef}
             data-scrollable={true}
             data-with-gutter={!withoutGutter}
             data-with-opposite-gutter={!withoutOppositeGutter}
             data-size={size}
             data-direction={direction}
-            role='region'
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={0}
-            aria-label={label}
+            data-overlayscrollbars='host'
         >
-            <div ref={mergedViewportRef}>
+            <div
+                ref={mergedViewportRef}
+                role='region'
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                tabIndex={0}
+                aria-label={label}
+                data-overlayscrollbars-viewport
+            >
                 {children}
             </div>
         </div>

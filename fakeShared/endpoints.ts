@@ -1,5 +1,5 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { HTTP_METHODS } from '@lesnoypudge/utils';
+import { capitalize, HTTP_METHODS } from '@lesnoypudge/utils';
 import { ClientEntities as Entities } from '@/types';
 import { ENTITY_NAME } from './entity';
 
@@ -27,6 +27,15 @@ const v1 = <
     return `/api/v1/${toKebabCase(entity)}/${toKebabCase(action)}` as const;
 };
 
+const namedAction = <
+    _Entity extends string,
+    _Action extends string,
+>(
+    entity: _Entity,
+    action: _Action,
+) => {
+    return `${entity}${capitalize(action)}` as const;
+};
 
 namespace WithId {
     export type User = {
@@ -127,6 +136,8 @@ namespace EndpointsV1 {
         export namespace Registration {
             export const ActionName = 'registration';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -141,6 +152,8 @@ namespace EndpointsV1 {
 
         export namespace Login {
             export const ActionName = 'login';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
 
             export const Path = v1(BasePath, ActionName);
 
@@ -157,6 +170,8 @@ namespace EndpointsV1 {
         export namespace Logout {
             export const ActionName = 'logout';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -171,6 +186,8 @@ namespace EndpointsV1 {
 
         export namespace Refresh {
             export const ActionName = 'refresh';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
 
             export const Path = v1(BasePath, ActionName);
 
@@ -192,6 +209,8 @@ namespace EndpointsV1 {
         export namespace MuteServer {
             export const ActionName = 'muteServer';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -203,6 +222,8 @@ namespace EndpointsV1 {
 
         export namespace UnmuteServer {
             export const ActionName = 'unmuteServer';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
 
             export const Path = v1(BasePath, ActionName);
 
@@ -216,6 +237,8 @@ namespace EndpointsV1 {
         export namespace MarkServerNotificationsAsRead {
             export const ActionName = 'markServerNotificationsAsRead';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -227,6 +250,8 @@ namespace EndpointsV1 {
 
         export namespace MuteConversation {
             export const ActionName = 'muteConversation';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
 
             export const Path = v1(BasePath, ActionName);
 
@@ -240,6 +265,8 @@ namespace EndpointsV1 {
         export namespace UnmuteConversation {
             export const ActionName = 'unmuteConversation';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -251,6 +278,8 @@ namespace EndpointsV1 {
 
         export namespace MarkConversationNotificationsAsRead {
             export const ActionName = 'markConversationNotificationsAsRead';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
 
             export const Path = v1(BasePath, ActionName);
 
@@ -264,6 +293,8 @@ namespace EndpointsV1 {
         export namespace HideConversation {
             export const ActionName = 'hideConversation';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -276,6 +307,8 @@ namespace EndpointsV1 {
         export namespace GetMany {
             export const ActionName = 'getMany';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -287,6 +320,8 @@ namespace EndpointsV1 {
 
         export namespace ProfileUpdate {
             export const ActionName = 'profileUpdate';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
 
             export const Path = v1(BasePath, ActionName);
 
@@ -313,6 +348,8 @@ namespace EndpointsV1 {
         export namespace GetByInvitationCode {
             export const ActionName = 'getByInvitationCode';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -327,6 +364,8 @@ namespace EndpointsV1 {
         export namespace AcceptInvitation {
             export const ActionName = 'acceptInvitation';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -340,6 +379,8 @@ namespace EndpointsV1 {
 
         export namespace Create {
             export const ActionName = 'create';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
 
             export const Path = v1(BasePath, ActionName);
 
@@ -363,6 +404,8 @@ namespace EndpointsV1 {
         export namespace Leave {
             export const ActionName = 'leave';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -375,6 +418,8 @@ namespace EndpointsV1 {
         export namespace GetMany {
             export const ActionName = 'getMany';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -386,6 +431,8 @@ namespace EndpointsV1 {
 
         export namespace GetManyDeep {
             export const ActionName = 'getManyDeep';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
 
             export const Path = v1(BasePath, ActionName);
 
@@ -411,6 +458,8 @@ namespace EndpointsV1 {
         export namespace GetMany {
             export const ActionName = 'getMany';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -427,6 +476,8 @@ namespace EndpointsV1 {
         export namespace GetMany {
             export const ActionName = 'getMany';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -438,6 +489,8 @@ namespace EndpointsV1 {
 
         export namespace GetManyDeep {
             export const ActionName = 'getManyDeep';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
 
             export const Path = v1(BasePath, ActionName);
 
@@ -458,6 +511,8 @@ namespace EndpointsV1 {
         export namespace GetMany {
             export const ActionName = 'getMany';
 
+            export const NamedAction = namedAction(BasePath, ActionName);
+
             export const Path = v1(BasePath, ActionName);
 
             export const Method = HTTP_METHODS.POST;
@@ -473,6 +528,8 @@ namespace EndpointsV1 {
 
         export namespace GetMany {
             export const ActionName = 'getMany';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
 
             export const Path = v1(BasePath, ActionName);
 
@@ -494,6 +551,8 @@ namespace EndpointsV1 {
         // export namespace GetMany {
         //     export const ActionName = 'getMany';
 
+        //     export const NamedAction = namedAction(BasePath, ActionName);
+
         //     export const Path = v1(BasePath, ActionName);
 
         //     export const Method = HTTP_METHODS.POST;
@@ -509,6 +568,8 @@ namespace EndpointsV1 {
 
         export namespace Read {
             export const ActionName = 'read';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
 
             export const Path = v1(BasePath, ActionName);
 

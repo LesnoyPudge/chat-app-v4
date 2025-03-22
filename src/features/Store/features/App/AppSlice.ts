@@ -4,6 +4,7 @@ import { MOBILE_SCREEN_QUERY } from '@/vars';
 import { createSlice } from '@/store/utils';
 import { ReduxToolkit } from '@/libs';
 import { Users } from '@/store/features';
+import { globalActions } from '@/store/globalActions';
 
 
 
@@ -24,18 +25,21 @@ const getInitialState = (): AppTypes.State => {
 export const AppSlice = createSlice({
     name: 'App',
     getInitialState,
-    reducers: (create) => ({
-        softReset: create.reducer((state) => ({
-            ...getInitialState(),
-            isAttemptedToRefresh: state.isAttemptedToRefresh,
-        })),
-    }),
     extraReducers: (builder) => {
+        builder.addCase(
+            globalActions.softReset,
+            (state) => {
+                return {
+                    ...getInitialState(),
+                    isAttemptedToRefresh: state.isAttemptedToRefresh,
+                };
+            },
+        );
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
-                Users.Api.endpoints.login.matchPending,
-                Users.Api.endpoints.registration.matchPending,
-                Users.Api.endpoints.refresh.matchPending,
+                Users.Api.endpoints.UserLogin.matchPending,
+                Users.Api.endpoints.UserRegistration.matchPending,
+                Users.Api.endpoints.UserRefresh.matchPending,
             ),
             (state) => {
                 state.isRefreshing = true;
@@ -43,9 +47,9 @@ export const AppSlice = createSlice({
         );
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
-                Users.Api.endpoints.login.matchFulfilled,
-                Users.Api.endpoints.registration.matchFulfilled,
-                Users.Api.endpoints.refresh.matchFulfilled,
+                Users.Api.endpoints.UserLogin.matchFulfilled,
+                Users.Api.endpoints.UserRegistration.matchFulfilled,
+                Users.Api.endpoints.UserRefresh.matchFulfilled,
             ),
             (state, { payload }) => {
                 state.userId = payload.userData.id;
@@ -55,9 +59,9 @@ export const AppSlice = createSlice({
         );
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
-                Users.Api.endpoints.login.matchRejected,
-                Users.Api.endpoints.registration.matchRejected,
-                Users.Api.endpoints.refresh.matchRejected,
+                Users.Api.endpoints.UserLogin.matchRejected,
+                Users.Api.endpoints.UserRegistration.matchRejected,
+                Users.Api.endpoints.UserRefresh.matchRejected,
             ),
             (state) => {
                 state.isRefreshing = false;

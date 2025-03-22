@@ -1,12 +1,7 @@
-import { createQuery } from '@/store/utils';
-import { ReduxToolkitQueryReact } from '@/libs';
+import { getRootApi } from '@/store/utils';
 
 
-// import Message = Endpoints.V1.Message;
 
-export const MessagesApi = ReduxToolkitQueryReact.createApi({
-    baseQuery: createQuery(),
-    reducerPath: 'MessagesApi',
-    tagTypes: ['Messages'],
+export const MessagesApi = getRootApi().injectEndpoints({
     endpoints: (build) => ({}),
 });

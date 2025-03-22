@@ -1,16 +1,12 @@
 import { Endpoints } from '@/fakeShared';
-import { createQuery } from '@/store/utils';
+import { getRootApi } from '@/store/utils';
 import User = Endpoints.V1.User;
-import { ReduxToolkitQueryReact } from '@/libs';
 
 
 
-export const UsersApi = ReduxToolkitQueryReact.createApi({
-    baseQuery: createQuery(),
-    reducerPath: 'UsersApi',
-    tagTypes: ['Users'],
+export const UsersApi = getRootApi().injectEndpoints({
     endpoints: (build) => ({
-        [User.Login.ActionName]: (
+        [User.Login.NamedAction]: (
             build.mutation<
                 User.Login.Response,
                 User.Login.RequestBody
@@ -22,7 +18,7 @@ export const UsersApi = ReduxToolkitQueryReact.createApi({
                 }),
             })
         ),
-        [User.Refresh.ActionName]: (
+        [User.Refresh.NamedAction]: (
             build.query<
                 User.Refresh.Response,
                 User.Refresh.RequestBody
@@ -34,7 +30,7 @@ export const UsersApi = ReduxToolkitQueryReact.createApi({
                 }),
             })
         ),
-        [User.Registration.ActionName]: (
+        [User.Registration.NamedAction]: (
             build.mutation<
                 User.Registration.Response,
                 User.Registration.RequestBody
@@ -46,7 +42,7 @@ export const UsersApi = ReduxToolkitQueryReact.createApi({
                 }),
             })
         ),
-        [User.MuteServer.ActionName]: (
+        [User.MuteServer.NamedAction]: (
             build.mutation<
                 User.MuteServer.Response,
                 User.MuteServer.RequestBody
@@ -58,7 +54,7 @@ export const UsersApi = ReduxToolkitQueryReact.createApi({
                 }),
             })
         ),
-        [User.UnmuteServer.ActionName]: (
+        [User.UnmuteServer.NamedAction]: (
             build.mutation<
                 User.UnmuteServer.Response,
                 User.UnmuteServer.RequestBody
@@ -71,7 +67,7 @@ export const UsersApi = ReduxToolkitQueryReact.createApi({
 
             })
         ),
-        [User.MarkServerNotificationsAsRead.ActionName]: (
+        [User.MarkServerNotificationsAsRead.NamedAction]: (
             build.mutation<
                 User.MarkServerNotificationsAsRead.Response,
                 User.MarkServerNotificationsAsRead.RequestBody
@@ -83,7 +79,7 @@ export const UsersApi = ReduxToolkitQueryReact.createApi({
                 }),
             })
         ),
-        [User.MuteConversation.ActionName]: (
+        [User.MuteConversation.NamedAction]: (
             build.mutation<
                 User.MuteConversation.Response,
                 User.MuteConversation.RequestBody
@@ -95,7 +91,7 @@ export const UsersApi = ReduxToolkitQueryReact.createApi({
                 }),
             })
         ),
-        [User.UnmuteConversation.ActionName]: (
+        [User.UnmuteConversation.NamedAction]: (
             build.mutation<
                 User.UnmuteConversation.Response,
                 User.UnmuteConversation.RequestBody
@@ -108,7 +104,7 @@ export const UsersApi = ReduxToolkitQueryReact.createApi({
 
             })
         ),
-        [User.MarkConversationNotificationsAsRead.ActionName]: (
+        [User.MarkConversationNotificationsAsRead.NamedAction]: (
             build.mutation<
                 User.MarkConversationNotificationsAsRead.Response,
                 User.MarkConversationNotificationsAsRead.RequestBody
@@ -120,7 +116,7 @@ export const UsersApi = ReduxToolkitQueryReact.createApi({
                 }),
             })
         ),
-        [User.HideConversation.ActionName]: (
+        [User.HideConversation.NamedAction]: (
             build.mutation<
                 User.HideConversation.Response,
                 User.HideConversation.RequestBody
@@ -132,7 +128,7 @@ export const UsersApi = ReduxToolkitQueryReact.createApi({
                 }),
             })
         ),
-        [User.GetMany.ActionName]: (
+        [User.GetMany.NamedAction]: (
             build.query<
                 User.GetMany.Response,
                 User.GetMany.RequestBody
@@ -143,12 +139,12 @@ export const UsersApi = ReduxToolkitQueryReact.createApi({
                     body,
                 }),
                 providesTags: (result) => result?.map(({ id }) => ({
-                    type: 'Users',
+                    type: 'User',
                     id,
-                })) ?? [{ type: 'Users', id: 'LIST' }],
+                })) ?? [{ type: 'User', id: 'LIST' }],
             })
         ),
-        [User.ProfileUpdate.ActionName]: (
+        [User.ProfileUpdate.NamedAction]: (
             build.mutation<
                 User.ProfileUpdate.Response,
                 User.ProfileUpdate.RequestBody

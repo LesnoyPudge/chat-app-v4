@@ -20,11 +20,11 @@ export const UsersSlice = createSlice({
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
-                UsersApi.endpoints.login.matchFulfilled,
-                UsersApi.endpoints.registration.matchFulfilled,
-                UsersApi.endpoints.refresh.matchFulfilled,
-                Servers.Api.endpoints.getManyDeep.matchFulfilled,
-                Conversations.Api.endpoints.getManyDeep.matchFulfilled,
+                UsersApi.endpoints.UserLogin.matchFulfilled,
+                UsersApi.endpoints.UserRegistration.matchFulfilled,
+                UsersApi.endpoints.UserRefresh.matchFulfilled,
+                Servers.Api.endpoints.ServerGetManyDeep.matchFulfilled,
+                Conversations.Api.endpoints.ConversationGetManyDeep.matchFulfilled,
             ),
             (state, { payload }) => {
                 const result = [...payload.User];
@@ -39,14 +39,14 @@ export const UsersSlice = createSlice({
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
-                UsersApi.endpoints.hideConversation.matchFulfilled,
-                UsersApi.endpoints.markConversationNotificationsAsRead.matchFulfilled,
-                UsersApi.endpoints.markServerNotificationsAsRead.matchFulfilled,
-                UsersApi.endpoints.muteConversation.matchFulfilled,
-                UsersApi.endpoints.muteServer.matchFulfilled,
-                UsersApi.endpoints.profileUpdate.matchFulfilled,
-                UsersApi.endpoints.unmuteConversation.matchFulfilled,
-                UsersApi.endpoints.unmuteServer.matchFulfilled,
+                UsersApi.endpoints.UserHideConversation.matchFulfilled,
+                UsersApi.endpoints.UserMarkConversationNotificationsAsRead.matchFulfilled,
+                UsersApi.endpoints.UserMarkServerNotificationsAsRead.matchFulfilled,
+                UsersApi.endpoints.UserMuteConversation.matchFulfilled,
+                UsersApi.endpoints.UserMuteServer.matchFulfilled,
+                UsersApi.endpoints.UserProfileUpdate.matchFulfilled,
+                UsersApi.endpoints.UserUnmuteConversation.matchFulfilled,
+                UsersApi.endpoints.UserUnmuteServer.matchFulfilled,
             ),
             adapter.upsertOne,
         );

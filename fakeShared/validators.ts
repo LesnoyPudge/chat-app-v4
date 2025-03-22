@@ -180,80 +180,49 @@ const sv = new SharedValidators();
 export const sharedValidators = sv;
 
 export namespace ApiValidators {
-    export namespace V1 {
-        export namespace User {
-            import User = Endpoints.V1.User;
+    import User = Endpoints.V1.User;
+    import Server = Endpoints.V1.Server;
 
-            export const {
-                login,
-                registration,
-            } = {
-                [User.Login.ActionName]: (
-                    schema<User.Login.RequestBody>(v.object({
-                        login: sv.singleCommonString,
-                        password: sv.singleCommonString,
-                    }))
-                ),
-                [User.Registration.ActionName]: (
-                    schema<User.Registration.RequestBody>(v.object({
-                        name: sv.commonString,
-                        login: sv.singleCommonString,
-                        password: sv.singleCommonString,
-                    }))
-                ),
-            };
-        }
+    export const {
+        UserLogin,
+        UserRegistration,
+    } = {
+        [User.Login.NamedAction]: (
+            schema<User.Login.RequestBody>(v.object({
+                login: sv.singleCommonString,
+                password: sv.singleCommonString,
+            }))
+        ),
+        [User.Registration.NamedAction]: (
+            schema<User.Registration.RequestBody>(v.object({
+                name: sv.commonString,
+                login: sv.singleCommonString,
+                password: sv.singleCommonString,
+            }))
+        ),
+    };
 
-        export namespace Server {
-            import Server = Endpoints.V1.Server;
-
-            export const {
-                acceptInvitation,
-                create,
-                getByInvitationCode,
-            } = {
-                [Server.AcceptInvitation.ActionName]: (
-                    schema<Server.AcceptInvitation.RequestBody>(v.object({
-                        invitationCode: sv.singleCommonString,
-                    }))
-                ),
-                [Server.Create.ActionName]: (
-                    schema<Server.Create.RequestBody>(v.object({
-                        name: sv.commonString,
-                        identifier: sv.singleCommonString,
-                        avatar: sv.nullableFile,
-                    }))
-                ),
-                [Server.GetByInvitationCode.ActionName]: (
-                    schema<Server.GetByInvitationCode.RequestBody>(v.object({
-                        invitationCode: sv.singleCommonString,
-                    }))
-                ),
-            };
-        }
-
-        // export namespace Channel {
-        //     import Channel = Endpoints.V1.Channel;
-        // }
-
-        // export namespace Role {
-        //     import Role = Endpoints.V1.Role;
-        // }
-
-        // export namespace Conversation {
-        //     import Conversation = Endpoints.V1.Conversation;
-        // }
-
-        // export namespace Message {
-        //     import Message = Endpoints.V1.Message;
-        // }
-
-        // export namespace File {
-        //     import File = Endpoints.V1.File;
-        // }
-
-        // export namespace TextChat {
-        //     import TextChat = Endpoints.V1.TextChat;
-        // }
-    }
+    export const {
+        ServerAcceptInvitation,
+        ServerCreate,
+        ServerGetByInvitationCode,
+    } = {
+        [Server.AcceptInvitation.NamedAction]: (
+            schema<Server.AcceptInvitation.RequestBody>(v.object({
+                invitationCode: sv.singleCommonString,
+            }))
+        ),
+        [Server.Create.NamedAction]: (
+            schema<Server.Create.RequestBody>(v.object({
+                name: sv.commonString,
+                identifier: sv.singleCommonString,
+                avatar: sv.nullableFile,
+            }))
+        ),
+        [Server.GetByInvitationCode.NamedAction]: (
+            schema<Server.GetByInvitationCode.RequestBody>(v.object({
+                invitationCode: sv.singleCommonString,
+            }))
+        ),
+    };
 }

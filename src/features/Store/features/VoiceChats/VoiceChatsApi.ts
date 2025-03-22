@@ -1,15 +1,11 @@
-import { ReduxToolkitQueryReact } from '@/libs';
-import { createQuery } from '@/store/utils';
+import { getRootApi } from '@/store/utils';
 // import VoiceChat = Endpoints.V1.VoiceChat;
 
 
 
-export const VoiceChatsApi = ReduxToolkitQueryReact.createApi({
-    baseQuery: createQuery(),
-    reducerPath: 'VoiceChatsApi',
-    tagTypes: ['VoiceChats'],
+export const VoiceChatsApi = getRootApi().injectEndpoints({
     endpoints: (build) => ({
-        // [VoiceChat.GetMany.ActionName]: (
+        // [VoiceChat.GetMany.NamedAction]: (
         //     build.query<
         //         VoiceChat.GetMany.Response,
         //         VoiceChat.GetMany.RequestBody

@@ -21,10 +21,10 @@ export const ServersSlice = createSlice({
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
-                Users.Api.endpoints.login.matchFulfilled,
-                Users.Api.endpoints.registration.matchFulfilled,
-                Users.Api.endpoints.refresh.matchFulfilled,
-                ServersApi.endpoints.getManyDeep.matchFulfilled,
+                Users.Api.endpoints.UserLogin.matchFulfilled,
+                Users.Api.endpoints.UserRegistration.matchFulfilled,
+                Users.Api.endpoints.UserRefresh.matchFulfilled,
+                ServersApi.endpoints.ServerGetManyDeep.matchFulfilled,
             ),
             (state, { payload }) => {
                 adapter.upsertMany(state, payload.Server);
@@ -33,14 +33,14 @@ export const ServersSlice = createSlice({
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
-                ServersApi.endpoints.getByInvitationCode.matchFulfilled,
-                ServersApi.endpoints.create.matchFulfilled,
-                ServersApi.endpoints.acceptInvitation.matchFulfilled,
+                ServersApi.endpoints.ServerGetByInvitationCode.matchFulfilled,
+                ServersApi.endpoints.ServerCreate.matchFulfilled,
+                ServersApi.endpoints.ServerAcceptInvitation.matchFulfilled,
             ),
             adapter.upsertOne,
         );
         builder.addMatcher(
-            ServersApi.endpoints.leave.matchFulfilled,
+            ServersApi.endpoints.ServerLeave.matchFulfilled,
             (state, { meta }) => {
                 adapter.removeOne(
                     state,

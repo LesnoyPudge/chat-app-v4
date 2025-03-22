@@ -45,12 +45,12 @@ export const ServerContextMenu = withDecorator<
     ServerContextMenu.Props
 >(({ serverId }) => {
     const { t } = useTrans();
-    const [mute] = Store.Users.Api.useMuteServerMutation();
-    const [unmute] = Store.Users.Api.useUnmuteServerMutation();
+    const [mute] = Store.Users.Api.useUserMuteServerMutation();
+    const [unmute] = Store.Users.Api.useUserUnmuteServerMutation();
     const [
         leaveTrigger,
         leaveHelpers,
-    ] = Store.Servers.Api.useLeaveMutation();
+    ] = Store.Servers.Api.useServerLeaveMutation();
 
     const leave = useFunction(() => {
         void leaveTrigger({ serverId });
@@ -59,7 +59,7 @@ export const ServerContextMenu = withDecorator<
     const [
         markAsReadTrigger,
         markAsReadHelpers,
-    ] = Store.Users.Api.useMarkServerNotificationsAsReadMutation();
+    ] = Store.Users.Api.useUserMarkServerNotificationsAsReadMutation();
 
     const markAsRead = useFunction(() => {
         void markAsReadTrigger({ serverId });

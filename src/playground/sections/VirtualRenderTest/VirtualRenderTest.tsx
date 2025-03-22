@@ -17,7 +17,7 @@ const Item: FC<{ id: number }> = memo(({ id }) => {
 });
 
 export const VirtualRenderTest: FC = () => {
-    const scrollableRef = useRef<HTMLDivElement>(null);
+    const viewportRef = useRef<HTMLDivElement>(null);
     const counter = useCounter(200);
     const items = useMemo(() => {
         return Array.from({ length: counter.count }).map((_, i) => i);
@@ -27,21 +27,20 @@ export const VirtualRenderTest: FC = () => {
     // const part2 = items.slice(items.length / 2);
 
     return (
-        <Scrollable scrollableRef={scrollableRef} className='max-h-[500px]'>
+        <Scrollable viewportRef={viewportRef} className='max-h-[500px]'>
             <div className='flex flex-col gap-2'>
                 <button onClick={() => counter.inc()}>
                     <>wow {counter.count}</>
                 </button>
 
                 <VirtualRender
-                    viewportRef={scrollableRef}
+                    viewportRef={viewportRef}
                     items={items}
                     getId={(item) => item}
                     direction='vertical'
                     indexesShift={0}
                     // itemSize={24}
                     // itemMargin={8}
-                    // viewportRef={scrollableRef}
                 >
                     {(item) => (
                         <Item id={item}/>

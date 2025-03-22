@@ -10,6 +10,20 @@
     min-height: 0;
 }
 
+[data-scrollable=true] {
+    // prevent? recalculation of outer elements
+    contain: content;
+    // force separate layer
+    transform: translateZ(0);
+}
+
+[data-scrollable=true] {
+    // outline on wrapper when viewport is focused
+    &:has(> [data-overlayscrollbars-viewport]:focus-visible) {
+        outline-color: theme('outlineColor.focus');
+    }
+}
+
 // https://kingsora.github.io/OverlayScrollbars/
 [data-scrollable=true] {
     --thumb-accessible-length: 44px;

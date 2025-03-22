@@ -1,16 +1,12 @@
 import { Endpoints } from '@/fakeShared';
-import { createQuery } from '@/store/utils';
+import { getRootApi } from '@/store/utils';
 import Role = Endpoints.V1.Role;
-import { ReduxToolkitQueryReact } from '@/libs';
 
 
 
-export const RolesApi = ReduxToolkitQueryReact.createApi({
-    baseQuery: createQuery(),
-    reducerPath: 'RolesApi',
-    tagTypes: ['Roles'],
+export const RolesApi = getRootApi().injectEndpoints({
     endpoints: (build) => ({
-        [Role.GetMany.ActionName]: (
+        [Role.GetMany.NamedAction]: (
             build.query<
                 Role.GetMany.Response,
                 Role.GetMany.RequestBody
@@ -21,9 +17,9 @@ export const RolesApi = ReduxToolkitQueryReact.createApi({
                     body,
                 }),
                 providesTags: (result) => result?.map(({ id }) => ({
-                    type: 'Roles',
+                    type: 'Role',
                     id,
-                })) ?? [{ type: 'Roles', id: 'LIST' }],
+                })) ?? [{ type: 'Role', id: 'LIST' }],
             })
         ),
     }),

@@ -1,16 +1,12 @@
 import { Endpoints } from '@/fakeShared';
-import { createQuery } from '@/store/utils';
+import { getRootApi } from '@/store/utils';
 import TextChat = Endpoints.V1.TextChat;
-import { ReduxToolkitQueryReact } from '@/libs';
 
 
 
-export const TextChatsApi = ReduxToolkitQueryReact.createApi({
-    baseQuery: createQuery(),
-    reducerPath: 'TextChatsApi',
-    tagTypes: ['TextChats'],
+export const TextChatsApi = getRootApi().injectEndpoints({
     endpoints: (build) => ({
-        [TextChat.GetMany.ActionName]: (
+        [TextChat.GetMany.NamedAction]: (
             build.query<
                 TextChat.GetMany.Response,
                 TextChat.GetMany.RequestBody
@@ -21,9 +17,9 @@ export const TextChatsApi = ReduxToolkitQueryReact.createApi({
                     body,
                 }),
                 providesTags: (result) => result?.map(({ id }) => ({
-                    type: 'TextChats',
+                    type: 'TextChat',
                     id,
-                })) ?? [{ type: 'TextChats', id: 'LIST' }],
+                })) ?? [{ type: 'TextChat', id: 'LIST' }],
             })
         ),
     }),

@@ -45,12 +45,12 @@ export const ConversationContextMenu = withDecorator<
     ConversationContextMenu.Props
 >(({ conversationId }) => {
     const { t } = useTrans();
-    const [mute] = Store.Users.Api.useMuteConversationMutation();
-    const [unmute] = Store.Users.Api.useUnmuteConversationMutation();
+    const [mute] = Store.Users.Api.useUserMuteConversationMutation();
+    const [unmute] = Store.Users.Api.useUserUnmuteConversationMutation();
     const [
         hideTrigger,
         hideHelpers,
-    ] = Store.Users.Api.useHideConversationMutation();
+    ] = Store.Users.Api.useUserHideConversationMutation();
 
     const hide = useFunction(() => {
         void hideTrigger({ conversationId });
@@ -59,7 +59,7 @@ export const ConversationContextMenu = withDecorator<
     const [
         markAsReadTrigger,
         markAsReadHelpers,
-    ] = Store.Users.Api.useMarkConversationNotificationsAsReadMutation();
+    ] = Store.Users.Api.useUserMarkConversationNotificationsAsReadMutation();
 
     const markAsRead = useFunction(() => {
         void markAsReadTrigger({ conversationId });

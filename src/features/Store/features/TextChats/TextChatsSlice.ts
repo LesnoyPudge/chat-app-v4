@@ -22,11 +22,11 @@ export const TextChatsSlice = createSlice({
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
-                Users.Api.endpoints.login.matchFulfilled,
-                Users.Api.endpoints.registration.matchFulfilled,
-                Users.Api.endpoints.refresh.matchFulfilled,
-                Servers.Api.endpoints.getManyDeep.matchFulfilled,
-                Conversations.Api.endpoints.getManyDeep.matchFulfilled,
+                Users.Api.endpoints.UserLogin.matchFulfilled,
+                Users.Api.endpoints.UserRegistration.matchFulfilled,
+                Users.Api.endpoints.UserRefresh.matchFulfilled,
+                Servers.Api.endpoints.ServerGetManyDeep.matchFulfilled,
+                Conversations.Api.endpoints.ConversationGetManyDeep.matchFulfilled,
             ),
             (state, { payload }) => {
                 adapter.upsertMany(state, payload.TextChat);

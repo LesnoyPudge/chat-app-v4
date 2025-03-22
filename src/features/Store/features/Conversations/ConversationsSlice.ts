@@ -21,10 +21,10 @@ export const ConversationsSlice = createSlice({
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
-                Users.Api.endpoints.login.matchFulfilled,
-                Users.Api.endpoints.registration.matchFulfilled,
-                Users.Api.endpoints.refresh.matchFulfilled,
-                ConversationsApi.endpoints.getManyDeep.matchFulfilled,
+                Users.Api.endpoints.UserLogin.matchFulfilled,
+                Users.Api.endpoints.UserRegistration.matchFulfilled,
+                Users.Api.endpoints.UserRefresh.matchFulfilled,
+                ConversationsApi.endpoints.ConversationGetManyDeep.matchFulfilled,
             ),
             (state, { payload }) => {
                 adapter.upsertMany(state, payload.Conversation);
