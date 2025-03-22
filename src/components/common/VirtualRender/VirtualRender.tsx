@@ -33,6 +33,20 @@ const getDefaultPrerenderCount = ({
     return Math.ceil(viewportHeight / itemSizeWithMargin);
 };
 
+const DefaultRenderSpacer: VirtualRender.RenderSpacer = ({
+    ref,
+    style,
+}) => {
+    return (
+        <div
+            data-virtual-spacer
+            ref={ref}
+            style={style}
+        >
+        </div>
+    );
+};
+
 export namespace VirtualRender {
     export type ScrollToIndexOptions = {
         index?: number;
@@ -87,7 +101,7 @@ export namespace VirtualRender {
         items: _Item[] | undefined;
         getId: GetId<_Item>;
         viewportRef?: RefObject<HTMLElement | null> | HTMLElement;
-        itemSize?: number;
+        itemSize: number;
         itemMargin?: number;
         overscan?: number;
         direction?: Direction.Single;
@@ -100,7 +114,6 @@ export namespace VirtualRender {
         overflowAnchor?: OverflowAnchor;
         withoutCache?: boolean;
         scrollThreshold?: number;
-        renderSpacer?: RenderSpacer;
         indexesShift: number;
         getItemBoundingClientRect?: GetItemBoundingClientRect;
     };
@@ -128,7 +141,7 @@ export const VirtualRender = <_Item,>({
     direction = 'vertical',
     items = [],
     viewportRef = document.documentElement,
-    itemSize = 0,
+    itemSize,
     itemMargin = -1,
     overscan = 1,
     initialIndex = -1,
@@ -144,7 +157,6 @@ export const VirtualRender = <_Item,>({
     overflowAnchor = 'auto',
     withoutCache = false,
     scrollThreshold = 0,
-    renderSpacer,
     indexesShift,
     getItemBoundingClientRect,
     children,
@@ -187,7 +199,7 @@ export const VirtualRender = <_Item,>({
             overflowAnchor={overflowAnchor}
             overscan={overscan}
             ref={apiRef}
-            renderSpacer={renderSpacer}
+            renderSpacer={DefaultRenderSpacer}
             scrollThreshold={scrollThreshold}
             viewportRef={_viewportRef}
             withCache={withCache}
