@@ -1,23 +1,25 @@
 // data attributes
-// 'data-scrollable': true,
+// 'data-scrollable-wrapper': true,
 // 'data-with-gutter': true | false,
 // 'data-with-opposite-gutter': true | false,
 // 'data-size': 'default' | 'small',
 // 'data-direction': 'vertical' | 'horizontal' | 'both',
 
 // allows scrollable parents to shrink
-* > :has([data-scrollable=true]) {
+* > :has([data-scrollable-wrapper=true]) {
     min-height: 0;
 }
 
-[data-scrollable=true] {
-    // prevent? recalculation of outer elements
-    contain: content;
-    // force separate layer
-    transform: translateZ(0);
+[data-scrollable-wrapper=true] {
+    [data-overlayscrollbars-viewport] {
+        // prevent? recalculation of outer elements
+        contain: content;
+        // force separate layer
+        transform: translateZ(0);
+    }
 }
 
-[data-scrollable=true] {
+[data-scrollable-wrapper=true] {
     // outline on wrapper when viewport is focused
     &:has(> [data-overlayscrollbars-viewport]:focus-visible) {
         outline-color: theme('outlineColor.focus');
@@ -25,7 +27,7 @@
 }
 
 // https://kingsora.github.io/OverlayScrollbars/
-[data-scrollable=true] {
+[data-scrollable-wrapper=true] {
     --thumb-accessible-length: 44px;
     
     --scrollbar-thickness: 0px;

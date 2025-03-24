@@ -27,7 +27,7 @@ export const VirtualRenderTest: FC = () => {
     // const part2 = items.slice(items.length / 2);
 
     return (
-        <Scrollable viewportRef={viewportRef} className='max-h-[500px]'>
+        <Scrollable scrollableRef={viewportRef} className='max-h-[500px]'>
             <div className='flex flex-col gap-2'>
                 <button onClick={() => counter.inc()}>
                     <>wow {counter.count}</>
@@ -39,7 +39,7 @@ export const VirtualRenderTest: FC = () => {
                     getId={(item) => item}
                     direction='vertical'
                     indexesShift={0}
-                    // itemSize={24}
+                    itemSize={24}
                     // itemMargin={8}
                 >
                     {(item) => (

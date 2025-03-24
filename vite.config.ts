@@ -23,8 +23,8 @@ const config: UserConfigFn = ({ mode }) => {
         ...loadEnv(mode, envDir, ''),
     } as Env;
 
-    const isProd = env.NODE_ENV === 'production';
-    // const isProd = false;
+    // const isProd = env.NODE_ENV === 'production';
+    const isProd = false;
     const isDev = !isProd;
 
     return defineConfig({
@@ -51,12 +51,15 @@ const config: UserConfigFn = ({ mode }) => {
             assetsInlineLimit: 0,
             minify: isProd,
             cssMinify: isProd,
+            modulePreload: {
+                polyfill: isProd,
+            },
         },
         envPrefix: env._PUBLIC_SAFE_ENV_PREFIX,
         envDir,
         assetsInclude: ['./generated/assets/**/*'],
         // optimizeDeps: {
-        //     force: true,
+        // force: true,
         // },
         plugins: [
             // ViteRestart({
@@ -147,27 +150,8 @@ const config: UserConfigFn = ({ mode }) => {
                             freezeObjects: 'development',
                         }],
                         'macros',
-                        isProd && 'minify-dead-code-elimination',
-                        isProd && 'minify-guarded-expressions',
                         'closure-elimination',
-                        'transform-inline-consecutive-adds',
-                        'transform-regexp-constructors',
-                        isProd && 'minify-flip-comparisons',
-                        'transform-member-expression-literals',
-                        isProd && 'transform-merge-sibling-variables',
-                        isProd && 'minify-numeric-literals',
-                        'transform-property-literals',
-                        isProd && 'babel-plugin-transform-remove-undefined',
-                        isProd && 'minify-simplify',
-                        isProd && 'minify-type-constructors',
-                        isProd && 'transform-undefined-to-void',
                         'tailcall-optimization',
-                        // similar to closure-elimination but
-                        // outputs incorrect code in some cases
-                        // // ['transform-hoist-nested-functions', {
-                        // //     // 'methods': true,
-                        // // }],
-                        // 'transform-class-properties',
                         'autobind-class-methods',
                     ].filter((item) => typeof item !== 'boolean'),
                 },

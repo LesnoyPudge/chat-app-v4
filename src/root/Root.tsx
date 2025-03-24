@@ -1,7 +1,9 @@
 import {
     ControllableStrictMode,
+    createWithDecorator,
     ErrorBoundary,
     Focus,
+    withDisplayName,
 } from '@lesnoypudge/utils-react';
 import { isDev } from '@/vars';
 import {
@@ -12,8 +14,9 @@ import {
 } from './components';
 import { ErrorScreen } from '@/router/screens/bundled';
 import { useDebug, usePreventDefault } from './hooks';
-import { withDisplayNameAndDecorator } from '@/utils';
 import { Router } from '@/router';
+import { decorate } from '@lesnoypudge/macro';
+import { FC } from 'react';
 
 
 
@@ -23,22 +26,22 @@ const DevTools = (
         : () => null
 );
 
-const { withDecorator } = withDisplayNameAndDecorator(
-    'Root',
-    ({ children }) => {
-        return (
-            <ControllableStrictMode isEnabled={true}>
-                <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
-                    <GlobalProviders>
-                        {children}
-                    </GlobalProviders>
-                </ErrorBoundary.Node>
-            </ControllableStrictMode>
-        );
-    },
-);
+const { withDecorator } = createWithDecorator(({ children }) => {
+    return (
+        <ControllableStrictMode isEnabled={true}>
+            <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
+                <GlobalProviders>
+                    {children}
+                </GlobalProviders>
+            </ErrorBoundary.Node>
+        </ControllableStrictMode>
+    );
+});
 
-export const Root = withDecorator(() => {
+decorate(withDisplayName, 'Root', decorate.target);
+decorate(withDecorator, decorate.target);
+
+export const Root: FC = () => {
     useDebug();
     usePreventDefault();
 
@@ -55,4 +58,4 @@ export const Root = withDecorator(() => {
             </GlobalLoader.Wrapper>
         </Focus.Lock>
     );
-});
+};

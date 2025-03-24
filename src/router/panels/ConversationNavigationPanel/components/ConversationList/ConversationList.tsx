@@ -63,17 +63,6 @@ export const ConversationList: FC = () => {
                                     />
                                 )}
                             </VirtualRender>
-                            {/* <ListVariants.Variant1.List
-                                items={conversationIds}
-                                getId={(item) => item}
-                                keyboardNavigation={{
-                                    wrapperRef: listRef,
-                                    direction: 'vertical',
-                                    loop: false,
-                                }}
-                            >
-                                {(props) => <ConversationItem {...props}/>}
-                            </ListVariants.Variant1.List> */}
                         </ul>
                     </Scrollable>
                 </If>

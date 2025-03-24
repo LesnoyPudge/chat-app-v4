@@ -46,6 +46,7 @@ export const PrimaryNavigation: FC = () => {
                     shouldShowContent && styles.wrapper.hidden,
                 )}
                 ref={containerRef}
+                role='list'
             >
                 <HomePageButton/>
 

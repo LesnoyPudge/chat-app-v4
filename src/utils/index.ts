@@ -9,5 +9,3 @@ export * from './localStorageApi';
 export * from './logger';
 export * from './promiseTimeout';
 export * from './sharedAnimationVariants';
-export * from './withDisplayNameAndMemo';
-export * from './withDisplayNameAndDecorator';

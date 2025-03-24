@@ -3,9 +3,9 @@ import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 
 
-
+// :not([data-virtual-spacer])
 const styles = createStyles({
-    buttonWrapper: 'relative mr-auto pl-3',
+    buttonWrapper: 'relative mr-auto pl-3 pt-2 [[data-virtual-spacer]+&]:pt-0',
     bullet: {
         base: `
             absolute 
@@ -53,7 +53,10 @@ export const WrapperWithBullet: FC<WrapperWithBullet.Props> = ({
     const showActiveStyle = isActive;
 
     return (
-        <div className={cn(styles.buttonWrapper, className)}>
+        <div
+            className={cn(styles.buttonWrapper, className)}
+            role='listitem'
+        >
             {children}
 
             <div

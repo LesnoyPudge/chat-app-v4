@@ -9,7 +9,7 @@ import { Store } from '@/features';
 
 
 const styles = createStyles({
-    list: 'flex flex-col gap-2 py-2',
+    list: 'flex flex-col py-2',
     scrollableSeparator: 'ml-5',
 });
 
@@ -80,17 +80,16 @@ export const NavigationList: FC = () => {
 
     const showServersOrConversations = !!ids.length;
     const showConversations = !!sortedConversationIds.length;
-    const separatorProps: Separator.Props = {
-        length: 32,
-        spacing: 0,
-        thickness: 2,
-    };
 
     if (!showServersOrConversations) return null;
 
     return (
-        <div>
-            <Separator {...separatorProps}/>
+        <div role='listitem'>
+            <Separator
+                length={32}
+                spacing={0}
+                thickness={2}
+            />
 
             <Scrollable
                 size='small'
@@ -101,13 +100,14 @@ export const NavigationList: FC = () => {
                     className={styles.list}
                     aria-label={t('PrimaryNavigation.NavigationList.label')}
                     ref={wrapperRef}
-                    role='menu'
+                    role='list'
                 >
                     <If condition={showConversations}>
                         <VirtualRender
                             items={sortedConversationIds}
                             getId={(item) => item}
                             indexesShift={0}
+                            itemSize={56}
                         >
                             {(conversationId) => (
                                 <ConversationListItem
@@ -122,7 +122,9 @@ export const NavigationList: FC = () => {
 
                         <Separator
                             className={styles.scrollableSeparator}
-                            {...separatorProps}
+                            length={32}
+                            spacing={8}
+                            thickness={2}
                         />
                     </If>
 
@@ -144,7 +146,11 @@ export const NavigationList: FC = () => {
                 </div>
             </Scrollable>
 
-            <Separator {...separatorProps}/>
+            <Separator
+                length={32}
+                spacing={0}
+                thickness={2}
+            />
         </div>
     );
 };

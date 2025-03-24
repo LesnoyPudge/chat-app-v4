@@ -1,45 +1,44 @@
 import { ActionMenu, Button, Overlay } from '@/components';
 import { useOptimisticQueue, useTrans } from '@/hooks';
-import { useFunction } from '@lesnoypudge/utils-react';
-import { withDisplayNameAndDecorator } from '@/utils';
+import { createWithDecorator, useFunction, withDisplayName } from '@lesnoypudge/utils-react';
 import { Store } from '@/features';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
 const {
     withDecorator,
-} = withDisplayNameAndDecorator<Overlay.Menu.Types.PublicPropsContextMenu>(
-    'ConversationContextMenu',
-    ({
-        children,
-        leaderElementRef,
-    }) => {
-        const {
-            controls,
-            leaderElementOrRectRef,
-        } = Overlay.Menu.useContextMenuControls({ leaderElementRef });
-        const { t } = useTrans();
+} = createWithDecorator<Overlay.Menu.Types.PublicPropsContextMenu>(({
+    children,
+    leaderElementRef,
+}) => {
+    const {
+        controls,
+        leaderElementOrRectRef,
+    } = Overlay.Menu.useContextMenuControls({ leaderElementRef });
+    const { t } = useTrans();
 
-        return (
-            <Overlay.Menu.Provider
-                label={t('ConversationContextMenu.label')}
-                controls={controls}
-                preferredAlignment='right'
-                leaderElementOrRectRef={leaderElementOrRectRef}
-            >
-                <Overlay.Menu.Wrapper>
-                    {children}
-                </Overlay.Menu.Wrapper>
-            </Overlay.Menu.Provider>
-        );
-    },
-);
+    return (
+        <Overlay.Menu.Provider
+            label={t('ConversationContextMenu.label')}
+            controls={controls}
+            preferredAlignment='right'
+            leaderElementOrRectRef={leaderElementOrRectRef}
+        >
+            <Overlay.Menu.Wrapper>
+                {children}
+            </Overlay.Menu.Wrapper>
+        </Overlay.Menu.Provider>
+    );
+});
 
 export namespace ConversationContextMenu {
     export type Props = {
         conversationId: string;
     };
 }
+
+decorate(withDisplayName, 'ConversationContextMenu', decorate.target);
 
 export const ConversationContextMenu = withDecorator<
     ConversationContextMenu.Props

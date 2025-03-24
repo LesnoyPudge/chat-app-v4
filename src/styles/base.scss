@@ -39,7 +39,7 @@
     input, 
     textarea, 
     [tabindex],
-    [data-scrollable=true] {
+    [data-scrollable-wrapper=true] {
         outline-width: 3px;
         outline-style: solid;
         outline-color: transparent;

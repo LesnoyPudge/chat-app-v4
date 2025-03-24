@@ -1,45 +1,44 @@
 import { Button, ActionMenu, Overlay } from '@/components';
 import { useOptimisticQueue, useTrans } from '@/hooks';
-import { useFunction } from '@lesnoypudge/utils-react';
-import { withDisplayNameAndDecorator } from '@/utils';
+import { createWithDecorator, useFunction, withDisplayName } from '@lesnoypudge/utils-react';
 import { Store } from '@/features';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
 const {
     withDecorator,
-} = withDisplayNameAndDecorator<Overlay.Menu.Types.PublicPropsContextMenu>(
-    'ServerContextMenu',
-    ({
-        children,
-        leaderElementRef,
-    }) => {
-        const {
-            controls,
-            leaderElementOrRectRef,
-        } = Overlay.Menu.useContextMenuControls({ leaderElementRef });
-        const { t } = useTrans();
+} = createWithDecorator<Overlay.Menu.Types.PublicPropsContextMenu>(({
+    children,
+    leaderElementRef,
+}) => {
+    const {
+        controls,
+        leaderElementOrRectRef,
+    } = Overlay.Menu.useContextMenuControls({ leaderElementRef });
+    const { t } = useTrans();
 
-        return (
-            <Overlay.Menu.Provider
-                label={t('ServerContextMenu.label')}
-                controls={controls}
-                preferredAlignment='right'
-                leaderElementOrRectRef={leaderElementOrRectRef}
-            >
-                <Overlay.Menu.Wrapper>
-                    {children}
-                </Overlay.Menu.Wrapper>
-            </Overlay.Menu.Provider>
-        );
-    },
-);
+    return (
+        <Overlay.Menu.Provider
+            label={t('ServerContextMenu.label')}
+            controls={controls}
+            preferredAlignment='right'
+            leaderElementOrRectRef={leaderElementOrRectRef}
+        >
+            <Overlay.Menu.Wrapper>
+                {children}
+            </Overlay.Menu.Wrapper>
+        </Overlay.Menu.Provider>
+    );
+});
 
 export namespace ServerContextMenu {
     export type Props = {
         serverId: string;
     };
 }
+
+decorate(withDisplayName, 'ServerContextMenu', decorate.target);
 
 export const ServerContextMenu = withDecorator<
     ServerContextMenu.Props

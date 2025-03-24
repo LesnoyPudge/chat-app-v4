@@ -1,6 +1,6 @@
 import { Direction } from '@/types';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { isRef, useConst, useFunction } from '@lesnoypudge/utils-react';
+import { isRef, useConst, useFunction, useLatest } from '@lesnoypudge/utils-react';
 import {
     CSSProperties,
     Fragment,
@@ -101,7 +101,7 @@ export namespace VirtualRender {
         items: _Item[] | undefined;
         getId: GetId<_Item>;
         viewportRef?: RefObject<HTMLElement | null> | HTMLElement;
-        itemSize: number;
+        itemSize?: number;
         itemMargin?: number;
         overscan?: number;
         direction?: Direction.Single;
@@ -140,8 +140,8 @@ export const VirtualRender = <_Item,>({
     getId,
     direction = 'vertical',
     items = [],
-    viewportRef = document.documentElement,
-    itemSize,
+    viewportRef,
+    itemSize = 0,
     itemMargin = -1,
     overscan = 1,
     initialIndex = -1,
@@ -151,7 +151,7 @@ export const VirtualRender = <_Item,>({
     initialPrerender = getDefaultPrerenderCount({
         itemMargin,
         itemSize,
-        viewportRef,
+        viewportRef: viewportRef ?? document.documentElement,
     }),
     onViewportIndexesChange,
     overflowAnchor = 'auto',
@@ -161,9 +161,12 @@ export const VirtualRender = <_Item,>({
     getItemBoundingClientRect,
     children,
 }: VirtualRender.Props<_Item>) => {
-    const _viewportRef = useConst(() => (
-        isRef(viewportRef) ? viewportRef : { current: viewportRef }
-    ));
+    const _viewportRef = useLatest(
+        isRef(viewportRef) ? viewportRef.current : viewportRef,
+    );
+    // const _viewportRef = useConst(() => (
+    //     isRef(viewportRef) ? viewportRef : { current: viewportRef }
+    // ));
 
     const _children = useFunction((
         item: _Item,
@@ -201,7 +204,7 @@ export const VirtualRender = <_Item,>({
             ref={apiRef}
             renderSpacer={DefaultRenderSpacer}
             scrollThreshold={scrollThreshold}
-            viewportRef={_viewportRef}
+            // viewportRef={_viewportRef}
             withCache={withCache}
         >
             {_children}

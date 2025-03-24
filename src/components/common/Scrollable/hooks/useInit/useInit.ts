@@ -14,8 +14,8 @@ type Props = Scrollable.WithExposedApi & Scrollable.Hooks.Options;
 type Return = (
     Scrollable.Hooks.WithInstanceRef
     & {
-        scrollableWrapperRef: MutableRefObject<HTMLDivElement | null>;
-        scrollableViewportRef: MutableRefObject<HTMLDivElement | null>;
+        wrapperRef: MutableRefObject<HTMLDivElement | null>;
+        scrollableRef: MutableRefObject<HTMLDivElement | null>;
     }
 );
 
@@ -32,13 +32,13 @@ export const useInit = ({
     direction,
 }: Props): Return => {
     const instanceRef = useRef<Scrollable.Instance>(null);
-    const scrollableWrapperRef = useRef<HTMLDivElement>(null);
-    const scrollableViewportRef = useRef<HTMLDivElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const scrollableRef = useRef<HTMLDivElement>(null);
 
     // initialization
     useLayoutEffect(() => {
-        const wrapper = scrollableWrapperRef.current;
-        const viewport = scrollableViewportRef.current;
+        const wrapper = wrapperRef.current;
+        const viewport = scrollableRef.current;
         if (!wrapper || !viewport) return;
 
         const instance = OverlayScrollbars({
@@ -100,7 +100,7 @@ export const useInit = ({
 
     return {
         instanceRef,
-        scrollableViewportRef,
-        scrollableWrapperRef,
+        scrollableRef,
+        wrapperRef,
     };
 };

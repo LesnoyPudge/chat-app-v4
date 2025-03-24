@@ -4,8 +4,10 @@ import {
     FollowInvitationTab,
     CreateServerTab,
 } from './components';
-import { withDisplayNameAndDecorator } from '@/utils';
 import { useTrans } from '@/hooks';
+import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
+import { decorate } from '@lesnoypudge/macro';
+import { FC } from 'react';
 
 
 
@@ -19,9 +21,9 @@ const { tabName } = Tab.createProps(tabs);
 
 export const CreateServerTabContext = Tab.createTabContext<typeof tabs>();
 
-const { withDecorator } = withDisplayNameAndDecorator<
+const { withDecorator } = createWithDecorator<
     DialogBlocks.Types.PublicProps
->('CreateServerDialog', ({ children, controls }) => {
+>(({ children, controls }) => {
     const { t } = useTrans();
 
     return (
@@ -35,6 +37,8 @@ const { withDecorator } = withDisplayNameAndDecorator<
         </DialogBlocks.Base.Provider>
     );
 });
+
+decorate(withDisplayName, 'CreateServerDialog', decorate.target);
 
 export const CreateServerDialog = withDecorator(() => {
     return (

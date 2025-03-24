@@ -2,8 +2,10 @@ import { Avatar, Button, Placeholder, Sprite, Overlay } from '@/components';
 import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
-import { Focus, useFunction, useRefManager } from '@lesnoypudge/utils-react';
-import { cn, createStyles, withDisplayNameAndMemo } from '@/utils';
+import { Focus, useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
+import { cn, createStyles } from '@/utils';
+import { decorate } from '@lesnoypudge/macro';
+import { FC, memo } from 'react';
 
 
 
@@ -63,12 +65,15 @@ export namespace ConversationItem {
     };
 }
 
-export const ConversationItem = withDisplayNameAndMemo('ConversationItem', ({
+decorate(withDisplayName, 'ConversationItem', decorate.target);
+decorate(memo, decorate.target);
+
+export const ConversationItem: FC<ConversationItem.Props> = ({
     isFocused,
     tabIndex,
     id,
     setFocusId,
-}: ConversationItem.Props) => {
+}) => {
     const conversationId = id;
 
     const { t } = useTrans();
@@ -176,4 +181,4 @@ export const ConversationItem = withDisplayNameAndMemo('ConversationItem', ({
             </Overlay.Tooltip>
         </li>
     );
-});
+};

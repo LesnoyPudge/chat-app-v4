@@ -59,6 +59,10 @@ export const Separator: FC<Separator.Props> = memo(({
                 className,
             )}
             style={style}
+            // mostly used as decorative element.
+            // also hard to know when to use real separator without
+            // screen reader.
+            aria-hidden
         >
         </div>
     );

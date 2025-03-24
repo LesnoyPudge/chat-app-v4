@@ -35,8 +35,8 @@ export namespace Scrollable {
         scrollableRef?: RefObject<HTMLDivElement>;
     };
 
-    export type WithViewportRef = {
-        viewportRef?: RefObject<HTMLDivElement>;
+    export type WithWrapperRef = {
+        wrapperRef?: RefObject<HTMLDivElement>;
     };
 
     export type Props = (
@@ -44,7 +44,7 @@ export namespace Scrollable {
         & Options
         & WithExposedApi
         & WithScrollableRef
-        & WithViewportRef
+        & WithWrapperRef
         & {
             label?: string;
         }
@@ -69,14 +69,10 @@ export const Scrollable: FC<Scrollable.Props> = ({
     apiRef,
     label,
     scrollableRef,
-    viewportRef,
+    wrapperRef,
     children,
 }) => {
-    const {
-        instanceRef,
-        scrollableViewportRef,
-        scrollableWrapperRef,
-    } = useInit({
+    const initData = useInit({
         autoHide,
         direction,
         size,
@@ -85,23 +81,23 @@ export const Scrollable: FC<Scrollable.Props> = ({
         apiRef,
     });
 
-    useDebug({ instanceRef, className });
+    useDebug({ instanceRef: initData.instanceRef, className });
 
     const mergedWrapperRef = useMergeRefs([
-        scrollableWrapperRef,
-        scrollableRef,
+        initData.wrapperRef,
+        wrapperRef,
     ]);
 
-    const mergedViewportRef = useMergeRefs([
-        scrollableViewportRef,
-        viewportRef,
+    const mergedScrollableRef = useMergeRefs([
+        initData.scrollableRef,
+        scrollableRef,
     ]);
 
     return (
         <div
             className={cn(styles.wrapper, className)}
             ref={mergedWrapperRef}
-            data-scrollable={true}
+            data-scrollable-wrapper={true}
             data-with-gutter={!withoutGutter}
             data-with-opposite-gutter={!withoutOppositeGutter}
             data-size={size}
@@ -109,7 +105,7 @@ export const Scrollable: FC<Scrollable.Props> = ({
             data-overlayscrollbars='host'
         >
             <div
-                ref={mergedViewportRef}
+                ref={mergedScrollableRef}
                 role='region'
                 // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
                 tabIndex={0}

@@ -12,6 +12,7 @@ const customConfigArray = config.createConfig({
     rules: {
         'tailwindcss/enforces-shorthand': 'off',
         'tailwindcss/no-unnecessary-arbitrary-value': 'off',
+        '@typescript-eslint/prefer-function-type': 'off',
     },
 });
 
