@@ -8,6 +8,8 @@ import {
 } from '@lesnoypudge/utils-react';
 import { m } from 'motion/react';
 import { Types } from './types';
+import { decorate } from '@lesnoypudge/macro';
+import { FC } from 'react';
 
 
 
@@ -81,7 +83,9 @@ const { withDecorator } = createWithDecorator<
     );
 });
 
-export const Tooltip = withDecorator(withDisplayName('Tooltip', ({
+decorate(withDisplayName, 'Tooltip', decorate.target);
+
+export const Tooltip: FC<Types.Node.Props> = withDecorator(({
     className = '',
     leaderElementRef,
     boundsSize = 20,
@@ -91,7 +95,7 @@ export const Tooltip = withDecorator(withDisplayName('Tooltip', ({
     unbounded = false,
     children,
     ...rest
-}: Types.Node.Props) => {
+}) => {
     const followerElementRef = useRefManager<HTMLDivElement>(null);
 
     return (
@@ -120,4 +124,4 @@ export const Tooltip = withDecorator(withDisplayName('Tooltip', ({
             )}
         </RelativelyPositioned.Node>
     );
-}));
+});

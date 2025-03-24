@@ -19,6 +19,7 @@ import {
     getStatusLabel,
 } from '@/utils';
 import { Store } from '@/features';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
@@ -74,7 +75,9 @@ const { withDecorator } = createWithDecorator<
     );
 });
 
-export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
+decorate(withDisplayName, 'UserMenu', decorate.target);
+
+export const UserMenu = withDecorator(() => {
     const {
         name,
         extraStatus,
@@ -164,4 +167,4 @@ export const UserMenu = withDisplayName('UserMenu', withDecorator(() => {
             </Button>
         </ActionMenu.Wrapper>
     );
-}));
+});
