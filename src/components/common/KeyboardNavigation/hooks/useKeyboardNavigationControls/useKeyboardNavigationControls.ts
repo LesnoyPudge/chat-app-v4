@@ -4,11 +4,13 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import {
     usePrevious,
     useFunction,
-    useRefManager,
     useMemoShallow,
     useHotKey,
     useIsFocused,
 } from '@lesnoypudge/utils-react';
+import { Types } from '../../types';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { useEvent } from '@/hooks';
 
 
 
@@ -17,54 +19,48 @@ const hotKeyOptions: hotKey.HotKeyOptions = {
     stop: true,
 };
 
-export namespace useKeyboardNavigation {
-    export type Direction = 'vertical' | 'horizontal';
+// forward vertical moves ↓
+const forwardVerticalKeys: hotKey.KeyCombo[] = [
+    [KEY.ArrowDown],
+    [KEY.S],
+];
 
-    export type MoveDirection = 'forward' | 'backward';
+// backward vertical moves ↑
+const backwardVerticalKeys: hotKey.KeyCombo[] = [
+    [KEY.ArrowUp],
+    [KEY.W],
+];
 
-    export type onFocusChangeItem = {
-        id: string;
-        index: number;
-    };
+// forward horizontal moves →
+const forwardHorizontalKeys: hotKey.KeyCombo[] = [
+    [KEY.ArrowRight],
+    [KEY.D],
+];
 
-    export type Options = {
-        list: string[];
-        direction: Direction;
-        loop: boolean;
-        initialFocusedId?: string;
-        onFocusChange?: (value: {
-            prev?: onFocusChangeItem;
-            next: onFocusChangeItem;
-            moveDirection: MoveDirection;
-            prevent: () => void;
-        }) => void;
-    };
+// backward horizontal moves ←
+const backwardHorizontalKeys: hotKey.KeyCombo[] = [
+    [KEY.ArrowLeft],
+    [KEY.A],
+];
 
-    export type Return = {
-        currentFocusedId: string | undefined;
-        getTabIndex: (id: string) => 0 | -1;
-        getIsFocused: (id: string) => boolean;
-        setCurrentFocusedId: (newId: string) => void;
-    };
-}
-
-export const useKeyboardNavigation = (
-    wrapperRefManager: useRefManager.NullableRefManager<HTMLElement>,
-    options: useKeyboardNavigation.Options,
-): useKeyboardNavigation.Return => {
-    const {
-        direction,
-        list,
-        loop,
-        initialFocusedId,
-        onFocusChange,
-    } = options;
+export const useKeyboardNavigationControls: Types.useControls.Fn = ({
+    list,
+    wrapperRef,
+    direction = 'vertical',
+    initialFocusedId,
+    loop = false,
+    onFocusChange,
+}) => {
+    const isHorizontal = direction === 'horizontal';
+    const isVertical = direction === 'vertical';
 
     const memoizedList = useMemoShallow(list);
     const prevList = usePrevious(memoizedList);
+    const initializedFocusedIdRef = useRef<string>();
+    const shouldUseMovedOnIdRef = useRef(true);
 
     const { isFocused } = useIsFocused(
-        wrapperRefManager,
+        wrapperRef,
         { within: true, visible: true },
     );
 
@@ -76,7 +72,6 @@ export const useKeyboardNavigation = (
         lastMovedOnId,
         setLastMovedOnId,
     ] = useState(() => getInitialId());
-    const shouldUseMovedOnIdRef = useRef(true);
 
     const setCurrentFocusedId = useFunction((newId: string) => {
         shouldUseMovedOnIdRef.current = true;
@@ -122,8 +117,6 @@ export const useKeyboardNavigation = (
         return newId;
     });
 
-    const initializedFocusedIdRef = useRef<string>();
-
     const derivedCurrentFocusedId = useMemo(() => {
         const isListChanged = !shallowEqual(
             memoizedList,
@@ -150,27 +143,38 @@ export const useKeyboardNavigation = (
         return newId;
     }, [lastMovedOnId, memoizedList, prevList, getDerivedId]);
 
-    const changeFocus = (
-        moveDirection: useKeyboardNavigation.MoveDirection,
-        prevItem: useKeyboardNavigation.onFocusChangeItem | undefined,
-        nextItem: useKeyboardNavigation.onFocusChangeItem,
-    ) => {
-        let bail = false;
 
-        const prevent = () => {
-            bail = true;
+    const { on, off, trigger } = useEvent<[Types.ListenerProps]>();
+
+    const focusChangeListener = useFunction((props: Types.ListenerProps) => {
+        onFocusChange?.(props);
+        trigger(props);
+    });
+
+    const changeFocus = ({
+        isFromEvent,
+        moveDirection,
+        next,
+        prev,
+    }: T.Except<Types.ListenerProps, 'moveEventState'>) => {
+        const state: Types.MoveEventState = {
+            isPrevented: false,
+            prevent: () => {
+                state.isPrevented = true;
+            },
         };
 
-        onFocusChange?.({
-            prev: prevItem,
-            next: nextItem,
+        focusChangeListener({
+            isFromEvent,
             moveDirection,
-            prevent,
+            next,
+            prev,
+            moveEventState: state,
         });
 
-        if (bail) return;
+        if (state.isPrevented) return;
 
-        setCurrentFocusedId(nextItem.id);
+        setCurrentFocusedId(next.id);
     };
 
     const getPossibleIndexes = (
@@ -212,9 +216,10 @@ export const useKeyboardNavigation = (
         };
     };
 
-    const move = (
-        moveDirection: useKeyboardNavigation.MoveDirection,
-    ) => {
+    const move = ({
+        isFromEvent,
+        moveDirection,
+    }: Pick<Types.ListenerProps, 'moveDirection' | 'isFromEvent'>) => {
         if (!list.length) return;
 
         const isForward = moveDirection === 'forward';
@@ -223,7 +228,7 @@ export const useKeyboardNavigation = (
                 ? -1
                 : list.indexOf(derivedCurrentFocusedId)
         );
-
+        console.log(derivedCurrentFocusedId, currentIndex, memoizedList);
         const isValidId = (
             derivedCurrentFocusedId !== undefined
             && (currentIndex !== -1)
@@ -232,9 +237,14 @@ export const useKeyboardNavigation = (
             const newId = getInitialId();
             if (!newId) return;
 
-            changeFocus(moveDirection, undefined, {
-                id: newId,
-                index: list.indexOf(newId),
+            changeFocus({
+                isFromEvent,
+                moveDirection,
+                prev: undefined,
+                next: {
+                    id: newId,
+                    index: list.indexOf(newId),
+                },
             });
 
             return;
@@ -257,58 +267,16 @@ export const useKeyboardNavigation = (
                 : undefined
         );
 
-        changeFocus(moveDirection, prevItem, {
-            id: newId,
-            index: newIndex,
+        changeFocus({
+            isFromEvent,
+            moveDirection,
+            next: {
+                id: newId,
+                index: newIndex,
+            },
+            prev: prevItem,
         });
     };
-
-    const isHorizontal = direction === 'horizontal';
-    const isVertical = direction === 'vertical';
-
-    // forward vertical moves ↓
-    useHotKey(
-        wrapperRefManager,
-        [
-            [KEY.ArrowDown],
-            [KEY.S],
-        ],
-        () => isVertical && move('forward'),
-        { hotKeyOptions },
-    );
-
-    // backward vertical moves ↑
-    useHotKey(
-        wrapperRefManager,
-        [
-            [KEY.ArrowUp],
-            [KEY.W],
-        ],
-        () => isVertical && move('backward'),
-        { hotKeyOptions },
-    );
-
-    // forward horizontal moves →
-    useHotKey(
-        wrapperRefManager,
-        [
-            [KEY.ArrowRight],
-            [KEY.D],
-        ],
-        () => isHorizontal && move('forward'),
-        { hotKeyOptions },
-    );
-
-    // backward horizontal moves ←
-    useHotKey(
-        wrapperRefManager,
-        [
-            [KEY.ArrowLeft],
-            [KEY.A],
-        ],
-        () => isHorizontal && move('backward'),
-        { hotKeyOptions },
-    );
 
     const getTabIndex = useCallback((id: string) => {
         if (derivedCurrentFocusedId === undefined) {
@@ -324,11 +292,52 @@ export const useKeyboardNavigation = (
         return id === derivedCurrentFocusedId;
     }, [derivedCurrentFocusedId, isFocused]);
 
-    // eslint-disable-next-line react-compiler/react-compiler
+    useHotKey(
+        wrapperRef,
+        forwardVerticalKeys,
+        () => isVertical && move({
+            isFromEvent: true,
+            moveDirection: 'forward',
+        }),
+        { hotKeyOptions },
+    );
+
+    useHotKey(
+        wrapperRef,
+        backwardVerticalKeys,
+        () => isVertical && move({
+            isFromEvent: true,
+            moveDirection: 'backward',
+        }),
+        { hotKeyOptions },
+    );
+
+    useHotKey(
+        wrapperRef,
+        forwardHorizontalKeys,
+        () => isHorizontal && move({
+            isFromEvent: true,
+            moveDirection: 'forward',
+        }),
+        { hotKeyOptions },
+    );
+
+    useHotKey(
+        wrapperRef,
+        backwardHorizontalKeys,
+        () => isHorizontal && move({
+            isFromEvent: true,
+            moveDirection: 'backward',
+        }),
+        { hotKeyOptions },
+    );
+
     return {
         currentFocusedId: derivedCurrentFocusedId,
-        getTabIndex,
         getIsFocused,
+        getTabIndex,
+        off,
+        on,
         setCurrentFocusedId,
     };
 };

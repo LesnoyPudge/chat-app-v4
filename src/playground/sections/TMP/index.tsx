@@ -1,49 +1,39 @@
-import { Scrollable, VirtualRender } from '@/components';
-import { useKeyboardNavigation } from '@/hooks';
-import { ContextSelectable, Focus, useBoolean, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
-import { FC, memo, useEffect, useRef, useState } from 'react';
+import { KeyboardNavigation, Scrollable, VirtualRender } from '@/components';
+import { useKeyboardNavigation, useVirtualListItem } from '@/hooks';
+import { combinedFunction, noop } from '@lesnoypudge/utils';
+import { ContextSelectable, Focus, useBoolean, useEventListener, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
+import { FC, memo, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { ViewportList, ViewportListRef } from 'react-viewport-list';
 
 
 
 const arr = Array.from({ length: 100 }).map((_, i) => String(i));
 
-const KeyboardNavigationContext = ContextSelectable.createContext<
-    useKeyboardNavigation.Return
->();
 
 const Item: FC<{
     item: string;
     onClick?: VoidFunction;
 }> = memo(({
     item,
-    onClick,
+    onClick = noop,
 }) => {
     const ref = useRefManager<HTMLButtonElement>(null);
     const {
-        getIsFocused,
-        getTabIndex,
-        setCurrentFocusedId,
-    } = ContextSelectable.useProxy(KeyboardNavigationContext);
-
-    const isFocused = getIsFocused(item);
-
-    Focus.useMoveFocusInside({
-        containerRef: ref,
-        isEnabled: isFocused,
-    });
-
-    useScrollIntoView(ref, {
-        enabled: isFocused,
-    });
+        isCurrentId,
+        isFocused,
+        setFocusId,
+        tabIndex,
+    } = useVirtualListItem({ elementRef: ref, itemId: item });
 
     return (
         <button
-            onClick={onClick}
+            className={isCurrentId ? 'bg-red-950' : ''}
+            onClick={combinedFunction(onClick, setFocusId)}
             ref={ref}
-            tabIndex={getTabIndex(item)}
+            tabIndex={tabIndex}
         >
-            <>item: {item} - ({getTabIndex(item)})</>
+            <>item: {item} - </>
+            (tabIndex)
             <> - {String(isFocused)}</>
         </button>
     );
@@ -54,15 +44,6 @@ export const TMP: FC = () => {
     const apiRef = useRefManager<ViewportListRef>(null);
     const wrapperRef = useRefManager<HTMLDivElement>(null);
     const [visibleList, setVisibleList] = useState<string[]>(arr);
-    const value = useKeyboardNavigation(wrapperRef, {
-        direction: 'vertical',
-        list: visibleList,
-        loop: false,
-        initialFocusedId: '40',
-        onFocusChange: (value) => {
-            console.log(value);
-        },
-    });
     const bool = useBoolean(false);
 
     useEffect(() => {
@@ -71,7 +52,7 @@ export const TMP: FC = () => {
 
     return (
         <div className='flex flex-col gap-2'>
-            <div className='text-center'>wow {value.currentFocusedId}</div>
+            <div className='text-center'>wow</div>
 
             <If condition={bool.value}>
                 <button onClick={bool.toggle}>go back</button>
@@ -79,13 +60,13 @@ export const TMP: FC = () => {
 
             <If condition={!bool.value}>
 
-                <KeyboardNavigationContext.Provider value={value}>
+                <KeyboardNavigation.Provider
+                    list={visibleList}
+                    wrapperRef={wrapperRef}
+                >
                     <button>home page button</button>
 
-                    <Scrollable
-                        scrollableRef={scrollableRef}
-                        // scrollableRef={scrollableRef}
-                    >
+                    <Scrollable scrollableRef={scrollableRef}>
                         <div className='flex flex-col gap-2' ref={wrapperRef}>
                             <ViewportList
                                 items={arr}
@@ -97,20 +78,20 @@ export const TMP: FC = () => {
                                 initialAlignToTop={true}
                                 initialPrerender={10}
                                 overscan={3}
-                                initialIndex={(() => {
-                                    if (!value.currentFocusedId) return;
+                                // initialIndex={(() => {
+                                //     if (!value.currentFocusedId) return;
 
-                                    const index = Number.parseInt(value.currentFocusedId);
+                                //     const index = Number.parseInt(value.currentFocusedId);
 
-                                    console.log(`initial index: ${index}`);
+                                //     console.log(`initial index: ${index}`);
 
-                                    return index;
-                                })()}
+                                //     return index;
+                                // })()}
                                 onViewportIndexesChange={([start, end]) => {
-                                    console.log(`start: ${start}, end: ${end}`);
-                                    console.log(`list length: ${end - start}`);
+                                // console.log(`start: ${start}, end: ${end}`);
+                                // console.log(`list length: ${end - start}`);
 
-                                    setVisibleList(arr.slice(start, end));
+                                    setVisibleList(arr.slice(start, end + 1));
                                 }}
                             >
                                 {(item) => (
@@ -123,7 +104,7 @@ export const TMP: FC = () => {
                             </ViewportList>
                         </div>
                     </Scrollable>
-                </KeyboardNavigationContext.Provider>
+                </KeyboardNavigation.Provider>
             </If>
         </div>
     );

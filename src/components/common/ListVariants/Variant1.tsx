@@ -7,9 +7,11 @@ import {
     useFunction,
     useRefManager,
     useScrollIntoView,
+    withDisplayName,
 } from '@lesnoypudge/utils-react';
-import { memo } from 'react';
+import { FC, memo } from 'react';
 import type { Base, Features } from './shared';
+import { decorate } from '@lesnoypudge/macro';
 
 
 export namespace Variant1 {
@@ -40,7 +42,10 @@ export namespace Variant1 {
     }
 }
 
-const ItemVariant1 = memo(({
+decorate(withDisplayName, 'ItemVariant1', decorate.target);
+decorate(memo, decorate.target);
+
+const ItemVariant1: FC<Variant1.Item.Props> = ({
     children,
     index,
     item,
@@ -49,7 +54,7 @@ const ItemVariant1 = memo(({
     tabIndex,
     id,
     setCurrentFocusedId,
-}: Variant1.Item.Props) => {
+}) => {
     const itemRef = useRefManager<HTMLElement>(null);
 
     useScrollIntoView(itemRef, {
@@ -76,7 +81,7 @@ const ItemVariant1 = memo(({
         id,
         scrollIntoView,
     });
-}, deepEqual);
+};
 
 export const WrapperVariant1 = <_Item,>({
     getId,

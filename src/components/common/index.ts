@@ -2,6 +2,7 @@ export * from './ActionMenu';
 export * from './Avatar';
 export * from './Button';
 export * from './DialogBlocks';
+export * from './KeyboardNavigation';
 export * from './Label';
 export * from './ListVariants';
 export * from './MobileMenu';

@@ -1,6 +1,8 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { cn, createStyles } from '@/utils';
 import { CSSProperties, FC, memo } from 'react';
+import { decorate } from '@lesnoypudge/macro';
+import { withDisplayName } from '@lesnoypudge/utils-react';
 
 
 
@@ -38,7 +40,10 @@ export namespace Separator {
     );
 }
 
-export const Separator: FC<Separator.Props> = memo(({
+decorate(withDisplayName, 'Separator', decorate.target);
+decorate(memo, decorate.target);
+
+export const Separator: FC<Separator.Props> = ({
     className = '',
     spacing,
     thickness,
@@ -66,4 +71,4 @@ export const Separator: FC<Separator.Props> = memo(({
         >
         </div>
     );
-});
+};
