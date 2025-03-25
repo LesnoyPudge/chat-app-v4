@@ -17,5 +17,6 @@ export namespace KeyboardNavigation {
         useKeyboardNavigationOnMove: useOnMove,
         useKeyboardNavigationTabIndex: useTabIndex,
         useKeyboardNavigationIsCurrentId: useIsCurrentId,
+        useKeyboardNavigationCommonItem: useCommonItem,
     } = hooks;
 }

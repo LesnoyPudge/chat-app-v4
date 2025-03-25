@@ -4,4 +4,3 @@ export * from './useLocalStorage';
 export * from './useOptimisticQueue';
 export * from './useTrans';
 export * from './useValidatedParams';
-export * from './useVirtualListItem';

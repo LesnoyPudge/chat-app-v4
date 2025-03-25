@@ -1,3 +1,4 @@
+export * from './useKeyboardNavigationCommonItem';
 export * from './useKeyboardNavigationControls';
 export * from './useKeyboardNavigationIsCurrentId';
 export * from './useKeyboardNavigationIsFocused';

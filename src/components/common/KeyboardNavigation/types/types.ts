@@ -1,7 +1,7 @@
 import { useEvent } from '@/hooks';
 import { Direction } from '@/types';
 import { useRefManager } from '@lesnoypudge/utils-react';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, RefObject } from 'react';
 
 
 
@@ -73,6 +73,22 @@ export namespace Types {
             & WithWrapperRef
             & PropsWithChildren
         );
+    }
+
+    export namespace useCommonItem {
+        export type Props = {
+            elementRef: RefObject<HTMLElement>;
+            itemId: string;
+        };
+
+        export type Return = {
+            isCurrentId: boolean;
+            isFocused: boolean;
+            tabIndex: number;
+            setFocusId: VoidFunction;
+        };
+
+        export type Fn = (props: Props) => Return;
     }
 
     export namespace useIsCurrentId {

@@ -1,5 +1,5 @@
 import { KeyboardNavigation, Scrollable, VirtualRender } from '@/components';
-import { useKeyboardNavigation, useVirtualListItem } from '@/hooks';
+import { useKeyboardNavigation } from '@/hooks';
 import { combinedFunction, noop } from '@lesnoypudge/utils';
 import { ContextSelectable, Focus, useBoolean, useEventListener, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
 import { FC, memo, PropsWithChildren, useEffect, useRef, useState } from 'react';
@@ -23,7 +23,7 @@ const Item: FC<{
         isFocused,
         setFocusId,
         tabIndex,
-    } = useVirtualListItem({ elementRef: ref, itemId: item });
+    } = KeyboardNavigation.useCommonItem({ elementRef: ref, itemId: item });
 
     return (
         <button

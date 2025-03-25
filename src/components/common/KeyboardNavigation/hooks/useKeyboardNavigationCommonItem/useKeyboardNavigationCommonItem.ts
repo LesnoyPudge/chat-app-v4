@@ -4,21 +4,14 @@ import {
     Focus,
     useFunction,
 } from '@lesnoypudge/utils-react';
-import { RefObject } from 'react';
+import { Types } from '../../types';
 
 
 
-export namespace useVirtualListItem {
-    export type Props = {
-        elementRef: RefObject<HTMLElement>;
-        itemId: string;
-    };
-}
-
-export const useVirtualListItem = ({
+export const useKeyboardNavigationCommonItem: Types.useCommonItem.Fn = ({
     elementRef,
     itemId,
-}: useVirtualListItem.Props) => {
+}) => {
     const isFocused = KeyboardNavigation.useIsFocused(itemId);
     const tabIndex = KeyboardNavigation.useTabIndex(itemId);
     const isCurrentId = KeyboardNavigation.useIsCurrentId(itemId);
