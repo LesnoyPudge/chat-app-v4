@@ -12,7 +12,7 @@ export const styles = createStyles({
         bg-primary-600
         shadow-elevation-high
     `,
-    scrollable: `
+    list: `
         flex
         flex-col 
         gap-1 

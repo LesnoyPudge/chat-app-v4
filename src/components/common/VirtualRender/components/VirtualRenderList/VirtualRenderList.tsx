@@ -1,5 +1,5 @@
-import { isRef, useFunction, useLatest } from '@lesnoypudge/utils-react';
-import { Fragment } from 'react';
+import { useFunction } from '@lesnoypudge/utils-react';
+import { Fragment, useMemo } from 'react';
 import { ViewportList, ViewportListPropsBase } from 'react-viewport-list';
 import { Types } from '../../types';
 
@@ -8,22 +8,19 @@ import { Types } from '../../types';
 const getDefaultPrerenderCount = ({
     itemMargin,
     itemSize,
-    viewportRef,
 }: Pick<
     Required<Types.Options<unknown>>,
-    'itemSize' | 'itemMargin' | 'viewportRef'
+    'itemSize' | 'itemMargin'
 >) => {
     if (itemSize === 0) return 0;
 
-    const viewport = (
-        isRef(viewportRef)
-            ? viewportRef.current ?? document.documentElement
-            : viewportRef
-    );
+    const viewport = document.documentElement;
     const viewportHeight = viewport.clientHeight;
     const itemSizeWithMargin = itemSize + Math.max(0, itemMargin);
 
-    return Math.ceil(viewportHeight / itemSizeWithMargin);
+    const initialPrerender = Math.ceil(viewportHeight / itemSizeWithMargin);
+
+    return initialPrerender;
 };
 
 const DefaultRenderSpacer: Types.RenderSpacer = ({
@@ -45,7 +42,7 @@ export const VirtualRenderList = <_Item,>({
     getId,
     direction = 'vertical',
     items = [],
-    viewportRef,
+    // viewportRef,
     itemSize = 0,
     itemMargin = -1,
     overscan = 1,
@@ -53,22 +50,26 @@ export const VirtualRenderList = <_Item,>({
     initialAlignToTop = true,
     initialOffset = 0,
     initialDelay = -1,
-    initialPrerender = getDefaultPrerenderCount({
-        itemMargin,
-        itemSize,
-        viewportRef: viewportRef ?? document.documentElement,
-    }),
+    initialPrerender,
     onViewportIndexesChange,
     overflowAnchor = 'auto',
     withoutCache = false,
     scrollThreshold = 0,
-    indexesShift,
+    indexesShift = 0,
     getItemBoundingClientRect,
     children,
 }: Types.List.Props<_Item>) => {
-    const _viewportRef = useLatest(
-        isRef(viewportRef) ? viewportRef.current : viewportRef,
-    );
+    const defaultInitialPrerender = useMemo(() => {
+        if (initialPrerender !== undefined) return initialPrerender;
+
+        return getDefaultPrerenderCount({
+            itemMargin,
+            itemSize,
+        });
+    }, [initialPrerender, itemMargin, itemSize]);
+    // const _viewportRef = useLatest(
+    //     isRef(viewportRef) ? viewportRef.current : viewportRef,
+    // );
     // const _viewportRef = useConst(() => (
     //     isRef(viewportRef) ? viewportRef : { current: viewportRef }
     // ));
@@ -100,7 +101,7 @@ export const VirtualRenderList = <_Item,>({
             initialDelay={initialDelay}
             initialIndex={initialIndex}
             initialOffset={initialOffset}
-            initialPrerender={initialPrerender}
+            initialPrerender={defaultInitialPrerender}
             itemMargin={itemMargin}
             itemSize={itemSize}
             onViewportIndexesChange={onViewportIndexesChange}

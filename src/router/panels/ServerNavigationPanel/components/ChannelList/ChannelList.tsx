@@ -1,31 +1,26 @@
 import { FC } from 'react';
 import { ChannelItem } from './components';
 import { createStyles } from '@/utils';
-import { useValidatedParams, useTrans } from '@/hooks';
+import { useTrans } from '@/hooks';
 import { useRefManager } from '@lesnoypudge/utils-react';
-import { KeyboardNavigation, Scrollable, VirtualRender } from '@/components';
-import { Store } from '@/features';
+import { Scrollable, VirtualList } from '@/components';
+import { Navigator, Store } from '@/features';
 
 
 
 const styles = createStyles({
     wrapper: 'mt-4',
-    list: 'flex flex-col gap-1',
+    list: 'flex flex-col',
 });
 
 export const ChannelList: FC = () => {
     const wrapperRef = useRefManager<HTMLUListElement>(null);
-    const { serverId } = useValidatedParams('server');
+    const { serverId } = Navigator.useParams('server');
     const { t } = useTrans();
 
     const server = Store.useSelector(
         Store.Servers.Selectors.selectById(serverId),
     );
-
-    const {
-        setVirtualIndexes,
-        virtualList,
-    } = VirtualRender.useVirtualArray(server?.channels);
 
     return (
         <Scrollable
@@ -38,22 +33,17 @@ export const ChannelList: FC = () => {
                 aria-label={t('ServerNavigation.ChannelList.label')}
                 ref={wrapperRef}
             >
-
-                <KeyboardNavigation.Provider
-                    list={virtualList}
+                <VirtualList
+                    items={server?.channels}
+                    getId={(id) => id}
                     wrapperRef={wrapperRef}
+                    itemSize={36}
+                    itemMargin={4}
                 >
-                    <VirtualRender.List
-                        items={server?.channels}
-                        getId={(v) => v}
-                        indexesShift={0}
-                        onViewportIndexesChange={setVirtualIndexes}
-                    >
-                        {(channelId) => (
-                            <ChannelItem channelId={channelId}/>
-                        )}
-                    </VirtualRender.List>
-                </KeyboardNavigation.Provider>
+                    {(channelId) => (
+                        <ChannelItem channelId={channelId}/>
+                    )}
+                </VirtualList>
             </ul>
         </Scrollable>
     );

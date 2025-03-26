@@ -1,4 +1,4 @@
-import { useValidatedParams, useTrans } from '@/hooks';
+import { useTrans } from '@/hooks';
 import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 import { ServerMenu } from './components';
@@ -6,7 +6,7 @@ import { useRefManager } from '@lesnoypudge/utils-react';
 import { Button, Overlay, Placeholder, Sprite } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
 import { TopBar } from '@/router/layouts/bundled';
-import { Store } from '@/features';
+import { Navigator, Store } from '@/features';
 
 
 
@@ -23,7 +23,7 @@ const styles = createStyles({
 export const Header: FC = () => {
     const { t } = useTrans();
     const buttonRef = useRefManager<HTMLButtonElement>(null);
-    const { serverId } = useValidatedParams('server');
+    const { serverId } = Navigator.useParams('server');
     const controls = Overlay.useControls();
 
     const server = Store.useSelector(

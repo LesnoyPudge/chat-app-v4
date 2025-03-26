@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Types } from '../../types';
 
 
@@ -16,13 +16,15 @@ export const useVirtualArray: Types.useVirtualArray.Fn = (
     const isLengthMoreThenOne = originalArray && originalArray.length > 1;
     const shouldReturnEmpty = isSame && isLengthMoreThenOne;
 
-    const virtualList = (
-        originalArray
-            ? shouldReturnEmpty
-                ? []
-                : originalArray.slice(virtualIndexes[0], virtualIndexes[1] + 1)
-            : []
-    );
+    const virtualList = useMemo(() => {
+        if (!originalArray) return [];
+        if (shouldReturnEmpty) return [];
+
+        const padding = 2;
+        const endWithPadding = Math.min(originalArray.length, end + padding);
+
+        return originalArray.slice(start, endWithPadding);
+    }, [end, originalArray, shouldReturnEmpty, start]);
 
     return {
         virtualList,

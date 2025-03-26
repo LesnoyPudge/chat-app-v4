@@ -42,9 +42,9 @@ export const Header: FC = () => {
     const { closeMenu } = MobileMenu.useMobileMenu();
 
     const handleClick = useFunction(() => {
-        if (isInRoot) closeMenu();
-
         navigateTo.root();
+
+        if (isInRoot) closeMenu();
     });
 
     return (

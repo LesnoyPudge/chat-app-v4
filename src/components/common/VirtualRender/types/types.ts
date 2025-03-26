@@ -57,7 +57,7 @@ export namespace Types {
     export type Options<_Item> = {
         items: _Item[] | undefined;
         getId: GetId<_Item>;
-        viewportRef?: RefObject<HTMLElement | null> | HTMLElement;
+        // viewportRef?: RefObject<HTMLElement | null> | HTMLElement;
         itemSize: number;
         itemMargin?: number;
         overscan?: number;
@@ -71,7 +71,7 @@ export namespace Types {
         overflowAnchor?: OverflowAnchor;
         withoutCache?: boolean;
         scrollThreshold?: number;
-        indexesShift: number;
+        indexesShift?: number;
         getItemBoundingClientRect?: GetItemBoundingClientRect;
     };
 
@@ -94,11 +94,13 @@ export namespace Types {
     }
 
     export namespace useVirtualArray {
-        export type Return = {
-            virtualList: string[];
+        export type Return<_Item> = {
+            virtualList: _Item[];
             setVirtualIndexes: Dispatch<SetStateAction<[number, number]>>;
         };
 
-        export type Fn = (originalArray: string[] | undefined) => Return;
+        export type Fn = <_Item>(
+            originalArray: _Item[] | undefined
+        ) => Return<_Item>;
     }
 }

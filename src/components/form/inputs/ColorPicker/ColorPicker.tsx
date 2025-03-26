@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
 import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import css from './ColorPicker.module.scss';
+import './ColorPicker.scss';
 import { Iterate, useFunction, useThrottled } from '@lesnoypudge/utils-react';
 import { FieldApi } from '@tanstack/react-form';
 
@@ -68,7 +68,7 @@ export const ColorPickerPure: FC<ColorPickerPure.Props> = ({
 
     return (
         <div className={cn(
-            css.colorPicker,
+            'ColorPicker',
             styles.colorPicker,
             className,
         )}>

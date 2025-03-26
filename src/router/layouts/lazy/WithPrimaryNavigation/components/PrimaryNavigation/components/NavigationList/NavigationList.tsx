@@ -1,10 +1,11 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { ConversationListItem, ServerListItem } from './components';
 import { KeyboardNavigation, Scrollable, Separator, VirtualRender } from '@/components';
 import { useTrans } from '@/hooks';
-import { useRefManager } from '@lesnoypudge/utils-react';
+import { useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
 import { Store } from '@/features';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
@@ -13,10 +14,80 @@ const styles = createStyles({
     scrollableSeparator: 'ml-5',
 });
 
-export const NavigationList: FC = () => {
+type ListProps = {
+    servers: string[];
+    conversations: string[];
+};
+
+decorate(withDisplayName, 'List', decorate.target);
+decorate(memo, decorate.target);
+
+const List: FC<ListProps> = ({ conversations, servers }) => {
     const { t } = useTrans();
     const wrapperRef = useRefManager<HTMLDivElement>(null);
 
+    const virtualServers = VirtualRender.useVirtualArray(servers);
+    const virtualConversations = VirtualRender.useVirtualArray(
+        conversations,
+    );
+
+    const showConversations = !!conversations.length;
+    const virtualList = [
+        ...virtualConversations.virtualList,
+        ...virtualServers.virtualList,
+    ];
+
+    return (
+        <div
+            className={styles.list}
+            aria-label={t('PrimaryNavigation.NavigationList.label')}
+            ref={wrapperRef}
+            role='list'
+        >
+            <KeyboardNavigation.Provider
+                list={virtualList}
+                wrapperRef={wrapperRef}
+            >
+                <If condition={showConversations}>
+                    <VirtualRender.List
+                        items={conversations}
+                        getId={(item) => item}
+                        itemSize={56}
+                        onViewportIndexesChange={virtualConversations.setVirtualIndexes}
+                    >
+                        {(conversationId) => (
+                            <ConversationListItem
+                                conversationId={conversationId}
+                            />
+                        )}
+                    </VirtualRender.List>
+
+                    <Separator
+                        className={styles.scrollableSeparator}
+                        length={32}
+                        spacing={8}
+                        thickness={2}
+                    />
+                </If>
+
+                <VirtualRender.List
+                    items={servers}
+                    getId={(item) => item}
+                    itemSize={56}
+                    onViewportIndexesChange={virtualServers.setVirtualIndexes}
+                >
+                    {(serverId) => (
+                        <ServerListItem
+                            serverId={serverId}
+                        />
+                    )}
+                </VirtualRender.List>
+            </KeyboardNavigation.Provider>
+        </div>
+    );
+};
+
+export const NavigationList: FC = () => {
     const sortedConversationIds = Store.useSelector(
         Store
             .Conversations
@@ -63,24 +134,8 @@ export const NavigationList: FC = () => {
         ...serverIdsWithoutNotifications,
     ];
 
-    const ids = [
-        ...sortedConversationIds,
-        ...serverIds,
-    ];
-
-    const showServersOrConversations = !!ids.length;
-    const showConversations = !!sortedConversationIds.length;
-
-    const virtualServers = VirtualRender.useVirtualArray(serverIds);
-    const virtualConversations = VirtualRender.useVirtualArray(
-        sortedConversationIds,
-    );
-    const virtualList = [
-        ...virtualConversations.virtualList,
-        ...virtualServers.virtualList,
-    ];
-
-    if (!showServersOrConversations) return null;
+    const listsAreEmpty = !serverIds.length && !sortedConversationIds.length;
+    if (listsAreEmpty) return null;
 
     return (
         <div role='listitem'>
@@ -95,53 +150,10 @@ export const NavigationList: FC = () => {
                 withoutOppositeGutter
                 autoHide
             >
-                <KeyboardNavigation.Provider
-                    list={virtualList}
-                    wrapperRef={wrapperRef}
-                >
-                    <div
-                        className={styles.list}
-                        aria-label={t('PrimaryNavigation.NavigationList.label')}
-                        ref={wrapperRef}
-                        role='list'
-                    >
-                        <If condition={showConversations}>
-                            <VirtualRender.List
-                                items={sortedConversationIds}
-                                getId={(item) => item}
-                                indexesShift={0}
-                                itemSize={56}
-                                onViewportIndexesChange={virtualConversations.setVirtualIndexes}
-                            >
-                                {(conversationId) => (
-                                    <ConversationListItem
-                                        conversationId={conversationId}
-                                    />
-                                )}
-                            </VirtualRender.List>
-
-                            <Separator
-                                className={styles.scrollableSeparator}
-                                length={32}
-                                spacing={8}
-                                thickness={2}
-                            />
-                        </If>
-
-                        <VirtualRender.List
-                            items={serverIds}
-                            getId={(item) => item}
-                            indexesShift={0}
-                            onViewportIndexesChange={virtualServers.setVirtualIndexes}
-                        >
-                            {(serverId) => (
-                                <ServerListItem
-                                    serverId={serverId}
-                                />
-                            )}
-                        </VirtualRender.List>
-                    </div>
-                </KeyboardNavigation.Provider>
+                <List
+                    conversations={sortedConversationIds}
+                    servers={serverIds}
+                />
             </Scrollable>
 
             <Separator

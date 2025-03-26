@@ -13,7 +13,7 @@ import {
     GlobalLoader,
 } from './components';
 import { ErrorScreen } from '@/router/screens/bundled';
-import { useDebug, usePreventDefault } from './hooks';
+import { useDebug, usePreventDefault, useHTMLVars } from './hooks';
 import { Router } from '@/router';
 import { decorate } from '@lesnoypudge/macro';
 import { FC } from 'react';
@@ -28,7 +28,7 @@ const DevTools = (
 
 const { withDecorator } = createWithDecorator(({ children }) => {
     return (
-        <ControllableStrictMode isEnabled={true}>
+        <ControllableStrictMode isEnabled={false}>
             <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
                 <GlobalProviders>
                     {children}
@@ -42,6 +42,7 @@ decorate(withDisplayName, 'Root', decorate.target);
 decorate(withDecorator, decorate.target);
 
 export const Root: FC = () => {
+    useHTMLVars();
     useDebug();
     usePreventDefault();
 

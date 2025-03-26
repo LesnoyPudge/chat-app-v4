@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from 'react';
 import { NavigatorContext } from '../../context';
-import { Types } from '../../types';
+import { Types } from '../../types/types';
 import { useLocation, useNavigate } from 'react-router';
 import { useFunction, useLatest } from '@lesnoypudge/utils-react';
 

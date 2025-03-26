@@ -1,4 +1,4 @@
-import { Avatar, Button, Placeholder, Sprite, Overlay, KeyboardNavigation } from '@/components';
+import { Avatar, Button, Placeholder, Sprite, Overlay, KeyboardNavigation, MobileMenu } from '@/components';
 import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
@@ -10,7 +10,7 @@ import { FC, memo } from 'react';
 
 
 const styles = createStyles({
-    wrapper: 'group relative',
+    wrapper: 'group relative pt-1 [[data-virtual-spacer]+&]:pt-0',
     userInfoButton: `
         flex 
         h-[42px]
@@ -71,6 +71,7 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
     const hideButtonRef = useRefManager<HTMLButtonElement>(null);
     const { t } = useTrans();
     const { navigateTo } = Navigator.useNavigateTo();
+    const { closeMenu } = MobileMenu.useMobileMenu();
     const isInConversation = Navigator.useIsLocation((v) => {
         return v.conversation({ conversationId });
     });
@@ -105,6 +106,7 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
 
     const handleNavigate = useFunction(() => {
         navigateTo.conversation({ conversationId });
+        closeMenu();
     });
 
     const handleHide = useFunction(() => {

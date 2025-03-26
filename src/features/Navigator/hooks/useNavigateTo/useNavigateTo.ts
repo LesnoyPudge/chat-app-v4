@@ -2,9 +2,8 @@ import { NavigateOptions } from 'react-router';
 import {
     ContextSelectable,
     useConst,
-    usePropsChange,
 } from '@lesnoypudge/utils-react';
-import { navigatorDevPath, navigatorPath, params, staticNavigatorPath } from '../../vars';
+import { navigatorDevPath, navigatorPath } from '../../vars';
 import { NavigatorContext } from '../../context';
 
 
@@ -127,8 +126,6 @@ export const useNavigateTo = () => {
             navigatorDevPath.playgroundAuthorized,
         ),
     }));
-
-    usePropsChange({ navigate });
 
     return {
         navigateTo,

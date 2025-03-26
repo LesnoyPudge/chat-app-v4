@@ -1,5 +1,5 @@
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { Types } from '../../types';
+import { Types } from '../../types/types';
 
 
 

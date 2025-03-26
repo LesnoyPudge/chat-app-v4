@@ -1,7 +1,7 @@
 import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
 import Skeleton, { SkeletonProps } from 'react-loading-skeleton';
-import css from './PlaceholderNode.module.scss';
+import './PlaceholderNode.scss';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
@@ -26,7 +26,7 @@ export const PlaceholderNode: FC<PlaceholderNode.Props> = ({
 }) => {
     return (
         <Skeleton
-            className={cn(css.PlaceholderNode, styles.base, className)}
+            className={cn('PlaceholderNode', styles.base, className)}
             enableAnimation={true}
             baseColor={undefined}
             {...props}

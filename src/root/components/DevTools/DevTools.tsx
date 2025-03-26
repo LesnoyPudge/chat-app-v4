@@ -109,6 +109,7 @@ export const DevTools: FC = withDecorator(() => {
             <KeyboardNavigation.Provider
                 list={items}
                 wrapperRef={wrapperRef}
+                loop
             >
                 <Iterate
                     items={items}

@@ -1,4 +1,4 @@
-import { Avatar, Button, KeyboardNavigation, Overlay } from '@/components';
+import { Avatar, Button, KeyboardNavigation, MobileMenu, Overlay } from '@/components';
 import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
@@ -24,6 +24,7 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
 }) => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { navigateTo } = Navigator.useNavigateTo();
+    const { closeMenu } = MobileMenu.useMobileMenu();
     const isInServer = Navigator.useIsLocation((v) => {
         return v.server({ serverId });
     });
@@ -47,6 +48,7 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
 
     const navigateToServer = useFunction(() => {
         navigateTo.server({ serverId });
+        closeMenu();
     });
 
     const isActive = isInServer || isFocused;

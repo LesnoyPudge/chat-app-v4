@@ -1,5 +1,5 @@
-import { Avatar, Button, KeyboardNavigation, Overlay } from '@/components';
-import { useKeyboardNavigation } from '@/hooks';
+import { Avatar, Button, KeyboardNavigation, MobileMenu, Overlay } from '@/components';
+
 import { Focus, useFunction, useRefManager, useScrollIntoView, withDisplayName } from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
@@ -25,6 +25,7 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
 }) => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { navigateTo } = Navigator.useNavigateTo();
+    const { closeMenu } = MobileMenu.useMobileMenu();
     const isInConversation = Navigator.useIsLocation((v) => {
         return v.conversation({ conversationId });
     });
@@ -64,6 +65,7 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
 
     const navigateToServer = useFunction(() => {
         navigateTo.conversation({ conversationId });
+        closeMenu();
     });
 
     const isUserAndConversationExist = !!userTarget && !!conversation;

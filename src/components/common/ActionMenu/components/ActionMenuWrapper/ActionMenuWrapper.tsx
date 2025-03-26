@@ -10,24 +10,25 @@ export namespace ActionMenuWrapper {
     export type Props = (
         RT.PropsWithChildrenAndClassName
         & {
-            scrollableClassName?: string;
+            listClassName?: string;
         }
     );
 }
 
 export const ActionMenuWrapper: FC<ActionMenuWrapper.Props> = ({
     className = '',
-    scrollableClassName = '',
+    listClassName = '',
     children,
 }) => {
     return (
         <div className={cn(styles.wrapper, className)}>
             <Scrollable
-                className={cn(styles.scrollable, scrollableClassName)}
                 size='small'
                 direction='vertical'
             >
-                {children}
+                <div className={cn(styles.list, listClassName)}>
+                    {children}
+                </div>
             </Scrollable>
         </div>
     );

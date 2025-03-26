@@ -93,13 +93,16 @@ export const Scrollable: FC<Scrollable.Props> = ({
         scrollableRef,
     ]);
 
+    const withGutter = !withoutGutter;
+    const withOppositeGutter = withGutter && !withoutOppositeGutter;
+
     return (
         <div
             className={cn(styles.wrapper, className)}
             ref={mergedWrapperRef}
             data-scrollable-wrapper={true}
-            data-with-gutter={!withoutGutter}
-            data-with-opposite-gutter={!withoutOppositeGutter}
+            data-with-gutter={withGutter}
+            data-with-opposite-gutter={withOppositeGutter}
             data-size={size}
             data-direction={direction}
             data-overlayscrollbars='host'

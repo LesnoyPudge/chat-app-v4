@@ -9,8 +9,6 @@ import { useSliderInput } from './useSliderInput';
 
 
 
-const defaultClassName = 'SliderInput';
-
 export namespace SliderInputPure {
     export type Options = {
         name: string;
@@ -35,7 +33,7 @@ export const SliderInputPure: FC<SliderInputPure.Props> = ({
     const { sliderRef } = useSliderInput(options);
 
     return (
-        <div className={cn(defaultClassName, className)}>
+        <div className={cn('SliderInput', className)}>
             <div ref={sliderRef}></div>
         </div>
     );

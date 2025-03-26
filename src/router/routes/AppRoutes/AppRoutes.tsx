@@ -27,7 +27,9 @@ export const AppRoutes: FC = () => {
                 <Route
                     path={Navigator.staticNavigatorPath.conversation}
                     element={(
-                        <>conversation</>
+                        <Navigator.ParamsProvider>
+                            <>conversation</>
+                        </Navigator.ParamsProvider>
                         // <Suspense fallback={<SubPageSkeleton/>}>
                         //     <GlobalLoader.Loaded>
                         //         <PrivateChatSubPage/>
@@ -40,9 +42,11 @@ export const AppRoutes: FC = () => {
             <Route
                 path={Navigator.staticNavigatorPath.server}
                 element={(
-                    <LazyLayouts.WithSecondaryNavigation>
-                        <LazyPanels.ServerNavigation/>
-                    </LazyLayouts.WithSecondaryNavigation>
+                    <Navigator.ParamsProvider>
+                        <LazyLayouts.WithSecondaryNavigation>
+                            <LazyPanels.ServerNavigation/>
+                        </LazyLayouts.WithSecondaryNavigation>
+                    </Navigator.ParamsProvider>
                 )}
             >
                 <Route
@@ -66,7 +70,9 @@ export const AppRoutes: FC = () => {
                 <Route
                     path={Navigator.staticNavigatorPath.channel}
                     element={(
-                        <>channel</>
+                        <Navigator.ParamsProvider>
+                            <>channel</>
+                        </Navigator.ParamsProvider>
 
                         // <Suspense fallback={<SubPageSkeleton/>}>
                         //     <GlobalLoader.Loaded>

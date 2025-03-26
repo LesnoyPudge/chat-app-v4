@@ -1,47 +1,27 @@
+
+
+
+--- global goals ---
+-? ПЕРЕНЕСТИ ВСЕ (почти) БИБЛИОТЕКИ В src/libs
+-? ИСПОЛЬЗОВАТЬ scripts:check-relative-imports И ИСПРАВИТЬ ВСЕ РЕЛАТИВНЫЕ ПУТИ
+-? fix all eslint violations :)
+-? UPDATE ALL FORM RELATED CODE TO TANSTACK FORM VERSION 1+
+-? сделать attachments layout через grid-template-areas
+- add sorting by createTimestamp to all EntityAdapters
+- добавить обработчики эндпоинтов из контекстных меню
+
+
+
+--- local goals ---
+
+
+
+
+--- ideas ---
 https://www.youtube.com/shorts/PHXdLe2f9rs
 https://www.tailwind-variants.org/docs/getting-started
 https://fluid.tw/
-
-
---client--
--? сделать attachments layout через grid-template-areas
-- добавить dataset к элементу(html? body?) для работы css (theme, message-font-size, ...)
-- добавить закрытие мобильного меню в местах 
-использования Navigator.useNavigator 
 -? стоит ли оставлять useOptimisticQueue? или сделать через rtkquery (
 составить таблицу запросов id запроса, при успешном убивать все записи до.
 при ошибке возвращать последнее валидное значение из таблицы)
--? PrimaryNavigation role 'menu'??? change to ul?
 -? remove useGetManyDeepQuery for entities that is received through socket
-- add sorting by createTimestamp to all EntityAdapters
--? populate VoiceChats
--? FIX ALL '../*' inside redux/features and RichTextEditor
-- добавить обработчики эндпоинтов из контекстных меню
-- при переключении мобильного меню на меню, фокусируется элемент списка с tabindex=0 вместо первого доступного элемента (кнопки HomePageButton) вероятно из за автофокуса который навешивается в KeyboardNavigation
-
-- СДЕЛАТЬ КОНТЕКСТ ДЛЯ KeyboardNavigation И ИСПОЛЬЗОВАТЬ ЕГО ВМЕСТО ПРОПСОВ
--? ЗАМЕНИТЬ ВСЕ ИСПОЛЬЗОВАНИЯ ListVariant НА KeyboardNavigation КОНТЕКСТ
-- ЗАМЕНИТЬ react-loading-skeleton НА СВОЮ ВЕРСИЮ ДЛЯ СИНХРОНИЗАЦИИ
-АНИМАЦИЙ
-- ДОБАВИТЬ itemSize И itemMargin??? ВСЕМ ВИРТУАЛЬНЫМ СПИСКАМ
-- СДЕЛАТЬ ОТСТУПЫ У ВИРТУАЛЬНЫХ СПИСКОВ ЧЕРЕЗ ПАДДИНГИ А НЕ ГАПЫ 
-- ВСЕ КАСТОМНЫЕ SCSS КОМПОНЕНТЫ ПЕРЕНЕСТИ НА СЛОЙ КОМПОНЕНТОВ ЧТО БЫ
-ИХ СТИЛИ МОЖНО БЫЛО ПЕРЕПИСАТЬ С ПОМОЩЬЮ ЮТИЛИТИ КЛАССОВ
-- ПРОТЕСТИРОВАТЬ РАБОТАЮТ ЛИ СЛОИ В ТАИЛВИНДЕ, БУДЕТ ЛИ ПЕРЕЗАПИСАНЫ СТИЛИ
-ИЗ СЛОЯ КОМПОНЕНТОВ
-- ИЗМЕНИТЬ КАК РАБОТАЕТ ФОКУС ПРИ KeyboardNavigation, ФОКУСИРОВАТЬ
-И СКРОЛЛИТЬ ТОЛЬКО НА ЭВЕНТ, А НЕ ПРИ МАУНТЕ
-- УБРАТЬ ВЕСЬ КОД ИЗ INDEX ФАЙЛОВ, ОСТАВИТЬ ТОЛЬКО ЭКСПОРТЫ, ПЕРЕМЕСТИТЬ
-ЭНТИТИ В ОТДЕЛЬНЫЕ ФАЙЛЫ ДЛЯ ЛЁГКОГО ПОИСКА
-- УБРАТЬ ТАБ ИНДЕКС С ВРАППЕРОВ KeyboardNavigation, ПЕРВЫЙ ЕЛЕМЕНТ ДОЛЖЕН БЫТЬ
-С ТАБ ИНДЕКСОМ И ПЕРЕКЛЮЧАТЬ ТОЛЬКО ПРИ ЭВЕНТЕ ДВИЖЕНИЯ
-- ПРОВЕРИТЬ ВСЕ Scrollable ЧТО БЫ У НИХ НЕ БЫЛО КЛАССОВ ОТВЕЧАЮЩИХ ЗА
-КОНТЕНТ
-- ПЕРЕНЕСТИ ВСЕ (почти) БИБЛИОТЕКИ В src/libs
-- ИСПОЛЬЗОВАТЬ scripts:check-relative-imports И ИСПРАВИТЬ ВСЕ РЕЛАТИВНЫЕ ПУТИ
--? fix all eslint violations :)
-- UPDATE ALL FORM RELATED CODE TO TANSTACK FORM VERSION 1+
-- РАЗОБРАТЬСЯ С indexesShift, НУЖНО ИЛИ НЕТ
-- ПОЧЕМУ ТО В PLAYGROUND МОЖНО ФОКУСИТЬ ЭЛЕМЕНТЫ С ОТРИЦАТЕЛЬНЫМ ТАБ ИНДЕКСОМ А В ConversationItem НЕЛЬЗЯ (ПРИХОДИТСЯ ИСПОЛЬЗОВАТЬ TIMEOUT)
-- VirtualRenderList ОТЛИЧАЕТСЯ ОТ ViewportList А НЕ ДОЛЖЕН
-- ПРОВЕРИТЬ ВСЕ ITEMSIZE И indexesShift У VirtualRender.List

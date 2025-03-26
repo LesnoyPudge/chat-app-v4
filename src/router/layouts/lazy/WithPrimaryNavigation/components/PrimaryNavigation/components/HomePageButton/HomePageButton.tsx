@@ -14,16 +14,15 @@ export const HomePageButton: FC = () => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { t } = useTrans();
     const { navigateTo } = Navigator.useNavigateTo();
+    const { closeMenu } = MobileMenu.useMobileMenu();
     const isInRoot = Navigator.useIsLocation((v) => v.root());
     const isInAnyConversation = Navigator.useIsLocation((v) => {
         return v.anyConversation();
     });
-    const { closeMenu } = MobileMenu.useMobileMenu();
 
     const handleClick = useFunction(() => {
-        if (isInRoot) closeMenu();
-
         navigateTo.root();
+        if (isInRoot) closeMenu();
     });
 
     const isInRootOrConversation = isInRoot || isInAnyConversation;

@@ -1,7 +1,7 @@
-import { Button, KeyboardNavigation, Overlay, Placeholder, Sprite, WithPermission } from '@/components';
+import { Button, KeyboardNavigation, MobileMenu, Overlay, Placeholder, Sprite, WithPermission } from '@/components';
 import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
-import { useValidatedParams, useTrans } from '@/hooks';
+import { useTrans } from '@/hooks';
 import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@/utils';
 import { FC, memo, useRef } from 'react';
@@ -11,7 +11,7 @@ import { decorate } from '@lesnoypudge/macro';
 
 const styles = createStyles({
     item: {
-        size: 'h-9',
+        size: 'mt-1 h-9 p-1.5 [[data-virtual-spacer]+&]:mt-0',
         base: `
             group/item 
             relative 
@@ -19,7 +19,6 @@ const styles = createStyles({
             items-center 
             gap-1.5 
             rounded-md 
-            p-1.5 
             font-medium
             text-color-muted
             hover-focus-within:bg-primary-hover 
@@ -64,7 +63,7 @@ decorate(memo, decorate.target);
 export const ChannelItem: FC<ChannelItem.Props> = ({
     channelId,
 }) => {
-    const elementRef = useRef<HTMLLIElement>(null);
+    const elementRef = useRef<HTMLButtonElement>(null);
     const {
         isFocused,
         setFocusId,
@@ -74,7 +73,8 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
         itemId: channelId,
     });
     const { navigateTo } = Navigator.useNavigateTo();
-    const { serverId } = useValidatedParams('server');
+    const { closeMenu } = MobileMenu.useMobileMenu();
+    const { serverId } = Navigator.useParams('server');
     const isInChannel = Navigator.useIsLocation((v) => {
         return v.channel({ serverId, channelId });
     });
@@ -88,6 +88,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
 
     const handleNavigation = useFunction(() => {
         navigateTo.channel({ serverId, channelId });
+        closeMenu();
     });
 
     const isTextChannel = channel?.voiceChat === null;
@@ -98,30 +99,27 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
     );
 
     return (
-        <Placeholder.With
-            className={styles.item.size}
-            reveal={!!channel}
+        <li
+            className={cn(
+                styles.item.size,
+                styles.item.base,
+                isInChannel && styles.item.selected,
+            )}
         >
-            <li
-                className={cn(
-                    styles.item.size,
-                    styles.item.base,
-                    isInChannel && styles.item.selected,
-                )}
-                ref={elementRef}
+            <Button
+                className={styles.navigationButton}
+                label={t('ServerNavigation.ChannelList.Item.navigationLabel', {
+                    name: channel?.name,
+                })}
+                tabIndex={tabIndex}
+                isActive={isFocused}
+                innerRef={elementRef}
+                onLeftClick={handleNavigation}
+                onAnyClick={setFocusId}
             >
-                <Button
-                    className={styles.navigationButton}
-                    label={t('ServerNavigation.ChannelList.Item.navigationLabel', {
-                        name: channel?.name,
-                    })}
-                    tabIndex={tabIndex}
-                    isActive={isFocused}
-                    onLeftClick={handleNavigation}
-                    onAnyClick={setFocusId}
-                >
-                </Button>
+            </Button>
 
+            <Placeholder.With reveal={!!channel}>
                 <Sprite
                     className={styles.channelTypeIcon}
                     sprite={channelTypeSprite}
@@ -163,7 +161,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
                         {t('ServerNavigation.ChannelList.Item.settingsTooltip')}
                     </Overlay.Tooltip>
                 </WithPermission.ChannelControl>
-            </li>
-        </Placeholder.With>
+            </Placeholder.With>
+        </li>
     );
 };

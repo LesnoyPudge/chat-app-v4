@@ -3,7 +3,6 @@
 import { FC, useContext, useRef } from 'react';
 // import { ActionButtons } from './components';
 // import { getRandomNumber } from '@utils';
-// import { useKeyboardNavigation } from '@hooks';
 // import { Entities } from '@shared';
 // import { IMAGES } from '@generated';
 

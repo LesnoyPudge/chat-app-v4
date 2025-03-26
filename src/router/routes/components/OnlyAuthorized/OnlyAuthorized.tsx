@@ -5,7 +5,7 @@ import { Outlet } from 'react-router';
 import { SuspenseWithGlobalLoader } from '../SuspenseWithGlobalLoader';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
 import { Navigator, Store } from '@/features';
-import { createSleep, ErrorThrower, usePropsChange } from '@lesnoypudge/utils-react';
+import { createSleep, ErrorThrower } from '@lesnoypudge/utils-react';
 
 
 
