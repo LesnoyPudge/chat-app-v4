@@ -1,6 +1,6 @@
 import { useConst, useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { useMemo, useState } from 'react';
-import { Types } from '../../types';
+import { Types } from '../../types/types';
 import { createProps } from '../../utils';
 
 

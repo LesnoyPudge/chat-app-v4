@@ -1,10 +1,11 @@
-import { Button, ListVariants, Overlay, Placeholder, Sprite, WithPermission } from '@/components';
+import { Button, KeyboardNavigation, Overlay, Placeholder, Sprite, WithPermission } from '@/components';
 import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useValidatedParams, useTrans } from '@/hooks';
-import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
+import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@/utils';
-import { FC } from 'react';
+import { FC, memo, useRef } from 'react';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
@@ -52,19 +53,26 @@ const styles = createStyles({
 });
 
 export namespace ChannelItem {
-    export type Props = (
-        ListVariants.Variant1.Types.ChildrenProps<string>
-    );
+    export type Props = {
+        channelId: string;
+    };
 }
 
-export const ChannelItem: FC<ChannelItem.Props> = ({
-    id,
-    itemRef,
-    setFocusId,
-    tabIndex,
-}) => {
-    const channelId = id;
+decorate(withDisplayName, 'ChannelItem', decorate.target);
+decorate(memo, decorate.target);
 
+export const ChannelItem: FC<ChannelItem.Props> = ({
+    channelId,
+}) => {
+    const elementRef = useRef<HTMLLIElement>(null);
+    const {
+        isFocused,
+        setFocusId,
+        tabIndex,
+    } = KeyboardNavigation.useCommonItem({
+        elementRef,
+        itemId: channelId,
+    });
     const { navigateTo } = Navigator.useNavigateTo();
     const { serverId } = useValidatedParams('server');
     const isInChannel = Navigator.useIsLocation((v) => {
@@ -100,7 +108,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
                     styles.item.base,
                     isInChannel && styles.item.selected,
                 )}
-                ref={itemRef}
+                ref={elementRef}
             >
                 <Button
                     className={styles.navigationButton}
@@ -108,6 +116,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
                         name: channel?.name,
                     })}
                     tabIndex={tabIndex}
+                    isActive={isFocused}
                     onLeftClick={handleNavigation}
                     onAnyClick={setFocusId}
                 >

@@ -1,6 +1,8 @@
-import { Types } from '../../types';
-import { ListVariants } from '@/components';
-import { ContextSelectable } from '@lesnoypudge/utils-react';
+import { KeyboardNavigation } from '@/components';
+import { Types } from '../../types/types';
+import { ContextSelectable, Iterate } from '@lesnoypudge/utils-react';
+import { isDev } from '@/vars';
+import { invariant } from '@lesnoypudge/utils';
 
 
 
@@ -17,6 +19,18 @@ export const TabList = <_Tabs extends Types.GenericTabs>({
         initialTabName,
     } = ContextSelectable.useProxy(context);
 
+    if (isDev) {
+        const nonStringFound = tabNames.find((item) => {
+            return typeof item !== 'string';
+        });
+
+        invariant(!nonStringFound, 'Do not use non string tabs');
+        invariant(
+            typeof initialTabName === 'string',
+            'Use sting as initialTabName',
+        );
+    }
+
     return (
         <div
             className={className}
@@ -26,18 +40,19 @@ export const TabList = <_Tabs extends Types.GenericTabs>({
             ref={_listRef}
             tabIndex={0}
         >
-            <ListVariants.Variant1.List
-                items={tabNames}
-                getId={String}
-                keyboardNavigation={{
-                    direction: orientation,
-                    loop: false,
-                    wrapperRef: _listRef,
-                    initialFocusedId: String(initialTabName),
-                }}
+            <KeyboardNavigation.Provider
+                list={tabNames as string[]}
+                wrapperRef={_listRef}
+                direction={orientation}
+                initialFocusedId={initialTabName as string}
             >
-                {children}
-            </ListVariants.Variant1.List>
+                <Iterate
+                    items={tabNames}
+                    getKey={(v) => v as string}
+                >
+                    {children}
+                </Iterate>
+            </KeyboardNavigation.Provider>
         </div>
     );
 };

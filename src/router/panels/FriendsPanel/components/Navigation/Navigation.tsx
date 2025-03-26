@@ -1,6 +1,6 @@
 import { createStyles } from '@/utils';
-import { Button, Overlay, Scrollable, Separator, Sprite, Tab } from '@/components';
-import { FC } from 'react';
+import { Button, KeyboardNavigation, Overlay, Scrollable, Separator, Sprite, Tab } from '@/components';
+import { FC, PropsWithChildren, useRef } from 'react';
 import { ContextSelectable, Heading } from '@lesnoypudge/utils-react';
 import { FriendsPanelTabs, FriendsPanelTabsContext } from '../../FriendsPanel';
 import { useTrans } from '@/hooks';
@@ -37,12 +37,51 @@ const separatorProps: Separator.Props = {
     thickness: 2,
 };
 
-export const Navigation: FC = () => {
-    const { t } = useTrans();
+type ItemProps = (
+    PropsWithChildren
+    & {
+        tabName: keyof FriendsPanelTabs;
+    }
+);
+
+const Item: FC<ItemProps> = ({
+    tabName,
+    children,
+}) => {
+    const elementRef = useRef<HTMLButtonElement>(null);
     const {
         changeTab,
         isActive,
         tabProps,
+    } = ContextSelectable.useProxy(FriendsPanelTabsContext);
+
+    const {
+        setFocusId,
+        tabIndex,
+    } = KeyboardNavigation.useCommonItem({
+        itemId: tabName,
+        elementRef,
+    });
+
+    return (
+        <Button
+            className={styles.button}
+            size='small'
+            innerRef={elementRef}
+            tabIndex={tabIndex}
+            isActive={isActive[tabName]}
+            onLeftClick={changeTab[tabName]}
+            onAnyClick={setFocusId}
+            {...tabProps[tabName]}
+        >
+            {children}
+        </Button>
+    );
+};
+
+export const Navigation: FC = () => {
+    const { t } = useTrans();
+    const {
         orientation,
     } = ContextSelectable.useProxy(FriendsPanelTabsContext);
     const controls = Overlay.useControls();
@@ -78,18 +117,10 @@ export const Navigation: FC = () => {
                         label={t('FriendsPanel.Navigation.tablist.label')}
                         context={FriendsPanelTabsContext}
                     >
-                        {(itemProps) => (
-                            <Button
-                                className={styles.button}
-                                size='small'
-                                innerRef={itemProps.itemRef}
-                                tabIndex={itemProps.tabIndex}
-                                isActive={isActive[itemProps.item]}
-                                {...tabProps[itemProps.item]}
-                                onLeftClick={changeTab[itemProps.item]}
-                            >
-                                {buttonText[itemProps.item]}
-                            </Button>
+                        {(tabName) => (
+                            <Item tabName={tabName}>
+                                {buttonText[tabName]}
+                            </Item>
                         )}
                     </Tab.List>
 

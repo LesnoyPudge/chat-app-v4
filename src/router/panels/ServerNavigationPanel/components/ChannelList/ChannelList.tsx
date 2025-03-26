@@ -3,7 +3,7 @@ import { ChannelItem } from './components';
 import { createStyles } from '@/utils';
 import { useValidatedParams, useTrans } from '@/hooks';
 import { useRefManager } from '@lesnoypudge/utils-react';
-import { ListVariants, Scrollable } from '@/components';
+import { KeyboardNavigation, Scrollable, VirtualRender } from '@/components';
 import { Store } from '@/features';
 
 
@@ -22,6 +22,11 @@ export const ChannelList: FC = () => {
         Store.Servers.Selectors.selectById(serverId),
     );
 
+    const {
+        setVirtualIndexes,
+        virtualList,
+    } = VirtualRender.useVirtualArray(server?.channels);
+
     return (
         <Scrollable
             className={styles.wrapper}
@@ -33,17 +38,22 @@ export const ChannelList: FC = () => {
                 aria-label={t('ServerNavigation.ChannelList.label')}
                 ref={wrapperRef}
             >
-                <ListVariants.Variant1.List
-                    items={server?.channels ?? []}
-                    getId={(id) => id}
-                    keyboardNavigation={{
-                        direction: 'vertical',
-                        loop: false,
-                        wrapperRef,
-                    }}
+
+                <KeyboardNavigation.Provider
+                    list={virtualList}
+                    wrapperRef={wrapperRef}
                 >
-                    {ChannelItem}
-                </ListVariants.Variant1.List>
+                    <VirtualRender.List
+                        items={server?.channels}
+                        getId={(v) => v}
+                        indexesShift={0}
+                        onViewportIndexesChange={setVirtualIndexes}
+                    >
+                        {(channelId) => (
+                            <ChannelItem channelId={channelId}/>
+                        )}
+                    </VirtualRender.List>
+                </KeyboardNavigation.Provider>
             </ul>
         </Scrollable>
     );

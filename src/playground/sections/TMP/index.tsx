@@ -1,13 +1,10 @@
 import { KeyboardNavigation, Scrollable, VirtualRender } from '@/components';
 import { useKeyboardNavigation } from '@/hooks';
 import { combinedFunction, noop } from '@lesnoypudge/utils';
-import { ContextSelectable, Focus, useBoolean, useEventListener, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
+import { ContextSelectable, Focus, useBoolean, useEventListener, useInterval, useRefManager, useScrollIntoView } from '@lesnoypudge/utils-react';
 import { FC, memo, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { ViewportList, ViewportListRef } from 'react-viewport-list';
 
-
-
-const arr = Array.from({ length: 100 }).map((_, i) => String(i));
 
 
 const Item: FC<{
@@ -43,12 +40,21 @@ export const TMP: FC = () => {
     const scrollableRef = useRefManager<HTMLDivElement>(null);
     const apiRef = useRefManager<ViewportListRef>(null);
     const wrapperRef = useRefManager<HTMLDivElement>(null);
-    const [visibleList, setVisibleList] = useState<string[]>(arr);
-    const bool = useBoolean(false);
 
-    useEffect(() => {
-        const api = apiRef.current;
-    }, [apiRef]);
+    const [arr, setArr] = useState(() => {
+        return Array.from({ length: 100 }).map((_, i) => String(i));
+    });
+
+    useInterval(() => {
+        setArr((prev) => [...prev, String(prev.length)]);
+    }, 1_500);
+
+    const {
+        setVirtualIndexes,
+        virtualList,
+    } = VirtualRender.useVirtualArray(arr);
+
+    const bool = useBoolean(false);
 
     return (
         <div className='flex flex-col gap-2'>
@@ -61,7 +67,7 @@ export const TMP: FC = () => {
             <If condition={!bool.value}>
 
                 <KeyboardNavigation.Provider
-                    list={visibleList}
+                    list={virtualList}
                     wrapperRef={wrapperRef}
                 >
                     <button>home page button</button>
@@ -78,21 +84,7 @@ export const TMP: FC = () => {
                                 initialAlignToTop={true}
                                 initialPrerender={10}
                                 overscan={3}
-                                // initialIndex={(() => {
-                                //     if (!value.currentFocusedId) return;
-
-                                //     const index = Number.parseInt(value.currentFocusedId);
-
-                                //     console.log(`initial index: ${index}`);
-
-                                //     return index;
-                                // })()}
-                                onViewportIndexesChange={([start, end]) => {
-                                // console.log(`start: ${start}, end: ${end}`);
-                                // console.log(`list length: ${end - start}`);
-
-                                    setVisibleList(arr.slice(start, end + 1));
-                                }}
+                                onViewportIndexesChange={setVirtualIndexes}
                             >
                                 {(item) => (
                                     <Item

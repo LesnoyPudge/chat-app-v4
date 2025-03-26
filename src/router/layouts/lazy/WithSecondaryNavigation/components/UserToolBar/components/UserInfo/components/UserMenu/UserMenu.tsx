@@ -118,7 +118,7 @@ export const UserMenu = withDecorator(() => {
 
     return (
         <ActionMenu.Wrapper>
-            <Iterate items={extraStatusNames}>
+            <Iterate items={extraStatusNames} getKey={(v) => v}>
                 {(extraStatusItem) => {
                     const label = getStatusLabel({
                         status: 'online',
@@ -138,7 +138,6 @@ export const UserMenu = withDecorator(() => {
                             isDisabled={isCurrentStatus}
                             isLoading={updateHelpers.isLoading}
                             onLeftClick={statusToFn[extraStatusItem]}
-                            key={extraStatusItem}
                         >
                             <PresenceStatus
                                 className={cn(

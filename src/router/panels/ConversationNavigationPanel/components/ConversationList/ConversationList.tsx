@@ -1,4 +1,4 @@
-import { Scrollable, VirtualRender } from '@/components';
+import { KeyboardNavigation, Scrollable, VirtualRender } from '@/components';
 import { FC } from 'react';
 import { createStyles } from '@/utils';
 import { Heading, useRefManager } from '@lesnoypudge/utils-react';
@@ -32,6 +32,11 @@ export const ConversationList: FC = () => {
         conversationIds: conversationIdsToFetch,
     }, { skip: !conversationIdsToFetch.length });
 
+    const {
+        setVirtualIndexes,
+        virtualList,
+    } = VirtualRender.useVirtualArray(conversationIds);
+
     return (
         <div className={styles.wrapper}>
             <Heading.Node className={styles.heading}>
@@ -49,20 +54,21 @@ export const ConversationList: FC = () => {
                             aria-label={t('ConversationNavigation.ConversationList.label')}
                             ref={listRef}
                         >
-                            <VirtualRender
-                                items={conversationIds}
-                                getId={(id) => id}
-                                indexesShift={0}
+                            <KeyboardNavigation.Provider
+                                list={virtualList}
+                                wrapperRef={listRef}
                             >
-                                {(id) => (
-                                    <ConversationItem
-                                        id={id}
-                                        isFocused={false}
-                                        setFocusId={() => {}}
-                                        tabIndex={0}
-                                    />
-                                )}
-                            </VirtualRender>
+                                <VirtualRender.List
+                                    items={conversationIds}
+                                    getId={(id) => id}
+                                    indexesShift={0}
+                                    onViewportIndexesChange={setVirtualIndexes}
+                                >
+                                    {(id) => (
+                                        <ConversationItem id={id}/>
+                                    )}
+                                </VirtualRender.List>
+                            </KeyboardNavigation.Provider>
                         </ul>
                     </Scrollable>
                 </If>

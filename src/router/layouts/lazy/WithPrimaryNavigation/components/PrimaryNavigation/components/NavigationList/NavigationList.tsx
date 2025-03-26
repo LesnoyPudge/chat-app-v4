@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ConversationListItem, ServerListItem } from './components';
-import { Scrollable, Separator, VirtualRender } from '@/components';
-import { useKeyboardNavigation, useTrans } from '@/hooks';
+import { KeyboardNavigation, Scrollable, Separator, VirtualRender } from '@/components';
+import { useTrans } from '@/hooks';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
 import { Store } from '@/features';
@@ -68,18 +68,17 @@ export const NavigationList: FC = () => {
         ...serverIds,
     ];
 
-    const {
-        getIsFocused,
-        getTabIndex,
-        setCurrentFocusedId,
-    } = useKeyboardNavigation(wrapperRef, {
-        list: ids,
-        direction: 'vertical',
-        loop: false,
-    });
-
     const showServersOrConversations = !!ids.length;
     const showConversations = !!sortedConversationIds.length;
+
+    const virtualServers = VirtualRender.useVirtualArray(serverIds);
+    const virtualConversations = VirtualRender.useVirtualArray(
+        sortedConversationIds,
+    );
+    const virtualList = [
+        ...virtualConversations.virtualList,
+        ...virtualServers.virtualList,
+    ];
 
     if (!showServersOrConversations) return null;
 
@@ -96,54 +95,53 @@ export const NavigationList: FC = () => {
                 withoutOppositeGutter
                 autoHide
             >
-                <div
-                    className={styles.list}
-                    aria-label={t('PrimaryNavigation.NavigationList.label')}
-                    ref={wrapperRef}
-                    role='list'
+                <KeyboardNavigation.Provider
+                    list={virtualList}
+                    wrapperRef={wrapperRef}
                 >
-                    <If condition={showConversations}>
-                        <VirtualRender
-                            items={sortedConversationIds}
+                    <div
+                        className={styles.list}
+                        aria-label={t('PrimaryNavigation.NavigationList.label')}
+                        ref={wrapperRef}
+                        role='list'
+                    >
+                        <If condition={showConversations}>
+                            <VirtualRender.List
+                                items={sortedConversationIds}
+                                getId={(item) => item}
+                                indexesShift={0}
+                                itemSize={56}
+                                onViewportIndexesChange={virtualConversations.setVirtualIndexes}
+                            >
+                                {(conversationId) => (
+                                    <ConversationListItem
+                                        conversationId={conversationId}
+                                    />
+                                )}
+                            </VirtualRender.List>
+
+                            <Separator
+                                className={styles.scrollableSeparator}
+                                length={32}
+                                spacing={8}
+                                thickness={2}
+                            />
+                        </If>
+
+                        <VirtualRender.List
+                            items={serverIds}
                             getId={(item) => item}
                             indexesShift={0}
-                            itemSize={56}
+                            onViewportIndexesChange={virtualServers.setVirtualIndexes}
                         >
-                            {(conversationId) => (
-                                <ConversationListItem
-                                    key={conversationId}
-                                    conversationId={conversationId}
-                                    isFocused={getIsFocused(conversationId)}
-                                    setCurrentFocusedId={setCurrentFocusedId}
-                                    tabIndex={getTabIndex(conversationId)}
+                            {(serverId) => (
+                                <ServerListItem
+                                    serverId={serverId}
                                 />
                             )}
-                        </VirtualRender>
-
-                        <Separator
-                            className={styles.scrollableSeparator}
-                            length={32}
-                            spacing={8}
-                            thickness={2}
-                        />
-                    </If>
-
-                    <VirtualRender
-                        items={serverIds}
-                        getId={(item) => item}
-                        indexesShift={0}
-                    >
-                        {(serverId) => (
-                            <ServerListItem
-                                key={serverId}
-                                serverId={serverId}
-                                isFocused={getIsFocused(serverId)}
-                                setCurrentFocusedId={setCurrentFocusedId}
-                                tabIndex={getTabIndex(serverId)}
-                            />
-                        )}
-                    </VirtualRender>
-                </div>
+                        </VirtualRender.List>
+                    </div>
+                </KeyboardNavigation.Provider>
             </Scrollable>
 
             <Separator

@@ -1,4 +1,4 @@
-import * as c from './components';
+import * as components from './components';
 import * as utils from './utils';
 import * as types from './types';
 
@@ -11,13 +11,13 @@ export namespace Tab {
         createProps,
     } = utils;
 
-    export import Current = c.CurrentTab;
+    export import Current = components.CurrentTab;
 
-    export import Provider = c.TabContextProvider;
+    export import Provider = components.TabContextProvider;
 
-    export import List = c.TabList;
+    export import List = components.TabList;
 
-    export import Panel = c.TabPanel;
+    export import Panel = components.TabPanel;
 
     export import Types = types.Types;
 }

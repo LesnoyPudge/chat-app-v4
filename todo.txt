@@ -21,7 +21,6 @@ https://fluid.tw/
 
 - СДЕЛАТЬ КОНТЕКСТ ДЛЯ KeyboardNavigation И ИСПОЛЬЗОВАТЬ ЕГО ВМЕСТО ПРОПСОВ
 -? ЗАМЕНИТЬ ВСЕ ИСПОЛЬЗОВАНИЯ ListVariant НА KeyboardNavigation КОНТЕКСТ
-И Focus.useFocusInside
 - ЗАМЕНИТЬ react-loading-skeleton НА СВОЮ ВЕРСИЮ ДЛЯ СИНХРОНИЗАЦИИ
 АНИМАЦИЙ
 - ДОБАВИТЬ itemSize И itemMargin??? ВСЕМ ВИРТУАЛЬНЫМ СПИСКАМ
@@ -42,3 +41,7 @@ https://fluid.tw/
 - ИСПОЛЬЗОВАТЬ scripts:check-relative-imports И ИСПРАВИТЬ ВСЕ РЕЛАТИВНЫЕ ПУТИ
 -? fix all eslint violations :)
 - UPDATE ALL FORM RELATED CODE TO TANSTACK FORM VERSION 1+
+- РАЗОБРАТЬСЯ С indexesShift, НУЖНО ИЛИ НЕТ
+- ПОЧЕМУ ТО В PLAYGROUND МОЖНО ФОКУСИТЬ ЭЛЕМЕНТЫ С ОТРИЦАТЕЛЬНЫМ ТАБ ИНДЕКСОМ А В ConversationItem НЕЛЬЗЯ (ПРИХОДИТСЯ ИСПОЛЬЗОВАТЬ TIMEOUT)
+- VirtualRenderList ОТЛИЧАЕТСЯ ОТ ViewportList А НЕ ДОЛЖЕН
+- ПРОВЕРИТЬ ВСЕ ITEMSIZE И indexesShift У VirtualRender.List

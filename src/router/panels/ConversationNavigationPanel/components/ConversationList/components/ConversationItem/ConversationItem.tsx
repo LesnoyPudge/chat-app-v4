@@ -1,8 +1,8 @@
-import { Avatar, Button, Placeholder, Sprite, Overlay } from '@/components';
+import { Avatar, Button, Placeholder, Sprite, Overlay, KeyboardNavigation } from '@/components';
 import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
-import { Focus, useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
+import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@/utils';
 import { decorate } from '@lesnoypudge/macro';
 import { FC, memo } from 'react';
@@ -11,20 +11,20 @@ import { FC, memo } from 'react';
 
 const styles = createStyles({
     wrapper: 'group relative',
-    userInfoButton: {
-        base: `
-            flex 
-            h-[42px]
-            w-full 
-            items-center 
-            gap-3 
-            rounded-sm
-            px-2 
-            py-1
-            group-hover-focus-within:bg-primary-hover 
-            group-hover-focus-within:pr-10`,
-        active: 'bg-primary-hover pr-10',
-    },
+    userInfoButton: `
+        flex 
+        h-[42px]
+        w-full 
+        items-center 
+        gap-3 
+        rounded-sm
+        px-2 
+        py-1
+        data-[active=true]:bg-primary-hover 
+        data-[active=true]:pr-10
+        group-hover-focus-within:bg-primary-hover
+        group-hover-focus-within:pr-10
+    `,
     avatar: 'size-8',
     username: {
         base: `
@@ -56,12 +56,8 @@ const styles = createStyles({
 });
 
 export namespace ConversationItem {
-    // export type Props = ListVariants.Variant1.Types.ChildrenProps<string>;
     export type Props = {
-        isFocused: boolean;
-        tabIndex: number;
         id: string;
-        setFocusId: VoidFunction;
     };
 }
 
@@ -69,24 +65,23 @@ decorate(withDisplayName, 'ConversationItem', decorate.target);
 decorate(memo, decorate.target);
 
 export const ConversationItem: FC<ConversationItem.Props> = ({
-    isFocused,
-    tabIndex,
-    id,
-    setFocusId,
+    id: conversationId,
 }) => {
-    const conversationId = id;
-
-    const { t } = useTrans();
     const mainButtonRef = useRefManager<HTMLButtonElement>(null);
     const hideButtonRef = useRefManager<HTMLButtonElement>(null);
+    const { t } = useTrans();
     const { navigateTo } = Navigator.useNavigateTo();
     const isInConversation = Navigator.useIsLocation((v) => {
         return v.conversation({ conversationId });
     });
 
-    Focus.useMoveFocusInside({
-        containerRef: mainButtonRef,
-        isEnabled: isFocused,
+    const {
+        isFocused,
+        setFocusId,
+        tabIndex,
+    } = KeyboardNavigation.useCommonItem({
+        elementRef: mainButtonRef,
+        itemId: conversationId,
     });
 
     const conversation = Store.useSelector(
@@ -121,10 +116,7 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
     return (
         <li className={styles.wrapper}>
             <Button
-                className={cn(
-                    styles.userInfoButton.base,
-                    shouldHighlight && styles.userInfoButton.active,
-                )}
+                className={styles.userInfoButton}
                 isActive={shouldHighlight}
                 onAnyClick={setFocusId}
                 onLeftClick={handleNavigate}

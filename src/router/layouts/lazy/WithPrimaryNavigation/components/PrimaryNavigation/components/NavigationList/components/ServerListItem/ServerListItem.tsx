@@ -1,6 +1,5 @@
-import { Avatar, Button, Overlay } from '@/components';
-import { useKeyboardNavigation } from '@/hooks';
-import { Focus, useFunction, useRefManager, useScrollIntoView, withDisplayName } from '@lesnoypudge/utils-react';
+import { Avatar, Button, KeyboardNavigation, Overlay } from '@/components';
+import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
 import { sharedStyles } from '../../../../sharedStyles';
@@ -12,17 +11,9 @@ import { FC, memo } from 'react';
 
 
 export namespace ServerListItem {
-    export type Props = (
-        Pick<
-            useKeyboardNavigation.Return,
-            'setCurrentFocusedId'
-        >
-        & {
-            serverId: string;
-            isFocused: boolean;
-            tabIndex: number;
-        }
-    );
+    export type Props = {
+        serverId: string;
+    };
 }
 
 decorate(withDisplayName, 'ServerListItem', decorate.target);
@@ -30,9 +21,6 @@ decorate(memo, decorate.target);
 
 export const ServerListItem: FC<ServerListItem.Props> = ({
     serverId,
-    isFocused,
-    tabIndex,
-    setCurrentFocusedId,
 }) => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { navigateTo } = Navigator.useNavigateTo();
@@ -48,46 +36,40 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
         Store.Servers.Selectors.selectHasNotificationsById(serverId),
     );
 
-    Focus.useMoveFocusInside({
-        containerRef: buttonRef,
-        isEnabled: isFocused,
-    });
-
-    useScrollIntoView(buttonRef, {
-        enabled: isFocused,
-    });
-
-    const setFocused = useFunction(() => {
-        setCurrentFocusedId(serverId);
+    const {
+        isFocused,
+        setFocusId,
+        tabIndex,
+    } = KeyboardNavigation.useCommonItem({
+        elementRef: buttonRef,
+        itemId: serverId,
     });
 
     const navigateToServer = useFunction(() => {
-        setFocused();
         navigateTo.server({ serverId });
     });
 
+    const isActive = isInServer || isFocused;
+
     return (
         <WrapperWithBullet
-            isActive={isInServer}
+            isActive={isActive}
             withNotifications={hasNotifications}
         >
             <Button
-                className={cn(
-                    sharedStyles.button.base,
-                    isInServer && sharedStyles.button.active,
-                )}
+                className={sharedStyles.button}
                 tabIndex={tabIndex}
                 label={server?.name}
                 role='menuitem'
-                isActive={isInServer}
+                isActive={isActive}
                 innerRef={buttonRef}
                 onLeftClick={navigateToServer}
-                onAnyClick={setFocused}
+                onAnyClick={setFocusId}
             >
                 <Avatar.Server
                     className={cn(
                         sharedStyles.avatar.base,
-                        isInServer && sharedStyles.avatar.active,
+                        isActive && sharedStyles.avatar.active,
                     )}
                     name={server?.name}
                     avatar={server?.avatar}

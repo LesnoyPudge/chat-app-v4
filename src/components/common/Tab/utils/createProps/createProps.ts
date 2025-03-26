@@ -1,5 +1,5 @@
 import { invariant } from '@lesnoypudge/utils';
-import { Types } from '../../types';
+import { Types } from '../../types/types';
 
 
 

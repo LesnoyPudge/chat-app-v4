@@ -228,7 +228,7 @@ export const useKeyboardNavigationControls: Types.useControls.Fn = ({
                 ? -1
                 : list.indexOf(derivedCurrentFocusedId)
         );
-        console.log(derivedCurrentFocusedId, currentIndex, memoizedList);
+
         const isValidId = (
             derivedCurrentFocusedId !== undefined
             && (currentIndex !== -1)

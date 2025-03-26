@@ -26,12 +26,13 @@ export const Sounds: FC = () => {
 
 
 
-            <Iterate items={Object.keys<typeof ASSETS.SOUNDS>(ASSETS.SOUNDS)}>
+            <Iterate
+                items={Object.keys<typeof ASSETS.SOUNDS>(ASSETS.SOUNDS)}
+                getKey={(v) => v}
+            >
                 {(name) => (
                     <div
                         className='flex flex-col gap-2 outline-dashed outline-red-900'
-
-                        key={name}
                     >
                         <button
                             onClick={() => {

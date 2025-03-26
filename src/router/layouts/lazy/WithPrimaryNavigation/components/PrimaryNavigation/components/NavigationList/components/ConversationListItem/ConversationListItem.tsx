@@ -1,4 +1,4 @@
-import { Avatar, Button, Overlay } from '@/components';
+import { Avatar, Button, KeyboardNavigation, Overlay } from '@/components';
 import { useKeyboardNavigation } from '@/hooks';
 import { Focus, useFunction, useRefManager, useScrollIntoView, withDisplayName } from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
@@ -12,17 +12,9 @@ import { FC, memo } from 'react';
 
 
 export namespace ConversationListItem {
-    export type Props = (
-        Pick<
-            useKeyboardNavigation.Return,
-            'setCurrentFocusedId'
-        >
-        & {
-            conversationId: string;
-            isFocused: boolean;
-            tabIndex: number;
-        }
-    );
+    export type Props = {
+        conversationId: string;
+    };
 }
 
 decorate(withDisplayName, 'ConversationListItem', decorate.target);
@@ -30,9 +22,6 @@ decorate(memo, decorate.target);
 
 export const ConversationListItem: FC<ConversationListItem.Props> = ({
     conversationId,
-    isFocused,
-    tabIndex,
-    setCurrentFocusedId,
 }) => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { navigateTo } = Navigator.useNavigateTo();
@@ -64,43 +53,37 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
         Store.Conversations.Selectors.selectNotificationCountById(conversationId),
     );
 
-    Focus.useMoveFocusInside({
-        containerRef: buttonRef,
-        isEnabled: isFocused,
-    });
-
-    useScrollIntoView(buttonRef, {
-        enabled: isFocused,
-    });
-
-    const setFocused = useFunction(() => {
-        setCurrentFocusedId(conversationId);
+    const {
+        isFocused,
+        setFocusId,
+        tabIndex,
+    } = KeyboardNavigation.useCommonItem({
+        elementRef: buttonRef,
+        itemId: conversationId,
     });
 
     const navigateToServer = useFunction(() => {
-        setFocused();
         navigateTo.conversation({ conversationId });
     });
 
     const isUserAndConversationExist = !!userTarget && !!conversation;
 
+    const isActive = isFocused || isInConversation;
+
     return (
         <WrapperWithBullet
-            isActive={isInConversation}
+            isActive={isActive}
             withNotifications={!!notificationsCount}
         >
             <Button
-                className={cn(
-                    sharedStyles.button.base,
-                    isInConversation && sharedStyles.button.active,
-                )}
+                className={sharedStyles.button}
                 tabIndex={tabIndex}
                 label={userTarget?.name}
                 role='menuitem'
-                isActive={isInConversation}
+                isActive={isActive}
                 innerRef={buttonRef}
                 onLeftClick={navigateToServer}
-                onAnyClick={setFocused}
+                onAnyClick={setFocusId}
             >
                 <Avatar.WithBadge.Notifications
                     count={notificationsCount}

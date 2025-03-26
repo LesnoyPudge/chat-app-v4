@@ -32,10 +32,8 @@ export const HomePageButton: FC = () => {
         <WrapperWithBullet isActive={isInRootOrConversation}>
             <Button
                 className={cn(
-                    sharedStyles.button.base,
-                    sharedStyles.brandButton.base,
-                    isInRootOrConversation && sharedStyles.button.active,
-                    isInRootOrConversation && sharedStyles.brandButton.active,
+                    sharedStyles.button,
+                    sharedStyles.brandButton,
                 )}
                 innerRef={buttonRef}
                 isActive={isInRootOrConversation}

@@ -87,10 +87,12 @@ export const ColorPickerPure: FC<ColorPickerPure.Props> = ({
 
             <If condition={withColorPresets}>
                 <div className={styles.presetsWrapper}>
-                    <Iterate items={colorPresets}>
-                        {(buttonColor, index) => (
+                    <Iterate
+                        items={colorPresets}
+                        getKey={(_, i) => i}
+                    >
+                        {(buttonColor) => (
                             <ColorButton
-                                key={index}
                                 color={buttonColor}
                                 onChange={onChange}
                             />

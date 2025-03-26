@@ -19,10 +19,8 @@ export const ActionButtons: FC = () => {
         <WrapperWithBullet isActive={controls.isOpen}>
             <Button
                 className={cn(
-                    sharedStyles.button.base,
-                    sharedStyles.actionButton.base,
-                    controls.isOpen && sharedStyles.button.active,
-                    controls.isOpen && sharedStyles.actionButton.active,
+                    sharedStyles.button,
+                    sharedStyles.actionButton,
                 )}
                 hasPopup='dialog'
                 isActive={controls.isOpen}

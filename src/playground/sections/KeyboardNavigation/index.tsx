@@ -112,10 +112,9 @@ export const KeyboardNavigation: FC = () => {
                 className='flex flex-col gap-2'
                 ref={wrapperRef}
             >
-                <Iterate items={arr}>
+                <Iterate items={arr} getKey={(v) => v}>
                     {(item, index) => (
                         <Item
-                            key={item}
                             item={item}
                             index={index}
                             isFocused={getIsFocused(item)}

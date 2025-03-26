@@ -33,7 +33,7 @@ export const VirtualRenderTest: FC = () => {
                     <>wow {counter.count}</>
                 </button>
 
-                <VirtualRender
+                <VirtualRender.List
                     viewportRef={viewportRef}
                     items={items}
                     getId={(item) => item}
@@ -45,7 +45,7 @@ export const VirtualRenderTest: FC = () => {
                     {(item) => (
                         <Item id={item}/>
                     )}
-                </VirtualRender>
+                </VirtualRender.List>
 
                 {/* <ViewportList items={part2}>
                     {(item) => (

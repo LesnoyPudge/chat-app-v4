@@ -1,10 +1,10 @@
-import { Button, DialogBlocks, ListVariants, Overlay } from '@/components';
+import { Button, DialogBlocks, KeyboardNavigation, Overlay } from '@/components';
 import { createStyles, logger } from '@/utils';
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import { useDevTools } from './hooks';
 import { KEY } from '@lesnoypudge/utils';
 import { rawActions } from './actions';
-import { createWithDecorator, useHotKey } from '@lesnoypudge/utils-react';
+import { createWithDecorator, Iterate, useHotKey } from '@lesnoypudge/utils-react';
 
 
 
@@ -17,6 +17,38 @@ const styles = createStyles({
         focus-visible:text-black
     `,
 });
+
+type ItemProps = {
+    actionName: string;
+    actionFn: VoidFunction;
+};
+
+const Item: FC<ItemProps> = ({
+    actionName,
+    actionFn,
+}) => {
+    const elementRef = useRef<HTMLButtonElement>(null);
+    const {
+        isFocused,
+        setFocusId,
+        tabIndex,
+    } = KeyboardNavigation.useCommonItem({
+        elementRef,
+        itemId: actionName,
+    });
+    return (
+        <Button
+            className={styles.action}
+            onAnyClick={setFocusId}
+            onLeftClick={actionFn}
+            isActive={isFocused}
+            tabIndex={tabIndex}
+            innerRef={elementRef}
+        >
+            {actionName}
+        </Button>
+    );
+};
 
 const { withDecorator } = createWithDecorator(({ children }) => {
     const controls = Overlay.useControls();
@@ -61,8 +93,6 @@ const { withDecorator } = createWithDecorator(({ children }) => {
     );
 });
 
-
-
 export const DevTools: FC = withDecorator(() => {
     const {
         actions,
@@ -76,27 +106,22 @@ export const DevTools: FC = withDecorator(() => {
             className={styles.inner}
             ref={wrapperRef}
         >
-            <ListVariants.Variant1.List
-                items={items}
-                getId={(item) => item}
-                keyboardNavigation={{
-                    wrapperRef,
-                    direction: 'vertical',
-                    loop: true,
-                }}
+            <KeyboardNavigation.Provider
+                list={items}
+                wrapperRef={wrapperRef}
             >
-                {({ item, itemRef, tabIndex, setFocusId }) => (
-                    <Button
-                        className={styles.action}
-                        onAnyClick={setFocusId}
-                        onLeftClick={actions[item]}
-                        tabIndex={tabIndex}
-                        innerRef={itemRef}
-                    >
-                        {item}
-                    </Button>
-                )}
-            </ListVariants.Variant1.List>
+                <Iterate
+                    items={items}
+                    getKey={(_, i) => i}
+                >
+                    {(actionName) => (
+                        <Item
+                            actionName={actionName}
+                            actionFn={actions[actionName]}
+                        />
+                    )}
+                </Iterate>
+            </KeyboardNavigation.Provider>
         </div>
     );
 });
