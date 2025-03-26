@@ -1,6 +1,17 @@
 
 
 
+--- ideas ---
+https://www.youtube.com/shorts/PHXdLe2f9rs
+https://www.tailwind-variants.org/docs/getting-started
+https://fluid.tw/
+-? стоит ли оставлять useOptimisticQueue? или сделать через rtkquery (
+составить таблицу запросов id запроса, при успешном убивать все записи до.
+при ошибке возвращать последнее валидное значение из таблицы)
+-? remove useGetManyDeepQuery for entities that is received through socket
+
+
+
 --- global goals ---
 -? ПЕРЕНЕСТИ ВСЕ (почти) БИБЛИОТЕКИ В src/libs
 -? ИСПОЛЬЗОВАТЬ scripts:check-relative-imports И ИСПРАВИТЬ ВСЕ РЕЛАТИВНЫЕ ПУТИ
@@ -13,15 +24,3 @@
 
 
 --- local goals ---
-
-
-
-
---- ideas ---
-https://www.youtube.com/shorts/PHXdLe2f9rs
-https://www.tailwind-variants.org/docs/getting-started
-https://fluid.tw/
--? стоит ли оставлять useOptimisticQueue? или сделать через rtkquery (
-составить таблицу запросов id запроса, при успешном убивать все записи до.
-при ошибке возвращать последнее валидное значение из таблицы)
--? remove useGetManyDeepQuery for entities that is received through socket
