@@ -1,6 +1,8 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { cn, createStyles } from '@/utils';
-import { FC, ReactEventHandler } from 'react';
+import { FC, memo, ReactEventHandler } from 'react';
+import { decorate } from '@lesnoypudge/macro';
+import { withDisplayName } from '@lesnoypudge/utils-react';
 
 
 
@@ -21,6 +23,9 @@ export namespace Image {
         }
     );
 }
+
+decorate(withDisplayName, 'Image', decorate.target);
+decorate(memo, decorate.target);
 
 export const Image: FC<Image.Props> = ({
     className = '',

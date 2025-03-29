@@ -1,14 +1,15 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { cn, getAssetUrl } from '@/utils';
 import { ClientEntities, ExtendedRecord } from '@/types';
 import { getReadImagePath } from '../../utils';
 import { useTrans } from '@/hooks';
-import { useBoolean } from '@lesnoypudge/utils-react';
+import { useBoolean, withDisplayName } from '@lesnoypudge/utils-react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Image } from '@/components';
 import { sharedStyles } from '../../vars';
 import { ASSETS } from '@/generated/ASSETS';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
@@ -31,6 +32,9 @@ export namespace UserAvatar {
         & RT.PropsWithClassName
     );
 }
+
+decorate(withDisplayName, 'UserAvatar', decorate.target);
+decorate(memo, decorate.target);
 
 export const UserAvatar: FC<UserAvatar.Props> = ({
     className = '',

@@ -26,7 +26,7 @@
     "dependencies": {
         "@faker-js/faker": "^9.5.0",
         "@lesnoypudge/types-utils-base": "^3.5.0",
-        "@lesnoypudge/utils": "^19.3.2",
+        "@lesnoypudge/utils": "^19.5.0",
         "@lesnoypudge/utils-react": "^17.1.1",
         "@lesnoypudge/utils-web": "^3.4.0",
         "@reduxjs/toolkit": "^2.5.1",

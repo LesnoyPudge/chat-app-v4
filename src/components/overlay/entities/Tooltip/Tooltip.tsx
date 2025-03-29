@@ -6,10 +6,10 @@ import {
     useRefManager,
     withDisplayName,
 } from '@lesnoypudge/utils-react';
-import { m } from 'motion/react';
 import { Types } from './types';
 import { decorate } from '@lesnoypudge/macro';
 import { FC } from 'react';
+import { Motion } from '@/libs';
 
 
 
@@ -109,7 +109,7 @@ export const Tooltip: FC<Types.Node.Props> = withDecorator(({
             {...rest}
         >
             {({ alignment }) => (
-                <m.div
+                <Motion.div
                     className={cn(styles.base, className)}
                     role='tooltip'
                     variants={variants}
@@ -120,7 +120,7 @@ export const Tooltip: FC<Types.Node.Props> = withDecorator(({
                     ref={followerElementRef}
                 >
                     {children}
-                </m.div>
+                </Motion.div>
             )}
         </RelativelyPositioned.Node>
     );

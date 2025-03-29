@@ -1,9 +1,11 @@
 import { PropsWithClassName } from '@lesnoypudge/types-utils-react';
 import { PropsWithInnerRef } from '@/types';
 import { cn, createStyles } from '@/utils';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { ASSETS } from '@/generated/ASSETS';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { decorate } from '@lesnoypudge/macro';
+import { withDisplayName } from '@lesnoypudge/utils-react';
 
 
 
@@ -21,6 +23,9 @@ export namespace Sprite {
         }
     );
 }
+
+decorate(withDisplayName, 'Sprite', decorate.target);
+decorate(memo, decorate.target);
 
 export const Sprite: FC<Sprite.Props> = ({
     className = '',

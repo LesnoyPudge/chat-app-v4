@@ -221,10 +221,27 @@ export class FakeDB {
     }
 }
 
+// its ok export db like this since we only use it inside
+// fakeServer and its dependencies.
 export let db: FakeDB;
+let isLoading = false;
+let isLoaded = false;
 
 export const initDB = async () => {
-    db = await new FakeDB({
-        socket,
-    }).init();
+    if (isLoading) return;
+    if (isLoaded) return;
+
+    isLoading = true;
+
+    try {
+        db = await new FakeDB({
+            socket,
+        }).init();
+    } catch (error) {
+        isLoading = false;
+        throw error;
+    }
+
+    isLoading = false;
+    isLoaded = true;
 };

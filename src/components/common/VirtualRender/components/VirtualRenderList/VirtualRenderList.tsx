@@ -1,7 +1,8 @@
-import { useFunction } from '@lesnoypudge/utils-react';
-import { Fragment, useMemo } from 'react';
+import { useFunction, withDisplayName } from '@lesnoypudge/utils-react';
+import { Fragment, memo, useMemo } from 'react';
 import { ViewportList, ViewportListPropsBase } from 'react-viewport-list';
 import { Types } from '../../types';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
@@ -37,6 +38,9 @@ const DefaultRenderSpacer: Types.RenderSpacer = ({
     );
 };
 
+decorate(withDisplayName, 'VirtualRenderList', decorate.target);
+decorate(memo, decorate.target);
+
 export const VirtualRenderList = <_Item,>({
     apiRef,
     getId,
@@ -67,12 +71,6 @@ export const VirtualRenderList = <_Item,>({
             itemSize,
         });
     }, [initialPrerender, itemMargin, itemSize]);
-    // const _viewportRef = useLatest(
-    //     isRef(viewportRef) ? viewportRef.current : viewportRef,
-    // );
-    // const _viewportRef = useConst(() => (
-    //     isRef(viewportRef) ? viewportRef : { current: viewportRef }
-    // ));
 
     const _children = useFunction((
         item: _Item,

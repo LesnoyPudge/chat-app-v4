@@ -1,4 +1,3 @@
-import { db } from '@/fakeServer';
 import { KEY, toOneLine } from '@lesnoypudge/utils';
 import { localStorageApi, logger } from '@/utils';
 import { devtools } from '@/features';
@@ -89,10 +88,14 @@ export const rawActions = {
     },
 
     clearDatabase: () => {
-        void db.clearStorage().then(() => {
+        void (async () => {
+            const { db } = await import('@/fakeServer');
+
+            await db.clearStorage();
+
             // eslint-disable-next-line no-restricted-globals
             location.reload();
-        });
+        })();
     },
 
     populateDB_Small: () => {

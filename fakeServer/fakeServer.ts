@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Endpoints } from '@/fakeShared';
-import { localStorageApi, logger } from '@/utils';
+import { createPromiseLoader, localStorageApi, logger } from '@/utils';
 import {
     delay,
     DefaultBodyType,
@@ -12,7 +12,7 @@ import {
     HttpHandler,
 } from 'msw';
 import { setupWorker } from 'msw/browser';
-import { db } from './FakeDB';
+import { db, initDB } from './FakeDB';
 import { Dummies } from './Dummies';
 import {
     HTTP_METHODS,
@@ -30,9 +30,6 @@ import {
 } from './utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { scenarios } from './Scenarios';
-
-
-
 import E_Channel = Endpoints.V1.Channel;
 import E_Conversation = Endpoints.V1.Conversation;
 import E_File = Endpoints.V1.File;
@@ -41,7 +38,8 @@ import E_Role = Endpoints.V1.Role;
 import E_Server = Endpoints.V1.Server;
 import E_TextChat = Endpoints.V1.TextChat;
 import E_User = Endpoints.V1.User;
-import { copyToClipboard } from '@lesnoypudge/utils-web';
+
+
 
 const _res = HttpResponse;
 
@@ -168,7 +166,7 @@ const withAuth: Handler<any, any> = (props) => {
     return 'unhandled';
 };
 
-const routes: HttpHandler[] = [
+const getRoutes = (): HttpHandler[] => [
     route<
         E_User.Login.RequestBody,
         E_User.Login.Response
@@ -620,27 +618,48 @@ const routes: HttpHandler[] = [
     ),
 ];
 
+const {
+    abortLoading,
+    finishLoading,
+    getIsLoaded,
+    getIsLoading,
+    loader,
+    startLoading,
+} = createPromiseLoader();
+
 class FakeServer {
     async init() {
-        logger.log('FakeServer starting');
+        if (getIsLoaded()) return loader;
+        if (getIsLoading()) return loader;
 
-        const worker = setupWorker(...this.getRoutes());
+        startLoading();
 
-        await worker.start({
-            onUnhandledRequest: (request, print) => {
-                if (!request.url.includes(env._PUBLIC_API_V1)) return;
+        try {
+            logger.log('FakeServer initialization started');
 
-                print.warning();
-            },
-            // findWorker: (scriptUrl, mockServiceWorkerUrl) => {
-            //     return scriptUrl.includes('mockServiceWorker');
-            // },
-        });
+            await initDB();
 
-        logger.log('FakeServer started');
+            const worker = setupWorker(...getRoutes());
+
+            await worker.start({
+                onUnhandledRequest: (request, print) => {
+                    if (!request.url.includes(env._PUBLIC_API_V1)) return;
+
+                    print.warning();
+                },
+                // findWorker: (scriptUrl, mockServiceWorkerUrl) => {
+                //     return scriptUrl.includes('mockServiceWorker');
+                // },
+            });
+
+            logger.log('FakeServer initialization ended');
+        } catch (error) {
+            abortLoading();
+            throw error;
+        }
+
+        finishLoading();
     }
-
-    getRoutes = () => routes;
 };
 
 export const fakeServer = new FakeServer();

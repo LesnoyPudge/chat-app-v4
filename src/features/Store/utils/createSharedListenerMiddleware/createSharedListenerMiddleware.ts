@@ -8,7 +8,9 @@ const {
     middleware,
     startListening,
     stopListening,
-} = ReduxToolkit.createListenerMiddleware<StoreTypes.State, StoreTypes.Dispatch>();
+} = ReduxToolkit.createListenerMiddleware<
+    StoreTypes.State, StoreTypes.Dispatch
+>();
 
 export const createSharedListenerMiddleware = () => {
     return {

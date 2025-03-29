@@ -1,8 +1,8 @@
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
-import { m } from 'motion/react';
 import { cn, createStyles } from '@/utils';
 import { Overlay } from '@/components';
+import { Motion } from '@/libs';
 
 
 
@@ -34,7 +34,7 @@ export const DialogWrapper: FC<Overlay.Dialog.Types.Wrapper.Props> = ({
         <Overlay.BaseOverlay.Wrapper>
             <Overlay.Popover.Wrapper className={styles.popover}>
                 <If condition={withBackdrop}>
-                    <m.div
+                    <Motion.div
                         className={styles.backdrop}
                         variants={backdropAnimationVariants}
                         initial={backdropAnimationVariants?.initial.key}
@@ -42,10 +42,10 @@ export const DialogWrapper: FC<Overlay.Dialog.Types.Wrapper.Props> = ({
                         exit={backdropAnimationVariants?.exit.key}
                         onClick={closeOverlay}
                     >
-                    </m.div>
+                    </Motion.div>
                 </If>
 
-                <m.div
+                <Motion.div
                     className={cn(styles.dialog, className)}
                     role='dialog'
                     aria-label={label}
@@ -55,7 +55,7 @@ export const DialogWrapper: FC<Overlay.Dialog.Types.Wrapper.Props> = ({
                     exit={animationVariants?.exit.key}
                 >
                     {children}
-                </m.div>
+                </Motion.div>
             </Overlay.Popover.Wrapper>
         </Overlay.BaseOverlay.Wrapper>
     );

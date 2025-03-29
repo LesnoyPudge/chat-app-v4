@@ -1,7 +1,7 @@
 import { Overlay, RelativelyPositioned } from '@/components';
+import { Motion } from '@/libs';
 import { cn, createStyles, getAnimationVariants } from '@/utils';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { m } from 'motion/react';
 import { FC } from 'react';
 
 
@@ -37,7 +37,7 @@ export const MenuWrapper: FC<Overlay.Menu.Types.Wrapper.Props> = ({
                     centered={centered}
                     swappableAlignment
                 >
-                    <m.div
+                    <Motion.div
                         className={cn(styles.content, className)}
                         role='menu'
                         aria-label={label}
@@ -47,7 +47,7 @@ export const MenuWrapper: FC<Overlay.Menu.Types.Wrapper.Props> = ({
                         exit={animationVariants.exit.key}
                     >
                         {children}
-                    </m.div>
+                    </Motion.div>
                 </RelativelyPositioned.Node>
             </Overlay.Popover.Wrapper>
         </Overlay.BaseOverlay.Wrapper>

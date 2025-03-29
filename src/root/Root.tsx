@@ -10,7 +10,6 @@ import {
     GlobalProviders,
     Masks,
     SpriteSheet,
-    GlobalLoader,
 } from './components';
 import { ErrorScreen } from '@/router/screens/bundled';
 import { useDebug, usePreventDefault, useHTMLVars } from './hooks';
@@ -28,7 +27,7 @@ const DevTools = (
 
 const { withDecorator } = createWithDecorator(({ children }) => {
     return (
-        <ControllableStrictMode isEnabled={false}>
+        <ControllableStrictMode isEnabled={true}>
             <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
                 <GlobalProviders>
                     {children}
@@ -54,9 +53,7 @@ export const Root: FC = () => {
 
             <DevTools/>
 
-            <GlobalLoader.Wrapper>
-                <Router/>
-            </GlobalLoader.Wrapper>
+            <Router/>
         </Focus.Lock>
     );
 };
