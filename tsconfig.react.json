@@ -92,6 +92,9 @@
             "@/fakeSocket": [
                 "./fakeSocket"
             ],
+            "@/features": [
+                "./src/features"
+            ],
             "@/store/features": [
                 "src/features/Store/features"
             ],
@@ -119,9 +122,6 @@
             "_@lesnoypudge/utils-web": [
                 "../@lesnoypudge/utils-web/build"
             ],
-            "@/features": [
-                "./src/features"
-            ]
         },
         "jsx": "preserve",
         "lib": [

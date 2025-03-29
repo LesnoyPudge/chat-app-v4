@@ -2,6 +2,16 @@ import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
+type WithTimestamps<
+    _Extra extends T.UnknownRecord = T.EmptyObject,
+> = T.Simplify<
+    _Extra
+    & {
+        createdAt: number;
+        updatedAt: number;
+    }
+>;
+
 export namespace ClientEntities {
     export namespace User {
         export type Id = string;
@@ -34,7 +44,7 @@ export namespace ClientEntities {
             createdAt: number;
         };
 
-        export type Base = {
+        export type Base = WithTimestamps<{
             id: Id;
             login: string;
             password: string;
@@ -58,7 +68,7 @@ export namespace ClientEntities {
             isDeleted: boolean;
             refreshToken: string;
             accessToken: string;
-        };
+        }>;
 
         export type TokenData = Pick<Base, 'id' | 'password'>;
     }
@@ -76,7 +86,7 @@ export namespace ClientEntities {
             conversation: Conversation.Id;
         };
 
-        export type Base = T.Simplify<(
+        export type Base = WithTimestamps<(
             Conditional
             & {
                 id: Id;
@@ -87,8 +97,6 @@ export namespace ClientEntities {
                 isModified: boolean;
                 isDeleted: boolean;
                 attachments: File.Id[];
-                createdAt: number;
-                updatedAt: number;
             }
         )>;
     }
@@ -109,7 +117,7 @@ export namespace ClientEntities {
             }
         );
 
-        export type Base = T.Simplify<
+        export type Base = WithTimestamps<
             Conditional
             & {
                 id: Id;
@@ -135,7 +143,7 @@ export namespace ClientEntities {
             }
         );
 
-        export type Base = T.Simplify<
+        export type Base = WithTimestamps<
             Conditional
             & {
                 id: Id;
@@ -149,12 +157,12 @@ export namespace ClientEntities {
     export namespace Conversation {
         export type Id = string;
 
-        export type Base = {
+        export type Base = WithTimestamps<{
             id: Id;
             members: User.Id[];
             textChat: TextChat.Id;
             voiceChat: VoiceChat.Id;
-        };
+        }>;
     }
 
     export namespace Role {
@@ -169,7 +177,7 @@ export namespace ClientEntities {
             admin: boolean;
         };
 
-        export type Base = {
+        export type Base = WithTimestamps<{
             id: Id;
             server: Server.Id;
             avatar: File.Id | null;
@@ -179,7 +187,7 @@ export namespace ClientEntities {
             weight: number;
             users: User.Id[];
             permissions: Permissions;
-        };
+        }>;
     }
 
     export namespace Channel {
@@ -196,7 +204,7 @@ export namespace ClientEntities {
             }
         );
 
-        export type Base = T.Simplify<(
+        export type Base = WithTimestamps<(
             Conditional
             & {
                 id: Id;
@@ -210,7 +218,7 @@ export namespace ClientEntities {
     export namespace Server {
         export type Id = string;
 
-        export type Base = {
+        export type Base = WithTimestamps<{
             id: Id;
             owner: User.Id;
             roles: Role.Id[];
@@ -228,19 +236,19 @@ export namespace ClientEntities {
                 expiresAt: number | null;
                 createdAt: number;
             }[];
-        };
+        }>;
     }
 
     export namespace File {
         export type Id = string;
 
-        export type Base = {
+        export type Base = WithTimestamps<{
             id: Id;
             name: string;
             size: number;
             type: string;
             base64: string;
-        };
+        }>;
 
         export type Encoded = Pick<
             Base,

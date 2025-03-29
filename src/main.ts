@@ -1,6 +1,5 @@
 import { setup } from '@/setup';
 import { logger } from '@/utils';
-import { defer } from '@lesnoypudge/utils-web';
 
 
 
@@ -10,7 +9,7 @@ const main = async () => {
 
         setup.init();
 
-        void defer(setup.postInit);
+        void setup.postInit();
     } catch (error) {
         logger.error(error);
     }

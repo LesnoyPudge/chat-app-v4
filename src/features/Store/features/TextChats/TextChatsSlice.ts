@@ -3,13 +3,13 @@ import { Servers } from '../Servers';
 import { Conversations } from '../Conversations';
 import { ReduxToolkit } from '@/libs';
 import { TextChatsTypes } from './TextChatsTypes';
-import { createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { createEntityAdapter, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
 
 
 
 const name = 'TextChats';
 
-const adapter = ReduxToolkit.createEntityAdapter<TextChatsTypes.EntityState>();
+const adapter = createEntityAdapter<TextChatsTypes.EntityState>();
 
 export const TextChatsSlice = createSlice({
     name,

@@ -1,4 +1,5 @@
 import {
+    createEntityAdapter,
     createSlice,
     createSocketExtraReducers,
     extractReducersFromAdapter,
@@ -13,7 +14,7 @@ import { ReduxToolkit } from '@/libs';
 
 const name = 'VoiceChats';
 
-const adapter = ReduxToolkit.createEntityAdapter<VoiceChatsTypes.EntityState>();
+const adapter = createEntityAdapter<VoiceChatsTypes.EntityState>();
 
 export const VoiceChatsSlice = createSlice({
     name,

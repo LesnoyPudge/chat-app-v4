@@ -37,6 +37,8 @@ export class Dummies {
     ): ClientEntities.Conversation.Base {
         return {
             ...data,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         };
     }
 
@@ -53,9 +55,9 @@ export class Dummies {
     ): ClientEntities.Message.Base {
         return {
             ...data,
-            createdAt: Date.now(),
             isDeleted: false,
             isModified: false,
+            createdAt: Date.now(),
             updatedAt: Date.now(),
         };
     }
@@ -89,6 +91,8 @@ export class Dummies {
                 serverControl: false,
             },
             weight: 0,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         };
     }
 
@@ -111,6 +115,8 @@ export class Dummies {
             invitations: [],
             isPrivate: false,
             onlineMemberCount: 0,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         };
     }
 
@@ -155,6 +161,8 @@ export class Dummies {
                 theme: 'dark',
             },
             status: data.status ?? 'offline',
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         };
     }
 
@@ -168,6 +176,8 @@ export class Dummies {
             ...data,
             messageCount: data.messages.length,
             conversation: null,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         };
     }
 
@@ -182,6 +192,8 @@ export class Dummies {
             server: null,
             messageCount: data.messages.length,
             channel: null,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         };
     }
 
@@ -197,6 +209,8 @@ export class Dummies {
             muted: [],
             participants: [],
             conversation: null,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         };
     }
 
@@ -213,6 +227,8 @@ export class Dummies {
             deafen: [],
             muted: [],
             participants: [],
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         };
     }
 
@@ -222,6 +238,8 @@ export class Dummies {
         return {
             id: uuid(),
             ...data,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         };
     }
 }

@@ -1,4 +1,4 @@
-import { createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { createEntityAdapter, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
 import { ConversationsApi } from './ConversationsApi';
 import { Users } from '../Users';
 import { ReduxToolkit } from '@/libs';
@@ -8,7 +8,7 @@ import { ConversationsTypes } from './ConversationsTypes';
 
 const name = 'Conversations';
 
-const adapter = ReduxToolkit.createEntityAdapter<ConversationsTypes.EntityState>();
+const adapter = createEntityAdapter<ConversationsTypes.EntityState>();
 
 export const ConversationsSlice = createSlice({
     name,

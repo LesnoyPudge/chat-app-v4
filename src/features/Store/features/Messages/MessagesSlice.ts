@@ -1,4 +1,4 @@
-import { createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { createEntityAdapter, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
 import { Users } from '../Users';
 import { ReduxToolkit } from '@/libs';
 import { MessagesTypes } from './MessagesTypes';
@@ -7,7 +7,7 @@ import { MessagesTypes } from './MessagesTypes';
 
 const name = 'Messages';
 
-const adapter = ReduxToolkit.createEntityAdapter<MessagesTypes.EntityState>();
+const adapter = createEntityAdapter<MessagesTypes.EntityState>();
 
 export const MessagesSlice = createSlice({
     name,

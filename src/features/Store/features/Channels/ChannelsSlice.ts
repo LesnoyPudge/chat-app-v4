@@ -1,4 +1,4 @@
-import { createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { createEntityAdapter, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
 import { ChannelsApi } from './ChannelsApi';
 import { Users, Servers } from '@/store/features';
 import { ReduxToolkit } from '@/libs';
@@ -8,7 +8,7 @@ import { ChannelsTypes } from './ChannelsTypes';
 
 const name = 'Channels';
 
-const adapter = ReduxToolkit.createEntityAdapter<ChannelsTypes.EntityState>();
+const adapter = createEntityAdapter<ChannelsTypes.EntityState>();
 
 export const ChannelsSlice = createSlice({
     name,

@@ -1,8 +1,7 @@
 import { FC } from 'react';
-import { cn, createStyles, getAssetUrl } from '@/utils';
+import { createStyles, getAssetUrl } from '@/utils';
 import { useGlobalLoaderScreen } from './useGlobalLoaderScreen';
 import { Scrollable } from '@/components';
-import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Screen } from '@/router/layouts/bundled';
 import { ASSETS } from '@/generated/ASSETS';
 import { ProblemBlock } from './components';
@@ -23,18 +22,14 @@ const styles = createStyles({
 });
 
 export namespace GlobalLoaderScreenPure {
-    export type Props = (
-        GlobalLoaderScreen.Props
-        & ReturnType<typeof useGlobalLoaderScreen>
-    );
+    export type Props = ReturnType<typeof useGlobalLoaderScreen>;
 }
 
 export const GlobalLoaderScreenPure: FC<GlobalLoaderScreenPure.Props> = ({
-    className = '',
     showProblemBlock,
 }) => {
     return (
-        <Screen className={cn(styles.screen, className)}>
+        <Screen className={styles.screen}>
             <Scrollable className={styles.scrollable}>
                 <div className={styles.content}>
                     <video
@@ -62,14 +57,9 @@ export const GlobalLoaderScreenPure: FC<GlobalLoaderScreenPure.Props> = ({
     );
 };
 
-export namespace GlobalLoaderScreen {
-    export type Props = RT.PropsWithClassName;
-}
-
-export const GlobalLoaderScreen: FC<GlobalLoaderScreen.Props> = (props) => {
+export const GlobalLoaderScreen = () => {
     return (
         <GlobalLoaderScreenPure
-            {...props}
             {...useGlobalLoaderScreen()}
         />
     );

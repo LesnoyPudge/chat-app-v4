@@ -2,13 +2,13 @@ import { ServersApi } from './ServersApi';
 import { Users } from '../Users';
 import { ReduxToolkit } from '@/libs';
 import { ServersTypes } from './ServersTypes';
-import { createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { createEntityAdapter, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
 
 
 
 const name = 'Servers';
 
-const adapter = ReduxToolkit.createEntityAdapter<ServersTypes.EntityState>();
+const adapter = createEntityAdapter<ServersTypes.EntityState>();
 
 export const ServersSlice = createSlice({
     name,

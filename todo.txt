@@ -18,11 +18,9 @@ https://fluid.tw/
 -? fix all eslint violations :)
 -? UPDATE ALL FORM RELATED CODE TO TANSTACK FORM VERSION 1+
 -? сделать attachments layout через grid-template-areas
-- add sorting by createTimestamp to all EntityAdapters
 - добавить обработчики эндпоинтов из контекстных меню
-- перенести загрузки из preInit в контекст для того что бы ждать не на пустом экране а на экране загрузки
 - при сборке мои библиотеки не до конца тришейкаются?
-- найти баг при котором ViewportListInner бесконечно перерендеривается
+-? найти баг при котором ViewportListInner бесконечно перерендеривается
 
 
 

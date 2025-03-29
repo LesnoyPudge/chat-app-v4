@@ -1,6 +1,7 @@
 export * from './createAdapterFilterSelectors';
 export * from './createAdapterSelectors';
 export * from './createEffects';
+export * from './createEntityAdapter';
 export * from './createQuery';
 export * from './createSelector';
 export * from './createSharedListenerMiddleware';
