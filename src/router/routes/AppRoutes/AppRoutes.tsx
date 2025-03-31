@@ -10,7 +10,7 @@ import { LazyPanels } from '@/router/panels';
 export const AppRoutes: FC = () => {
     return (
         <Route element={(
-            <SuspenseWithGlobalLoader>
+            <SuspenseWithGlobalLoader loaderId='App'>
                 <LazyLayouts.WithPrimaryNavigation/>
             </SuspenseWithGlobalLoader>
         )}>

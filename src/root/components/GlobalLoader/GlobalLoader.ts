@@ -12,8 +12,8 @@ export namespace GlobalLoader {
     } = context;
 
     export const {
-        GlobalLoaderDisable: Disable,
-        GlobalLoaderEnable: Enable,
+        GlobalLoaderToggle: Toggle,
         GlobalLoaderWrapper: Wrapper,
+        GlobalLoaderDisable: Disable,
     } = components;
 }

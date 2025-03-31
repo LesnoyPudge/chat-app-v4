@@ -6,7 +6,7 @@ import { getHTMLElement, logger } from '@/utils';
 
 
 export const init = () => {
-    logger.log('init');
+    logger.setup.log('init');
 
     createRoot(getHTMLElement.appRoot).render(<Root/>);
 };

@@ -49,14 +49,18 @@ const load = lazyLoad.createBasePreloadedComponent({
 const { withPreloadGroup } = lazyLoad.createPreloadGroup();
 
 const LazyA = lazyLoad.modifiedReactLazy(withPreloadGroup(() => {
+    console.log('LOAD LazyA');
     return import('./LazyA').then((v) => ({ default: v.LazyA }));
 }));
 
 const LazyB = lazyLoad.modifiedReactLazy(withPreloadGroup(() => {
+    console.log('LOAD LazyB');
     return import('./LazyB').then((v) => ({ default: v.LazyB }));
 }));
 
-export const TMP: FC = () => {
+console.log(LazyA, LazyB);
+
+export const LazyLoad: FC = () => {
     const bool = useBoolean(true);
     // useEffect(() => {
     //     console.clear();

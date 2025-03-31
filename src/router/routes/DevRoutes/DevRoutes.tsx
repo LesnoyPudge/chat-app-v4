@@ -8,10 +8,9 @@ import { AuthScreenPure } from '@/router/screens/lazy/AuthScreen/AuthScreen';
 import { Outlet, Route } from 'react-router';
 import { Dummies } from '@/fakeServer';
 import { OnlyAuthorized } from '../components';
-import { createSleep } from '@lesnoypudge/utils-react';
 import { Navigator } from '@/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import React, { Suspense } from 'react';
+import type React from 'react';
 import { GlobalLoader } from '@/root/components';
 
 
@@ -57,8 +56,6 @@ const pathNameToComponent = {
     React.JSX.Element
 >;
 
-const Sleep = createSleep(1_000);
-
 const DevElements = Object.values(Navigator.navigatorDevPath).map((path) => {
     if (path === Navigator.navigatorDevPath.playgroundAuthorized) {
         return (
@@ -69,13 +66,7 @@ const DevElements = Object.values(Navigator.navigatorDevPath).map((path) => {
             >
                 <Route
                     index
-                    element={(
-                        <Suspense>
-                            <Sleep>
-                                {pathNameToComponent[path]}
-                            </Sleep>
-                        </Suspense>
-                    )}
+                    element={pathNameToComponent[path]}
                 />
             </Route>
         );
@@ -85,13 +76,7 @@ const DevElements = Object.values(Navigator.navigatorDevPath).map((path) => {
         <Route
             key={path}
             path={path}
-            element={(
-                <Suspense>
-                    <Sleep>
-                        {pathNameToComponent[path]}
-                    </Sleep>
-                </Suspense>
-            )}
+            element={pathNameToComponent[path]}
         />
     );
 });

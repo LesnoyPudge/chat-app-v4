@@ -63,7 +63,7 @@ const { withDecorator } = createWithDecorator(({ children }) => {
     useHotKey(
         document,
         [KEY.F2],
-        () => logger.log(document.activeElement),
+        () => logger._common.log(document.activeElement),
         { hotKeyOptions: { prevent: true } },
     );
 

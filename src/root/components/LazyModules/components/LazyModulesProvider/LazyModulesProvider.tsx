@@ -51,12 +51,12 @@ export const LazyModulesProvider: FC<PropsWithChildren> = ({
     useEffect(() => {
         void setupPromise(i18nCreatePromise).then(() => {
             setI18n(getLoadedState());
-            logger.log('LazyModules: "i18n" ready');
+            logger.lazyModules.log('LazyModules: "i18n" ready');
         });
 
         void setupPromise(serverCreatePromise).then(() => {
             setServer(getLoadedState());
-            logger.log('LazyModules: "server" ready');
+            logger.lazyModules.log('LazyModules: "server" ready');
         });
     }, []);
 

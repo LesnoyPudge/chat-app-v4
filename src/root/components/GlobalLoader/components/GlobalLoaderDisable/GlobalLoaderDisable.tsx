@@ -19,7 +19,7 @@ export const GlobalLoaderDisable: FC<Types.ActionComponentProps> = ({
     useEffect(() => {
         if (!isEnabled) return;
 
-        displayId && logger.log(toOneLine(`
+        displayId && logger.globalLoader.log(toOneLine(`
             DISABLE global loader with 
             id: ${displayId}, at: ${Date.now()}
         `));

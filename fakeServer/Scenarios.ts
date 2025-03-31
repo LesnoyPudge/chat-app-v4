@@ -108,7 +108,7 @@ const createMessage = deferred(async (props: Pick<
     );
 
     if (createdAt >= Date.now()) {
-        logger.warn('created too much messages, need to change timestamp generation');
+        logger.scenarios.warn('created too much messages, need to change timestamp generation');
     }
 
     if (props.conversation) {
@@ -374,10 +374,10 @@ class Scenarios {
         const originalState = db.getStorageClone();
         sizeMultiplier = sizeNameToMultiplier[options.size];
 
-        logger.log(`Database is populating with size: ${options.size}`);
+        logger.scenarios.log(`Database is populating with size: ${options.size}`);
 
         if (options.size === 'large') {
-            logger.log('Long loading is expected');
+            logger.scenarios.log('Long loading is expected');
         }
 
         const startTime = performance.now();
@@ -393,24 +393,24 @@ class Scenarios {
         const timeMs = timeDiff.toFixed(0);
         const timeSec = (timeDiff / 1_000).toFixed(2);
 
-        logger.log(toOneLine(`
+        logger.scenarios.log(toOneLine(`
             Population duration: ${timeMs}ms = ${timeSec}sec`,
         ));
 
-        logger.log(toOneLine(`
+        logger.scenarios.log(toOneLine(`
             Times deferred function called 
             during population: ${finalDeferredCount}    
         `));
 
         if (!error) {
-            logger.log(`Database successfully populated`);
+            logger.scenarios.log(`Database successfully populated`);
             return;
         }
 
         await catchErrorAsync(() => db.clearStorage());
 
-        logger.log('Database population failed', error);
-        logger.log('Restoring previous state');
+        logger.scenarios.log('Database population failed', error);
+        logger.scenarios.log('Restoring previous state');
 
         await catchErrorAsync(() => db.set(originalState));
     }

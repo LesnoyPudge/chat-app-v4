@@ -19,7 +19,7 @@ import {
     HTTP_STATUS_CODES,
     invariant,
 } from '@lesnoypudge/utils';
-import { env } from '@/vars';
+import { env, THIRD_PARTY_LOGS } from '@/vars';
 import { token } from './token';
 import { v4 as uuid } from 'uuid';
 import {
@@ -635,13 +635,14 @@ class FakeServer {
         startLoading();
 
         try {
-            logger.log('FakeServer initialization started');
+            logger.fakeServer.log('FakeServer initialization started');
 
             await initDB();
 
             const worker = setupWorker(...getRoutes());
 
             await worker.start({
+                quiet: !THIRD_PARTY_LOGS.msw,
                 onUnhandledRequest: (request, print) => {
                     if (!request.url.includes(env._PUBLIC_API_V1)) return;
 
@@ -652,7 +653,7 @@ class FakeServer {
                 // },
             });
 
-            logger.log('FakeServer initialization ended');
+            logger.fakeServer.log('FakeServer initialization ended');
         } catch (error) {
             abortLoading();
             throw error;

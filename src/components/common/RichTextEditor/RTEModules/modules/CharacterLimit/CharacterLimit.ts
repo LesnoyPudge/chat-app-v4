@@ -116,7 +116,7 @@ export const CharacterLimit = {
                 return next();
             }
 
-            logger.warn('character limit deletion is not handled');
+            logger._warns.warn('character limit deletion is not handled');
         };
 
         editor.onChange = (options) => {

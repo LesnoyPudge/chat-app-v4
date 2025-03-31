@@ -14,7 +14,7 @@ export const useDebug = () => {
             invariant(typeof currentCount === 'number');
 
             if (currentCount >= MAX) {
-                logger.warn(toOneLine(`
+                logger._warns.warn(toOneLine(`
                     Found ${currentCount} elements on page.
                     Maximum allowed is ${MAX}.    
                 `));

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { Store } from '@/features';
 import { ReduxToolkit } from '@/libs';
 import { logger } from '@/utils';
@@ -29,13 +31,13 @@ export const devtools = (() => {
     >(key: _Key) => {
         const devtools = (window as any)._devtools as DevTools | undefined;
         if (!devtools) {
-            logger.error('devtools not initialized');
+            logger._errors.error('devtools not initialized');
             return;
         }
 
         const value = devtools[key];
         if (!value) {
-            logger.error(`devtools value ${key} not initialized`);
+            logger._errors.error(`devtools value ${key} not initialized`);
             return;
         }
 

@@ -19,7 +19,6 @@ https://fluid.tw/
 -? UPDATE ALL FORM RELATED CODE TO TANSTACK FORM VERSION 1+
 -? сделать attachments layout через grid-template-areas
 - добавить обработчики эндпоинтов из контекстных меню
-- при сборке мои библиотеки не до конца тришейкаются?
 -? найти баг при котором ViewportListInner бесконечно перерендеривается
 
 

@@ -5,10 +5,10 @@ import { devtools } from '@/features';
 
 
 const logConsoleHint = () => {
-    logger.log(`${KEY.F1} to clear console`);
-    logger.log(`${KEY.F2} to log activeElement`);
-    logger.log(`${KEY.F3} to open devtools`);
-    logger.log(`${KEY.F4} to log element count`);
+    logger._common.log(`${KEY.F1} to clear console`);
+    logger._common.log(`${KEY.F2} to log activeElement`);
+    logger._common.log(`${KEY.F3} to open devtools`);
+    logger._common.log(`${KEY.F4} to log element count`);
 };
 
 logConsoleHint();
@@ -60,12 +60,12 @@ export const rawActions = {
     },
 
     clearConsole: () => {
-        logger.clear();
+        logger._common.clear();
         logConsoleHint();
     },
 
     logElementsCount: () => {
-        logger.log(toOneLine(`
+        logger._common.log(toOneLine(`
             ${document.querySelectorAll('*')?.length} 
             DOM elements
         `));
@@ -111,7 +111,7 @@ export const rawActions = {
     },
 
     populateDB_Large: () => {
-        logger.log('LONG LOADING IS EXPECTED');
+        logger._common.log('LONG LOADING IS EXPECTED');
         localStorageApi.set('shouldPopulate', 'large');
         // eslint-disable-next-line no-restricted-globals
         location.reload();

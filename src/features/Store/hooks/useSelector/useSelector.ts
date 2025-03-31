@@ -42,15 +42,17 @@ export const useSelector = <
         const selectorName = getSelectorName(selector);
 
         if (diff >= SLOW_SELECTOR_THRESHOLD) {
-            logger.warn(`Found slow selector ${selectorName}: ${diff}ms`);
+            logger._warns.warn(`Found slow selector ${selectorName}: ${diff}ms`);
         }
 
         const secondResult = selector(state);
         const notEqual = result !== secondResult;
 
         if (notEqual) {
-            logger.log(`Selector ${selectorName} returned different reference`);
-            logger.trace(selectorName);
+            logger._warns.log(
+                `Selector ${selectorName} returned different reference`,
+            );
+            logger._warns.trace(selectorName);
         }
 
         return result;

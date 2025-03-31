@@ -56,7 +56,7 @@ export const Render = {
             }
 
             default: {
-                logger.error('unhandled rendering element type');
+                logger._errors.error('unhandled rendering element type');
                 return <></>;
             }
         }
@@ -120,7 +120,7 @@ export const Render = {
                 }
 
                 default: {
-                    logger.error('unhandled element serialization');
+                    logger._errors.error('unhandled element serialization');
                     return null;
                 }
             }

@@ -43,7 +43,7 @@ export const useDebug = ({
 
         if (isOverflowingWindow) {
             shouldReportCheckWindowOverflowRef.current = false;
-            logger.warn(
+            logger._warns.warn(
                 `scrollable is overflowing window`,
                 getElementObject(scrollableElement),
             );
@@ -81,7 +81,7 @@ export const useDebug = ({
         if (isOverflowingParent) {
             shouldReportCheckParentOverflowRef.current = false;
 
-            logger.warn(
+            logger._warns.warn(
                 `scrollable is overflowing parent.`,
                 getElementObject(scrollableElement),
                 { parentElement },
@@ -108,7 +108,7 @@ export const useDebug = ({
         });
 
         if (isInvalid) {
-            logger.warn(toOneLine(`
+            logger._warns.warn(toOneLine(`
                 Scrollable: found invalid classes in ${className}`,
             ));
         }

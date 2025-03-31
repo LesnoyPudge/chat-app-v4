@@ -11,7 +11,7 @@ const main = async () => {
 
         void setup.postInit();
     } catch (error) {
-        logger.error(error);
+        logger._common.error(error);
     }
 };
 

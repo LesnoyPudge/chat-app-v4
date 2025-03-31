@@ -1,3 +1,4 @@
+export * from './basePreloadedComponent';
 export * from './cn';
 export * from './createPromiseLoader';
 export * from './createStyles';

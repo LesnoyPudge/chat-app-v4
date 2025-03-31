@@ -11,7 +11,7 @@ export const useErrorScreen = () => {
     } = useContext(ErrorBoundary.Context);
 
     const onClick = useFunction(() => {
-        logger.clear();
+        logger._common.clear();
 
         if (counter.get() === 5) {
             window.location.reload();
