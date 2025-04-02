@@ -1,11 +1,18 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
+import { VirtualList } from '@/components';
 
 
 // :not([data-virtual-spacer])
 const styles = createStyles({
-    buttonWrapper: 'relative mr-auto pl-3 pt-2 [[data-virtual-spacer]+&]:pt-0',
+    buttonWrapper: `
+        relative 
+        mr-auto 
+        mt-2 
+        pl-3 
+        ${VirtualList.Styles.resetItemMarginTop}
+    `,
     bullet: {
         base: `
             absolute 

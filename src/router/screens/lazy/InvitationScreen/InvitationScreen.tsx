@@ -78,34 +78,36 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
                         />
 
                         <Heading.Node className={styles.heading}>
-                            <Placeholder.With reveal={!!server}>
-                                {server?.name}
+                            <Placeholder.With reveal={server}>
+                                {(server) => server.name}
                             </Placeholder.With>
                         </Heading.Node>
 
                         <div className={styles.statsWrapper}>
-                            <Placeholder.With reveal={!!server}>
-                                <div className={styles.stat}>
-                                    <div className={styles.statOnline}></div>
+                            <Placeholder.With reveal={server}>
+                                {(server) => (
+                                    <>
+                                        <div className={styles.stat}>
+                                            <div className={styles.statOnline}></div>
 
-                                    <span>
-                                        {t(
-                                            'InvitationScreen.onlineCount',
-                                            { count: server?.onlineMemberCount },
-                                        )}
-                                    </span>
-                                </div>
+                                            <span>
+                                                {t('InvitationScreen.onlineCount', {
+                                                    count: server.onlineMemberCount,
+                                                })}
+                                            </span>
+                                        </div>
 
-                                <div className={styles.stat}>
-                                    <div className={styles.statOffline}></div>
+                                        <div className={styles.stat}>
+                                            <div className={styles.statOffline}></div>
 
-                                    <span>
-                                        {t(
-                                            'InvitationScreen.totalCount',
-                                            { count: server?.members.length },
-                                        )}
-                                    </span>
-                                </div>
+                                            <span>
+                                                {t('InvitationScreen.totalCount', {
+                                                    count: server.memberCount,
+                                                })}
+                                            </span>
+                                        </div>
+                                    </>
+                                )}
                             </Placeholder.With>
                         </div>
 

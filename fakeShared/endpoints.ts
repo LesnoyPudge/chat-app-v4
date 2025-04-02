@@ -340,6 +340,76 @@ namespace EndpointsV1 {
 
             export type Response = Entities.User.Base;
         }
+
+        export namespace DeleteFriend {
+            export const ActionName = 'deleteFriend';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = WithId.Target;
+
+            export type Response = Entities.User.Base;
+        }
+
+        export namespace Unblock {
+            export const ActionName = 'unblock';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = WithId.Target;
+
+            export type Response = Entities.User.Base;
+        }
+
+        export namespace AcceptFriendRequest {
+            export const ActionName = 'acceptFriendRequest';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = WithId.Target;
+
+            export type Response = Entities.User.Base;
+        }
+
+        export namespace RejectFriendRequest {
+            export const ActionName = 'rejectFriendRequest';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = WithId.Target;
+
+            export type Response = Entities.User.Base;
+        }
+
+        export namespace RevokeFriendRequest {
+            export const ActionName = 'revokeFriendRequest';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = WithId.Target;
+
+            export type Response = Entities.User.Base;
+        }
     }
 
     export namespace Server {
@@ -502,6 +572,20 @@ namespace EndpointsV1 {
                 AppData,
                 'Conversation' | 'User' | 'TextChat' | 'VoiceChat'
             >;
+        }
+
+        export namespace Create {
+            export const ActionName = 'create';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = WithId.Target;
+
+            export type Response = Entities.Conversation.Base;
         }
     }
 

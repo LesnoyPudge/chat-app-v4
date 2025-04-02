@@ -25,9 +25,9 @@ export const createProps = <
         Types.Context<_Tabs>['_tabPanelProps']
     >((acc, name) => {
         acc[name] = {
-            id: `tabPanel-${name.toString()}`,
-            labelledBy: `tab-${name.toString()}`,
-            role: 'tabpanel',
+            'id': `tabPanel-${name.toString()}`,
+            'aria-labelledby': `tab-${name.toString()}`,
+            'role': 'tabpanel',
         };
 
         return acc;

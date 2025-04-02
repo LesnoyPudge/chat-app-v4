@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { createEntityAdapter, createEntityExtraReducers, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
 import { ChannelsApi } from './ChannelsApi';
 import { Users, Servers } from '@/store/features';
 import { ReduxToolkit } from '@/libs';
@@ -19,6 +19,17 @@ export const ChannelsSlice = createSlice({
     extraReducers: (builder) => {
         createSocketExtraReducers(name, adapter, builder);
 
+        createEntityExtraReducers({
+            api: ChannelsApi,
+            builder,
+            addOne: adapter.addOne,
+        });
+
+        builder.addMatcher(
+            ChannelsApi.endpoints.ChannelGetMany.matchFulfilled,
+            adapter.upsertMany,
+        );
+
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
                 Users.Api.endpoints.UserLogin.matchFulfilled,
@@ -29,11 +40,6 @@ export const ChannelsSlice = createSlice({
             (state, { payload }) => {
                 adapter.upsertMany(state, payload.Channel);
             },
-        );
-
-        builder.addMatcher(
-            ChannelsApi.endpoints.ChannelGetMany.matchFulfilled,
-            adapter.upsertMany,
         );
     },
 });

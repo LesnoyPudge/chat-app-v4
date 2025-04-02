@@ -30,6 +30,17 @@ export namespace StoreTypes {
         VoiceChats: typeof slices.VoiceChats._Slice;
     };
 
+    export type Apis = {
+        Channels: typeof slices.Channels.Api;
+        Conversations: typeof slices.Conversations.Api;
+        Messages: typeof slices.Messages.Api;
+        Roles: typeof slices.Roles.Api;
+        Servers: typeof slices.Servers.Api;
+        TextChats: typeof slices.TextChats.Api;
+        Users: typeof slices.Users.Api;
+        VoiceChats: typeof slices.VoiceChats.Api;
+    };
+
     export type SlicesWithEntityAdapter = T.Except<Slices, 'App'>;
 
     export type Store = ReturnType<typeof ReduxToolkit.configureStore<State>>;

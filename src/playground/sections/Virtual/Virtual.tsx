@@ -76,7 +76,7 @@ export const Virtual: FC = () => {
 
                 <Scrollable scrollableRef={scrollableRef}>
                     <div className='flex flex-col gap-2' ref={wrapperRef}>
-                        <VirtualList
+                        {/* <VirtualList
                             items={arr}
                             apiRef={apiRef}
                             getId={String}
@@ -85,7 +85,7 @@ export const Virtual: FC = () => {
                             indexesShift={Math.abs(50 - arr.length)}
                         >
                             {(item) => <Item item={item}/>}
-                        </VirtualList>
+                        </VirtualList> */}
                     </div>
                 </Scrollable>
             </If>

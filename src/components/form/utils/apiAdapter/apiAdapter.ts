@@ -1,6 +1,6 @@
 import { t } from '@/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { merge, HTTP_STATUS_CODES } from '@lesnoypudge/utils';
+import { HTTP_STATUS_CODES } from '@lesnoypudge/utils';
 import { CustomQueryFn } from '@/store/utils';
 import { FormApi } from '@tanstack/react-form';
 import { ReduxToolkitQueryReact } from '@/libs';
@@ -22,7 +22,7 @@ type StatusCode = T.Except<typeof HTTP_STATUS_CODES, 'OK'>;
 
 type ErrorCodes = T.RequiredKeysOf<StatusCode>;
 
-type ErrorTable = Record<ErrorCodes, string>;
+type ErrorTable = Record<ErrorCodes, ReturnType<typeof t>>;
 
 type Options<_Result> = {
     errorTable?: Partial<ErrorTable>;
@@ -61,7 +61,10 @@ export const apiAdapter = <
     apiFn: _ApiTrigger,
     options?: Options<_Result>,
 ) => {
-    const _errorTable = merge(options?.errorTable ?? {}, defaultErrorTable);
+    const _errorTable = Object.assign(
+        defaultErrorTable,
+        options?.errorTable,
+    );
 
     return async ({
         value,
@@ -73,11 +76,14 @@ export const apiAdapter = <
             && 'status' in response.error
             && typeof response.error.status === 'number'
         ) {
-            return _errorTable[codeToName[response.error.status]] ?? null;
+            return (
+                _errorTable[codeToName[response.error.status]].toString()
+                ?? null
+            );
         }
 
         if (response.error) {
-            return _errorTable.INTERNAL_SERVER_ERROR ?? null;
+            return _errorTable.INTERNAL_SERVER_ERROR.toString() ?? null;
         }
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

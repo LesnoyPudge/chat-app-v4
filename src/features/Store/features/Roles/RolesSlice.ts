@@ -2,7 +2,8 @@ import { Users } from '../Users';
 import { Servers } from '../Servers';
 import { ReduxToolkit } from '@/libs';
 import { RolesTypes } from './RolesTypes';
-import { createEntityAdapter, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { createEntityAdapter, createEntityExtraReducers, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { RolesApi } from './RolesApi';
 
 
 
@@ -18,6 +19,17 @@ export const RolesSlice = createSlice({
     }),
     extraReducers: (builder) => {
         createSocketExtraReducers(name, adapter, builder);
+
+        createEntityExtraReducers({
+            api: RolesApi,
+            builder,
+            addOne: adapter.addOne,
+        });
+
+        builder.addMatcher(
+            RolesApi.endpoints.RoleGetMany.matchFulfilled,
+            adapter.upsertMany,
+        );
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(

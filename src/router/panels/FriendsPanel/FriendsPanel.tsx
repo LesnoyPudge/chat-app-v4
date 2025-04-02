@@ -1,8 +1,13 @@
 import { Tab } from '@/components';
 import { FC } from 'react';
 import { Content, Navigation } from './components';
+import { createStyles } from '@/utils';
 
 
+
+const styles = createStyles({
+    wrapper: 'flex h-dvh flex-col',
+});
 
 const tabs = Tab.createTabs({
     online: null,
@@ -19,7 +24,7 @@ export const FriendsPanelTabsContext = Tab.createTabContext<
 
 export const FriendsPanel: FC = () => {
     return (
-        <div>
+        <div className={styles.wrapper}>
             <Tab.Provider
                 context={FriendsPanelTabsContext}
                 tabs={tabs}
@@ -27,6 +32,8 @@ export const FriendsPanel: FC = () => {
                 orientation='horizontal'
             >
                 <Navigation/>
+
+                <Content/>
             </Tab.Provider>
         </div>
     );

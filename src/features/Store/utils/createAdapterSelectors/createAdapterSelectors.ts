@@ -91,7 +91,7 @@ export const createAdapterSelectors = <
 
             const entities = query(selectEntities);
 
-            return ids.map((id) => entities[id]);
+            return ids.map((id) => entities[id]).filter(Boolean);
         };
     }, `${sliceName}/selectByIds`);
 

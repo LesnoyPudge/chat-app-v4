@@ -35,5 +35,18 @@ export const ConversationsApi = getRootApi().injectEndpoints({
                 }),
             })
         ),
+
+        [Conversation.Create.NamedAction]: (
+            build.mutation<
+                Conversation.Create.Response,
+                Conversation.Create.RequestBody
+            >({
+                query: (body) => ({
+                    url: Conversation.Create.Path,
+                    method: Conversation.Create.Method,
+                    body,
+                }),
+            })
+        ),
     }),
 });

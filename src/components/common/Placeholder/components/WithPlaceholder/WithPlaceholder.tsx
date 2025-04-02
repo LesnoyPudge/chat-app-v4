@@ -1,9 +1,10 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { FC, useState } from 'react';
+import { memo, useState } from 'react';
 import { Placeholder } from '@/components';
 import { cn, createStyles } from '@/utils';
 import { isDev, isProd } from '@/vars';
-import { useTimeout } from '@lesnoypudge/utils-react';
+import { renderFunction, useTimeout, withDisplayName } from '@lesnoypudge/utils-react';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
@@ -12,22 +13,26 @@ const styles = createStyles({
 });
 
 export namespace WithPlaceholder {
-    export type Props = (
-        RT.PropsWithChildrenAndClassName
+    export type Props<_Value> = (
+        RT.PropsWithClassName
         & Placeholder.Node.Props
+        & RT.PropsWithRenderFunctionOrNode<[value: NonNullable<_Value>]>
         & {
-            reveal: boolean;
+            reveal: _Value;
         }
     );
 }
 
-export const WithPlaceholder: FC<WithPlaceholder.Props> = ({
+decorate(withDisplayName, 'WithPlaceholder', decorate.target);
+decorate(memo, decorate.target);
+
+export const WithPlaceholder = <_Value,>({
     className = '',
     reveal,
     children,
     containerClassName,
     ...rest
-}) => {
+}: WithPlaceholder.Props<_Value>) => {
     let devReveal = isProd;
 
     if (isDev) {
@@ -42,13 +47,16 @@ export const WithPlaceholder: FC<WithPlaceholder.Props> = ({
         devReveal = state;
     }
 
+    const showChildren = devReveal && !!reveal;
+    const showPlaceholder = !showChildren;
+
     return (
         <>
-            <If condition={devReveal && reveal}>
-                {children}
+            <If condition={showChildren}>
+                {renderFunction(children, reveal!)}
             </If>
 
-            <If condition={!devReveal || !reveal}>
+            <If condition={showPlaceholder}>
                 <Placeholder.Node
                     className={className}
                     containerClassName={cn(

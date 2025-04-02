@@ -1,6 +1,5 @@
 import { ActionMenu, Button, Overlay, PresenceStatus } from '@/components';
 import { useTrans } from '@/hooks';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { noop } from '@lesnoypudge/utils';
 import {
     useConst,
@@ -23,16 +22,13 @@ import { decorate } from '@lesnoypudge/macro';
 
 
 
-type TMPNames = Record<ClientEntities.User.Base['extraStatus'], null>;
+type ExtraStatusNames = ClientEntities.User.ExtraStatus;
 
-const extraStatusNames = Object.keys<TMPNames>({
-    default: null,
-    invisible: null,
-    afk: null,
-    dnd: null,
-} satisfies TMPNames);
+const extraStatusNames: ExtraStatusNames[] = [
+    'afk', 'default', 'dnd', 'invisible',
+];
 
-type ExtraStatusNames = T.ArrayValues<typeof extraStatusNames>;
+const { animationVariants } = getAnimationVariants.withOpacity();
 
 const styles = createStyles({
     button: 'justify-start',
@@ -46,8 +42,6 @@ const styles = createStyles({
         data-[active=true]:text-white
     `,
 });
-
-const { animationVariants } = getAnimationVariants.withOpacity();
 
 const { withDecorator } = createWithDecorator<
     Overlay.Menu.Types.PublicProps
@@ -144,7 +138,8 @@ export const UserMenu = withDecorator(() => {
                                     ActionMenu.styles.icon.fill,
                                     styles.status,
                                 )}
-                                precalculatedStatus={extraStatusItem}
+                                status='online'
+                                extraStatus={extraStatusItem}
                             />
 
                             <span>{label}</span>

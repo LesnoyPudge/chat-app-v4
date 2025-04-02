@@ -2,7 +2,7 @@ import { KeyboardNavigation, VirtualRender } from '@/components';
 
 
 
-export namespace VirtualList {
+export namespace VirtualListNode {
     type KeyboardNavigationNonIntersectingProps = (
         Exclude<
             keyof KeyboardNavigation.Types.Provider.Props,
@@ -19,13 +19,13 @@ export namespace VirtualList {
     );
 }
 
-export const VirtualList = <_Item,>({
+export const VirtualListNode = <_Item,>({
     items,
     getId,
     wrapperRef,
     children,
     ...rest
-}: VirtualList.Props<_Item>) => {
+}: VirtualListNode.Props<_Item>) => {
     const {
         setVirtualIndexes,
         virtualList,

@@ -49,10 +49,12 @@ export const Header: FC = () => {
                 innerRef={buttonRef}
                 onLeftClick={controls.open}
             >
-                <Placeholder.With reveal={!!server}>
-                    <span className={styles.buttonText}>
-                        {server?.name}
-                    </span>
+                <Placeholder.With reveal={server}>
+                    {(server) => (
+                        <span className={styles.buttonText}>
+                            {server.name}
+                        </span>
+                    )}
                 </Placeholder.With>
 
                 <Sprite

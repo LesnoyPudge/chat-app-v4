@@ -33,7 +33,7 @@ export const ChannelList: FC = () => {
                 aria-label={t('ServerNavigation.ChannelList.label')}
                 ref={wrapperRef}
             >
-                <VirtualList
+                <VirtualList.Node
                     items={server?.channels}
                     getId={(id) => id}
                     wrapperRef={wrapperRef}
@@ -43,7 +43,7 @@ export const ChannelList: FC = () => {
                     {(channelId) => (
                         <ChannelItem channelId={channelId}/>
                     )}
-                </VirtualList>
+                </VirtualList.Node>
             </ul>
         </Scrollable>
     );

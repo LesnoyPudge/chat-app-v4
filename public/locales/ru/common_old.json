@@ -1,7 +1,19 @@
 {
     "COMMON.Loading": "Загрузка",
+    "FriendsPanel.AllFriends.button.label": "Перейти к сообщениям",
+    "FriendsPanel.AllFriends.button.tooltip": "Сообщения",
+    "FriendsPanel.AllFriends.goToConversationButton.label": "Перейти к сообщениям",
+    "FriendsPanel.AllFriends.goToConversationButton.tooltip": "Сообщения",
+    "FriendsPanel.DisplayCount.text_one": "__NOT_TRANSLATED__",
+    "FriendsPanel.DisplayCount.text_few": "__NOT_TRANSLATED__",
+    "FriendsPanel.DisplayCount.text_many": "__NOT_TRANSLATED__",
+    "FriendsPanel.DisplayCount.text_other": "__NOT_TRANSLATED__",
     "FriendsPanel.Navigation.allFriends.button.label": "Все",
     "FriendsPanel.Navigation.blockedUsers.button.label": "Заблокированные",
     "FriendsPanel.Navigation.friendRequests.button.label": "Ожидание",
+    "FriendsPanel.PendingRequests.incoming.button.label": "Принять запрос в друзья",
+    "FriendsPanel.PendingRequests.incoming.button.tooltip": "Принять",
+    "FriendsPanel.PendingRequests.outgoing.button.label": "Отклонить запрос в друзья",
+    "FriendsPanel.PendingRequests.outgoing.button.tooltip": "Отклонить",
     "ServerMenu.actionListLabel": "Меню действий"
 }

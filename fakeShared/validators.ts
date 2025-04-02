@@ -25,14 +25,14 @@ const ve = VALIDATION_ERRORS;
 
 class SharedValidators {
     commonString = v.pipe(
-        v.string(ve.BAD_VALUE),
+        v.string(ve.BAD_VALUE.toString()),
         v.trim(),
-        v.nonEmpty(ve.REQUIRED),
+        v.nonEmpty(ve.REQUIRED.toString()),
     );
 
     noWhitespaces = v.pipe(
-        v.string(ve.BAD_VALUE),
-        v.check((input) => input.split(' ').length === 1, ve.BAD_VALUE),
+        v.string(ve.BAD_VALUE.toString()),
+        v.check((input) => input.split(' ').length === 1, ve.BAD_VALUE.toString()),
     );
 
     singleCommonString = v.pipe(
@@ -42,12 +42,12 @@ class SharedValidators {
 
     id = v.pipe(
         this.singleCommonString,
-        v.uuid(ve.BAD_VALUE),
+        v.uuid(ve.BAD_VALUE.toString()),
     );
 
     email = v.pipe(
         this.singleCommonString,
-        v.email(ve.INVALID_EMAIL),
+        v.email(ve.INVALID_EMAIL.toString()),
     );
 
     RTEText = v.customAsync<RichTextEditor.Types.Text>((value) => {
@@ -57,7 +57,7 @@ class SharedValidators {
                     text: v.string(),
                     bold: v.pipe(v.optional(v.boolean())),
                     italic: v.pipe(v.optional(v.boolean())),
-                }, ve.BAD_VALUE),
+                }, ve.BAD_VALUE.toString()),
             ),
             value,
         ));
@@ -70,7 +70,7 @@ class SharedValidators {
             v.objectAsync({
                 type: v.literal('paragraph'),
                 children: this.RTENodes,
-            }, ve.BAD_VALUE),
+            }, ve.BAD_VALUE.toString()),
             value,
         ));
     });
@@ -90,10 +90,10 @@ class SharedValidators {
                         v.arrayAsync(this.RTEText),
                         v.length(1),
                     ),
-                }, ve.BAD_VALUE),
+                }, ve.BAD_VALUE.toString()),
                 v.check((link) => {
                     return link.url === link.children[0]?.text;
-                }, ve.BAD_VALUE),
+                }, ve.BAD_VALUE.toString()),
             ),
             value,
         ));
@@ -124,10 +124,10 @@ class SharedValidators {
                         )),
                         v.length(1),
                     ),
-                }, ve.BAD_VALUE),
+                }, ve.BAD_VALUE.toString()),
                 v.check((emoji) => {
                     return emoji.code === emoji.children[0]?.text;
-                }, ve.BAD_VALUE),
+                }, ve.BAD_VALUE.toString()),
             ),
             value,
         ));
@@ -151,7 +151,7 @@ class SharedValidators {
         }
 
         return false;
-    }), ve.BAD_VALUE);
+    }), ve.BAD_VALUE.toString());
 
     file = schema<ClientEntities.File.Encoded>(v.object({
         type: this.commonString,
@@ -170,9 +170,9 @@ class SharedValidators {
             v.number(),
             v.maxValue(FILE_MAX_SIZE),
         ),
-    }, ve.BAD_VALUE));
+    }, ve.BAD_VALUE.toString()));
 
-    nullableFile = v.nullable(this.file, ve.BAD_VALUE);
+    nullableFile = v.nullable(this.file);
 }
 
 const sv = new SharedValidators();

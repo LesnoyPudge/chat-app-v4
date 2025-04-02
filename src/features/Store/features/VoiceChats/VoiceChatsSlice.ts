@@ -1,5 +1,6 @@
 import {
     createEntityAdapter,
+    createEntityExtraReducers,
     createSlice,
     createSocketExtraReducers,
     extractReducersFromAdapter,
@@ -9,6 +10,7 @@ import { Servers } from '../Servers';
 import { Conversations } from '../Conversations';
 import { VoiceChatsTypes } from './VoiceChatsTypes';
 import { ReduxToolkit } from '@/libs';
+import { VoiceChatsApi } from './VoiceChatsApi';
 
 
 
@@ -24,6 +26,17 @@ export const VoiceChatsSlice = createSlice({
     }),
     extraReducers: (builder) => {
         createSocketExtraReducers(name, adapter, builder);
+
+        createEntityExtraReducers({
+            api: VoiceChatsApi,
+            builder,
+            addOne: adapter.addOne,
+        });
+
+        // builder.addMatcher(
+        //     VoiceChatsApi.endpoints.GetMany.matchFulfilled,
+        //     adapter.upsertMany,
+        // );
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(

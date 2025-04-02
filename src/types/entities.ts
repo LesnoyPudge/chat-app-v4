@@ -29,6 +29,8 @@ export namespace ClientEntities {
 
         export type ExtraStatus = 'default' | 'afk' | 'dnd' | 'invisible';
 
+        export type VisibleStatus = 'online' | 'offline' | 'afk' | 'dnd';
+
         export type LastSeenMessage = {
             textChatId: TextChat.Id;
             lastIndex: number;
@@ -225,6 +227,7 @@ export namespace ClientEntities {
             channels: Channel.Id[];
             members: User.Id[];
             onlineMemberCount: number;
+            memberCount: number;
             avatar: File.Id | null;
             identifier: string;
             name: string;

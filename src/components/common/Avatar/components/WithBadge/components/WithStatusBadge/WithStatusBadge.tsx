@@ -1,9 +1,10 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { useRefManager } from '@lesnoypudge/utils-react';
+import { useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { cn, createStyles, getStatusLabel } from '@/utils';
 import { MASK_ID } from '@/vars';
-import { CSSProperties, FC, useMemo } from 'react';
+import { CSSProperties, FC, memo, useMemo } from 'react';
 import { PresenceStatus, Overlay } from '@/components';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
@@ -28,6 +29,9 @@ export namespace WithStatusBadge {
         }
     );
 }
+
+decorate(withDisplayName, 'WithStatusBadge', decorate.target);
+decorate(memo, decorate.target);
 
 export const WithStatusBadge: FC<WithStatusBadge.Props> = ({
     className = '',

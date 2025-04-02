@@ -19,6 +19,7 @@ export const preInit = async () => {
             log: THIRD_PARTY_LOGS.reactScanDeep,
             animationSpeed: 'off',
             showToolbar: true,
+            showNotificationCount: true,
         });
     }
 

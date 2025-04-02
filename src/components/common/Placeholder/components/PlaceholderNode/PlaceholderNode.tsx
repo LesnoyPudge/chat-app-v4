@@ -1,8 +1,10 @@
 import { cn, createStyles } from '@/utils';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import Skeleton, { SkeletonProps } from 'react-loading-skeleton';
 import './PlaceholderNode.scss';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { decorate } from '@lesnoypudge/macro';
+import { withDisplayName } from '@lesnoypudge/utils-react';
 
 
 
@@ -19,6 +21,9 @@ export namespace PlaceholderNode {
         | 'customHighlightBackground'
     >;
 }
+
+decorate(withDisplayName, 'PlaceholderNode', decorate.target);
+decorate(memo, decorate.target);
 
 export const PlaceholderNode: FC<PlaceholderNode.Props> = ({
     className = '',

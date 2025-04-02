@@ -156,5 +156,65 @@ export const UsersApi = getRootApi().injectEndpoints({
                 }),
             })
         ),
+        [User.DeleteFriend.NamedAction]: (
+            build.mutation<
+                User.DeleteFriend.Response,
+                User.DeleteFriend.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.DeleteFriend.Path,
+                    method: User.DeleteFriend.Method,
+                    body,
+                }),
+            })
+        ),
+        [User.Unblock.NamedAction]: (
+            build.mutation<
+                User.Unblock.Response,
+                User.Unblock.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.Unblock.Path,
+                    method: User.Unblock.Method,
+                    body,
+                }),
+            })
+        ),
+        [User.AcceptFriendRequest.NamedAction]: (
+            build.mutation<
+                User.AcceptFriendRequest.Response,
+                User.AcceptFriendRequest.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.AcceptFriendRequest.Path,
+                    method: User.AcceptFriendRequest.Method,
+                    body,
+                }),
+            })
+        ),
+        [User.RejectFriendRequest.NamedAction]: (
+            build.mutation<
+                User.RejectFriendRequest.Response,
+                User.RejectFriendRequest.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.RejectFriendRequest.Path,
+                    method: User.RejectFriendRequest.Method,
+                    body,
+                }),
+            })
+        ),
+        [User.RevokeFriendRequest.NamedAction]: (
+            build.mutation<
+                User.RevokeFriendRequest.Response,
+                User.RevokeFriendRequest.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.RevokeFriendRequest.Path,
+                    method: User.RevokeFriendRequest.Method,
+                    body,
+                }),
+            })
+        ),
     }),
 });

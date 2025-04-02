@@ -91,3 +91,15 @@ export const selectVisibleIds = createSelector((query) => {
 
     return visibleIds;
 }, `${ConversationsSlice.name}/selectVisibleIds`);
+
+export const selectConversationByTargetId = (
+    createSelector.withParams((targetId: string) => (query) => {
+        const {
+            conversations: conversationIds,
+        } = query(Users.Selectors.selectCurrentUser);
+
+        const conversations = query(selectByIds(...conversationIds));
+
+        return conversations.find((value) => value.members.includes(targetId));
+    }, `${ConversationsSlice.name}/selectConversationByTargetId`)
+);

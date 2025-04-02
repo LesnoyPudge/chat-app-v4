@@ -45,11 +45,16 @@ export const SearchBar: FC<SearchBar.Props> = ({
 }) => {
     const { t } = useTrans();
     const inputRef = useRef<HTMLInputElement>(null);
-    const inputProps = Form.Inputs.TextInput.useTextInputDefaults({});
+
+    const showClearButton = !!value;
 
     const handleClick = useFunction(() => {
         if (!inputRef.current) return;
         inputRef.current.focus();
+
+        if (!showClearButton) return;
+
+        onChange('');
     });
 
     const handleChange: ChangeEventHandler<
@@ -58,14 +63,19 @@ export const SearchBar: FC<SearchBar.Props> = ({
         onChange(e.target.value);
     });
 
+    const inputProps = Form.Inputs.TextInput.useTextInputDefaults({
+        className: styles.input,
+        placeholder: placeholder,
+    });
+
     const sprite = (
-        value
+        showClearButton
             ? ASSETS.IMAGES.SPRITE.CROSS_ICON
             : ASSETS.IMAGES.SPRITE.SEARCH_ICON
     );
 
     const buttonLabel = (
-        value
+        showClearButton
             ? t('SearchBar.clearSearch')
             : t('SearchBar.focusSearch')
     );
@@ -77,9 +87,7 @@ export const SearchBar: FC<SearchBar.Props> = ({
         )}>
             <Form.Inputs.TextInput.NodePure
                 {...inputProps}
-                className={styles.input}
                 name='search'
-                placeholder={placeholder}
                 value={value}
                 label={label}
                 error={null}
@@ -88,6 +96,7 @@ export const SearchBar: FC<SearchBar.Props> = ({
                 onBlur={noop}
                 type='text'
                 onChange={handleChange}
+                innerRef={inputRef}
             />
 
             <Button

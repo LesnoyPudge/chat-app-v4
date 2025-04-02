@@ -1,6 +1,6 @@
 import { t } from '@/features';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { ClientEntities } from '@/types';
+import { derivePresenceStatus } from '@/utils';
 
 
 
@@ -9,24 +9,13 @@ type Props = Pick<
     'status' | 'extraStatus'
 >;
 
-type Names = T.ValueOf<Props>;
+const STATUS_LABEL = {
+    online: t('STATUS.online'),
+    offline: t('STATUS.offline'),
+    afk: t('STATUS.afk'),
+    dnd: t('STATUS.dnd'),
+} satisfies Record<ClientEntities.User.VisibleStatus, ReturnType<typeof t>>;
 
-export const getStatusLabel = ({
-    extraStatus,
-    status,
-}: Props): string => {
-    const STATUS_LABEL = {
-        online: t('STATUS.online'),
-        offline: t('STATUS.offline'),
-        default: t('STATUS.online'),
-        invisible: t('STATUS.offline'),
-        afk: t('STATUS.afk'),
-        dnd: t('STATUS.dnd'),
-    } satisfies Record<Names, string>;
-
-    return (
-        status === 'offline'
-            ? STATUS_LABEL[status]
-            : STATUS_LABEL[extraStatus]
-    );
+export const getStatusLabel = (props: Props): string => {
+    return STATUS_LABEL[derivePresenceStatus(props)].toString();
 };

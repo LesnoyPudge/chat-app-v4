@@ -2,7 +2,7 @@ import { ServersApi } from './ServersApi';
 import { Users } from '../Users';
 import { ReduxToolkit } from '@/libs';
 import { ServersTypes } from './ServersTypes';
-import { createEntityAdapter, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { createEntityAdapter, createEntityExtraReducers, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
 
 
 
@@ -19,6 +19,17 @@ export const ServersSlice = createSlice({
     extraReducers: (builder) => {
         createSocketExtraReducers(name, adapter, builder);
 
+        createEntityExtraReducers({
+            api: ServersApi,
+            builder,
+            addOne: adapter.addOne,
+        });
+
+        builder.addMatcher(
+            ServersApi.endpoints.ServerGetMany.matchFulfilled,
+            adapter.upsertMany,
+        );
+
         builder.addMatcher(
             ReduxToolkit.isAnyOf(
                 Users.Api.endpoints.UserLogin.matchFulfilled,
@@ -31,14 +42,6 @@ export const ServersSlice = createSlice({
             },
         );
 
-        builder.addMatcher(
-            ReduxToolkit.isAnyOf(
-                ServersApi.endpoints.ServerGetByInvitationCode.matchFulfilled,
-                ServersApi.endpoints.ServerCreate.matchFulfilled,
-                ServersApi.endpoints.ServerAcceptInvitation.matchFulfilled,
-            ),
-            adapter.upsertOne,
-        );
         builder.addMatcher(
             ServersApi.endpoints.ServerLeave.matchFulfilled,
             (state, { meta }) => {

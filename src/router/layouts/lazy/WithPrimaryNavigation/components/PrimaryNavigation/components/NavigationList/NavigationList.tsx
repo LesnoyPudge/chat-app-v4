@@ -52,7 +52,8 @@ const List: FC<ListProps> = ({ conversations, servers }) => {
                     <VirtualRender.List
                         items={conversations}
                         getId={(item) => item}
-                        itemSize={56}
+                        itemSize={48}
+                        itemMargin={8}
                         onViewportIndexesChange={virtualConversations.setVirtualIndexes}
                     >
                         {(conversationId) => (
@@ -73,7 +74,8 @@ const List: FC<ListProps> = ({ conversations, servers }) => {
                 <VirtualRender.List
                     items={servers}
                     getId={(item) => item}
-                    itemSize={56}
+                    itemSize={48}
+                    itemMargin={8}
                     onViewportIndexesChange={virtualServers.setVirtualIndexes}
                 >
                     {(serverId) => (

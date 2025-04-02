@@ -59,7 +59,7 @@ export namespace Types {
         getId: GetId<_Item>;
         // viewportRef?: RefObject<HTMLElement | null> | HTMLElement;
         itemSize: number;
-        itemMargin?: number;
+        itemMargin: number;
         overscan?: number;
         direction?: Direction.Single;
         initialIndex?: ScrollToIndexOptions['index'];

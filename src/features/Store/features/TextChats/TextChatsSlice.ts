@@ -3,7 +3,8 @@ import { Servers } from '../Servers';
 import { Conversations } from '../Conversations';
 import { ReduxToolkit } from '@/libs';
 import { TextChatsTypes } from './TextChatsTypes';
-import { createEntityAdapter, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { createEntityAdapter, createEntityExtraReducers, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { TextChatsApi } from './TextChatsApi';
 
 
 
@@ -19,6 +20,17 @@ export const TextChatsSlice = createSlice({
     }),
     extraReducers: (builder) => {
         createSocketExtraReducers(name, adapter, builder);
+
+        createEntityExtraReducers({
+            api: TextChatsApi,
+            builder,
+            addOne: adapter.addOne,
+        });
+
+        builder.addMatcher(
+            TextChatsApi.endpoints.TextChatGetMany.matchFulfilled,
+            adapter.upsertMany,
+        );
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(

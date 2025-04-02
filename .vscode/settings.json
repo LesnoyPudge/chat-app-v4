@@ -38,4 +38,7 @@
         "**/generated": false
     },
     "explorerExclude.backup": {},
+    "cSpell.words": [
+        "recomputations"
+    ],
 }

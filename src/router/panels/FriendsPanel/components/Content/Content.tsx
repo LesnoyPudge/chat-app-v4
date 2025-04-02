@@ -1,164 +1,77 @@
-// import { Image, TabPanel, Separator, UserAvatar, TabContext, Scrollable, List , MoveFocusInside, ToDo } from '@components';
-// import { AppSubPageTabs } from '@subPages/AppSubPage';
-import { FC, useContext, useRef } from 'react';
-// import { ActionButtons } from './components';
-// import { getRandomNumber } from '@utils';
-// import { Entities } from '@shared';
-// import { IMAGES } from '@generated';
+import { createStyles } from '@/utils';
+import { ReactNode } from 'react';
+import { FriendsPanelTabsContext } from '../../FriendsPanel';
+import { ContextSelectable } from '@lesnoypudge/utils-react';
+import { Scrollable, Search, Separator, Tab } from '@/components';
+import {
+    AllFriendsTab,
+    BlockedUsersTab,
+    OnlineFriendsTab,
+    PendingRequestsTab,
+} from './tabs';
+import { useTrans } from '@/hooks';
+import { ContentContextProvider, DisplayCount, EmptyListBlock } from './components';
 
 
 
-type Content = {
-    value: string;
-};
+const styles = createStyles({
+    searchBar: 'h-9 w-full',
+    infoWrapper: 'px-7 pt-4',
+    tabWrapper: 'h-full overflow-hidden px-7 pb-4',
+    scrollable: 'h-full',
+});
 
-// const allFriends: (Entities.User.Preview & Entities.User.WithStatus)[] = [];
+export namespace Content {
+    export type Props = {
+        searchValue: string;
+    };
+}
 
-// const onlineFriends = [...allFriends].filter((friend) => {
-//     return friend.status === 'online' && friend.extraStatus !== 'invisible';
-// });
-// const blocked = [...allFriends].slice(2, 5);
-// const friendRequests = [...allFriends];
+export const Content = () => {
+    const { t } = useTrans();
+    const search = Search.useSearch('');
+    const {
+        currentTab,
+    } = ContextSelectable.useProxy(FriendsPanelTabsContext);
 
-// const friends = {
-//     allFriends,
-//     onlineFriends,
-//     blocked,
-//     friendRequests,
-// };
+    const tabNameToTabComponent = {
+        all: <AllFriendsTab/>,
+        blocked: <BlockedUsersTab/>,
+        online: <OnlineFriendsTab/>,
+        pending: <PendingRequestsTab/>,
+    } satisfies Record<typeof currentTab.identifier, ReactNode>;
 
-const styles = {
-    tabPanel: 'flex flex-col h-full overflow-hidden',
-    filteredLength: 'text-xs uppercase font-semibold text-color-secondary mx-2.5',
-    separator: 'mx-2.5',
-    list: 'flex flex-col gap-0.5 py-2',
-    listItem: `flex items-center gap-3 h-[60px] py-2 px-2.5 mr-1 rounded-lg 
-    hover:bg-primary-hover focus-within:bg-primary-hover`,
-    avatar: 'h-8 w-8',
-    infoWrapper: 'overflow-hidden',
-    username: 'text-color-primary font-semibold truncate',
-    extraInfo: 'text-sm text-color-secondary font-medium truncate',
-    buttonsContainer: 'flex shrink-0 gap-2.5 ml-auto',
-    notFoundWrapper: 'm-auto w-full max-w-[420px]',
-    notFoundImage: 'mb-10 max-h-[220px]',
-    notFoundText: 'text-color-secondary text-center',
-};
+    return (
+        <ContentContextProvider searchValue={search.deferredValue.trim()}>
+            <div className={styles.infoWrapper}>
+                <Search.Bar
+                    className={styles.searchBar}
+                    label={t('FriendsPanel.Navigation.searchLabel')}
+                    onChange={search.setState}
+                    placeholder={t('FriendsPanel.Navigation.searchLabel')}
+                    value={search.value}
+                />
 
-export const Content: FC<Content> = ({ value }) => {
-    return 'content';
+                <DisplayCount/>
 
-    // const {
-    //     currentTab,
-    //     tabs,
-    //     tabPanelProps,
-    //     isActive
-    // } = useContext<TabContext<AppSubPageTabs>>(TabContext);
+                <Separator
+                    spacing={12}
+                    length='100%'
+                    thickness={2}
+                />
+            </div>
 
-    // const filterByName = (users: Entities.User.Preview[]) => {
-    //     if (!value) return users;
+            <Tab.Panel
+                className={styles.tabWrapper}
+                context={FriendsPanelTabsContext}
+                tabName={currentTab.identifier}
+            >
+                <Scrollable className={styles.scrollable}>
+                    {tabNameToTabComponent[currentTab.identifier]}
 
-    //     return users.filter((user) => user.username.includes(value));
-    // };
-
-    // const filters: Record<
-    //     keyof typeof tabs,
-    //     () => ReturnType<typeof filterByName>
-    // > = {
-    //     allFriends: () => filterByName(friends.allFriends),
-    //     blocked: () => filterByName(friends.blocked),
-    //     friendRequests: () => filterByName(friends.friendRequests),
-    //     onlineFriends: () => filterByName(friends.onlineFriends),
-    // };
-
-    // const listToShow = filters[currentTab.identifier]();
-    // const showList = !!listToShow.length;
-    // const searchIsEmpty = !value;
-
-    // const listToShowRef = useRef(listToShow);
-    // const {
-    //     getIsFocused,
-    //     getTabIndex,
-    //     setRoot,
-    // } = useKeyboardNavigation(listToShowRef);
-
-    // return (
-    //     <TabPanel
-    //         className={styles.tabPanel}
-    //         {...tabPanelProps[currentTab.identifier]}
-    //     >
-    //         <div className={styles.filteredLength}>
-    //             <>Показано — {listToShow.length}</>
-    //         </div>
-
-    //         <Separator className={styles.separator} spacing={12}/>
-
-    //         <If condition={showList}>
-    //             <Scrollable>
-    //                 <ul
-    //                     className={styles.list}
-    //                     tabIndex={0}
-    //                     aria-label='Список запросов'
-    //                     ref={setRoot}
-    //                 >
-    //                     <List list={listToShow}>
-    //                         {(user) => (
-    //                             <MoveFocusInside enabled={getIsFocused(user.id)}>
-    //                                 <li className={styles.listItem} >
-    //                                     <UserAvatar
-    //                                         className={styles.avatar}
-    //                                         {...user}
-    //                                     />
-
-    //                                     <div className={styles.infoWrapper}>
-    //                                         <div className={styles.username}>
-    //                                             {user.username}
-    //                                         </div>
-
-    //                                         <If condition={isActive.friendRequests}>
-    //                                             <div className={styles.extraInfo}>
-    //                                                 {
-    //                                                     getRandomNumber(0, 1)
-    //                                                         ? 'Исходящий запрос дружбы'
-    //                                                         : 'Входящий запрос дружбы'
-    //                                                 }
-    //                                             </div>
-    //                                         </If>
-    //                                     </div>
-
-    //                                     <div className={styles.buttonsContainer}>
-    //                                         <ActionButtons
-    //                                             userId={user.id}
-    //                                             tabIndex={getTabIndex(user.id)}
-    //                                         />
-    //                                     </div>
-    //                                 </li>
-    //                             </MoveFocusInside>
-    //                         )}
-    //                     </List>
-    //                 </ul>
-    //             </Scrollable>
-    //         </If>
-
-    //         <If condition={!showList}>
-    //             <div className={styles.notFoundWrapper}>
-    //                 <Image
-    //                     className={styles.notFoundImage}
-    //                     src={IMAGES.COMMON.FRIENDSNOTFOUND.PATH}
-    //                 />
-
-    //                 <ToDo text='показывается даже при пустом поле ввода'>
-    //                     <div className={styles.notFoundText}>
-    //                         <If condition={searchIsEmpty}>
-    //                             <>Никто не хочет играть с Вампусом.</>
-    //                         </If>
-
-    //                         <If condition={!searchIsEmpty}>
-    //                             <>Вампус внимательно искал, но не нашёл никого с таким именем.</>
-    //                         </If>
-    //                     </div>
-    //                 </ToDo>
-    //             </div>
-    //         </If>
-    //     </TabPanel>
-    // );
+                    <EmptyListBlock/>
+                </Scrollable>
+            </Tab.Panel>
+        </ContentContextProvider>
+    );
 };

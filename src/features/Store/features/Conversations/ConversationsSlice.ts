@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import { createEntityAdapter, createEntityExtraReducers, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
 import { ConversationsApi } from './ConversationsApi';
 import { Users } from '../Users';
 import { ReduxToolkit } from '@/libs';
@@ -18,6 +18,17 @@ export const ConversationsSlice = createSlice({
     }),
     extraReducers: (builder) => {
         createSocketExtraReducers(name, adapter, builder);
+
+        createEntityExtraReducers({
+            api: ConversationsApi,
+            builder,
+            addOne: adapter.addOne,
+        });
+
+        builder.addMatcher(
+            ConversationsApi.endpoints.ConversationGetMany.matchFulfilled,
+            adapter.upsertMany,
+        );
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(

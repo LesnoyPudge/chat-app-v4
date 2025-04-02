@@ -11,6 +11,7 @@ import { ASSETS } from '@/generated/ASSETS';
 
 
 const styles = createStyles({
+    topBar: 'px-2',
     content: 'flex h-8 min-w-max items-center px-2',
     icon: 'size-6 fill-icon-300',
     heading: 'ml-2 text-17-22 font-semibold text-color-primary',
@@ -94,7 +95,10 @@ export const Navigation: FC = () => {
     };
 
     return (
-        <TopBar withMobileButton>
+        <TopBar
+            className={styles.topBar}
+            withMobileButton
+        >
             <Scrollable
                 direction={orientation}
                 autoHide

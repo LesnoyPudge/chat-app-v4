@@ -1,4 +1,4 @@
-import { Avatar, Button, Placeholder, Sprite, Overlay, KeyboardNavigation, MobileMenu } from '@/components';
+import { Avatar, Button, Placeholder, Sprite, Overlay, KeyboardNavigation, MobileMenu, VirtualList } from '@/components';
 import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
@@ -10,7 +10,12 @@ import { FC, memo } from 'react';
 
 
 const styles = createStyles({
-    wrapper: 'group relative pt-1 [[data-virtual-spacer]+&]:pt-0',
+    wrapper: `
+        group 
+        relative 
+        mt-1
+        ${VirtualList.Styles.resetItemMarginTop}
+    `,
     userInfoButton: `
         flex 
         h-[42px]
@@ -138,15 +143,17 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
                     />
                 </Avatar.WithBadge.Status>
 
-                <Placeholder.With reveal={!!userTarget}>
-                    <span
-                        className={cn(
-                            styles.username.base,
-                            shouldHighlight && styles.username.active,
-                        )}
-                    >
-                        {userTarget?.name}
-                    </span>
+                <Placeholder.With reveal={userTarget}>
+                    {(userTarget) => (
+                        <span
+                            className={cn(
+                                styles.username.base,
+                                shouldHighlight && styles.username.active,
+                            )}
+                        >
+                            {userTarget.name}
+                        </span>
+                    )}
                 </Placeholder.With>
             </Button>
 

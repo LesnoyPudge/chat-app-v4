@@ -3,22 +3,51 @@ import type { HttpBackendOptions } from 'i18next-http-backend';
 import { env, isDev } from '@/vars';
 import { namespaces } from '@/generated/i18n';
 import { createPromiseLoader } from '@/utils';
+import { invariant } from '@lesnoypudge/utils';
 
 
 
+const NOT_LOADED = '__NOT_LOADED__';
 let resolvedT: TFunction | null = null;
 let i18nInstance: i18n;
 
-export const t = ((...args) => {
-    if (resolvedT) return resolvedT(...args);
+class LazyString extends String {
+    _args: Parameters<TFunction> | undefined = undefined;
 
-    const getValue = () => resolvedT?.(...args) as string ?? '__NOT_LOADED__';
+    _setArgs(newArgs: Parameters<TFunction>) {
+        this._args = newArgs;
+    }
 
-    return {
-        toString: getValue,
-        valueOf: getValue,
-    } satisfies Pick<string, 'toString' | 'valueOf'>;
-}) as TFunction;
+    _getValue() {
+        invariant(this._args);
+
+        return (resolvedT?.(...this._args) ?? NOT_LOADED);
+    }
+
+    toString() {
+        return this._getValue().toString();
+    }
+
+    valueOf() {
+        return this._getValue().valueOf();
+    }
+
+    [Symbol.toPrimitive](hint: unknown) {
+        if (hint === 'string') {
+            return this.toString();
+        }
+
+        return this.valueOf();
+    }
+}
+
+export const t = ((...args: Parameters<TFunction>) => {
+    const lazyString = new LazyString(NOT_LOADED);
+
+    lazyString._setArgs(args);
+
+    return lazyString;
+});
 
 export const getI18nInstance = () => {
     return i18nInstance;

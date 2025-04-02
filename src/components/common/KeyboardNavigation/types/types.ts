@@ -91,6 +91,10 @@ export namespace Types {
         export type Fn = (props: Props) => Return;
     }
 
+    export namespace useSetFocusId {
+        export type Fn = (itemId: string) => VoidFunction;
+    }
+
     export namespace useIsCurrentId {
         export type Fn = (itemId: string) => boolean;
     }

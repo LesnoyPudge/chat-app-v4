@@ -4,7 +4,7 @@ import { logger } from '@/utils';
 import { isProd } from '@/vars';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { useMemo } from 'react';
-import { shallowEqual } from '@lesnoypudge/utils';
+import { invariant, isCallable, shallowEqual } from '@lesnoypudge/utils';
 import { ReduxReact } from '@/libs';
 
 
@@ -24,6 +24,16 @@ const getSelectorName = (selector: T.AnyFunction) => {
     return displayName || selector.name.trim() || 'unknown';
 };
 
+const getRecomputations = (selector: T.AnyFunction): number => {
+    if (!('recomputations' in selector)) return 0;
+    if (!isCallable(selector.recomputations)) return 0;
+
+    const result = selector.recomputations();
+    invariant(typeof result === 'number');
+
+    return result;
+};
+
 const defaultTransformer = <_Value>(state: _Value) => state;
 
 export const useSelector = <
@@ -39,6 +49,7 @@ export const useSelector = <
         const startTime = performance.now();
         const result = selector(state);
         const diff = performance.now() - startTime;
+        const firstRecomputeCount = getRecomputations(selector);
         const selectorName = getSelectorName(selector);
 
         if (diff >= SLOW_SELECTOR_THRESHOLD) {
@@ -46,11 +57,21 @@ export const useSelector = <
         }
 
         const secondResult = selector(state);
+        const secondRecomputeCount = getRecomputations(selector);
+
         const notEqual = result !== secondResult;
+        const isRecomputed = firstRecomputeCount !== secondRecomputeCount;
 
         if (notEqual) {
             logger._warns.log(
                 `Selector ${selectorName} returned different reference`,
+            );
+            logger._warns.trace(selectorName);
+        }
+
+        if (isRecomputed) {
+            logger._warns.log(
+                `Selector ${selectorName} has unnecessary recomputations`,
             );
             logger._warns.trace(selectorName);
         }

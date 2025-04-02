@@ -24,22 +24,10 @@ const slices = [
     features.VoiceChats._Slice,
 ] as const;
 
-// const apis = [
-//     features.Channels.Api,
-//     features.Conversations.Api,
-//     features.Messages.Api,
-//     features.Roles.Api,
-//     features.Servers.Api,
-//     features.TextChats.Api,
-//     features.Users.Api,
-//     features.VoiceChats.Api,
-// ] as const;
-
 export const setupStore = (preloadedState?: Partial<StoreTypes.State>) => {
     const rootReducer = ReduxToolkit.combineSlices(
         ...slices,
         getRootApi(),
-        // ...apis,
     );
 
     const setupEffects = (store: StoreTypes.Store) => {
@@ -53,7 +41,6 @@ export const setupStore = (preloadedState?: Partial<StoreTypes.State>) => {
                 .prepend([
                     createSharedListenerMiddleware().middleware,
                     getRootApi().middleware,
-                    // ...apis.map((api) => api.middleware),
                 ])
         ),
         preloadedState,

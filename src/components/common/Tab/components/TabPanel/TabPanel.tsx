@@ -17,6 +17,7 @@ export const TabPanel = <_Tabs extends Types.GenericTabs>({
         <div
             className={className}
             {...tabPanelProps}
+            aria-labelledby=''
         >
             {children}
         </div>

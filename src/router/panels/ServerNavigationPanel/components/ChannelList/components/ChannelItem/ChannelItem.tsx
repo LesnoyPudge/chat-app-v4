@@ -1,4 +1,4 @@
-import { Button, KeyboardNavigation, MobileMenu, Overlay, Placeholder, Sprite, WithPermission } from '@/components';
+import { Button, KeyboardNavigation, MobileMenu, Overlay, Placeholder, Sprite, VirtualList, WithPermission } from '@/components';
 import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
@@ -11,7 +11,12 @@ import { decorate } from '@lesnoypudge/macro';
 
 const styles = createStyles({
     item: {
-        size: 'mt-1 h-9 p-1.5 [[data-virtual-spacer]+&]:mt-0',
+        size: `
+            mt-1 
+            h-9 
+            p-1.5 
+            ${VirtualList.Styles.resetItemMarginTop}
+        `,
         base: `
             group/item 
             relative 
@@ -119,48 +124,52 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
             >
             </Button>
 
-            <Placeholder.With reveal={!!channel}>
-                <Sprite
-                    className={styles.channelTypeIcon}
-                    sprite={channelTypeSprite}
-                />
-
-                <span className={styles.name}>
-                    {channel?.name}
-                </span>
-
-                <WithPermission.ChannelControl serverId={serverId}>
-                    <Button
-                        className={cn(
-                            styles.actionButton.base,
-                            isInChannel && styles.actionButton.selected,
-                        )}
-                        tabIndex={tabIndex}
-                        isActive={controls.isOpen}
-                        hasPopup='dialog'
-                        label={t('ServerNavigation.ChannelList.Item.settingsLabel', {
-                            name: channel?.name,
-                        })}
-                        innerRef={settingsButtonRef}
-                        onLeftClick={controls.open}
-                        onAnyClick={setFocusId}
-                    >
+            <Placeholder.With reveal={channel}>
+                {(channel) => (
+                    <>
                         <Sprite
-                            className={styles.actionIcon}
-                            sprite={ASSETS.IMAGES.SPRITE.SETTINGS_GEAR}
+                            className={styles.channelTypeIcon}
+                            sprite={channelTypeSprite}
                         />
-                    </Button>
 
-                    {/* <ChannelSettingsDialog/> */}
+                        <span className={styles.name}>
+                            {channel.name}
+                        </span>
 
-                    <Overlay.Tooltip
-                        preferredAlignment='right'
-                        spacing={5}
-                        leaderElementRef={settingsButtonRef}
-                    >
-                        {t('ServerNavigation.ChannelList.Item.settingsTooltip')}
-                    </Overlay.Tooltip>
-                </WithPermission.ChannelControl>
+                        <WithPermission.ChannelControl serverId={serverId}>
+                            <Button
+                                className={cn(
+                                    styles.actionButton.base,
+                                    isInChannel && styles.actionButton.selected,
+                                )}
+                                tabIndex={tabIndex}
+                                isActive={controls.isOpen}
+                                hasPopup='dialog'
+                                label={t('ServerNavigation.ChannelList.Item.settingsLabel', {
+                                    name: channel.name,
+                                })}
+                                innerRef={settingsButtonRef}
+                                onLeftClick={controls.open}
+                                onAnyClick={setFocusId}
+                            >
+                                <Sprite
+                                    className={styles.actionIcon}
+                                    sprite={ASSETS.IMAGES.SPRITE.SETTINGS_GEAR}
+                                />
+                            </Button>
+
+                            {/* <ChannelSettingsDialog/> */}
+
+                            <Overlay.Tooltip
+                                preferredAlignment='right'
+                                spacing={5}
+                                leaderElementRef={settingsButtonRef}
+                            >
+                                {t('ServerNavigation.ChannelList.Item.settingsTooltip')}
+                            </Overlay.Tooltip>
+                        </WithPermission.ChannelControl>
+                    </>
+                )}
             </Placeholder.With>
         </li>
     );

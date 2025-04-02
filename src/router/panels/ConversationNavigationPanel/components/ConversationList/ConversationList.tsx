@@ -49,16 +49,17 @@ export const ConversationList: FC = () => {
                             aria-label={t('ConversationNavigation.ConversationList.label')}
                             ref={listRef}
                         >
-                            <VirtualList
+                            <VirtualList.Node
                                 items={conversationIds}
                                 getId={(id) => id}
                                 wrapperRef={listRef}
                                 itemSize={46}
+                                itemMargin={4}
                             >
                                 {(id) => (
                                     <ConversationItem id={id}/>
                                 )}
-                            </VirtualList>
+                            </VirtualList.Node>
                         </ul>
                     </Scrollable>
                 </If>

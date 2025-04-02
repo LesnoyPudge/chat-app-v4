@@ -115,6 +115,7 @@ export class Dummies {
             invitations: [],
             isPrivate: false,
             onlineMemberCount: 0,
+            memberCount: 0,
             createdAt: Date.now(),
             updatedAt: Date.now(),
         };

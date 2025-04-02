@@ -38,9 +38,9 @@ export namespace Types {
     };
 
     export type TabPanelElementProps<KEY extends keyof GenericTabs> = {
-        id: `tabPanel-${KEY}`;
-        labelledBy: `tab-${KEY}`;
-        role: 'tabpanel';
+        'id': `tabPanel-${KEY}`;
+        'aria-labelledby': `tab-${KEY}`;
+        'role': 'tabpanel';
     };
 
     export type Context<_Tabs extends GenericTabs> = {
@@ -82,7 +82,7 @@ export namespace Types {
                 context: ContextSelectable.createContext.ContextSelectable<
                     Context<_Tabs>
                 >;
-                tabName: T.StringKeyOf<keyof _Tabs>;
+                tabName: T.StringKeyOf<_Tabs>;
             }
         );
     }

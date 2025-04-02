@@ -1,12 +1,7 @@
 import { KeyboardNavigation } from '@/components';
-import {
-    ContextSelectable,
-    Focus,
-    useFunction,
-    useUnmountEffect,
-} from '@lesnoypudge/utils-react';
+import { Focus, useUnmountEffect } from '@lesnoypudge/utils-react';
 import { Types } from '../../types';
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 
 
@@ -19,15 +14,7 @@ export const useKeyboardNavigationCommonItem: Types.useCommonItem.Fn = ({
     const isFocused = KeyboardNavigation.useIsFocused(itemId);
     const tabIndex = KeyboardNavigation.useTabIndex(itemId);
     const isCurrentId = KeyboardNavigation.useIsCurrentId(itemId);
-    const setNewFocusId = ContextSelectable.useSelector(
-        KeyboardNavigation.Context,
-        (v) => v.setCurrentFocusedId,
-    );
-
-    const setFocusId = useFunction(() => {
-        if (isCurrentId) return;
-        setNewFocusId(itemId);
-    });
+    const setFocusId = KeyboardNavigation.useSetFocusId(itemId);
 
     useEffect(() => {
         const element = elementRef.current;
