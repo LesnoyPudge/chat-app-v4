@@ -11,6 +11,7 @@ export const {
     selectIds,
     selectTotal,
     selectUndefinedIdsByIds,
+    selectIsExistsById,
 } = createAdapterSelectors(ChannelsSlice);
 
 export const {
@@ -21,11 +22,14 @@ export const {
     selectAll,
 });
 
-export const selectAvailableByServerId = (
-    createSelector.withParams((serverId: string) => (query) => {
+// role calculations are omitted for simplicity
+export const selectAvailableTextChannelIdByServerId = (
+    createSelector.withParams((serverId: string | undefined) => (query) => {
+        if (!serverId) return;
+
         const channels = query(selectFilteredByServer(serverId));
         if (!channels.length) return;
 
-        // find text channel that i can join
+        return channels.find((v) => v.textChat)?.id;
     }, `${ChannelsSlice.name}/selectAvailableByServerId`)
 );

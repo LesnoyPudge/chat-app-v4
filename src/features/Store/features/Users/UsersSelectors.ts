@@ -14,6 +14,7 @@ export const {
     selectIds,
     selectTotal,
     selectUndefinedIdsByIds,
+    selectIsExistsById,
 } = createAdapterSelectors(UsersSlice);
 
 

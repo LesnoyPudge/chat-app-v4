@@ -11,4 +11,5 @@ export const {
     selectIds,
     selectTotal,
     selectUndefinedIdsByIds,
+    selectIsExistsById,
 } = createAdapterSelectors(RolesSlice);

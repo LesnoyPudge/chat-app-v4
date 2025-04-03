@@ -22,10 +22,12 @@ const styles = createStyles({
     content: 'gap-2.5',
 });
 
+const invitePlaceholder = `hTkz9ak`;
+
 export const FollowInvitationTab: FC = () => {
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
     const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
-    const { navigateTo } = Navigator.useNavigateTo();
+    const { tryNavigateToChannel } = Navigator.useTryNavigateToChannel();
     const { mounted } = useMountedWrapper();
     const [accept] = Store.Servers.Api.useServerAcceptInvitationMutation();
     const { t } = useTrans();
@@ -35,12 +37,11 @@ export const FollowInvitationTab: FC = () => {
         onSubmit: Form.apiAdapter(accept, {
             onSuccess: (server) => mounted(() => {
                 closeOverlay();
-                navigateTo.server({ serverId: server.id });
+                tryNavigateToChannel(server.id);
             }),
         }),
     });
 
-    const invitePlaceholder = `hTkzmak`;
 
     return (
         <Form.Provider formApi={FormApi} submitError={submitError}>

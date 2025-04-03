@@ -17,6 +17,7 @@ export const {
     selectIds,
     selectTotal,
     selectUndefinedIdsByIds,
+    selectIsExistsById,
 } = createAdapterSelectors(ServersSlice);
 
 

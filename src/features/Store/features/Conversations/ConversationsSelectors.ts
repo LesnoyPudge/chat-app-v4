@@ -14,6 +14,7 @@ export const {
     selectIds,
     selectTotal,
     selectUndefinedIdsByIds,
+    selectIsExistsById,
 } = createAdapterSelectors(ConversationsSlice);
 
 export const selectIsMutedById = createSelector.withParams((id: string) => {

@@ -23,11 +23,11 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
     serverId,
 }) => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
-    const { navigateTo } = Navigator.useNavigateTo();
     const { closeMenu } = MobileMenu.useMobileMenu();
-    const isInServer = Navigator.useIsLocation((v) => {
-        return v.server({ serverId });
-    });
+    const isInServer = Navigator.useIsLocation((v) => v.server({ serverId }));
+    const {
+        tryNavigateToChannel,
+    } = Navigator.useTryNavigateToChannel(serverId);
 
     const server = Store.useSelector(
         Store.Servers.Selectors.selectById(serverId),
@@ -46,8 +46,8 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
         itemId: serverId,
     });
 
-    const navigateToServer = useFunction(() => {
-        navigateTo.server({ serverId });
+    const navigateToServerOrChannel = useFunction(() => {
+        tryNavigateToChannel();
 
         if (isInServer) closeMenu();
     });
@@ -66,7 +66,7 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
                 role='menuitem'
                 isActive={isActive}
                 innerRef={buttonRef}
-                onLeftClick={navigateToServer}
+                onLeftClick={navigateToServerOrChannel}
                 onAnyClick={setFocusId}
             >
                 <Avatar.Server
