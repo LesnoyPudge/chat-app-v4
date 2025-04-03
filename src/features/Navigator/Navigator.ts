@@ -1,19 +1,20 @@
-import * as c1 from './hooks';
-import * as c2 from './vars';
-import * as c3 from './components';
-import * as c4 from './context';
-import * as c5 from './types';
+import * as hooks from './hooks';
+import * as vars from './vars';
+import * as components from './components';
+import * as context from './context';
+import * as types from './types';
 
 
 
 export namespace Navigator {
-    export import Types = c5.Types;
+    export import Types = types.Types;
 
     export const {
         useIsLocation,
         useNavigateTo,
         useParams,
-    } = c1;
+        useTryNavigateToChannel,
+    } = hooks;
 
     export const {
         navigatorPath,
@@ -21,13 +22,13 @@ export namespace Navigator {
         params,
         navigatorDevPath,
         pathToParams,
-    } = c2;
+    } = vars;
 
-    export import Context = c4.NavigatorContext;
+    export import Context = context.NavigatorContext;
 
-    export import ParamsContext = c4.ParamsContext;
+    export import ParamsContext = context.ParamsContext;
 
-    export import Provider = c3.NavigatorContextProvider;
+    export import Provider = components.NavigatorContextProvider;
 
-    export import ParamsProvider = c3.ParamsContextProvider;
+    export import ParamsProvider = components.ParamsContextProvider;
 }

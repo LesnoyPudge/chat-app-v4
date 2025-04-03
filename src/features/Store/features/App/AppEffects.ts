@@ -44,8 +44,11 @@ export const AppEffects = createEffects({
                 localStorageApi.remove('isMute');
                 localStorageApi.remove('accessToken');
                 localStorageApi.remove('refreshToken');
-                // localStorageApi.remove('lastVisitedChannels');
-                // localStorageApi.remove('savedMessageDrafts');
+                localStorageApi.remove('messageDisplayMode');
+                localStorageApi.remove('messageFontSize');
+                localStorageApi.remove('messageGroupSpacing');
+                localStorageApi.remove('theme');
+                localStorageApi.remove('lastVisitedChannels');
 
                 socket.disconnect();
                 socket.removeOnAddData();

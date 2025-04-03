@@ -10,4 +10,6 @@ export const LazyPanels = {
     ServerNavigation: load(() => import('./ServerNavigationPanel')),
 
     Friends: load(() => import('./FriendsPanel')),
+
+    ChannelFinder: load(() => import('./ChannelFinderPanel')),
 };

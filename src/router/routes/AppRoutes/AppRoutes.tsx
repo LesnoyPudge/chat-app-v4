@@ -51,20 +51,7 @@ export const AppRoutes: FC = () => {
             >
                 <Route
                     index
-                    element={(
-                        <>auto redirect or chose available channel</>
-
-                        // <NavigateToRoom
-                        //     loader={<>show room skeleton loader while deciding what room to join</>}
-                        //     fallback={(
-                        //         <Suspense fallback={<>show room skeleton loader while deciding what room to join</>}>
-                        //             <GlobalLoader.Loaded>
-                        //                 <NoRoomsSubPage/>
-                        //             </GlobalLoader.Loaded>
-                        //         </Suspense>
-                        //     )}
-                        // />
-                    )}
+                    element={<LazyPanels.ChannelFinder/>}
                 />
 
                 <Route

@@ -48,7 +48,8 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
 
     const navigateToServer = useFunction(() => {
         navigateTo.server({ serverId });
-        closeMenu();
+
+        if (isInServer) closeMenu();
     });
 
     const isActive = isInServer || isFocused;

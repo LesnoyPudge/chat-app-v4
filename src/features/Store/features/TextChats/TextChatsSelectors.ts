@@ -1,4 +1,7 @@
-import { createAdapterFilterSelectors, createAdapterSelectors } from '@/store/utils';
+import {
+    createAdapterFilterSelectors,
+    createAdapterSelectors,
+} from '@/store/utils';
 import { TextChatsSlice } from './TextChatsSlice';
 
 

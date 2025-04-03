@@ -14,8 +14,10 @@ export namespace localStorageApi {
             refreshToken: string;
             accessToken: string;
             shouldPopulate: 'none' | 'small' | 'medium' | 'large';
-            // lastVisitedChannels: Record<ChannelId, RoomId>;
-            // savedMessageDrafts: Record<ChatId, RTETypes.Nodes>;
+            lastVisitedChannels: Record<
+                ClientEntities.Server.Id,
+                ClientEntities.Channel.Id
+            >;
         }
     );
 }
