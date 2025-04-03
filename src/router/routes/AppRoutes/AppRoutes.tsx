@@ -58,7 +58,13 @@ export const AppRoutes: FC = () => {
                     path={Navigator.staticNavigatorPath.channel}
                     element={(
                         <Navigator.ParamsProvider>
-                            <>channel</>
+                            <>
+                                <>topbar</>
+                                <>
+                                    <>feed</>           <>member list</>
+                                    <>message input</>  <>member list</>
+                                </>
+                            </>
                         </Navigator.ParamsProvider>
 
                         // <Suspense fallback={<SubPageSkeleton/>}>
