@@ -3,9 +3,9 @@
     "author": "LesnoyPudge",
     "type": "module",
     "scripts": {
-        "dev_old2": "vite --force",
         "dev_old1": "npm run scripts:i18n && concurrently \"nodemon --config nodemon.i18n.json\" \"nodemon --config nodemon.vite.json\"",
         "dev": "nodemon --config nodemon.dev.json",
+        "dev:hmr": "vite --force",
         "prod": "echo \"Not implemented\" && exit 1",
         "build": "npm run scripts:pre-build && npm run type:check && vite build",
         "build:fast": "vite build",

@@ -12,8 +12,7 @@ const styles = createStyles({
     navigation: {
         base: `
             flex
-            h-full 
-            w-full 
+            size-full 
             max-w-[240px] 
             flex-col 
             overflow-hidden 
@@ -21,32 +20,31 @@ const styles = createStyles({
         `,
         wide: 'max-w-full',
     },
-    content: `
-        flex
-        h-full 
-        w-full 
-        flex-1 
-        flex-col 
-        overflow-hidden 
-        bg-primary-200
-    `,
+    content: `size-full bg-primary-200`,
 });
 
 export const WithSecondaryNavigation: FC<PropsWithChildren> = ({
     children,
 }) => {
     const {
+        isMobile,
         shouldShowMenu,
         shouldShowContent,
+        shouldFocusContent,
     } = MobileMenu.useMobileMenu();
     const containerRef = useRefManager<HTMLDivElement>(null);
 
+    Focus.useMoveFocusInside({
+        containerRef: containerRef,
+        isEnabled: shouldFocusContent,
+    });
+
     return (
         <div className={styles.wrapper}>
-            <If condition={!shouldShowContent}>
+            <If condition={shouldShowMenu}>
                 <div className={cn(
                     styles.navigation.base,
-                    shouldShowMenu && styles.navigation.wide,
+                    isMobile && styles.navigation.wide,
                 )}>
                     {children}
 
@@ -54,18 +52,13 @@ export const WithSecondaryNavigation: FC<PropsWithChildren> = ({
                 </div>
             </If>
 
-            <If condition={!shouldShowMenu}>
-                <Focus.Inside
-                    isEnabled={shouldShowContent}
-                    containerRef={containerRef}
+            <If condition={shouldShowContent}>
+                <div
+                    className={styles.content}
+                    ref={containerRef}
                 >
-                    <div
-                        className={styles.content}
-                        ref={containerRef}
-                    >
-                        <Outlet/>
-                    </div>
-                </Focus.Inside>
+                    <Outlet/>
+                </div>
             </If>
         </div>
     );

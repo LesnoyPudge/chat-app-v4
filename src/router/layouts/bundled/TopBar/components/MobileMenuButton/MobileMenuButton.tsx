@@ -14,7 +14,6 @@ const styles = createStyles({
 export const MobileMenuButton: FC = () => {
     const {
         openMenu,
-        shouldShowContent,
         isDesktop,
     } = MobileMenu.useMobileMenu();
     const { t } = useTrans();
@@ -24,7 +23,6 @@ export const MobileMenuButton: FC = () => {
     return (
         <Button
             className={styles.button}
-            isActive={shouldShowContent}
             label={t('TopBar.MobileMenuButton.label')}
             onLeftClick={openMenu}
         >

@@ -1,27 +1,31 @@
 import { FC, PropsWithChildren } from 'react';
-import { MobileMenuContext } from '../MobileMenuContext';
+import { Types } from '../../types';
 import { useBoolean } from '@lesnoypudge/utils-react';
-import { Store } from '@/features';
+import { MobileMenuContext } from '../../context';
+import { LayoutType } from '@/components';
 
 
 
 export const MobileMenuProvider: FC<PropsWithChildren> = ({
     children,
 }) => {
-    const isMobile = Store.useSelector(
-        Store.App.Selectors.selectIsMobileScreen,
-    );
+    const { isDesktop, isMobile } = LayoutType.useLayoutType();
     const menuState = useBoolean(isMobile);
 
-    const contextValue: MobileMenuContext = {
+    const isMenuActive = menuState.value;
+    const isContentActive = !isMenuActive;
+
+    const contextValue: Types.Context = {
         isMobile,
-        isDesktop: !isMobile,
+        isDesktop,
         isMenuOpen: menuState.value,
         closeMenu: menuState.setFalse,
         openMenu: menuState.setTrue,
         toggleMenu: menuState.toggle,
-        shouldShowMenu: isMobile && menuState.value,
-        shouldShowContent: isMobile && !menuState.value,
+        shouldShowMenu: isDesktop || isMenuActive,
+        shouldShowContent: isDesktop || isContentActive,
+        shouldFocusContent: isMobile && isContentActive,
+        shouldFocusMenu: isMobile && isMenuActive,
     };
 
     return (

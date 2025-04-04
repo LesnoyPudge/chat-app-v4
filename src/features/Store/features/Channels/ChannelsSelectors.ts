@@ -1,5 +1,6 @@
-import { createAdapterFilterSelectors, createAdapterSelectors, createSelector } from '@/store/utils';
+import { createAdapterFieldSelectors, createAdapterFilterSelectors, createAdapterSelectors, createSelector } from '@/store/utils';
 import { ChannelsSlice } from './ChannelsSlice';
+import { ClientEntities } from '@/types';
 
 
 
@@ -20,6 +21,14 @@ export const {
     keys: ['server'],
     slice: ChannelsSlice,
     selectAll,
+});
+
+export const {
+    selectTextChatById,
+} = createAdapterFieldSelectors({
+    keys: ['textChat'],
+    slice: ChannelsSlice,
+    selectById,
 });
 
 // role calculations are omitted for simplicity

@@ -53,6 +53,9 @@
             "@/router/layouts/bundled": [
                 "./src/router/layouts/bundled"
             ],
+            "@/router/templates": [
+                "./src/router/templates"
+            ],
             "@/setup": [
                 "./src/setup",
             ],

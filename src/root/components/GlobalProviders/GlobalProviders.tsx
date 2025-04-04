@@ -5,6 +5,7 @@ import { LazyMotion, MotionConfig } from 'motion/react';
 import { FC, PropsWithChildren } from 'react';
 import { BrowserRouter } from 'react-router';
 import { GlobalLoader, LazyModules } from '@/root/components';
+import { LayoutType } from '@/components';
 
 
 
@@ -18,22 +19,24 @@ export const GlobalProviders: FC<PropsWithChildren> = ({
     children,
 }) => {
     return (
-        <LazyModules.Provider>
-            <BrowserRouter>
-                <Navigator.Provider>
-                    <ReduxReact.Provider store={store}>
-                        <Heading.Provider>
-                            <LazyMotion features={loadDomAnimation} strict>
-                                <MotionConfig reducedMotion='user'>
-                                    <GlobalLoader.Wrapper>
-                                        {children}
-                                    </GlobalLoader.Wrapper>
-                                </MotionConfig>
-                            </LazyMotion>
-                        </Heading.Provider>
-                    </ReduxReact.Provider>
-                </Navigator.Provider>
-            </BrowserRouter>
-        </LazyModules.Provider>
+        <ReduxReact.Provider store={store}>
+            <LazyModules.Provider>
+                <LazyMotion features={loadDomAnimation} strict>
+                    <MotionConfig reducedMotion='user'>
+                        <BrowserRouter>
+                            <Navigator.Provider>
+                                <Heading.Provider>
+                                    <LayoutType.Provider>
+                                        <GlobalLoader.Wrapper>
+                                            {children}
+                                        </GlobalLoader.Wrapper>
+                                    </LayoutType.Provider>
+                                </Heading.Provider>
+                            </Navigator.Provider>
+                        </BrowserRouter>
+                    </MotionConfig>
+                </LazyMotion>
+            </LazyModules.Provider>
+        </ReduxReact.Provider>
     );
 };

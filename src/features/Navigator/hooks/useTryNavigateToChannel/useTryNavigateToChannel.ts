@@ -15,8 +15,22 @@ export const useTryNavigateToChannel = (serverId?: string) => {
         getManyHelpers,
     ] = Store.Servers.Api.useLazyServerGetManyDeepQuery();
 
-    const navigate = (serverId: string, channelId: string) => {
+    const navigate = ({
+        channelId,
+        serverId,
+    }: {
+        serverId: string;
+        channelId: string;
+    }) => {
         navigateTo.channel({ serverId, channelId });
+
+        const storeState = injectedStore.getStore().getState();
+        const textChatId = (
+            Store.Channels.Selectors.selectTextChatById(channelId)(storeState)
+        );
+
+        // save if it is text channel
+        if (!textChatId) return;
 
         const value = localStorageApi.get('lastVisitedChannels');
 
@@ -34,14 +48,20 @@ export const useTryNavigateToChannel = (serverId?: string) => {
         const lastVisitedChannels = localStorageApi.get('lastVisitedChannels');
         const lastChannelId = lastVisitedChannels?.[localServerId];
 
-        if (lastChannelId) return navigate(localServerId, lastChannelId);
+        if (lastChannelId) return navigate({
+            channelId: lastChannelId,
+            serverId: localServerId,
+        });
 
         const maybeChannelId = (
             Store.Channels.Selectors
                 .selectAvailableTextChannelIdByServerId(serverId)(storeState)
         );
 
-        if (maybeChannelId) return navigate(localServerId, maybeChannelId);
+        if (maybeChannelId) return navigate({
+            serverId: localServerId,
+            channelId: maybeChannelId,
+        });
 
         const isServerExists = (
             Store.Servers.Selectors.selectIsExistsById(serverId)(storeState)
@@ -56,5 +76,6 @@ export const useTryNavigateToChannel = (serverId?: string) => {
 
     return {
         tryNavigateToChannel,
+        navigate,
     };
 };

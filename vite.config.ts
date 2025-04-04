@@ -23,6 +23,8 @@ const config: UserConfigFn = ({ mode }) => {
         ...loadEnv(mode, envDir, ''),
     } as Env;
 
+    const isHMREnabled = false;
+
     // const isProd = env.NODE_ENV === 'production';
     const isProd = false;
     const isDev = !isProd;
@@ -40,7 +42,7 @@ const config: UserConfigFn = ({ mode }) => {
             watch: {
                 ignored: ['**/generated/**/*'],
             },
-            hmr: false,
+            hmr: isHMREnabled,
         },
         preview: {
             port: Number.parseInt(env._PUBLIC_CLIENT_PORT),

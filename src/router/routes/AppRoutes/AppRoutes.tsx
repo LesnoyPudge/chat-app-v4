@@ -58,13 +58,15 @@ export const AppRoutes: FC = () => {
                     path={Navigator.staticNavigatorPath.channel}
                     element={(
                         <Navigator.ParamsProvider>
-                            <>
-                                <>topbar</>
-                                <>
-                                    <>feed</>           <>member list</>
-                                    <>message input</>  <>member list</>
-                                </>
-                            </>
+                            {/* <LazyLayouts.WithExtraPanel
+                                main={(
+                                    <div className='size-full'>
+                                        <div>feed</div>
+                                        <div>message input</div>
+                                    </div>
+                                )}
+                                extra={<div>member list</div>}
+                            /> */}
                         </Navigator.ParamsProvider>
 
                         // <Suspense fallback={<SubPageSkeleton/>}>

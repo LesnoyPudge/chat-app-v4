@@ -20,7 +20,7 @@ const {
         <Overlay.Menu.Provider
             label={t('ServerMenu.label')}
             controls={controls}
-            preferredAlignment='right'
+            preferredAlignment='bottom'
             leaderElementOrRectRef={leaderElementOrRectRef}
             centered
         >

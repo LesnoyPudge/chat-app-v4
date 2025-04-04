@@ -77,7 +77,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
         elementRef,
         itemId: channelId,
     });
-    const { navigateTo } = Navigator.useNavigateTo();
+    const { navigate } = Navigator.useTryNavigateToChannel();
     const { closeMenu } = MobileMenu.useMobileMenu();
     const { serverId } = Navigator.useParams('server');
     const isInChannel = Navigator.useIsLocation((v) => {
@@ -92,7 +92,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
     );
 
     const handleNavigation = useFunction(() => {
-        navigateTo.channel({ serverId, channelId });
+        navigate({ serverId, channelId });
         closeMenu();
     });
 

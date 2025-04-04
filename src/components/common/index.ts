@@ -4,6 +4,7 @@ export * from './Button';
 export * from './DialogBlocks';
 export * from './KeyboardNavigation';
 export * from './Label';
+export * from './LayoutType';
 export * from './MobileMenu';
 export * from './Placeholder';
 export * from './PresenceStatus';
