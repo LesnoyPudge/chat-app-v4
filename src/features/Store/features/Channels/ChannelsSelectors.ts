@@ -1,6 +1,5 @@
 import { createAdapterFieldSelectors, createAdapterFilterSelectors, createAdapterSelectors, createSelector } from '@/store/utils';
 import { ChannelsSlice } from './ChannelsSlice';
-import { ClientEntities } from '@/types';
 
 
 
@@ -25,11 +24,18 @@ export const {
 
 export const {
     selectTextChatById,
+    selectNameById,
 } = createAdapterFieldSelectors({
-    keys: ['textChat'],
+    keys: ['textChat', 'name'],
     slice: ChannelsSlice,
     selectById,
 });
+
+export const selectIsTextChannelById = (
+    createSelector.withParams((channelId: string) => (query) => {
+        return !!query(selectTextChatById(channelId));
+    }, `${ChannelsSlice.name}/selectIsTextChannelById`)
+);
 
 // role calculations are omitted for simplicity
 export const selectAvailableTextChannelIdByServerId = (

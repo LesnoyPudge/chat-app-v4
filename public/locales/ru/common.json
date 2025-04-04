@@ -9,6 +9,8 @@
     "ChannelFinderPanel.heading": "Нет доступных текстовых каналов",
     "ChannelFinderPanel.openMobileMenu": "Открыть меню",
     "ChannelFinderPanel.strangePlace": "Вы оказались в странном месте.",
+    "ChannelPanel.Header.toggleButton.description.off": "Скрыть список участников",
+    "ChannelPanel.Header.toggleButton.description.on": "Показать список участников",
     "COMMON.Hide": "Скрыть",
     "COMMON.Settings": "Настройки",
     "ConversationContextMenu.hideButton.text": "Скрыть сообщения",
