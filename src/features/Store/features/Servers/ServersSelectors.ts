@@ -94,14 +94,14 @@ export const selectIdsWithUnreadNotificationCount = (
     }, `${ServersSlice.name}/selectIdsWithUnreadNotificationCount`)
 );
 
-export const selectIdsWithUnreadNotificationCountSortedByCount = (
+export const selectIdsSortedByUnreadNotificationCount = (
     createSelector((query) => {
         const servers = query(selectIdsWithUnreadNotificationCount);
 
         return servers.sort(
             sortFns.bigToSmall.select(([_, count]) => count),
-        );
-    }, `${ServersSlice.name}/selectIdsWithUnreadNotificationCountSortedByCount`)
+        ).map((v) => v[0]);
+    }, `${ServersSlice.name}/selectIdsSortedByUnreadNotificationCount`)
 );
 
 export const selectIdsWithoutUnreadNotifications = (

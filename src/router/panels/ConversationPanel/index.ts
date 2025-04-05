@@ -1,0 +1,1 @@
+export { ConversationPanel as default } from './ChannelPanel';

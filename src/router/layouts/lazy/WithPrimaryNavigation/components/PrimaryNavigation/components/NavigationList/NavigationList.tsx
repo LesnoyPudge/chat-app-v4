@@ -94,8 +94,7 @@ export const NavigationList: FC = () => {
         Store
             .Conversations
             .Selectors
-            .selectIdsWithUnreadNotificationCountSortedByCount,
-        (state) => state.map((v) => v[0]),
+            .selectIdsSortedByUnreadNotificationCount,
     );
 
     const conversationIdsToFetch = Store.useSelector(
@@ -112,8 +111,7 @@ export const NavigationList: FC = () => {
         Store
             .Servers
             .Selectors
-            .selectIdsWithUnreadNotificationCountSortedByCount,
-        (state) => state.map((v) => v[0]),
+            .selectIdsSortedByUnreadNotificationCount,
     );
 
     const serverIdsWithoutNotifications = Store.useSelector(

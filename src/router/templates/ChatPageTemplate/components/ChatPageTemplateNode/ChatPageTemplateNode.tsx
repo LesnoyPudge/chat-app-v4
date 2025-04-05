@@ -9,8 +9,9 @@ import { useChatPageTemplate } from '../../hooks';
 
 
 const styles = createStyles({
-    wrapper: 'size-full',
-    mainPanelWrapper: 'flex size-full',
+    wrapper: 'flex size-full flex-col',
+    inner: 'flex size-full',
+    mainPanelWrapper: 'flex size-full flex-col',
     extraPanelWrapper: {
         base: 'size-full max-w-[264px] pb-5',
         wide: 'max-w-full',
@@ -37,9 +38,11 @@ export const ChatPageTemplateNode: FC<Types.Node.Props> = ({
         <div className={styles.wrapper}>
             {header}
 
-            <div className={styles.mainPanelWrapper}>
+            <div className={styles.inner}>
                 <If condition={shouldShowMainPanel}>
-                    {main}
+                    <div className={styles.mainPanelWrapper}>
+                        {main}
+                    </div>
                 </If>
 
                 <If condition={shouldShowExtraPanel}>

@@ -23,7 +23,7 @@ export const ProdRoutes = () => {
                             <SuspenseWithGlobalLoader
                                 loaderId='InvitationScreen'
                             >
-                                <LazyScreens.InvitationScreen/>
+                                <LazyScreens.Invitation/>
                             </SuspenseWithGlobalLoader>
                         </Navigator.ParamsProvider>
                     )}
@@ -36,7 +36,7 @@ export const ProdRoutes = () => {
                     element={(
                         <Navigator.ParamsProvider>
                             <SuspenseWithGlobalLoader loaderId='AuthScreen'>
-                                <LazyScreens.AuthScreen/>
+                                <LazyScreens.Auth/>
                             </SuspenseWithGlobalLoader>
                         </Navigator.ParamsProvider>
                     )}

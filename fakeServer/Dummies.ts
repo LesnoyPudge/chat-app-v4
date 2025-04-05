@@ -144,7 +144,9 @@ export class Dummies {
             avatar: null,
             blocked: [],
             conversations: [],
-            defaultAvatar: inRange(1, 4) as 1 | 2 | 3 | 4,
+            defaultAvatar: (
+                inRange(1, 4) as ClientEntities.User.Base['defaultAvatar']
+            ),
             extraStatus: 'default',
             incomingFriendRequests: [],
             outgoingFriendRequests: [],

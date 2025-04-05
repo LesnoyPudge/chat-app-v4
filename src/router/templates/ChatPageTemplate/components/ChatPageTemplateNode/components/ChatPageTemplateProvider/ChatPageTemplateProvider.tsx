@@ -12,7 +12,7 @@ export const ChatPageTemplateProvider: FC<PropsWithChildren> = ({
     children,
 }) => {
     const { isDesktop, isMobile } = LayoutType.useLayoutType();
-    const state = useBoolean(true);
+    const state = useBoolean(false);
 
     const isExtraPanelActive = state.value;
     const isMainPanelActive = !isExtraPanelActive;

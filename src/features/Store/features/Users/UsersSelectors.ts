@@ -26,9 +26,15 @@ export const {
     slice: UsersSlice,
 });
 
-export const selectCurrentUser = createSelector((query) => {
+export const selectCurrentUserId = createSelector((query) => {
     const id = query(App.Selectors.selectUserId);
     invariant(id, 'Failed to select current user id');
+
+    return id;
+}, `${UsersSlice.name}/selectCurrentUserId`);
+
+export const selectCurrentUser = createSelector((query) => {
+    const id = query(selectCurrentUserId);
 
     const user = query(selectById(id));
     invariant(user, 'Failed to select current user while not authorized');

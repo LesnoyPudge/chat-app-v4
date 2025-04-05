@@ -14,4 +14,6 @@ export const LazyPanels = {
     ChannelFinder: load(() => import('./ChannelFinderPanel')),
 
     Channel: load(() => import('./ChannelPanel')),
+
+    Conversation: load(() => import('./ConversationPanel')),
 };

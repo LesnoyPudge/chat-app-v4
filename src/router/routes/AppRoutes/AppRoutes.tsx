@@ -30,13 +30,8 @@ export const AppRoutes: FC = () => {
                     path={Navigator.staticNavigatorPath.conversation}
                     element={(
                         <Navigator.ParamsProvider>
-                            <>conversation</>
+                            <LazyPanels.Conversation/>
                         </Navigator.ParamsProvider>
-                        // <Suspense fallback={<SubPageSkeleton/>}>
-                        //     <GlobalLoader.Loaded>
-                        //         <PrivateChatSubPage/>
-                        //     </GlobalLoader.Loaded>
-                        // </Suspense>
                     )}
                 />
             </Route>

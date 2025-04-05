@@ -17,6 +17,7 @@
     "FriendsPanel.PendingRequests.incoming.button.tooltip": "Принять",
     "FriendsPanel.PendingRequests.outgoing.button.label": "Отклонить запрос в друзья",
     "FriendsPanel.PendingRequests.outgoing.button.tooltip": "Отклонить",
+    "MemberActionMenu.label": "__NOT_TRANSLATED__",
     "MemberActionMenu.sendMessageButton": "__NOT_TRANSLATED__",
     "ServerMenu.actionListLabel": "Меню действий"
 }

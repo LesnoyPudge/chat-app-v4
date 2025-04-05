@@ -67,11 +67,11 @@ export const selectNotificationCountById = (
     }, `${ConversationsSlice.name}/selectNotificationCountById`)
 );
 
-export const selectIdsWithUnreadNotificationCountSortedByCount = (
+export const selectIdsSortedByUnreadNotificationCount = (
     createSelector((query) => {
         const { conversations } = query(Users.Selectors.selectCurrentUser);
 
-        const result = conversations.map((conversationId) => {
+        const ids = conversations.map((conversationId) => {
             const count = query(selectNotificationCountById(
                 conversationId,
             ));
@@ -81,10 +81,10 @@ export const selectIdsWithUnreadNotificationCountSortedByCount = (
             return [conversationId, count] as const;
         }).filter(Boolean).sort(
             sortFns.bigToSmall.select(([_, count]) => count),
-        );
+        ).map((v) => v[0]);
 
-        return result;
-    }, `${ConversationsSlice.name}/selectIdsWithUnreadNotificationCountSortedByCount`)
+        return ids;
+    }, `${ConversationsSlice.name}/selectIdsSortedByUnreadNotificationCount`)
 );
 
 export const selectVisibleIds = createSelector((query) => {
@@ -113,15 +113,26 @@ export const selectConversationByTargetId = (
     }, `${ConversationsSlice.name}/selectConversationByTargetId`)
 );
 
-export const selectSecondConversationMemberById = (
+export const selectSecondConversationMemberIdById = (
     createSelector.withParams((conversationId: string) => (query) => {
         const members = query(selectMembersById(conversationId));
         if (!members) return;
 
         const userId = query(Users.Selectors.selectCurrentUser).id;
         const targetId = members.find((id) => id !== userId);
-        const targetUser = query(Users.Selectors.selectById(targetId));
 
+
+        return targetId;
+    }, `${ConversationsSlice.name}/selectSecondConversationMemberIdById`)
+);
+
+export const selectSecondConversationMemberById = (
+    createSelector.withParams((conversationId: string) => (query) => {
+        const targetId = query(
+            selectSecondConversationMemberIdById(conversationId),
+        );
+
+        const targetUser = query(Users.Selectors.selectById(targetId));
 
         return targetUser;
     }, `${ConversationsSlice.name}/selectSecondConversationMemberById`)

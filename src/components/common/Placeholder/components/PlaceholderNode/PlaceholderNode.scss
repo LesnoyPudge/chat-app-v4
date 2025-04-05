@@ -14,7 +14,8 @@
         position: relative;
         user-select: none;
         overflow: hidden;
-    
+        pointer-events: none;
+        
         &::before {
             display: none;
         }

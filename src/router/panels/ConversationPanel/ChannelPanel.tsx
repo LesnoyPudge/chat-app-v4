@@ -1,10 +1,10 @@
 import { ChatPageTemplate } from '@/router/templates';
 import { FC } from 'react';
-import { Header, MemberList } from './components';
+import { Header } from './components';
 
 
 
-export const ChannelPanel: FC = () => {
+export const ConversationPanel: FC = () => {
     return (
         <ChatPageTemplate.Node
             header={<Header/>}
@@ -14,7 +14,7 @@ export const ChannelPanel: FC = () => {
                     <div>message input</div>
                 </>
             )}
-            extra={<MemberList/>}
+            extra={null}
         />
     );
 };

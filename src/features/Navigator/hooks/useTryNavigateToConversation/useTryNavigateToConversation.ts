@@ -17,6 +17,13 @@ export const useTryNavigateToConversation = () => {
     const tryNavigateToConversation = useFunction((targetId: string) => {
         const storeState = injectedStore.getStore().getState();
 
+        const currentUserId = (
+            Store.Users.Selectors
+                .selectCurrentUserId(storeState)
+        );
+
+        if (targetId === currentUserId) return;
+
         const maybeConversation = (
             Store.Conversations.Selectors
                 .selectConversationByTargetId(targetId)(storeState)
