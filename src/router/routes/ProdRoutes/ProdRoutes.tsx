@@ -19,11 +19,13 @@ export const ProdRoutes = () => {
                 <Route
                     path={Navigator.staticNavigatorPath.invitation}
                     element={(
-                        <SuspenseWithGlobalLoader>
-                            <Navigator.ParamsProvider>
+                        <Navigator.ParamsProvider>
+                            <SuspenseWithGlobalLoader
+                                loaderId='InvitationScreen'
+                            >
                                 <LazyScreens.InvitationScreen/>
-                            </Navigator.ParamsProvider>
-                        </SuspenseWithGlobalLoader>
+                            </SuspenseWithGlobalLoader>
+                        </Navigator.ParamsProvider>
                     )}
                 />
             </Route>
@@ -32,11 +34,11 @@ export const ProdRoutes = () => {
                 <Route
                     path={Navigator.staticNavigatorPath.auth}
                     element={(
-                        <SuspenseWithGlobalLoader>
-                            <Navigator.ParamsProvider>
+                        <Navigator.ParamsProvider>
+                            <SuspenseWithGlobalLoader loaderId='AuthScreen'>
                                 <LazyScreens.AuthScreen/>
-                            </Navigator.ParamsProvider>
-                        </SuspenseWithGlobalLoader>
+                            </SuspenseWithGlobalLoader>
+                        </Navigator.ParamsProvider>
                     )}
                 />
             </Route>

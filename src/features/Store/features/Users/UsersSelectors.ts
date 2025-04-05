@@ -1,4 +1,4 @@
-import { createAdapterSelectors, createSelector } from '@/store/utils';
+import { createAdapterFieldSelectors, createAdapterSelectors, createSelector } from '@/store/utils';
 import { App } from '@/store/features';
 import { invariant } from '@lesnoypudge/utils';
 import { UsersSlice } from './UsersSlice';
@@ -17,6 +17,14 @@ export const {
     selectIsExistsById,
 } = createAdapterSelectors(UsersSlice);
 
+export const {
+    selectExtraStatusById,
+    selectStatusById,
+} = createAdapterFieldSelectors({
+    keys: ['status', 'extraStatus'],
+    selectById,
+    slice: UsersSlice,
+});
 
 export const selectCurrentUser = createSelector((query) => {
     const id = query(App.Selectors.selectUserId);
@@ -64,4 +72,31 @@ export const selectCurrentUserOutgoingRequestUserIds = (
 
         return user.outgoingFriendRequests.map((v) => v.to);
     }, `${UsersSlice.name}/selectCurrentUserOutgoingRequestUserIds`)
+);
+
+export const selectPresenceStatusById = (
+    createSelector.withParams((userId: string) => (query) => {
+        const extraStatus = query(selectExtraStatusById(userId));
+        const status = query(selectStatusById(userId));
+
+        if (!extraStatus || !status) return 'offline';
+
+        return derivePresenceStatus({ extraStatus, status });
+    }, `${UsersSlice.name}/selectPresenceStatusById`)
+);
+
+export const selectIsNotOfflineById = (
+    createSelector.withParams((userId: string) => (query) => {
+        const status = query(selectPresenceStatusById(userId));
+
+        return status !== 'offline';
+    }, `${UsersSlice.name}/selectIsNotOfflineById`)
+);
+
+export const selectIsOfflineById = (
+    createSelector.withParams((userId: string) => (query) => {
+        const status = query(selectPresenceStatusById(userId));
+
+        return status === 'offline';
+    }, `${UsersSlice.name}/selectIsOfflineById`)
 );

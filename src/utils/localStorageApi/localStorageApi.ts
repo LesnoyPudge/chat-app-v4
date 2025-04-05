@@ -22,4 +22,18 @@ export namespace localStorageApi {
     );
 }
 
-export const localStorageApi = new LocalStorage<localStorageApi.Storage>();
+const api = new LocalStorage<localStorageApi.Storage>();
+
+export const localStorageApi = Object.assign(api, {
+    removeSensitiveData: () => {
+        localStorageApi.remove('isDeaf');
+        localStorageApi.remove('isMute');
+        localStorageApi.remove('accessToken');
+        localStorageApi.remove('refreshToken');
+        localStorageApi.remove('messageDisplayMode');
+        localStorageApi.remove('messageFontSize');
+        localStorageApi.remove('messageGroupSpacing');
+        localStorageApi.remove('theme');
+        localStorageApi.remove('lastVisitedChannels');
+    },
+});

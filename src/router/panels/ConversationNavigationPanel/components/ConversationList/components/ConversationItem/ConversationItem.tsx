@@ -90,18 +90,9 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
         itemId: conversationId,
     });
 
-    const conversation = Store.useSelector(
-        Store.Conversations.Selectors.selectById(conversationId),
-    );
-
-    const userId = Store.useSelector(
-        Store.App.Selectors.selectUserId,
-    );
-
     const userTarget = Store.useSelector(
-        Store.Users.Selectors.selectById(
-            conversation?.members.find((id) => id !== userId),
-        ),
+        Store.Conversations.Selectors
+            .selectSecondConversationMemberById(conversationId),
     );
 
     const [

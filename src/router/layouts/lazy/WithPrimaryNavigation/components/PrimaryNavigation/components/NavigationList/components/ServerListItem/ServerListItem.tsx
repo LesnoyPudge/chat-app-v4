@@ -63,7 +63,6 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
                 className={sharedStyles.button}
                 tabIndex={tabIndex}
                 label={server?.name}
-                role='menuitem'
                 isActive={isActive}
                 innerRef={buttonRef}
                 onLeftClick={navigateToServerOrChannel}

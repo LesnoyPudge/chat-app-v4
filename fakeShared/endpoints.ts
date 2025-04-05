@@ -520,6 +520,62 @@ namespace EndpointsV1 {
                 | 'VoiceChat'
             >;
         }
+
+        export namespace GetMembers {
+            export const ActionName = 'getMembers';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = (
+                WithId.Server
+                & {
+                    limit: number;
+                }
+            );
+
+            export type Response = Pick<
+                AppData,
+                'User'
+            >;
+        }
+
+        export namespace KickMember {
+            export const ActionName = 'kickMember';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = (
+                WithId.Server
+                & WithId.Target
+            );
+
+            export type Response = void;
+        }
+
+        export namespace BanMember {
+            export const ActionName = 'banMember';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = (
+                WithId.Server
+                & WithId.Target
+            );
+
+            export type Response = void;
+        }
     }
 
     export namespace Channel {

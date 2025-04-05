@@ -2,10 +2,10 @@ import { useLocalStorage } from '@/hooks';
 import { env } from '@/vars';
 import { FC, useEffect, useMemo } from 'react';
 import { Outlet } from 'react-router';
-import { SuspenseWithGlobalLoader } from '../SuspenseWithGlobalLoader';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
 import { Navigator, Store } from '@/features';
 import { createSleep, ErrorThrower } from '@lesnoypudge/utils-react';
+import { SuspenseWithGlobalLoader } from '../SuspenseWithGlobalLoader';
 
 
 
@@ -82,7 +82,7 @@ export const OnlyAuthorized: FC = () => {
         || (isAttemptedToRefresh && isAuthorized && !isRefreshing)
     );
 
-    const showLoader = !shouldShowOutlet && !shouldNavigateToAuth;
+    const shouldShowLoader = !shouldShowOutlet && !shouldNavigateToAuth;
 
     useEffect(() => {
         if (!shouldNavigateToAuth) return;
@@ -98,8 +98,8 @@ export const OnlyAuthorized: FC = () => {
                 <Outlet/>
             </If>
 
-            <If condition={showLoader}>
-                <SuspenseWithGlobalLoader>
+            <If condition={shouldShowLoader}>
+                <SuspenseWithGlobalLoader loaderId='OnlyAuthorized'>
                     <Sleep>
                         <ErrorThrower/>
                     </Sleep>

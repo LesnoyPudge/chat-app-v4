@@ -161,7 +161,7 @@ const createServer = deferred(async (
 
     owner.servers.push(serverId);
 
-    const members: ClientEntities.User.Base[] = [];
+    const members: ClientEntities.User.Base[] = [owner];
 
     for (let i = 0; i < inRange(1, mul(5)); i++) {
         const user = await createUser();
@@ -283,10 +283,10 @@ const createServer = deferred(async (
             ...voiceChannels,
         ]),
         identifier: faker.string.sample(),
-        members: [
+        members: [...new Set([
             ...extractIds(members),
             myId,
-        ],
+        ])],
         name: faker.company.name(),
         owner: owner.id,
         roles: extractIds(roles),

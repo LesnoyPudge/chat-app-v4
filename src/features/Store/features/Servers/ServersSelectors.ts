@@ -1,4 +1,4 @@
-import { createAdapterSelectors, createSelector } from '@/store/utils';
+import { createAdapterFieldSelectors, createAdapterSelectors, createSelector } from '@/store/utils';
 import { ServersSlice } from './ServersSlice';
 import { Users } from '../Users';
 import { TextChats } from '../TextChats';
@@ -19,6 +19,14 @@ export const {
     selectUndefinedIdsByIds,
     selectIsExistsById,
 } = createAdapterSelectors(ServersSlice);
+
+export const {
+    selectMembersById,
+} = createAdapterFieldSelectors({
+    keys: ['members'],
+    selectById,
+    slice: ServersSlice,
+});
 
 
 export const selectIsMutedById = createSelector.withParams((id: string) => {
@@ -161,4 +169,26 @@ export const selectMyPermissionsByServerId = (
 
         return query(selectUserPermissions(serverId, userId));
     }, `${ServersSlice.name}/selectMyPermissionsByServerId`)
+);
+
+export const selectOnlineMemberIdsById = (
+    createSelector.withParams((serverId: string) => (query) => {
+        const membersIds = query(selectMembersById(serverId));
+        if (!membersIds?.length) return [];
+
+        return membersIds.filter((memberId) => {
+            return query(Users.Selectors.selectIsNotOfflineById(memberId));
+        });
+    }, `${ServersSlice.name}/selectOnlineMemberIdsById`)
+);
+
+export const selectOfflineMemberIdsById = (
+    createSelector.withParams((serverId: string) => (query) => {
+        const membersIds = query(selectMembersById(serverId));
+        if (!membersIds?.length) return [];
+
+        return membersIds.filter((memberId) => {
+            return query(Users.Selectors.selectIsOfflineById(memberId));
+        });
+    }, `${ServersSlice.name}/selectOfflineMemberIdsById`)
 );

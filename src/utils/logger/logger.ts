@@ -18,7 +18,7 @@ const createMethods = (flagName: keyof LOGGER_FLAGS) => {
 
             // @ts-ignore
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-            console[cur](...data);
+            console[cur](`[${flagName}]`, ...data);
         };
 
         return acc;

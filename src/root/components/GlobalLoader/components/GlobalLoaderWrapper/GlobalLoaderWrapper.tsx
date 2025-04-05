@@ -31,8 +31,10 @@ export const GlobalLoaderWrapper: FC<PropsWithChildren> = ({
 
     const disable = useFunction(() => {
         clearTimeout(disableTimeoutIdRef.current);
-
+        // const id = Math.random();
+        // console.log(`QUEUE STATE CLOSE: ${id}`);
         disableTimeoutIdRef.current = setTimeout(() => {
+            // console.log(`STATE CLOSE: ${id}`);
             controls.close();
         }, 200);
     });
@@ -40,8 +42,13 @@ export const GlobalLoaderWrapper: FC<PropsWithChildren> = ({
     const enable = useFunction(() => {
         clearTimeout(disableTimeoutIdRef.current);
 
+        // console.log('STATE OPEN');
         controls.open();
     });
+
+    // useEffect(() => {
+    // console.log(`STATE IS: ${controls.isOpen}`);
+    // }, [controls.isOpen]);
 
     const value: Types.Context = {
         isEnabled: controls.isOpen,

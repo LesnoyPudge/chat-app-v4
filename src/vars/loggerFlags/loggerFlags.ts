@@ -9,10 +9,12 @@ export const LOGGER_FLAGS = {
     _warns: true,
     prod: true,
     setup: false,
-    globalLoader: true,
+    globalLoader: false,
     lazyModules: false,
     fakeServer: false,
     scenarios: true,
+    selectors: true,
+    selectorsTrace: true,
 } satisfies Record<string, boolean>;
 
 export type LOGGER_FLAGS = typeof LOGGER_FLAGS;

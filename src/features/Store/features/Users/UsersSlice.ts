@@ -35,10 +35,11 @@ export const UsersSlice = createSlice({
                 UsersApi.endpoints.UserRegistration.matchFulfilled,
                 UsersApi.endpoints.UserRefresh.matchFulfilled,
                 Servers.Api.endpoints.ServerGetManyDeep.matchFulfilled,
+                Servers.Api.endpoints.ServerGetMembers.matchFulfilled,
                 Conversations.Api.endpoints.ConversationGetManyDeep.matchFulfilled,
             ),
             (state, { payload }) => {
-                const result = [...payload.User];
+                const result = payload.User;
 
                 if ('userData' in payload) {
                     result.push(payload.userData);

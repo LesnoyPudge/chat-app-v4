@@ -11,21 +11,19 @@ export const GlobalLoaderDisable: FC<Types.ActionComponentProps> = ({
     displayId,
     children,
 }) => {
-    const {
-        disable,
-        isEnabled,
-    } = ContextSelectable.useProxy(GlobalLoaderContext);
+    const { disable } = ContextSelectable.useProxy(GlobalLoaderContext);
 
     useEffect(() => {
-        if (!isEnabled) return;
-
         displayId && logger.globalLoader.log(toOneLine(`
             DISABLE global loader with 
             id: ${displayId}, at: ${Date.now()}
         `));
 
         disable();
-    }, [disable, displayId, isEnabled]);
+    }, [
+        disable,
+        displayId,
+    ]);
 
     return children;
 };

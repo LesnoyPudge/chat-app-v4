@@ -96,5 +96,44 @@ export const ServersApi = getRootApi().injectEndpoints({
                 }),
             })
         ),
+
+        [Server.GetMembers.NamedAction]: (
+            build.query<
+                Server.GetMembers.Response,
+                Server.GetMembers.RequestBody
+            >({
+                query: (body) => ({
+                    url: Server.GetMembers.Path,
+                    method: Server.GetMembers.Method,
+                    body,
+                }),
+            })
+        ),
+
+        [Server.KickMember.NamedAction]: (
+            build.mutation<
+                Server.KickMember.Response,
+                Server.KickMember.RequestBody
+            >({
+                query: (body) => ({
+                    url: Server.KickMember.Path,
+                    method: Server.KickMember.Method,
+                    body,
+                }),
+            })
+        ),
+
+        [Server.BanMember.NamedAction]: (
+            build.mutation<
+                Server.BanMember.Response,
+                Server.BanMember.RequestBody
+            >({
+                query: (body) => ({
+                    url: Server.BanMember.Path,
+                    method: Server.BanMember.Method,
+                    body,
+                }),
+            })
+        ),
     }),
 });

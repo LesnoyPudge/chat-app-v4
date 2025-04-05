@@ -1,38 +1,13 @@
 import { useFunction } from '@lesnoypudge/utils-react';
 import { StoreTypes } from '@/store/types';
-import { logger } from '@/utils';
 import { isProd } from '@/vars';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { useMemo } from 'react';
-import { invariant, isCallable, shallowEqual } from '@lesnoypudge/utils';
 import { ReduxReact } from '@/libs';
+import { checks } from './checks';
 
 
-
-const SLOW_SELECTOR_THRESHOLD = 5;
 
 const useTypedSelector = ReduxReact.useSelector.withTypes<StoreTypes.State>();
-
-const getSelectorName = (selector: T.AnyFunction) => {
-    let displayName: string | undefined;
-
-    if ('displayName' in selector) {
-        displayName = String(selector.displayName);
-    };
-
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    return displayName || selector.name.trim() || 'unknown';
-};
-
-const getRecomputations = (selector: T.AnyFunction): number => {
-    if (!('recomputations' in selector)) return 0;
-    if (!isCallable(selector.recomputations)) return 0;
-
-    const result = selector.recomputations();
-    invariant(typeof result === 'number');
-
-    return result;
-};
 
 const defaultTransformer = <_Value>(state: _Value) => state;
 
@@ -46,43 +21,16 @@ export const useSelector = <
     const stableSelector = useFunction((state: StoreTypes.State) => {
         if (isProd) return selector(state);
 
-        const startTime = performance.now();
-        const result = selector(state);
-        const diff = performance.now() - startTime;
-        const firstRecomputeCount = getRecomputations(selector);
-        const selectorName = getSelectorName(selector);
+        checks.detectBrokenStats(selector);
+        checks.detectSlowFirstRun(selector, state);
+        checks.detectSlowSecondRun(selector, state);
+        checks.detectRecomputations(selector, state);
+        checks.detectUnstableReturn(selector, state);
 
-        if (diff >= SLOW_SELECTOR_THRESHOLD) {
-            logger._warns.warn(`Found slow selector ${selectorName}: ${diff}ms`);
-        }
-
-        const secondResult = selector(state);
-        const secondRecomputeCount = getRecomputations(selector);
-
-        const notEqual = result !== secondResult;
-        const isRecomputed = firstRecomputeCount !== secondRecomputeCount;
-
-        if (notEqual) {
-            logger._warns.log(
-                `Selector ${selectorName} returned different reference`,
-            );
-            logger._warns.trace(selectorName);
-        }
-
-        if (isRecomputed) {
-            logger._warns.log(
-                `Selector ${selectorName} has unnecessary recomputations`,
-            );
-            logger._warns.trace(selectorName);
-        }
-
-        return result;
+        return selector(state);
     });
 
-    const selectorResult = useTypedSelector(
-        stableSelector,
-        shallowEqual,
-    );
+    const selectorResult = useTypedSelector(stableSelector);
 
     const stableTransformer = useFunction(transformer ?? defaultTransformer);
 

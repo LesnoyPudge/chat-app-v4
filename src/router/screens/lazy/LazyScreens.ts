@@ -1,8 +1,8 @@
-import { lazyLoad } from '@lesnoypudge/utils-react';
+import { baseAsyncComponent } from '@/utils';
 
 
 
-const load = lazyLoad.baseAsyncComponent;
+const load = baseAsyncComponent;
 
 export const LazyScreens = {
     AuthScreen: load(() => import('./AuthScreen')),

@@ -1,5 +1,5 @@
 import { ReduxToolkit } from '@/libs';
-import { withStateReducers, withStateSelectors } from './utils';
+import { addStatsToSelectors, withStateReducers, withStateSelectors } from './utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
@@ -51,6 +51,11 @@ export const createSlice = <
         }),
         extraReducers,
         reducerPath: name,
+    });
+
+    addStatsToSelectors({
+        sliceName: name,
+        selectors: slice.selectors,
     });
 
     return slice;

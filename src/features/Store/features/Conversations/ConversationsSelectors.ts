@@ -1,4 +1,4 @@
-import { createAdapterSelectors, createSelector } from '@/store/utils';
+import { createAdapterFieldSelectors, createAdapterSelectors, createSelector } from '@/store/utils';
 import { ConversationsSlice } from './ConversationsSlice';
 import { Users } from '../Users';
 import { TextChats } from '../TextChats';
@@ -16,6 +16,14 @@ export const {
     selectUndefinedIdsByIds,
     selectIsExistsById,
 } = createAdapterSelectors(ConversationsSlice);
+
+export const {
+    selectMembersById,
+} = createAdapterFieldSelectors({
+    keys: ['members'],
+    selectById,
+    slice: ConversationsSlice,
+});
 
 export const selectIsMutedById = createSelector.withParams((id: string) => {
     return (query) => {
@@ -103,4 +111,18 @@ export const selectConversationByTargetId = (
 
         return conversations.find((value) => value.members.includes(targetId));
     }, `${ConversationsSlice.name}/selectConversationByTargetId`)
+);
+
+export const selectSecondConversationMemberById = (
+    createSelector.withParams((conversationId: string) => (query) => {
+        const members = query(selectMembersById(conversationId));
+        if (!members) return;
+
+        const userId = query(Users.Selectors.selectCurrentUser).id;
+        const targetId = members.find((id) => id !== userId);
+        const targetUser = query(Users.Selectors.selectById(targetId));
+
+
+        return targetUser;
+    }, `${ConversationsSlice.name}/selectSecondConversationMemberById`)
 );

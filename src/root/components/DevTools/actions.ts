@@ -98,14 +98,22 @@ export const rawActions = {
         })();
     },
 
+    fullReset: () => {
+        rawActions.clearLocalStorage();
+        rawActions.softResetReduxStore();
+        rawActions.clearDatabase();
+    },
+
     populateDB_Small: () => {
         localStorageApi.set('shouldPopulate', 'small');
+        localStorageApi.remove('lastVisitedChannels');
         // eslint-disable-next-line no-restricted-globals
         location.reload();
     },
 
     populateDB_Medium: () => {
         localStorageApi.set('shouldPopulate', 'medium');
+        localStorageApi.remove('lastVisitedChannels');
         // eslint-disable-next-line no-restricted-globals
         location.reload();
     },
@@ -113,6 +121,7 @@ export const rawActions = {
     populateDB_Large: () => {
         logger._common.log('LONG LOADING IS EXPECTED');
         localStorageApi.set('shouldPopulate', 'large');
+        localStorageApi.remove('lastVisitedChannels');
         // eslint-disable-next-line no-restricted-globals
         location.reload();
     },

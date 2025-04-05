@@ -18,7 +18,9 @@ export type CustomQueryFn = ReduxToolkitQuery.BaseQueryFn<
     ReduxToolkitQuery.FetchBaseQueryMeta
 >;
 
-const createBaseQuery = (options: QueryOptions) => ReduxToolkitQuery.fetchBaseQuery({
+const createBaseQuery = (
+    options: QueryOptions,
+) => ReduxToolkitQuery.fetchBaseQuery({
     baseUrl: env._PUBLIC_SERVER_URL,
     credentials: 'include',
     prepareHeaders: (headers) => {

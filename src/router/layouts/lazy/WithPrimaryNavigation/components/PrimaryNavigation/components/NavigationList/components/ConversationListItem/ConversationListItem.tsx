@@ -1,6 +1,5 @@
 import { Avatar, Button, KeyboardNavigation, MobileMenu, Overlay } from '@/components';
-
-import { Focus, useFunction, useRefManager, useScrollIntoView, withDisplayName } from '@lesnoypudge/utils-react';
+import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
 import { sharedStyles } from '../../../../sharedStyles';
@@ -30,28 +29,14 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
         return v.conversation({ conversationId });
     });
 
-    const conversation = Store.useSelector(
-        Store.Conversations.Selectors.selectById(conversationId),
-    );
-
-    const myId = Store.useSelector(
-        Store.App.Selectors.selectUserId,
-    );
-
     const userTarget = Store.useSelector(
-        (state) => {
-            if (!conversation) return;
-            if (!myId) return;
-
-            const targetId = conversation.members.find((id) => id !== myId);
-            if (!targetId) return;
-
-            return Store.Users.Selectors.selectById(targetId)(state);
-        },
+        Store.Conversations.Selectors
+            .selectSecondConversationMemberById(conversationId),
     );
 
     const notificationsCount = Store.useSelector(
-        Store.Conversations.Selectors.selectNotificationCountById(conversationId),
+        Store.Conversations.Selectors
+            .selectNotificationCountById(conversationId),
     );
 
     const {
@@ -68,8 +53,7 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
         closeMenu();
     });
 
-    const isUserAndConversationExist = !!userTarget && !!conversation;
-
+    const shouldShowTooltip = !!userTarget;
     const isActive = isFocused || isInConversation;
 
     return (
@@ -81,7 +65,6 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
                 className={sharedStyles.button}
                 tabIndex={tabIndex}
                 label={userTarget?.name}
-                role='menuitem'
                 isActive={isActive}
                 innerRef={buttonRef}
                 onLeftClick={navigateToServer}
@@ -101,7 +84,7 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
                 </Avatar.WithBadge.Notifications>
             </Button>
 
-            <If condition={isUserAndConversationExist}>
+            <If condition={shouldShowTooltip}>
                 <Overlay.Tooltip
                     preferredAlignment='right'
                     leaderElementRef={buttonRef}

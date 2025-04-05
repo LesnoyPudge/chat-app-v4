@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { Types } from '../../types';
 import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
 import { decorate } from '@lesnoypudge/macro';
-import { ChatPageTemplateProvider } from '../ChatPageTemplateProvider';
+import { ChatPageTemplateProvider } from './components';
 import { useChatPageTemplate } from '../../hooks';
 
 

@@ -40,15 +40,7 @@ export const AppEffects = createEffects({
         ({ startListening }) => startListening({
             actionCreator: globalActions.softReset,
             effect: () => {
-                localStorageApi.remove('isDeaf');
-                localStorageApi.remove('isMute');
-                localStorageApi.remove('accessToken');
-                localStorageApi.remove('refreshToken');
-                localStorageApi.remove('messageDisplayMode');
-                localStorageApi.remove('messageFontSize');
-                localStorageApi.remove('messageGroupSpacing');
-                localStorageApi.remove('theme');
-                localStorageApi.remove('lastVisitedChannels');
+                localStorageApi.removeSensitiveData();
 
                 socket.disconnect();
                 socket.removeOnAddData();

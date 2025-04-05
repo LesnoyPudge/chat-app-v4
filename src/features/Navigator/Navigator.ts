@@ -14,6 +14,7 @@ export namespace Navigator {
         useNavigateTo,
         useParams,
         useTryNavigateToChannel,
+        useTryNavigateToConversation,
     } = hooks;
 
     export const {

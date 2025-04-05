@@ -17,38 +17,18 @@ export const FriendsActionButtons: FC<Props> = ({
     userId,
 }) => {
     const { t } = useTrans();
-    const { navigateTo } = Navigator.useNavigateTo();
-    const { getIsMounted } = useIsMounted();
-
-    const maybeConversation = Store.useSelector(
-        Store.Conversations.Selectors
-            .selectConversationByTargetId(userId),
-    );
+    const {
+        isConversationLoading,
+        tryNavigateToConversation,
+    } = Navigator.useTryNavigateToConversation();
 
     const [
         deleteFriendTrigger,
         deleteFriendHelpers,
     ] = Store.Users.Api.useUserDeleteFriendMutation();
 
-    const [
-        createConversationTrigger,
-        createConversationHelpers,
-    ] = Store.Conversations.Api.useConversationCreateMutation();
-
     const handleNavigateToChat = useFunction(() => {
-        if (maybeConversation) {
-            navigateTo.conversation({ conversationId: maybeConversation.id });
-            return;
-        }
-
-        if (createConversationHelpers.isLoading) return;
-
-        void createConversationTrigger({ targetId: userId }).then((v) => {
-            if (!v.data) return;
-            if (!getIsMounted()) return;
-
-            navigateTo.conversation({ conversationId: v.data.id });
-        });
+        tryNavigateToConversation(userId);
     });
 
     const handleDeleteFriend = () => {
@@ -65,7 +45,7 @@ export const FriendsActionButtons: FC<Props> = ({
                 sprite={ASSETS.IMAGES.SPRITE.MESSAGE_BUBBLE_ICON}
                 tooltip={t('FriendsPanel.Friends.goToConversationButton.tooltip')}
                 userId={userId}
-                isLoading={createConversationHelpers.isLoading}
+                isLoading={isConversationLoading}
             />
 
             <BaseActionButton

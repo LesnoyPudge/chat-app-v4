@@ -10,7 +10,6 @@ export namespace ChatPageTemplate {
 
     export const {
         ChatPageTemplateNode: Node,
-        ChatPageTemplateProvider: Provider,
     } = components;
 
     export const {

@@ -23,7 +23,7 @@ export const OnlyUnAuthorized: FC = () => {
 
     useEffect(() => {
         if (!shouldNavigateToRoot) return;
-
+        console.log('navigate to root');
         navigateTo.root({ replace: true });
     }, [navigateTo, shouldNavigateToRoot]);
 

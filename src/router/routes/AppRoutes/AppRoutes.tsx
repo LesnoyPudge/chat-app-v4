@@ -1,15 +1,17 @@
 import { FC } from 'react';
 import { Route } from 'react-router';
-import { SuspenseWithGlobalLoader } from '../components';
 import { Navigator } from '@/features';
 import { LazyLayouts } from '@/router/layouts/lazy';
 import { LazyPanels } from '@/router/panels';
+import { SuspenseWithGlobalLoader } from '../components';
 
 
 
 export const AppRoutes: FC = () => {
     return (
         <Route element={(
+            // since our components loaded all at once,
+            // single suspense is enough
             <SuspenseWithGlobalLoader loaderId='App'>
                 <LazyLayouts.WithPrimaryNavigation/>
             </SuspenseWithGlobalLoader>
@@ -58,22 +60,8 @@ export const AppRoutes: FC = () => {
                     path={Navigator.staticNavigatorPath.channel}
                     element={(
                         <Navigator.ParamsProvider>
-                            {/* <LazyLayouts.WithExtraPanel
-                                main={(
-                                    <div className='size-full'>
-                                        <div>feed</div>
-                                        <div>message input</div>
-                                    </div>
-                                )}
-                                extra={<div>member list</div>}
-                            /> */}
+                            <LazyPanels.Channel/>
                         </Navigator.ParamsProvider>
-
-                        // <Suspense fallback={<SubPageSkeleton/>}>
-                        //     <GlobalLoader.Loaded>
-                        //         <RoomSubPage/>
-                        //     </GlobalLoader.Loaded>
-                        // </Suspense>
                     )}
                 />
             </Route>

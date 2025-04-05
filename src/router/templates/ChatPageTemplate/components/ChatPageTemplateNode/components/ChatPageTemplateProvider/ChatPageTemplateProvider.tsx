@@ -1,10 +1,10 @@
 import { FC, PropsWithChildren } from 'react';
-import { Types } from '../../types';
+import { Types } from '../../../../types';
 import { LayoutType } from '@/components';
 import { useBoolean } from '@lesnoypudge/utils-react';
 import { isDev } from '@/vars';
 import { never } from '@lesnoypudge/utils';
-import { ChatPageTemplateContext } from '../../context';
+import { ChatPageTemplateContext } from '../../../../context';
 
 
 
@@ -12,7 +12,7 @@ export const ChatPageTemplateProvider: FC<PropsWithChildren> = ({
     children,
 }) => {
     const { isDesktop, isMobile } = LayoutType.useLayoutType();
-    const state = useBoolean(false);
+    const state = useBoolean(true);
 
     const isExtraPanelActive = state.value;
     const isMainPanelActive = !isExtraPanelActive;

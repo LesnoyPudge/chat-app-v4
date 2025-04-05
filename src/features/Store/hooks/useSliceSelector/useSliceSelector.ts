@@ -29,7 +29,9 @@ export const useSliceSelector = <
     const stableSelector = useFunction((state: StoreTypes.State) => {
         const slice = sliceHolder._Slice as _Slice;
         const sliceState = state[slice.name as _Slice['name']];
+
         const result = selector(sliceState);
+
         const prev = prevResultRef.current;
 
         if (prev === EMPTY_STATE) {
@@ -47,10 +49,27 @@ export const useSliceSelector = <
     });
 
     if (isDev) {
+        const displayName = (
+            selector as T.AnyRecord
+        )?.displayName as string | undefined;
+
         Object.assign(
             stableSelector,
             {
-                displayName: 'inlineSliceSelector',
+                displayName: displayName ?? `${
+                    sliceHolder._Slice.name
+                }/inlineSliceSelector`,
+            },
+        );
+
+        const recomputations = (
+            selector as T.AnyRecord
+        )?.recomputations as T.AnyFunction | undefined;
+
+        Object.assign(
+            stableSelector,
+            {
+                recomputations: recomputations ?? '__SKIP__',
             },
         );
     }
