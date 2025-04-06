@@ -10,7 +10,7 @@ import {
 
 
 
-export namespace TextInputTypes {
+export namespace Types {
     export type PropsWithDefaultValue = {
         placeholder: string;
         minLength: number;

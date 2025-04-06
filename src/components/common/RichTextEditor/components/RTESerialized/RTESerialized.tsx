@@ -1,17 +1,11 @@
 import { FC, useMemo } from 'react';
-import { RTETypes } from '../../RTETypes';
+import { RTETypes } from '../../types';
 import { parseJSON } from '@lesnoypudge/utils';
 import { RTEModules } from '../../RTEModules';
 
 
 
-export namespace RTESerialized {
-    export type Props = {
-        value: string;
-    };
-}
-
-export const RTESerialized: FC<RTESerialized.Props> = ({
+export const RTESerialized: FC<RTETypes.Serialized.Props> = ({
     value,
 }) => {
     const result = useMemo(() => {

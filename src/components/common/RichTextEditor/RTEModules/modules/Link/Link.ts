@@ -1,5 +1,5 @@
 import { Editor, Element, Location, NodeEntry, Text, Transforms } from 'slate';
-import { RTETypes } from '../../../RTETypes';
+import { RTETypes } from '../../../types';
 import { RTEModules } from '../..';
 
 

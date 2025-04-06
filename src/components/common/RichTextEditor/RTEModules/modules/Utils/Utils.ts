@@ -1,7 +1,7 @@
 import { Text, Editor, Element, Node, Transforms, createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import { withReact } from 'slate-react';
-import { RTETypes } from '../../../RTETypes';
+import { RTETypes } from '../../../types';
 import { RTEModules } from '../..';
 import { parseJSON } from '@lesnoypudge/utils';
 

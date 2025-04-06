@@ -1,6 +1,6 @@
 import { Editor, Element, NodeEntry, Text as SlateText } from 'slate';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { RTETypes } from '../../../RTETypes';
+import { RTETypes } from '../../../types';
 import { RTEModules } from '../..';
 
 

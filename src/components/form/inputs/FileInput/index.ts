@@ -1,12 +1,12 @@
-import * as a from './FileInput';
-import * as b from './acceptedFileType';
+import * as components from './FileInput';
+import * as vars from './acceptedFileType';
 
 
 
 export namespace FileInput {
-    export import Node = a.FileInput;
+    export import Node = components.FileInput;
 
-    export import NodePure = a.FileInputPure;
+    export import NodePure = components.FileInputPure;
 
-    export const { ACCEPTED_FILE_TYPE } = b;
+    export const { ACCEPTED_FILE_TYPE } = vars;
 }

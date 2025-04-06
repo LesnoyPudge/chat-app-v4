@@ -1,9 +1,9 @@
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { TextInputTypes } from '../../textInputTypes';
+import { Types } from '../../types';
 
 
 
-export type TextInputContext = TextInputTypes.Context;
+export type TextInputContext = Types.Context;
 
 export const TextInputContext = ContextSelectable.createContext<
     TextInputContext

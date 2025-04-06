@@ -1,7 +1,9 @@
-import { BaseEditor } from 'slate';
+import { BaseEditor, BaseSelection } from 'slate';
 import { HistoryEditor } from 'slate-history';
 import { ReactEditor } from 'slate-react';
 import { EmojiStore } from '@/features';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { PropsWithChildren } from 'react';
 
 
 
@@ -71,4 +73,32 @@ export namespace RTETypes {
     export type Node = RTETypes.Element | RTETypes.Text;
 
     export type Nodes = RTETypes.Node[];
+
+    export type Context = {
+        name: string;
+        label: string;
+        placeholder: string;
+        maxLength: number;
+        disabled: boolean;
+        onSubmit: (value: RTETypes.Nodes, editor: RTETypes.Editor) => void;
+    };
+
+    export namespace Provider {
+        export type Props = T.Simplify<(
+            PropsWithChildren
+            & Partial<Context>
+            & Pick<Context, 'name' | 'label' | 'placeholder'>
+            & {
+                value?: RTETypes.Nodes;
+                onChange?: (value: RTETypes.Nodes) => void;
+                onSelectionChange?: (selection: BaseSelection) => void;
+            }
+        )>;
+    }
+
+    export namespace Serialized {
+        export type Props = {
+            value: string;
+        };
+    }
 }

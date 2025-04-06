@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react';
-import { RTETypes } from '../../../../../RTETypes';
+import { RTETypes } from '../../../../../types';
 import { ExternalLink } from '@/components';
 import { createStyles } from '@/utils';
 

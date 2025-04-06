@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { cn, createStyles } from '@/utils';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { TextInputContext } from './context';
-import { useTextInput, useTextInputDefaults } from './hooks';
+import { TextInputContext } from '../../context';
+import { useTextInput, useTextInputDefaults } from '../../hooks';
 import { invariant } from '@lesnoypudge/utils';
-import { TextInputTypes } from './textInputTypes';
+import { Types } from '../../types/types';
 
 
 
@@ -22,7 +22,7 @@ const styles = createStyles({
 });
 
 export namespace TextInputPure {
-    export type Props = TextInputTypes.NodePureProps;
+    export type Props = Types.NodePureProps;
 }
 
 export const TextInputPure: FC<TextInputPure.Props> = ({
@@ -58,11 +58,11 @@ export const TextInputPure: FC<TextInputPure.Props> = ({
     );
 };
 
-export namespace TextInput {
-    export type Props = TextInputTypes.NodeProps;
+export namespace TextInputNode {
+    export type Props = Types.NodeProps;
 }
 
-export const TextInput: FC<TextInput.Props> = (props) => {
+export const TextInputNode: FC<TextInputNode.Props> = (props) => {
     const context = ContextSelectable.useSelector(
         TextInputContext,
     ) as TextInputContext | undefined;

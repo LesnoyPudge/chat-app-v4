@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { TextInputContext } from './context';
-import { useTextInput, useTextInputDefaults } from './hooks';
-import { TextInputTypes } from './textInputTypes';
+import { TextInputContext } from '../../context';
+import { useTextInput, useTextInputDefaults } from '../../hooks';
+import { Types } from '../../types';
 
 
 
 export namespace TextInputProvider {
-    export type Props = TextInputTypes.ContextProviderProps;
+    export type Props = Types.ContextProviderProps;
 }
 
 export const TextInputProvider: FC<TextInputProvider.Props> = ({
@@ -16,7 +16,7 @@ export const TextInputProvider: FC<TextInputProvider.Props> = ({
     const hook = useTextInput(rest);
     const propsWithDefaults = useTextInputDefaults(rest);
 
-    const contextValue: TextInputTypes.Context = {
+    const contextValue: Types.Context = {
         ...rest,
         ...propsWithDefaults,
         ...hook,

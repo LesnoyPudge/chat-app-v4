@@ -1,10 +1,10 @@
 import { CSSProperties, FC } from 'react';
 import { Editable, useSlate } from 'slate-react';
 import { cn, createStyles } from '@/utils';
-import { PropsWithClassName } from '@lesnoypudge/types-utils-react';
 import { RTEContext } from '../../context';
 import { RTEModules } from '../../RTEModules';
-import { ContextSelectable } from '@lesnoypudge/utils-react';
+import { ContextSelectable, useFunction } from '@lesnoypudge/utils-react';
+import { RT } from '@lesnoypudge/types-utils-react/namespace';
 
 
 
@@ -17,11 +17,7 @@ const style = {
     lineHeight: 'var(--message-line-height)',
 } satisfies CSSProperties;
 
-export namespace RTEContentEditable {
-    export type Props = PropsWithClassName;
-}
-
-export const RTEContentEditable: FC<RTEContentEditable.Props> = ({
+export const RTEContentEditable: FC<RT.PropsWithClassName> = ({
     className = '',
 }) => {
     const editor = useSlate();
@@ -34,6 +30,14 @@ export const RTEContentEditable: FC<RTEContentEditable.Props> = ({
         disabled,
     } = ContextSelectable.useProxy(RTEContext);
 
+    const handleOnKeyDown = useFunction(
+        RTEModules.Events.KeyDown(editor, onSubmit),
+    );
+
+    const handleFocus = useFunction(
+        RTEModules.Events.Focus(editor),
+    );
+
     return (
         <Editable
             className={cn(styles.editor, className)}
@@ -41,8 +45,8 @@ export const RTEContentEditable: FC<RTEContentEditable.Props> = ({
             renderElement={RTEModules.Render.renderElement}
             renderLeaf={RTEModules.Render.renderLeaf}
             renderPlaceholder={RTEModules.Render.renderPlaceholder}
-            onKeyDown={RTEModules.Events.KeyDown(editor, onSubmit)}
-            onFocus={RTEModules.Events.Focus(editor)}
+            onKeyDown={handleOnKeyDown}
+            onFocus={handleFocus}
             aria-label={label}
             placeholder={placeholder}
             maxLength={maxLength}

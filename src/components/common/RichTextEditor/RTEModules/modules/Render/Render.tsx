@@ -7,7 +7,7 @@ import {
     RenderPlaceholderProps,
 } from 'slate-react';
 import { RTEModules } from '../..';
-import { RTETypes } from '../../../RTETypes';
+import { RTETypes } from '../../../types';
 import {
     RenderedEmoji,
     RenderedLink,

@@ -1,13 +1,13 @@
 import { useId, useState } from 'react';
 import { useFunction } from '@lesnoypudge/utils-react';
-import { TextInputTypes } from '../../textInputTypes';
+import { Types } from '../../types';
 
 
 
 export namespace useTextInput {
-    export type Props = TextInputTypes.useTextInputProps;
+    export type Props = Types.useTextInputProps;
 
-    export type Return = TextInputTypes.useTextInputReturn;
+    export type Return = Types.useTextInputReturn;
 }
 
 export const useTextInput = ({

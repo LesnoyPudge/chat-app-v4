@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { RenderElementProps } from 'slate-react';
-import { RTETypes } from '../../../../../RTETypes';
+import { RTETypes } from '../../../../../types';
 
 
 

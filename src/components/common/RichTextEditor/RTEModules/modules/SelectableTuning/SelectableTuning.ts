@@ -1,5 +1,5 @@
 import { Editor, Range, Transforms } from 'slate';
-import { RTETypes } from '../../../RTETypes';
+import { RTETypes } from '../../../types';
 import { RTEModules } from '../..';
 
 

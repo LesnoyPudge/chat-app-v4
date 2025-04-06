@@ -1,6 +1,6 @@
 import { isProd } from '@/vars';
 import { Editor, Transforms, Element, Range, Text, Node } from 'slate';
-import { RTETypes } from '../../../RTETypes';
+import { RTETypes } from '../../../types';
 import { RTEModules } from '../..';
 
 

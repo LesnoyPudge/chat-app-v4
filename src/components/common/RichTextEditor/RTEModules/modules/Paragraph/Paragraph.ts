@@ -1,5 +1,5 @@
 import { Element } from 'slate';
-import { RTETypes } from '../../../RTETypes';
+import { RTETypes } from '../../../types';
 
 
 

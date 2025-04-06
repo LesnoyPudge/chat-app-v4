@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 import { catchErrorAsync, chance, coinFlip, inRange, invariant, toOneLine } from '@lesnoypudge/utils';
 import { v4 as uuid } from 'uuid';
 import { ClientEntities } from '@/types';
-import type { RichTextEditor } from '@/components';
+import type { RTE } from '@/components';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
 import { logger } from '@/utils';
 import { flattenPopulated } from './utils';
@@ -93,7 +93,7 @@ const createMessage = deferred(async (props: Pick<
         [{
             type: 'paragraph',
             children: [{ text }],
-        }] satisfies RichTextEditor.Types.Nodes,
+        }] satisfies RTE.Types.Nodes,
     );
 
     const timeDiff = minutesToMilliseconds(

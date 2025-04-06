@@ -2,7 +2,7 @@ import { EmojiStore } from '@/features';
 import { useCallback } from 'react';
 import { Element, Transforms } from 'slate';
 import { useSlate } from 'slate-react';
-import { RTETypes } from '../../../RTETypes';
+import { RTETypes } from '../../../types';
 import { RTEModules } from '../..';
 
 

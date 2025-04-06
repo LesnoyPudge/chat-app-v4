@@ -1,11 +1,11 @@
-import { TextInputTypes } from '../../textInputTypes';
+import { Types } from '../../types';
 
 
 
 export namespace useTextInputDefaults {
-    export type Props = TextInputTypes.useTextInputDefaultsProps;
+    export type Props = Types.useTextInputDefaultsProps;
 
-    export type Return = TextInputTypes.useTextInputDefaultsReturn;
+    export type Return = Types.useTextInputDefaultsReturn;
 }
 
 export const useTextInputDefaults = ({

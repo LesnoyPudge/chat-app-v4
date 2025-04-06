@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { RTETypes } from '../../../../../RTETypes';
+import { RTETypes } from '../../../../../types';
 import { Emoji } from '@/components';
 import { createStyles } from '@/utils';
 

@@ -1,35 +1,19 @@
 import {
     FC,
-    PropsWithChildren,
     useMemo,
     useEffect,
     useRef,
 } from 'react';
 import { Slate } from 'slate-react';
-import { BaseSelection } from 'slate';
-import { RTETypes } from '../../RTETypes';
+import { RTETypes } from '../../types';
 import { RTEModules } from '../../RTEModules';
 import { RTEContext } from '../../context';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { noop, shallowEqual } from '@lesnoypudge/utils';
 import { useFunction } from '@lesnoypudge/utils-react';
 
 
 
-export namespace RTEContextProvider {
-    export type Props = T.Simplify<(
-        PropsWithChildren
-        & Partial<RTEContext>
-        & Pick<RTEContext, 'name' | 'label' | 'placeholder'>
-        & {
-            value?: RTETypes.Nodes;
-            onChange?: (value: RTETypes.Nodes) => void;
-            onSelectionChange?: (selection: BaseSelection) => void;
-        }
-    )>;
-}
-
-export const RTEContextProvider: FC<RTEContextProvider.Props> = ({
+export const RTEContextProvider: FC<RTETypes.Provider.Props> = ({
     name,
     value = RTEModules.Utils.createInitialValue(),
     label,
@@ -48,7 +32,9 @@ export const RTEContextProvider: FC<RTEContextProvider.Props> = ({
         },
     }), [maxLength]);
 
-    const handleChange: NonNullable<typeof onChange> = useFunction((newValue) => {
+    const handleChange: NonNullable<
+        typeof onChange
+    > = useFunction((newValue) => {
         if (!onChange) return;
         if (newValue === lastValueRef.current) return;
 
@@ -75,7 +61,7 @@ export const RTEContextProvider: FC<RTEContextProvider.Props> = ({
         editor.onChange();
     }, [editor]);
 
-    const contextValues: RTEContext = {
+    const contextValues: RTETypes.Context = {
         maxLength,
         label,
         placeholder,

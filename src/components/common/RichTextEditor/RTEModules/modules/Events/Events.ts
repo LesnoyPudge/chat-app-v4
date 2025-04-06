@@ -2,7 +2,7 @@ import { Transforms } from 'slate';
 import { ReactEditor } from 'slate-react';
 import { KEY, noop } from '@lesnoypudge/utils';
 import { hotKey } from '@lesnoypudge/utils-web';
-import { RTETypes } from '../../../RTETypes';
+import { RTETypes } from '../../../types';
 
 
 

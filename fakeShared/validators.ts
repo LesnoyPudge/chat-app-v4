@@ -3,7 +3,7 @@ import { Endpoints } from './endpoints';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { t, EmojiStore } from '@/features';
 import { promiseToBoolean } from '@lesnoypudge/utils';
-import type { RichTextEditor } from '@/components';
+import type { RTE } from '@/components';
 import type { ClientEntities } from '@/types';
 import { FILE_MAX_SIZE } from './vars';
 
@@ -50,9 +50,9 @@ class SharedValidators {
         v.email(ve.INVALID_EMAIL),
     );
 
-    RTEText = v.customAsync<RichTextEditor.Types.Text>((value) => {
+    RTEText = v.customAsync<RTE.Types.Text>((value) => {
         return promiseToBoolean(v.parseAsync(
-            schema<RichTextEditor.Types.Text>(
+            schema<RTE.Types.Text>(
                 v.object({
                     text: v.string(),
                     bold: v.pipe(v.optional(v.boolean())),
@@ -64,7 +64,7 @@ class SharedValidators {
     });
 
     RTEParagraph = v.customAsync<
-        RichTextEditor.Types.Elements.Paragraph
+        RTE.Types.Elements.Paragraph
     >((value) => {
         return promiseToBoolean(v.parseAsync(
             v.objectAsync({
@@ -76,7 +76,7 @@ class SharedValidators {
     });
 
     RTELink = v.customAsync<
-        RichTextEditor.Types.Elements.Link
+        RTE.Types.Elements.Link
     >((value) => {
         return promiseToBoolean(v.parseAsync(
             v.pipeAsync(
@@ -100,7 +100,7 @@ class SharedValidators {
     });
 
     RTEEmoji = v.customAsync<
-        RichTextEditor.Types.Elements.Emoji
+        RTE.Types.Elements.Emoji
     >((value) => {
         return promiseToBoolean(v.parseAsync(
             v.pipeAsync(
@@ -134,7 +134,7 @@ class SharedValidators {
     });
 
     RTENodes = v.arrayAsync(v.customAsync<
-        RichTextEditor.Types.Node
+        RTE.Types.Node
     >(async (nodes) => {
         const results = await Promise.allSettled([
             this.RTEText.check(nodes),

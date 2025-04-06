@@ -57,13 +57,13 @@ const Inner: FC = () => {
     console.time('render');
     // start();
 
-    const res = Store.useSelector(
-        Store
-            .Conversations
-            .Selectors
-            .selectIdsWithUnreadNotificationCountSortedByCount,
-        // (state) => state.map(([v]) => v),
-    );
+    // const res = Store.useSelector(
+    //     Store
+    //         .Conversations
+    //         .Selectors
+    //         .selectIdsWithUnreadNotificationCountSortedByCount,
+    //     (state) => state.map(([v]) => v),
+    // );
 
     // const sortedConversationIds = Store.useSelector(
     //     (state) => (
@@ -154,23 +154,23 @@ const resultHolder: unknown[] = [];
 (window as any)._resultHolder = resultHolder;
 
 const fnToMeasure = (log: boolean) => {
-    const {
-        sortedConversationIds,
-    } = measure(
-        'sortedConversationIds',
-        log,
-        function sortedConversationIds() {
-            return (
-                Store
-                    .Conversations
-                    .Selectors
-                    .selectIdsWithUnreadNotificationCountSortedByCount(
-                        Store.Utils.injectedStore.getStore().getState(),
-                    )
-                    // .map((v) => v[0])
-            );
-        },
-    );
+    // const {
+    //     sortedConversationIds,
+    // } = measure(
+    //     'sortedConversationIds',
+    //     log,
+    //     function sortedConversationIds() {
+    //         return (
+    //             Store
+    //                 .Conversations
+    //                 .Selectors
+    //                 .selectIdsWithUnreadNotificationCountSortedByCount(
+    //                     Store.Utils.injectedStore.getStore().getState(),
+    //                 )
+    //                 // .map((v) => v[0])
+    //         );
+    //     },
+    // );
 
     // const {
     //     conversationIdsToFetch,
