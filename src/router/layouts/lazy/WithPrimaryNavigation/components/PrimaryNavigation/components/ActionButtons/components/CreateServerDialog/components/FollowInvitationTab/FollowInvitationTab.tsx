@@ -1,4 +1,4 @@
-import { Button, Form, Label, DialogBlocks } from '@/components';
+import { Button, Form, DialogBlocks, Inputs } from '@/components';
 import { ApiValidators, Endpoints } from '@/fakeShared';
 import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
@@ -9,42 +9,39 @@ import { Navigator, Store } from '@/features';
 
 
 
-type FollowInvitationFormValues = Endpoints.V1.Server.AcceptInvitation.RequestBody;
-
-const FollowInvitationForm = Form.createForm<FollowInvitationFormValues>({
-    defaultValues: {
-        invitationCode: '',
-    },
-    validator: ApiValidators.ServerAcceptInvitation,
-});
-
 const styles = createStyles({
     content: 'gap-2.5',
 });
 
 const invitePlaceholder = `hTkz9ak`;
 
+const {
+    FollowInvitationForm,
+} = Form.createForm<Endpoints.V1.Server.AcceptInvitation.RequestBody>({
+    defaultValues: {
+        invitationCode: '',
+    },
+    validator: ApiValidators.ServerAcceptInvitation,
+}).withName('FollowInvitation');
+
 export const FollowInvitationTab: FC = () => {
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
     const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
     const { tryNavigateToChannel } = Navigator.useTryNavigateToChannel();
-    const { mounted } = useMountedWrapper();
     const [accept] = Store.Servers.Api.useServerAcceptInvitationMutation();
     const { t } = useTrans();
 
-    const { FormApi, submitError } = Form.useForm({
-        ...FollowInvitationForm,
-        onSubmit: Form.apiAdapter(accept, {
-            onSuccess: (server) => mounted(() => {
-                closeOverlay();
-                tryNavigateToChannel(server.id);
-            }),
-        }),
+    const { form } = Form.useExtendForm(FollowInvitationForm, {
+        trigger: accept,
+        onSubmitSuccessMounted: (server) => {
+            closeOverlay();
+            tryNavigateToChannel(server.id);
+        },
     });
 
 
     return (
-        <Form.Provider formApi={FormApi} submitError={submitError}>
+        <Form.Provider form={form}>
             <Form.Node>
                 <DialogBlocks.Base.Header>
                     <DialogBlocks.Base.Title>
@@ -57,29 +54,20 @@ export const FollowInvitationTab: FC = () => {
                 </DialogBlocks.Base.Header>
 
                 <DialogBlocks.Base.Content className={styles.content}>
-                    <FormApi.Field name='invitationCode'>
-                        {(field) => (
-                            <Form.Inputs.TextInput.Provider
-                                field={field}
-                                label={t('CreateServerDialog.FollowInvitationTab.invitationCodeInput.label')}
-                                type='text'
-                                placeholder={invitePlaceholder}
-                                required
-                            >
-                                <div>
-                                    <Label.Node htmlFor={field.name}>
-                                        {t('CreateServerDialog.FollowInvitationTab.invitationCodeInput.label')}
+                    <Inputs.TextInput.Provider
+                        name={FollowInvitationForm.names.invitationCode}
+                        label={t('CreateServerDialog.FollowInvitationTab.invitationCodeInput.label')}
+                        placeholder={invitePlaceholder}
+                        required
+                    >
+                        <div>
+                            <Form.Label>
+                                {t('CreateServerDialog.FollowInvitationTab.invitationCodeInput.label')}
+                            </Form.Label>
 
-                                        <Label.Wildcard/>
-
-                                        <Label.Error field={field}/>
-                                    </Label.Node>
-
-                                    <Form.Inputs.TextInput.Node/>
-                                </div>
-                            </Form.Inputs.TextInput.Provider>
-                        )}
-                    </FormApi.Field>
+                            <Inputs.TextInput.Node/>
+                        </div>
+                    </Inputs.TextInput.Provider>
 
                     <Form.Error/>
                 </DialogBlocks.Base.Content>
@@ -93,18 +81,12 @@ export const FollowInvitationTab: FC = () => {
                         {t('CreateServerDialog.FollowInvitationTab.goBackButton.text')}
                     </Button>
 
-                    <FormApi.Subscribe selector={(s) => s.isSubmitting}>
-                        {(isSubmitting) => (
-                            <Button
-                                stylingPreset='brand'
-                                size='medium'
-                                type='submit'
-                                isLoading={isSubmitting}
-                            >
-                                {t('CreateServerDialog.FollowInvitationTab.joinServerButton.text')}
-                            </Button>
-                        )}
-                    </FormApi.Subscribe>
+                    <Form.SubmitButton
+                        stylingPreset='brand'
+                        size='medium'
+                    >
+                        {t('CreateServerDialog.FollowInvitationTab.joinServerButton.text')}
+                    </Form.SubmitButton>
                 </DialogBlocks.Base.Footer>
             </Form.Node>
         </Form.Provider>

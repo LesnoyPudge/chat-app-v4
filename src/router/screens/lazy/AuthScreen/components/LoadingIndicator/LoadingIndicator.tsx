@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { Form } from '@/components';
+import { useTrans } from '@/hooks';
 
 
 
@@ -24,31 +26,25 @@ const styles = createStyles({
     child: 'invisible',
 });
 
-export namespace WithLoadingIndicator {
-    export type Props = (
-        RT.PropsWithChildrenAndClassName
-        & {
-            isLoading: boolean;
-        }
-    );
-}
-
-export const WithLoadingIndicator: FC<WithLoadingIndicator.Props> = ({
+export const WithLoadingIndicator: FC<RT.PropsWithChildrenAndClassName> = ({
     className = '',
-    isLoading,
     children,
 }) => {
+    const { t } = useTrans();
+    const { api } = Form.useFormContext();
+    const isSubmitting = Form.useStore(api.store, (v) => v.isSubmitting);
+
     return (
         <div className={styles.wrapper}>
-            <div className={cn(isLoading && styles.child)}>
+            <div className={cn(isSubmitting && styles.child)}>
                 {children}
             </div>
 
-            <If condition={isLoading}>
+            <If condition={isSubmitting}>
                 <div
                     className={cn(styles.indicatorWrapper, className)}
-                    aria-label='Loading...'
-                    title='Loading...'
+                    aria-label={t('COMMON.Loading')}
+                    title={t('COMMON.Loading')}
                 >
                     <div></div>
 

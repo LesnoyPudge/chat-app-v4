@@ -49,6 +49,8 @@ export const t = ((...args: Parameters<TFunction>) => {
     return lazyString;
 });
 
+export type t = typeof t;
+
 export const getI18nInstance = () => {
     return i18nInstance;
 };

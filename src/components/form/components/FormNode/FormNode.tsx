@@ -1,57 +1,35 @@
+import { FC, FormEvent } from 'react';
+import { useFormContext } from '../../hooks';
+import { useFunction } from '@lesnoypudge/utils-react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { ContextSelectable, useFunction } from '@lesnoypudge/utils-react';
-import { PropsWithInnerRef } from '@/types';
-import { ComponentPropsWithoutRef, FC, FormEvent } from 'react';
-import { UntypedFormContext } from '../../context';
-import { invariant } from '@lesnoypudge/utils';
 
 
 
-export namespace FormNode {
-    export type OnSubmit = (
-        e: FormEvent<HTMLFormElement>
-    ) => Promise<void> | void;
-
-    export type OwnProps = (
-        RT.PropsWithChildrenAndClassName
-        & PropsWithInnerRef<'form'>
-        & {
-            onSubmit?: OnSubmit;
-        }
-    );
-
-    export type Props = (
-        Omit<ComponentPropsWithoutRef<'form'>, keyof OwnProps>
-        & OwnProps
-    );
-}
-
-export const FormNode: FC<FormNode.Props> = ({
+export const FormNode: FC<RT.PropsWithChildrenAndClassName> = ({
     className = '',
-    onSubmit,
     children,
-    ...rest
 }) => {
-    const contextValue = ContextSelectable.useSelector(
-        UntypedFormContext,
-    ) as UntypedFormContext | undefined;
+    const { api, name } = useFormContext();
 
-    const _onSubmit = onSubmit ?? contextValue?.formApi.handleSubmit;
-    invariant(_onSubmit);
-
-    const handleSubmit: FormNode.OnSubmit = useFunction((e) => {
+    const handleSubmit = useFunction((e: FormEvent) => {
         e.preventDefault();
         e.stopPropagation();
+        void api.handleSubmit();
+    });
 
-        void _onSubmit(e);
+    const handleReset = useFunction((e: FormEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        api.reset();
     });
 
     return (
         <form
             className={className}
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            data-form-name={name}
+            action='#'
             onSubmit={handleSubmit}
-            {...rest}
+            onReset={handleReset}
         >
             {children}
         </form>

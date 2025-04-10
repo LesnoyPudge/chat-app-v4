@@ -1,4 +1,4 @@
-import { isDev, THIRD_PARTY_LOGS } from '@/vars';
+import { isDev, FLAGS } from '@/vars';
 import { logger } from '@/utils';
 
 
@@ -9,14 +9,16 @@ export const preInit = async () => {
     if (isDev) {
         const { scan } = await import('react-scan');
 
-        // @ts-expect-error internal flag for react-scan to skip into logging
-        window.hideIntro = !THIRD_PARTY_LOGS.reactScan;
+        // internal flag for react-scan to skip into logging
+        Object.assign(window, {
+            hideIntro: !FLAGS.THIRD_PARTY_LOGS.reactScan,
+        });
 
         scan({
             enabled: true,
             showFPS: true,
             trackUnnecessaryRenders: false,
-            log: THIRD_PARTY_LOGS.reactScanDeep,
+            log: FLAGS.THIRD_PARTY_LOGS.reactScanDeep,
             animationSpeed: 'off',
             showToolbar: true,
             showNotificationCount: true,

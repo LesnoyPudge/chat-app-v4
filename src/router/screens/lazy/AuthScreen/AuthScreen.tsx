@@ -9,7 +9,7 @@ import {
     Focus,
     useRefManager,
 } from '@lesnoypudge/utils-react';
-import { LoginForm, RegistrationForm } from './components';
+import { LoginFormComponent, RegistrationFormComponent } from './components';
 import { Screen } from '@/router/layouts/bundled';
 import { ASSETS } from '@/generated/ASSETS';
 
@@ -53,8 +53,8 @@ const { animationVariants } = getAnimationVariants.custom({
 });
 
 const tabs = Tab.createTabs({
-    login: <LoginForm/>,
-    registration: <RegistrationForm/>,
+    login: <LoginFormComponent/>,
+    registration: <RegistrationFormComponent/>,
 });
 
 export const AuthTabContext = Tab.createTabContext<typeof tabs>();

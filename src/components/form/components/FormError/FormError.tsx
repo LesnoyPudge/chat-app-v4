@@ -1,9 +1,7 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
-import { UntypedFormContext } from '../../context';
-import { invariant } from '@lesnoypudge/utils';
+import { useFormContext } from '../../hooks';
+import { cn, createStyles } from '@/utils';
 
 
 
@@ -11,34 +9,19 @@ const styles = createStyles({
     wrapper: 'rounded-md bg-danger p-2 font-semibold text-white',
 });
 
-export namespace FormError {
-    export type Props = (
-        RT.PropsWithClassName
-        & {
-            error?: string | null;
-        }
-    );
-}
-
-export const FormError: FC<FormError.Props> = ({
+export const FormError: FC<RT.PropsWithClassName> = ({
     className = '',
-    error,
 }) => {
-    const contextValue = ContextSelectable.useSelector(
-        UntypedFormContext,
-    ) as UntypedFormContext | undefined;
+    const { submitError } = useFormContext();
 
-    const _error = error ?? contextValue?.submitError;
-    invariant(_error !== undefined);
+    if (!submitError) return null;
 
     return (
-        <If condition={!!_error}>
-            <div
-                className={cn(styles.wrapper, className)}
-                aria-live='polite'
-            >
-                {_error}
-            </div>
-        </If>
+        <div
+            className={cn(styles.wrapper, className)}
+            aria-live='polite'
+        >
+            {submitError}
+        </div>
     );
 };

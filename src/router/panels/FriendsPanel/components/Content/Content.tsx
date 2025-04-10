@@ -2,7 +2,7 @@ import { createStyles } from '@/utils';
 import { ReactNode } from 'react';
 import { FriendsPanelTabsContext } from '../../FriendsPanel';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { Scrollable, Search, Separator, Tab } from '@/components';
+import { Scrollable, SearchBar, Separator, Tab } from '@/components';
 import {
     AllFriendsTab,
     BlockedUsersTab,
@@ -29,7 +29,7 @@ export namespace Content {
 
 export const Content = () => {
     const { t } = useTrans();
-    const search = Search.useSearch('');
+    const search = SearchBar.useControls('');
     const {
         currentTab,
     } = ContextSelectable.useProxy(FriendsPanelTabsContext);
@@ -44,10 +44,10 @@ export const Content = () => {
     return (
         <ContentContextProvider searchValue={search.deferredValue.trim()}>
             <div className={styles.infoWrapper}>
-                <Search.Bar
+                <SearchBar.Node
                     className={styles.searchBar}
                     label={t('FriendsPanel.Navigation.searchLabel')}
-                    onChange={search.setState}
+                    setValue={search.setValue}
                     placeholder={t('FriendsPanel.Navigation.searchLabel')}
                     value={search.value}
                 />

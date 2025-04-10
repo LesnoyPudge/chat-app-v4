@@ -4,6 +4,13 @@
     style="background-color: hsl(216, 7%, 14%); height: 100%;"
 >
     <head>
+        <script>
+            const el = document.querySelector('html');
+            const value = localStorage.getItem("theme") || "dark";
+            
+            el.setAttribute("data-theme", value);
+		</script>
+
         <meta charset="utf-8" />
         <meta
             name="viewport"
@@ -12,7 +19,8 @@
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="description" content="%_PUBLIC_APP_NAME%" />
-
+        <meta name="darkreader-lock">
+        
         <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -36,7 +44,7 @@
     </head>
     <body>
         <header>
-            <h1 class="sr-only" style="opacity: 0; font-size: 0px">
+            <h1 class="sr-only" style="opacity: 0; position: fixed;">
                 %_PUBLIC_APP_NAME%
             </h1>
 

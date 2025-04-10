@@ -1,20 +1,20 @@
-import { isProd, LOGGER_FLAGS } from '@/vars';
+import { isProd, FLAGS } from '@/vars';
 
 
 
 type FlaggedMethods = Record<
-    keyof LOGGER_FLAGS,
+    keyof FLAGS.LOGGER,
     Console
 >;
 
-const loggerFlagList = Object.keys<LOGGER_FLAGS>(LOGGER_FLAGS);
+const loggerFlagList = Object.keys<FLAGS.LOGGER>(FLAGS.LOGGER);
 
-const createMethods = (flagName: keyof LOGGER_FLAGS) => {
+const createMethods = (flagName: keyof FLAGS.LOGGER) => {
     return Object.keys(console).reduce<Console>((acc, cur) => {
         acc[cur as keyof Console] = (...data: unknown[]) => {
             if (isProd) return;
 
-            if (!LOGGER_FLAGS[flagName]) return;
+            if (!FLAGS.LOGGER[flagName]) return;
 
             // @ts-ignore
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call

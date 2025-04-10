@@ -1,6 +1,6 @@
 import { Button, Image, Scrollable } from '@/components';
 import { useTrans } from '@/hooks';
-import { Heading } from '@lesnoypudge/utils-react';
+import { Heading, Hidden } from '@lesnoypudge/utils-react';
 import { createStyles, getAssetUrl } from '@/utils';
 import { CUSTOM_STYLES } from '@/vars';
 import { FC } from 'react';
@@ -54,7 +54,13 @@ export const ErrorScreenPure: FC<ErrorScreenPure.Props> = ({
                     />
 
                     <Heading.Node className={styles.heading}>
-                        {t('ErrorScreen.heading')}
+                        <Hidden.Visually>
+                            {t('ErrorScreen.headingAccessible')}
+                        </Hidden.Visually>
+
+                        <Hidden.Accessibly>
+                            {t('ErrorScreen.heading')}
+                        </Hidden.Accessibly>
                     </Heading.Node>
 
                     <p className={styles.text}>

@@ -1,10 +1,10 @@
 import { HTTP_STATUS_CODES } from '@lesnoypudge/utils';
-import { CustomQueryError } from '@/types';
 import { localStorageApi } from '@/utils';
 import { env, isDev } from '@/vars';
 import { ReduxToolkitQuery } from '@/libs';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { globalActions } from '@/store/globalActions';
+import { StoreTypes } from '@/store/types';
 
 
 
@@ -13,7 +13,7 @@ type QueryOptions = Parameters<typeof ReduxToolkitQuery.fetchBaseQuery>[0];
 export type CustomQueryFn = ReduxToolkitQuery.BaseQueryFn<
     string | ReduxToolkitQuery.FetchArgs,
     unknown,
-    CustomQueryError,
+    StoreTypes.QueryError,
     T.EmptyObject,
     ReduxToolkitQuery.FetchBaseQueryMeta
 >;
@@ -62,7 +62,10 @@ const withReAuthorization = (baseQuery: CustomQueryFn): CustomQueryFn => {
 
         if (!result.error) return result;
 
-        if (result.error.status !== HTTP_STATUS_CODES.UNAUTHORIZED) {
+        if (
+            !('status' in result.error)
+            || result.error.status !== HTTP_STATUS_CODES.UNAUTHORIZED
+        ) {
             return result;
         }
 

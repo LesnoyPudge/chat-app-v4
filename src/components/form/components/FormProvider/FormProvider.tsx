@@ -1,26 +1,17 @@
-import { FC, PropsWithChildren } from 'react';
-import { UntypedFormContext } from '../../context';
+import { FormContext } from '../../context';
+import { FormTypes } from '../../types';
 
 
 
-export namespace FormProvider {
-    export type Props = (
-        PropsWithChildren
-        & UntypedFormContext
-    );
-}
-
-export const FormProvider: FC<FormProvider.Props> = ({
-    formApi,
-    submitError,
+export const FormProvider: FormTypes.FormProvider.Fn = ({
+    form,
     children,
 }) => {
+    const value = form as FormTypes.FormContext;
+
     return (
-        <UntypedFormContext.Provider value={{
-            formApi,
-            submitError,
-        }}>
+        <FormContext.Provider value={value}>
             {children}
-        </UntypedFormContext.Provider>
+        </FormContext.Provider>
     );
 };

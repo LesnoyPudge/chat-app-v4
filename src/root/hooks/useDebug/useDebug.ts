@@ -1,6 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+
 import { logger } from '@/utils';
 import { invariant, toOneLine } from '@lesnoypudge/utils';
 import { useAnimationFrame } from '@lesnoypudge/utils-react';
+import { useFocusTracker } from './hooks';
+import { FLAGS } from '@/vars';
 
 
 
@@ -24,5 +28,9 @@ export const useDebug = () => {
 
     useAnimationFrame(() => {
         Object.values(checks).forEach((check) => check());
-    }, true);
+    }, FLAGS.GENERAL.ENABLE_ELEMENT_COUNT);
+
+    if (FLAGS.GENERAL.ENABLE_FOCUS_TRACKER) {
+        useFocusTracker();
+    }
 };

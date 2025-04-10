@@ -1,6 +1,6 @@
 import { devtools } from '@/features';
 import { logger } from '@/utils';
-import { isProd, THIRD_PARTY_LOGS } from '@/vars';
+import { isProd, FLAGS } from '@/vars';
 import { defer } from '@lesnoypudge/utils-web';
 
 
@@ -29,7 +29,7 @@ export const postInit = async () => {
                     },
                 ],
             }, undefined, (...args) => {
-                if (!THIRD_PARTY_LOGS.reactAxe) return;
+                if (!FLAGS.THIRD_PARTY_LOGS.reactAxe) return;
 
                 axe.logToConsole(...args);
             });

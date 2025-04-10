@@ -19,7 +19,7 @@ import {
     HTTP_STATUS_CODES,
     invariant,
 } from '@lesnoypudge/utils';
-import { env, THIRD_PARTY_LOGS } from '@/vars';
+import { env, FLAGS } from '@/vars';
 import { token } from './token';
 import { v4 as uuid } from 'uuid';
 import {
@@ -642,7 +642,7 @@ class FakeServer {
             const worker = setupWorker(...getRoutes());
 
             await worker.start({
-                quiet: !THIRD_PARTY_LOGS.msw,
+                quiet: !FLAGS.THIRD_PARTY_LOGS.msw,
                 onUnhandledRequest: (request, print) => {
                     if (!request.url.includes(env._PUBLIC_API_V1)) return;
 

@@ -2,4 +2,4 @@ import { MBToBytes } from '@/utils';
 
 
 
-export const FILE_MAX_SIZE = MBToBytes(6);
+export const FILE_MAX_SIZE = MBToBytes(8);

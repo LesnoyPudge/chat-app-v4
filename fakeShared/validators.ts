@@ -1,4 +1,3 @@
-import * as v from 'valibot';
 import { Endpoints } from './endpoints';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { t, EmojiStore } from '@/features';
@@ -6,13 +5,16 @@ import { promiseToBoolean } from '@lesnoypudge/utils';
 import type { RTE } from '@/components';
 import type { ClientEntities } from '@/types';
 import { FILE_MAX_SIZE } from './vars';
+import { Valibot } from '@/libs';
 
 
+
+const v = Valibot;
 
 const schema = <
     _Shape extends T.UnknownRecord,
 >(
-    schema: v.GenericSchema<_Shape>,
+    schema: Valibot.GenericSchema<_Shape>,
 ) => schema;
 
 const VALIDATION_ERRORS = {

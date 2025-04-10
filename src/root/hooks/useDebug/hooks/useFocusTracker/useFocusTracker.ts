@@ -7,7 +7,8 @@ export const useFocusTracker = () => {
     useEventListener(window, 'blur', (e) => {
         logger._common.log('blur on:', e.target);
     }, { capture: true });
-    useEventListener(window, 'focus', (e) => {
+
+    useEventListener(window, 'focusin', (e) => {
         logger._common.log('focus on:', e.target);
     }, { capture: true });
 };

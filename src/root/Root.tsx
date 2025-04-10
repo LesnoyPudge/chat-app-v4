@@ -1,12 +1,12 @@
 import {
     ControllableStrictMode,
-    createWithDecorator,
     ErrorBoundary,
     Focus,
-    withDisplayName,
+    Heading,
 } from '@lesnoypudge/utils-react';
-import { isDev } from '@/vars';
+import { FLAGS, isDev } from '@/vars';
 import {
+    GlobalLoader,
     GlobalProviders,
     Masks,
     SpriteSheet,
@@ -14,7 +14,6 @@ import {
 import { ErrorScreen } from '@/router/screens/bundled';
 import { useDebug, usePreventDefault, useHTMLVars } from './hooks';
 import { Router } from '@/router';
-import { decorate } from '@lesnoypudge/macro';
 import { FC } from 'react';
 
 
@@ -25,35 +24,32 @@ const DevTools = (
         : () => null
 );
 
-const { withDecorator } = createWithDecorator(({ children }) => {
-    return (
-        <ControllableStrictMode isEnabled={true}>
-            <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
-                <GlobalProviders>
-                    {children}
-                </GlobalProviders>
-            </ErrorBoundary.Node>
-        </ControllableStrictMode>
-    );
-});
-
-decorate(withDisplayName, 'Root', decorate.target);
-decorate(withDecorator, decorate.target);
-
 export const Root: FC = () => {
     useHTMLVars();
     useDebug();
     usePreventDefault();
 
     return (
-        <Focus.Lock autoFocus enabled noIsolation>
+        <ControllableStrictMode
+            isEnabled={FLAGS.GENERAL.ENABLE_REACT_STRICT_MODE}
+        >
+            <Focus.Lock autoFocus enabled noIsolation>
+                <Heading.Provider>
+                    <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
+                        <GlobalProviders>
+                            <DevTools/>
+
+                            <GlobalLoader.Wrapper>
+                                <Router/>
+                            </GlobalLoader.Wrapper>
+                        </GlobalProviders>
+                    </ErrorBoundary.Node>
+                </Heading.Provider>
+            </Focus.Lock>
+
             <Masks/>
 
             <SpriteSheet/>
-
-            <DevTools/>
-
-            <Router/>
-        </Focus.Lock>
+        </ControllableStrictMode>
     );
 };

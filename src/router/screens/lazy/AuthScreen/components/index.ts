@@ -1,3 +1,3 @@
 export * from './LoadingIndicator';
-export * from './LoginForm';
-export * from './RegistrationForm';
+export * from './LoginFormComponent';
+export * from './RegistrationFormComponent';

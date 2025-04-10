@@ -14,7 +14,7 @@ const STATUS_LABEL = {
     offline: t('STATUS.offline'),
     afk: t('STATUS.afk'),
     dnd: t('STATUS.dnd'),
-} satisfies Record<ClientEntities.User.VisibleStatus, ReturnType<typeof t>>;
+} satisfies Record<ClientEntities.User.VisibleStatus, ReturnType<t>>;
 
 export const getStatusLabel = (props: Props): string => {
     return STATUS_LABEL[derivePresenceStatus(props)].toString();

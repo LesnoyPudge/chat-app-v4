@@ -1,7 +1,8 @@
 import type * as slices from '@/store/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { WithId } from '@/types';
-import { ReduxToolkit } from '@/libs';
+import { ReduxToolkit, ReduxToolkitQueryReact } from '@/libs';
+import { HTTP_STATUS_CODES } from '@lesnoypudge/utils';
 
 
 
@@ -64,4 +65,19 @@ export namespace StoreTypes {
             ? _State
             : never
     );
+
+    export type QueryError = T.Simplify<
+        // T.ConditionalExcept<
+        //     ReduxToolkitQueryReact.FetchBaseQueryError,
+        //     // 'data' | 'error'
+        //     string
+        // >
+        | ReduxToolkit.SerializedError
+        | {
+            status: T.ValueOf<T.Except<typeof HTTP_STATUS_CODES, 'OK'>>;
+            data: {
+                message: string;
+            };
+        }
+    >;
 }

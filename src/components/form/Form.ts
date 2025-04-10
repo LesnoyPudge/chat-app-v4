@@ -1,27 +1,32 @@
-import * as hooks from './hooks';
 import * as components from './components';
+import * as hooks from './hooks';
 import * as utils from './utils';
-import * as inputs from './inputs';
+import * as types from './types';
 
 
 
 export namespace Form {
-    export import Node = components.FormNode;
-
-    export import Provider = components.FormProvider;
-
-    export import Error = components.FormError;
-
-    export import Inputs = inputs.FormInputs;
+    export import Types = types.FormTypes;
 
     export const {
-        apiAdapter,
+        useExtendForm,
+        useFieldContext,
+        useFieldError,
+        useFormContext,
+        useStore,
+    } = hooks;
+
+    export const {
+        createFieldProvider,
         createForm,
-        createFormContext,
     } = utils;
 
     export const {
-        useForm,
-        useField,
-    } = hooks;
+        FieldProvider,
+        FormError: Error,
+        FormNode: Node,
+        FormProvider: Provider,
+        Label,
+        SubmitButton,
+    } = components;
 }

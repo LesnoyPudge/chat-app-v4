@@ -3,13 +3,12 @@ import { ReduxReact } from '@/libs';
 import {
     createWithDecorator,
     ErrorThrower,
-    Heading,
     withDisplayName,
 } from '@lesnoypudge/utils-react';
 import { LazyMotion, MotionConfig } from 'motion/react';
 import { FC, PropsWithChildren, Suspense } from 'react';
 import { BrowserRouter } from 'react-router';
-import { GlobalLoader, LazyModules } from '@/root/components';
+import { LazyModules } from '@/root/components';
 import { LayoutType } from '@/components';
 import { decorate } from '@lesnoypudge/macro';
 
@@ -42,13 +41,9 @@ const {
     withDecorator: withSecondDecorator,
 } = createWithDecorator(({ children }) => (
     <Navigator.Provider>
-        <Heading.Provider>
-            <LayoutType.Provider>
-                <GlobalLoader.Wrapper>
-                    {children}
-                </GlobalLoader.Wrapper>
-            </LayoutType.Provider>
-        </Heading.Provider>
+        <LayoutType.Provider>
+            {children}
+        </LayoutType.Provider>
     </Navigator.Provider>
 ));
 
