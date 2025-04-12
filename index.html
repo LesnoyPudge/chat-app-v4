@@ -6,9 +6,15 @@
     <head>
         <script>
             const el = document.querySelector('html');
-            const value = localStorage.getItem("theme") || "dark";
             
-            el.setAttribute("data-theme", value);
+            const storageValue = localStorage.getItem("theme");
+            const isPreferDark = window.matchMedia(
+                '(prefers-color-scheme: dark)'
+            ).matches;
+            
+            const mediaValue = isPreferDark ? 'dark' : 'light';
+
+            el.setAttribute("data-theme", storageValue ?? mediaValue);
 		</script>
 
         <meta charset="utf-8" />

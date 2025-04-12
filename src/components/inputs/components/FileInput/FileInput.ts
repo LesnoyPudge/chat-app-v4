@@ -19,5 +19,7 @@ export namespace FileInput {
 
     export const {
         useFileInputContext: useContext,
+        useFileInputControls: useControls,
+        useFileInputOnChange: useOnChange,
     } = hooks;
 }

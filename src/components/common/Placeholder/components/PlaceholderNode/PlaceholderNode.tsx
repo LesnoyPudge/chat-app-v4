@@ -1,5 +1,5 @@
 import { cn, createStyles } from '@/utils';
-import { FC, memo } from 'react';
+import { FC, memo, PropsWithChildren } from 'react';
 import Skeleton, { SkeletonProps } from 'react-loading-skeleton';
 import './PlaceholderNode.scss';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
@@ -10,7 +10,16 @@ import { withDisplayName } from '@lesnoypudge/utils-react';
 
 const styles = createStyles({
     base: 'animate-placeholder',
+    wrapper: 'leading-[0]',
 });
+
+const Wrapper: FC<PropsWithChildren> = ({ children }) => {
+    return (
+        <div className={styles.wrapper}>
+            {children}
+        </div>
+    );
+};
 
 export namespace PlaceholderNode {
     export type Props = T.Except<
@@ -34,6 +43,7 @@ export const PlaceholderNode: FC<PlaceholderNode.Props> = ({
             className={cn('PlaceholderNode', styles.base, className)}
             enableAnimation={true}
             baseColor={undefined}
+            wrapper={Wrapper}
             {...props}
         />
     );

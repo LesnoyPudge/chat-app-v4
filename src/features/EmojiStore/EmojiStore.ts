@@ -47,7 +47,7 @@ export namespace EmojiStore {
         return emoji.code;
     });
 
-    // export type EmojiCode = T.ArrayValues<typeof emojiCodes>;
+    export type EmojiCode = T.ArrayValues<typeof emojiCodes>;
 
     export type EmojiMap = (
         Emojis[number] extends infer _Emoji extends Emoji

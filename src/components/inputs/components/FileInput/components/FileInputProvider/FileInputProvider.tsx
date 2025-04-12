@@ -1,10 +1,10 @@
 import { FileInputTypes } from '../../types';
 import { FileInputContext } from '../../context';
 import { renderFunction, useFunction } from '@lesnoypudge/utils-react';
-import { Form } from '@/components';
-import { invariant, noop } from '@lesnoypudge/utils';
+import { invariant, isCallable, noop } from '@lesnoypudge/utils';
 import { isDev } from '@/vars';
 import { FILE_MAX_SIZE } from '@/fakeShared';
+import { Form } from '@/components';
 
 
 
@@ -49,8 +49,13 @@ export const FileInputProvider = Form.createFieldProvider(<
 
     const setValue: (
         FileInputTypes.Context['setValue']
-    ) = useFunction((newFiles) => {
-        field.setValue(getFiles(newFiles));
+    ) = useFunction((updaterOrValue) => {
+        if (isCallable(updaterOrValue)) {
+            field.setValue((prev) => getFiles(updaterOrValue(prev)));
+            return;
+        }
+
+        field.setValue(getFiles(updaterOrValue));
     });
 
     const contextValue: FileInputTypes.Context = {

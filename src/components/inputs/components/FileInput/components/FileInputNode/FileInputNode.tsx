@@ -1,9 +1,7 @@
 import { cn, createStyles } from '@/utils';
 import { CUSTOM_STYLES } from '@/vars';
-import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { FC, useId } from 'react';
-import { useFileInputContext } from '../../hooks';
-import { useFileInput } from './hooks';
+import { useFileInputContext, useFileInputOnChange } from '../../hooks';
 import { FileInputTypes } from '../../types';
 
 
@@ -34,7 +32,7 @@ export const FileInputNode: FC<FileInputTypes.Node.Props> = ({
         innerRef,
     } = useFileInputContext();
 
-    const { onChange } = useFileInput();
+    const { onChange } = useFileInputOnChange();
 
     return (
         <div className={cn(styles.wrapper, className)}>

@@ -2,6 +2,7 @@ import { PropsWithInnerRef } from '@/types';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { ChangeEventHandler, FocusEventHandler } from 'react';
+import { Form } from '@/components';
 
 
 
@@ -20,7 +21,7 @@ export namespace TextAreaTypes {
             value: string;
             label: string;
             error: string | null;
-            setValue: (value: Context['value']) => void;
+            setValue: Form.Types.SetValue<Context['value']>;
             onChange: ChangeEventHandler<HTMLTextAreaElement>;
             onBlur: FocusEventHandler<HTMLTextAreaElement>;
         }

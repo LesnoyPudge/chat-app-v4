@@ -18,6 +18,7 @@
         "scripts:clear": "tsx ./scripts/clearGenerated.ts",
         "scripts:env": "tsx ./scripts/env.ts",
         "scripts:check-relative-imports": "tsx ./scripts/checkRelativeImports.ts",
+        "scripts:find-index-with-code": "tsx ./scripts/findIndexWithCode.ts",
         "scripts:pre-build": "npm run scripts:clear && npm run scripts:env && npm run scripts:assets && npm run scripts:i18n",
         "scripts:count-code": "npx tsx scripts/countCode.ts",
         "type:check": "tsc -p tsconfig.react.build.json",

@@ -2,6 +2,7 @@ export * from './ActionMenu';
 export * from './Avatar';
 export * from './Button';
 export * from './DialogBlocks';
+export * from './EmojiPicker';
 export * from './KeyboardNavigation';
 export * from './LayoutType';
 export * from './MessageEditor';

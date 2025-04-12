@@ -3,6 +3,7 @@ import { ACCEPTED_FILE_TYPE } from '@/vars';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { FocusEventHandler } from 'react';
+import { Form } from '@/components';
 
 
 
@@ -37,7 +38,7 @@ export namespace FileInputTypes {
             value: ConditionalValue<_Amount>;
             label: string;
             error: string | null;
-            setValue: (value: Context<_Amount>['value']) => void;
+            setValue: Form.Types.SetValue<Context<_Amount>['value']>;
             onBlur: FocusEventHandler<HTMLInputElement>;
         }
     >;
@@ -70,5 +71,14 @@ export namespace FileInputTypes {
 
     export namespace Node {
         export type Props = RT.PropsWithChildrenAndClassName;
+    }
+
+    export namespace useFileInputControls {
+        export type Fn = (
+            setValue: Context<number>['setValue']
+        ) => {
+            removeOne: (index: number) => void;
+            removeAll: VoidFunction;
+        };
     }
 }

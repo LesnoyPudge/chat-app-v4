@@ -9,6 +9,7 @@ const styles = createStyles({
     inner: `
         grid 
         cursor-not-allowed 
+        select-none
         place-content-center 
         truncate 
         opacity-60

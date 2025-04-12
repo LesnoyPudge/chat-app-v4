@@ -16,9 +16,6 @@
 }
 
 @keyframes placeholder-animation {
-    // 50% {
-    //     opacity: .5;
-    // }
     0% {
         background-color: theme('colors.primary.100');
     }
@@ -30,5 +27,5 @@
 
 :root {
     --custom-pulse-animation: pulse-animation 1.4s ease-in-out infinite;
-    --custom-placeholder-animation: placeholder-animation 2s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate-reverse
+    --custom-placeholder-animation: placeholder-animation 2s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate-reverse;
 }

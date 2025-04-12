@@ -256,4 +256,6 @@ export namespace FormTypes {
             >
         >;
     }
+
+    export type SetValue<_Value> = FieldApiWrapper<_Value>['setValue'];
 }

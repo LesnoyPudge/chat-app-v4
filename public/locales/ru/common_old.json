@@ -18,5 +18,6 @@
     "FriendsPanel.PendingRequests.outgoing.button.tooltip": "Отклонить",
     "MemberActionMenu.label": "__NOT_TRANSLATED__",
     "MemberActionMenu.sendMessageButton": "__NOT_TRANSLATED__",
-    "ServerMenu.actionListLabel": "Меню действий"
+    "ServerMenu.actionListLabel": "Меню действий",
+    "SizeLimitDialog.header": "__NOT_TRANSLATED__"
 }

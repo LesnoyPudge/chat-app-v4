@@ -2,6 +2,7 @@ import { PropsWithInnerRef } from '@/types';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { PartialFormatter } from 'nouislider';
+import { Form } from '@/components';
 
 
 
@@ -19,7 +20,7 @@ export namespace SliderInputTypes {
             value: number;
             label: string;
             error: string | null;
-            setValue: (value: Context['value']) => void;
+            setValue: Form.Types.SetValue<Context['value']>;
             onBlur: VoidFunction;
         }
     >;
