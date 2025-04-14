@@ -1,6 +1,6 @@
 import type { i18n, TFunction } from 'i18next';
 import type { HttpBackendOptions } from 'i18next-http-backend';
-import { env, isDev } from '@/vars';
+import { env, FLAGS, isDev } from '@/vars';
 import { namespaces } from '@/generated/i18n';
 import { createPromiseLoader } from '@/utils';
 import { invariant } from '@lesnoypudge/utils';
@@ -97,7 +97,7 @@ export const initI18n = async () => {
                 .use(LanguageDetector)
                 .use(initReactI18next)
                 .init<HttpBackendOptions>({
-                    // debug: true,
+                    debug: FLAGS.GENERAL.DEBUG_I18N,
                     partialBundledLanguages: true,
                     interpolation: {
                         escapeValue: false,

@@ -3,7 +3,7 @@ import { FileInputContext } from '../../context';
 import { renderFunction, useFunction } from '@lesnoypudge/utils-react';
 import { invariant, isCallable, noop } from '@lesnoypudge/utils';
 import { isDev } from '@/vars';
-import { FILE_MAX_SIZE } from '@/fakeShared';
+import { FILE_MAX_SIZE_BYTES } from '@/fakeShared';
 import { Form } from '@/components';
 
 
@@ -21,7 +21,7 @@ export const FileInputProvider = Form.createFieldProvider(<
     onInvalid = noop,
     onSizeLimit = noop,
     onUnacceptableType = noop,
-    sizeLimit = FILE_MAX_SIZE,
+    sizeLimit = FILE_MAX_SIZE_BYTES,
     hidden = false,
     children,
 }: FileInputTypes.Provider.Props<_Amount>) => {
@@ -47,6 +47,12 @@ export const FileInputProvider = Form.createFieldProvider(<
         return isMultiple ? [newFiles] : newFiles;
     };
 
+    const getFileArray = (files: FileInputTypes.Context['value']) => {
+        if (files === null) return [];
+
+        return Array.isArray(files) ? files : [files];
+    };
+
     const setValue: (
         FileInputTypes.Context['setValue']
     ) = useFunction((updaterOrValue) => {
@@ -55,7 +61,10 @@ export const FileInputProvider = Form.createFieldProvider(<
             return;
         }
 
-        field.setValue(getFiles(updaterOrValue));
+        field.setValue((prev) => getFiles([
+            ...getFileArray(prev),
+            ...getFileArray(updaterOrValue),
+        ]));
     });
 
     const contextValue: FileInputTypes.Context = {

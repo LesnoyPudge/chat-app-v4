@@ -14,6 +14,9 @@ export namespace Form {
         useFieldError,
         useFormContext,
         useStore,
+        useFieldApi,
+        useFieldValue,
+        useFormStore,
     } = hooks;
 
     export const {

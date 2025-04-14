@@ -683,6 +683,27 @@ namespace EndpointsV1 {
 
     export namespace Message {
         const BasePath = ENTITY_NAME.MESSAGE;
+
+        export namespace Send {
+            export const ActionName = 'send';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = T.Simplify<
+                WithId.TextChat
+                & T.Override<
+                    Pick<Entities.Message.Base, 'attachments' | 'content'>,
+                    'attachments',
+                    Entities.File.Encoded[]
+                >
+            >;
+
+            export type Response = Entities.Message.Base;
+        }
     }
 
     export namespace VoiceChat {

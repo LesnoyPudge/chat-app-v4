@@ -1,11 +1,12 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { useEmojiSwitcher } from './hooks';
 import { sharedStyles } from '../../styles';
 import { cn, createStyles, getAnimationVariants } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Button, Emoji, EmojiPicker, Overlay, RelativelyPositioned, RTE } from '@/components';
 import { useTrans } from '@/hooks';
-import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
+import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
@@ -26,6 +27,9 @@ const styles = createStyles({
         active: 'scale-[1] grayscale-0',
     },
 });
+
+decorate(withDisplayName, 'MessageEditorEmojiPickerButton', decorate.target);
+decorate(memo, decorate.target);
 
 export const MessageEditorEmojiPickerButton: FC<RT.PropsWithClassName> = ({
     className = '',
@@ -69,14 +73,16 @@ export const MessageEditorEmojiPickerButton: FC<RT.PropsWithClassName> = ({
             <Overlay.Dialog.Provider
                 controls={controls}
                 animationVariants={animationVariants}
-                label=''
+                label={t('MessageEditor.EmojiPickerButton.dialog.label')}
             >
-                <RelativelyPositioned.Node
-                    leaderElementOrRectRef={buttonRef}
-                    preferredAlignment='top'
-                >
-                    <EmojiPicker onEmojiPick={insert}/>
-                </RelativelyPositioned.Node>
+                <Overlay.Dialog.Wrapper>
+                    <RelativelyPositioned.Node
+                        leaderElementOrRectRef={buttonRef}
+                        preferredAlignment='top'
+                    >
+                        <EmojiPicker onEmojiPick={insert}/>
+                    </RelativelyPositioned.Node>
+                </Overlay.Dialog.Wrapper>
             </Overlay.Dialog.Provider>
         </>
     );

@@ -16,17 +16,12 @@ export const OverflowLimitDialog: FC<DialogBlocks.Types.PublicProps> = ({
     const { t } = useTrans();
 
     return (
-        <DialogBlocks.Base.Provider
-            label={t('OverflowLimitDialog.label')}
+        <Content
+            className={styles.content}
             controls={controls}
-        >
-            <DialogBlocks.Base.Wrapper>
-                <Content
-                    className={styles.content}
-                    header={t('OverflowLimitDialog.label')}
-                    content={t('OverflowLimitDialog.description')}
-                />
-            </DialogBlocks.Base.Wrapper>
-        </DialogBlocks.Base.Provider>
+            label={t('OverflowLimitDialog.label')}
+            header={t('OverflowLimitDialog.label')}
+            content={t('OverflowLimitDialog.description')}
+        />
     );
 };

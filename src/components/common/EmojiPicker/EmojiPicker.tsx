@@ -21,8 +21,16 @@ const styles = createStyles({
         bg-primary-400
         shadow-elevation-high
     `,
-    scrollable: 'my-3',
-    emojiList: 'grid h-full grid-cols-5 gap-3 py-2 pl-2',
+    scrollable: 'my-3 h-full',
+    emojiList: ` 
+        grid 
+        h-full
+        auto-rows-max 
+        grid-cols-5
+        justify-center 
+        gap-3 
+        py-2
+    `,
     notFound: `
         flex 
         h-full 

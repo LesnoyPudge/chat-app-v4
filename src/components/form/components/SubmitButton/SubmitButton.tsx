@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Button } from '@/components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { useFormContext, useStore } from '../../hooks';
+import { useFormStore } from '../../hooks';
 
 
 
@@ -19,9 +19,8 @@ export const SubmitButton: FC<SubmitButton.Props> = ({
     isDisabled,
     ...rest
 }) => {
-    const { api } = useFormContext();
-    const canSubmit = useStore(api.store, (v) => v.canSubmit);
-    const isSubmitting = useStore(api.store, (v) => v.isSubmitting);
+    const canSubmit = useFormStore((v) => v.canSubmit);
+    const isSubmitting = useFormStore((v) => v.isSubmitting);
 
     return (
         <Button

@@ -17,27 +17,27 @@ export namespace EmojiStore {
         {
             code: ':smile:',
             path: getAssetUrl(ASSETS.IMAGES.COMMON.SMILE),
-            aliases: [],
+            aliases: [':smile:'],
         },
         {
             code: ':poop:',
             path: getAssetUrl(ASSETS.IMAGES.COMMON.POOP),
-            aliases: [':shit:'],
+            aliases: [':poop:', ':shit:'],
         },
         {
             code: ':thumbs_up:',
             path: getAssetUrl(ASSETS.IMAGES.COMMON.THUMBS_UP),
-            aliases: [],
+            aliases: [':thumbs_up:'],
         },
         {
             code: ':thumbs_down:',
             path: getAssetUrl(ASSETS.IMAGES.COMMON.THUMBS_DOWN),
-            aliases: [],
+            aliases: [':thumbs_down:'],
         },
         {
             code: ':ok_hand:',
             path: getAssetUrl(ASSETS.IMAGES.COMMON.OK_HAND),
-            aliases: [':ok:'],
+            aliases: [':ok_hand:', ':ok:'],
         },
     ] as const satisfies Emoji[];
 

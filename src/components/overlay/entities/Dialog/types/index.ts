@@ -16,6 +16,7 @@ export namespace Types {
                 createVariants.BaseVariantsWithKey | undefined
             );
             withBackdrop: boolean;
+            withoutPointerEvents: boolean;
         }
     );
 
@@ -27,6 +28,7 @@ export namespace Types {
                 'animationVariants'
                 | 'backdropAnimationVariants'
                 | 'withBackdrop'
+                | 'withoutPointerEvents'
             >>
         )>;
 

@@ -8,11 +8,13 @@ export const MessageInputBarTest: FC = () => {
         <div className='flex flex-col gap-4'>
             <div>wow</div>
 
-            <MessageEditor.Disabled>
+            <MessageEditor.Presets.Disabled>
                 <>disabled</>
-            </MessageEditor.Disabled>
+            </MessageEditor.Presets.Disabled>
 
-            <MessageEditor.Placeholder/>
+            <MessageEditor.Presets.Placeholder/>
+
+            <MessageEditor.Presets.SendMessageInput textChatId=''/>
         </div>
     );
 };

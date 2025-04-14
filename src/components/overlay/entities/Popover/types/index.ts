@@ -30,6 +30,11 @@ export namespace Types {
     }
 
     export namespace Wrapper {
-        export type Props = RT.PropsWithChildrenAndClassName;
+        export type Props = (
+            RT.PropsWithChildrenAndClassName
+            & {
+                clickProtectorClassName?: string;
+            }
+        );
     }
 }

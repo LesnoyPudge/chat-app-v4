@@ -2,6 +2,7 @@
 import { Store, t } from '@/features';
 import { TanStackForm, Valibot } from '@/libs';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { HTTP_STATUS_CODES } from '@lesnoypudge/utils';
 import { PropsWithChildren, ReactNode } from 'react';
 
@@ -30,15 +31,7 @@ export namespace FormTypes {
         T.Except<
             TanStackForm.FormOptions<
                 _Shape,
-                any,
-                any,
-                any,
-                any,
-                any,
-                any,
-                any,
-                any,
-                any
+                any, any, any, any, any, any, any, any, any
             >,
             'onSubmit'
         >
@@ -53,38 +46,21 @@ export namespace FormTypes {
     type FormApiWrapper<_Shape extends T.UnknownRecord> = (
         TanStackForm.ReactFormExtendedApi<
             _Shape,
-            any,
-            any,
-            any,
-            any,
-            any,
-            any,
-            any,
-            any,
-            any
+            any, any, any, any, any, any, any, any, any
         >
     );
 
-    type FieldApiWrapper<_Value> = TanStackForm.FieldApi<
+    export type FieldApiWrapper<_Value> = TanStackForm.FieldApi<
         any,
         string,
         _Value,
-        any,
-        any,
-        any,
-        any,
-        any,
-        any,
-        any,
-        any,
-        any,
-        any,
-        any,
-        any,
-        any,
-        any,
-        any,
-        any
+        any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any
+    >;
+
+    type FormStateWrapper<
+        _Shape extends T.UnknownRecord = T.UnknownRecord,
+    > = TanStackForm.FormState<
+        _Shape, any, any, any, any, any, any, any, any
     >;
 
     export type GenericNameWrapper<
@@ -134,7 +110,7 @@ export namespace FormTypes {
 
     export namespace FieldProvider {
         export type Props<_Value> = (
-            PropsWithChildren
+            RT.PropsWithRenderFunctionOrNode<[FieldContext]>
             & {
                 required: boolean;
                 name: GenericNameWrapper;
@@ -258,4 +234,12 @@ export namespace FormTypes {
     }
 
     export type SetValue<_Value> = FieldApiWrapper<_Value>['setValue'];
+
+    export namespace useFormStore {
+        export type Fn = <
+            _ReturnValue,
+        >(
+            selector: (formStore: FormStateWrapper) => _ReturnValue
+        ) => _ReturnValue;
+    }
 }

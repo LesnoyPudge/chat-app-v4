@@ -7,6 +7,7 @@ export namespace FLAGS {
         ENABLE_REACT_STRICT_MODE: true,
         ENABLE_FOCUS_TRACKER: false,
         ENABLE_ELEMENT_COUNT: true,
+        DEBUG_I18N: false,
     };
 
     export const LOGGER = {

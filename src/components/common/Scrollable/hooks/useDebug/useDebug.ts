@@ -47,9 +47,9 @@ export const useDebug = ({
                 `scrollable is overflowing window`,
                 getElementObject(scrollableElement),
             );
-        } else {
-            remove();
         }
+
+        remove();
     });
 
     const checkParentOverflow = useFunction(() => {
@@ -89,7 +89,7 @@ export const useDebug = ({
             );
         }
 
-        if (!isOverflowingParent) remove();
+        remove();
 
         parentElement.style.overflow = originalParentOverflow;
     });

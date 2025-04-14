@@ -1,7 +1,7 @@
-import { TanStackForm } from '@/libs';
 import { FieldContext } from '../../context';
-import { useFormContext } from '../../hooks';
+import { useFieldApi, useFormContext } from '../../hooks';
 import { FormTypes } from '../../types';
+import { renderFunction } from '@lesnoypudge/utils-react';
 
 
 
@@ -10,19 +10,18 @@ export const FieldProvider: FormTypes.FieldProvider.Fn = ({
     name,
     children,
 }) => {
-    const { name: formName, api } = useFormContext();
-    const field = TanStackForm.useField({ form: api, name: name._ });
-    const _field = field as FormTypes.FieldContext['field'];
+    const { name: formName } = useFormContext();
+    const field = useFieldApi(name);
 
     const value: FormTypes.FieldContext = {
-        id: `${formName}-${field.name}`,
+        id: `${formName}-${name._}`,
         required,
-        field: _field,
+        field: field,
     };
 
     return (
         <FieldContext.Provider value={value}>
-            {children}
+            {renderFunction(children, value)}
         </FieldContext.Provider>
     );
 };

@@ -31,6 +31,9 @@
         min-width: 0;
         color: inherit;
         box-sizing: border-box;
+        outline-width: 3px;
+        outline-style: solid;
+        outline-color: transparent;
     }
 
     button, 
@@ -39,10 +42,6 @@
     textarea, 
     [tabindex],
     [data-scrollable-wrapper=true] {
-        outline-width: 3px;
-        outline-style: solid;
-        outline-color: transparent;
-
         &:focus-visible {
             outline-width: 3px;
             outline-style: solid;

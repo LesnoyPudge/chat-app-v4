@@ -4,7 +4,7 @@ import { t, EmojiStore } from '@/features';
 import { promiseToBoolean } from '@lesnoypudge/utils';
 import type { RTE } from '@/components';
 import type { ClientEntities } from '@/types';
-import { FILE_MAX_SIZE } from './vars';
+import { FILE_MAX_SIZE_BYTES } from './vars';
 import { Valibot } from '@/libs';
 
 
@@ -170,7 +170,7 @@ class SharedValidators {
         name: this.commonString,
         size: v.pipe(
             v.number(),
-            v.maxValue(FILE_MAX_SIZE),
+            v.maxValue(FILE_MAX_SIZE_BYTES),
         ),
     }, ve.BAD_VALUE));
 

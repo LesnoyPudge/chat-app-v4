@@ -16,6 +16,7 @@ const visibleElements = [getHTMLElement.H1];
 
 export const PopoverWrapper: FC<Overlay.Popover.Types.Wrapper.Props> = ({
     className = '',
+    clickProtectorClassName = '',
     children,
 }) => {
     const {
@@ -40,7 +41,10 @@ export const PopoverWrapper: FC<Overlay.Popover.Types.Wrapper.Props> = ({
         >
             <If condition={focused}>
                 <div
-                    className={styles.clickProtector}
+                    className={cn(
+                        styles.clickProtector,
+                        clickProtectorClassName,
+                    )}
                     onClick={closeOverlay}
                     onContextMenu={closeOverlay}
                     onAuxClick={closeOverlay}

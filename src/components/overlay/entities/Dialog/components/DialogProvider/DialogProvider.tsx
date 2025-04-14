@@ -12,6 +12,7 @@ export const DialogProviderInner: FC<
     animationVariants,
     backdropAnimationVariants,
     withBackdrop = false,
+    withoutPointerEvents = false,
     children,
 }) => {
     const popover = ContextSelectable.useSelector(
@@ -24,6 +25,7 @@ export const DialogProviderInner: FC<
         animationVariants,
         backdropAnimationVariants,
         withBackdrop,
+        withoutPointerEvents,
     };
 
     return (

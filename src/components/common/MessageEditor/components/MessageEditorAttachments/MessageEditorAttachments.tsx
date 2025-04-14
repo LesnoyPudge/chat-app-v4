@@ -1,11 +1,11 @@
 import { createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { FC } from 'react';
-import { Scrollable } from '@/components';
+import { Form, Scrollable } from '@/components';
 import { useMessageEditorContext } from '../../hooks';
-import { invariant } from '@lesnoypudge/utils';
 import { Iterate } from '@lesnoypudge/utils-react';
 import { MessageEditorAttachmentItem } from './components';
+import { Types } from '../../types';
 
 
 
@@ -17,10 +17,10 @@ const styles = createStyles({
 export const MessageEditorAttachments: FC<RT.PropsWithClassName> = ({
     className = '',
 }) => {
-    const {
-        attachmentsValue: attachments,
-    } = useMessageEditorContext();
-    invariant(attachments !== undefined);
+    const { attachmentsName } = useMessageEditorContext();
+    const attachments = Form.useFieldValue<
+        Types.MessageAttachments
+    >(attachmentsName);
 
     if (!attachments?.length) return null;
 

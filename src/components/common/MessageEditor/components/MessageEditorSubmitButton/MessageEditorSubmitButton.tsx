@@ -1,4 +1,4 @@
-import { Button, Sprite } from '@/components';
+import { Button, Form, Sprite } from '@/components';
 import { cn } from '@/utils';
 import { FC } from 'react';
 import { sharedStyles } from '../../styles';
@@ -9,23 +9,18 @@ import { useMessageEditorContext } from '../../hooks';
 
 export const MessageEditorSubmitButton: FC = () => {
     const {
-        isSubmitting,
         submitButtonLabel,
-        submit,
     } = useMessageEditorContext();
 
     return (
-        <Button
+        <Form.SubmitButton
             className={cn(sharedStyles.buttonWithIcon, sharedStyles.stickyControl)}
-            type='submit'
             label={submitButtonLabel}
-            isLoading={isSubmitting}
-            onLeftClick={submit}
         >
             <Sprite
                 className={sharedStyles.buttonIcon}
                 sprite={ASSETS.IMAGES.SPRITE.SEND_MESSAGE_ICON}
             />
-        </Button>
+        </Form.SubmitButton>
     );
 };

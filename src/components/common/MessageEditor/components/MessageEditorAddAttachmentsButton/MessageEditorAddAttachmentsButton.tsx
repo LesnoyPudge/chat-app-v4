@@ -4,62 +4,45 @@ import { sharedStyles } from '../../styles';
 import { cn } from '@/utils';
 import { ASSETS } from '@/generated/ASSETS';
 import { useMessageEditorContext } from '../../hooks';
-import { invariant } from '@lesnoypudge/utils';
 import { ACCEPTED_FILE_TYPE } from '@/vars';
 import { useTrans } from '@/hooks';
-import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
-import { decorate } from '@lesnoypudge/macro';
 import { useFileDrop } from './hooks';
 import { FileDropDialog, OverflowLimitDialog, SizeLimitDialog } from './components';
-import { FILE_MAX_SIZE } from '@/fakeShared';
+import { FILE_MAX_SIZE_BYTES } from '@/fakeShared';
 
 
 
-const { withDecorator } = createWithDecorator(({ children }) => {
+const DragOverlayTrigger: FC<Overlay.Types.WithControls> = ({
+    controls,
+}) => {
+    useFileDrop({
+        onDragEnd: controls.close,
+        onDragStart: controls.open,
+    });
+
+    return null;
+};
+
+export const MessageEditorAddAttachmentsButton: FC = () => {
+    const fileDropDialogControls = Overlay.useControls();
+    const attachmentsAmountLimitControls = Overlay.useControls();
+    const attachmentsSizeLimitIsControls = Overlay.useControls();
+
     const { t } = useTrans();
-    const {
-        attachmentsName,
-        attachmentsAmountLimitControls,
-        attachmentsSizeLimitIsControls,
-    } = useMessageEditorContext();
-
-    const errorMessage = 'Attachments not provided in MessageEditor';
-    invariant(attachmentsName, errorMessage);
-    invariant(attachmentsAmountLimitControls, errorMessage);
-    invariant(attachmentsSizeLimitIsControls, errorMessage);
+    const { attachmentsName } = useMessageEditorContext();
 
     return (
         <Inputs.FileInput.Provider
             name={attachmentsName}
             accept={ACCEPTED_FILE_TYPE.ALL}
             amountLimit={9}
-            sizeLimit={FILE_MAX_SIZE}
-            label={t('MessageEditor.AttachmentButton.label')}
+            sizeLimit={FILE_MAX_SIZE_BYTES}
+            label={t('MessageEditor.AddAttachmentsButton.label')}
             onAmountLimit={attachmentsAmountLimitControls.open}
             onSizeLimit={attachmentsSizeLimitIsControls.open}
         >
-            {children}
-        </Inputs.FileInput.Provider>
-    );
-});
+            <DragOverlayTrigger controls={fileDropDialogControls}/>
 
-decorate(withDisplayName, 'MessageEditorAddAttachmentsButton', decorate.target);
-decorate(withDecorator, decorate.target);
-
-export const MessageEditorAddAttachmentsButton: FC = () => {
-    const controls = Overlay.useControls();
-    const {
-        attachmentsAmountLimitControls,
-        attachmentsSizeLimitIsControls,
-    } = useMessageEditorContext();
-
-    useFileDrop({
-        onDragEnd: controls.close,
-        onDragStart: controls.open,
-    });
-
-    return (
-        <>
             <Inputs.FileInput.Node className={cn(
                 sharedStyles.stickyControl,
                 sharedStyles.buttonWithIcon,
@@ -70,11 +53,11 @@ export const MessageEditorAddAttachmentsButton: FC = () => {
                 />
             </Inputs.FileInput.Node>
 
-            <FileDropDialog controls={controls}/>
+            <FileDropDialog controls={fileDropDialogControls}/>
 
             <OverflowLimitDialog controls={attachmentsAmountLimitControls}/>
 
             <SizeLimitDialog controls={attachmentsSizeLimitIsControls}/>
-        </>
+        </Inputs.FileInput.Provider>
     );
 };

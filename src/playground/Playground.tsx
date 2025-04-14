@@ -7,11 +7,13 @@ import * as Sections from './sections';
 export const Playground: FC = () => {
     return (
         <Screen className='flex flex-col'>
-            {/* <Sections.FormTest/> */}
             {/* <Sections.TMP/> */}
-            <Sections.MessageInputBarTest/>
             {/* <Sections.RouterContextRerenders/> */}
             {/* <Sections.MeasureSelectorPerf/> */}
+            {/* <Sections.FormTest/> */}
+            {/* <Sections.MessageInputBarTest/> */}
+            {/* <Sections.FeedTest/> */}
+            <Sections.MessageTest/>
         </Screen>
     );
 };

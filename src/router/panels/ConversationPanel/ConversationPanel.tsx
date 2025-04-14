@@ -1,6 +1,6 @@
 import { ChatPageTemplate } from '@/router/templates';
 import { FC } from 'react';
-import { Header } from './components';
+import { Header, ConversationFeed, SendMessageInput } from './components';
 
 
 
@@ -10,8 +10,9 @@ export const ConversationPanel: FC = () => {
             header={<Header/>}
             main={(
                 <>
-                    <div>feed</div>
-                    <div>message input</div>
+                    <ConversationFeed/>
+
+                    <SendMessageInput/>
                 </>
             )}
             extra={null}

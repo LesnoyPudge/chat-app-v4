@@ -2,7 +2,8 @@ import { ASSETS } from '@/generated/ASSETS';
 import { ClientEntities } from '@/types';
 import { FC } from 'react';
 import { useMessageEditorContext } from '../../../../hooks';
-import { Button, Image, Inputs, Overlay, Sprite } from '@/components';
+import { Types } from '../../../../types';
+import { Button, Form, Image, Inputs, Overlay, Sprite } from '@/components';
 import { cn, createStyles, getAssetUrl } from '@/utils';
 import { invariant } from '@lesnoypudge/utils';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
@@ -65,15 +66,15 @@ export const MessageEditorAttachmentItem: FC<
 }) => {
     const { t } = useTrans();
     const deleteButtonRef = useRefManager<HTMLButtonElement>(null);
-    const { attachmentsSetValue } = useMessageEditorContext();
-    invariant(attachmentsSetValue);
+    const { attachmentsName } = useMessageEditorContext();
+    const field = Form.useFieldApi<Types.MessageAttachments>(attachmentsName);
 
-    const { removeOne } = Inputs.FileInput.useControls(attachmentsSetValue);
+    const { removeOne } = Inputs.FileInput.useControls(field.setValue);
 
-    const fileIsImage = file.type.includes('image');
+    const isFileAnImage = file.type.includes('image');
 
     const src = (
-        fileIsImage
+        isFileAnImage
             ? file.base64
             : getAssetUrl(ASSETS.IMAGES.COMMON.FILE_TEXT_IMAGE)
     );
@@ -109,7 +110,7 @@ export const MessageEditorAttachmentItem: FC<
                 <Image
                     className={cn(
                         styles.image,
-                        !fileIsImage && styles.imageAsIcon,
+                        !isFileAnImage && styles.imageAsIcon,
                     )}
                     alt={file.name}
                     src={src}

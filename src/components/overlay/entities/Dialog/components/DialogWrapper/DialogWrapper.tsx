@@ -8,14 +8,15 @@ import { Motion } from '@/libs';
 
 const styles = createStyles({
     popover: 'relative',
-    dialog: 'pointer-events-auto',
+    withPointer: 'pointer-events-auto',
+    withoutPointer: 'pointer-events-none',
     backdrop: `
-        pointer-events-auto 
         absolute
         inset-0 
         -z-10
         bg-black/70
     `,
+    contentWrapper: 'absolute inset-0',
 });
 
 export const DialogWrapper: FC<Overlay.Dialog.Types.Wrapper.Props> = ({
@@ -27,15 +28,25 @@ export const DialogWrapper: FC<Overlay.Dialog.Types.Wrapper.Props> = ({
         backdropAnimationVariants,
         label,
         withBackdrop,
+        withoutPointerEvents,
         closeOverlay,
     } = ContextSelectable.useProxy(Overlay.Dialog.Context);
 
     return (
         <Overlay.BaseOverlay.Wrapper>
-            <Overlay.Popover.Wrapper className={styles.popover}>
+            <Overlay.Popover.Wrapper
+                className={styles.popover}
+                clickProtectorClassName={cn(
+                    withoutPointerEvents && styles.withoutPointer,
+                )}
+            >
                 <If condition={withBackdrop}>
                     <Motion.div
-                        className={styles.backdrop}
+                        className={cn(
+                            styles.backdrop,
+                            withoutPointerEvents && styles.withoutPointer,
+                            !withoutPointerEvents && styles.withPointer,
+                        )}
                         variants={backdropAnimationVariants}
                         initial={backdropAnimationVariants?.initial.key}
                         animate={backdropAnimationVariants?.animate.key}
@@ -46,15 +57,23 @@ export const DialogWrapper: FC<Overlay.Dialog.Types.Wrapper.Props> = ({
                 </If>
 
                 <Motion.div
-                    className={cn(styles.dialog, className)}
-                    role='dialog'
-                    aria-label={label}
+                    className={styles.contentWrapper}
                     variants={animationVariants}
                     initial={animationVariants?.initial.key}
                     animate={animationVariants?.animate.key}
                     exit={animationVariants?.exit.key}
                 >
-                    {children}
+                    <div
+                        className={cn(
+                            withoutPointerEvents && styles.withoutPointer,
+                            !withoutPointerEvents && styles.withPointer,
+                            className,
+                        )}
+                        role='dialog'
+                        aria-label={label}
+                    >
+                        {children}
+                    </div>
                 </Motion.div>
             </Overlay.Popover.Wrapper>
         </Overlay.BaseOverlay.Wrapper>

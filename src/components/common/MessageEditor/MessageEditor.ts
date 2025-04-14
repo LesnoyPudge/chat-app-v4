@@ -17,7 +17,17 @@ export namespace MessageEditor {
         MessageEditorEmojiPickerButton: EmojiPickerButton,
         MessageEditorScroll: Scroll,
         MessageEditorSubmitButton: SubmitButton,
+        MessageEditorEditable: Editable,
+        MessageEditorProvider: Provider,
     } = components;
+
+    export namespace Presets {
+        export const {
+            MessageEditorDisabled: Disabled,
+            MessageEditorPlaceholder: Placeholder,
+            MessageEditorSendMessageInput: SendMessageInput,
+        } = presets;
+    }
 
     export const {
         MessageEditorContext: Context,
@@ -26,9 +36,4 @@ export namespace MessageEditor {
     export const {
         useMessageEditorContext: useContext,
     } = hooks;
-
-    export const {
-        MessageEditorDisabled: Disabled,
-        MessageEditorPlaceholder: Placeholder,
-    } = presets;
 }

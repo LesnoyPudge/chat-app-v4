@@ -16,17 +16,13 @@ export const FileDropDialog: FC<DialogBlocks.Types.PublicProps> = ({
     const { t } = useTrans();
 
     return (
-        <DialogBlocks.Base.Provider
-            label={t('FileDropDialog.label')}
+        <Content
+            className={styles.content}
             controls={controls}
-        >
-            <DialogBlocks.Base.Wrapper>
-                <Content
-                    className={styles.content}
-                    header={t('FileDropDialog.label')}
-                    content={t('FileDropDialog.description')}
-                />
-            </DialogBlocks.Base.Wrapper>
-        </DialogBlocks.Base.Provider>
+            withoutPointerEvents
+            label={t('FileDropDialog.label')}
+            header={t('FileDropDialog.label')}
+            content={t('FileDropDialog.description')}
+        />
     );
 };

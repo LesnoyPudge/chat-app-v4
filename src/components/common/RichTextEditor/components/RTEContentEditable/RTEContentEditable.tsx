@@ -15,6 +15,7 @@ const styles = createStyles({
 const style = {
     fontSize: 'var(--message-font-size)',
     lineHeight: 'var(--message-line-height)',
+    paddingBlock: 'var(--message-y-padding)',
 } satisfies CSSProperties;
 
 export const RTEContentEditable: FC<RT.PropsWithClassName> = ({

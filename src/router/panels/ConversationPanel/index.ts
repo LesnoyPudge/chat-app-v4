@@ -1,1 +1,1 @@
-export { ConversationPanel as default } from './ChannelPanel';
+export { ConversationPanel as default } from './ConversationPanel';
