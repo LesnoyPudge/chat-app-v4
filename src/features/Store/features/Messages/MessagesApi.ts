@@ -18,5 +18,29 @@ export const MessagesApi = getRootApi().injectEndpoints({
                 }),
             })
         ),
+        [Message.Edit.NamedAction]: (
+            build.mutation<
+                Message.Edit.Response,
+                Message.Edit.RequestBody
+            >({
+                query: (body) => ({
+                    url: Message.Edit.Path,
+                    method: Message.Edit.Method,
+                    body,
+                }),
+            })
+        ),
+        [Message.ToggleReaction.NamedAction]: (
+            build.mutation<
+                Message.ToggleReaction.Response,
+                Message.ToggleReaction.RequestBody
+            >({
+                query: (body) => ({
+                    url: Message.ToggleReaction.Path,
+                    method: Message.ToggleReaction.Method,
+                    body,
+                }),
+            })
+        ),
     }),
 });

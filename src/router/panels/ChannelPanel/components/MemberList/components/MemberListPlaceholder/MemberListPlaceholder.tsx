@@ -15,6 +15,7 @@ const styles = createStyles({
         px-4 
         py-5
     `,
+    placeholder: 'min-h-10',
 });
 
 const placeholderItems = Array.from({ length: 40 }).map((_, i) => i);
@@ -23,7 +24,7 @@ export const MemberListPlaceholder: FC = () => {
     return (
         <div className={styles.wrapper}>
             <Iterate items={placeholderItems} getKey={(v) => v}>
-                {() => <Placeholder.Node height={40}/>}
+                {() => <Placeholder.Node className={styles.placeholder}/>}
             </Iterate>
         </div>
     );

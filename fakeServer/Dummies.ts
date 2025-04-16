@@ -50,11 +50,13 @@ export class Dummies {
                 | 'isDeleted'
                 | 'isModified'
                 | 'updatedAt'
+                | 'reactions'
             >
         ),
     ): ClientEntities.Message.Base {
         return {
             ...data,
+            reactions: [],
             isDeleted: false,
             isModified: false,
             createdAt: Date.now(),

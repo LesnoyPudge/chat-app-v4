@@ -1,18 +1,15 @@
-import { FC } from 'react';
-
-
-
-const MessageNode: FC = () => {
-    return <div>message</div>;
-};
-
-const MessagePlaceholder: FC = () => {
-    return <div>MessagePlaceholder</div>;
-};
+import * as components from './components';
+import * as utils from './utils';
 
 
 export namespace Message {
-    export const Node = MessageNode;
+    export const {
+        MessageNode: Node,
+        MessagePlaceholder: Placeholder,
+        MessageRedactorProvider: RedactorProvider,
+    } = components;
 
-    export const Placeholder = MessagePlaceholder;
+    export const {
+        getPlaceholderVariation,
+    } = utils;
 }

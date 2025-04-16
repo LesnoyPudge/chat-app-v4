@@ -46,10 +46,12 @@ const styles = createStyles({
 });
 
 export namespace EmojiPicker {
+    export type OnEmojiPick = (code: EmojiStore.EmojiCode) => void;
+
     export type Props = (
         RT.PropsWithClassName
         & {
-            onEmojiPick: (code: EmojiStore.EmojiCode) => void;
+            onEmojiPick: OnEmojiPick;
         }
     );
 }

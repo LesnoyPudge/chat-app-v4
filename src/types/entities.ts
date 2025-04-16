@@ -1,3 +1,4 @@
+import { EmojiStore } from '@/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
@@ -88,6 +89,11 @@ export namespace ClientEntities {
             conversation: Conversation.Id;
         };
 
+        export type Reaction = {
+            code: EmojiStore.EmojiCode;
+            users: string[];
+        };
+
         export type Base = WithTimestamps<(
             Conditional
             & {
@@ -99,6 +105,7 @@ export namespace ClientEntities {
                 isModified: boolean;
                 isDeleted: boolean;
                 attachments: File.Id[];
+                reactions: Reaction[];
             }
         )>;
     }

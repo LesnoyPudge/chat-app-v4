@@ -704,6 +704,46 @@ namespace EndpointsV1 {
 
             export type Response = Entities.Message.Base;
         }
+
+        export namespace Edit {
+            export const ActionName = 'edit';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = T.Simplify<
+                WithId.Message
+                & Pick<
+                    Entities.Message.Base,
+                    'content'
+                >
+            >;
+
+            export type Response = Entities.Message.Base;
+        }
+
+        export namespace ToggleReaction {
+            export const ActionName = 'toggleReaction';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = T.Simplify<
+                WithId.Message
+                & Pick<
+                    Entities.Message.Reaction,
+                    'code'
+                >
+            >;
+
+            export type Response = Entities.Message.Base;
+        }
     }
 
     export namespace VoiceChat {

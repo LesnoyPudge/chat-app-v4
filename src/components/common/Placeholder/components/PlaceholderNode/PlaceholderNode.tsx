@@ -1,50 +1,62 @@
-import { cn, createStyles } from '@/utils';
-import { FC, memo, PropsWithChildren } from 'react';
-import Skeleton, { SkeletonProps } from 'react-loading-skeleton';
+import { cn, logger } from '@/utils';
+import { CSSProperties, FC, useLayoutEffect } from 'react';
 import './PlaceholderNode.scss';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { decorate } from '@lesnoypudge/macro';
-import { withDisplayName } from '@lesnoypudge/utils-react';
+import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { isDev } from '@/vars';
+import { toOneLine } from '@lesnoypudge/utils';
+import { useRefManager, useSynchronizedAnimation } from '@lesnoypudge/utils-react';
 
 
-
-const styles = createStyles({
-    base: 'animate-placeholder',
-    wrapper: 'leading-[0]',
-});
-
-const Wrapper: FC<PropsWithChildren> = ({ children }) => {
-    return (
-        <div className={styles.wrapper}>
-            {children}
-        </div>
-    );
-};
 
 export namespace PlaceholderNode {
-    export type Props = T.Except<
-        SkeletonProps,
-        'baseColor'
-        | 'enableAnimation'
-        | 'highlightColor'
-        | 'customHighlightBackground'
-    >;
+    export type Props = (
+        RT.PropsWithClassName
+        & {
+            style?: CSSProperties;
+        }
+    );
 }
-
-decorate(withDisplayName, 'PlaceholderNode', decorate.target);
-decorate(memo, decorate.target);
 
 export const PlaceholderNode: FC<PlaceholderNode.Props> = ({
     className = '',
-    ...props
+    style,
 }) => {
+    const ref = useRefManager<HTMLDivElement>(null);
+
+    useSynchronizedAnimation(ref);
+
+    if (isDev) {
+        // eslint-disable-next-line react-compiler/react-compiler, react-hooks/rules-of-hooks
+        useLayoutEffect(() => {
+            if (!ref.current) return;
+
+            const node = ref.current;
+            const size = node.getBoundingClientRect();
+
+            if (size.width !== 0 && size.height !== 0) return;
+
+            logger._warns.log(toOneLine(`
+                Placeholder node have incorrect size: 
+                w: ${size.width}
+                h: ${size.height}
+            `));
+            logger._warns.log(node);
+            logger._warns.trace();
+        }, [ref]);
+    }
+
     return (
-        <Skeleton
-            className={cn('PlaceholderNode', styles.base, className)}
-            enableAnimation={true}
-            baseColor={undefined}
-            wrapper={Wrapper}
-            {...props}
-        />
+        <div
+            className={cn('PlaceholderNode', className)}
+            style={style}
+            aria-busy
+            aria-live='polite'
+            ref={ref}
+        >
+            {/* ZERO WIDTH NON-JOINER */}
+            {'\u200C'}
+
+            {/* <br/> */}
+        </div>
     );
 };
