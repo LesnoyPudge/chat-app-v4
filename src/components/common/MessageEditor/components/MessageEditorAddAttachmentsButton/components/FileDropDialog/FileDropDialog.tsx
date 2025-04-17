@@ -1,4 +1,4 @@
-import { DialogBlocks } from '@/components';
+import { Overlay } from '@/components';
 import { Content } from '../Content';
 import { createStyles } from '@/utils';
 import { FC } from 'react';
@@ -10,7 +10,7 @@ const styles = createStyles({
     content: 'pointer-events-none bg-brand',
 });
 
-export const FileDropDialog: FC<DialogBlocks.Types.PublicProps> = ({
+export const FileDropDialog: FC<Overlay.Dialog.Types.PublicProps> = ({
     controls,
 }) => {
     const { t } = useTrans();

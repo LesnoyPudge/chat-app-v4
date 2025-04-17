@@ -42,24 +42,11 @@ const { animationVariants } = getAnimationVariants.withOpacity();
 
 export const MessageControlBar: FC = () => {
     const { t } = useTrans();
-    const { tabIndex, message } = useMessageContext();
+    const { tabIndex, message, toggleReaction } = useMessageContext();
     const { openRedactor } = useMessageRedactorContext();
     const addReactionControls = Overlay.useControls();
     const addReactionRef = useRefManager<HTMLButtonElement>(null);
     const openRedactorRef = useRefManager<HTMLButtonElement>(null);
-
-    const [
-        toggleReactionTrigger,
-    ] = Store.Messages.Api.useMessageToggleReactionMutation();
-
-    const handlePickReaction: (
-        EmojiPicker.OnEmojiPick
-    ) = useFunction((code) => {
-        void toggleReactionTrigger({
-            code,
-            messageId: message.id,
-        });
-    });
 
     const handleOpenRedactor = useFunction(() => {
         openRedactor(message.id);
@@ -106,7 +93,7 @@ export const MessageControlBar: FC = () => {
                         leaderElementOrRectRef={addReactionRef}
                         preferredAlignment='top'
                     >
-                        <EmojiPicker onEmojiPick={handlePickReaction}/>
+                        <EmojiPicker onEmojiPick={toggleReaction}/>
                     </RelativelyPositioned.Node>
                 </Overlay.Dialog.Wrapper>
             </Overlay.Dialog.Provider>

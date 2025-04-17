@@ -45,23 +45,25 @@ export const MessageEditorSendMessageInput: FC<
             contentLabel={t('MessageEditor.SendMessageInput.content.label')}
             contentName={SendMessageForm.names.content}
         >
-            <Form.Node>
-                <MessageEditor.Wrapper>
-                    <MessageEditor.Scroll>
-                        <MessageEditor.Attachments/>
+            <MessageEditor.PaddedWrapper>
+                <Form.Node>
+                    <MessageEditor.Wrapper>
+                        <MessageEditor.Scroll>
+                            <MessageEditor.Attachments/>
 
-                        <MessageEditor.ControlsWrapper>
-                            <MessageEditor.AddAttachmentsButton/>
+                            <MessageEditor.ControlsWrapper>
+                                <MessageEditor.AddAttachmentsButton/>
 
-                            <MessageEditor.Editable/>
+                                <MessageEditor.Editable/>
 
-                            <MessageEditor.EmojiPickerButton/>
+                                <MessageEditor.EmojiPickerButton/>
 
-                            <MessageEditor.SubmitButton/>
-                        </MessageEditor.ControlsWrapper>
-                    </MessageEditor.Scroll>
-                </MessageEditor.Wrapper>
-            </Form.Node>
+                                <MessageEditor.SubmitButton/>
+                            </MessageEditor.ControlsWrapper>
+                        </MessageEditor.Scroll>
+                    </MessageEditor.Wrapper>
+                </Form.Node>
+            </MessageEditor.PaddedWrapper>
         </MessageEditor.Provider>
     );
 };

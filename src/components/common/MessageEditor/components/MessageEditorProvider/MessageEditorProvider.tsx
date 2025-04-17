@@ -1,4 +1,4 @@
-import { Form, Overlay, RTE } from '@/components';
+import { Form, RTE } from '@/components';
 import { MessageEditorContext } from '../../context';
 import { FC } from 'react';
 import { Types } from '../../types';
@@ -22,30 +22,42 @@ const { withDecorator } = createWithDecorator<DecoratorProps>(({
 
 export const MessageEditorProvider: FC<Types.Provider.Props> = withDecorator(({
     children,
-    ...rest
+    attachmentsName = { _: '' },
+    submitButtonLabel = '',
+    contentLabel,
+    contentName,
+    onKeyDown,
+    form: _,
 }) => {
     const { t } = useTrans();
-    const content = Form.useFieldValue<Types.MessageContent>(rest.contentName);
+    const content = Form.useFieldValue<Types.MessageContent>(contentName);
     const isSubmitting = Form.useFormStore((v) => v.isSubmitting);
     const { api } = Form.useFormContext();
-    const { setValue } = Form.useFieldApi(rest.contentName);
+    const field = Form.useFieldApi(contentName);
 
     const handleSubmit = useFunction(() => {
         void api.handleSubmit();
     });
 
-    const value: Types.Context = rest;
+    const value: Types.Context = {
+        attachmentsName,
+        contentLabel,
+        contentName,
+        submitButtonLabel,
+    };
 
     return (
         <RTE.Provider
-            label={rest.contentLabel}
-            name={rest.contentName._}
+            label={contentLabel}
+            name={contentName._}
             placeholder={t('MessageEditor.Provider.placeholder')}
             value={content}
             maxLength={2_000}
             disabled={isSubmitting}
-            onChange={setValue}
+            onChange={field.setValue}
             onSubmit={handleSubmit}
+            onBlur={field.handleBlur}
+            onKeyDown={onKeyDown}
         >
             <MessageEditorContext.Provider value={value}>
                 {children}

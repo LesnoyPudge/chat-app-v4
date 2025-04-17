@@ -17,6 +17,13 @@ export const getHTMLElement = {
         return element as HTMLDivElement;
     })(),
 
+    devRoot: (() => {
+        const element = document.querySelector('#dev-root');
+        invariant(element, 'dev-root not found');
+
+        return element as HTMLDivElement;
+    })(),
+
     H1: (() => {
         const element = document.querySelector('h1');
         invariant(element, 'h1');

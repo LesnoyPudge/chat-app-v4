@@ -23,7 +23,7 @@ const config: UserConfigFn = ({ mode }) => {
         ...loadEnv(mode, envDir, ''),
     } as Env;
 
-    const isHMREnabled = false;
+    const isHMREnabled = true;
 
     // const isProd = env.NODE_ENV === 'production';
     const isProd = false;

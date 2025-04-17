@@ -1,6 +1,6 @@
 import { createStyles } from '@/utils';
 import { FC } from 'react';
-import { useMessageContext, useMessageRedactorContext } from '../../../../hooks';
+import { useIsMessageRedactorActive, useMessageContext } from '../../../../hooks';
 import { RTE } from '@/components';
 import { MessageModifiedTimestamp } from '..';
 import { useTrans } from '@/hooks';
@@ -10,7 +10,8 @@ import { WHITESPACE } from '@/vars';
 
 const styles = createStyles({
     wrapper: `
-        inline 
+        my-auto
+        py-2
         leading-[--message-line-height]
         [font-size:var(--message-font-size)]
     `,
@@ -19,14 +20,14 @@ const styles = createStyles({
 export const MessageContent: FC = () => {
     const { t } = useTrans();
     const { contentId, message } = useMessageContext();
-    const { getIsRedactorActive } = useMessageRedactorContext();
+    const isRedactorActive = useIsMessageRedactorActive(message.id);
 
     return (
         <div
             className={styles.wrapper}
             id={contentId}
         >
-            <If condition={!getIsRedactorActive(message.id)}>
+            <If condition={!isRedactorActive}>
                 <RTE.Serialized value={message.content}/>
 
                 <MessageModifiedTimestamp>

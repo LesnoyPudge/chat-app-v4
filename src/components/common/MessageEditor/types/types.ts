@@ -13,7 +13,7 @@ export namespace Types {
 
     export type Values = {
         content: MessageContent;
-        attachments: MessageAttachments;
+        attachments?: MessageAttachments;
     };
 
     export type Context = {
@@ -26,7 +26,15 @@ export namespace Types {
     export namespace Provider {
         export type Props = T.Simplify<(
             PropsWithChildren
-            & Context
+            & Partial<Pick<
+                RTE.Types.Context, 'onKeyDown'
+            >>
+            & Pick<
+                Context, 'contentLabel' | 'contentName'
+            >
+            & Partial<Pick<
+                Context, 'attachmentsName' | 'submitButtonLabel'
+            >>
             & {
                 form: Form.Types.FormContext<Values>;
             }

@@ -1,25 +1,54 @@
-import { Message, Scrollable } from '@/components';
+import { Message, RTE, Scrollable } from '@/components';
+import { Dummies } from 'fakeServer/Dummies';
 import { FC } from 'react';
 
 
 
-export const MessageTest: FC = () => {
-    const variation = Message.getPlaceholderVariation();
+const message = Dummies.message({
+    id: 'qwe',
+    attachments: [],
+    author: 'zxc',
+    channel: null,
+    content: JSON.stringify(RTE.Modules.Utils.createInitialValue('some value')),
+    conversation: 'zxczxc',
+    index: 0,
+    server: null,
+    textChat: 'zxcqwezxc',
+});
 
+export const MessageTest: FC = () => {
     return (
         <Scrollable>
             <div className='flex flex-col gap-4 p-8'>
-                {/* <Message.Placeholder
-                    messageDisplayMode='compact'
-                    placeholderVariation={variation}
-                />
+                <Message.RedactorProvider>
+                    <Message.Node
+                        message={message}
+                        tabIndex={0}
+                        isGroupHead={true}
+                        messageDisplayMode='cozy'
+                    />
 
-                <Message.Placeholder
-                    messageDisplayMode='cozy'
-                    placeholderVariation={variation}
-                /> */}
+                    <Message.Node
+                        message={message}
+                        tabIndex={0}
+                        isGroupHead={false}
+                        messageDisplayMode='cozy'
+                    />
 
-                <Message.Node/>
+                    <Message.Node
+                        message={message}
+                        tabIndex={0}
+                        isGroupHead={true}
+                        messageDisplayMode='compact'
+                    />
+
+                    <Message.Node
+                        message={message}
+                        tabIndex={0}
+                        isGroupHead={false}
+                        messageDisplayMode='compact'
+                    />
+                </Message.RedactorProvider>
             </div>
         </Scrollable>
     );

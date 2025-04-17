@@ -108,7 +108,8 @@
     }
 
     #app-root,
-    #overlay-root {
+    #overlay-root,
+    #dev-root {
         position: fixed;
         inset: 0;
         overflow: hidden;
@@ -121,6 +122,11 @@
 
     #overlay-root {
         z-index: 20;
+        pointer-events: none;
+    }
+
+    #dev-root {
+        z-index: 30;
         pointer-events: none;
     }
 

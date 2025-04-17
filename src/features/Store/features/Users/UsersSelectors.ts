@@ -21,8 +21,10 @@ export const {
     selectExtraStatusById,
     selectStatusById,
     selectNameById,
+    selectAvatarById,
+    selectDefaultAvatarById,
 } = createAdapterFieldSelectors({
-    keys: ['status', 'extraStatus', 'name'],
+    keys: ['status', 'extraStatus', 'name', 'avatar', 'defaultAvatar'],
     selectById,
     slice: UsersSlice,
 });

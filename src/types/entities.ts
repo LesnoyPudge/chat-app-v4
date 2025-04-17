@@ -94,6 +94,13 @@ export namespace ClientEntities {
             users: string[];
         };
 
+        type AttachmentType = 'image' | 'file';
+
+        export type Attachment = {
+            id: File.Id;
+            type: AttachmentType;
+        };
+
         export type Base = WithTimestamps<(
             Conditional
             & {
@@ -104,7 +111,7 @@ export namespace ClientEntities {
                 content: string;
                 isModified: boolean;
                 isDeleted: boolean;
-                attachments: File.Id[];
+                attachments: Attachment[];
                 reactions: Reaction[];
             }
         )>;

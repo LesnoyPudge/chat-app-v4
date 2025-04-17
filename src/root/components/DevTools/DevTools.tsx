@@ -1,14 +1,17 @@
-import { Button, DialogBlocks, KeyboardNavigation, Overlay } from '@/components';
-import { createStyles, logger } from '@/utils';
+import { Button, DialogBlocks, KeyboardNavigation, Overlay, Scrollable } from '@/components';
+import { createStyles, getHTMLElement, logger } from '@/utils';
 import { FC, useRef } from 'react';
 import { useDevTools } from './hooks';
 import { KEY } from '@lesnoypudge/utils';
 import { rawActions } from './actions';
 import { createWithDecorator, Iterate, useHotKey } from '@lesnoypudge/utils-react';
+import { createPortal } from 'react-dom';
 
 
 
 const styles = createStyles({
+    wrapper: 'pointer-events-auto fixed inset-0 grid place-items-center',
+    scrollable: 'h-[70dvh] bg-black',
     inner: 'flex flex-col gap-2 p-2',
     action: `
         px-2
@@ -70,7 +73,7 @@ const { withDecorator } = createWithDecorator(({ children }) => {
     useHotKey(
         document,
         [KEY.F3],
-        controls.open,
+        controls.toggle,
         { hotKeyOptions: { prevent: true } },
     );
 
@@ -81,16 +84,15 @@ const { withDecorator } = createWithDecorator(({ children }) => {
         { hotKeyOptions: { prevent: true } },
     );
 
-    return (
-        <DialogBlocks.Base.Provider
-            controls={controls}
-            label='devtools'
-        >
-            <DialogBlocks.Base.Wrapper>
-                {children}
-            </DialogBlocks.Base.Wrapper>
-        </DialogBlocks.Base.Provider>
+    useHotKey(
+        document,
+        [KEY.Escape],
+        controls.close,
     );
+
+    if (!controls.isOpen) return null;
+
+    return createPortal(children, getHTMLElement.devRoot);
 });
 
 export const DevTools: FC = withDecorator(() => {
@@ -102,27 +104,31 @@ export const DevTools: FC = withDecorator(() => {
     const items = Object.keys<typeof actions>(actions);
 
     return (
-        <div
-            className={styles.inner}
-            ref={wrapperRef}
-        >
-            <KeyboardNavigation.Provider
-                list={items}
-                wrapperRef={wrapperRef}
-                loop
-            >
-                <Iterate
-                    items={items}
-                    getKey={(_, i) => i}
+        <div className={styles.wrapper}>
+            <Scrollable className={styles.scrollable}>
+                <div
+                    className={styles.inner}
+                    ref={wrapperRef}
                 >
-                    {(actionName) => (
-                        <Item
-                            actionName={actionName}
-                            actionFn={actions[actionName]}
-                        />
-                    )}
-                </Iterate>
-            </KeyboardNavigation.Provider>
+                    <KeyboardNavigation.Provider
+                        list={items}
+                        wrapperRef={wrapperRef}
+                        loop
+                    >
+                        <Iterate
+                            items={items}
+                            getKey={(_, i) => i}
+                        >
+                            {(actionName) => (
+                                <Item
+                                    actionName={actionName}
+                                    actionFn={actions[actionName]}
+                                />
+                            )}
+                        </Iterate>
+                    </KeyboardNavigation.Provider>
+                </div>
+            </Scrollable>
         </div>
     );
 });

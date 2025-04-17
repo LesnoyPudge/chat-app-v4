@@ -1,9 +1,9 @@
 import { Types } from '../../types';
 import { cn, createStyles } from '@/utils';
 import { createWithDecorator } from '@lesnoypudge/utils-react';
-import { MessageControlBar, MessageProvider } from './components';
+import { CompactMessage, CozyMessage, MessageControlBar, MessageProvider } from './components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { useMessageContext, useMessageRedactorContext } from '../../hooks';
+import { useIsMessageRedactorActive, useMessageContext } from '../../hooks';
 import { toOneLine } from '@lesnoypudge/utils';
 
 
@@ -55,11 +55,11 @@ export const MessageNode = withDecorator<NodeProps>(({
         message,
     } = useMessageContext();
 
-    const { getIsRedactorActive } = useMessageRedactorContext();
+    const isRedactorActive = useIsMessageRedactorActive(message.id);
 
     const isCompact = messageDisplayMode === 'compact';
     const isCozy = messageDisplayMode === 'cozy';
-
+    console.log(message.id, isRedactorActive);
     return (
         <article
             className={cn(styles.wrapper, className)}
@@ -82,7 +82,7 @@ export const MessageNode = withDecorator<NodeProps>(({
                 <CozyMessage/>
             </If>
 
-            <If condition={!getIsRedactorActive(message.id)}>
+            <If condition={!isRedactorActive}>
                 <MessageControlBar/>
             </If>
         </article>

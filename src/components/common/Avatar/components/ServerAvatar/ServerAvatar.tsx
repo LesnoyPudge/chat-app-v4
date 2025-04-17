@@ -1,9 +1,8 @@
 import { ClientEntities } from '@/types';
 import { FC } from 'react';
-import { getReadImagePath } from '../../utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Image } from '@/components';
-import { cn, createStyles } from '@/utils';
+import { cn, getReadFilePath, createStyles } from '@/utils';
 import { useTrans } from '@/hooks';
 import { useBoolean } from '@lesnoypudge/utils-react';
 import { sharedStyles } from '../../vars';
@@ -50,7 +49,7 @@ export const ServerAvatar: FC<ServerAvatar.Props> = ({
     const { t } = useTrans();
     const isLoadedState = useBoolean(false);
 
-    const src = getReadImagePath(avatar);
+    const src = getReadFilePath(avatar);
 
     const showImage = !!src;
     const showName = !showImage && !!name;

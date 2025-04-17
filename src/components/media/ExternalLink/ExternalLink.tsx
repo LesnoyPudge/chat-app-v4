@@ -13,6 +13,8 @@ const giveUpUrl = 'https://www.youtube.com/watch?v=xvFZjo5PgG0';
 export namespace ExternalLink {
     type StableProps = {
         label?: string;
+        download?: boolean;
+        tabIndex?: number;
     };
 
     type ConditionalProps = (
@@ -38,6 +40,8 @@ export const ExternalLink: FC<ExternalLink.Props> = ({
     href,
     label,
     giveUp,
+    download = false,
+    tabIndex = 0,
     children,
 }) => {
     const _href = giveUp ? giveUpUrl : href;
@@ -49,6 +53,8 @@ export const ExternalLink: FC<ExternalLink.Props> = ({
             rel='noopener noreferrer'
             target='_blank'
             aria-label={label}
+            download={download}
+            tabIndex={tabIndex}
         >
             {children}
         </a>

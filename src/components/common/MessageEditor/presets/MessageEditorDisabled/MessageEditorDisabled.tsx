@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { sharedStyles } from '../../styles';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { cn, createStyles } from '@/utils';
+import { MessageEditor } from '@/components';
 
 
 
@@ -21,10 +22,10 @@ export const MessageEditorDisabled: FC<RT.PropsWithChildrenAndClassName> = ({
     children,
 }) => {
     return (
-        <div className={cn(sharedStyles.wrapper, className)}>
+        <MessageEditor.PaddedWrapper className={className}>
             <div className={cn(sharedStyles.inner, styles.inner)}>
                 {children}
             </div>
-        </div>
+        </MessageEditor.PaddedWrapper>
     );
 };

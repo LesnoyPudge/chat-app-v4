@@ -7,7 +7,7 @@ import { withDisplayName } from '@lesnoypudge/utils-react';
 
 
 const styles = createStyles({
-    image: 'h-auto w-full max-w-full shrink-0 object-cover',
+    image: 'size-full max-w-full shrink-0 object-cover',
 });
 
 export namespace Image {

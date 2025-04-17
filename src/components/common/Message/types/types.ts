@@ -1,5 +1,5 @@
 import { ClientEntities, PropsWithInnerRef } from '@/types';
-import { RTE } from '@/components';
+import { EmojiPicker, RTE } from '@/components';
 import { PropsWithChildren } from 'react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
@@ -17,6 +17,7 @@ export namespace Types {
             editTimestampId: string;
             isGroupHead: boolean;
             tabIndex: number;
+            toggleReaction: EmojiPicker.OnEmojiPick;
         }
     )>;
 
@@ -25,7 +26,6 @@ export namespace Types {
     };
 
     export type RedactorContext = {
-        getIsRedactorActive: (id: string) => boolean;
         activeMessageId: string | null;
         openRedactor: (messageId: string) => void;
         closeRedactor: () => void;

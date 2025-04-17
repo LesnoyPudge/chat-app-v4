@@ -8,6 +8,7 @@ export * from './fileSize';
 export * from './formatNotificationCount';
 export * from './getAssetUrl';
 export * from './getHTMLElement';
+export * from './getReadFilePath';
 export * from './getStatusLabel';
 export * from './localStorageApi';
 export * from './logger';

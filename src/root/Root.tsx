@@ -37,14 +37,14 @@ export const Root: FC = () => {
                 <Heading.Provider>
                     <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
                         <GlobalProviders>
-                            <DevTools/>
-
                             <GlobalLoader.Wrapper>
                                 <Router/>
                             </GlobalLoader.Wrapper>
                         </GlobalProviders>
                     </ErrorBoundary.Node>
                 </Heading.Provider>
+
+                <DevTools/>
             </Focus.Lock>
 
             <Masks/>

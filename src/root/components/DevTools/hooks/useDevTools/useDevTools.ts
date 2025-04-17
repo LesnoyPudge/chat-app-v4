@@ -5,9 +5,12 @@ import { rawActions } from '../../actions';
 
 
 
+const navigate = (path: string) => {
+    history.replaceState(null, '', path);
+};
+
 export const useDevTools = () => {
     const wrapperRef = useRefManager<HTMLDivElement>(null);
-    const { navigate } = Navigator.useNavigateTo();
 
     // const navigateToDev = Object.entries({
     //     playground: () => navigate(Navigator.navigatorDevPath.playground),

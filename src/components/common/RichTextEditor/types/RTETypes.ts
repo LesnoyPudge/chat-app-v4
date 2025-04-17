@@ -3,7 +3,7 @@ import { HistoryEditor } from 'slate-history';
 import { ReactEditor } from 'slate-react';
 import { EmojiStore } from '@/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { PropsWithChildren } from 'react';
+import { KeyboardEvent, PropsWithChildren } from 'react';
 
 
 
@@ -81,6 +81,8 @@ export namespace RTETypes {
         maxLength: number;
         disabled: boolean;
         onSubmit: (value: RTETypes.Nodes, editor: RTETypes.Editor) => void;
+        onKeyDown: (e: KeyboardEvent) => void;
+        onBlur: VoidFunction;
     };
 
     export namespace Provider {

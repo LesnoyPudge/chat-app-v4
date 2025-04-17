@@ -2,9 +2,11 @@ import { FC, PropsWithChildren, useState } from 'react';
 import { Types } from '../../types';
 import { useFunction } from '@lesnoypudge/utils-react';
 import { Store } from '@/features';
-import { invariant } from '@lesnoypudge/utils';
-import { Form } from '@/components';
+import { invariant, KEY, parseJSON } from '@lesnoypudge/utils';
+import { Form, MessageEditor, RTE } from '@/components';
 import { MessageRedactorContext } from '../../context';
+import { useTrans } from '@/hooks';
+import { injectedStore } from '@/store/utils';
 
 
 
@@ -12,13 +14,14 @@ const {
     MessageRedactorForm,
 } = Form.createForm<Types.MessageRedactorFormValues>({
     defaultValues: {
-        content: [],
+        content: RTE.Modules.Utils.createInitialValue(),
     },
 }).withName('MessageRedactor');
 
 export const MessageRedactorProvider: FC<PropsWithChildren> = ({
     children,
 }) => {
+    const { t } = useTrans();
     const [
         activeMessageId,
         setActiveMessageId,
@@ -42,30 +45,55 @@ export const MessageRedactorProvider: FC<PropsWithChildren> = ({
 
     const openRedactor: (
         Types.RedactorContext['openRedactor']
-    ) = setActiveMessageId;
+    ) = useFunction((messageId) => {
+        const store = injectedStore.getStore();
+
+        const message = Store.Messages.Selectors.selectById(messageId)(
+            store.getState(),
+        );
+
+        invariant(message);
+
+        // @ts-expect-error deep types error
+        form.api.setFieldValue(
+            MessageRedactorForm.names.content._,
+            parseJSON(message.content),
+        );
+
+        setActiveMessageId(messageId);
+    });
 
     const closeRedactor: (
         Types.RedactorContext['closeRedactor']
-    ) = useFunction(() => setActiveMessageId(null));
+    ) = useFunction(() => {
+        form.api.reset();
+        setActiveMessageId(null);
+    });
 
-    const getIsRedactorActive: (
-        Types.RedactorContext['getIsRedactorActive']
-    ) = useFunction((id) => {
-        return id === activeMessageId;
+    const handleEscape: (
+        NonNullable<MessageEditor.Types.Provider.Props['onKeyDown']>
+    ) = useFunction((e) => {
+        if (e.key !== KEY.Escape) return;
+
+        closeRedactor();
     });
 
     const value: Types.RedactorContext = {
-        getIsRedactorActive,
         activeMessageId,
         closeRedactor,
         openRedactor,
     };
 
     return (
-        <Form.Provider form={form}>
+        <MessageEditor.Provider
+            form={form}
+            contentLabel={t('Message.Redactor.label')}
+            contentName={MessageRedactorForm.names.content}
+            onKeyDown={handleEscape}
+        >
             <MessageRedactorContext.Provider value={value}>
                 {children}
             </MessageRedactorContext.Provider>
-        </Form.Provider>
+        </MessageEditor.Provider>
     );
 };

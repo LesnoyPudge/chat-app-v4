@@ -3,7 +3,6 @@ import { createStyles } from '@/utils';
 
 
 export const sharedStyles = createStyles({
-    wrapper: 'px-4 pb-6 pt-4',
     inner: `
         min-h-[--message-editor-height] 
         rounded-lg 

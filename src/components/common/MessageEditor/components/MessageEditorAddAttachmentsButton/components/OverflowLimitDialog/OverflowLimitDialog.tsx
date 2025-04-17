@@ -1,4 +1,4 @@
-import { DialogBlocks } from '@/components';
+import { Overlay } from '@/components';
 import { Content } from '../Content';
 import { FC } from 'react';
 import { useTrans } from '@/hooks';
@@ -10,7 +10,7 @@ const styles = createStyles({
     content: 'bg-danger',
 });
 
-export const OverflowLimitDialog: FC<DialogBlocks.Types.PublicProps> = ({
+export const OverflowLimitDialog: FC<Overlay.Dialog.Types.PublicProps> = ({
     controls,
 }) => {
     const { t } = useTrans();

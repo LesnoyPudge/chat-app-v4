@@ -19,6 +19,7 @@ export namespace MessageEditor {
         MessageEditorSubmitButton: SubmitButton,
         MessageEditorEditable: Editable,
         MessageEditorProvider: Provider,
+        MessageEditorPaddedWrapper: PaddedWrapper,
     } = components;
 
     export namespace Presets {

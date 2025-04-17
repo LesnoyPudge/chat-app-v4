@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from 'react';
+import { CSSProperties, FC, KeyboardEvent } from 'react';
 import { Editable, useSlate } from 'slate-react';
 import { cn, createStyles } from '@/utils';
 import { RTEContext } from '../../context';
@@ -24,6 +24,8 @@ export const RTEContentEditable: FC<RT.PropsWithClassName> = ({
     const editor = useSlate();
     const {
         onSubmit,
+        onBlur,
+        onKeyDown,
         label,
         placeholder,
         maxLength,
@@ -31,13 +33,13 @@ export const RTEContentEditable: FC<RT.PropsWithClassName> = ({
         disabled,
     } = ContextSelectable.useProxy(RTEContext);
 
-    const handleOnKeyDown = useFunction(
-        RTEModules.Events.KeyDown(editor, onSubmit),
-    );
+    const handleOnKeyDown = useFunction((e: KeyboardEvent<HTMLDivElement>) => {
+        onKeyDown(e);
 
-    const handleFocus = useFunction(
-        RTEModules.Events.Focus(editor),
-    );
+        RTEModules.Events.KeyDown(editor, onSubmit)(e);
+    });
+
+    const handleFocus = useFunction(RTEModules.Events.Focus(editor));
 
     return (
         <Editable
@@ -48,6 +50,7 @@ export const RTEContentEditable: FC<RT.PropsWithClassName> = ({
             renderPlaceholder={RTEModules.Render.renderPlaceholder}
             onKeyDown={handleOnKeyDown}
             onFocus={handleFocus}
+            onBlur={onBlur}
             aria-label={label}
             placeholder={placeholder}
             maxLength={maxLength}

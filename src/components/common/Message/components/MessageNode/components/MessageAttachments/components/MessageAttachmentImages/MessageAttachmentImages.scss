@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer components {
+    .MessageAttachmentImages {
+        --template: '';
+        
+        --aspect-square: 1;
+        --aspect-rectangle: 55/28;
+
+        --grid-max-height: 100%;
+
+        display: grid;
+        gap: 4px;
+        grid-template-areas: var(--template);
+        max-height: var(--grid-max-height);
+
+        [data-grid-item] {
+            overflow: hidden;
+        }
+        
+        @mixin limit-grid-max-height() {
+            --grid-max-height: 350px;
+        }
+
+        @mixin set-aspect($item-num, $aspect-type) {
+            --item-aspect-#{$item-num}: var(--aspect-#{$aspect-type});
+        }
+
+        @mixin set-width($item-num, $width) {
+            --item-width-#{$item-num}: #{$width};
+        }
+
+        @mixin set-max-width($item-num, $max-width) {
+            --item-max-width-#{$item-num}: #{$max-width};
+        }
+
+        @mixin set-max-height($item-num, $max-height) {
+            --item-max-height-#{$item-num}: #{$max-height};
+        }
+
+        @for $i from 1 through 9 {
+            @include set-aspect($i, 'square');
+            @include set-width($i, 100%);
+            @include set-max-width($i, 100%);
+            @include set-max-height($i, 100%);
+
+            [data-grid-item="#{$i}"] {
+                grid-area: i#{$i};
+                aspect-ratio: var(--item-aspect-#{$i});
+                width: var(--item-width-#{$i});
+                max-width: var(--item-max-width-#{$i});
+                max-height: var(--item-max-height-#{$i});
+            }
+        }
+        
+        & {
+            &[data-grid-size='1'] {
+                @include set-max-width(1, 200px);
+
+                --template: 'i1';
+            }
+    
+            &[data-grid-size='2'] {
+                --template: 'i1 i2';
+            }
+    
+            &[data-grid-size='3'] {
+                @include limit-grid-max-height();
+                
+                --template: 'i1 i1 i2'
+                            'i1 i1 i3'
+                ;
+            }
+    
+            &[data-grid-size='4'] {
+                @include limit-grid-max-height();
+
+                --template: 'i1 i2'
+                            'i3 i4'
+                ;
+            }
+    
+            &[data-grid-size='5'] {
+                --template: 'i1 i1 i1 i2 i2 i2'
+                            'i3 i3 i4 i4 i5 i5'
+                ;
+            }
+    
+            &[data-grid-size='6'] {
+                --template: 'i1 i2 i3'
+                            'i4 i5 i6'
+                ;
+            }
+    
+            &[data-grid-size='7'] {
+                @include set-max-height(1, 280);
+                @include set-aspect(1, 'rectangle');
+
+                --template: 'i1 i1 i1'
+                            'i2 i3 i4'
+                            'i5 i6 i7'
+                ;
+            }
+    
+            &[data-grid-size='8'] {
+                --template: 'i1 i1 i1 i2 i2 i2'
+                            'i3 i3 i4 i4 i5 i5'
+                            'i6 i6 i7 i7 i8 i8'
+                ;
+            }
+    
+            &[data-grid-size='9'] {
+                --template: 'i1 i2 i3'
+                            'i4 i5 i6'
+                            'i7 i8 i9'
+                ;
+            }
+        }
+    }
+}

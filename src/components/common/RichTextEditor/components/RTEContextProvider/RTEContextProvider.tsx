@@ -23,6 +23,8 @@ export const RTEContextProvider: FC<RTETypes.Provider.Props> = ({
     onChange,
     onSubmit = noop,
     onSelectionChange = noop,
+    onBlur = noop,
+    onKeyDown = noop,
     children,
 }) => {
     const lastValueRef = useRef(value);
@@ -68,6 +70,8 @@ export const RTEContextProvider: FC<RTETypes.Provider.Props> = ({
         name,
         disabled,
         onSubmit,
+        onBlur,
+        onKeyDown,
     };
 
     return (

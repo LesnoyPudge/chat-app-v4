@@ -40,7 +40,7 @@ const styles = createStyles({
         font-medium
     `,
     searchBar: 'm-3 h-[30px] w-auto',
-    previewWrapper: 'flex h-12 items-center bg-primary-500 px-2',
+    previewWrapper: 'flex h-12 items-center bg-primary-500 p-2',
     previewEmoji: 'mr-2 size-7',
     previewText: 'truncate font-bold',
 });

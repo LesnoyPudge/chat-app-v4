@@ -14,7 +14,7 @@ export const MessageEditorWrapper: FC<RT.PropsWithChildrenAndClassName> = ({
     children,
 }) => {
     return (
-        <div className={cn(sharedStyles.wrapper, className)}>
+        <div className={className}>
             <div className={cn(sharedStyles.inner, styles.inner)}>
                 {children}
             </div>

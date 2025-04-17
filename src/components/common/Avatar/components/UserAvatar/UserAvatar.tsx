@@ -1,7 +1,6 @@
 import { FC, memo } from 'react';
-import { cn, getAssetUrl } from '@/utils';
+import { cn, getReadFilePath, getAssetUrl } from '@/utils';
 import { ClientEntities, ExtendedRecord } from '@/types';
-import { getReadImagePath } from '../../utils';
 import { useTrans } from '@/hooks';
 import { useBoolean, withDisplayName } from '@lesnoypudge/utils-react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
@@ -52,7 +51,7 @@ export const UserAvatar: FC<UserAvatar.Props> = ({
 
     const avatarSrc = (
         (avatar && !defaultAvatar)
-            ? getReadImagePath(avatar)
+            ? getReadFilePath(avatar)
             : null
     );
 
