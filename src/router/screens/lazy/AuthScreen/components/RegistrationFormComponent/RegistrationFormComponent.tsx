@@ -77,7 +77,7 @@ export const RegistrationFormComponent: FC = () => {
                 </Inputs.TextInput.Provider>
 
                 <Inputs.TextInput.Provider
-                    name={RegistrationForm.names.login}
+                    name={RegistrationForm.names.password}
                     label={t('RegistrationForm.passwordLabel')}
                     placeholder='myPassword'
                     type='password'

@@ -1,4 +1,4 @@
-import { CSSProperties, FC, KeyboardEvent } from 'react';
+import { CSSProperties, FC } from 'react';
 import { Editable, useSlate } from 'slate-react';
 import { cn, createStyles } from '@/utils';
 import { RTEContext } from '../../context';
@@ -33,11 +33,11 @@ export const RTEContentEditable: FC<RT.PropsWithClassName> = ({
         disabled,
     } = ContextSelectable.useProxy(RTEContext);
 
-    const handleOnKeyDown = useFunction((e: KeyboardEvent<HTMLDivElement>) => {
-        onKeyDown(e);
-
-        RTEModules.Events.KeyDown(editor, onSubmit)(e);
-    });
+    const handleOnKeyDown = useFunction(RTEModules.Events.KeyDown(
+        editor,
+        onSubmit,
+        [onKeyDown],
+    ));
 
     const handleFocus = useFunction(RTEModules.Events.Focus(editor));
 

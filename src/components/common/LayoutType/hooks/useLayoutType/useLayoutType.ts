@@ -3,6 +3,6 @@ import { LayoutTypeContext } from '../../context';
 
 
 
-export const useLayoutType = () => {
-    return ContextSelectable.useSelector(LayoutTypeContext);
-};
+export const useLayoutType = ContextSelectable.createUseProxyHook(
+    LayoutTypeContext,
+);

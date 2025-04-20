@@ -1,6 +1,8 @@
 import { Direction } from '@/types';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { CSSProperties, Dispatch, MutableRefObject, ReactNode, RefObject, SetStateAction } from 'react';
+import { useRefManager } from '@lesnoypudge/utils-react';
+import { CSSProperties, Dispatch, MutableRefObject, ReactNode, SetStateAction } from 'react';
 
 
 
@@ -22,7 +24,7 @@ export namespace Types {
     };
 
     export type WithApi = {
-        apiRef?: MutableRefObject<Api | null>;
+        apiRef?: useRefManager.NullableRefManager<Api>;
     };
 
     export type OnViewportIndexesChange = (
@@ -86,11 +88,11 @@ export namespace Types {
     >;
 
     export namespace List {
-        export type Props<_Item> = (
+        export type Props<_Item> = T.Simplify<(
             Options<_Item>
             & WithApi
             & WithChildren<_Item>
-        );
+        )>;
     }
 
     export namespace useVirtualArray {

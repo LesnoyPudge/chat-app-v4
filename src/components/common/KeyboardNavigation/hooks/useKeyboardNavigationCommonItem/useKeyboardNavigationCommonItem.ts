@@ -1,5 +1,5 @@
 import { KeyboardNavigation } from '@/components';
-import { Focus, useUnmountEffect } from '@lesnoypudge/utils-react';
+import { Focus } from '@lesnoypudge/utils-react';
 import { Types } from '../../types';
 import { useEffect, useRef } from 'react';
 
@@ -10,7 +10,6 @@ export const useKeyboardNavigationCommonItem: Types.useCommonItem.Fn = ({
     itemId,
 }) => {
     const shouldMoveRef = useRef(false);
-    const timeoutIdRef = useRef<number>();
     const isFocused = KeyboardNavigation.useIsFocused(itemId);
     const tabIndex = KeyboardNavigation.useTabIndex(itemId);
     const isCurrentId = KeyboardNavigation.useIsCurrentId(itemId);
@@ -20,6 +19,7 @@ export const useKeyboardNavigationCommonItem: Types.useCommonItem.Fn = ({
         const element = elementRef.current;
         if (!element) return;
         if (!shouldMoveRef.current) return;
+        if (!isCurrentId) return;
 
         shouldMoveRef.current = false;
 
@@ -32,7 +32,7 @@ export const useKeyboardNavigationCommonItem: Types.useCommonItem.Fn = ({
             block: 'center',
             inline: 'center',
         });
-    });
+    }, [elementRef, isCurrentId]);
 
     KeyboardNavigation.useOnMove(itemId, () => {
         // at the moment of this callback is executed
@@ -40,10 +40,6 @@ export const useKeyboardNavigationCommonItem: Types.useCommonItem.Fn = ({
         // has tabIndex -1.
         // in some cases that prevent us from focusing.
         shouldMoveRef.current = true;
-    });
-
-    useUnmountEffect(() => {
-        clearTimeout(timeoutIdRef.current);
     });
 
     return {

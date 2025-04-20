@@ -1,9 +1,9 @@
 import { db } from './FakeDB';
 import { Dummies } from './Dummies';
 import { faker } from '@faker-js/faker';
-import { catchErrorAsync, chance, coinFlip, inRange, invariant, toOneLine } from '@lesnoypudge/utils';
+import { catchErrorAsync, chance, coinFlip, inRange, invariant, never, toOneLine } from '@lesnoypudge/utils';
 import { v4 as uuid } from 'uuid';
-import { ClientEntities } from '@/types';
+import { ClientEntities, PopulationVariants } from '@/types';
 import type { RTE } from '@/components';
 import { hoursToMilliseconds, minutesToMilliseconds } from 'date-fns';
 import { logger } from '@/utils';
@@ -354,7 +354,7 @@ const createConversation = deferred(async (myId: string, userId: string) => {
 
 type PopulateOptions = {
     myId: string;
-    size: 'small' | 'medium' | 'large';
+    size: Exclude<PopulationVariants, 'none'>;
 };
 
 const sizeNameToMultiplier = {
@@ -372,9 +372,17 @@ const mul = (value: number) => {
 class Scenarios {
     async populate(options: PopulateOptions) {
         const originalState = db.getStorageClone();
-        sizeMultiplier = sizeNameToMultiplier[options.size];
 
-        logger.scenarios.log(`Database is populating with size: ${options.size}`);
+        const isSizedPopulation = options.size in sizeNameToMultiplier;
+        if (isSizedPopulation) {
+            sizeMultiplier = sizeNameToMultiplier[
+                options.size as keyof typeof sizeNameToMultiplier
+            ];
+        }
+
+        logger.scenarios.log(
+            `Database is populating with size: ${options.size}`,
+        );
 
         if (options.size === 'large') {
             logger.scenarios.log('Long loading is expected');
@@ -384,7 +392,15 @@ class Scenarios {
         deferredCounter = 0;
 
         const [_, error] = await catchErrorAsync(() => {
-            return defer(() => this._populate(options));
+            if (isSizedPopulation) {
+                return defer(() => this._populate(options));
+            }
+
+            if (options.size === 'minimal') {
+                return defer(() => this._populateMinimal(options));
+            }
+
+            never();
         });
 
         const finalDeferredCount = deferredCounter;
@@ -413,6 +429,10 @@ class Scenarios {
         logger.scenarios.log('Restoring previous state');
 
         await catchErrorAsync(() => db.set(originalState));
+    }
+
+    private async _populateMinimal({ myId }: PopulateOptions) {
+        throw new Error('Not implemented');
     }
 
     private async _populate({ myId }: PopulateOptions) {

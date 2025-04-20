@@ -29,7 +29,7 @@
         "@faker-js/faker": "^9.5.0",
         "@lesnoypudge/types-utils-base": "^3.5.0",
         "@lesnoypudge/utils": "^19.5.2",
-        "@lesnoypudge/utils-react": "^17.1.3",
+        "@lesnoypudge/utils-react": "^18.0.0",
         "@lesnoypudge/utils-web": "^3.4.1",
         "@reduxjs/toolkit": "^2.5.1",
         "@tailwindcss/container-queries": "^0.1.1",

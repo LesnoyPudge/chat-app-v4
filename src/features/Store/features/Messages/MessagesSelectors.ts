@@ -1,4 +1,4 @@
-import { createAdapterSelectors } from '@/store/utils';
+import { createAdapterFieldSelectors, createAdapterSelectors } from '@/store/utils';
 import { MessagesSlice } from './MessagesSlice';
 
 
@@ -13,3 +13,11 @@ export const {
     selectUndefinedIdsByIds,
     selectIsExistsById,
 } = createAdapterSelectors(MessagesSlice);
+
+export const {
+    selectIndexById,
+} = createAdapterFieldSelectors({
+    keys: ['index'],
+    selectById,
+    slice: MessagesSlice,
+});

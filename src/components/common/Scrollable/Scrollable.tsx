@@ -25,7 +25,7 @@ export namespace Scrollable {
 
     export type Instance = OverlayScrollbars;
 
-    export type Api = {};
+    export type Api = Instance;
 
     export type WithExposedApi = {
         apiRef?: useRefManager.NullableRefManager<Api>;

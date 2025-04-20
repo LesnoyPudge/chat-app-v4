@@ -10,8 +10,10 @@ export const SerializedParagraph: FC<SerializedParagraph.Props> = ({
     children,
 }) => {
     return (
-        <p>
+        <span>
             {children}
-        </p>
+
+            <br/>
+        </span>
     );
 };

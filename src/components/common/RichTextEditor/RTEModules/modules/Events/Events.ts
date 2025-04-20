@@ -18,9 +18,14 @@ export const Events = {
             value: RTETypes.Nodes,
             editor: RTETypes.Editor
         ) => void = noop,
+        extraHandlers: ((e: React.KeyboardEvent) => boolean)[] = [],
     ) => {
-        return (e: React.KeyboardEvent<HTMLDivElement>) => {
+        return (e: React.KeyboardEvent) => {
             if (!editor.selection) return;
+
+            for (const extraHandler of extraHandlers) {
+                if (extraHandler(e)) return;
+            }
 
             if (isSelectLeftHotkey(e.nativeEvent)) {
                 e.preventDefault();

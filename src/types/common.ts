@@ -22,3 +22,11 @@ export namespace Direction {
 
     export type All = 'horizontal' | 'vertical' | 'both';
 }
+
+export type PopulationVariants = (
+    'none'
+    | 'small'
+    | 'medium'
+    | 'large'
+    | 'minimal'
+);

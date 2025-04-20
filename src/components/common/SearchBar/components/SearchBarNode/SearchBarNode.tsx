@@ -79,6 +79,7 @@ export const SearchBarNode: FC<SearchBarNode.Props> = ({
             className,
         )}>
             <Inputs.TextInput.NodePure
+                className={styles.input}
                 name='search'
                 value={value}
                 label={label}

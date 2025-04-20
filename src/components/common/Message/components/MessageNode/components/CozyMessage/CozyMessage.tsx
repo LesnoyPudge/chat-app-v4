@@ -11,20 +11,15 @@ import { formatCreationTimestamp, formatSimpleTimestamp } from '../../utils';
 
 const styles = createStyles({
     wrapper: 'flex',
-    firstCol: 'flex w-[72px] shrink-0 items-start justify-end pr-4',
+    firstCol: 'flex w-[72px] shrink-0 items-start justify-center',
     avatar: 'size-10',
     headlessCreationTimestamp: `
-        text-xs 
-        font-medium 
-        leading-none 
-        text-color-muted 
-        opacity-0
+        leading-[--message-line-height]
+        opacity-100
         group-hover-focus-within/message:opacity-100
     `,
-    secondCol: 'w-full',
-    infoRow: 'flex gap-2',
-    username: 'font-medium text-color-primary',
-    groupHeadTimestamp: 'self-center text-xs font-medium text-color-muted',
+    secondCol: 'w-full pr-6',
+    infoRow: 'flex items-center gap-2',
 });
 
 export const CozyMessage: FC = () => {
@@ -50,20 +45,18 @@ export const CozyMessage: FC = () => {
                 </If>
 
                 <If condition={!isGroupHead}>
-                    <div>
-                        <MessageCreatedTimestamp className={styles.headlessCreationTimestamp}>
-                            {formatSimpleTimestamp(message.createdAt)}
-                        </MessageCreatedTimestamp>
-                    </div>
+                    <MessageCreatedTimestamp className={styles.headlessCreationTimestamp}>
+                        {formatSimpleTimestamp(message.createdAt)}
+                    </MessageCreatedTimestamp>
                 </If>
             </div>
 
             <div className={styles.secondCol}>
                 <If condition={isGroupHead}>
                     <div className={styles.infoRow}>
-                        <MessageUsername className={styles.username}/>
+                        <MessageUsername/>
 
-                        <MessageCreatedTimestamp className={styles.groupHeadTimestamp}>
+                        <MessageCreatedTimestamp>
                             {formatCreationTimestamp(message.createdAt)}
                         </MessageCreatedTimestamp>
                     </div>

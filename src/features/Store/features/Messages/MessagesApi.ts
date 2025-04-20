@@ -42,5 +42,17 @@ export const MessagesApi = getRootApi().injectEndpoints({
                 }),
             })
         ),
+        [Message.GetManyByTextChatId.NamedAction]: (
+            build.query<
+                Message.GetManyByTextChatId.Response,
+                Message.GetManyByTextChatId.RequestBody
+            >({
+                query: (body) => ({
+                    url: Message.GetManyByTextChatId.Path,
+                    method: Message.GetManyByTextChatId.Method,
+                    body,
+                }),
+            })
+        ),
     }),
 });

@@ -17,6 +17,7 @@ export const DialogProviderInner: FC<
 }) => {
     const popover = ContextSelectable.useSelector(
         Overlay.Popover.Context,
+        (v) => v,
     );
 
     const contextValue: Overlay.Dialog.Types.Context = {

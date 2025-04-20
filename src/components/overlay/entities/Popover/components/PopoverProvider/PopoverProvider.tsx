@@ -23,6 +23,7 @@ export const PopoverProvider: FC<Overlay.Popover.Types.Provider.Props> = ({
     const blockingChildren = useConst(() => new Set<string>());
     const overlay = ContextSelectable.useSelector(
         Overlay.BaseOverlay.Context,
+        (v) => v,
     );
 
     const upperChildren = ContextSelectable.useSelector(

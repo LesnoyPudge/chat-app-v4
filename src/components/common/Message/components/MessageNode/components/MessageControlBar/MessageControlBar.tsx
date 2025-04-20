@@ -47,10 +47,15 @@ export const MessageControlBar: FC = () => {
     const addReactionControls = Overlay.useControls();
     const addReactionRef = useRefManager<HTMLButtonElement>(null);
     const openRedactorRef = useRefManager<HTMLButtonElement>(null);
+    const userId = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserId,
+    );
 
     const handleOpenRedactor = useFunction(() => {
         openRedactor(message.id);
     });
+
+    const isMessageOwner = userId === message.author;
 
     return (
         <div
@@ -98,28 +103,30 @@ export const MessageControlBar: FC = () => {
                 </Overlay.Dialog.Wrapper>
             </Overlay.Dialog.Provider>
 
-            <Button
-                className={styles.button}
-                label={t('Message.ControlBar.openRedactorButton.label')}
-                role='menuitem'
-                tabIndex={tabIndex}
-                innerRef={openRedactorRef}
-                onLeftClick={handleOpenRedactor}
-            >
-                <Sprite
-                    className={styles.buttonIcon}
-                    sprite={ASSETS.IMAGES.SPRITE.PEN_ICON}
-                />
-            </Button>
+            <If condition={isMessageOwner}>
+                <Button
+                    className={styles.button}
+                    label={t('Message.ControlBar.openRedactorButton.label')}
+                    role='menuitem'
+                    tabIndex={tabIndex}
+                    innerRef={openRedactorRef}
+                    onLeftClick={handleOpenRedactor}
+                >
+                    <Sprite
+                        className={styles.buttonIcon}
+                        sprite={ASSETS.IMAGES.SPRITE.PEN_ICON}
+                    />
+                </Button>
 
-            <Overlay.Tooltip
-                className={styles.tooltip}
-                preferredAlignment='top'
-                spacing={5}
-                leaderElementRef={openRedactorRef}
-            >
-                {t('Message.ControlBar.openRedactorButton.label')}
-            </Overlay.Tooltip>
+                <Overlay.Tooltip
+                    className={styles.tooltip}
+                    preferredAlignment='top'
+                    spacing={5}
+                    leaderElementRef={openRedactorRef}
+                >
+                    {t('Message.ControlBar.openRedactorButton.label')}
+                </Overlay.Tooltip>
+            </If>
         </div>
     );
 };

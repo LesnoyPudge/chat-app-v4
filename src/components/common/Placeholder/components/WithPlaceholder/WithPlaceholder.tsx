@@ -34,7 +34,7 @@ export const WithPlaceholder = <_Value,>({
         // eslint-disable-next-line react-compiler/react-compiler, react-hooks/rules-of-hooks
         useTimeout(() => {
             setState(true);
-        }, 999_000);
+        }, 5_000);
 
         devReveal = state;
     }

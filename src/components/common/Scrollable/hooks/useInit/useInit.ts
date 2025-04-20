@@ -23,7 +23,7 @@ OverlayScrollbars.plugin(ClickScrollPlugin);
 OverlayScrollbars.plugin(ScrollbarsHidingPlugin);
 
 const createApi = (instance: Scrollable.Instance): Scrollable.Api => {
-    return {};
+    return instance;
 };
 
 export const useInit = ({

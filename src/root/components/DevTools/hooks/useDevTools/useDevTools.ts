@@ -6,7 +6,8 @@ import { rawActions } from '../../actions';
 
 
 const navigate = (path: string) => {
-    history.replaceState(null, '', path);
+    // eslint-disable-next-line no-restricted-globals
+    location.href = path;
 };
 
 export const useDevTools = () => {

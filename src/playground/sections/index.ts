@@ -1,4 +1,5 @@
 export * from './ActionMenuOverlay';
+export * from './ContextSelectorTest';
 export * from './FeedTest';
 export * from './FormTest';
 export * from './LazyLoad';

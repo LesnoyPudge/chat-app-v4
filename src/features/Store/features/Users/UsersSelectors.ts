@@ -83,6 +83,14 @@ export const selectCurrentUserOutgoingRequestUserIds = (
     }, `${UsersSlice.name}/selectCurrentUserOutgoingRequestUserIds`)
 );
 
+export const selectCurrentUserSettings = (
+    createSelector((query) => {
+        const user = query(selectCurrentUser);
+
+        return user.settings;
+    }, `${UsersSlice.name}/selectCurrentUserSettings`)
+);
+
 export const selectPresenceStatusById = (
     createSelector.withParams((userId: string) => (query) => {
         const extraStatus = query(selectExtraStatusById(userId));

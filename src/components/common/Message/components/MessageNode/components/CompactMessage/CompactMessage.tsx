@@ -1,5 +1,5 @@
 import { cn, createStyles } from '@/utils';
-import { useMessageContext } from '../../../../hooks';
+import { useIsMessageRedactorActive, useMessageContext } from '../../../../hooks';
 import { FC } from 'react';
 import { MessageAdditions, MessageContent, MessageCreatedTimestamp, MessageUsername } from '..';
 import { WHITESPACE } from '@/vars';
@@ -8,44 +8,47 @@ import { formatSimpleTimestamp } from '../../utils';
 
 
 const styles = createStyles({
-    wrapper: 'flex items-baseline pl-4',
-    content: 'w-full',
-    heading: 'sr-only',
-    time: {
-        base: 'mr-2 inline-block text-xs font-medium text-color-muted',
-        headless: 'opacity-0 group-hover:opacity-100',
+    wrapper: 'flex',
+    firstCol: 'flex w-[48px] shrink-0 items-start justify-center',
+    timestamp: {
+        base: 'leading-[--message-line-height]',
+        headless: `
+            opacity-0 
+            group-hover-focus-within/message:opacity-100
+        `,
     },
-    usernameWrapper: 'font-medium text-color-primary',
+    secondCol: 'w-full',
     username: 'inline',
+    content: 'inline',
 });
 
 export const CompactMessage: FC = () => {
     const { isGroupHead, message } = useMessageContext();
+    const isRedactorActive = useIsMessageRedactorActive(message.id);
 
     return (
         <div className={styles.wrapper}>
-            <div>
+            <div className={styles.firstCol}>
                 <MessageCreatedTimestamp className={cn(
-                    styles.time.base,
-                    !isGroupHead && styles.time.headless,
+                    styles.timestamp.base,
+                    !isGroupHead && styles.timestamp.headless,
                 )}>
                     {formatSimpleTimestamp(message.createdAt)}
                 </MessageCreatedTimestamp>
             </div>
 
-            <div className={styles.content}>
-                <div>
-                    <div className={styles.usernameWrapper}>
-                        <MessageUsername className={styles.username}/>
+            <If condition={!isRedactorActive}>
+                <div className={styles.secondCol}>
+                    <MessageUsername
+                        className={styles.username}
+                        postfix={`:${WHITESPACE}`}
+                    />
 
-                        {`:${WHITESPACE}`}
-                    </div>
-
-                    <MessageContent/>
+                    <MessageContent className={styles.content}/>
                 </div>
+            </If>
 
-                <MessageAdditions/>
-            </div>
+            <MessageAdditions/>
         </div>
     );
 };

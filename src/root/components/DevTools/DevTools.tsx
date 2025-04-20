@@ -4,7 +4,7 @@ import { FC, useRef } from 'react';
 import { useDevTools } from './hooks';
 import { KEY } from '@lesnoypudge/utils';
 import { rawActions } from './actions';
-import { createWithDecorator, Iterate, useHotKey } from '@lesnoypudge/utils-react';
+import { createWithDecorator, Focus, Iterate, useHotKey } from '@lesnoypudge/utils-react';
 import { createPortal } from 'react-dom';
 
 
@@ -104,31 +104,33 @@ export const DevTools: FC = withDecorator(() => {
     const items = Object.keys<typeof actions>(actions);
 
     return (
-        <div className={styles.wrapper}>
-            <Scrollable className={styles.scrollable}>
-                <div
-                    className={styles.inner}
-                    ref={wrapperRef}
-                >
-                    <KeyboardNavigation.Provider
-                        list={items}
-                        wrapperRef={wrapperRef}
-                        loop
+        <Focus.Lock autoFocus enabled returnFocus>
+            <div className={styles.wrapper}>
+                <Scrollable className={styles.scrollable}>
+                    <div
+                        className={styles.inner}
+                        ref={wrapperRef}
                     >
-                        <Iterate
-                            items={items}
-                            getKey={(_, i) => i}
+                        <KeyboardNavigation.Provider
+                            list={items}
+                            wrapperRef={wrapperRef}
+                            loop
                         >
-                            {(actionName) => (
-                                <Item
-                                    actionName={actionName}
-                                    actionFn={actions[actionName]}
-                                />
-                            )}
-                        </Iterate>
-                    </KeyboardNavigation.Provider>
-                </div>
-            </Scrollable>
-        </div>
+                            <Iterate
+                                items={items}
+                                getKey={(_, i) => i}
+                            >
+                                {(actionName) => (
+                                    <Item
+                                        actionName={actionName}
+                                        actionFn={actions[actionName]}
+                                    />
+                                )}
+                            </Iterate>
+                        </KeyboardNavigation.Provider>
+                    </div>
+                </Scrollable>
+            </div>
+        </Focus.Lock>
     );
 });

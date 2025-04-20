@@ -74,6 +74,8 @@ export namespace RTETypes {
 
     export type Nodes = RTETypes.Node[];
 
+    export type KeyHandler = (e: KeyboardEvent) => boolean;
+
     export type Context = {
         name: string;
         label: string;
@@ -81,7 +83,7 @@ export namespace RTETypes {
         maxLength: number;
         disabled: boolean;
         onSubmit: (value: RTETypes.Nodes, editor: RTETypes.Editor) => void;
-        onKeyDown: (e: KeyboardEvent) => void;
+        onKeyDown: KeyHandler;
         onBlur: VoidFunction;
     };
 

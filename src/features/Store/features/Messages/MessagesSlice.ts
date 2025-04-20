@@ -25,10 +25,10 @@ export const MessagesSlice = createSlice({
             addOne: adapter.addOne,
         });
 
-        // builder.addMatcher(
-        //     MessagesApi.endpoints.GetMany.matchFulfilled,
-        //     adapter.upsertMany,
-        // );
+        builder.addMatcher(
+            MessagesApi.endpoints.MessageGetManyByTextChatId.matchFulfilled,
+            adapter.upsertMany,
+        );
 
         builder.addMatcher(
             ReduxToolkit.isAnyOf(

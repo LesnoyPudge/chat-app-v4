@@ -12,8 +12,8 @@ export const Playground: FC = () => {
             {/* <Sections.MeasureSelectorPerf/> */}
             {/* <Sections.FormTest/> */}
             {/* <Sections.MessageInputBarTest/> */}
-            {/* <Sections.FeedTest/> */}
-            <Sections.MessageTest/>
+            {/* <Sections.MessageTest/> */}
+            <Sections.FeedTest/>
         </Screen>
     );
 };

@@ -13,7 +13,7 @@ const getDefaultPrerenderCount = ({
     Required<Types.Options<unknown>>,
     'itemSize' | 'itemMargin'
 >) => {
-    if (itemSize === 0) return 0;
+    if (itemSize === 0) return 1;
 
     const viewport = document.documentElement;
     const viewportHeight = viewport.clientHeight;

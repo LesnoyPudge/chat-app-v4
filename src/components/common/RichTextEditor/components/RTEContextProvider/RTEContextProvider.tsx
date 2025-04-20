@@ -24,7 +24,7 @@ export const RTEContextProvider: FC<RTETypes.Provider.Props> = ({
     onSubmit = noop,
     onSelectionChange = noop,
     onBlur = noop,
-    onKeyDown = noop,
+    onKeyDown = () => false,
     children,
 }) => {
     const lastValueRef = useRef(value);

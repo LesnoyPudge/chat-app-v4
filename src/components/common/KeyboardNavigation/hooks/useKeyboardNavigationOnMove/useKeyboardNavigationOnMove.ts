@@ -13,8 +13,10 @@ export const useKeyboardNavigationOnMove: Types.useOnMove.Fn = (
         KeyboardNavigationContext,
         (v) => v.on,
     );
+
     const _listener: typeof listener = useFunction((props) => {
         if (nextItemId !== null && props.next.id !== nextItemId) return;
+        if (props.next.id === props.prev?.id) return;
 
         listener(props);
     });

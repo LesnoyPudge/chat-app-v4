@@ -21,6 +21,7 @@ export const MenuProvider: FC<Overlay.Menu.Types.Provider.Props> = ({
             >
                 <ContextSelectable.ConsumerSelector
                     context={Overlay.Popover.Context}
+                    selector={(v) => v}
                 >
                     {(popover) => (
                         <MenuContext.Provider value={{

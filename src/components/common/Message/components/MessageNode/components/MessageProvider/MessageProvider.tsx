@@ -29,9 +29,9 @@ export const MessageProvider: FC<Types.Provider.Props> = ({
         toggleReaction,
         message,
         contentId: `contentId-${message.id}`,
-        editTimestampId: `contentId-${message.id}`,
-        timestampId: `contentId-${message.id}`,
-        usernameId: `contentId-${message.id}`,
+        editTimestampId: `editTimestampId-${message.id}`,
+        timestampId: `timestampId-${message.id}`,
+        usernameId: `usernameId-${message.id}`,
     };
 
     return (

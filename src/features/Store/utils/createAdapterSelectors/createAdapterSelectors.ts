@@ -1,40 +1,9 @@
 import { ReduxToolkit } from '@/libs';
-import { WithId } from '@/types';
 import { createSelector } from '@/store/utils';
 import { StoreTypes } from '@/store/types';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
-
-// type EntityAdapterSelectors<_State extends WithId> = {
-//     selectIds: (
-//         rootState: StoreTypes.State
-//     ) => _State['id'][];
-
-//     selectEntities: (
-//         rootState: StoreTypes.State
-//     ) => Record<_State['id'], _State>;
-
-//     selectAll: (
-//         rootState: StoreTypes.State
-//     ) => _State[];
-
-//     selectById: (id: _State['id'] | undefined) => (
-//         rootState: StoreTypes.State,
-//     ) => _State | undefined;
-
-//     selectByIds: (...ids: _State['id'][]) => (
-//         rootState: StoreTypes.State,
-//     ) => _State[];
-
-//     selectTotal: (
-//         rootState: StoreTypes.State
-//     ) => number;
-
-//     selectUndefinedIdsByIds: (...ids: _State['id'][]) => (
-//         rootState: StoreTypes.State,
-//     ) => _State['id'][];
-// };
 
 export const createAdapterSelectors = <
     _Slice extends T.ValueOf<StoreTypes.SlicesWithEntityAdapter>,
@@ -84,7 +53,7 @@ export const createAdapterSelectors = <
 
                 const entities = query(selectEntities);
 
-                return !!entities[id].id;
+                return id in entities;
             };
         }, `${sliceName}/selectIsExistsById`,
     );

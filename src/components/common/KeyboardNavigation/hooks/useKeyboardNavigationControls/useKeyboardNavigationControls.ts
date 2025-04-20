@@ -7,6 +7,7 @@ import {
     useMemoShallow,
     useHotKey,
     useIsFocused,
+    useForceUpdate,
 } from '@lesnoypudge/utils-react';
 import { Types } from '../../types';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
@@ -73,9 +74,12 @@ export const useKeyboardNavigationControls: Types.useControls.Fn = ({
         setLastMovedOnId,
     ] = useState(() => getInitialId());
 
+    const { forceUpdate, forcedState } = useForceUpdate();
+
     const setCurrentFocusedId = useFunction((newId: string) => {
         shouldUseMovedOnIdRef.current = true;
         setLastMovedOnId(newId);
+        forceUpdate();
     });
 
     const getDerivedId = useFunction((
@@ -141,8 +145,13 @@ export const useKeyboardNavigationControls: Types.useControls.Fn = ({
         initializedFocusedIdRef.current = newId;
 
         return newId;
-    }, [lastMovedOnId, memoizedList, prevList, getDerivedId]);
-
+    }, [
+        lastMovedOnId,
+        memoizedList,
+        prevList,
+        getDerivedId,
+        forcedState,
+    ]);
 
     const { on, off, trigger } = useEvent<[Types.ListenerProps]>();
 

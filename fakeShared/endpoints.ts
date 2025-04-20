@@ -744,6 +744,26 @@ namespace EndpointsV1 {
 
             export type Response = Entities.Message.Base;
         }
+
+        export namespace GetManyByTextChatId {
+            export const ActionName = 'getManyByTextChatId';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = (
+                WithId.TextChat
+                & {
+                    from: number | null;
+                    limit: number;
+                }
+            );
+
+            export type Response = Entities.Message.Base[];
+        }
     }
 
     export namespace VoiceChat {

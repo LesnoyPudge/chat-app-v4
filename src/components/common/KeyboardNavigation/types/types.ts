@@ -1,5 +1,6 @@
 import { useEvent } from '@/hooks';
 import { Direction } from '@/types';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { PropsWithChildren, RefObject } from 'react';
 
@@ -60,19 +61,19 @@ export namespace Types {
         getIsFocused: (id: string) => boolean;
     };
 
-    export type Context = (
+    export type Context = T.Simplify<(
         WithCurrentId
         & WithSetCurrentId
         & WithListeners
         & withItemStateGetters
-    );
+    )>;
 
     export namespace Provider {
-        export type Props = (
+        export type Props = T.Simplify<(
             Options
             & WithWrapperRef
             & PropsWithChildren
-        );
+        )>;
     }
 
     export namespace useCommonItem {

@@ -43,9 +43,13 @@ import E_User = Endpoints.V1.User;
 
 const _res = HttpResponse;
 
+const toError = (status: number) => {
+    return new _res(null, { status });
+};
+
 const apiError = {
-    badRequest: () => HTTP_STATUS_CODES.BAD_REQUEST,
-    unauthorized: () => HTTP_STATUS_CODES.UNAUTHORIZED,
+    badRequest: () => toError(HTTP_STATUS_CODES.BAD_REQUEST),
+    unauthorized: () => toError(HTTP_STATUS_CODES.UNAUTHORIZED),
 };
 
 type EndpointObject = {
@@ -84,9 +88,6 @@ const jsonResponse = <
     return result;
 };
 
-const toError = (status: number) => {
-    return new _res(null, { status });
-};
 
 const populateIfNeeded = async (myId: string) => {
     const populationSize = localStorageApi.get('shouldPopulate');
@@ -398,13 +399,13 @@ const getRoutes = (): HttpHandler[] => [
             await delay();
 
             const { fileId } = params as { fileId: string };
-            if (!fileId) return toError(apiError.badRequest());
+            if (!fileId) return apiError.badRequest();
 
             const file = db.getById('file', fileId);
-            if (!file) return toError(apiError.badRequest());
+            if (!file) return apiError.badRequest();
 
             const base64Data = file.base64.split(';base64,')[1];
-            if (!base64Data) return toError(apiError.badRequest());
+            if (!base64Data) return apiError.badRequest();
 
             const buffer = Uint8Array.from(
                 atob(base64Data),
@@ -614,6 +615,27 @@ const getRoutes = (): HttpHandler[] => [
                 User,
                 VoiceChat,
             });
+        },
+    ),
+    route<
+        E_Message.GetManyByTextChatId.RequestBody,
+        E_Message.GetManyByTextChatId.Response
+    >(E_Message.GetManyByTextChatId)(
+        withAuth,
+        async ({ body, auth }) => {
+            const textChat = db.getById('textChat', body.textChatId);
+
+            if (!textChat) return apiError.badRequest();
+
+            const sliceTo = body.from ?? textChat.messageCount;
+            const sliceFrom = Math.max(0, sliceTo - body.limit);
+
+            const messages = db.getByIds(
+                'message',
+                textChat.messages.slice(sliceFrom, sliceTo),
+            );
+
+            return jsonResponse(messages);
         },
     ),
 ];

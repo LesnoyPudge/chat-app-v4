@@ -73,9 +73,13 @@ export const MessageRedactorProvider: FC<PropsWithChildren> = ({
     const handleEscape: (
         NonNullable<MessageEditor.Types.Provider.Props['onKeyDown']>
     ) = useFunction((e) => {
-        if (e.key !== KEY.Escape) return;
+        if (e.key !== KEY.Escape) return false;
+
+        e.preventDefault();
 
         closeRedactor();
+
+        return true;
     });
 
     const value: Types.RedactorContext = {
