@@ -1,13 +1,12 @@
 import { Types } from '../../types';
 import { cn, createStyles } from '@/utils';
-import { ContextSelectable, createWithDecorator, usePropsChange, withDisplayName } from '@lesnoypudge/utils-react';
+import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
 import { CompactMessage, CozyMessage, MessageControlBar, MessageProvider } from './components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { useIsMessageRedactorActive, useMessageContext } from '../../hooks';
 import { toOneLine } from '@lesnoypudge/utils';
 import { decorate } from '@lesnoypudge/macro';
 import { memo } from 'react';
-import { MessageContext } from '../../context';
 
 
 
@@ -47,84 +46,46 @@ export const MessageNode = withDecorator<Types.Node.Props>(({
     className = '',
     innerRef,
     tabIndex,
-    ...rest
 }) => {
-    // const {
-    //     messageDisplayMode,
-    //     editTimestampId,
-    //     timestampId,
-    //     usernameId,
-    //     contentId,
-    //     message,
-    //     tabIndex: _tabIndex,
-    // } = useMessageContext();
+    const {
+        messageDisplayMode,
+        editTimestampId,
+        timestampId,
+        usernameId,
+        contentId,
+        message,
+    } = useMessageContext();
 
+    const isRedactorActive = useIsMessageRedactorActive(message.id);
 
-    const id = ContextSelectable.useSelector(
-        MessageContext,
-        (v) => v.message.id,
-    );
-
-    const _tabIndex = ContextSelectable.useSelector(
-        MessageContext,
-        (v) => v.tabIndex,
-    );
-
-    usePropsChange({
-        ...rest,
-        id,
-        _tabIndex,
-        tabIndex,
-        innerRef,
-        className,
-    });
-
-    // const isRedactorActive = useIsMessageRedactorActive(message.id);
-
-    // const isCompact = messageDisplayMode === 'compact';
-    // const isCozy = messageDisplayMode === 'cozy';
-
-
-    console.log(JSON.stringify({
-        id: id,
-        props: tabIndex,
-        context: _tabIndex,
-    }, null, 4), '\n');
+    const isCompact = messageDisplayMode === 'compact';
+    const isCozy = messageDisplayMode === 'cozy';
 
     return (
-        <div
+        <article
+            className={cn(styles.wrapper, className)}
+            aria-hidden={false}
+            aria-setsize={-1}
             tabIndex={tabIndex}
+            aria-labelledby={toOneLine(`
+                ${timestampId}
+                ${usernameId}
+                ${contentId}
+                ${editTimestampId}
+            `)}
+            ref={innerRef}
         >
-            {id}
-        </div>
+            <If condition={!isRedactorActive}>
+                <MessageControlBar/>
+            </If>
+
+            <If condition={isCompact}>
+                <CompactMessage/>
+            </If>
+
+            <If condition={isCozy}>
+                <CozyMessage/>
+            </If>
+        </article>
     );
-
-
-    // return (
-    //     <article
-    //         className={cn(styles.wrapper, className)}
-    //         aria-hidden={false}
-    //         aria-setsize={-1}
-    //         tabIndex={tabIndex}
-    //         aria-labelledby={toOneLine(`
-    //             ${timestampId}
-    //             ${usernameId}
-    //             ${contentId}
-    //             ${editTimestampId}
-    //         `)}
-    //         ref={innerRef}
-    //     >
-    //         <If condition={!isRedactorActive}>
-    //             <MessageControlBar/>
-    //         </If>
-
-    //         <If condition={isCompact}>
-    //             <CompactMessage/>
-    //         </If>
-
-    //         <If condition={isCozy}>
-    //             <CozyMessage/>
-    //         </If>
-    //     </article>
-    // );
 });

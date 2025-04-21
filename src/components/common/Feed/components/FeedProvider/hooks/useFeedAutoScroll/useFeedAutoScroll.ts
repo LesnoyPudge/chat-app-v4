@@ -2,6 +2,7 @@ import { Store } from '@/features';
 import { Types } from '../../../../types';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { mutate, useFunction, useIntersectionObserver, useResizeObserver } from '@lesnoypudge/utils-react';
+import { combinedFunction } from '@lesnoypudge/utils';
 
 
 
@@ -62,6 +63,7 @@ export const useFeedAutoScroll = ({
 
     useIntersectionObserver(autoscrollTriggerRef, (entry) => {
         isAutoScrollEnabledRef.current = entry.isIntersecting;
+        console.log(`isIntersecting: ${entry.isIntersecting}`);
     });
 
     // const [indexesShift, setIndexesShift] = useState(messagesLengthRef.current || 0);
@@ -83,19 +85,31 @@ export const useFeedAutoScroll = ({
         scrollToBottom();
     });
 
-    // useIntersectionObserver(autoScrollTriggerElement, ({ isIntersecting }) => {
-    //     isAutoScrollEnabledRef.current = isIntersecting;
-    // });
+    // useResizeObserver(scrollableRef, scrollToBottomIfAllowed);
+
+    // useResizeObserver(scrollableWrapperRef, scrollToBottomIfAllowed);
+
+    // useLayoutEffect(() => {
+    //     console.log('initial scroll');
+    //     scrollToBottomIfAllowed();
+    // }, [scrollToBottomIfAllowed]);
+
+    useLayoutEffect(() => {
+        return scrollableApiRef.effect((api) => {
+            if (!api) return;
+
+            return api.on('updated', () => {
+                console.log('updated');
+                scrollToBottomIfAllowed();
+            });
+        });
+    }, [scrollToBottomIfAllowed, scrollableApiRef, scrollableRef]);
 
     // useLayoutEffect(() => {
     //     if (!isAutoScrollEnabledRef.current) return;
 
     //     setIndexesShift(messagesLengthRef.current || 0);
     // }, [messages, messagesLengthRef]);
-
-    // useResizeObserver(scrollableRef, scrollToBottomIfAllowed);
-
-    // useResizeObserver(scrollableWrapperRef, scrollToBottomIfAllowed);
 
     // useLayoutEffect(() => {
     //     if (!placeholderElement) return;

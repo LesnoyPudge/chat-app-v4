@@ -14,7 +14,7 @@ const styles = createStyles({
 export namespace List {
     export type Props = {
         userIds: string[];
-        children: VirtualList.Node.Props<string>['children'];
+        children: VirtualList.Node.Props['children'];
     };
 }
 

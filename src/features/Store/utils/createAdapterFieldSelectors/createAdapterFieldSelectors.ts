@@ -15,7 +15,7 @@ export type FieldSelectors<
             ? `select${Capitalize<_Key>}ById`
             : never
     )]: (
-        (id: _State['id']) => (
+        (id: _State['id'] | undefined) => (
             rootState: StoreTypes.State
         ) => _State[_Key] | undefined
     );
@@ -26,7 +26,9 @@ export const createAdapterFieldSelectors = <
     _State extends StoreTypes.ExtractStateFromSliceWithEntityAdapter<_Slice>,
     _Keys extends (keyof _State)[],
     _SelectById extends (
-        (id: string) => (rootState: StoreTypes.State) => _State | undefined
+        (id: string) => (
+            (rootState: StoreTypes.State) => _State | undefined
+        )
     ),
 >({
     keys,
@@ -45,8 +47,10 @@ export const createAdapterFieldSelectors = <
         const selectorDisplayName = `${sliceName}/${selectorName}`;
 
         const selector = createSelector.withParams((
-            id: _State['id'],
+            id: _State['id'] | undefined,
         ) => (query) => query(() => {
+            if (!id) return;
+
             const entity = query(selectById(id));
             if (!entity) return;
 

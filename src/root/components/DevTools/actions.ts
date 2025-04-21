@@ -105,22 +105,21 @@ export const rawActions = {
     },
 
     populateDB_Small: () => {
-        localStorageApi.set('shouldPopulate', 'small');
+        localStorageApi.set('setupScenario', 'populateSmall');
         localStorageApi.remove('lastVisitedChannels');
         // eslint-disable-next-line no-restricted-globals
         location.reload();
     },
 
     populateDB_Medium: () => {
-        localStorageApi.set('shouldPopulate', 'medium');
+        localStorageApi.set('setupScenario', 'populateMedium');
         localStorageApi.remove('lastVisitedChannels');
         // eslint-disable-next-line no-restricted-globals
         location.reload();
     },
 
     populateDB_Large: () => {
-        logger._common.log('LONG LOADING IS EXPECTED');
-        localStorageApi.set('shouldPopulate', 'large');
+        localStorageApi.set('setupScenario', 'populateLarge');
         localStorageApi.remove('lastVisitedChannels');
         // eslint-disable-next-line no-restricted-globals
         location.reload();

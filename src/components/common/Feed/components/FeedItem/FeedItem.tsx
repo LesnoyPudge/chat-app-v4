@@ -1,11 +1,14 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { KeyboardNavigation, Message, VirtualList } from '@/components';
-import { Focus, useRefManager } from '@lesnoypudge/utils-react';
+import { useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { Store } from '@/features';
-import { coinFlip, invariant } from '@lesnoypudge/utils';
+import { invariant } from '@lesnoypudge/utils';
 import { createStyles } from '@/utils';
+import { differenceInMinutes, isSameDay } from 'date-fns';
+import { FeedDayDivider } from '../FeedDayDivider';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
@@ -16,21 +19,80 @@ const styles = createStyles({
     `,
 });
 
-export namespace FeedItem {
+namespace getExtraMessageData {
     export type Props = {
-        messageId: string;
+        currentMessageAuthorId: string;
+        currentMessageCreatedAt: number;
+        prevMessageAuthorId: string | undefined;
+        prevMessageCreatedAt: number | undefined;
+    };
+
+    export type Return = {
+        isGroupHead: boolean;
+        shouldShowDayDivider: boolean;
     };
 }
 
+const getExtraMessageData = ({
+    currentMessageAuthorId,
+    currentMessageCreatedAt,
+    prevMessageAuthorId,
+    prevMessageCreatedAt,
+}: getExtraMessageData.Props): getExtraMessageData.Return => {
+    if (!prevMessageAuthorId || !prevMessageCreatedAt) {
+        return {
+            isGroupHead: true,
+            shouldShowDayDivider: false,
+        };
+    }
+
+    const isSameAuthor = currentMessageAuthorId === prevMessageAuthorId;
+
+    const isNewDay = !isSameDay(
+        prevMessageCreatedAt,
+        currentMessageCreatedAt,
+    );
+
+    const timeGap = differenceInMinutes(
+        prevMessageCreatedAt,
+        currentMessageCreatedAt,
+    );
+
+    const withTimeGap = timeGap >= 5;
+
+    const isGroupHead = (
+        !isSameAuthor
+        || withTimeGap
+        || isNewDay
+    );
+
+    const shouldShowDayDivider = isNewDay;
+
+    return {
+        isGroupHead,
+        shouldShowDayDivider,
+    };
+};
+
+export namespace FeedItem {
+    export type Props = {
+        messageId: string;
+        previousMessageId: string | undefined;
+    };
+}
+
+decorate(withDisplayName, 'FeedItem', decorate.target);
+decorate(memo, decorate.target);
+
 export const FeedItem: FC<FeedItem.Props> = ({
     messageId,
+    previousMessageId,
 }) => {
     const elementRef = useRefManager<HTMLDivElement>(null);
 
     const {
         tabIndex,
         setFocusId,
-        isFocused,
     } = KeyboardNavigation.useCommonItem({
         elementRef,
         itemId: messageId,
@@ -43,25 +105,49 @@ export const FeedItem: FC<FeedItem.Props> = ({
     const message = Store.useSelector(
         Store.Messages.Selectors.selectById(messageId),
     );
-    invariant(message, 'message should be defined');
+    invariant(
+        message,
+        'message should be defined, otherwise we would not be here',
+    );
+
+    const previousMessageAuthor = Store.useSelector(
+        Store.Messages.Selectors.selectAuthorById(previousMessageId),
+    );
+
+    const previousMessageCreatedAt = Store.useSelector(
+        Store.Messages.Selectors.selectCreatedAtById(previousMessageId),
+    );
+
+    const {
+        isGroupHead,
+        shouldShowDayDivider,
+    } = getExtraMessageData({
+        currentMessageAuthorId: message.author,
+        currentMessageCreatedAt: message.createdAt,
+        prevMessageAuthorId: previousMessageAuthor,
+        prevMessageCreatedAt: previousMessageCreatedAt,
+    });
 
     return (
-        <div
-            className={styles.wrapper}
-            onClick={setFocusId}
-            onAuxClick={setFocusId}
-            onContextMenu={setFocusId}
-        >
-            {/* <div className='h-32' tabIndex={tabIndex} ref={elementRef}>
-                <>isFocused: {String(isFocused)} - {message.id}</>
-            </div> */}
-            <Message.Node
-                message={message}
-                isGroupHead
-                messageDisplayMode={messageDisplayMode}
-                tabIndex={tabIndex}
-                innerRef={elementRef}
-            />
-        </div>
+        <>
+            <If condition={shouldShowDayDivider}>
+                <FeedDayDivider timestamp={message.createdAt}/>
+            </If>
+
+            <div
+                className={styles.wrapper}
+                onClick={setFocusId}
+                onAuxClick={setFocusId}
+                onContextMenu={setFocusId}
+            >
+                <Message.Node
+                    message={message}
+                    isGroupHead={isGroupHead}
+                    messageDisplayMode={messageDisplayMode}
+                    tabIndex={tabIndex}
+                    innerRef={elementRef}
+                />
+            </div>
+        </>
     );
 };

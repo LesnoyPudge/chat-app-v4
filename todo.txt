@@ -36,7 +36,8 @@ https://fluid.tw/
 -? изменить как entity id передаются в компоненты? сделать через контекст из за чего будет меньше дрилинга?
 - добавить в UserEffects эффект для ухода в афк
 - handle 404 in server/channel/conversation 
-
+-? refactor useKeyboardNavigationControls
+-? investigate infinite rerenders in VirtualListInner
 
 
 --- current goals ---

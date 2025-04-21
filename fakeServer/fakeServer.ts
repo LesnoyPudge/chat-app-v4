@@ -89,15 +89,15 @@ const jsonResponse = <
 };
 
 
-const populateIfNeeded = async (myId: string) => {
-    const populationSize = localStorageApi.get('shouldPopulate');
+const setupScenarioIfNeeded = async (myId: string) => {
+    const setupScenario = localStorageApi.get('setupScenario');
 
-    if (populationSize && populationSize !== 'none') {
-        localStorageApi.set('shouldPopulate', 'none');
+    if (setupScenario && setupScenario !== 'none') {
+        localStorageApi.set('setupScenario', 'none');
 
-        await scenarios.populate({
+        await scenarios.setup({
             myId,
-            size: populationSize,
+            variant: setupScenario,
         });
     }
 
@@ -181,7 +181,7 @@ const getRoutes = (): HttpHandler[] => [
             });
             if (!user) return apiError.badRequest();
 
-            const populatedUser = await populateIfNeeded(user.id);
+            const populatedUser = await setupScenarioIfNeeded(user.id);
 
             populatedUser.status = 'online';
 
@@ -224,7 +224,7 @@ const getRoutes = (): HttpHandler[] => [
 
             const user = await db.create('user', dummy);
 
-            const populatedUser = await populateIfNeeded(user.id);
+            const populatedUser = await setupScenarioIfNeeded(user.id);
 
             return jsonResponse({
                 userData: populatedUser,
@@ -257,7 +257,7 @@ const getRoutes = (): HttpHandler[] => [
             }));
             if (!updatedUser) return apiError.badRequest();
 
-            const populatedUser = await populateIfNeeded(user.id);
+            const populatedUser = await setupScenarioIfNeeded(user.id);
 
             return jsonResponse({
                 userData: populatedUser,

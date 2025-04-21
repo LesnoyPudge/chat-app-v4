@@ -54,12 +54,12 @@ export namespace Types {
 
     export type OverflowAnchor = 'none' | 'auto';
 
-    export type GetId<_Item> = (item: _Item, index: number) => string | number;
+    export type GetId = (item: string, index: number) => string | number;
 
-    export type Options<_Item> = {
-        items: _Item[] | undefined;
-        getId: GetId<_Item>;
-        // viewportRef?: RefObject<HTMLElement | null> | HTMLElement;
+    export type Options = {
+        items: string[] | undefined;
+        getId: GetId;
+        viewportRef?: useRefManager.NullableRefManager<HTMLElement>;
         itemSize: number;
         itemMargin: number;
         overscan?: number;
@@ -77,32 +77,32 @@ export namespace Types {
         getItemBoundingClientRect?: GetItemBoundingClientRect;
     };
 
-    export type ChildrenArgs<_Item> = [
-        item: _Item,
+    export type ChildrenArgs = [
+        item: string,
         index: number,
-        array: _Item[],
+        array: string[],
     ];
 
-    export type WithChildren<_Item> = RT.PropsWithRequiredRenderFunction<
-        ChildrenArgs<_Item>
+    export type WithChildren = RT.PropsWithRequiredRenderFunction<
+        ChildrenArgs
     >;
 
     export namespace List {
-        export type Props<_Item> = T.Simplify<(
-            Options<_Item>
+        export type Props = T.Simplify<(
+            Options
             & WithApi
-            & WithChildren<_Item>
+            & WithChildren
         )>;
     }
 
     export namespace useVirtualArray {
-        export type Return<_Item> = {
-            virtualList: _Item[];
+        export type Return = {
+            virtualList: string[];
             setVirtualIndexes: Dispatch<SetStateAction<[number, number]>>;
         };
 
-        export type Fn = <_Item>(
-            originalArray: _Item[] | undefined
-        ) => Return<_Item>;
+        export type Fn = (
+            originalArray: string[]
+        ) => Return;
     }
 }

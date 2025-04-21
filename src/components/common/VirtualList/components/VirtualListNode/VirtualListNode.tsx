@@ -7,47 +7,54 @@ export namespace VirtualListNode {
     type KeyboardNavigationNonIntersectingProps = (
         Exclude<
             keyof KeyboardNavigation.Types.Provider.Props,
-            keyof VirtualRender.Types.List.Props<unknown>
+            keyof VirtualRender.Types.List.Props
             | 'list'
         >
     );
 
-    export type Props<_Item> = T.Simplify<(
+    export type Props = T.Simplify<(
         Pick<
             KeyboardNavigation.Types.Provider.Props,
             KeyboardNavigationNonIntersectingProps
         >
         & T.Except<
-            VirtualRender.Types.List.Props<_Item>,
+            VirtualRender.Types.List.Props,
             'onViewportIndexesChange'
         >
     )>;
 }
 
-export const VirtualListNode = <_Item,>({
+export const VirtualListNode = ({
     items = [],
     getId,
     wrapperRef,
     children,
     ...rest
-}: VirtualListNode.Props<_Item>) => {
+}: VirtualListNode.Props) => {
     const {
         setVirtualIndexes,
         virtualList,
     } = VirtualRender.useVirtualArray(items);
 
+    const {
+        direction,
+        initialFocusedId,
+        loop,
+        onFocusChange,
+        ...virtualRenderProps
+    } = rest;
+
     return (
         <KeyboardNavigation.Provider
-            {...rest}
-            // list={items.map((v, i) => String(getId(v, i)))}
-            list={virtualList.map((v, i) => String(getId(v, i)))}
+            list={virtualList}
             wrapperRef={wrapperRef}
-            onFocusChange={({ next }) => {
-                console.log(next);
-            }}
+            direction={direction}
+            initialFocusedId={initialFocusedId}
+            loop={loop}
+            onFocusChange={onFocusChange}
         >
             <VirtualRender.List
-                {...rest}
+                {...virtualRenderProps}
                 items={items}
                 getId={getId}
                 onViewportIndexesChange={setVirtualIndexes}

@@ -1,4 +1,4 @@
-import { ClientEntities, PopulationVariants } from '@/types';
+import { ClientEntities, ScenarioVariants } from '@/types';
 import { LocalStorage } from '@lesnoypudge/utils-web';
 
 
@@ -13,7 +13,7 @@ export namespace localStorageApi {
             isMute: boolean;
             refreshToken: string;
             accessToken: string;
-            shouldPopulate: PopulationVariants;
+            setupScenario: ScenarioVariants;
             lastVisitedChannels: Record<
                 ClientEntities.Server.Id,
                 ClientEntities.Channel.Id

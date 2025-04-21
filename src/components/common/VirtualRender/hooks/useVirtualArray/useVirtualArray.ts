@@ -1,30 +1,41 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Types } from '../../types';
+import { shallowEqual } from '@lesnoypudge/utils';
+import { useLatest } from '@lesnoypudge/utils-react';
 
 
+
+const emptyArray: string[] = [];
 
 export const useVirtualArray: Types.useVirtualArray.Fn = (
     originalArray,
 ) => {
     const [virtualIndexes, setVirtualIndexes] = useState([
         0,
-        originalArray ? Math.max(0, originalArray.length - 1) : 0,
+        Math.max(0, originalArray.length - 1),
     ] as [number, number]);
+    const prevRef = useRef<string[]>();
+    const latestOriginalArrayRef = useLatest(originalArray);
 
     const [start, end] = virtualIndexes;
-    const isSame = start === end;
+    const isCollapsed = start === end;
     const isLengthMoreThenOne = originalArray && originalArray.length > 1;
-    const shouldReturnEmpty = isSame && isLengthMoreThenOne;
+    const shouldReturnEmpty = isCollapsed && isLengthMoreThenOne;
 
     const virtualList = useMemo(() => {
-        if (!originalArray) return [];
-        if (shouldReturnEmpty) return [];
+        if (shouldReturnEmpty) return emptyArray;
 
-        const padding = 2;
-        const endWithPadding = Math.min(originalArray.length, end + padding);
+        const newArray = latestOriginalArrayRef.current.slice(start, end);
+        const prev = prevRef.current;
 
-        return originalArray.slice(start, endWithPadding);
-    }, [end, originalArray, shouldReturnEmpty, start]);
+        if (prev && shallowEqual(prev, newArray)) {
+            return prev;
+        }
+
+        prevRef.current = newArray;
+
+        return newArray;
+    }, [end, shouldReturnEmpty, start, latestOriginalArrayRef]);
 
     return {
         virtualList,

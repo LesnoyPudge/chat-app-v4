@@ -1,18 +1,86 @@
-import { Feed } from '@/components';
+import { Feed, RTE } from '@/components';
 import { Store } from '@/features';
 import { invariant } from '@lesnoypudge/utils';
-import { FC } from 'react';
+import { Dummies } from '@/fakeServer';
+import { FC, useEffect } from 'react';
+import { v4 as uuid } from 'uuid';
+import { faker } from '@faker-js/faker';
 
 
 
 export const FeedTest: FC = () => {
-    const [textChat] = Store.useSelector(
-        Store.TextChats.Selectors.selectAll,
+    const [conversation] = Store.useSelector(
+        Store.Conversations.Selectors.selectAll,
+    );
+    invariant(conversation);
+
+    const textChat = Store.useSelector(
+        Store.TextChats.Selectors.selectById(conversation.textChat),
+    );
+    invariant(textChat);
+
+    const targetId = Store.useSelector(
+        Store.Conversations.Selectors
+            .selectSecondConversationMemberIdById(conversation.id),
+    );
+    invariant(targetId);
+
+    const definedMessages = Store.useSelector(
+        Store.TextChats.Selectors
+            .selectDefinedMessageIdsById(conversation.textChat),
     );
 
-    invariant(textChat, 'Text chats not loaded');
+    const messageActions = Store.useActions(Store.Messages);
+    const textChatActions = Store.useActions(Store.TextChats);
+
+    const isDefinedMessagesExists = !!definedMessages?.length;
+
+    useEffect(() => {
+        if (!isDefinedMessagesExists) return;
+
+        const id = setInterval(() => {
+            const message = Dummies.message({
+                attachments: [],
+                author: targetId,
+                channel: null,
+                content: JSON.stringify(
+                    RTE.Modules.Utils.createInitialValue(
+                        faker.lorem.words(15),
+                    ),
+                ),
+                conversation: conversation.id,
+                id: uuid(),
+                index: textChat.messages.length,
+                server: null,
+                textChat: textChat.id,
+            });
+
+            messageActions.addOne(message);
+            textChatActions.updateOne({
+                id: textChat.id,
+                changes: {
+                    messageCount: textChat.messageCount + 1,
+                    messages: [...textChat.messages, message.id],
+                },
+            });
+        }, 3_000);
+
+        return () => {
+            clearInterval(id);
+        };
+    }, [
+        conversation.id,
+        isDefinedMessagesExists,
+        messageActions,
+        targetId,
+        textChat.id,
+        textChat.messageCount,
+        textChat.messages,
+        textChat.messages.length,
+        textChatActions,
+    ]);
 
     return (
-        <Feed textChatId={textChat.id}/>
+        <Feed textChatId={conversation.textChat}/>
     );
 };

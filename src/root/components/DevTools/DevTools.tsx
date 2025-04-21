@@ -1,4 +1,4 @@
-import { Button, DialogBlocks, KeyboardNavigation, Overlay, Scrollable } from '@/components';
+import { Button, KeyboardNavigation, Overlay, Scrollable } from '@/components';
 import { createStyles, getHTMLElement, logger } from '@/utils';
 import { FC, useRef } from 'react';
 import { useDevTools } from './hooks';

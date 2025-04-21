@@ -23,10 +23,10 @@ export namespace Direction {
     export type All = 'horizontal' | 'vertical' | 'both';
 }
 
-export type PopulationVariants = (
+export type ScenarioVariants = (
     'none'
-    | 'small'
-    | 'medium'
-    | 'large'
-    | 'minimal'
+    | 'populateSmall'
+    | 'populateMedium'
+    | 'populateLarge'
+    | 'minimalScene'
 );

@@ -46,7 +46,7 @@ const BaseLayer2: FC<WithValues> = ({ value }) => {
 
     logValues({
         name: 'base',
-        // @ts-expect-error
+        // @ts-ignore
         context,
         value,
     });

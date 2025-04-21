@@ -2,12 +2,24 @@ import { FC } from 'react';
 import { Message, VirtualList } from '@/components';
 import { useFeedContextProxy, useFeedContextSelector } from '../../context';
 import { FeedItem } from '../FeedItem';
+import { useFunction } from '@lesnoypudge/utils-react';
 
 
 
 export const FeedList: FC = () => {
-    const { feedRef, virtualRenderApiRef } = useFeedContextProxy();
     const messageIds = useFeedContextSelector((v) => v.messageIds);
+    const {
+        feedRef,
+        virtualRenderApiRef,
+        scrollableRef,
+    } = useFeedContextProxy();
+
+    const renderItem = useFunction((id: string, index: number) => (
+        <FeedItem
+            previousMessageId={messageIds[index - 1]}
+            messageId={id}
+        />
+    ));
 
     return (
         <Message.RedactorProvider>
@@ -24,8 +36,9 @@ export const FeedList: FC = () => {
                 initialFocusedId={messageIds.at(-1)}
                 overscan={5}
                 initialOffset={1_000}
+                viewportRef={scrollableRef}
             >
-                {(id) => <FeedItem messageId={id}/>}
+                {renderItem}
             </VirtualList.Node>
         </Message.RedactorProvider>
     );

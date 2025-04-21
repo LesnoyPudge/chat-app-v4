@@ -16,8 +16,10 @@ export const {
 
 export const {
     selectIndexById,
+    selectAuthorById,
+    selectCreatedAtById,
 } = createAdapterFieldSelectors({
-    keys: ['index'],
+    keys: ['index', 'author', 'createdAt'],
     selectById,
     slice: MessagesSlice,
 });

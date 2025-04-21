@@ -10,7 +10,7 @@ const getDefaultPrerenderCount = ({
     itemMargin,
     itemSize,
 }: Pick<
-    Required<Types.Options<unknown>>,
+    Required<Types.Options>,
     'itemSize' | 'itemMargin'
 >) => {
     if (itemSize === 0) return 1;
@@ -41,14 +41,14 @@ const DefaultRenderSpacer: Types.RenderSpacer = ({
 decorate(withDisplayName, 'VirtualRenderList', decorate.target);
 decorate(memo, decorate.target);
 
-export const VirtualRenderList = <_Item,>({
+export const VirtualRenderList = ({
     apiRef,
     getId,
     direction = 'vertical',
     items = [],
-    // viewportRef,
     itemSize,
     itemMargin,
+    viewportRef,
     overscan = 1,
     initialIndex = -1,
     initialAlignToTop = true,
@@ -62,7 +62,7 @@ export const VirtualRenderList = <_Item,>({
     indexesShift = 0,
     getItemBoundingClientRect,
     children,
-}: Types.List.Props<_Item>) => {
+}: Types.List.Props) => {
     const defaultInitialPrerender = useMemo(() => {
         if (initialPrerender !== undefined) return initialPrerender;
 
@@ -73,9 +73,9 @@ export const VirtualRenderList = <_Item,>({
     }, [initialPrerender, itemMargin, itemSize]);
 
     const _children = useFunction((
-        item: _Item,
+        item: string,
         index: number,
-        array: _Item[],
+        array: string[],
     ) => (
         <Fragment key={getId(item, index)}>
             {children(item, index, array)}
@@ -105,10 +105,10 @@ export const VirtualRenderList = <_Item,>({
             onViewportIndexesChange={onViewportIndexesChange}
             overflowAnchor={overflowAnchor}
             overscan={overscan}
+            viewportRef={viewportRef}
             ref={apiRef}
             renderSpacer={DefaultRenderSpacer}
             scrollThreshold={scrollThreshold}
-            // viewportRef={_viewportRef}
             withCache={withCache}
         >
             {_children}
