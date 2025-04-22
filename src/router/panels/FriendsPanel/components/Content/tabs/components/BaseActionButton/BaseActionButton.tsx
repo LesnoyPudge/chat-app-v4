@@ -13,11 +13,9 @@ const styles = {
         bg-primary-300 
         fill-icon-300
         hover-focus-visible:fill-icon-100
-        data-[active=true]:fill-icon-100
     `,
     buttonDanger: `
-        hover-focus-visible:fill-danger 
-        data-[active=true]:fill-danger
+        hover-focus-visible:fill-danger
     `,
     icon: 'size-full',
 };
@@ -46,8 +44,7 @@ export const BaseActionButton: FC<BaseActionButton.Props> = ({
 }) => {
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const tabIndex = KeyboardNavigation.useTabIndex(userId);
-    const isFocused = KeyboardNavigation.useIsFocused(userId);
-    const setFocusId = KeyboardNavigation.useSetFocusId(userId);
+    const setId = KeyboardNavigation.useSetId(userId);
 
     return (
         <>
@@ -55,11 +52,10 @@ export const BaseActionButton: FC<BaseActionButton.Props> = ({
                 className={styles.button}
                 label={label}
                 tabIndex={tabIndex}
-                isActive={isFocused}
                 isLoading={isLoading}
                 innerRef={buttonRef}
                 onLeftClick={onClick}
-                onAnyClick={setFocusId}
+                onAnyClick={setId}
             >
                 <Sprite
                     className={styles.icon}

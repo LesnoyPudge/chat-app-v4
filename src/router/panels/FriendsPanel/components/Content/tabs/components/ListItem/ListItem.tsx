@@ -46,9 +46,7 @@ export const ListItem: FC<ListItem.Props> = ({
 }) => {
     const user = Store.useSelector(Store.Users.Selectors.selectById(userId));
     const wrapperRef = useRefManager<HTMLLIElement>(null);
-    const {
-        tabIndex,
-    } = KeyboardNavigation.useCommonItem({
+    const { tabIndex } = KeyboardNavigation.useCommonItem({
         elementRef: wrapperRef,
         itemId: userId,
     });

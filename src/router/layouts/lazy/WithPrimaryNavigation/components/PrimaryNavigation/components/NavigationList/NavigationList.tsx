@@ -26,10 +26,12 @@ const List: FC<ListProps> = ({ conversations, servers }) => {
     const { t } = useTrans();
     const wrapperRef = useRefManager<HTMLDivElement>(null);
 
-    const virtualServers = VirtualRender.useVirtualArray(servers);
-    const virtualConversations = VirtualRender.useVirtualArray(
-        conversations,
-    );
+    const virtualServers = VirtualRender.useVirtualArray({
+        originalArray: servers,
+    });
+    const virtualConversations = VirtualRender.useVirtualArray({
+        originalArray: conversations,
+    });
 
     const showConversations = !!conversations.length;
     const virtualList = [

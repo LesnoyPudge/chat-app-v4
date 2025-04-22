@@ -33,7 +33,12 @@ export const Root: FC = () => {
         <ControllableStrictMode
             isEnabled={FLAGS.GENERAL.ENABLE_REACT_STRICT_MODE}
         >
-            <Focus.Lock autoFocus enabled noIsolation>
+            <Focus.Lock
+                autoFocus
+                enabled
+                scrollLock={false}
+                noIsolation
+            >
                 <Heading.Provider>
                     <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
                         <GlobalProviders>

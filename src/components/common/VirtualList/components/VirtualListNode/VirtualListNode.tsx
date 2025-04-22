@@ -1,5 +1,6 @@
 import { KeyboardNavigation, VirtualRender } from '@/components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { useEffect } from 'react';
 
 
 
@@ -34,13 +35,16 @@ export const VirtualListNode = ({
     const {
         setVirtualIndexes,
         virtualList,
-    } = VirtualRender.useVirtualArray(items);
+    } = VirtualRender.useVirtualArray({
+        originalArray: items,
+        overscan: rest.overscan,
+    });
 
     const {
         direction,
-        initialFocusedId,
         loop,
-        onFocusChange,
+        onIdChange,
+        takeInitialIdFrom,
         ...virtualRenderProps
     } = rest;
 
@@ -49,9 +53,9 @@ export const VirtualListNode = ({
             list={virtualList}
             wrapperRef={wrapperRef}
             direction={direction}
-            initialFocusedId={initialFocusedId}
             loop={loop}
-            onFocusChange={onFocusChange}
+            onIdChange={onIdChange}
+            takeInitialIdFrom={takeInitialIdFrom}
         >
             <VirtualRender.List
                 {...virtualRenderProps}

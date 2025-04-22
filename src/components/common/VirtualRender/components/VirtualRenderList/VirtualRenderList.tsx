@@ -1,6 +1,6 @@
 import { useFunction, withDisplayName } from '@lesnoypudge/utils-react';
-import { Fragment, memo, useMemo } from 'react';
-import { ViewportList, ViewportListPropsBase } from 'react-viewport-list';
+import { Fragment, memo, useEffect, useMemo } from 'react';
+import { ViewportList, ViewportListPropsBase } from './components';
 import { Types } from '../../types';
 import { decorate } from '@lesnoypudge/macro';
 
@@ -13,11 +13,11 @@ const getDefaultPrerenderCount = ({
     Required<Types.Options>,
     'itemSize' | 'itemMargin'
 >) => {
-    if (itemSize === 0) return 1;
+    const itemSizeApprox = itemSize <= 0 ? 20 : itemSize;
 
     const viewport = document.documentElement;
     const viewportHeight = viewport.clientHeight;
-    const itemSizeWithMargin = itemSize + Math.max(0, itemMargin);
+    const itemSizeWithMargin = itemSizeApprox + Math.max(0, itemMargin);
 
     const initialPrerender = Math.ceil(viewportHeight / itemSizeWithMargin);
 
@@ -88,6 +88,10 @@ export const VirtualRenderList = ({
             ? 'x'
             : 'y'
     );
+
+    useEffect(() => {
+        console.log(defaultInitialPrerender, itemSize);
+    }, [defaultInitialPrerender, itemSize]);
 
     return (
         <ViewportList

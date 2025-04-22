@@ -39,11 +39,7 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
             .selectNotificationCountById(conversationId),
     );
 
-    const {
-        isFocused,
-        setFocusId,
-        tabIndex,
-    } = KeyboardNavigation.useCommonItem({
+    const { setId, tabIndex } = KeyboardNavigation.useCommonItem({
         elementRef: buttonRef,
         itemId: conversationId,
     });
@@ -54,21 +50,20 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
     });
 
     const shouldShowTooltip = !!userTarget;
-    const isActive = isFocused || isInConversation;
 
     return (
         <WrapperWithBullet
-            isActive={isActive}
+            isActive={isInConversation}
             withNotifications={!!notificationsCount}
         >
             <Button
                 className={sharedStyles.button}
                 tabIndex={tabIndex}
                 label={userTarget?.name}
-                isActive={isActive}
+                isActive={isInConversation}
                 innerRef={buttonRef}
                 onLeftClick={navigateToServer}
-                onAnyClick={setFocusId}
+                onAnyClick={setId}
             >
                 <Avatar.WithBadge.Notifications
                     count={notificationsCount}

@@ -18,24 +18,25 @@ const Item: FC<{
     const ref = useRefManager<HTMLButtonElement>(null);
     const {
         isCurrentId,
-        isFocused,
-        setFocusId,
+        // isFocused,
+        // setFocusId,
         tabIndex,
     } = KeyboardNavigation.useCommonItem({ elementRef: ref, itemId: item });
 
-    return (
-        <button
-            className={isCurrentId ? 'bg-red-950' : ''}
-            onClick={combinedFunction(onClick, setFocusId)}
-            ref={ref}
-            tabIndex={tabIndex}
-        >
-            <>item: {item} - </>
-            (tabIndex)
-            <> - {String(isFocused)}</>
-            <> - {String(Math.random())}</>
-        </button>
-    );
+    return null;
+    // return (
+    //     <button
+    //         className={isCurrentId ? 'bg-red-950' : ''}
+    //         onClick={combinedFunction(onClick, setFocusId)}
+    //         ref={ref}
+    //         tabIndex={tabIndex}
+    //     >
+    //         <>item: {item} - </>
+    //         (tabIndex)
+    //         <> - {String(isFocused)}</>
+    //         <> - {String(Math.random())}</>
+    //     </button>
+    // );
 };
 
 export const Virtual: FC = () => {

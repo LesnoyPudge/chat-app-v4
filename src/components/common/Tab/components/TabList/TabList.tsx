@@ -2,7 +2,7 @@ import { KeyboardNavigation } from '@/components';
 import { Types } from '../../types/types';
 import { ContextSelectable, Iterate } from '@lesnoypudge/utils-react';
 import { isDev } from '@/vars';
-import { invariant } from '@lesnoypudge/utils';
+import { invariant, never } from '@lesnoypudge/utils';
 
 
 
@@ -31,6 +31,17 @@ export const TabList = <_Tabs extends Types.GenericTabs>({
         );
     }
 
+    const index = tabNames.indexOf(initialTabName);
+    const startFrom: (
+        KeyboardNavigation.Types.Provider.Props['takeInitialIdFrom']
+    ) = (
+        index === 0
+            ? 'start'
+            : index === tabNames.length - 1
+                ? 'end'
+                : never('Initial tab name should be first or last in the list')
+    );
+
     return (
         <div
             className={className}
@@ -44,7 +55,7 @@ export const TabList = <_Tabs extends Types.GenericTabs>({
                 list={tabNames as string[]}
                 wrapperRef={_listRef}
                 direction={orientation}
-                initialFocusedId={initialTabName as string}
+                takeInitialIdFrom={startFrom}
             >
                 <Iterate
                     items={tabNames}

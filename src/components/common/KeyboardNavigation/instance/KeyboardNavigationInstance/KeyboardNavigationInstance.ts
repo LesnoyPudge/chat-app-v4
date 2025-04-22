@@ -1,64 +1,27 @@
-import { Direction } from '@/types';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { invariant, ListenerStore } from '@lesnoypudge/utils';
+import { autoBind, invariant, ListenerStore, shallowEqual } from '@lesnoypudge/utils';
+import { Types } from '../../types';
 
 
-
-export type MoveDirection = 'forward' | 'backward';
-
-type Item = {
-    id: string;
-    index: number;
-};
-
-type EmptyItem = {
-    id: undefined;
-    index: number;
-};
-
-type MaybeEmptyItem = Item | EmptyItem;
-
-export type ListenerProps = {
-    prev: Item | undefined;
-    next: MaybeEmptyItem;
-    moveDirection: MoveDirection | undefined;
-    isFromEvent: boolean;
-};
-
-type OnIdChangeListener = (props: ListenerProps) => void;
-
-type Options = {
-    list: string[];
-    direction: Direction.Single;
-    loop: boolean;
-    initialFocusedId: string | undefined;
-    takeInitialIdFrom: 'start' | 'end';
-};
-
-type UpdatableOptions = Pick<Options, 'list'>;
-
-type ConstructorProps = T.Simplify<(
-    Partial<Options>
-    & UpdatableOptions
-)>;
 
 export class KeyboardNavigationInstance {
     private currentId: string | undefined;
     private currentIndex: number;
-    private options: Options;
-    private listeners: ListenerStore<null, [ListenerProps]>;
+    private options: Types.Instance.Options;
+    private listeners: ListenerStore<null, [Types.Instance.ListenerProps]>;
 
-    constructor(props: ConstructorProps) {
+    constructor(props: Types.Instance.ConstructorProps) {
         this.options = this.withDefaultProps(props);
         this.listeners = new ListenerStore();
 
         const item = (
-            this.validateId(this.getInitialId())
+            this.validateId(this.getInitialId(), this.options.list)
             ?? this.getEmptyItem()
         );
 
         this.currentId = item.id;
         this.currentIndex = item.index;
+
+        autoBind(this);
     }
 
     getId() {
@@ -66,12 +29,13 @@ export class KeyboardNavigationInstance {
     }
 
     setId(newId: string) {
-        const newItem = this.validateId(newId);
+        const newItem = this.validateId(newId, this.options.list);
 
         if (!newItem) return;
 
-        const prevItem = this.getCurrentItem();
+        const prevItem = this.getCurrentItemOrUndefined();
 
+        this.setCurrentItem(newItem);
         this.notify({
             isFromEvent: false,
             moveDirection: undefined,
@@ -80,50 +44,69 @@ export class KeyboardNavigationInstance {
         });
     }
 
-    eventMove(props: Pick<ListenerProps, 'moveDirection'>) {
+    eventMove(props: Pick<Types.Instance.ListenerProps, 'moveDirection'>) {
         if (!this.options.list.length) return;
+
+        const isForward = props.moveDirection === 'forward';
+        const notLoop = !this.options.loop;
+        const isAtEdge = (
+            isForward
+                ? this.currentIndex === this.options.list.length - 1
+                : this.currentIndex === 0
+        );
+
+        const shouldSkip = notLoop && isAtEdge;
+        if (shouldSkip) return;
 
         const { nextIndex, prevIndex } = this.getPossibleIndexes();
 
-        const isForward = props.moveDirection === 'forward';
         const newIndex = isForward ? nextIndex : prevIndex;
         const newId = this.options.list[newIndex];
         invariant(newId);
 
-        const prevItem = this.getCurrentItem();
+        const prevItem = this.getCurrentItemOrUndefined();
+        const newItem = {
+            id: newId,
+            index: newIndex,
+        };
 
+        this.setCurrentItem(newItem);
         this.notify({
             isFromEvent: true,
             moveDirection: props.moveDirection,
             prev: prevItem,
-            next: {
-                id: newId,
-                index: newIndex,
-            },
+            next: newItem,
         });
     }
 
-    withDefaultProps(
-        props: Partial<ConstructorProps>,
-    ) {
-        return {
-            list: props.list ?? [],
-            direction: props.direction ?? 'vertical',
-            initialFocusedId: props.initialFocusedId ?? props.list?.[0],
-            loop: props.loop ?? false,
-            takeInitialIdFrom: props.takeInitialIdFrom ?? 'start',
+    updateOptions(newOptions: Types.Instance.UpdatableOptions) {
+        const options = this.options;
+        const mergedOptions: Types.Instance.Options = {
+            list: (
+                newOptions.list ?? options.list
+            ),
+            loop: (
+                newOptions.loop ?? options.loop
+            ),
+            takeInitialIdFrom: (
+                newOptions.takeInitialIdFrom ?? options.takeInitialIdFrom
+            ),
         };
-    }
 
-    updateOptions(options: UpdatableOptions) {
-        const derivedItem = this.deriveNewItem(options);
+        if (shallowEqual(mergedOptions, options)) return;
 
-        Object.assign(this.options, options);
+        const derivedItem = this.deriveNewItem(mergedOptions);
 
-        if (derivedItem.id === this.currentId) return;
+        Object.assign(this.options, mergedOptions);
 
-        const prevItem = this.getCurrentItem();
+        if (
+            (derivedItem.id === this.currentId)
+            && (derivedItem.index === this.currentIndex)
+        ) return;
 
+        const prevItem = this.getCurrentItemOrUndefined();
+
+        this.setCurrentItem(derivedItem);
         this.notify({
             isFromEvent: false,
             moveDirection: undefined,
@@ -132,19 +115,31 @@ export class KeyboardNavigationInstance {
         });
     }
 
-    onIdChange(listener: OnIdChangeListener) {
+    onIdChange(listener: Types.Instance.OnIdChangeListener) {
         return this.listeners.add(null, listener);
     }
 
-    private getEmptyItem(): EmptyItem {
+    private withDefaultProps({
+        list = [],
+        loop = false,
+        takeInitialIdFrom = 'start',
+    }: Partial<Types.Instance.ConstructorProps>) {
+        return {
+            list,
+            loop,
+            takeInitialIdFrom,
+        };
+    }
+
+    private getEmptyItem(): Types.Instance.EmptyItem {
         return {
             id: undefined,
             index: -1,
         };
     }
 
-    private getCurrentItem(): Item | undefined {
-        if (!this.currentId) return;
+    private getCurrentItem(): Types.Instance.MaybeEmptyItem {
+        if (!this.currentId) return this.getEmptyItem();
 
         return {
             id: this.currentId,
@@ -152,10 +147,22 @@ export class KeyboardNavigationInstance {
         };
     }
 
-    private validateId(id: string | undefined): Item | undefined {
+    private getCurrentItemOrUndefined(): Types.Instance.Item | undefined {
+        const item = this.getCurrentItem();
+        if (!item.id) return;
+
+        return item;
+    }
+
+    private validateId(
+        id: string | undefined,
+        list: string[],
+    ): Types.Instance.Item | undefined {
         if (!id) return;
 
-        const index = this.options.list.indexOf(id);
+        const index = list.indexOf(id);
+
+        if (index === -1) return;
 
         return {
             id,
@@ -163,32 +170,40 @@ export class KeyboardNavigationInstance {
         };
     }
 
-    private deriveNewItem(options: UpdatableOptions): MaybeEmptyItem {
-        const newList = options.list;
-        const isSameList = newList === this.options.list;
-        if (isSameList) {
-            const currentItem = this.getCurrentItem();
-            invariant(currentItem);
+    private deriveNewItem(
+        options: Types.Instance.UpdatableOptions,
+    ): Types.Instance.MaybeEmptyItem {
+        // we care only about options.list since it is the only option
+        // that can invalidate current id.
 
-            return currentItem;
-        }
+        // it is either new list or old list
+        const newList = options.list;
+        invariant(newList);
+
+        const isSameList = newList === this.options.list;
+        if (isSameList) this.getCurrentItem();
 
         const isListEmpty = newList.length === 0;
         if (isListEmpty) return this.getEmptyItem();
         // list not empty
 
-        const newItem = this.validateId(this.currentId);
-        if (newItem) return newItem;
+        const currentItemInNewList = this.validateId(this.currentId, newList);
+        if (currentItemInNewList) return currentItemInNewList;
         // list not empty but current id is invalid
 
-        const newIndex = Math.min(
-            newList.length - 1,
-            this.currentIndex,
+        const newIndex = (
+            this.currentIndex === -1
+                ? this.getInitialIndex(newList)
+                : Math.min(newList.length - 1, this.currentIndex)
         );
 
         const newId = newList[newIndex];
+        invariant(newId);
 
-        return this.validateId(newId) ?? this.getEmptyItem();
+        return {
+            id: newId,
+            index: newIndex,
+        };
     }
 
     private getPossibleIndexes() {
@@ -229,18 +244,28 @@ export class KeyboardNavigationInstance {
         };
     }
 
-    private getInitialId() {
+    private getInitialIndex(list: string[]) {
         const index = (
             this.options.takeInitialIdFrom === 'start'
                 ? 0
-                : -1
+                : list.length - 1
         );
 
-        return this.options.initialFocusedId ?? this.options.list.at(index);
+        return index;
     }
 
-    private notify(props: ListenerProps) {
-        this.currentId = props.next.id;
+    getInitialId() {
+        return this.options.list.at(
+            this.getInitialIndex(this.options.list),
+        );
+    }
+
+    private notify(props: Types.Instance.ListenerProps) {
         this.listeners.triggerAll(props);
+    }
+
+    private setCurrentItem(item: Types.Instance.MaybeEmptyItem) {
+        this.currentId = item.id;
+        this.currentIndex = item.index;
     }
 }

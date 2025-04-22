@@ -9,6 +9,8 @@ export namespace Types {
     export type Context = {
         textChatId: string;
         messageIds: string[];
+        indexesShift: number;
+        setIndexesShift: (shift: number) => void;
         feedRef: useRefManager.NullableRefManager<HTMLDivElement>;
         autoscrollTriggerRef: useRefManager.NullableRefManager<HTMLDivElement>;
         virtualRenderApiRef: (

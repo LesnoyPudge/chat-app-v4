@@ -69,11 +69,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
     channelId,
 }) => {
     const elementRef = useRef<HTMLButtonElement>(null);
-    const {
-        isFocused,
-        setFocusId,
-        tabIndex,
-    } = KeyboardNavigation.useCommonItem({
+    const { setId, tabIndex } = KeyboardNavigation.useCommonItem({
         elementRef,
         itemId: channelId,
     });
@@ -117,10 +113,9 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
                     name: channel?.name,
                 })}
                 tabIndex={tabIndex}
-                isActive={isFocused}
                 innerRef={elementRef}
                 onLeftClick={handleNavigation}
-                onAnyClick={setFocusId}
+                onAnyClick={setId}
             >
             </Button>
 
@@ -150,7 +145,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
                                 })}
                                 innerRef={settingsButtonRef}
                                 onLeftClick={controls.open}
-                                onAnyClick={setFocusId}
+                                onAnyClick={setId}
                             >
                                 <Sprite
                                     className={styles.actionIcon}

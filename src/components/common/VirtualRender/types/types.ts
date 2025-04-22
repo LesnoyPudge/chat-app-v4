@@ -101,8 +101,11 @@ export namespace Types {
             setVirtualIndexes: Dispatch<SetStateAction<[number, number]>>;
         };
 
-        export type Fn = (
-            originalArray: string[]
-        ) => Return;
+        type Props = {
+            originalArray: string[];
+            overscan?: number;
+        };
+
+        export type Fn = (props: Props) => Return;
     }
 }

@@ -10,18 +10,19 @@ export const useKeyboardNavigationCommonItem: Types.useCommonItem.Fn = ({
     itemId,
 }) => {
     const shouldMoveRef = useRef(false);
-    const isFocused = KeyboardNavigation.useIsFocused(itemId);
     const tabIndex = KeyboardNavigation.useTabIndex(itemId);
     const isCurrentId = KeyboardNavigation.useIsCurrentId(itemId);
-    const setFocusId = KeyboardNavigation.useSetFocusId(itemId);
+    const setId = KeyboardNavigation.useSetId(itemId);
 
     useEffect(() => {
-        const element = elementRef.current;
-        if (!element) return;
         if (!shouldMoveRef.current) return;
-        if (!isCurrentId) return;
 
         shouldMoveRef.current = false;
+
+        const element = elementRef.current;
+
+        if (!element) return;
+        if (!isCurrentId) return;
 
         Focus.moveFocusInside(element, {
             preventScroll: true,
@@ -36,16 +37,15 @@ export const useKeyboardNavigationCommonItem: Types.useCommonItem.Fn = ({
 
     KeyboardNavigation.useOnMove(itemId, () => {
         // at the moment of this callback is executed
-        // element that we want to focus on still
-        // has tabIndex -1.
-        // in some cases that prevent us from focusing.
+        // element that we want to focus on
+        // still has tabIndex -1.
+        // that prevent us from focusing.
         shouldMoveRef.current = true;
     });
 
     return {
         isCurrentId,
-        isFocused,
         tabIndex,
-        setFocusId,
+        setId,
     };
 };

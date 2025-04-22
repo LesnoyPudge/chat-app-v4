@@ -1,78 +1,66 @@
-import { useEvent } from '@/hooks';
-import { Direction } from '@/types';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { PropsWithChildren, RefObject } from 'react';
+import { KeyboardNavigationInstance } from '../instance';
+import { Direction } from '@/types';
 
 
 
 export namespace Types {
-    export type MoveDirection = 'forward' | 'backward';
+    export namespace Instance {
+        export type Impl = KeyboardNavigationInstance;
 
-    export type onFocusChangeItem = {
-        id: string;
-        index: number;
+        export type MoveDirection = 'forward' | 'backward';
+
+        export type Item = {
+            id: string;
+            index: number;
+        };
+
+        export type EmptyItem = {
+            id: undefined;
+            index: number;
+        };
+
+        export type MaybeEmptyItem = Item | EmptyItem;
+
+        export type ListenerProps = {
+            prev: Item | undefined;
+            next: MaybeEmptyItem;
+            moveDirection: MoveDirection | undefined;
+            isFromEvent: boolean;
+        };
+
+        export type OnIdChangeListener = (props: ListenerProps) => void;
+
+        export type Options = {
+            list: string[];
+            loop: boolean;
+            takeInitialIdFrom: 'start' | 'end';
+        };
+
+        export type UpdatableOptions = Partial<Options>;
+
+        export type ConstructorProps = T.Simplify<(
+            Partial<Options>
+            & UpdatableOptions
+        )>;
+    }
+
+    export type Context = {
+        instance: Instance.Impl;
+        currentId: Instance.Impl['currentId'];
     };
-
-    export type MoveEventState = {
-        isPrevented: boolean;
-        prevent: () => void;
-    };
-
-    export type ListenerProps = {
-        moveEventState: MoveEventState;
-        prev: onFocusChangeItem | undefined;
-        next: onFocusChangeItem;
-        moveDirection: MoveDirection;
-        isFromEvent: boolean;
-    };
-
-    export type OnFocusChange = (props: ListenerProps) => void;
-
-    export type Options = {
-        list: string[];
-        direction?: Direction.Single;
-        loop?: boolean;
-        initialFocusedId?: string;
-        onFocusChange?: OnFocusChange;
-    };
-
-    export type WithCurrentId = {
-        currentFocusedId: string | undefined;
-    };
-
-    export type WithSetCurrentId = {
-        setCurrentFocusedId: (newId: string) => void;
-    };
-
-    export type WrapperRef = useRefManager.NullableRefManager<HTMLElement>;
-
-    export type WithWrapperRef = {
-        wrapperRef: WrapperRef;
-    };
-
-    export type WithListeners = {
-        on: useEvent.On<[ListenerProps]>;
-        off: useEvent.Off<[ListenerProps]>;
-    };
-
-    export type withItemStateGetters = {
-        getTabIndex: (id: string) => 0 | -1;
-        getIsFocused: (id: string) => boolean;
-    };
-
-    export type Context = T.Simplify<(
-        WithCurrentId
-        & WithSetCurrentId
-        & WithListeners
-        & withItemStateGetters
-    )>;
 
     export namespace Provider {
         export type Props = T.Simplify<(
-            Options
-            & WithWrapperRef
-            & PropsWithChildren
+            PropsWithChildren
+            & Instance.ConstructorProps
+            & {
+                wrapperRef: useRefManager.NullableRefManager<HTMLElement>;
+                direction?: Direction.Single;
+                onIdChange?: Instance.OnIdChangeListener;
+            }
         )>;
     }
 
@@ -84,15 +72,14 @@ export namespace Types {
 
         export type Return = {
             isCurrentId: boolean;
-            isFocused: boolean;
             tabIndex: number;
-            setFocusId: VoidFunction;
+            setId: VoidFunction;
         };
 
         export type Fn = (props: Props) => Return;
     }
 
-    export namespace useSetFocusId {
+    export namespace useSetId {
         export type Fn = (itemId: string) => VoidFunction;
     }
 
@@ -109,7 +96,7 @@ export namespace Types {
     }
 
     export namespace useOnMove {
-        export type Listener = (props: ListenerProps) => void;
+        export type Listener = Instance.OnIdChangeListener;
 
         export type Fn = (
             nextItemId: string | null,
@@ -118,18 +105,8 @@ export namespace Types {
     }
 
     export namespace useInstance {
-        export type Props = (
-            WithWrapperRef
-            & Options
-        );
+        type Props = T.Except<Provider.Props, 'children'>;
 
-        export type Return = (
-            WithCurrentId
-            & WithSetCurrentId
-            & WithListeners
-            & withItemStateGetters
-        );
-
-        export type Fn = (props: Props) => Return;
+        export type Fn = (props: Props) => Context;
     }
 }

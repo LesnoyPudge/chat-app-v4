@@ -56,10 +56,7 @@ const Item: FC<ItemProps> = ({
         tabProps,
     } = ContextSelectable.useProxy(FriendsPanelTabsContext);
 
-    const {
-        setFocusId,
-        tabIndex,
-    } = KeyboardNavigation.useCommonItem({
+    const { setId, tabIndex } = KeyboardNavigation.useCommonItem({
         itemId: tabName,
         elementRef,
     });
@@ -72,7 +69,7 @@ const Item: FC<ItemProps> = ({
             tabIndex={tabIndex}
             isActive={isActive[tabName]}
             onLeftClick={changeTab[tabName]}
-            onAnyClick={setFocusId}
+            onAnyClick={setId}
             {...tabProps[tabName]}
         >
             {children}

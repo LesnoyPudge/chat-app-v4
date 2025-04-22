@@ -1,6 +1,6 @@
 import { Store } from '@/features';
 import { Types } from '../../../../types';
-import { useFunction, useIntersectionObserver, useIsMounted, useMountEffect } from '@lesnoypudge/utils-react';
+import { useFunction, useIntersectionObserver, useIsMounted } from '@lesnoypudge/utils-react';
 import { useEffect, useRef, useState } from 'react';
 
 
@@ -48,6 +48,8 @@ export const useFeedScrollLoader = ({
     const fetchFn = useFunction(({
         from,
     }: { from: number | null }) => {
+        if (getMessagesHelpers.isFetching) return;
+
         void getMessagesTrigger({
             textChatId,
             from,
@@ -56,7 +58,7 @@ export const useFeedScrollLoader = ({
     });
 
     // initial fetch
-    useMountEffect(() => fetchFn({ from: null }));
+    useEffect(() => fetchFn({ from: null }), [fetchFn]);
 
     // fetch on intersection with placeholder
     useEffect(() => {

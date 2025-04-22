@@ -43,11 +43,7 @@ export const MemberItem: FC<MemberItem.Props> = ({
     const { t } = useTrans();
     const controls = Overlay.useControls();
     const wrapperRef = useRefManager<HTMLButtonElement>(null);
-    const {
-        setFocusId,
-        tabIndex,
-        isFocused,
-    } = KeyboardNavigation.useCommonItem({
+    const { setId, tabIndex } = KeyboardNavigation.useCommonItem({
         elementRef: wrapperRef,
         itemId: userId,
     });
@@ -64,20 +60,18 @@ export const MemberItem: FC<MemberItem.Props> = ({
         controls.open();
     });
 
-    const isActive = isFocused || controls.isOpen;
-
     return (
         <>
             <Button
                 className={styles.wrapper}
-                isActive={isActive}
+                isActive={controls.isOpen}
                 tabIndex={tabIndex}
                 innerRef={wrapperRef}
                 label={t('ChannelPanel.MemberItem.label', {
                     name: user?.name,
                 })}
                 onLeftClick={handleClick}
-                onAnyClick={setFocusId}
+                onAnyClick={setId}
             >
                 <Avatar.WithBadge.Status
                     className={styles.avatarWrapper}

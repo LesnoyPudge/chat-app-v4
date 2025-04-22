@@ -6,7 +6,9 @@ import * as types from './types';
 export namespace VirtualRender {
     export import Types = types.Types;
 
-    export import List = components.VirtualRenderList;
+    export const {
+        VirtualRenderList: List,
+    } = components;
 
     export const { useVirtualArray } = hooks;
 }

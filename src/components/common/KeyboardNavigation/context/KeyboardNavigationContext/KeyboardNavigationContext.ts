@@ -3,6 +3,12 @@ import { Types } from '../../types';
 
 
 
-export const KeyboardNavigationContext = ContextSelectable.createContext<
-    Types.Context
->();
+export const {
+    KeyboardNavigationContext,
+    useKeyboardNavigationContextProxy,
+    useKeyboardNavigationContextSelector,
+} = (
+    ContextSelectable.createContextWithHooks<
+        Types.Context
+    >().withName('KeyboardNavigation')
+);

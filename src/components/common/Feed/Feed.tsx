@@ -12,11 +12,7 @@ const { withDecorator } = createWithDecorator<Types.FeedProvider.OwnProps>(({
     textChatId,
 }) => {
     return (
-        <FeedProvider
-            // recreate provider on id change
-            key={textChatId}
-            textChatId={textChatId}
-        >
+        <FeedProvider textChatId={textChatId}>
             {children}
         </FeedProvider>
     );

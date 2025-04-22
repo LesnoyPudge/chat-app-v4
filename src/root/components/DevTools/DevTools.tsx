@@ -32,8 +32,8 @@ const Item: FC<ItemProps> = ({
 }) => {
     const elementRef = useRef<HTMLButtonElement>(null);
     const {
-        isFocused,
-        setFocusId,
+        isCurrentId,
+        setId,
         tabIndex,
     } = KeyboardNavigation.useCommonItem({
         elementRef,
@@ -42,9 +42,9 @@ const Item: FC<ItemProps> = ({
     return (
         <Button
             className={styles.action}
-            onAnyClick={setFocusId}
+            onAnyClick={setId}
             onLeftClick={actionFn}
-            isActive={isFocused}
+            isActive={isCurrentId}
             tabIndex={tabIndex}
             innerRef={elementRef}
         >

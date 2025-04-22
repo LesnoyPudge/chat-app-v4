@@ -7,9 +7,10 @@ import { useLatest } from '@lesnoypudge/utils-react';
 
 const emptyArray: string[] = [];
 
-export const useVirtualArray: Types.useVirtualArray.Fn = (
+export const useVirtualArray: Types.useVirtualArray.Fn = ({
     originalArray,
-) => {
+    overscan = 1,
+}) => {
     const [virtualIndexes, setVirtualIndexes] = useState([
         0,
         Math.max(0, originalArray.length - 1),
@@ -25,9 +26,16 @@ export const useVirtualArray: Types.useVirtualArray.Fn = (
     const virtualList = useMemo(() => {
         if (shouldReturnEmpty) return emptyArray;
 
-        const newArray = latestOriginalArrayRef.current.slice(
-            startIndex,
-            endIndex + 1,
+        const list = latestOriginalArrayRef.current;
+
+        const minIndex = 0;
+        const maxInclusiveIndex = list.length;
+        const startIndexWithOverscan = startIndex - overscan;
+        const endInclusiveIndexWithOverscan = endIndex + 1 + overscan;
+
+        const newArray = list.slice(
+            Math.max(minIndex, startIndexWithOverscan),
+            Math.min(maxInclusiveIndex, endInclusiveIndexWithOverscan),
         );
         const prev = prevRef.current;
 
@@ -38,7 +46,13 @@ export const useVirtualArray: Types.useVirtualArray.Fn = (
         prevRef.current = newArray;
 
         return newArray;
-    }, [endIndex, shouldReturnEmpty, startIndex, latestOriginalArrayRef]);
+    }, [
+        endIndex,
+        shouldReturnEmpty,
+        startIndex,
+        latestOriginalArrayRef,
+        overscan,
+    ]);
 
     return {
         virtualList,

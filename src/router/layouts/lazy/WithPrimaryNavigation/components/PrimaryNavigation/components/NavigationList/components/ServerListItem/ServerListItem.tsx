@@ -37,11 +37,7 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
         Store.Servers.Selectors.selectHasNotificationsById(serverId),
     );
 
-    const {
-        isFocused,
-        setFocusId,
-        tabIndex,
-    } = KeyboardNavigation.useCommonItem({
+    const { setId, tabIndex } = KeyboardNavigation.useCommonItem({
         elementRef: buttonRef,
         itemId: serverId,
     });
@@ -52,26 +48,24 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
         if (isInServer) closeMenu();
     });
 
-    const isActive = isInServer || isFocused;
-
     return (
         <WrapperWithBullet
-            isActive={isActive}
+            isActive={isInServer}
             withNotifications={hasNotifications}
         >
             <Button
                 className={sharedStyles.button}
                 tabIndex={tabIndex}
                 label={server?.name}
-                isActive={isActive}
+                isActive={isInServer}
                 innerRef={buttonRef}
                 onLeftClick={navigateToServerOrChannel}
-                onAnyClick={setFocusId}
+                onAnyClick={setId}
             >
                 <Avatar.Server
                     className={cn(
                         sharedStyles.avatar.base,
-                        isActive && sharedStyles.avatar.active,
+                        isInServer && sharedStyles.avatar.active,
                     )}
                     name={server?.name}
                     avatar={server?.avatar}

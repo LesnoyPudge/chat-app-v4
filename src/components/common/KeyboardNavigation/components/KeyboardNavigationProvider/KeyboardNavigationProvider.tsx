@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { KeyboardNavigationContext } from '../../context';
 import { Types } from '../../types';
-import { useKeyboardNavigationInstance } from '../../hooks';
+import { useKeyboardNavigationInstance } from './hooks';
 
 
 

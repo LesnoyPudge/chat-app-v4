@@ -81,11 +81,7 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
         return v.conversation({ conversationId });
     });
 
-    const {
-        isFocused,
-        setFocusId,
-        tabIndex,
-    } = KeyboardNavigation.useCommonItem({
+    const { setId, tabIndex } = KeyboardNavigation.useCommonItem({
         elementRef: mainButtonRef,
         itemId: conversationId,
     });
@@ -109,14 +105,12 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
         void hideTrigger({ conversationId });
     });
 
-    const shouldHighlight = isInConversation || isFocused;
-
     return (
         <li className={styles.wrapper}>
             <Button
                 className={styles.userInfoButton}
-                isActive={shouldHighlight}
-                onAnyClick={setFocusId}
+                isActive={isInConversation}
+                onAnyClick={setId}
                 onLeftClick={handleNavigate}
                 innerRef={mainButtonRef}
                 label={t('ConversationNavigation.Item.navigateToMessagesButton.label', { name: userTarget?.name })}
@@ -139,7 +133,7 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
                         <span
                             className={cn(
                                 styles.username.base,
-                                shouldHighlight && styles.username.active,
+                                isInConversation && styles.username.active,
                             )}
                         >
                             {userTarget.name}
@@ -151,7 +145,7 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
             <Button
                 className={cn(
                     styles.hideButton.base,
-                    shouldHighlight && styles.hideButton.active,
+                    isInConversation && styles.hideButton.active,
                 )}
                 tabIndex={tabIndex}
                 innerRef={hideButtonRef}

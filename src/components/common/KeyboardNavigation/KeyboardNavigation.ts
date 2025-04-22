@@ -7,16 +7,21 @@ import * as types from './types';
 export namespace KeyboardNavigation {
     export import Types = types.Types;
 
-    export import Context = context.KeyboardNavigationContext;
-
-    export import Provider = components.KeyboardNavigationProvider;
+    export const {
+        KeyboardNavigationContext,
+        useKeyboardNavigationContextProxy: useContextProxy,
+        useKeyboardNavigationContextSelector: useContextSelector,
+    } = context;
 
     export const {
-        useKeyboardNavigationIsFocused: useIsFocused,
+        KeyboardNavigationProvider: Provider,
+    } = components;
+
+    export const {
         useKeyboardNavigationOnMove: useOnMove,
         useKeyboardNavigationTabIndex: useTabIndex,
         useKeyboardNavigationIsCurrentId: useIsCurrentId,
         useKeyboardNavigationCommonItem: useCommonItem,
-        useKeyboardNavigationSetFocusId: useSetFocusId,
+        useKeyboardNavigationSetId: useSetId,
     } = hooks;
 }

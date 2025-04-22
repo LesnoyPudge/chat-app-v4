@@ -35,6 +35,37 @@ export const FeedTest: FC = () => {
 
     const isDefinedMessagesExists = !!definedMessages?.length;
 
+    // useMountEffect(() => {
+    //     const messages = Array.from({ length: 100 }, (_, index) => {
+    //         const message = Dummies.message({
+    //             attachments: [],
+    //             author: targetId,
+    //             channel: null,
+    //             content: JSON.stringify(
+    //                 RTE.Modules.Utils.createInitialValue(
+    //                     faker.lorem.words(15),
+    //                 ),
+    //             ),
+    //             conversation: conversation.id,
+    //             id: uuid(),
+    //             index,
+    //             server: null,
+    //             textChat: textChat.id,
+    //         });
+
+    //         return message;
+    //     });
+
+    //     messageActions.addMany(messages);
+    //     textChatActions.updateOne({
+    //         id: textChat.id,
+    //         changes: {
+    //             messageCount: textChat.messageCount + messages.length,
+    //             messages: [...textChat.messages, ...messages.map((v) => v.id)],
+    //         },
+    //     });
+    // });
+
     useEffect(() => {
         if (!isDefinedMessagesExists) return;
 

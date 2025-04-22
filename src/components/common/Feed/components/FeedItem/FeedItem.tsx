@@ -1,5 +1,5 @@
-
-
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { FC, memo } from 'react';
 import { KeyboardNavigation, Message, VirtualList } from '@/components';
 import { useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
@@ -89,75 +89,61 @@ export const FeedItem: FC<FeedItem.Props> = ({
     previousMessageId,
 }) => {
     const elementRef = useRefManager<HTMLDivElement>(null);
-
-    const {
-        tabIndex,
-        setFocusId,
-    } = KeyboardNavigation.useCommonItem({
+    const { tabIndex, setId } = KeyboardNavigation.useCommonItem({
         elementRef,
         itemId: messageId,
     });
 
-    return (
-        <div
-            className='mt-2 bg-rose-950 p-4'
-            tabIndex={tabIndex}
-            ref={elementRef}
-        >
-            {messageId}
-        </div>
+    const { messageDisplayMode } = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserSettings,
     );
 
-    // const { messageDisplayMode } = Store.useSelector(
-    //     Store.Users.Selectors.selectCurrentUserSettings,
-    // );
+    const message = Store.useSelector(
+        Store.Messages.Selectors.selectById(messageId),
+    );
+    invariant(
+        message,
+        'message should be defined, otherwise we would not be here',
+    );
 
-    // const message = Store.useSelector(
-    //     Store.Messages.Selectors.selectById(messageId),
-    // );
-    // invariant(
-    //     message,
-    //     'message should be defined, otherwise we would not be here',
-    // );
+    const previousMessageAuthor = Store.useSelector(
+        Store.Messages.Selectors.selectAuthorById(previousMessageId),
+    );
 
-    // const previousMessageAuthor = Store.useSelector(
-    //     Store.Messages.Selectors.selectAuthorById(previousMessageId),
-    // );
+    const previousMessageCreatedAt = Store.useSelector(
+        Store.Messages.Selectors.selectCreatedAtById(previousMessageId),
+    );
 
-    // const previousMessageCreatedAt = Store.useSelector(
-    //     Store.Messages.Selectors.selectCreatedAtById(previousMessageId),
-    // );
+    const {
+        isGroupHead,
+        shouldShowDayDivider,
+    } = getExtraMessageData({
+        currentMessageAuthorId: message.author,
+        currentMessageCreatedAt: message.createdAt,
+        prevMessageAuthorId: previousMessageAuthor,
+        prevMessageCreatedAt: previousMessageCreatedAt,
+    });
 
-    // const {
-    //     isGroupHead,
-    //     shouldShowDayDivider,
-    // } = getExtraMessageData({
-    //     currentMessageAuthorId: message.author,
-    //     currentMessageCreatedAt: message.createdAt,
-    //     prevMessageAuthorId: previousMessageAuthor,
-    //     prevMessageCreatedAt: previousMessageCreatedAt,
-    // });
+    return (
+        <>
+            <If condition={shouldShowDayDivider}>
+                <FeedDayDivider timestamp={message.createdAt}/>
+            </If>
 
-    // return (
-    //     <>
-    //         <If condition={shouldShowDayDivider}>
-    //             <FeedDayDivider timestamp={message.createdAt}/>
-    //         </If>
-
-    //         <div
-    //             className={styles.wrapper}
-    //             onClick={setFocusId}
-    //             onAuxClick={setFocusId}
-    //             onContextMenu={setFocusId}
-    //         >
-    //             <Message.Node
-    //                 message={message}
-    //                 isGroupHead={isGroupHead}
-    //                 messageDisplayMode={messageDisplayMode}
-    //                 tabIndex={tabIndex}
-    //                 innerRef={elementRef}
-    //             />
-    //         </div>
-    //     </>
-    // );
+            <div
+                className={styles.wrapper}
+                onClick={setId}
+                onAuxClick={setId}
+                onContextMenu={setId}
+            >
+                <Message.Node
+                    message={message}
+                    isGroupHead={isGroupHead}
+                    messageDisplayMode={messageDisplayMode}
+                    tabIndex={tabIndex}
+                    innerRef={elementRef}
+                />
+            </div>
+        </>
+    );
 };

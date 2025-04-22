@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Types } from '../../types';
 import { FeedContext } from '../../context';
 import { useRefManager } from '@lesnoypudge/utils-react';
@@ -12,6 +12,10 @@ export const FeedProvider: FC<Types.FeedProvider.Props> = ({
     children,
 }) => {
     const feedRef: Types.Context['feedRef'] = useRefManager(null);
+    const [
+        indexesShift,
+        setIndexesShift,
+    ] = useState(0);
 
     const autoscrollTriggerRef: (
         Types.Context['autoscrollTriggerRef']
@@ -39,7 +43,7 @@ export const FeedProvider: FC<Types.FeedProvider.Props> = ({
 
     const definedMessageIds = Store.useSelector(
         Store.TextChats.Selectors.selectDefinedMessageIdsById(textChatId),
-    );
+    ) ?? [];
 
     const {
         shouldShowPlaceholder,
@@ -54,16 +58,18 @@ export const FeedProvider: FC<Types.FeedProvider.Props> = ({
 
     useFeedAutoScroll({
         autoscrollTriggerRef,
-        virtualRenderApiRef,
-        textChatId,
         scrollableApiRef,
         scrollableRef,
         scrollableWrapperRef,
+        messageIds: definedMessageIds,
+        setIndexesShift,
     });
 
     const value: Types.Context = {
         textChatId,
-        messageIds: definedMessageIds ?? [],
+        messageIds: definedMessageIds,
+        indexesShift,
+        setIndexesShift,
         feedRef,
         scrollableRef,
         scrollableWrapperRef,
