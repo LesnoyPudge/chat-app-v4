@@ -117,7 +117,7 @@ export namespace Types {
         ) => void;
     }
 
-    export namespace useControls {
+    export namespace useInstance {
         export type Props = (
             WithWrapperRef
             & Options

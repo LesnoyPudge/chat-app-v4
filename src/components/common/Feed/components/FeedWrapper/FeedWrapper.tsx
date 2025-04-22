@@ -24,6 +24,35 @@ export const FeedWrapper: FC<PropsWithChildren> = ({
     } = useFeedContextProxy();
 
     return (
+        <div
+            className={styles.wrapper}
+            ref={scrollableWrapperRef}
+        >
+            <div
+                className='h-full overflow-scroll'
+                ref={scrollableRef}
+                tabIndex={0}
+            >
+                <div
+                    role='feed'
+                    aria-busy
+                    aria-label={t('Feed.label')}
+                    ref={feedRef}
+                >
+                    {children}
+                </div>
+
+                <div
+                    className={styles.autoscrollTrigger}
+                    aria-hidden
+                    ref={autoscrollTriggerRef}
+                >
+                </div>
+            </div>
+        </div>
+    );
+
+    return (
         <Scrollable
             className={styles.wrapper}
             apiRef={scrollableApiRef}

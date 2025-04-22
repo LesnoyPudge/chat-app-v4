@@ -1,5 +1,5 @@
 export * from './useKeyboardNavigationCommonItem';
-export * from './useKeyboardNavigationControls';
+export * from './useKeyboardNavigationInstance';
 export * from './useKeyboardNavigationIsCurrentId';
 export * from './useKeyboardNavigationIsFocused';
 export * from './useKeyboardNavigationOnMove';

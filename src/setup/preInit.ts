@@ -6,7 +6,7 @@ import { logger } from '@/utils';
 export const preInit = async () => {
     logger.setup.log('preInit');
 
-    if (isDev) {
+    if (isDev && FLAGS.GENERAL.ENABLE_REACT_SCAN) {
         const { scan } = await import('react-scan');
 
         // internal flag for react-scan to skip into logging

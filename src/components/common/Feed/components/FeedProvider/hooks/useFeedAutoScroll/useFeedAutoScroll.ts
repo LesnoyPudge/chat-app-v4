@@ -70,13 +70,20 @@ export const useFeedAutoScroll = ({
     // const earliestMessageTimestampRef = useRef(messages[0].createdAt);
 
     const scrollToBottom = useFunction(() => {
-        if (!scrollableRef.current) return;
+        // if (!scrollableRef.current) return;
+        if (!autoscrollTriggerRef.current) return;
 
-        mutate(
-            scrollableRef.current,
-            'scrollTop',
-            scrollableRef.current.scrollHeight,
-        );
+        autoscrollTriggerRef.current.scrollIntoView({
+            behavior: 'instant',
+            block: 'center',
+        });
+
+
+        // mutate(
+        //     scrollableRef.current,
+        //     'scrollTop',
+        //     scrollableRef.current.scrollHeight,
+        // );
     });
 
     const scrollToBottomIfAllowed = useFunction(() => {

@@ -8,6 +8,7 @@ export namespace FLAGS {
         ENABLE_FOCUS_TRACKER: false,
         ENABLE_ELEMENT_COUNT: true,
         DEBUG_I18N: false,
+        ENABLE_REACT_SCAN: false,
     };
 
     export const LOGGER = {
@@ -27,7 +28,7 @@ export namespace FLAGS {
 
     export type LOGGER = typeof LOGGER;
 
-    const thirdPartyRawFlags = {
+    const THIRD_PARTY_LOGS_RAW = {
         reactScan: false,
         reactScanDeep: false,
         msw: true,
@@ -35,8 +36,8 @@ export namespace FLAGS {
     } satisfies Record<string, boolean>;
 
     export const THIRD_PARTY_LOGS = (
-        Object.entries(thirdPartyRawFlags)
-            .reduce<typeof thirdPartyRawFlags>((acc, [key, value]) => {
+        Object.entries(THIRD_PARTY_LOGS_RAW)
+            .reduce<typeof THIRD_PARTY_LOGS_RAW>((acc, [key, value]) => {
                 Object.assign(
                     acc,
                     {

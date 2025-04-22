@@ -12,6 +12,7 @@ export const FeedList: FC = () => {
         feedRef,
         virtualRenderApiRef,
         scrollableRef,
+        shouldShowMessageList,
     } = useFeedContextProxy();
 
     const renderItem = useFunction((id: string, index: number) => (
@@ -21,6 +22,8 @@ export const FeedList: FC = () => {
         />
     ));
 
+    if (!shouldShowMessageList) return null;
+
     return (
         <Message.RedactorProvider>
             <VirtualList.Node
@@ -28,14 +31,12 @@ export const FeedList: FC = () => {
                 apiRef={virtualRenderApiRef}
                 getId={(v) => v}
                 itemMargin={0}
-                itemSize={100}
+                itemSize={-1}
                 wrapperRef={feedRef}
                 initialIndex={messageIds.length - 1}
                 initialPrerender={20}
-                initialAlignToTop={false}
                 initialFocusedId={messageIds.at(-1)}
-                overscan={5}
-                initialOffset={1_000}
+                overscan={3}
                 viewportRef={scrollableRef}
             >
                 {renderItem}

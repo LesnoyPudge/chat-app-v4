@@ -44,7 +44,7 @@ const backwardHorizontalKeys: hotKey.KeyCombo[] = [
     [KEY.A],
 ];
 
-export const useKeyboardNavigationControls: Types.useControls.Fn = ({
+export const useKeyboardNavigationInstance: Types.useInstance.Fn = ({
     list,
     wrapperRef,
     direction = 'vertical',

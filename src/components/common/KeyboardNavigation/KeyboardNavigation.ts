@@ -12,7 +12,6 @@ export namespace KeyboardNavigation {
     export import Provider = components.KeyboardNavigationProvider;
 
     export const {
-        useKeyboardNavigationControls: useControls,
         useKeyboardNavigationIsFocused: useIsFocused,
         useKeyboardNavigationOnMove: useOnMove,
         useKeyboardNavigationTabIndex: useTabIndex,

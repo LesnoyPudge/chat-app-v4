@@ -17,15 +17,18 @@ export const useVirtualArray: Types.useVirtualArray.Fn = (
     const prevRef = useRef<string[]>();
     const latestOriginalArrayRef = useLatest(originalArray);
 
-    const [start, end] = virtualIndexes;
-    const isCollapsed = start === end;
+    const [startIndex, endIndex] = virtualIndexes;
+    const isCollapsed = startIndex === endIndex;
     const isLengthMoreThenOne = originalArray && originalArray.length > 1;
     const shouldReturnEmpty = isCollapsed && isLengthMoreThenOne;
 
     const virtualList = useMemo(() => {
         if (shouldReturnEmpty) return emptyArray;
 
-        const newArray = latestOriginalArrayRef.current.slice(start, end);
+        const newArray = latestOriginalArrayRef.current.slice(
+            startIndex,
+            endIndex + 1,
+        );
         const prev = prevRef.current;
 
         if (prev && shallowEqual(prev, newArray)) {
@@ -35,7 +38,7 @@ export const useVirtualArray: Types.useVirtualArray.Fn = (
         prevRef.current = newArray;
 
         return newArray;
-    }, [end, shouldReturnEmpty, start, latestOriginalArrayRef]);
+    }, [endIndex, shouldReturnEmpty, startIndex, latestOriginalArrayRef]);
 
     return {
         virtualList,

@@ -29,7 +29,6 @@ export const Feed = withDecorator(() => {
     const {
         shouldShowMessagePlaceholder,
         shouldShowPlaceholder,
-        shouldShowMessageList,
         messagesPlaceholderRef,
     } = useFeedContextProxy();
 
@@ -47,9 +46,7 @@ export const Feed = withDecorator(() => {
                 <FeedPlaceholder innerRef={messagesPlaceholderRef}/>
             </If>
 
-            <If condition={shouldShowMessageList}>
-                <FeedList/>
-            </If>
+            <FeedList/>
         </FeedWrapper>
     );
 });
