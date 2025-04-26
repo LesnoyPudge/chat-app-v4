@@ -8,8 +8,6 @@ import { FLAGS, isDev } from '@/vars';
 import {
     GlobalLoader,
     GlobalProviders,
-    Masks,
-    SpriteSheet,
 } from './components';
 import { ErrorScreen } from '@/router/screens/bundled';
 import { useDebug, usePreventDefault, useHTMLVars } from './hooks';
@@ -51,10 +49,6 @@ export const Root: FC = () => {
 
                 <DevTools/>
             </Focus.Lock>
-
-            <Masks/>
-
-            <SpriteSheet/>
         </ControllableStrictMode>
     );
 };

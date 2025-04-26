@@ -1,17 +1,21 @@
 import * as components from './components';
 import * as context from './context';
-import * as hooks from './hooks';
 import * as types from './types';
+import * as hooks from './hooks';
 
 
 export namespace LazyModules {
     export import Types = types.Types;
 
-    export const Context = context.LazyModulesContext;
-
-    export const Provider = components.LazyModulesProvider;
+    export const {
+        useLazyModulesContextProxy: useContext,
+    } = context;
 
     export const {
-        useLazyModulesContext: useContext,
+        useIsLazyModuleLoaded: useIsModuleLoaded,
     } = hooks;
+
+    export const {
+        LazyModulesProvider: Provider,
+    } = components;
 }

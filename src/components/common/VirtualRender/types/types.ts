@@ -60,8 +60,8 @@ export namespace Types {
         items: string[] | undefined;
         getId: GetId;
         viewportRef?: useRefManager.NullableRefManager<HTMLElement>;
-        itemSize: number;
-        itemMargin: number;
+        itemSize?: number;
+        itemMargin?: number;
         overscan?: number;
         direction?: Direction.Single;
         initialIndex?: ScrollToIndexOptions['index'];

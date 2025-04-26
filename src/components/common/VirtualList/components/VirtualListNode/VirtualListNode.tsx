@@ -1,6 +1,6 @@
 import { KeyboardNavigation, VirtualRender } from '@/components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { useEffect } from 'react';
+import { useFunction } from '@lesnoypudge/utils-react';
 
 
 
@@ -18,10 +18,7 @@ export namespace VirtualListNode {
             KeyboardNavigation.Types.Provider.Props,
             KeyboardNavigationNonIntersectingProps
         >
-        & T.Except<
-            VirtualRender.Types.List.Props,
-            'onViewportIndexesChange'
-        >
+        & VirtualRender.Types.List.Props
     )>;
 }
 
@@ -45,8 +42,16 @@ export const VirtualListNode = ({
         loop,
         onIdChange,
         takeInitialIdFrom,
+        onViewportIndexesChange,
         ...virtualRenderProps
     } = rest;
+
+    const handleViewportIndexesChange: (
+        VirtualRender.Types.OnViewportIndexesChange
+    ) = useFunction((indexes) => {
+        setVirtualIndexes(indexes);
+        onViewportIndexesChange?.(indexes);
+    });
 
     return (
         <KeyboardNavigation.Provider
@@ -61,7 +66,7 @@ export const VirtualListNode = ({
                 {...virtualRenderProps}
                 items={items}
                 getId={getId}
-                onViewportIndexesChange={setVirtualIndexes}
+                onViewportIndexesChange={handleViewportIndexesChange}
             >
                 {children}
             </VirtualRender.List>

@@ -335,6 +335,7 @@ const ViewportListInner = <T,>(
 
     useIsomorphicLayoutEffect(() => {
         mainFrameRef.current = () => {
+            // console.log('frame');
             const viewport = getViewport();
             const topSpacer = topSpacerRef.current;
             const bottomSpacer = bottomSpacerRef.current;

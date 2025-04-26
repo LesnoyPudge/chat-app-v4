@@ -1,6 +1,8 @@
 import { createStyles } from '@/utils';
+import { decorate } from '@lesnoypudge/macro';
+import { withDisplayName } from '@lesnoypudge/utils-react';
 import { lightFormat } from 'date-fns';
-import { FC, useMemo } from 'react';
+import { FC, memo, useMemo } from 'react';
 
 
 
@@ -25,6 +27,9 @@ export namespace FeedDayDivider {
         timestamp: number;
     };
 }
+
+decorate(withDisplayName, 'FeedDayDivider', decorate.target);
+decorate(memo, decorate.target);
 
 export const FeedDayDivider: FC<FeedDayDivider.Props> = ({
     timestamp,

@@ -36,4 +36,8 @@ export const localStorageApi = Object.assign(api, {
         localStorageApi.remove('theme');
         localStorageApi.remove('lastVisitedChannels');
     },
+
+    removeScenarioSpecificData: () => {
+        localStorageApi.remove('lastVisitedChannels');
+    },
 });

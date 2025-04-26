@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
-import { logger } from '@/utils';
-import { invariant, toOneLine } from '@lesnoypudge/utils';
-import { useAnimationFrame } from '@lesnoypudge/utils-react';
+import { getAppElementCount, logger } from '@/utils';
+import { toOneLine } from '@lesnoypudge/utils';
+import { useInterval } from '@lesnoypudge/utils-react';
 import { useFocusTracker } from './hooks';
 import { FLAGS } from '@/vars';
 
@@ -13,9 +13,10 @@ import { FLAGS } from '@/vars';
 export const useDebug = () => {
     const checks = {
         checkElementCount: () => {
+            if (!FLAGS.GENERAL.ENABLE_ELEMENT_COUNT) return;
+
             const MAX = 1_000;
-            const currentCount = document.querySelectorAll('*')?.length;
-            invariant(typeof currentCount === 'number');
+            const currentCount = getAppElementCount();
 
             if (currentCount >= MAX) {
                 logger._warns.warn(toOneLine(`
@@ -26,9 +27,9 @@ export const useDebug = () => {
         },
     };
 
-    useAnimationFrame(() => {
+    useInterval(() => {
         Object.values(checks).forEach((check) => check());
-    }, FLAGS.GENERAL.ENABLE_ELEMENT_COUNT);
+    }, 500);
 
     if (FLAGS.GENERAL.ENABLE_FOCUS_TRACKER) {
         useFocusTracker();

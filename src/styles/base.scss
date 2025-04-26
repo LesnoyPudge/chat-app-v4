@@ -109,6 +109,7 @@
 
     #app-root,
     #overlay-root,
+    #svg-resources-root,
     #dev-root {
         position: fixed;
         inset: 0;
@@ -120,14 +121,24 @@
         z-index: 10;
     }
 
-    #overlay-root {
-        z-index: 20;
+    #overlay-root,
+    #svg-resources-root,
+    #dev-root {
         pointer-events: none;
     }
 
-    #dev-root {
+    #overlay-root {
+        z-index: 20;
+    }
+
+    #svg-resources-root {
+        @apply sr-only;
+        opacity: 0;
         z-index: 30;
-        pointer-events: none;
+    }
+
+    #dev-root {
+        z-index: 40;
     }
 
     @media (prefers-reduced-motion: reduce) {

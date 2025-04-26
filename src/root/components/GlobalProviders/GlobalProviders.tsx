@@ -8,7 +8,7 @@ import {
 import { LazyMotion, MotionConfig } from 'motion/react';
 import { FC, PropsWithChildren, Suspense } from 'react';
 import { BrowserRouter } from 'react-router';
-import { LazyModules } from '@/root/components';
+import { LazyModules, WithLazySVGResources } from '@/root/components';
 import { LayoutType } from '@/components';
 import { decorate } from '@lesnoypudge/macro';
 
@@ -25,13 +25,15 @@ const {
 } = createWithDecorator(({ children }) => (
     <ReduxReact.Provider store={store}>
         <LazyModules.Provider>
-            <LazyMotion features={loadDomAnimation} strict>
-                <MotionConfig reducedMotion='user'>
-                    <BrowserRouter>
-                        {children}
-                    </BrowserRouter>
-                </MotionConfig>
-            </LazyMotion>
+            <WithLazySVGResources>
+                <LazyMotion features={loadDomAnimation} strict>
+                    <MotionConfig reducedMotion='user'>
+                        <BrowserRouter>
+                            {children}
+                        </BrowserRouter>
+                    </MotionConfig>
+                </LazyMotion>
+            </WithLazySVGResources>
         </LazyModules.Provider>
     </ReduxReact.Provider>
 ));

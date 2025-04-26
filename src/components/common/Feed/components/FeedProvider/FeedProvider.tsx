@@ -1,9 +1,9 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Types } from '../../types';
 import { FeedContext } from '../../context';
-import { useRefManager } from '@lesnoypudge/utils-react';
+import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { Store } from '@/features';
-import { useFeedAutoScroll, useFeedScrollLoader } from './hooks';
+import { useAutoScroll, useDeriveFeedState, useInfiniteLoader } from './hooks';
 
 
 
@@ -12,25 +12,9 @@ export const FeedProvider: FC<Types.FeedProvider.Props> = ({
     children,
 }) => {
     const feedRef: Types.Context['feedRef'] = useRefManager(null);
-    const [
-        indexesShift,
-        setIndexesShift,
-    ] = useState(0);
 
     const autoscrollTriggerRef: (
         Types.Context['autoscrollTriggerRef']
-    ) = useRefManager(null);
-
-    const messagesPlaceholderRef: (
-        Types.Context['messagesPlaceholderRef']
-    ) = useRefManager(null);
-
-    const virtualRenderApiRef: (
-        Types.Context['virtualRenderApiRef']
-    ) = useRefManager(null);
-
-    const scrollableApiRef: (
-        Types.Context['scrollableApiRef']
     ) = useRefManager(null);
 
     const scrollableRef: (
@@ -41,9 +25,36 @@ export const FeedProvider: FC<Types.FeedProvider.Props> = ({
         Types.Context['scrollableWrapperRef']
     ) = useRefManager(null);
 
-    const definedMessageIds = Store.useSelector(
+    const virtualRenderApiRef: (
+        Types.Context['virtualRenderApiRef']
+    ) = useRefManager(null);
+
+    const messageIds = Store.useSelector(
         Store.TextChats.Selectors.selectDefinedMessageIdsById(textChatId),
     ) ?? [];
+
+    const {
+        isLoading,
+        isUninitialized,
+        onIndexesChange: onIndexesChangeLoader,
+    } = useInfiniteLoader({ textChatId });
+
+    const {
+        indexesShift,
+        onIndexesChange: onIndexesChangeScroll,
+    } = useAutoScroll({
+        autoscrollTriggerRef,
+        scrollableWrapperRef,
+        textChatId,
+        virtualRenderApiRef,
+    });
+
+    const onIndexesChange: (
+        Types.Context['onIndexesChange']
+    ) = useFunction((indexes) => {
+        onIndexesChangeLoader(indexes);
+        onIndexesChangeScroll(indexes);
+    });
 
     const {
         shouldShowPlaceholder,
@@ -51,32 +62,22 @@ export const FeedProvider: FC<Types.FeedProvider.Props> = ({
         shouldShowMessagePlaceholder,
         shouldShowIntroduction,
         shouldShowEmptyIntroduction,
-    } = useFeedScrollLoader({
+    } = useDeriveFeedState({
+        isLoading,
+        isUninitialized,
         textChatId,
-        messagesPlaceholderRef,
-    });
-
-    useFeedAutoScroll({
-        autoscrollTriggerRef,
-        scrollableApiRef,
-        scrollableRef,
-        scrollableWrapperRef,
-        messageIds: definedMessageIds,
-        setIndexesShift,
     });
 
     const value: Types.Context = {
         textChatId,
-        messageIds: definedMessageIds,
+        messageIds,
         indexesShift,
-        setIndexesShift,
+        onIndexesChange,
         feedRef,
+        virtualRenderApiRef,
         scrollableRef,
         scrollableWrapperRef,
-        scrollableApiRef,
         autoscrollTriggerRef,
-        messagesPlaceholderRef,
-        virtualRenderApiRef,
         shouldShowPlaceholder,
         shouldShowMessageList,
         shouldShowMessagePlaceholder,

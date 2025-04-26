@@ -2,9 +2,11 @@ import { basePreloadedComponent } from '@/utils';
 
 
 
-const load = basePreloadedComponent;
+const { load, trigger } = basePreloadedComponent;
 
 export const LazyPanels = {
+    trigger,
+
     ConversationNavigation: load(() => import('./ConversationNavigationPanel')),
 
     ServerNavigation: load(() => import('./ServerNavigationPanel')),

@@ -20,21 +20,20 @@ export const FeedWrapper: FC<PropsWithChildren> = ({
     const {
         feedRef,
         autoscrollTriggerRef,
-        scrollableApiRef,
         scrollableRef,
         scrollableWrapperRef,
     } = useFeedContextProxy();
 
     return (
-        <Scrollable
-            className={styles.wrapper}
-            apiRef={scrollableApiRef}
-            scrollableRef={scrollableRef}
-            wrapperRef={scrollableWrapperRef}
-        >
-            <div className={styles.feedWrapper}>
+        <div className='h-full py-6'>
+            <Scrollable
+                className={styles.wrapper}
+                scrollableRef={scrollableRef}
+                wrapperRef={scrollableWrapperRef}
+            >
+                {/* <div className={styles.feedWrapper}> */}
                 <div
-                    className={styles.feed}
+                // className={styles.feed}
                     role='feed'
                     aria-busy
                     aria-label={t('Feed.label')}
@@ -43,13 +42,14 @@ export const FeedWrapper: FC<PropsWithChildren> = ({
                     {children}
                 </div>
 
-                <div
+                {/* <div
                     className={styles.autoscrollTrigger}
                     aria-hidden
                     ref={autoscrollTriggerRef}
                 >
-                </div>
-            </div>
-        </Scrollable>
+                </div> */}
+                {/* </div> */}
+            </Scrollable>
+        </div>
     );
 };

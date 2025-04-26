@@ -25,22 +25,22 @@ export const Feed = withDecorator(() => {
     const {
         shouldShowMessagePlaceholder,
         shouldShowPlaceholder,
-        messagesPlaceholderRef,
     } = useFeedContextProxy();
+
 
     if (shouldShowPlaceholder) {
         return (
-            <FeedPlaceholder/>
+            <FeedPlaceholder isStatic/>
         );
     }
 
     return (
         <FeedWrapper>
-            <FeedIntroduction/>
+            {/* <FeedIntroduction/>
 
             <If condition={shouldShowMessagePlaceholder}>
-                <FeedPlaceholder innerRef={messagesPlaceholderRef}/>
-            </If>
+                <FeedPlaceholder/>
+            </If> */}
 
             <FeedList/>
         </FeedWrapper>

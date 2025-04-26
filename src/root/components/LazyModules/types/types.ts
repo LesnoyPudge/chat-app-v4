@@ -1,18 +1,12 @@
-import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { LazyModules } from '@/features';
 
 
 
 export namespace Types {
-    type Module<_Extra extends T.UnknownRecord = T.EmptyObject> = (
-        {
-            isLoaded: boolean;
-        }
-        & _Extra
-    );
+    export type ModuleNames = LazyModules.ModuleNames;
 
     export type Context = {
-        i18n: Module;
-        server: Module;
-        areAllModulesLoaded: boolean;
+        instance: LazyModules;
+        isLoaded: boolean;
     };
 }

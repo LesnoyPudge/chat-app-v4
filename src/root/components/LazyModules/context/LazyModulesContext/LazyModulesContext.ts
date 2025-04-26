@@ -3,6 +3,10 @@ import { Types } from '../../types';
 
 
 
-export const LazyModulesContext = ContextSelectable.createContext<
+export const {
+    LazyModulesContext,
+    useLazyModulesContextProxy,
+    useLazyModulesContextSelector,
+} = ContextSelectable.createContextWithHooks<
     Types.Context
->();
+>().withName('LazyModules');

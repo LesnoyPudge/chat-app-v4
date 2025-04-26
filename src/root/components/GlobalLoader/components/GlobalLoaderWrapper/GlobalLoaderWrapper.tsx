@@ -26,15 +26,13 @@ export const GlobalLoaderWrapper: FC<PropsWithChildren> = ({
     children,
 }) => {
     const controls = Overlay.useControls(true);
-    const { areAllModulesLoaded } = LazyModules.useContext();
+    const { isLoaded } = LazyModules.useContext();
     const disableTimeoutIdRef = useRef<number>();
 
     const disable = useFunction(() => {
         clearTimeout(disableTimeoutIdRef.current);
-        // const id = Math.random();
-        // console.log(`QUEUE STATE CLOSE: ${id}`);
+
         disableTimeoutIdRef.current = setTimeout(() => {
-            // console.log(`STATE CLOSE: ${id}`);
             controls.close();
         }, 200);
     });
@@ -42,13 +40,8 @@ export const GlobalLoaderWrapper: FC<PropsWithChildren> = ({
     const enable = useFunction(() => {
         clearTimeout(disableTimeoutIdRef.current);
 
-        // console.log('STATE OPEN');
         controls.open();
     });
-
-    // useEffect(() => {
-    // console.log(`STATE IS: ${controls.isOpen}`);
-    // }, [controls.isOpen]);
 
     const value: Types.Context = {
         isEnabled: controls.isOpen,
@@ -58,7 +51,7 @@ export const GlobalLoaderWrapper: FC<PropsWithChildren> = ({
 
     return (
         <GlobalLoaderContext.Provider value={value}>
-            <If condition={areAllModulesLoaded}>
+            <If condition={isLoaded}>
                 {children}
             </If>
 

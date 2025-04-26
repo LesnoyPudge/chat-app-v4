@@ -4,8 +4,8 @@ import { FC, memo } from 'react';
 import { KeyboardNavigation, Message, VirtualList } from '@/components';
 import { useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { Store } from '@/features';
-import { invariant } from '@lesnoypudge/utils';
-import { createStyles } from '@/utils';
+import { inRange, invariant } from '@lesnoypudge/utils';
+import { cn, createStyles } from '@/utils';
 import { differenceInMinutes, isSameDay } from 'date-fns';
 import { FeedDayDivider } from '../FeedDayDivider';
 import { decorate } from '@lesnoypudge/macro';
@@ -13,10 +13,10 @@ import { decorate } from '@lesnoypudge/macro';
 
 
 const styles = createStyles({
-    wrapper: `
-        ${VirtualList.Styles.resetItemPaddingTop}
-        pt-[--message-gap]
-    `,
+    wrapper: {
+        base: 'pt-[--message-gap]',
+        resetPadding: VirtualList.Styles.resetItemPaddingTop,
+    },
 });
 
 namespace getExtraMessageData {
@@ -81,6 +81,8 @@ export namespace FeedItem {
     };
 }
 
+const h = new Map<string, number>();
+
 decorate(withDisplayName, 'FeedItem', decorate.target);
 decorate(memo, decorate.target);
 
@@ -89,11 +91,11 @@ export const FeedItem: FC<FeedItem.Props> = ({
     previousMessageId,
 }) => {
     const elementRef = useRefManager<HTMLDivElement>(null);
-    const { tabIndex, setId } = KeyboardNavigation.useCommonItem({
-        elementRef,
-        itemId: messageId,
-    });
-
+    // const { tabIndex, setId } = KeyboardNavigation.useCommonItem({
+    //     elementRef,
+    //     itemId: messageId,
+    // });
+    const setId = () => {};
     const { messageDisplayMode } = Store.useSelector(
         Store.Users.Selectors.selectCurrentUserSettings,
     );
@@ -124,26 +126,41 @@ export const FeedItem: FC<FeedItem.Props> = ({
         prevMessageCreatedAt: previousMessageCreatedAt,
     });
 
+    const shouldResetPadding = message.index === 0;
+
+    if (!h.has(message.id)) {
+        const height = 40 + Math.floor(Math.max(
+            40, inRange(0, message.index / 2),
+        ));
+
+        h.set(message.id, height);
+    }
+
     return (
-        <>
+        <div
+            className={cn(
+                styles.wrapper.base,
+                shouldResetPadding && styles.wrapper.resetPadding,
+            )}
+            style={{
+                height: h.get(message.id),
+            }}
+            onClick={setId}
+            onAuxClick={setId}
+            onContextMenu={setId}
+        >
             <If condition={shouldShowDayDivider}>
                 <FeedDayDivider timestamp={message.createdAt}/>
             </If>
 
-            <div
-                className={styles.wrapper}
-                onClick={setId}
-                onAuxClick={setId}
-                onContextMenu={setId}
-            >
-                <Message.Node
+            <div>{message.index} - {h.get(message.id)} - {message.id}</div>
+            {/* <Message.Node
                     message={message}
                     isGroupHead={isGroupHead}
                     messageDisplayMode={messageDisplayMode}
                     tabIndex={tabIndex}
                     innerRef={elementRef}
-                />
-            </div>
-        </>
+                /> */}
+        </div>
     );
 };

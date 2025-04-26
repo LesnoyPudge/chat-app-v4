@@ -1,5 +1,5 @@
-import { KEY, toOneLine } from '@lesnoypudge/utils';
-import { localStorageApi, logger } from '@/utils';
+import { KEY } from '@lesnoypudge/utils';
+import { getAppElementCount, localStorageApi, logger } from '@/utils';
 import { devtools } from '@/features';
 
 
@@ -65,10 +65,7 @@ export const rawActions = {
     },
 
     logElementsCount: () => {
-        logger._common.log(toOneLine(`
-            ${document.querySelectorAll('*')?.length} 
-            DOM elements
-        `));
+        logger._common.log(`${getAppElementCount()} DOM elements`);
     },
 
     setDarkTheme: () => {
@@ -106,21 +103,28 @@ export const rawActions = {
 
     populateDB_Small: () => {
         localStorageApi.set('setupScenario', 'populateSmall');
-        localStorageApi.remove('lastVisitedChannels');
+        localStorageApi.removeScenarioSpecificData();
         // eslint-disable-next-line no-restricted-globals
         location.reload();
     },
 
     populateDB_Medium: () => {
         localStorageApi.set('setupScenario', 'populateMedium');
-        localStorageApi.remove('lastVisitedChannels');
+        localStorageApi.removeScenarioSpecificData();
         // eslint-disable-next-line no-restricted-globals
         location.reload();
     },
 
     populateDB_Large: () => {
         localStorageApi.set('setupScenario', 'populateLarge');
-        localStorageApi.remove('lastVisitedChannels');
+        localStorageApi.removeScenarioSpecificData();
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
+    },
+
+    setupMinimalScene: () => {
+        localStorageApi.set('setupScenario', 'minimalScene');
+        localStorageApi.removeScenarioSpecificData();
         // eslint-disable-next-line no-restricted-globals
         location.reload();
     },

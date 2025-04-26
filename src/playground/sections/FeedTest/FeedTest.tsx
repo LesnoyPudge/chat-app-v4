@@ -9,6 +9,9 @@ import { faker } from '@faker-js/faker';
 
 
 export const FeedTest: FC = () => {
+    const isAuthorized = Store.useSliceSelector(Store.App, (v) => !!v.userId);
+    invariant(isAuthorized, 'NOT AUTHORIZED');
+
     const [conversation] = Store.useSelector(
         Store.Conversations.Selectors.selectAll,
     );
@@ -68,7 +71,7 @@ export const FeedTest: FC = () => {
 
     useEffect(() => {
         if (!isDefinedMessagesExists) return;
-
+        // if (1) return;
         const id = setInterval(() => {
             const message = Dummies.message({
                 attachments: [],
@@ -94,7 +97,7 @@ export const FeedTest: FC = () => {
                     messages: [...textChat.messages, message.id],
                 },
             });
-        }, 3_000);
+        }, 1_500);
 
         return () => {
             clearInterval(id);

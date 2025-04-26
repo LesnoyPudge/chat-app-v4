@@ -6,6 +6,7 @@ export * from './createStyles';
 export * from './derivePresenceStatus';
 export * from './fileSize';
 export * from './formatNotificationCount';
+export * from './getAppElementCount';
 export * from './getAssetUrl';
 export * from './getHTMLElement';
 export * from './getReadFilePath';

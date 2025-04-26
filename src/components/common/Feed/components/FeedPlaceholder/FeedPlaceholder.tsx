@@ -1,9 +1,10 @@
-import { PropsWithInnerRef } from '@/types';
 import { cn, createStyles } from '@/utils';
-import { Iterate } from '@lesnoypudge/utils-react';
-import { FC } from 'react';
+import { Iterate, withDisplayName } from '@lesnoypudge/utils-react';
+import { FC, memo } from 'react';
 import { Message } from '@/components';
 import { Store } from '@/features';
+import { decorate } from '@lesnoypudge/macro';
+import { Types } from '../../types';
 
 
 
@@ -14,27 +15,26 @@ const styles = createStyles({
     },
 });
 
-const variations = Array.from({ length: 20 }, () => {
+const variations = Array.from({ length: 15 }, () => {
     return Message.getPlaceholderVariation();
 });
 
-export const FeedPlaceholder: FC<PropsWithInnerRef<'div'>> = ({
-    innerRef,
+
+decorate(withDisplayName, 'FeedPlaceholder', decorate.target);
+decorate(memo, decorate.target);
+
+export const FeedPlaceholder: FC<Types.FeedPlaceholder.Props> = ({
+    isStatic = false,
 }) => {
     const { messageDisplayMode } = Store.useSelector(
         Store.Users.Selectors.selectCurrentUserSettings,
     );
 
-    const isStatic = !innerRef;
-
     return (
-        <div
-            className={cn(
-                styles.list.base,
-                isStatic && styles.list.static,
-            )}
-            ref={innerRef}
-        >
+        <div className={cn(
+            styles.list.base,
+            isStatic && styles.list.static,
+        )}>
             <Iterate
                 items={variations}
                 getKey={(_, index) => index}

@@ -17,6 +17,13 @@ export const getHTMLElement = {
         return element as HTMLDivElement;
     })(),
 
+    svgResourcesRoot: (() => {
+        const element = document.querySelector('#svg-resources-root');
+        invariant(element, 'svg-resources-root not found');
+
+        return element as HTMLDivElement;
+    })(),
+
     devRoot: (() => {
         const element = document.querySelector('#dev-root');
         invariant(element, 'dev-root not found');
