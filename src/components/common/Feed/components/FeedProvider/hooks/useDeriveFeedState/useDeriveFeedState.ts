@@ -41,23 +41,17 @@ export const useDeriveFeedState = ({
         )
     );
 
-    // we have some messages in store.
-    // this is only for message list
-    const shouldShowMessageList = (
-        definedMessageCount !== 0
-    );
-
     // there is unloaded messages
     const shouldShowMessagePlaceholder = (
         firstDefinedMessageIndex !== 0
     );
 
-    // there is no unloaded messages, should show intro
+    // all old messages are loaded, should show intro
     const shouldShowIntroduction = (
         !shouldShowMessagePlaceholder
     );
 
-    // there is no messages yet
+    // text chat does not have messages
     const shouldShowEmptyIntroduction = (
         shouldShowIntroduction
         && definedMessageCount === 0
@@ -65,7 +59,6 @@ export const useDeriveFeedState = ({
 
     return {
         shouldShowPlaceholder,
-        shouldShowMessageList,
         shouldShowMessagePlaceholder,
         shouldShowIntroduction,
         shouldShowEmptyIntroduction,

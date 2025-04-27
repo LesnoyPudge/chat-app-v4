@@ -1,27 +1,22 @@
-import { useRefManager } from '@lesnoypudge/utils-react';
-import { PropsWithChildren } from 'react';
-import { VirtualRender } from '@/components';
+import { PropsWithChildren, RefObject } from 'react';
+import { VirtualizerHandle } from 'virtua';
 
 
 
 export namespace Types {
     export type Context = {
         textChatId: string;
-        messageIds: string[];
-        feedRef: useRefManager.NullableRefManager<HTMLDivElement>;
-        autoscrollTriggerRef: useRefManager.NullableRefManager<HTMLDivElement>;
-        scrollableWrapperRef: useRefManager.NullableRefManager<HTMLDivElement>;
-        scrollableRef: useRefManager.NullableRefManager<HTMLDivElement>;
-        virtualRenderApiRef: (
-            useRefManager.NullableRefManager<VirtualRender.Types.Api>
-        );
+        feedRef: RefObject<HTMLDivElement>;
+        scrollableRef: RefObject<HTMLDivElement>;
+        virtualizerRef: RefObject<VirtualizerHandle>;
         shouldShowPlaceholder: boolean;
-        shouldShowMessageList: boolean;
         shouldShowMessagePlaceholder: boolean;
         shouldShowIntroduction: boolean;
         shouldShowEmptyIntroduction: boolean;
-        indexesShift: number | undefined;
-        onIndexesChange: (indexes: [number, number]) => void;
+        messagePlaceholderHeight: 600;
+        loadMore: (
+            options: { from: number | null }
+        ) => Promise<unknown> | undefined;
     };
 
     export namespace FeedProvider {

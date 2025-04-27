@@ -18,7 +18,7 @@
     [data-scrollable-wrapper=true] {
         [data-overlayscrollbars-viewport] {
             // prevent? recalculation of outer elements
-            contain: content;
+            contain: strict;
             // force separate layer
             transform: translateZ(0);
         }

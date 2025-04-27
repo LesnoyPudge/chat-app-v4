@@ -62,7 +62,8 @@
         "tailwind-merge": "^3.0.1",
         "use-context-selector": "^2.0.0",
         "uuid": "^11.0.5",
-        "valibot": "^1.0.0"
+        "valibot": "^1.0.0",
+        "virtua": "^0.40.4"
     },
     "devDependencies": {
         "@axe-core/react": "^4.10.1",

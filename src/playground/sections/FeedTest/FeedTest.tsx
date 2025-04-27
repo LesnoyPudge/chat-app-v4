@@ -71,7 +71,7 @@ export const FeedTest: FC = () => {
 
     useEffect(() => {
         if (!isDefinedMessagesExists) return;
-        // if (1) return;
+        if (1) return;
         const id = setInterval(() => {
             const message = Dummies.message({
                 attachments: [],

@@ -8,9 +8,6 @@ import { createStyles } from '@/utils';
 
 const styles = createStyles({
     wrapper: 'h-full',
-    autoscrollTrigger: 'h-px shrink-0',
-    feedWrapper: 'flex min-h-full flex-col',
-    feed: 'mt-auto',
 });
 
 export const FeedWrapper: FC<PropsWithChildren> = ({
@@ -19,37 +16,29 @@ export const FeedWrapper: FC<PropsWithChildren> = ({
     const { t } = useTrans();
     const {
         feedRef,
-        autoscrollTriggerRef,
         scrollableRef,
-        scrollableWrapperRef,
     } = useFeedContextProxy();
 
     return (
-        <div className='h-full py-6'>
-            <Scrollable
-                className={styles.wrapper}
-                scrollableRef={scrollableRef}
-                wrapperRef={scrollableWrapperRef}
+        <Scrollable
+            className={styles.wrapper}
+            scrollableRef={scrollableRef}
+        >
+            <div
+                role='feed'
+                aria-busy
+                aria-label={t('Feed.label')}
+                ref={feedRef}
+                style={{
+                    visibility: 'hidden', // TODO replace with other optimization methods
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    minHeight: '100%',
+                }}
             >
-                {/* <div className={styles.feedWrapper}> */}
-                <div
-                // className={styles.feed}
-                    role='feed'
-                    aria-busy
-                    aria-label={t('Feed.label')}
-                    ref={feedRef}
-                >
-                    {children}
-                </div>
-
-                {/* <div
-                    className={styles.autoscrollTrigger}
-                    aria-hidden
-                    ref={autoscrollTriggerRef}
-                >
-                </div> */}
-                {/* </div> */}
-            </Scrollable>
-        </div>
+                {children}
+            </div>
+        </Scrollable>
     );
 };

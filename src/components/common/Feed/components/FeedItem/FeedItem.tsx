@@ -78,6 +78,7 @@ export namespace FeedItem {
     export type Props = {
         messageId: string;
         previousMessageId: string | undefined;
+        index: number;
     };
 }
 
@@ -89,6 +90,7 @@ decorate(memo, decorate.target);
 export const FeedItem: FC<FeedItem.Props> = ({
     messageId,
     previousMessageId,
+    index,
 }) => {
     const elementRef = useRefManager<HTMLDivElement>(null);
     // const { tabIndex, setId } = KeyboardNavigation.useCommonItem({
@@ -96,64 +98,64 @@ export const FeedItem: FC<FeedItem.Props> = ({
     //     itemId: messageId,
     // });
     const setId = () => {};
-    const { messageDisplayMode } = Store.useSelector(
-        Store.Users.Selectors.selectCurrentUserSettings,
-    );
+    // const { messageDisplayMode } = Store.useSelector(
+    //     Store.Users.Selectors.selectCurrentUserSettings,
+    // );
 
-    const message = Store.useSelector(
-        Store.Messages.Selectors.selectById(messageId),
-    );
-    invariant(
-        message,
-        'message should be defined, otherwise we would not be here',
-    );
+    // const message = Store.useSelector(
+    //     Store.Messages.Selectors.selectById(messageId),
+    // );
+    // invariant(
+    //     message,
+    //     'message should be defined, otherwise we would not be here',
+    // );
 
-    const previousMessageAuthor = Store.useSelector(
-        Store.Messages.Selectors.selectAuthorById(previousMessageId),
-    );
+    // const previousMessageAuthor = Store.useSelector(
+    //     Store.Messages.Selectors.selectAuthorById(previousMessageId),
+    // );
 
-    const previousMessageCreatedAt = Store.useSelector(
-        Store.Messages.Selectors.selectCreatedAtById(previousMessageId),
-    );
+    // const previousMessageCreatedAt = Store.useSelector(
+    //     Store.Messages.Selectors.selectCreatedAtById(previousMessageId),
+    // );
 
-    const {
-        isGroupHead,
-        shouldShowDayDivider,
-    } = getExtraMessageData({
-        currentMessageAuthorId: message.author,
-        currentMessageCreatedAt: message.createdAt,
-        prevMessageAuthorId: previousMessageAuthor,
-        prevMessageCreatedAt: previousMessageCreatedAt,
-    });
+    // const {
+    //     isGroupHead,
+    //     shouldShowDayDivider,
+    // } = getExtraMessageData({
+    //     currentMessageAuthorId: message.author,
+    //     currentMessageCreatedAt: message.createdAt,
+    //     prevMessageAuthorId: previousMessageAuthor,
+    //     prevMessageCreatedAt: previousMessageCreatedAt,
+    // });
 
-    const shouldResetPadding = message.index === 0;
+    // const shouldResetPadding = message.index === 0;
 
-    if (!h.has(message.id)) {
-        const height = 40 + Math.floor(Math.max(
-            40, inRange(0, message.index / 2),
-        ));
+    if (!h.has(messageId)) {
+        const height = 40 + Math.floor(
+            inRange(0, Math.max(50, index) / 2) + inRange(0, 35),
+        );
 
-        h.set(message.id, height);
+        h.set(messageId, height);
     }
 
     return (
         <div
             className={cn(
                 styles.wrapper.base,
-                shouldResetPadding && styles.wrapper.resetPadding,
+                // shouldResetPadding && styles.wrapper.resetPadding,
             )}
             style={{
-                height: h.get(message.id),
+                height: h.get(messageId),
             }}
             onClick={setId}
             onAuxClick={setId}
             onContextMenu={setId}
         >
-            <If condition={shouldShowDayDivider}>
+            {/* <If condition={shouldShowDayDivider}>
                 <FeedDayDivider timestamp={message.createdAt}/>
-            </If>
+            </If> */}
 
-            <div>{message.index} - {h.get(message.id)} - {message.id}</div>
+            <div>{index} - {h.get(messageId)} - {messageId}</div>
             {/* <Message.Node
                     message={message}
                     isGroupHead={isGroupHead}
