@@ -45,7 +45,7 @@ export const FeedScroller: FC = () => {
     );
     invariant(messageIds);
 
-    const listCount = messageIds.length;
+    const count = messageIds.length;
 
     useLayoutEffect(() => {
         isPrependingRef.current = false;
@@ -56,15 +56,16 @@ export const FeedScroller: FC = () => {
         if (!virtualizer) return;
         if (!isAtBottomRef.current) return;
 
-        const lastItemIndex = listCount - 1;
+        const lastItemIndex = count - 1;
 
         virtualizer.scrollToIndex(lastItemIndex, {
             align: 'start',
+            offset: virtualizer.scrollSize,
         });
         // in case where last element is bigger then viewport
         // we should scroll an extra offset to be at the bottom of the list
         // virtualizer.scrollBy(virtualizer.getItemSize(lastItemIndex));
-    }, [listCount, virtualizerRef]);
+    }, [count, virtualizerRef]);
 
     const renderItem = useFunction((index: number) => {
         const prevId = messageIds[index - 1];
@@ -118,7 +119,7 @@ export const FeedScroller: FC = () => {
 
     const virtualizerProps: CustomVirtualizerProps = {
         scrollRef: scrollableRef,
-        count: listCount,
+        count: count,
         ref: virtualizerRef,
         shift: true,
         // shift: isPrependingRef.current,

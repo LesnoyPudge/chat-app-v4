@@ -71,7 +71,7 @@ export const FeedTest: FC = () => {
 
     useEffect(() => {
         if (!isDefinedMessagesExists) return;
-        if (1) return;
+        // if (1) return;
         const id = setInterval(() => {
             const message = Dummies.message({
                 attachments: [],
@@ -97,7 +97,7 @@ export const FeedTest: FC = () => {
                     messages: [...textChat.messages, message.id],
                 },
             });
-        }, 1_500);
+        }, 5_000);
 
         return () => {
             clearInterval(id);

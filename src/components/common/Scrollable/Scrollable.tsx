@@ -105,6 +105,7 @@ export const Scrollable: FC<Scrollable.Props> = ({
             data-with-opposite-gutter={withOppositeGutter}
             data-size={size}
             data-direction={direction}
+            data-auto-hide={autoHide}
             data-overlayscrollbars='host'
         >
             <div

@@ -12,14 +12,19 @@ import { useFeedContextProxy } from '../../context';
 const styles = createStyles({
     list: {
         base: `
+            visible 
             flex 
-            h-[--placeholder-height] 
-            flex-col 
-            gap-2 
+            max-h-[--placeholder-height] 
+            min-h-[--placeholder-height] 
+            flex-col-reverse
+            gap-2
             overflow-hidden
             [overflow-anchor:none]
         `,
-        static: 'h-full',
+        static: `
+            max-h-full 
+            min-h-full 
+        `,
     },
 });
 
@@ -41,7 +46,7 @@ export const FeedPlaceholder: FC<Types.FeedPlaceholder.Props> = ({
     );
 
     const style = {
-        '--placeholder-height': messagePlaceholderHeight,
+        '--placeholder-height': `${messagePlaceholderHeight}px`,
     } as CSSProperties;
 
     return (

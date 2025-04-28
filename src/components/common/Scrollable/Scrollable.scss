@@ -9,6 +9,7 @@
     // 'data-with-opposite-gutter': true | false,
     // 'data-size': 'default' | 'small',
     // 'data-direction': 'vertical' | 'horizontal' | 'both',
+    // 'data-auto-hide': true | false
 
     // allows scrollable parents to shrink
     * > :has([data-scrollable-wrapper=true]) {
@@ -47,7 +48,6 @@
         --thumb-bg-color: var(--scrollbar-thumb);
 
         --scrollbar-transition: 
-            opacity 0.15s, 
             top 0.15s, 
             right 0.15s, 
             bottom 0.15s, 
@@ -55,17 +55,38 @@
         ;
 
         --track-transition: 
-            opacity 0.15s, 
             background-color 0.15s, 
             border-color 0.15s
         ;
 
         --thumb-transition: 
-            opacity 0.15s, 
             background-color 0.15s, 
             border-color 0.15s, 
             width 0.15s
         ;
+
+        &[data-auto-hide=true] {
+            --scrollbar-transition: 
+                opacity 0.15s, 
+                top 0.15s, 
+                right 0.15s, 
+                bottom 0.15s, 
+                left 0.15s
+            ;
+
+            --track-transition: 
+                opacity 0.15s, 
+                background-color 0.15s, 
+                border-color 0.15s
+            ;
+
+            --thumb-transition: 
+                opacity 0.15s, 
+                background-color 0.15s, 
+                border-color 0.15s, 
+                width 0.15s
+            ;
+        }
 
         &[data-direction=both],
         &[data-direction=vertical] {
