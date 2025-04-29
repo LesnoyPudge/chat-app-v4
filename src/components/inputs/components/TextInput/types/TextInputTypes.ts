@@ -35,18 +35,26 @@ export namespace TextInputTypes {
     export namespace Provider {
         type RequiredProps = Pick<Context, 'label'>;
 
-        type OptionalProps = Pick<
-            Partial<Omit<Context, keyof RequiredProps>>,
+        export type PropsWithDefaultValues = Pick<
+            Omit<Context, keyof RequiredProps>,
             'disabled'
-            | 'innerRef'
             | 'inputMode'
             | 'maxLength'
             | 'minLength'
             | 'readOnly'
-            | 'type'
             | 'placeholder'
             | 'autoComplete'
+            | 'required'
         >;
+
+        type OptionalProps = (
+            Partial<PropsWithDefaultValues>
+            & Pick<
+                Partial<Omit<Context, keyof RequiredProps>>,
+                'innerRef'
+                | 'type'
+            >
+        );
 
         export type Props = T.Simplify<
             RT.PropsWithRenderFunctionOrNode<[Context]>

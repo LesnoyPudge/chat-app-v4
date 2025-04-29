@@ -1,50 +1,28 @@
 import { KeyboardNavigation, VirtualRender } from '@/components';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { useFunction } from '@lesnoypudge/utils-react';
+import { Types } from '../../types';
 
 
-
-export namespace VirtualListNode {
-    type KeyboardNavigationNonIntersectingProps = (
-        Exclude<
-            keyof KeyboardNavigation.Types.Provider.Props,
-            keyof VirtualRender.Types.List.Props
-            | 'list'
-        >
-    );
-
-    export type Props = T.Simplify<(
-        Pick<
-            KeyboardNavigation.Types.Provider.Props,
-            KeyboardNavigationNonIntersectingProps
-        >
-        & VirtualRender.Types.List.Props
-    )>;
-}
 
 export const VirtualListNode = ({
     items = [],
     getId,
     wrapperRef,
     children,
-    ...rest
-}: VirtualListNode.Props) => {
+    direction,
+    loop,
+    onIdChange,
+    takeInitialIdFrom,
+    onViewportIndexesChange,
+    ...virtualRenderProps
+}: Types.Node.Props) => {
     const {
         setVirtualIndexes,
         virtualList,
     } = VirtualRender.useVirtualArray({
         originalArray: items,
-        overscan: rest.overscan,
+        overscan: virtualRenderProps.overscan,
     });
-
-    const {
-        direction,
-        loop,
-        onIdChange,
-        takeInitialIdFrom,
-        onViewportIndexesChange,
-        ...virtualRenderProps
-    } = rest;
 
     const handleViewportIndexesChange: (
         VirtualRender.Types.OnViewportIndexesChange
@@ -63,10 +41,11 @@ export const VirtualListNode = ({
             takeInitialIdFrom={takeInitialIdFrom}
         >
             <VirtualRender.List
-                {...virtualRenderProps}
+                direction={direction}
                 items={items}
                 getId={getId}
                 onViewportIndexesChange={handleViewportIndexesChange}
+                {...virtualRenderProps}
             >
                 {children}
             </VirtualRender.List>

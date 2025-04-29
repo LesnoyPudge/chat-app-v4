@@ -10,9 +10,7 @@ export const AllFriendsTab: FC = () => {
     );
 
     return (
-        <List
-            userIds={friends}
-        >
+        <List userIds={friends}>
             {(id) => (
                 <ListItem
                     userId={id}

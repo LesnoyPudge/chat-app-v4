@@ -119,8 +119,7 @@ export const PendingRequestsTab: FC = () => {
     };
 
     return (
-        <List
-            userIds={ids}
+        <List userIds={ids}
         >
             {(id) => (
                 <ListItem

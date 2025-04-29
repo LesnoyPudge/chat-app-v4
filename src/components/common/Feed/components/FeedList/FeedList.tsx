@@ -1,357 +1,231 @@
-import { ComponentProps, FC, memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Message, VirtualList } from '@/components';
-import { useFeedContextProxy, useFeedContextSelector } from '../../context';
+import {
+    FC,
+    memo,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+} from 'react';
+import { invariant } from '@lesnoypudge/utils';
+import { useFeedContextProxy } from '../../context';
 import { FeedItem } from '../FeedItem';
-import { useFunction, withDisplayName } from '@lesnoypudge/utils-react';
-import { decorate } from '@lesnoypudge/macro';
-import { ViewportList } from 'src/components/common/VirtualRender/components/VirtualRenderList/components';
-import { ListRootProps, Virtuoso, VirtuosoProps } from 'react-virtuoso';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { Store } from '@/features';
-import { FeedIntroduction } from '../FeedIntroduction';
-import { FeedPlaceholder } from '../FeedPlaceholder';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { ViewportComponentAttributes, Virtualizer, VirtualizerHandle, VirtualizerProps, VList, VListHandle, VListProps } from 'virtua';
-import { invariant, sleep } from '@lesnoypudge/utils';
-import { FeedDefault } from './subFeeds';
+import { useFunction, usePrevious, withDisplayName } from '@lesnoypudge/utils-react';
+import { Message, VirtualList } from '@/components';
+import { decorate } from '@lesnoypudge/macro';
 
+
+
+const useExternalData = () => {
+    const {
+        scrollableApiRef,
+        textChatId,
+        loadMore,
+        feedRef,
+        scrollableRef,
+    } = useFeedContextProxy();
+
+    const messageIds = Store.useSelector(
+        Store.TextChats.Selectors.selectDefinedMessageIdsById(textChatId),
+    );
+    invariant(messageIds);
+
+    const firstMessageIndex = Store.useSelector(
+        Store.TextChats.Selectors
+            .selectFirstDefinedMessageIndexById(textChatId),
+    );
+
+    const lastMessageIndex = Store.useSelector(
+        Store.TextChats.Selectors
+            .selectLastDefinedMessageIndexById(textChatId),
+    );
+
+    return {
+        scrollableApiRef,
+        loadMore,
+        firstMessageIndex,
+        lastMessageIndex,
+        messageIds,
+        scrollableRef,
+        feedRef,
+    };
+};
+
+const LOAD_MORE_THRESHOLD = 3;
+const SCROLL_AT_BOTTOM_THRESHOLD = 4;
+const OVERSCAN = 3;
+const ITEM_SIZE_ESTIMATE = 40;
+const SCROLL_TO_BOTTOM_EXTRA_OFFSET = 9_999;
+const PRERENDER = Math.floor(
+    document.documentElement.clientHeight
+    / ITEM_SIZE_ESTIMATE,
+);
 
 decorate(withDisplayName, 'FeedList', decorate.target);
 decorate(memo, decorate.target);
 
 export const FeedList: FC = () => {
+    const {
+        firstMessageIndex,
+        lastMessageIndex,
+        loadMore,
+        scrollableApiRef,
+        messageIds,
+        scrollableRef,
+        feedRef,
+    } = useExternalData();
+
+    const count = messageIds.length;
+    const virtualizerRef = useRef<
+        VirtualList.Types.VirtualRenderTypes.Api
+    >(null);
+    const isAtBottomRef = useRef(true);
+    const prevFirstMessageIndex = usePrevious(firstMessageIndex);
+    const prevLastMessageIndex = usePrevious(lastMessageIndex);
+    const prevCount = usePrevious(count);
+    const savedScrollPositionRef = useRef({
+        offset: 0,
+        index: 0,
+    });
+
+    // prepend
+    useLayoutEffect(() => {
+        if (prevCount === undefined) return;
+        if (prevFirstMessageIndex === undefined) return;
+        if (firstMessageIndex === prevFirstMessageIndex) return;
+
+        const virtualizer = virtualizerRef.current;
+        if (!virtualizer) return;
+
+        const countDiff = count - prevCount;
+        invariant(countDiff > 0);
+
+        const savedPos = savedScrollPositionRef.current;
+        const previousIndex = countDiff + savedPos.index;
+
+        virtualizer.scrollToIndex({
+            index: previousIndex,
+            alignToTop: true,
+            offset: savedPos.offset,
+            prerender: PRERENDER,
+        });
+    }, [
+        prevFirstMessageIndex,
+        firstMessageIndex,
+        prevCount,
+        count,
+    ]);
+
+    // append
+    useLayoutEffect(() => {
+        if (prevLastMessageIndex === undefined) return;
+        if (prevLastMessageIndex === lastMessageIndex) return;
+        if (!isAtBottomRef.current) return;
+
+        const virtualizer = virtualizerRef.current;
+        if (!virtualizer) return;
+
+        virtualizer.scrollToIndex({
+            index: count - 1,
+            prerender: PRERENDER,
+            alignToTop: true,
+            offset: SCROLL_TO_BOTTOM_EXTRA_OFFSET,
+        });
+    }, [count, lastMessageIndex, prevLastMessageIndex]);
+
+    // track scroll position
+    useLayoutEffect(() => {
+        return scrollableApiRef.effect((scrollableApi) => {
+            const virtualizer = virtualizerRef.current;
+
+            if (!virtualizer) return;
+            if (!scrollableApi) return;
+
+            return scrollableApi.on('scroll', () => {
+                const pos = virtualizer.getScrollPosition();
+
+                savedScrollPositionRef.current = pos;
+            });
+        });
+    }, [scrollableApiRef]);
+
+    // check scroll position before new items are appended.
+    useMemo(() => {
+        if (lastMessageIndex === prevLastMessageIndex) return;
+
+        const scrollableApi = scrollableApiRef.current;
+        if (!scrollableApi) return;
+
+        const scrollable = scrollableApi.elements().viewport;
+        const diff = (
+            scrollable.scrollHeight
+            - scrollable.clientHeight
+            - scrollable.scrollTop
+        );
+
+        isAtBottomRef.current = diff <= SCROLL_AT_BOTTOM_THRESHOLD;
+    }, [lastMessageIndex, prevLastMessageIndex, scrollableApiRef]);
+
+    // load more when first index reach threshold.
+    const onViewportIndexesChange = useFunction((
+        [start]: [number, number],
+    ) => {
+        if (!firstMessageIndex) return;
+
+        const scrollable = scrollableRef.current;
+        if (!scrollable) return;
+
+        const isAtTop = start <= LOAD_MORE_THRESHOLD;
+        if (!isAtTop) return;
+
+        void loadMore({
+            from: firstMessageIndex,
+        });
+    });
+
+    const renderItem = useFunction((id: string, index: number) => {
+        const prevId = messageIds[index - 1];
+
+        return (
+            <FeedItem
+                key={id}
+                messageId={id}
+                previousMessageId={prevId}
+            />
+        );
+    });
+
     return (
-        <>
-            <FeedDefault/>
-        </>
+        <Message.RedactorProvider>
+            <VirtualList.Node
+                items={messageIds}
+                getId={(v) => v}
+                wrapperRef={feedRef}
+                initialIndex={count - 1}
+                viewportRef={scrollableRef}
+                apiRef={virtualizerRef}
+                overscan={OVERSCAN}
+                overflowAnchor='none'
+                itemSize={ITEM_SIZE_ESTIMATE}
+                initialPrerender={PRERENDER}
+                onViewportIndexesChange={onViewportIndexesChange}
+                takeInitialIdFrom='end'
+            >
+                {renderItem}
+            </VirtualList.Node>
+
+            {/* <ViewportList
+                count={count}
+                initialIndex={count - 1}
+                viewportRef={scrollableRef}
+                ref={virtualizerRef}
+                overscan={OVERSCAN}
+                overflowAnchor='none'
+                itemSize={ITEM_SIZE_ESTIMATE}
+                initialPrerender={PRERENDER}
+                onViewportIndexesChange={onViewportIndexesChange}
+            >
+                {renderItem}
+            </ViewportList> */}
+        </Message.RedactorProvider>
     );
 };
-
-// export const FeedList: FC = () => {
-//     const messageIds = useFeedContextSelector((v) => v.messageIds);
-//     const {
-//         feedRef,
-//         shouldShowMessageList,
-//         scrollableRef,
-//         indexesShift,
-//         virtualRenderApiRef,
-//         onIndexesChange,
-//         shouldShowMessagePlaceholder,
-//         textChatId,
-//     } = useFeedContextProxy();
-
-//     const renderItem = useFunction((id: string, index: number) => (
-//         <FeedItem
-//             key={id}
-//             previousMessageId={messageIds[index - 1]}
-//             messageId={id}
-//         />
-//     ));
-
-//     // useEffect(() => {
-//     //     console.log(indexesShift);
-//     // }, [indexesShift]);
-
-//     // useLayoutEffect(() => {
-//     //     virtualRenderApiRef.current?.scrollToIndex({
-//     //         index: messageIds.length - 1,
-//     //     });
-//     // }, [messageIds.length, virtualRenderApiRef]);
-
-//     const firstMessageIndex = Store.useSelector(
-//         Store.TextChats.Selectors
-//             .selectFirstDefinedMessageIndexById(textChatId),
-//     );
-
-//     const Header = useMemo(() => () => (
-//         <>
-//             <FeedIntroduction/>
-
-//             <If condition={shouldShowMessagePlaceholder}>
-//                 <FeedPlaceholder/>
-//             </If>
-//         </>
-//     ), [shouldShowMessagePlaceholder]);
-
-//     const [
-//         getMessagesTrigger,
-//         getMessagesHelpers,
-//     ] = Store.Messages.Api.useLazyMessageGetManyByTextChatIdQuery();
-
-//     const loadMoreFn = useFunction(async ({
-//         from,
-//     }: { from: number | null }) => {
-//         if (getMessagesHelpers.isFetching) return;
-
-//         setStartFetching(true);
-//         console.log('fetch more', firstMessageIndex);
-//         isShifting.current = true;
-//         await getMessagesTrigger({
-//             textChatId,
-//             from,
-//             limit: 50,
-//         });
-
-//         setStartFetching(false);
-//     });
-
-
-
-//     const isShifting = useRef(false);
-//     const virtualRef = useRef<VirtualizerHandle>(null);
-//     const isPrepend = useRef(false);
-//     const shouldStickToBottom = useRef(true);
-//     const prevLastIndex = useRef<number>();
-//     const prevFirstIndex = useRef<number>();
-//     const isCollapsed = useRef(false);
-//     const count = messageIds.length;
-
-//     // update refs on rerender
-//     useEffect(() => {
-//         prevFirstIndex.current = firstMessageIndex;
-//     }, [firstMessageIndex]);
-
-//     useEffect(() => {
-//         isShifting.current = false;
-//     }, []);
-
-//     // shift in place
-//     // useLayoutEffect(() => {
-//     //     if (!virtualRef.current) return;
-//     //     const isAtBottom = virtualRef.current.findStartIndex() === count - 1;
-//     //     if (isAtBottom) return;
-//     //     if (firstMessageIndex === undefined) return;
-//     //     if (prevFirstIndex.current === undefined) return;
-
-//     //     isShifting.current = true;
-
-//     //     // const diff = prevFirstIndex.current - firstMessageIndex;
-//     //     // invariant(diff >= 0);
-
-//     //     // setShift((prev) => (prev ?? 0) + diff);
-
-//     //     // if (isCollapsed.current) {
-//     //     //     virtualRenderApiRef.current?.scrollToIndex({
-//     //     //         index: diff,
-//     //     //         alignToTop: true,
-//     //     //     });
-//     //     // }
-//     // }, [firstMessageIndex, virtualRenderApiRef, count]);
-
-//     // useEffect(() => {
-//     //     isShifting.current = false;
-//     // });
-
-// type Props = (
-//     // T.Except<VListProps, 'children' | keyof ViewportComponentAttributes>
-//     & T.Except<VirtualizerProps, 'children'>
-//     & Pick<ComponentProps<typeof Virtualizer>, 'ref'>
-// );
-
-
-//     // const [shifting, setShifting] = useState(false);
-//     const [startFetching, setStartFetching] = useState(false);
-//     const [endFetching, setEndFetching] = useState(false);
-
-//     const ITEM_BATCH_COUNT = 100;
-//     const THRESHOLD = 50;
-//     const startFetchedCountRef = useRef(-1);
-//     const endFetchedCountRef = useRef(-1);
-//     const ready = useRef(false);
-
-//     useEffect(() => {
-//         virtualRef.current?.scrollToIndex(count - 1);
-//         ready.current = true;
-//     }, []);
-
-//     const spinnerHeight = 100;
-
-
-// const props: Props = {
-//     scrollRef: scrollableRef,
-//     ref: virtualRef,
-//     // shift: isShifting.current,
-//     shift: true,
-//     // startMargin: spinnerHeight,
-//     count,
-//     overscan: 3,
-//     onScroll: async () => {
-//         if (!ready.current) return;
-//         if (!virtualRef.current) return;
-
-//         const isAtTop = virtualRef.current.findStartIndex() === 0;
-
-//         if (isAtTop) {
-//             if (firstMessageIndex === 0) return;
-//             startFetchedCountRef.current = count;
-
-
-//             await loadMoreFn({
-//                 from: firstMessageIndex ?? null,
-//             });
-
-//             // setItems((prev) => [...createRows(ITEM_BATCH_COUNT).reverse(), ...prev]);
-//         }
-//     },
-
-
-
-//         // ref: virtualRef,
-//         // scrollRef: scrollableRef,
-//         // // reverse: true,
-//         // count: messageIds.length,
-//         // shift: isPrepend.current,
-//         // overscan: 3,
-//         // onScroll: (offset) => {
-//         //     const virtual = virtualRef.current;
-//         //     if (!virtual) return;
-
-//         //     const diff = (
-//         //         offset
-//         //         - virtual.scrollSize
-//         //         + virtual.viewportSize
-//         //     );
-//         //     // console.log('onScroll', diff);
-//         //     shouldStickToBottom.current = diff >= -1.5;
-
-//         //     if (offset < 100) {
-//         //         if (firstMessageIndex === undefined) return;
-//         //         if (firstMessageIndex === 0) return;
-
-//         //         console.log('load more');
-//         //         loadMoreFn({
-//         //             from: firstMessageIndex,
-//         //         });
-//         //     }
-//         // },
-//     };
-
-
-//     if (!shouldShowMessageList) return null;
-//     return (
-//         <div style={{
-//             // opt out browser's scroll anchoring on header/footer because it will conflict to scroll anchoring of virtualizer
-//             overflowAnchor: 'none',
-//         }}>
-//             {/* <div
-//                 style={startFetching ? undefined : {
-//                     height: spinnerHeight,
-//                     visibility: 'hidden',
-//                 }}
-//             >
-//                 <>spinner</>
-//             </div> */}
-//             <Virtualizer
-//                 // style={{
-//                 //     flex: 1,
-//                 // }}
-
-//                 {...props}
-//             >
-//                 {(index) => renderItem(messageIds[index]!, index)}
-//             </Virtualizer>
-//             {/* <div
-//                 style={endFetching ? undefined : {
-//                     height: spinnerHeight,
-//                     visibility: 'hidden',
-//                 }}
-//             >
-//                 <>spinner</>
-//             </div> */}
-//         </div>
-//     );
-// };
-
-
-// const props: Omit<VirtuosoProps<string, {}>, keyof ListRootProps> = {
-//     data: messageIds,
-//     alignToBottom: true,
-//     followOutput: true,
-//     customScrollParent: scrollableRef.current ?? undefined,
-//     firstItemIndex: firstMessageIndex,
-//     initialTopMostItemIndex: messageIds.length - 1,
-//     itemContent: (index, id) => renderItem(id, index),
-//     components: {
-//         Header: Header,
-//     },
-//     // defaultItemHeight: 150,
-//     // skipAnimationFrameInResizeObserver: true,
-//     startReached: (index) => {
-//         if (getMessagesHelpers.isFetching) return;
-//         console.log(`start reached: ${index}`);
-//         loadMoreFn({ from: index });
-//     },
-// };
-
-
-// const count = messageIds.length;
-
-// const getKey = useFunction((index: number) => messageIds[index]!);
-// const isScrolledInitially = useRef(false);
-
-// const virtualizer = useVirtualizer({
-//     count,
-//     getScrollElement: () => scrollableRef.current,
-//     estimateSize: () => 150,
-//     enabled: true,
-//     getItemKey: getKey,
-//     useAnimationFrameWithResizeObserver: true,
-//     onChange: (instance, sync) => {
-//         if (sync) return;
-
-//         // console.log(instance.getVirtualIndexes());
-
-//         const offset = instance.getOffsetForIndex(count - 1);
-
-//         if (!isScrolledInitially.current && offset?.[0]) {
-//             isScrolledInitially.current = true;
-
-//             instance.scrollToIndex(count - 1, {
-//                 align: 'start',
-//             });
-//         }
-//     },
-// });
-
-// useLayoutEffect(() => {
-//     console.log('scroll to bottom');
-//     virtualizer.scrollToIndex(count - 1, {
-//         align: 'end',
-//     });
-// }, [count, virtualizer]);
-
-// const items = virtualizer.getVirtualItems();
-
-
-
-{ /* <div
-                style={{
-                    height: virtualizer.getTotalSize(),
-                    width: '100%',
-                    position: 'relative',
-                    transform: 'translate',
-                }}
-            >
-                <div
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        transform: `translateY(${items[0]?.start ?? 0}px)`,
-                    }}
-                >
-                    {items.map((virtualRow) => (
-                        <div
-                            key={virtualRow.key}
-                            data-index={virtualRow.index}
-                            ref={virtualizer.measureElement}
-                        >
-                            {renderItem(
-                                messageIds[virtualRow.index]!,
-                                virtualRow.index,
-                            )}
-                        </div>
-                    ))}
-                </div>
-            </div> */ }

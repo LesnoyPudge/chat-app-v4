@@ -1,9 +1,16 @@
 import * as components from './components';
 import * as styles from './styles';
+import * as types from './types';
 
 
 export namespace VirtualList {
-    export import Node = components.VirtualListNode;
+    export const {
+        VirtualListNode: Node,
+    } = components;
 
-    export const Styles = styles.styles;
+    export const {
+        styles: Styles,
+    } = styles;
+
+    export import Types = types.Types;
 }

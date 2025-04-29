@@ -3,6 +3,7 @@ import { TextInputTypes } from '../../types';
 import { TextInputContext } from '../../context';
 import { renderFunction, useFunction } from '@lesnoypudge/utils-react';
 import { Form } from '@/components';
+import { withDefaultProps } from '../../utils';
 
 
 
@@ -10,17 +11,21 @@ export const TextInputProvider = Form.createFieldProvider<
     TextInputTypes.Provider.Props
 >(({
     label,
-    disabled = false,
     innerRef,
-    inputMode = 'text',
-    maxLength = 32,
-    minLength = 0,
-    placeholder = '',
-    readOnly = false,
-    type = 'text',
-    autoComplete = 'off',
     children,
+    type = 'text',
+    ...optional
 }) => {
+    const {
+        autoComplete,
+        disabled,
+        inputMode,
+        maxLength,
+        minLength,
+        placeholder,
+        readOnly,
+    } = withDefaultProps(optional);
+
     const { field, required, id } = Form.useFieldContext<string>();
     const [changeableType, setChangeableType] = useState(type);
     const error = Form.useFieldError();

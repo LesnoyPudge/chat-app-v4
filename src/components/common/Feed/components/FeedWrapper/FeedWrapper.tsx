@@ -17,27 +17,20 @@ export const FeedWrapper: FC<PropsWithChildren> = ({
     const {
         feedRef,
         scrollableRef,
+        scrollableApiRef,
     } = useFeedContextProxy();
-
-    return children;
 
     return (
         <Scrollable
             className={styles.wrapper}
             scrollableRef={scrollableRef}
+            apiRef={scrollableApiRef}
         >
             <div
                 role='feed'
                 aria-busy
                 aria-label={t('Feed.label')}
                 ref={feedRef}
-                style={{
-                    // visibility: 'hidden', // TODO replace with other optimization methods
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-end',
-                    minHeight: '100%',
-                }}
             >
                 {children}
             </div>

@@ -39,5 +39,7 @@ https://fluid.tw/
 -? investigate infinite rerenders in VirtualListInner (list mutation on every frame, maybe indexes, maybe should install older version, in previous project version is 7.0.0, in current 7.1.2)
 
 
+
 --- current goals ---
-- при загрузке старых сообщений они ресайзятся если предыдущее оказывается groupHead, можно показывать на одно сообщение меньше что бы всегда знать groupHead первое сообщение или нет
+- убрать серектор по ids, заменить на селект по id овнера (например textChatId вместо messageIds)
+- протестировать кэш селекторов, они подозрительно медленные

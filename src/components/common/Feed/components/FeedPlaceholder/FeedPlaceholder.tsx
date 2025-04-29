@@ -1,37 +1,35 @@
 import { cn, createStyles } from '@/utils';
 import { Iterate, withDisplayName } from '@lesnoypudge/utils-react';
-import { CSSProperties, FC, memo } from 'react';
+import { FC, memo } from 'react';
 import { Message } from '@/components';
 import { Store } from '@/features';
 import { decorate } from '@lesnoypudge/macro';
 import { Types } from '../../types';
-import { useFeedContextProxy } from '../../context';
 
 
 
 const styles = createStyles({
     list: {
         base: `
-            visible 
             flex 
-            max-h-[--placeholder-height] 
-            min-h-[--placeholder-height] 
+            max-h-[80dvh] 
+            min-h-[80dvh] 
             flex-col-reverse
+            justify-between
             gap-2
             overflow-hidden
             [overflow-anchor:none]
         `,
         static: `
-            max-h-full 
-            min-h-full 
+            max-h-dvh
+            min-h-dvh
         `,
     },
 });
 
-const variations = Array.from({ length: 15 }, () => {
+const variations = Array.from({ length: 6 }, () => {
     return Message.getPlaceholderVariation();
 });
-
 
 decorate(withDisplayName, 'FeedPlaceholder', decorate.target);
 decorate(memo, decorate.target);
@@ -39,24 +37,15 @@ decorate(memo, decorate.target);
 export const FeedPlaceholder: FC<Types.FeedPlaceholder.Props> = ({
     isStatic = false,
 }) => {
-    const { messagePlaceholderHeight } = useFeedContextProxy();
-
     const { messageDisplayMode } = Store.useSelector(
         Store.Users.Selectors.selectCurrentUserSettings,
     );
 
-    const style = {
-        '--placeholder-height': `${messagePlaceholderHeight}px`,
-    } as CSSProperties;
-
     return (
-        <div
-            className={cn(
-                styles.list.base,
-                isStatic && styles.list.static,
-            )}
-            style={style}
-        >
+        <div className={cn(
+            styles.list.base,
+            isStatic && styles.list.static,
+        )}>
             <Iterate
                 items={variations}
                 getKey={(_, index) => index}

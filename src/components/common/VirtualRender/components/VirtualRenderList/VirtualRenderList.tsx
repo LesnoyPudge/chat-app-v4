@@ -1,8 +1,9 @@
 import { useFunction, withDisplayName } from '@lesnoypudge/utils-react';
 import { Fragment, memo, useMemo } from 'react';
-import { ViewportList, ViewportListPropsBase } from './components';
+import { ViewportList } from './components';
 import { Types } from '../../types';
 import { decorate } from '@lesnoypudge/macro';
+import { never } from '@lesnoypudge/utils';
 
 
 
@@ -10,7 +11,7 @@ const getDefaultPrerenderCount = ({
     itemMargin = 0,
     itemSize = 0,
 }: Pick<
-    Types.Options,
+    Types.List.Props<never>,
     'itemSize' | 'itemMargin'
 >) => {
     const itemSizeApprox = itemSize <= 0 ? 20 : itemSize;
@@ -41,11 +42,12 @@ const DefaultRenderSpacer: Types.RenderSpacer = ({
 decorate(withDisplayName, 'VirtualRenderList', decorate.target);
 decorate(memo, decorate.target);
 
-export const VirtualRenderList = ({
+export const VirtualRenderList = <_Item,>({
     apiRef,
     getId,
     direction = 'vertical',
-    items = [],
+    items,
+    count,
     itemSize,
     itemMargin,
     viewportRef,
@@ -62,7 +64,7 @@ export const VirtualRenderList = ({
     indexesShift = 0,
     getItemBoundingClientRect,
     children,
-}: Types.List.Props) => {
+}: Types.List.Props<_Item>) => {
     const defaultInitialPrerender = useMemo(() => {
         if (initialPrerender !== undefined) return initialPrerender;
 
@@ -73,25 +75,49 @@ export const VirtualRenderList = ({
     }, [initialPrerender, itemMargin, itemSize]);
 
     const _children = useFunction((
-        item: string,
-        index: number,
-        array: string[],
-    ) => (
-        <Fragment key={getId(item, index)}>
-            {children(item, index, array)}
-        </Fragment>
-    ));
+        itemOrIndex: _Item | number,
+        index: number | undefined,
+        array: _Item[] | undefined,
+    ) => {
+        if (
+            typeof itemOrIndex === 'number'
+            && typeof count === 'number'
+            && typeof index === 'number'
+        ) {
+            return (
+                <Fragment key={getId(itemOrIndex)}>
+                    {children(index)}
+                </Fragment>
+            );
+        }
+
+        if (
+            typeof itemOrIndex !== 'number'
+            && typeof count !== 'number'
+            && typeof index === 'number'
+            && array !== undefined
+        ) {
+            return (
+                <Fragment key={getId(itemOrIndex, index)}>
+                    {children(itemOrIndex, index, array)}
+                </Fragment>
+            );
+        }
+
+        never();
+    });
 
     const withCache = !withoutCache;
-    const directionToAxis: ViewportListPropsBase['axis'] = (
+    const directionToAxis: ViewportList.Types.PropsBase['axis'] = (
         direction === 'horizontal'
             ? 'x'
             : 'y'
     );
 
     return (
-        <ViewportList
+        <ViewportList.Node
             items={items}
+            count={count as any}
             axis={directionToAxis}
             getItemBoundingClientRect={getItemBoundingClientRect}
             indexesShift={indexesShift}
@@ -112,6 +138,6 @@ export const VirtualRenderList = ({
             withCache={withCache}
         >
             {_children}
-        </ViewportList>
+        </ViewportList.Node>
     );
 };

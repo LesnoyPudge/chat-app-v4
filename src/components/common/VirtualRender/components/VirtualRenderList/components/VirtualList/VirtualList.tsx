@@ -1,230 +1,70 @@
-// @ts-nocheck
+import { decorate } from '@lesnoypudge/macro';
+import { withDisplayName } from '@lesnoypudge/utils-react';
 import {
     useState,
     useRef,
-    useEffect,
     Fragment,
     useImperativeHandle,
-    useLayoutEffect,
     useMemo,
     MutableRefObject,
     forwardRef,
     ForwardedRef,
     RefObject,
     CSSProperties,
+    memo,
+    ReactNode,
 } from 'react';
+import {
+    IS_OVERFLOW_ANCHOR_SUPPORTED,
+    IS_TOUCH_DEVICE,
+    PROP_NAME_FOR_X_AXIS,
+    PROP_NAME_FOR_Y_AXIS,
+    SHOULD_DELAY_SCROLL,
+    findElement,
+    findNearestScrollableElement,
+    generateArray,
+    getDiff,
+    getStyle,
+    normalizeValue,
+    useIsomorphicLayoutEffect,
+} from './extra';
 
-const IS_SSR = typeof window === 'undefined';
 
-const IS_TOUCH_DEVICE
-    = !IS_SSR
-        && (() => {
-            try {
-                return 'ontouchstart' in window || navigator.maxTouchPoints;
-            } catch {
-                return false;
-            }
-        })();
 
-const IS_OVERFLOW_ANCHOR_SUPPORTED
-    = !IS_SSR
-        && (() => {
-            try {
-                return window.CSS.supports('overflow-anchor: auto');
-            } catch {
-                return false;
-            }
-        })();
+decorate(withDisplayName, 'ViewportListInner', decorate.target);
+decorate(memo, decorate.target);
+decorate(forwardRef, decorate.target);
 
-const SHOULD_DELAY_SCROLL = IS_TOUCH_DEVICE && !IS_OVERFLOW_ANCHOR_SUPPORTED;
-
-const PROP_NAME_FOR_Y_AXIS = {
-    top: 'top',
-    bottom: 'bottom',
-    clientHeight: 'clientHeight',
-    scrollHeight: 'scrollHeight',
-    scrollTop: 'scrollTop',
-    overflowY: 'overflowY',
-    height: 'height',
-    minHeight: 'minHeight',
-    maxHeight: 'maxHeight',
-    marginTop: 'marginTop',
-} as const;
-
-const PROP_NAME_FOR_X_AXIS = {
-    top: 'left',
-    bottom: 'right',
-    scrollHeight: 'scrollWidth',
-    clientHeight: 'clientWidth',
-    scrollTop: 'scrollLeft',
-    overflowY: 'overflowX',
-    minHeight: 'minWidth',
-    height: 'width',
-    maxHeight: 'maxWidth',
-    marginTop: 'marginLeft',
-} as const;
-
-const normalizeValue = (min: number, value: number, max = Infinity) => Math.max(Math.min(value, max), min);
-
-const getDiff = (value1: number, value2: number, step: number) => Math.ceil(Math.abs(value1 - value2) / step);
-
-const useIsomorphicLayoutEffect = IS_SSR ? useEffect : useLayoutEffect;
-
-const generateArray = <T,>(from: number, to: number, generate: (index: number) => T): T[] => {
-    const array = [];
-
-    for (let index = from; index < to; index++) {
-        array.push(generate(index));
+const ViewportListInner = <_Item,>({
+    items = [],
+    count,
+    children,
+    viewportRef,
+    itemSize = 0,
+    itemMargin = -1,
+    overscan = 1,
+    axis = 'y',
+    initialIndex = -1,
+    initialAlignToTop = true,
+    initialOffset = 0,
+    initialDelay = -1,
+    initialPrerender = 0,
+    onViewportIndexesChange,
+    overflowAnchor = 'auto',
+    withCache = true,
+    scrollThreshold = 0,
+    renderSpacer = ({ ref, style }) => <div ref={ref} style={style}/>,
+    indexesShift = 0,
+    getItemBoundingClientRect = (element) => element.getBoundingClientRect(),
+}: (
+    ViewportList.Types.PropsBase
+    & {
+        items?: _Item[];
+        count?: number;
+        children: (...args: any) => any;
     }
-
-    return array;
-};
-
-const findElement = ({
-    fromElement,
-    toElement,
-    fromIndex,
-    asc = true,
-    compare,
-}: {
-    fromElement: Element;
-    toElement: Element;
-    fromIndex: number;
-    asc?: boolean;
-    compare: (element: Element, index: number) => boolean;
-}) => {
-    let index = fromIndex;
-    let element: Element | null = fromElement;
-
-    while (element && element !== toElement) {
-        if (compare(element, index)) {
-            return [element, index] as const;
-        }
-
-        if (asc) {
-            index++;
-            element = element.nextSibling as Element | null;
-        } else {
-            index--;
-            element = element.previousSibling as Element | null;
-        }
-    }
-
-    return [null, -1] as const;
-};
-
-const SCROLLABLE_REGEXP = /auto|scroll/gi;
-
-const findNearestScrollableElement = (
-    propName: typeof PROP_NAME_FOR_Y_AXIS | typeof PROP_NAME_FOR_X_AXIS,
-    node: Element | null,
-): Element | null => {
-    if (!node || node === document.body || node === document.documentElement) {
-        return document.documentElement;
-    }
-
-    const style = window.getComputedStyle(node);
-
-    if (SCROLLABLE_REGEXP.test(style[propName.overflowY]) || SCROLLABLE_REGEXP.test(style.overflow)) {
-        return node;
-    }
-
-    return findNearestScrollableElement(propName, node.parentNode as Element | null);
-};
-
-const getStyle = (propName: typeof PROP_NAME_FOR_Y_AXIS | typeof PROP_NAME_FOR_X_AXIS, size: number, marginTop = 0) =>
-    ({
-        padding: 0,
-        margin: 0,
-        border: 'none',
-        visibility: 'hidden',
-        overflowAnchor: 'none',
-        [propName.minHeight]: size,
-        [propName.height]: size,
-        [propName.maxHeight]: size,
-        [propName.marginTop]: marginTop,
-    }) as const;
-
-export type ScrollToIndexOptions = {
-    index?: number;
-    alignToTop?: boolean;
-    offset?: number;
-    delay?: number;
-    prerender?: number;
-};
-
-export type ViewportListRef = {
-    scrollToIndex: (options: ScrollToIndexOptions) => void;
-    getScrollPosition: () => { index: number; offset: number };
-};
-
-export type ViewportListPropsBase = {
-    viewportRef?:
-        | MutableRefObject<HTMLElement | null>
-        | RefObject<HTMLElement | null>
-        | { current: HTMLElement | null }
-        | null;
-    itemSize?: number;
-    itemMargin?: number;
-    overscan?: number;
-    axis?: 'y' | 'x';
-    initialIndex?: ScrollToIndexOptions['index'];
-    initialAlignToTop?: ScrollToIndexOptions['alignToTop'];
-    initialOffset?: ScrollToIndexOptions['offset'];
-    initialDelay?: ScrollToIndexOptions['delay'];
-    initialPrerender?: ScrollToIndexOptions['prerender'];
-    onViewportIndexesChange?: (viewportIndexes: [number, number]) => void;
-    overflowAnchor?: 'none' | 'auto';
-    withCache?: boolean;
-    scrollThreshold?: number;
-    renderSpacer?: (props: { ref: MutableRefObject<any>; style: CSSProperties; type: 'top' | 'bottom' }) => any;
-    indexesShift?: number;
-    getItemBoundingClientRect?: (element: Element) =>
-        | DOMRect
-        | {
-            bottom: number;
-            left: number;
-            right: number;
-            top: number;
-            width: number;
-            height: number;
-        };
-};
-
-export type ViewportListPropsWithItems<T> = {
-    items?: T[];
-    children: (item: T, index: number, array: T[]) => any;
-} & ViewportListPropsBase;
-
-export type ViewportListPropsWithCount = {
-    count: number;
-    children: (index: number) => any;
-} & ViewportListPropsBase;
-
-const ViewportListInner = <T,>(
-    {
-        items = [],
-        count,
-        children,
-        viewportRef,
-        itemSize = 0,
-        itemMargin = -1,
-        overscan = 1,
-        axis = 'y',
-        initialIndex = -1,
-        initialAlignToTop = true,
-        initialOffset = 0,
-        initialDelay = -1,
-        initialPrerender = 0,
-        onViewportIndexesChange,
-        overflowAnchor = 'auto',
-        withCache = true,
-        scrollThreshold = 0,
-        renderSpacer = ({ ref, style }) => <div ref={ref} style={style}/>,
-        indexesShift = 0,
-        getItemBoundingClientRect = (element) => element.getBoundingClientRect(),
-    }: ViewportListPropsBase & { items?: T[]; count?: number; children: (...args: any) => any },
-    ref: ForwardedRef<ViewportListRef>,
+),
+    ref: ForwardedRef<ViewportList.Types.Api>,
 ) => {
     const propName = axis === 'y' ? PROP_NAME_FOR_Y_AXIS : PROP_NAME_FOR_X_AXIS;
     const withCount = typeof count === 'number';
@@ -235,7 +75,12 @@ const ViewportListInner = <T,>(
     ]);
     const itemHeightWithMargin = normalizeValue(0, estimatedItemHeight + estimatedItemMargin);
     const overscanSize = normalizeValue(0, Math.ceil(overscan * itemHeightWithMargin));
-    const [indexes, setIndexes] = useState([initialIndex - initialPrerender, initialIndex + initialPrerender]);
+    const [indexes, setIndexes] = useState(() => {
+        return [
+            initialIndex - initialPrerender,
+            initialIndex + initialPrerender,
+        ] as [number, number];
+    });
     const anchorElementRef = useRef<Element | null>(null);
     const anchorIndexRef = useRef<number>(-1);
     const topSpacerRef = useRef<any>(null);
@@ -243,7 +88,9 @@ const ViewportListInner = <T,>(
     const ignoreOverflowAnchorRef = useRef(false);
     const lastIndexesShiftRef = useRef(indexesShift);
     const cacheRef = useRef<number[]>([]);
-    const scrollToIndexOptionsRef = useRef<Required<ScrollToIndexOptions> | null>(
+    const scrollToIndexOptionsRef = useRef<
+        Required<ViewportList.Types.ScrollToIndexOptions> | null
+    >(
         initialIndex >= 0
             ? {
                     index: initialIndex,
@@ -279,30 +126,47 @@ const ViewportListInner = <T,>(
         return indexes;
     }, [indexesShift, indexes, maxIndex]);
 
-    const topSpacerStyle = useMemo(
-        () =>
-            getStyle(
-                propName,
-                (withCache ? cacheRef.current : [])
-                    .slice(0, startIndex)
-                    .reduce((sum, next) => sum + (next - estimatedItemHeight), startIndex * itemHeightWithMargin),
-                marginTopRef.current,
-            ),
-        [propName, withCache, startIndex, itemHeightWithMargin, estimatedItemHeight],
-    );
-    const bottomSpacerStyle = useMemo(
-        () =>
-            getStyle(
-                propName,
-                (withCache ? cacheRef.current : [])
-                    .slice(endIndex + 1, maxIndex + 1)
-                    .reduce(
-                        (sum, next) => sum + (next - estimatedItemHeight),
-                        itemHeightWithMargin * (maxIndex - endIndex),
-                    ),
-            ),
-        [propName, withCache, endIndex, maxIndex, itemHeightWithMargin, estimatedItemHeight],
-    );
+    const topSpacerStyle = useMemo(() => {
+        const cache = (withCache ? cacheRef.current : []);
+        const size = (
+            cache
+                .slice(0, startIndex)
+                .reduce<number>((sum, next) => {
+                    return sum + (next - estimatedItemHeight);
+                }, startIndex * itemHeightWithMargin)
+        );
+
+        return getStyle(
+            propName,
+            size,
+            marginTopRef.current,
+        );
+    }, [
+        propName,
+        withCache,
+        startIndex,
+        itemHeightWithMargin,
+        estimatedItemHeight,
+    ]);
+    const bottomSpacerStyle = useMemo(() => {
+        const cache = (withCache ? cacheRef.current : []);
+
+        return getStyle(
+            propName,
+            cache
+                .slice(endIndex + 1, maxIndex + 1)
+                .reduce<number>((sum, next) => {
+                    return sum + (next - estimatedItemHeight);
+                }, itemHeightWithMargin * (maxIndex - endIndex)),
+        );
+    }, [
+        propName,
+        withCache,
+        endIndex,
+        maxIndex,
+        itemHeightWithMargin,
+        estimatedItemHeight,
+    ]);
     const getViewport = useMemo(() => {
         let autoViewport: any = null;
 
@@ -325,7 +189,10 @@ const ViewportListInner = <T,>(
                 return null;
             }
 
-            autoViewport = findNearestScrollableElement(propName, topSpacer.parentNode);
+            autoViewport = findNearestScrollableElement(
+                propName,
+                topSpacer.parentNode,
+            );
 
             return autoViewport;
         };
@@ -335,7 +202,6 @@ const ViewportListInner = <T,>(
 
     useIsomorphicLayoutEffect(() => {
         mainFrameRef.current = () => {
-            // console.log('frame');
             const viewport = getViewport();
             const topSpacer = topSpacerRef.current;
             const bottomSpacer = bottomSpacerRef.current;
@@ -747,13 +613,13 @@ const ViewportListInner = <T,>(
                     = topSpacer.getBoundingClientRect()[propName.top]
                         + (withCache ? cacheRef.current : [])
                             .slice(0, anchorIndex)
-                            .reduce((sum, next) => sum + (next - estimatedItemHeight), anchorIndex * itemHeightWithMargin);
+                            .reduce<number>((sum, next) => sum + (next - estimatedItemHeight), anchorIndex * itemHeightWithMargin);
             } else if (anchorIndex <= maxIndex) {
                 top
                     = bottomSpacer.getBoundingClientRect()[propName.top]
                         + (withCache ? cacheRef.current : [])
                             .slice(endIndex + 1, anchorIndex)
-                            .reduce(
+                            .reduce<number>(
                                 (sum, next) => sum + (next - estimatedItemHeight),
                                 itemHeightWithMargin * (anchorIndex - 1 - endIndex),
                             );
@@ -825,11 +691,95 @@ const ViewportListInner = <T,>(
     );
 };
 
-export type ViewportList = {
-    <T>(
-        props: ViewportListPropsWithItems<T> & { ref?: ForwardedRef<ViewportListRef> },
-    ): ReturnType<typeof ViewportListInner>;
-    (props: ViewportListPropsWithCount & { ref?: ForwardedRef<ViewportListRef> }): ReturnType<typeof ViewportListInner>;
-};
 
-export const ViewportList = forwardRef(ViewportListInner) as ViewportList;
+export namespace ViewportList {
+    export namespace Types {
+        export type ScrollToIndexOptions = {
+            index?: number;
+            alignToTop?: boolean;
+            offset?: number;
+            delay?: number;
+            prerender?: number;
+        };
+
+        export type Api = {
+            scrollToIndex: (options: ScrollToIndexOptions) => void;
+            getScrollPosition: () => { index: number; offset: number };
+        };
+
+        export type PropsBase = {
+            viewportRef?:
+                | MutableRefObject<HTMLElement | null>
+                | RefObject<HTMLElement | null>
+                | { current: HTMLElement | null }
+                | null;
+            itemSize?: number;
+            itemMargin?: number;
+            overscan?: number;
+            axis?: 'y' | 'x';
+            initialIndex?: ScrollToIndexOptions['index'];
+            initialAlignToTop?: ScrollToIndexOptions['alignToTop'];
+            initialOffset?: ScrollToIndexOptions['offset'];
+            initialDelay?: ScrollToIndexOptions['delay'];
+            initialPrerender?: ScrollToIndexOptions['prerender'];
+            onViewportIndexesChange?: (viewportIndexes: [number, number]) => void;
+            overflowAnchor?: 'none' | 'auto';
+            withCache?: boolean;
+            scrollThreshold?: number;
+            renderSpacer?: (props: { ref: MutableRefObject<any>; style: CSSProperties; type: 'top' | 'bottom' }) => any;
+            indexesShift?: number;
+            getItemBoundingClientRect?: (element: Element) =>
+                | DOMRect
+                | {
+                    bottom: number;
+                    left: number;
+                    right: number;
+                    top: number;
+                    width: number;
+                    height: number;
+                };
+        };
+
+        export type WithItems<_Item> = {
+            count?: never;
+            items: _Item[] | undefined;
+            children: (
+                item: _Item, index: number, array: _Item[]
+            ) => ReactNode;
+        };
+
+        export type PropsWithItems<_Item> = (
+            PropsBase
+            & WithItems<_Item>
+        );
+
+        export type WithCount = {
+            count: number;
+            items?: never;
+            children: (index: number) => ReactNode;
+        };
+
+        export type PropsWithCount = (
+            PropsBase
+            & WithCount
+        );
+
+        type WithRef = {
+            ref?: ForwardedRef<Api>;
+        };
+
+        export type Node = {
+            <_Item>(props: (
+                PropsWithItems<_Item>
+                & WithRef
+            )): ReturnType<typeof ViewportListInner>;
+
+            (props: (
+                PropsWithCount
+                & WithRef
+            )): ReturnType<typeof ViewportListInner>;
+        };
+    }
+
+    export const Node = ViewportListInner as Types.Node;
+}

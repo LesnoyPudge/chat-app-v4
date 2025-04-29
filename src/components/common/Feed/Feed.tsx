@@ -1,10 +1,9 @@
 import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
-import { FeedScroller, FeedPlaceholder, FeedProvider, FeedWrapper } from './components';
+import { FeedPlaceholder, FeedProvider, FeedWrapper, FeedIntroduction, FeedList } from './components';
 import { Types } from './types';
 import { decorate } from '@lesnoypudge/macro';
 import { memo } from 'react';
 import { useFeedContextProxy } from './context';
-import { FeedList } from './components/FeedList';
 
 
 
@@ -26,6 +25,7 @@ export const Feed = withDecorator(() => {
     const {
         shouldShowPlaceholder,
         shouldShowMessagePlaceholder,
+        shouldShowIntroduction,
     } = useFeedContextProxy();
 
     if (shouldShowPlaceholder) {
@@ -36,12 +36,15 @@ export const Feed = withDecorator(() => {
 
     return (
         <FeedWrapper>
-            {/* <If condition={shouldShowMessagePlaceholder}>
+            <If condition={shouldShowIntroduction}>
+                <FeedIntroduction/>
+            </If>
+
+            <If condition={shouldShowMessagePlaceholder}>
                 <FeedPlaceholder/>
-            </If> */}
+            </If>
 
             <FeedList/>
-            {/* <FeedScroller/> */}
         </FeedWrapper>
     );
 });

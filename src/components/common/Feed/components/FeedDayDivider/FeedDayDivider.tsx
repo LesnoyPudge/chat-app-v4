@@ -7,11 +7,12 @@ import { FC, memo, useMemo } from 'react';
 
 
 const styles = createStyles({
-    wrapper: 'flex pb-3 pt-4',
+    wrapper: 'flex pb-3',
     dividerLine: `
         relative 
         mx-4 
-        grow before:absolute 
+        grow 
+        before:absolute 
         before:top-1/2 
         before:-z-10 
         before:h-0.5 

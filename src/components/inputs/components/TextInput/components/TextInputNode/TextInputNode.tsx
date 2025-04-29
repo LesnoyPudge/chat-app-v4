@@ -2,6 +2,7 @@ import { FC, useId } from 'react';
 import { useTextInputContext } from '../../hooks';
 import { cn, createStyles } from '@/utils';
 import { TextInputTypes } from '../../types';
+import { withDefaultProps } from '../../utils';
 
 
 
@@ -20,24 +21,29 @@ const styles = createStyles({
 
 export const TextInputNodePure: FC<TextInputTypes.NodePure.Props> = ({
     className = '',
-    autoComplete,
-    disabled,
+    type,
+    value,
     error,
     id,
-    inputMode,
     label,
-    maxLength,
-    minLength,
     name,
     onBlur,
     onChange,
-    placeholder,
-    readOnly,
-    required,
-    type,
-    value,
     innerRef,
+
+    ...optional
 }) => {
+    const {
+        autoComplete,
+        disabled,
+        inputMode,
+        maxLength,
+        minLength,
+        placeholder,
+        readOnly,
+        required,
+    } = withDefaultProps(optional);
+
     const errorId = useId();
 
     return (

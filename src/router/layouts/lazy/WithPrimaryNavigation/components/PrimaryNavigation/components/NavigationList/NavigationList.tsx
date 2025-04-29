@@ -152,8 +152,7 @@ export const NavigationList: FC = () => {
                 withoutOppositeGutter
                 autoHide
             >
-                <List
-                    conversations={sortedConversationIds}
+                <List         conversations={sortedConversationIds}
                     servers={serverIds}
                 />
             </Scrollable>

@@ -45,9 +45,7 @@ export const BlockedUsersTab: FC = () => {
     }, { skip: !blocked.length });
 
     return (
-        <List
-            userIds={blocked}
-        >
+        <List userIds={blocked}>
             {(id) => (
                 <ListItem
                     userId={id}

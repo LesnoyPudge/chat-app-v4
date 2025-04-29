@@ -2,6 +2,7 @@ import { FC, useRef } from 'react';
 import { Types } from '../../types';
 import { FeedContext } from '../../context';
 import { useDeriveFeedState, useInfiniteLoader } from './hooks';
+import { useRefManager } from '@lesnoypudge/utils-react';
 
 
 
@@ -9,9 +10,11 @@ export const FeedProvider: FC<Types.FeedProvider.Props> = ({
     textChatId,
     children,
 }) => {
-    const feedRef: Types.Context['feedRef'] = useRef(null);
+    const feedRef: Types.Context['feedRef'] = useRefManager(null);
     const scrollableRef: Types.Context['scrollableRef'] = useRef(null);
-    const virtualizerRef: Types.Context['virtualizerRef'] = useRef(null);
+    const scrollableApiRef: (
+        Types.Context['scrollableApiRef']
+    ) = useRefManager(null);
 
     const {
         isLoading,
@@ -34,10 +37,9 @@ export const FeedProvider: FC<Types.FeedProvider.Props> = ({
 
     const value: Types.Context = {
         textChatId,
-        messagePlaceholderHeight: 600,
         feedRef,
         scrollableRef,
-        virtualizerRef,
+        scrollableApiRef,
         loadMore,
         shouldShowEmptyIntroduction,
         shouldShowPlaceholder,

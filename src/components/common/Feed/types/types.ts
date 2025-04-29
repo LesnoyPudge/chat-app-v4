@@ -1,19 +1,19 @@
 import { PropsWithChildren, RefObject } from 'react';
-import { VirtualizerHandle } from 'virtua';
+import { Scrollable } from '@/components';
+import { useRefManager } from '@lesnoypudge/utils-react';
 
 
 
 export namespace Types {
     export type Context = {
         textChatId: string;
-        feedRef: RefObject<HTMLDivElement>;
+        feedRef: useRefManager.NullableRefManager<HTMLDivElement>;
         scrollableRef: RefObject<HTMLDivElement>;
-        virtualizerRef: RefObject<VirtualizerHandle>;
+        scrollableApiRef: useRefManager.NullableRefManager<Scrollable.Api>;
         shouldShowPlaceholder: boolean;
         shouldShowMessagePlaceholder: boolean;
         shouldShowIntroduction: boolean;
         shouldShowEmptyIntroduction: boolean;
-        messagePlaceholderHeight: 600;
         loadMore: (
             options: { from: number | null }
         ) => Promise<unknown> | undefined;
