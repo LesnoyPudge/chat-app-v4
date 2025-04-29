@@ -69,7 +69,6 @@ export namespace Types {
 
         type Props = {
             originalArray: string[];
-            overscan?: number;
         };
 
         export type Fn = (props: Props) => Return;

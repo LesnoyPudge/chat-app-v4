@@ -1,6 +1,7 @@
 import { KeyboardNavigation, VirtualRender } from '@/components';
 import { useFunction } from '@lesnoypudge/utils-react';
 import { Types } from '../../types';
+import { useMemo, useRef } from 'react';
 
 
 
@@ -21,7 +22,6 @@ export const VirtualListNode = ({
         virtualList,
     } = VirtualRender.useVirtualArray({
         originalArray: items,
-        overscan: virtualRenderProps.overscan,
     });
 
     const handleViewportIndexesChange: (

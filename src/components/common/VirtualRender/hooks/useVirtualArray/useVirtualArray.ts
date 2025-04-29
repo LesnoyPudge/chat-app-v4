@@ -9,7 +9,6 @@ const emptyArray: string[] = [];
 
 export const useVirtualArray: Types.useVirtualArray.Fn = ({
     originalArray,
-    overscan = 1,
 }) => {
     const [virtualIndexes, setVirtualIndexes] = useState([
         0,
@@ -30,8 +29,8 @@ export const useVirtualArray: Types.useVirtualArray.Fn = ({
 
         const minIndex = 0;
         const maxInclusiveIndex = list.length;
-        const startIndexWithOverscan = startIndex - overscan;
-        const endInclusiveIndexWithOverscan = endIndex + 1 + overscan;
+        const startIndexWithOverscan = startIndex;
+        const endInclusiveIndexWithOverscan = endIndex + 1;
 
         const newArray = list.slice(
             Math.max(minIndex, startIndexWithOverscan),
@@ -51,7 +50,6 @@ export const useVirtualArray: Types.useVirtualArray.Fn = ({
         shouldReturnEmpty,
         startIndex,
         latestOriginalArrayRef,
-        overscan,
     ]);
 
     return {

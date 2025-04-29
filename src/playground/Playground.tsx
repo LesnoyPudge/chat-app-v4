@@ -9,12 +9,12 @@ export const Playground: FC = () => {
         <Screen className='flex flex-col'>
             {/* <Sections.TMP/> */}
             {/* <Sections.RouterContextRerenders/> */}
-            {/* <Sections.MeasureSelectorPerf/> */}
             {/* <Sections.FormTest/> */}
             {/* <Sections.MessageInputBarTest/> */}
             {/* <Sections.MessageTest/> */}
             {/* <Sections.ContextSelectorTest/> */}
             <Sections.FeedTest/>
+            {/* <Sections.MeasureSelectorPerf/> */}
         </Screen>
     );
 };

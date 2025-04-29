@@ -33,7 +33,10 @@ const List: FC<ListProps> = ({ conversations, servers }) => {
         originalArray: conversations,
     });
 
-    const showConversations = !!conversations.length;
+    const shouldShowSeparator = (
+        !!conversations.length
+        && !!servers.length
+    );
     const virtualList = [
         ...virtualConversations.virtualList,
         ...virtualServers.virtualList,
@@ -50,21 +53,21 @@ const List: FC<ListProps> = ({ conversations, servers }) => {
                 list={virtualList}
                 wrapperRef={wrapperRef}
             >
-                <If condition={showConversations}>
-                    <VirtualRender.List
-                        items={conversations}
-                        getId={(item) => item}
-                        itemSize={48}
-                        itemMargin={8}
-                        onViewportIndexesChange={virtualConversations.setVirtualIndexes}
-                    >
-                        {(conversationId) => (
-                            <ConversationListItem
-                                conversationId={conversationId}
-                            />
-                        )}
-                    </VirtualRender.List>
+                <VirtualRender.List
+                    items={conversations}
+                    getId={(item) => item}
+                    itemSize={48}
+                    itemMargin={8}
+                    onViewportIndexesChange={virtualConversations.setVirtualIndexes}
+                >
+                    {(conversationId) => (
+                        <ConversationListItem
+                            conversationId={conversationId}
+                        />
+                    )}
+                </VirtualRender.List>
 
+                <If condition={shouldShowSeparator}>
                     <Separator
                         className={styles.scrollableSeparator}
                         length={32}
@@ -152,7 +155,8 @@ export const NavigationList: FC = () => {
                 withoutOppositeGutter
                 autoHide
             >
-                <List         conversations={sortedConversationIds}
+                <List
+                    conversations={sortedConversationIds}
                     servers={serverIds}
                 />
             </Scrollable>

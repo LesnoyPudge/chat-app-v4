@@ -11,19 +11,15 @@ import { Types } from '../../types';
 const styles = createStyles({
     list: {
         base: `
-            flex 
-            max-h-[80dvh] 
-            min-h-[80dvh] 
+            flex
+            grow
             flex-col-reverse
             justify-between
             gap-2
             overflow-hidden
             [overflow-anchor:none]
         `,
-        static: `
-            max-h-dvh
-            min-h-dvh
-        `,
+        nonStatic: 'max-h-[80%]',
     },
 });
 
@@ -44,7 +40,7 @@ export const FeedPlaceholder: FC<Types.FeedPlaceholder.Props> = ({
     return (
         <div className={cn(
             styles.list.base,
-            isStatic && styles.list.static,
+            !isStatic && styles.list.nonStatic,
         )}>
             <Iterate
                 items={variations}

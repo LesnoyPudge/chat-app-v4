@@ -237,7 +237,8 @@
                     opacity: 0;
                 }
 
-                &.os-scrollbar-unusable {
+                &.os-scrollbar-unusable, 
+                &:not(.os-scrollbar-visible) {
                     visibility: hidden;
                     opacity: 0;
                 }

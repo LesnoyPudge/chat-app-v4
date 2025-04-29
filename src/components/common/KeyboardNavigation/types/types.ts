@@ -47,9 +47,11 @@ export namespace Types {
         )>;
     }
 
+    export type Api = Instance.Impl;
+
     export type Context = {
-        instance: Instance.Impl;
-        currentId: Instance.Impl['currentId'];
+        instance: Api;
+        currentId: Api['currentId'];
     };
 
     export namespace Provider {
@@ -57,6 +59,7 @@ export namespace Types {
             PropsWithChildren
             & Instance.ConstructorProps
             & {
+                apiRef?: RefObject<Api>;
                 wrapperRef: useRefManager.NullableRefManager<HTMLElement>;
                 direction?: Direction.Single;
                 onIdChange?: Instance.OnIdChangeListener;

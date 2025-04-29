@@ -1,7 +1,12 @@
 import { MessageEditor, With } from '@/components';
 import { Navigator, Store } from '@/features';
+import { createStyles } from '@/utils';
 
 
+
+const styles = createStyles({
+    wrapper: 'shrink-0',
+});
 
 export const SendMessageInput = () => {
     const { conversationId } = Navigator.useParams('conversation');
@@ -13,7 +18,7 @@ export const SendMessageInput = () => {
     const shouldShowPlaceholder = !conversation;
 
     return (
-        <>
+        <div className={styles.wrapper}>
             <If condition={shouldShowInput}>
                 <With value={conversation}>
                     {({ textChat }) => (
@@ -27,6 +32,6 @@ export const SendMessageInput = () => {
             <If condition={shouldShowPlaceholder}>
                 <MessageEditor.Presets.Placeholder/>
             </If>
-        </>
+        </div>
     );
 };

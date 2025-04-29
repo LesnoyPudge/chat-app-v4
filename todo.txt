@@ -29,14 +29,16 @@ https://fluid.tw/
 
 
 
-
 --- local goals ---
+-? investigate long initialization (before loading screen)
 -? звуки пытаются загрузиться до первого юзер ивента из за чего загрузка отменяется. добавить утилиту onFirstGesture в utils-web для загрузки звуков после ивента
 -? сделать тэмплейт для модалок через рендер пропы
 -? изменить как entity id передаются в компоненты? сделать через контекст из за чего будет меньше дрилинга?
 - добавить в UserEffects эффект для ухода в афк
 - handle 404 in server/channel/conversation 
 -? investigate infinite rerenders in VirtualListInner (list mutation on every frame, maybe indexes, maybe should install older version, in previous project version is 7.0.0, in current 7.1.2)
+-? убрать voiceChatId? или сделать textChatId обязательным а voiceChatId опциональным
+-? убрать автопереход? или фэтчить доступные каналы заранее
 
 
 

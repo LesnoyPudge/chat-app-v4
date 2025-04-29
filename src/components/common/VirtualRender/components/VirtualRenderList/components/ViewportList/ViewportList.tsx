@@ -69,18 +69,32 @@ const ViewportListInner = <_Item,>({
     const propName = axis === 'y' ? PROP_NAME_FOR_Y_AXIS : PROP_NAME_FOR_X_AXIS;
     const withCount = typeof count === 'number';
     const maxIndex = (withCount ? count : items.length) - 1;
-    const [[estimatedItemHeight, estimatedItemMargin], setItemDimensions] = useState(() => [
+
+    const [
+        [estimatedItemHeight, estimatedItemMargin],
+        setItemDimensions,
+    ] = useState(() => [
         normalizeValue(0, itemSize),
         normalizeValue(-1, itemMargin),
     ]);
-    const itemHeightWithMargin = normalizeValue(0, estimatedItemHeight + estimatedItemMargin);
-    const overscanSize = normalizeValue(0, Math.ceil(overscan * itemHeightWithMargin));
+
+    const itemHeightWithMargin = normalizeValue(
+        0,
+        estimatedItemHeight + estimatedItemMargin,
+    );
+
+    const overscanSize = normalizeValue(
+        0,
+        Math.ceil(overscan * itemHeightWithMargin),
+    );
+
     const [indexes, setIndexes] = useState(() => {
         return [
             initialIndex - initialPrerender,
             initialIndex + initialPrerender,
         ] as [number, number];
     });
+
     const anchorElementRef = useRef<Element | null>(null);
     const anchorIndexRef = useRef<number>(-1);
     const topSpacerRef = useRef<any>(null);
@@ -88,6 +102,7 @@ const ViewportListInner = <_Item,>({
     const ignoreOverflowAnchorRef = useRef(false);
     const lastIndexesShiftRef = useRef(indexesShift);
     const cacheRef = useRef<number[]>([]);
+
     const scrollToIndexOptionsRef = useRef<
         Required<ViewportList.Types.ScrollToIndexOptions> | null
     >(
@@ -101,10 +116,12 @@ const ViewportListInner = <_Item,>({
                 }
             : null,
     );
+
     const scrollToIndexTimeoutIdRef = useRef<any>(null);
     const marginTopRef = useRef(0);
     const viewportIndexesRef = useRef<[number, number]>([-1, -1]);
     const scrollTopRef = useRef<number | null>(null);
+
     const [startIndex, endIndex] = useMemo(() => {
         indexes[0] = normalizeValue(0, indexes[0], maxIndex);
         indexes[1] = normalizeValue(indexes[0], indexes[1], maxIndex);
@@ -148,6 +165,7 @@ const ViewportListInner = <_Item,>({
         itemHeightWithMargin,
         estimatedItemHeight,
     ]);
+
     const bottomSpacerStyle = useMemo(() => {
         const cache = (withCache ? cacheRef.current : []);
 
@@ -167,6 +185,7 @@ const ViewportListInner = <_Item,>({
         itemHeightWithMargin,
         estimatedItemHeight,
     ]);
+
     const getViewport = useMemo(() => {
         let autoViewport: any = null;
 
@@ -197,6 +216,7 @@ const ViewportListInner = <_Item,>({
             return autoViewport;
         };
     }, [propName, viewportRef]);
+
     const mainFrameRef = useRef(() => {});
     const getScrollPositionRef = useRef(() => ({ index: -1, offset: 0 }));
 
@@ -522,6 +542,7 @@ const ViewportListInner = <_Item,>({
 
             setIndexes([nextStartIndex, nextEndIndex]);
         };
+
         getScrollPositionRef.current = () => {
             const viewport = getViewport();
             const topSpacer = topSpacerRef.current;
@@ -648,6 +669,7 @@ const ViewportListInner = <_Item,>({
 
         viewport[propName.scrollTop] += offset;
     }, [startIndex]);
+
     useIsomorphicLayoutEffect(() => {
         let frameId: number;
         const frame = () => {
@@ -665,6 +687,7 @@ const ViewportListInner = <_Item,>({
             }
         };
     }, []);
+
     useImperativeHandle(
         ref,
         () => ({
@@ -677,16 +700,37 @@ const ViewportListInner = <_Item,>({
         [],
     );
 
+    const topSpacer = renderSpacer({
+        ref: topSpacerRef,
+        style: topSpacerStyle,
+        type: 'top',
+    });
+
+    const bottomSpacer = renderSpacer({
+        ref: bottomSpacerRef,
+        style: bottomSpacerStyle,
+        type: 'bottom',
+    });
+
+    const elements = (
+        (!!count || !!items.length)
+            ? generateArray(
+                    startIndex,
+                    endIndex + 1,
+                    withCount
+                        ? children
+                        : (index) => children(items[index], index, items),
+                )
+            : null
+    );
+
     return (
         <Fragment>
-            {renderSpacer({ ref: topSpacerRef, style: topSpacerStyle, type: 'top' })}
-            {(!!count || !!items.length)
-            && generateArray(
-                startIndex,
-                endIndex + 1,
-                withCount ? children : (index) => children(items[index], index, items),
-            )}
-            {renderSpacer({ ref: bottomSpacerRef, style: bottomSpacerStyle, type: 'bottom' })}
+            {topSpacer}
+
+            {elements}
+
+            {bottomSpacer}
         </Fragment>
     );
 };

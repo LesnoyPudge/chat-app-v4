@@ -135,6 +135,7 @@ export const FeedItem: FC<FeedItem.Props> = ({
             onClick={setId}
             onAuxClick={setId}
             onContextMenu={setId}
+            data-index={message.index}
         >
             <If condition={shouldShowDayDivider}>
                 <FeedDayDivider timestamp={message.createdAt}/>

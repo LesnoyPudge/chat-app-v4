@@ -19,8 +19,9 @@ export const {
 
 export const {
     selectMembersById,
+    selectTextChatById,
 } = createAdapterFieldSelectors({
-    keys: ['members'],
+    keys: ['members', 'textChat'],
     selectById,
     slice: ConversationsSlice,
 });

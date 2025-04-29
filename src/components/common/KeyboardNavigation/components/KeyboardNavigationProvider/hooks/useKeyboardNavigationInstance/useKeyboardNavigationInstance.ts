@@ -1,6 +1,6 @@
 import { KEY, noop } from '@lesnoypudge/utils';
 import { hotKey } from '@lesnoypudge/utils-web';
-import { useEffect, useSyncExternalStore } from 'react';
+import { useEffect, useImperativeHandle, useSyncExternalStore } from 'react';
 import { useHotKey, useConst } from '@lesnoypudge/utils-react';
 import { Types } from '../../../../types';
 import { KeyboardNavigationInstance } from '../../../../instance';
@@ -43,12 +43,15 @@ export const useKeyboardNavigationInstance: Types.useInstance.Fn = ({
     list,
     loop,
     takeInitialIdFrom,
+    apiRef,
 }) => {
     const instance = useConst(() => new KeyboardNavigationInstance({
         list,
         loop,
         takeInitialIdFrom,
     }));
+
+    useImperativeHandle(apiRef, () => instance, [instance]);
 
     const currentId = useSyncExternalStore(
         (trigger) => instance.onIdChange(trigger),

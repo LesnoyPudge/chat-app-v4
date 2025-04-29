@@ -15,6 +15,16 @@ import { decorate } from '@lesnoypudge/macro';
 
 
 
+const LOAD_MORE_THRESHOLD = 3;
+const SCROLL_AT_BOTTOM_THRESHOLD = 4;
+const OVERSCAN = 3;
+const ITEM_SIZE_ESTIMATE = 40;
+const SCROLL_TO_BOTTOM_EXTRA_OFFSET = 9_999;
+const PRERENDER = Math.floor(
+    document.documentElement.clientHeight
+    / ITEM_SIZE_ESTIMATE,
+);
+
 const useExternalData = () => {
     const {
         scrollableApiRef,
@@ -49,16 +59,6 @@ const useExternalData = () => {
         feedRef,
     };
 };
-
-const LOAD_MORE_THRESHOLD = 3;
-const SCROLL_AT_BOTTOM_THRESHOLD = 4;
-const OVERSCAN = 3;
-const ITEM_SIZE_ESTIMATE = 40;
-const SCROLL_TO_BOTTOM_EXTRA_OFFSET = 9_999;
-const PRERENDER = Math.floor(
-    document.documentElement.clientHeight
-    / ITEM_SIZE_ESTIMATE,
-);
 
 decorate(withDisplayName, 'FeedList', decorate.target);
 decorate(memo, decorate.target);
@@ -209,23 +209,13 @@ export const FeedList: FC = () => {
                 initialPrerender={PRERENDER}
                 onViewportIndexesChange={onViewportIndexesChange}
                 takeInitialIdFrom='end'
+                // when items are prepended we shift to previous items.
+                // after we shift, we scroll to shifted items.
+                // this allows to keep rendered items in place.
+                indexesShift={count}
             >
                 {renderItem}
             </VirtualList.Node>
-
-            {/* <ViewportList
-                count={count}
-                initialIndex={count - 1}
-                viewportRef={scrollableRef}
-                ref={virtualizerRef}
-                overscan={OVERSCAN}
-                overflowAnchor='none'
-                itemSize={ITEM_SIZE_ESTIMATE}
-                initialPrerender={PRERENDER}
-                onViewportIndexesChange={onViewportIndexesChange}
-            >
-                {renderItem}
-            </ViewportList> */}
         </Message.RedactorProvider>
     );
 };

@@ -22,7 +22,6 @@ export const useInfiniteLoader = ({
         Types.Context['loadMore']
     ) = useFunction(({ from }) => {
         if (getMessagesHelpers.isFetching) return;
-        console.log('fetching!', from);
 
         return getMessagesTrigger({
             textChatId,
