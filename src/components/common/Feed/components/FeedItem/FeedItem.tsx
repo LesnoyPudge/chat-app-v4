@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { FC, memo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { KeyboardNavigation, Message, VirtualList } from '@/components';
 import { useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { Store } from '@/features';
@@ -117,12 +117,17 @@ export const FeedItem: FC<FeedItem.Props> = ({
     const {
         isGroupHead,
         shouldShowDayDivider,
-    } = getExtraMessageData({
+    } = useMemo(() => getExtraMessageData({
         currentMessageAuthorId: message.author,
         currentMessageCreatedAt: message.createdAt,
         prevMessageAuthorId: previousMessageAuthor,
         prevMessageCreatedAt: previousMessageCreatedAt,
-    });
+    }), [
+        message.author,
+        message.createdAt,
+        previousMessageAuthor,
+        previousMessageCreatedAt,
+    ]);
 
     const shouldResetPadding = message.index === 0;
 

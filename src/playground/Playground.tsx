@@ -13,8 +13,8 @@ export const Playground: FC = () => {
             {/* <Sections.MessageInputBarTest/> */}
             {/* <Sections.MessageTest/> */}
             {/* <Sections.ContextSelectorTest/> */}
-            <Sections.FeedTest/>
-            {/* <Sections.MeasureSelectorPerf/> */}
+            {/* <Sections.FeedTest/> */}
+            <Sections.MeasureSelectorPerf/>
         </Screen>
     );
 };
