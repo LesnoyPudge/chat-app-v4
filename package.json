@@ -65,7 +65,7 @@
     "devDependencies": {
         "@axe-core/react": "^4.10.1",
         "@dotenvx/dotenvx": "^1.42.0",
-        "@lesnoypudge/eslint-config": "^11.0.1",
+        "@lesnoypudge/eslint-config": "^12.0.3",
         "@lesnoypudge/formatter-config": "^8.0.0",
         "@lesnoypudge/macro": "^1.0.2",
         "@lesnoypudge/types-global-base": "^4.0.0",
