@@ -26,6 +26,7 @@ https://fluid.tw/
 -? сделать кастомный babel plugin для компонента If. передавать не только condition но и value, и принимать children как рендер/ноду с NonNullable value.
 - refactor utils-react so that entities uses Types instead of nested namespaces
 - refactor utils-react so that it uses '@/path' instead of '@path'
+- create library 'is', with many functions like is(someValue).equal.shallow(otherValue), is(maybeValue).defined(). the feature is that it comes with babel plugin to transform this code in prod into shallowEqual(someValue, otherValue), maybeValue !== undefined.
 
 
 
