@@ -10,10 +10,7 @@ import { Users } from '../Users';
 
 
 const playNotificationSound = () => {
-    soundManager.play(
-        ASSETS.SOUNDS.DISCORD_NOTIFICATION.NAME,
-        ASSETS.SOUNDS.DISCORD_NOTIFICATION,
-    );
+    soundManager.play(ASSETS.SOUNDS.DISCORD_NOTIFICATION);
 };
 
 export const MessagesEffects = createEffects({

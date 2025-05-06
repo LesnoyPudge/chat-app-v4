@@ -2,12 +2,86 @@ import { createEffects } from '@/store/utils';
 import { globalActions } from '@/store/globalActions';
 import { App } from '../App';
 import { selectCurrentUser } from './UsersSelectors';
-import { sortFns } from '@lesnoypudge/utils';
+import { combinedFunction, sortFns } from '@lesnoypudge/utils';
 import { UsersSlice } from './UsersSlice';
+import { addEventListener } from '@lesnoypudge/utils-web';
+import { minutesToMilliseconds } from 'date-fns';
+import { UsersApi } from './UsersApi';
 
 
+
+const AKF_DELAY = minutesToMilliseconds(5);
+
+const eventNames = [
+    'mousemove',
+    'mousedown',
+    'keydown',
+    'click',
+    'scroll',
+    'wheel',
+    'touchstart',
+    'touchmove',
+] as const;
 
 export const UsersEffects = createEffects({
+    effects: (store) => [
+        (() => {
+            let timeoutId: number;
+            let isOnlineFetching = false;
+            let isOfflineFetching = false;
+
+            const goOnline = () => {
+                if (isOnlineFetching) return;
+
+                const { extraStatus } = selectCurrentUser(store.getState());
+                const isOnline = extraStatus === 'default';
+                if (isOnline) return;
+
+                isOnlineFetching = true;
+
+                void store.dispatch(
+                    UsersApi.endpoints.UserProfileUpdate.initiate({
+                        extraStatus: 'default',
+                    }),
+                ).finally(() => {
+                    isOnlineFetching = false;
+                });
+            };
+
+            const goAfk = () => {
+                if (isOfflineFetching) return;
+
+                const { extraStatus } = selectCurrentUser(store.getState());
+                const isAfk = extraStatus === 'afk';
+                if (isAfk) return;
+
+                isOfflineFetching = true;
+
+                void store.dispatch(
+                    UsersApi.endpoints.UserProfileUpdate.initiate({
+                        extraStatus: 'afk',
+                    }),
+                ).finally(() => {
+                    isOfflineFetching = false;
+                });
+            };
+
+            const startTimer = () => {
+                goOnline();
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(goAfk, AKF_DELAY);
+            };
+
+            startTimer();
+
+            const events = eventNames.map((eventName) => {
+                return addEventListener(window, eventName, startTimer);
+            });
+
+            return combinedFunction(...events);
+        })(),
+    ],
+
     listenerMiddlewares: [
         ({ startListening }) => startListening({
             actionCreator: globalActions.addSocketData,

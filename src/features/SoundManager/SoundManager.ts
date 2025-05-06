@@ -2,6 +2,7 @@ import { ASSETS } from '@/generated/ASSETS';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { getAssetUrl } from '@/utils';
 import { Howl } from 'howler';
+import { autoBind } from '@lesnoypudge/utils';
 
 
 
@@ -38,7 +39,7 @@ type Timeouts = Record<AssetNames, {
 
 const SOUNDS = ASSETS.SOUNDS;
 const DEFAULT_VOLUME = 0.3;
-// const DEFAULT_FADE_DURATION = 100;
+const DEFAULT_FADE_DURATION = 100;
 
 const soundApis = {
     [SOUNDS.DISCORD_INCOMING_CALL.NAME]: new Howl({
@@ -165,7 +166,7 @@ const timeoutIds = (
 export const soundManager = (() => {
     const currentlyPlayingSounds = new Set<AssetNames>();
 
-    const stop = (id: string | null, item: AssetItem) => {
+    const stop = (item: AssetItem) => {
         const sound = configuredSounds[item.NAME];
         if (!currentlyPlayingSounds.has(sound.name)) return;
 
@@ -187,7 +188,7 @@ export const soundManager = (() => {
         }, sound.throttleDelay);
     };
 
-    const play = (id: string | null, item: AssetItem) => {
+    const play = (item: AssetItem) => {
         const currentSound = configuredSounds[item.NAME];
 
         if (currentlyPlayingSounds.has(currentSound.name)) return;
@@ -207,7 +208,7 @@ export const soundManager = (() => {
         });
 
         soundsToInterrupt.forEach((sound) => {
-            stop(id, SOUNDS[sound.name]);
+            stop(SOUNDS[sound.name]);
         });
 
         currentlyPlayingSounds.add(currentSound.name);
@@ -217,7 +218,7 @@ export const soundManager = (() => {
         currentSound.api.once('end', () => {
             if (currentSound.api.loop()) return;
 
-            stop(id, item);
+            stop(item);
         });
     };
 
@@ -226,3 +227,108 @@ export const soundManager = (() => {
         stop,
     };
 })();
+
+
+
+// const { SOUNDS } = ASSETS;
+
+// type SoundConfig = {
+//     src: string;
+//     volume: number;
+//     loop: boolean;
+//     throttleDelay: number | null;
+//     isBlockable: boolean;
+//     isBlocking: boolean;
+//     interruptedBy: string[];
+// };
+
+// type SoundAssets = typeof SOUNDS;
+// type SoundAsset = T.ValueOf<SoundAssets>;
+// // type SoundName = SoundAsset['NAME'];
+
+// type SoundItemOptions = {
+//     asset: SoundAsset;
+//     volume: number;
+//     loop: boolean;
+//     throttleDelay: number | null;
+//     isBlockable: boolean;
+//     isBlocking: boolean;
+//     interruptedBy: string[];
+// };
+
+// class SoundItem {
+//     id: string;
+//     src: string;
+//     volume: number;
+//     loop: boolean;
+//     throttleDelay: number | null;
+//     isBlockable: boolean;
+//     isBlocking: boolean;
+//     interruptedBy: string[];
+//     timeoutId: number | undefined;
+//     api: Howl | undefined;
+
+//     constructor(options: SoundItemOptions) {
+//         this.id = options.asset.NAME;
+//         this.src = getAssetUrl(options.asset);
+//         this.volume = options.volume;
+//         this.loop = options.loop;
+//         this.throttleDelay = options.throttleDelay;
+//         this.isBlockable = options.isBlockable;
+//         this.isBlocking = options.isBlocking;
+//         this.interruptedBy = options.interruptedBy;
+
+//         autoBind(this);
+//     }
+
+//     getApi() {
+//         if (this.api) return this.api;
+
+//         this.api = new Howl({
+//             src: this.src,
+//             volume: this.volume,
+//             loop: this.loop,
+//         });
+
+//         return this.api;
+//     }
+
+//     play() {
+//         const isThrottling = this.timeoutId !== undefined;
+//         if (isThrottling) return;
+
+//         const api = this.getApi();
+
+//         api.play();
+
+//         api.once('end', () => {
+//             if (this.throttleDelay === null) return;
+
+//             this.timeoutId = setTimeout(() => {
+//                 this.timeoutId = undefined;
+//             }, this.throttleDelay);
+//         });
+//     }
+
+//     stop() {
+//         this.getApi().stop();
+//     }
+// }
+
+// const soundConfigs = {
+//     [SOUNDS.DISCORD_DEAFEN.NAME]: {
+//         src: getAssetUrl(SOUNDS.DISCORD_INCOMING_CALL),
+//         volume: DEFAULT_VOLUME,
+//         loop: true,
+//         throttleDelay: null,
+//         isBlockable: false,
+//         isBlocking: false,
+//         interruptedBy: [SOUNDS.DISCORD_UNDEAFEN.NAME],
+//     },
+// } satisfies Record<string, SoundConfig>;
+
+// class SoundManager {
+//     constructor() {}
+// }
+
+// export const soundManager2 = new SoundManager();

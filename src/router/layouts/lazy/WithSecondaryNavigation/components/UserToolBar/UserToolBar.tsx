@@ -5,7 +5,7 @@ import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
 import { Button, Sprite, Overlay } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
-import { Store } from '@/features';
+import { soundManager, Store } from '@/features';
 
 
 
@@ -55,8 +55,33 @@ export const UserToolBar: FC = () => {
         setIsMute,
     } = Store.useActions(Store.App);
 
-    const toggleMute = useFunction(() => setIsMute(!isMute));
-    const toggleDeaf = useFunction(() => setIsDeaf(!isDeaf));
+    const toggleMute = useFunction(() => {
+        const shouldMute = !isMute;
+
+        const sound = (
+            shouldMute
+                ? ASSETS.SOUNDS.DISCORD_MUTE
+                : ASSETS.SOUNDS.DISCORD_UNMUTE
+        );
+
+        soundManager.play(sound);
+
+        setIsMute(shouldMute);
+    });
+
+    const toggleDeaf = useFunction(() => {
+        const shouldDeaf = !isDeaf;
+
+        const sound = (
+            shouldDeaf
+                ? ASSETS.SOUNDS.DISCORD_DEAFEN
+                : ASSETS.SOUNDS.DISCORD_UNDEAFEN
+        );
+
+        soundManager.play(sound);
+
+        setIsDeaf(!isDeaf);
+    });
 
     const microphoneSprite = (
         isMute
