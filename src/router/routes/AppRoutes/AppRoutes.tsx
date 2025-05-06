@@ -10,8 +10,6 @@ import { SuspenseWithGlobalLoader } from '../components';
 export const AppRoutes: FC = () => {
     return (
         <Route element={(
-            // since our components loaded all at once,
-            // single suspense is enough
             <SuspenseWithGlobalLoader loaderId='App'>
                 <LazyLayouts.WithPrimaryNavigation/>
             </SuspenseWithGlobalLoader>
@@ -30,7 +28,9 @@ export const AppRoutes: FC = () => {
                     path={Navigator.staticNavigatorPath.conversation}
                     element={(
                         <Navigator.ParamsProvider>
-                            <LazyPanels.Conversation/>
+                            <Navigator.ParamsValidator preset='conversation'>
+                                <LazyPanels.Conversation/>
+                            </Navigator.ParamsValidator>
                         </Navigator.ParamsProvider>
                     )}
                 />
@@ -40,9 +40,11 @@ export const AppRoutes: FC = () => {
                 path={Navigator.staticNavigatorPath.server}
                 element={(
                     <Navigator.ParamsProvider>
-                        <LazyLayouts.WithSecondaryNavigation>
-                            <LazyPanels.ServerNavigation/>
-                        </LazyLayouts.WithSecondaryNavigation>
+                        <Navigator.ParamsValidator preset='server'>
+                            <LazyLayouts.WithSecondaryNavigation>
+                                <LazyPanels.ServerNavigation/>
+                            </LazyLayouts.WithSecondaryNavigation>
+                        </Navigator.ParamsValidator>
                     </Navigator.ParamsProvider>
                 )}
             >
@@ -55,7 +57,9 @@ export const AppRoutes: FC = () => {
                     path={Navigator.staticNavigatorPath.channel}
                     element={(
                         <Navigator.ParamsProvider>
-                            <LazyPanels.Channel/>
+                            <Navigator.ParamsValidator preset='channel'>
+                                <LazyPanels.Channel/>
+                            </Navigator.ParamsValidator>
                         </Navigator.ParamsProvider>
                     )}
                 />

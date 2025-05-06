@@ -15,9 +15,9 @@ const styles = createStyles({
         base: 'relative hover-focus-within:bg-primary-hover',
         active: 'bg-primary-hover',
     },
-    button: 'flex h-full w-full items-center justify-between gap-4 px-4',
+    button: 'flex size-full items-center justify-between gap-4 px-4',
     buttonText: 'truncate font-semibold text-color-primary',
-    buttonIcon: 'h-4 w-4 fill-icon-100',
+    buttonIcon: 'size-4 fill-icon-100',
 });
 
 export const Header: FC = () => {
@@ -26,8 +26,8 @@ export const Header: FC = () => {
     const { serverId } = Navigator.useParams('server');
     const controls = Overlay.useControls();
 
-    const server = Store.useSelector(
-        Store.Servers.Selectors.selectById(serverId),
+    const serverName = Store.useSelector(
+        Store.Servers.Selectors.selectNameById(serverId),
     );
 
     const sprite = (
@@ -47,20 +47,23 @@ export const Header: FC = () => {
                 hasPopup='menu'
                 isActive={controls.isOpen}
                 innerRef={buttonRef}
+                isDisabled={!serverName}
                 onLeftClick={controls.open}
             >
-                <Placeholder.With reveal={server}>
-                    {(server) => (
-                        <span className={styles.buttonText}>
-                            {server.name}
-                        </span>
+                <Placeholder.With reveal={serverName}>
+                    {(serverName) => (
+                        <>
+                            <span className={styles.buttonText}>
+                                {serverName}
+                            </span>
+
+                            <Sprite
+                                className={styles.buttonIcon}
+                                sprite={sprite}
+                            />
+                        </>
                     )}
                 </Placeholder.With>
-
-                <Sprite
-                    className={styles.buttonIcon}
-                    sprite={sprite}
-                />
             </Button>
 
             <ServerMenu

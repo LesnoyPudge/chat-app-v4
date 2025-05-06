@@ -24,15 +24,14 @@ const styles = createStyles({
     buttonsWrapper: 'flex shrink-0',
     button: `
         flex 
-        h-8 
-        w-8 
+        size-8
         shrink-0 
         rounded 
         fill-icon-300 
         hover-focus-visible:bg-primary-hover
         hover-focus-visible:fill-icon-200
     `,
-    icon: 'm-auto h-5 w-5',
+    icon: 'm-auto size-5',
 });
 
 export const UserToolBar: FC = () => {
@@ -42,18 +41,12 @@ export const UserToolBar: FC = () => {
     const settingsButtonRef = useRefManager<HTMLButtonElement>(null);
     const controls = Overlay.useControls();
 
-    const {
-        isDeaf,
-        isMute,
-    } = Store.useSliceSelector(
+    const { isDeaf, isMute } = Store.useSliceSelector(
         Store.App,
         ({ isDeaf, isMute }) => ({ isDeaf, isMute }),
     );
 
-    const {
-        setIsDeaf,
-        setIsMute,
-    } = Store.useActions(Store.App);
+    const { setIsDeaf, setIsMute } = Store.useActions(Store.App);
 
     const toggleMute = useFunction(() => {
         const shouldMute = !isMute;

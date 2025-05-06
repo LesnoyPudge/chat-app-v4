@@ -13,6 +13,7 @@ export namespace Navigator {
         useIsLocation,
         useNavigateTo,
         useParams,
+        useParamsValidator,
         useTryNavigateToChannel,
         useTryNavigateToConversation,
     } = hooks;
@@ -32,4 +33,6 @@ export namespace Navigator {
     export import Provider = components.NavigatorContextProvider;
 
     export import ParamsProvider = components.ParamsContextProvider;
+
+    export import ParamsValidator = components.ParamsValidator;
 }
