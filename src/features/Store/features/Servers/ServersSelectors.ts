@@ -1,4 +1,8 @@
-import { createAdapterFieldSelectors, createAdapterSelectors, createSelector } from '@/store/utils';
+import {
+    createAdapterFieldSelectors,
+    createAdapterSelectors,
+    createSelector,
+} from '@/store/utils';
 import { ServersSlice } from './ServersSlice';
 import { Users } from '../Users';
 import { TextChats } from '../TextChats';
@@ -46,25 +50,17 @@ export const selectNotificationCountById = createSelector.withParams((
         const isMuted = query(selectIsMutedById(serverId));
         if (isMuted) return 0;
 
-        const { lastSeenMessages } = query(Users.Selectors.selectCurrentUser);
-
         const textChats = query(TextChats.Selectors.selectFilteredByServer(
             serverId,
         ));
 
         const notificationCount = textChats.reduce<number>((acc, textChat) => {
-            const lastSeenMessageIndex = lastSeenMessages.find((item) => {
-                return item.textChatId === textChat.id;
-            })?.lastIndex;
+            const count = query(
+                TextChats.Selectors
+                    .selectUnreadMessageCountById(textChat.id),
+            );
 
-            if (lastSeenMessageIndex === undefined) {
-                acc += textChat.messageCount;
-                return acc;
-            }
-
-            const diff = textChat.messageCount - (lastSeenMessageIndex + 1);
-
-            acc += diff;
+            acc += count;
 
             return acc;
         }, 0);

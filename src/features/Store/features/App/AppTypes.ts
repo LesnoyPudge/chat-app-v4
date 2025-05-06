@@ -12,5 +12,6 @@ export namespace AppTypes {
         isMute: boolean;
         isDeaf: boolean;
         isMobileScreen: boolean;
+        currentTextChat: string | null;
     };
 }

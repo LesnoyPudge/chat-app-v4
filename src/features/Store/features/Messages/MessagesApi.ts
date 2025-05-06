@@ -52,6 +52,10 @@ export const MessagesApi = getRootApi().injectEndpoints({
                     method: Message.GetManyByTextChatId.Method,
                     body,
                 }),
+                providesTags: (result) => result?.map(({ id }) => ({
+                    type: 'Message',
+                    id,
+                })) ?? [{ type: 'Message', id: 'LIST' }],
             })
         ),
     }),

@@ -1,12 +1,22 @@
-import { Avatar, Button, KeyboardNavigation, MobileMenu, Overlay } from '@/components';
-import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
+import {
+    Avatar,
+    Button,
+    KeyboardNavigation,
+    MobileMenu,
+    Overlay,
+} from '@/components';
+import {
+    useFunction,
+    useRefManager,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
 import { sharedStyles } from '../../../../sharedStyles';
 import { Navigator, Store } from '@/features';
 import { ConversationContextMenu } from './components';
 import { decorate } from '@lesnoypudge/macro';
-import { FC, memo } from 'react';
+import { FC, memo, startTransition } from 'react';
 
 
 
@@ -44,9 +54,9 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
         itemId: conversationId,
     });
 
-    const navigateToServer = useFunction(() => {
+    const navigateToConversation = useFunction(() => {
         navigateTo.conversation({ conversationId });
-        closeMenu();
+        startTransition(closeMenu);
     });
 
     const shouldShowTooltip = !!userTarget;
@@ -55,6 +65,7 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
         <WrapperWithBullet
             isActive={isInConversation}
             withNotifications={!!notificationsCount}
+            virtual
         >
             <Button
                 className={sharedStyles.button}
@@ -62,7 +73,7 @@ export const ConversationListItem: FC<ConversationListItem.Props> = ({
                 label={userTarget?.name}
                 isActive={isInConversation}
                 innerRef={buttonRef}
-                onLeftClick={navigateToServer}
+                onLeftClick={navigateToConversation}
                 onAnyClick={setId}
             >
                 <Avatar.WithBadge.Notifications

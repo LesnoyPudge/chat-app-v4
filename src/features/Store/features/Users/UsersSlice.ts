@@ -1,8 +1,15 @@
 import { UsersApi } from './UsersApi';
 import { UsersTypes } from './UsersTypes';
-import { createEntityAdapter, createEntityExtraReducers, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import {
+    createEntityAdapter,
+    createEntityExtraReducers,
+    createSlice,
+    createSocketExtraReducers,
+    extractReducersFromAdapter,
+} from '@/store/utils';
 import { ReduxToolkit } from '@/libs';
 import { Servers, Conversations } from '@/store/features';
+
 
 
 const name = 'Users';

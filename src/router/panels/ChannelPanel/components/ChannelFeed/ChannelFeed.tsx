@@ -12,6 +12,7 @@ export const ChannelFeed = () => {
     );
     invariant(textChatId);
 
+
     return (
         <Feed
             key={textChatId}

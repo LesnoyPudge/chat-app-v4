@@ -1,11 +1,24 @@
-import { Avatar, Button, Placeholder, Sprite, Overlay, KeyboardNavigation, MobileMenu, VirtualList } from '@/components';
+import {
+    Avatar,
+    Button,
+    Placeholder,
+    Sprite,
+    Overlay,
+    KeyboardNavigation,
+    MobileMenu,
+    VirtualList,
+} from '@/components';
 import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
-import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
+import {
+    useFunction,
+    useRefManager,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@/utils';
 import { decorate } from '@lesnoypudge/macro';
-import { FC, memo } from 'react';
+import { FC, memo, startTransition } from 'react';
 
 
 
@@ -98,7 +111,7 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
 
     const handleNavigate = useFunction(() => {
         navigateTo.conversation({ conversationId });
-        closeMenu();
+        startTransition(closeMenu);
     });
 
     const handleHide = useFunction(() => {

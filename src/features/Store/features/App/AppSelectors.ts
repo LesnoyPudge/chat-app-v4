@@ -12,4 +12,5 @@ export const {
     selectIsSocketConnected,
     selectLastSuccessfulRefreshTimestamp,
     selectUserId,
+    selectCurrentTextChat,
 } = AppSlice.selectors;

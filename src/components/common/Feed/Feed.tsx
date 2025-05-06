@@ -1,5 +1,11 @@
 import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
-import { FeedPlaceholder, FeedProvider, FeedWrapper, FeedIntroduction, FeedList } from './components';
+import {
+    FeedPlaceholder,
+    FeedProvider,
+    FeedWrapper,
+    FeedIntroduction,
+    FeedList,
+} from './components';
 import { Types } from './types';
 import { decorate } from '@lesnoypudge/macro';
 import { memo } from 'react';

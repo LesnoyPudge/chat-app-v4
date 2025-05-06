@@ -19,6 +19,7 @@ const getInitialState = (): AppTypes.State => {
         isNetworkConnected: navigator.onLine,
         isRefreshing: false,
         isSocketConnected: false,
+        currentTextChat: null,
     };
 };
 

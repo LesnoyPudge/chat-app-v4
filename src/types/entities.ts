@@ -32,10 +32,7 @@ export namespace ClientEntities {
 
         export type VisibleStatus = 'online' | 'offline' | 'afk' | 'dnd';
 
-        export type LastSeenMessage = {
-            textChatId: TextChat.Id;
-            lastIndex: number;
-        };
+        export type LastSeenMessages = Record<TextChat.Id, number>;
 
         export type IncomingFriendRequest = {
             from: Id;
@@ -67,7 +64,7 @@ export namespace ClientEntities {
             hiddenConversations: Conversation.Id[];
             incomingFriendRequests: IncomingFriendRequest[];
             outgoingFriendRequests: OutgoingFriendRequest[];
-            lastSeenMessages: LastSeenMessage[];
+            lastSeenMessages: LastSeenMessages;
             isDeleted: boolean;
             refreshToken: string;
             accessToken: string;

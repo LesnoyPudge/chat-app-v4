@@ -5,7 +5,7 @@ import { useTrans } from '@/hooks';
 import { TopBar } from '@/router/layouts/bundled';
 import { useFunction } from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@/utils';
-import { FC } from 'react';
+import { FC, startTransition } from 'react';
 
 
 
@@ -44,7 +44,7 @@ export const Header: FC = () => {
     const handleClick = useFunction(() => {
         navigateTo.root();
 
-        if (isInRoot) closeMenu();
+        if (isInRoot) startTransition(closeMenu);
     });
 
     return (

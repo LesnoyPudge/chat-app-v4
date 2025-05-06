@@ -1,4 +1,8 @@
-import { createAdapterFieldSelectors, createAdapterSelectors, createSelector } from '@/store/utils';
+import {
+    createAdapterFieldSelectors,
+    createAdapterSelectors,
+    createSelector,
+} from '@/store/utils';
 import { ConversationsSlice } from './ConversationsSlice';
 import { Users } from '../Users';
 import { TextChats } from '../TextChats';
@@ -41,8 +45,6 @@ export const selectNotificationCountById = (
         const isMuted = query(selectIsMutedById(conversationId));
         if (isMuted) return 0;
 
-        const { lastSeenMessages } = query(Users.Selectors.selectCurrentUser);
-
         const [
             textChat,
         ] = query(TextChats.Selectors.selectFilteredByConversation(
@@ -51,20 +53,12 @@ export const selectNotificationCountById = (
 
         if (!textChat) return 0;
 
-        const lastSeenMessageIndex = lastSeenMessages.find((item) => {
-            return item.textChatId === textChat.id;
-        })?.lastIndex;
-
-        if (lastSeenMessageIndex === undefined) {
-            return textChat.messageCount;
-        }
-
-        const diff = Math.max(
-            0,
-            textChat.messageCount - (lastSeenMessageIndex + 1),
+        const count = query(
+            TextChats.Selectors
+                .selectUnreadMessageCountById(textChat.id),
         );
 
-        return diff;
+        return count;
     }, `${ConversationsSlice.name}/selectNotificationCountById`)
 );
 

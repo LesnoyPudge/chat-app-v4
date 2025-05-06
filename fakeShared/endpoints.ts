@@ -410,6 +410,20 @@ namespace EndpointsV1 {
 
             export type Response = Entities.User.Base;
         }
+
+        export namespace MarkTextChatAsRead {
+            export const ActionName = 'markTextChatAsRead';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = WithId.TextChat;
+
+            export type Response = Entities.User.Base;
+        }
     }
 
     export namespace Server {

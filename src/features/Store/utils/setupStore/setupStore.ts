@@ -12,27 +12,24 @@ import { globalActions } from '@/store/globalActions';
 
 
 
-const slices = [
-    features.App._Slice,
-    features.Channels._Slice,
-    features.Conversations._Slice,
-    features.Messages._Slice,
-    features.Roles._Slice,
-    features.Servers._Slice,
-    features.TextChats._Slice,
-    features.Users._Slice,
-    features.VoiceChats._Slice,
-] as const;
+const names = Object.keys<typeof features>(features);
+
+const slices = names.map((name) => features[name]._Slice);
+
+const setupEffects = (store: StoreTypes.Store) => {
+    names.forEach((name) => {
+        const slice = features[name];
+        if (!('Effects' in slice)) return;
+
+        slice.Effects.setupEffects(store);
+    });
+};
 
 export const setupStore = (preloadedState?: Partial<StoreTypes.State>) => {
     const rootReducer = ReduxToolkit.combineSlices(
         ...slices,
         getRootApi(),
     );
-
-    const setupEffects = (store: StoreTypes.Store) => {
-        features.App.Effects.setupEffects(store);
-    };
 
     const store = ReduxToolkit.configureStore({
         reducer: rootReducer,

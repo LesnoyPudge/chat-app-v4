@@ -7,6 +7,8 @@ import {
 import { TextChatsSlice } from './TextChatsSlice';
 import { Messages } from '../Messages';
 import { invariant } from '@lesnoypudge/utils';
+import { Users } from '../Users';
+import { App } from '../App';
 
 
 
@@ -23,8 +25,9 @@ export const {
 
 export const {
     selectMessagesById,
+    selectMessageCountById,
 } = createAdapterFieldSelectors({
-    keys: ['messages'],
+    keys: ['messages', 'messageCount'],
     selectById,
     slice: TextChatsSlice,
 });
@@ -103,4 +106,29 @@ export const selectLastDefinedMessageIndexById = createSelector.withParams(
         return lastMessageIndex;
     },
     `${TextChatsSlice.name}/selectLastDefinedMessageIndexById`,
+);
+
+export const selectUnreadMessageCountById = createSelector.withParams(
+    (textChatId: string) => (query): number => {
+        const totalCount = query(selectMessageCountById(textChatId));
+        if (!totalCount) return 0;
+
+        const currentTextChatId = query(App.Selectors.selectCurrentTextChat);
+        if (textChatId === currentTextChatId) return 0;
+
+        const lastSeenList = query(
+            Users.Selectors.selectCurrentUser,
+        ).lastSeenMessages;
+
+        const foundItem = lastSeenList.find((v) => {
+            return v.textChatId === textChatId;
+        });
+        if (!foundItem) return totalCount;
+
+
+        const diff = Math.max(0, totalCount - foundItem.lastIndex + 1);
+
+        return diff;
+    },
+    `${TextChatsSlice.name}/selectUnreadMessageCountById`,
 );

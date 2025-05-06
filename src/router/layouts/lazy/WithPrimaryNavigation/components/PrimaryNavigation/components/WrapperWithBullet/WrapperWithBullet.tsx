@@ -4,15 +4,15 @@ import { FC } from 'react';
 import { VirtualList } from '@/components';
 
 
-// :not([data-virtual-spacer])
+
 const styles = createStyles({
-    buttonWrapper: `
-        relative 
-        mr-auto 
-        mt-2 
-        pl-3 
-        ${VirtualList.Styles.resetItemMarginTop}
-    `,
+    buttonWrapper: {
+        base: `relative mr-auto pl-3`,
+        virtual: `
+            mt-2
+            ${VirtualList.Styles.resetItemMarginTop}
+        `,
+    },
     bullet: {
         base: `
             absolute 
@@ -45,6 +45,7 @@ export namespace WrapperWithBullet {
         & {
             isActive: boolean;
             withNotifications?: boolean;
+            virtual?: boolean;
         }
     );
 }
@@ -53,6 +54,7 @@ export const WrapperWithBullet: FC<WrapperWithBullet.Props> = ({
     className = '',
     isActive = false,
     withNotifications = false,
+    virtual = false,
     children,
 }) => {
     const showBaseStyle = !isActive;
@@ -61,7 +63,11 @@ export const WrapperWithBullet: FC<WrapperWithBullet.Props> = ({
 
     return (
         <div
-            className={cn(styles.buttonWrapper, className)}
+            className={cn(
+                styles.buttonWrapper.base,
+                virtual && styles.buttonWrapper.virtual,
+                className,
+            )}
             role='listitem'
         >
             {children}

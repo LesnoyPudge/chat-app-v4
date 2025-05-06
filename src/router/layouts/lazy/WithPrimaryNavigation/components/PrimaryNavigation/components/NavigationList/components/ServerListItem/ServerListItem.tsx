@@ -1,12 +1,22 @@
-import { Avatar, Button, KeyboardNavigation, MobileMenu, Overlay } from '@/components';
-import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
+import {
+    Avatar,
+    Button,
+    KeyboardNavigation,
+    MobileMenu,
+    Overlay,
+} from '@/components';
+import {
+    useFunction,
+    useRefManager,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
 import { WrapperWithBullet } from '../../../WrapperWithBullet';
 import { sharedStyles } from '../../../../sharedStyles';
 import { Navigator, Store } from '@/features';
 import { ServerContextMenu } from './components';
 import { decorate } from '@lesnoypudge/macro';
-import { FC, memo } from 'react';
+import { FC, memo, startTransition } from 'react';
 
 
 
@@ -45,13 +55,16 @@ export const ServerListItem: FC<ServerListItem.Props> = ({
     const navigateToServerOrChannel = useFunction(() => {
         tryNavigateToChannel();
 
-        if (isInServer) closeMenu();
+        if (isInServer) {
+            startTransition(closeMenu);
+        }
     });
 
     return (
         <WrapperWithBullet
             isActive={isInServer}
             withNotifications={hasNotifications}
+            virtual
         >
             <Button
                 className={sharedStyles.button}

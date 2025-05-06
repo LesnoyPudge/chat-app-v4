@@ -2,7 +2,7 @@ import { Button, Sprite, Overlay, MobileMenu } from '@/components';
 import { useTrans } from '@/hooks';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
-import { FC } from 'react';
+import { FC, startTransition } from 'react';
 import { WrapperWithBullet } from '../WrapperWithBullet';
 import { sharedStyles } from '../../sharedStyles';
 import { Navigator } from '@/features';
@@ -22,7 +22,7 @@ export const HomePageButton: FC = () => {
 
     const handleClick = useFunction(() => {
         navigateTo.root();
-        if (isInRoot) closeMenu();
+        if (isInRoot) startTransition(closeMenu);
     });
 
     const isInRootOrConversation = isInRoot || isInAnyConversation;

@@ -1,7 +1,11 @@
 import { FC, useRef } from 'react';
 import { Types } from '../../types';
 import { FeedContext } from '../../context';
-import { useDeriveFeedState, useInfiniteLoader } from './hooks';
+import {
+    useDeriveFeedState,
+    useInfiniteLoader,
+    useOuterStateSync,
+} from './hooks';
 import { useRefManager } from '@lesnoypudge/utils-react';
 
 
@@ -15,6 +19,8 @@ export const FeedProvider: FC<Types.FeedProvider.Props> = ({
     const scrollableApiRef: (
         Types.Context['scrollableApiRef']
     ) = useRefManager(null);
+
+    useOuterStateSync({ textChatId });
 
     const {
         isLoading,

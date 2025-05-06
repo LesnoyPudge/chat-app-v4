@@ -68,7 +68,7 @@ export const useTryNavigateToChannel = (serverId?: string) => {
             Store.Servers.Selectors.selectIsExistsById(serverId)(storeState)
         );
 
-        if (!getManyHelpers.isLoading && !isServerExists) {
+        if (!getManyHelpers.isFetching && !isServerExists) {
             void getManyTrigger({ serverIds: [localServerId] });
         }
 

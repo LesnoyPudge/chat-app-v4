@@ -216,5 +216,17 @@ export const UsersApi = getRootApi().injectEndpoints({
                 }),
             })
         ),
+        [User.MarkTextChatAsRead.NamedAction]: (
+            build.mutation<
+                User.MarkTextChatAsRead.Response,
+                User.MarkTextChatAsRead.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.MarkTextChatAsRead.Path,
+                    method: User.MarkTextChatAsRead.Method,
+                    body,
+                }),
+            })
+        ),
     }),
 });
