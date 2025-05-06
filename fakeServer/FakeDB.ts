@@ -22,7 +22,6 @@ export namespace FakeDB {
         server: Record<string, ClientEntities.Server.Base>;
         textChat: Record<string, ClientEntities.TextChat.Base>;
         user: Record<string, ClientEntities.User.Base>;
-        voiceChat: Record<string, ClientEntities.VoiceChat.Base>;
     };
 }
 

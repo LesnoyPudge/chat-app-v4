@@ -43,12 +43,12 @@ export const useParamsValidator = <
 >(
     presetKey: _Key,
 ): v.SafeParseResult<useParamsValidator.Presets[_Key]> => {
-    const parsed = ContextSelectable.useSelector(
+    const params = ContextSelectable.useSelector(
         ParamsContext,
-        ({ params }) => {
-            return v.safeParse(presets[presetKey], params);
-        },
+        ({ params }) => params,
     );
+
+    const parsed = v.safeParse(presets[presetKey], params);
 
     return parsed;
 };

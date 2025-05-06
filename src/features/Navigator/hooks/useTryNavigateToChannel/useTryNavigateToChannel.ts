@@ -25,13 +25,12 @@ export const useTryNavigateToChannel = (serverId?: string) => {
         navigateTo.channel({ serverId, channelId });
 
         const storeState = injectedStore.getStore().getState();
-        const isTextChannel = (
+        const isExists = (
             Store.Channels.Selectors
-                .selectIsTextChannelById(channelId)(storeState)
+                .selectIsExistsById(channelId)(storeState)
         );
 
-        // save if it is text channel
-        if (!isTextChannel) return;
+        if (!isExists) return;
 
         const value = localStorageApi.get('lastVisitedChannels');
 

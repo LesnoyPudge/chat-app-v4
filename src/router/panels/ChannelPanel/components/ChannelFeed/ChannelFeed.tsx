@@ -1,6 +1,5 @@
 import { Feed } from '@/components';
 import { Navigator, Store } from '@/features';
-import { invariant } from '@lesnoypudge/utils';
 
 
 
@@ -10,12 +9,10 @@ export const ChannelFeed = () => {
     const textChatId = Store.useSelector(
         Store.Channels.Selectors.selectTextChatById(channelId),
     );
-    invariant(textChatId);
-
 
     return (
         <Feed
-            key={textChatId}
+            key={channelId}
             textChatId={textChatId}
         />
     );

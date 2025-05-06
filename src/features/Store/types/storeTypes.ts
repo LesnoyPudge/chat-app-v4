@@ -1,7 +1,7 @@
 import type * as slices from '@/store/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { WithId } from '@/types';
-import { ReduxToolkit, ReduxToolkitQueryReact } from '@/libs';
+import { ReduxToolkit } from '@/libs';
 import { HTTP_STATUS_CODES } from '@lesnoypudge/utils';
 
 
@@ -16,7 +16,6 @@ export namespace StoreTypes {
         Servers: slices.Servers.Types.State;
         TextChats: slices.TextChats.Types.State;
         Users: slices.Users.Types.State;
-        VoiceChats: slices.VoiceChats.Types.State;
     };
 
     export type Slices = {
@@ -28,7 +27,6 @@ export namespace StoreTypes {
         Servers: typeof slices.Servers._Slice;
         TextChats: typeof slices.TextChats._Slice;
         Users: typeof slices.Users._Slice;
-        VoiceChats: typeof slices.VoiceChats._Slice;
     };
 
     export type Apis = {
@@ -39,7 +37,6 @@ export namespace StoreTypes {
         Servers: typeof slices.Servers.Api;
         TextChats: typeof slices.TextChats.Api;
         Users: typeof slices.Users.Api;
-        VoiceChats: typeof slices.VoiceChats.Api;
     };
 
     export type SlicesWithEntityAdapter = T.Except<Slices, 'App'>;
@@ -67,12 +64,7 @@ export namespace StoreTypes {
     );
 
     export type QueryError = T.Simplify<
-        // T.ConditionalExcept<
-        //     ReduxToolkitQueryReact.FetchBaseQueryError,
-        //     // 'data' | 'error'
-        //     string
-        // >
-        | ReduxToolkit.SerializedError
+        ReduxToolkit.SerializedError
         | {
             status: T.ValueOf<T.Except<typeof HTTP_STATUS_CODES, 'OK'>>;
             data: {

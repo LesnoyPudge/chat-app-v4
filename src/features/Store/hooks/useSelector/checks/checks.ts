@@ -2,6 +2,7 @@ import { StoreTypes } from '@/store/types';
 import { logger } from '@/utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { invariant, isCallable, toOneLine } from '@lesnoypudge/utils';
+import { getSelectorName } from '../utils';
 
 
 
@@ -9,17 +10,6 @@ const SLOW_FIRST_RUN_THRESHOLD = 5;
 const SLOW_SECOND_RUN_THRESHOLD = 2;
 
 export const checks = (() => {
-    const getSelectorName = (selector: T.AnyFunction) => {
-        let displayName: string | undefined;
-
-        if ('displayName' in selector) {
-            displayName = String(selector.displayName);
-        };
-
-        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-        return displayName || selector.name.trim() || 'unknown';
-    };
-
     const detectBrokenStats = (selector: T.AnyFunction) => {
         const withDisplayName = 'displayName' in selector;
         const withRecomputations = 'recomputations' in selector;

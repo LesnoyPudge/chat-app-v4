@@ -42,4 +42,5 @@ https://fluid.tw/
 
 
 --- current goals ---
--? сделать кастомный babel plugin для компонента If. передавать не только condition но и value, и принимать children как рендер/ноду с NonNullable value. (https://www.npmjs.com/package/babel-plugin-jsx-control-statements)
+- сделать кастомный babel plugin для компонента If. передавать не только condition но и value, и принимать children как рендер/ноду с NonNullable value. (https://www.npmjs.com/package/babel-plugin-jsx-control-statements)
+- replace With component with new If.

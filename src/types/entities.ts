@@ -140,33 +140,6 @@ export namespace ClientEntities {
         >;
     }
 
-    export namespace VoiceChat {
-        export type Id = string;
-
-        type Conditional = (
-            {
-                channel: Channel.Id;
-                server: Server.Id;
-                conversation: null;
-            }
-            | {
-                channel: null;
-                server: null;
-                conversation: Conversation.Id;
-            }
-        );
-
-        export type Base = WithTimestamps<
-            Conditional
-            & {
-                id: Id;
-                participants: User.Id[];
-                muted: User.Id[];
-                deafen: User.Id[];
-            }
-        >;
-    }
-
     export namespace Conversation {
         export type Id = string;
 
@@ -174,7 +147,6 @@ export namespace ClientEntities {
             id: Id;
             members: User.Id[];
             textChat: TextChat.Id;
-            voiceChat: VoiceChat.Id;
         }>;
     }
 
@@ -206,26 +178,13 @@ export namespace ClientEntities {
     export namespace Channel {
         export type Id = string;
 
-        type Conditional = (
-            {
-                textChat: TextChat.Id;
-                voiceChat: null;
-            }
-            | {
-                textChat: null;
-                voiceChat: VoiceChat.Id;
-            }
-        );
-
-        export type Base = WithTimestamps<(
-            Conditional
-            & {
-                id: Id;
-                name: string;
-                server: Server.Id;
-                roleWhitelist: Role.Id[];
-            }
-        )>;
+        export type Base = WithTimestamps<{
+            id: Id;
+            name: string;
+            server: Server.Id;
+            roleWhitelist: Role.Id[];
+            textChat: TextChat.Id;
+        }>;
     }
 
     export namespace Server {

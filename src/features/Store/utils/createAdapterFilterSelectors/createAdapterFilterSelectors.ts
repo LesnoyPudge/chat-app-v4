@@ -15,7 +15,7 @@ export type FilterSelectors<
             ? `selectFilteredBy${Capitalize<_Key>}`
             : never
     )]: (
-        (searchValue: _State[_Key]) => (
+        (searchValue: _State[_Key] | undefined) => (
             rootState: StoreTypes.State
         ) => _State[]
     );
@@ -43,7 +43,7 @@ export const createAdapterFilterSelectors = <
         const selectorDisplayName = `${sliceName}/${selectorName}`;
 
         const selector = createSelector.withParams((
-            searchValue: _State[typeof key],
+            searchValue: _State[typeof key] | undefined,
         ) => (query) => query(() => {
             const allEntities = query(selectAll);
 

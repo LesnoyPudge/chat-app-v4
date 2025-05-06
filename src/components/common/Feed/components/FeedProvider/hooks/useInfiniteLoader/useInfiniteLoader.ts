@@ -21,6 +21,7 @@ export const useInfiniteLoader = ({
     const loadMore: (
         Types.Context['loadMore']
     ) = useFunction(({ from }) => {
+        if (!textChatId) return;
         if (getMessagesHelpers.isFetching) return;
 
         return getMessagesTrigger({
@@ -32,10 +33,11 @@ export const useInfiniteLoader = ({
 
     // initial fetch
     useEffect(() => {
+        if (!textChatId) return;
         if (!getMessagesHelpers.isUninitialized) return;
 
         void loadMore({ from: null });
-    }, [loadMore, getMessagesHelpers.isUninitialized]);
+    }, [loadMore, getMessagesHelpers.isUninitialized, textChatId]);
 
     return {
         loadMore,

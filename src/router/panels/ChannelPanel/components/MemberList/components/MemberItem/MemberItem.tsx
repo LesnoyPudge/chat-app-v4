@@ -1,7 +1,18 @@
-import { Button, Overlay, Placeholder, VirtualList, KeyboardNavigation, Avatar } from '@/components';
+import {
+    Button,
+    Overlay,
+    Placeholder,
+    VirtualList,
+    KeyboardNavigation,
+    Avatar,
+} from '@/components';
 import { FC, memo } from 'react';
 import { Store } from '@/features';
-import { useRefManager, withDisplayName, useFunction } from '@lesnoypudge/utils-react';
+import {
+    useRefManager,
+    withDisplayName,
+    useFunction,
+} from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
 import { useTrans, useIsCurrentUser } from '@/hooks';
 import { decorate } from '@lesnoypudge/macro';

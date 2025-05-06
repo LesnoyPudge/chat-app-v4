@@ -4,6 +4,8 @@ import { isProd } from '@/vars';
 import { useMemo } from 'react';
 import { ReduxReact } from '@/libs';
 import { checks } from './checks';
+import { logger } from '@/utils';
+import { getSelectorName } from './utils';
 
 
 
@@ -21,11 +23,18 @@ export const useSelector = <
     const stableSelector = useFunction((state: StoreTypes.State) => {
         if (isProd) return selector(state);
 
-        checks.detectBrokenStats(selector);
-        checks.detectSlowFirstRun(selector, state);
-        checks.detectSlowSecondRun(selector, state);
-        checks.detectRecomputations(selector, state);
-        checks.detectUnstableReturn(selector, state);
+        try {
+            checks.detectBrokenStats(selector);
+            checks.detectSlowFirstRun(selector, state);
+            checks.detectSlowSecondRun(selector, state);
+            checks.detectRecomputations(selector, state);
+            checks.detectUnstableReturn(selector, state);
+        } catch (error) {
+            logger._errors.log(`Found error in selector: ${
+                getSelectorName(selector)
+            }`);
+            logger._errors.error(error);
+        }
 
         return selector(state);
     });

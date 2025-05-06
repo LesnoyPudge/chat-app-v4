@@ -6,7 +6,7 @@ import { useRefManager } from '@lesnoypudge/utils-react';
 
 export namespace Types {
     export type Context = {
-        textChatId: string;
+        textChatId: string | undefined;
         feedRef: useRefManager.NullableRefManager<HTMLDivElement>;
         scrollableRef: RefObject<HTMLDivElement>;
         scrollableApiRef: useRefManager.NullableRefManager<Scrollable.Api>;

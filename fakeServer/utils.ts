@@ -74,17 +74,11 @@ export const getDeepServer = ({
         return channel.textChat;
     }).filter(Boolean);
 
-    const voiceChatIds = channels.map((channel) => {
-        return channel.voiceChat;
-    }).filter(Boolean);
-
     const textChats = db.getByIds('textChat', textChatIds);
-    const voiceChats = db.getByIds('voiceChat', voiceChatIds);
 
     return {
         [ENTITY_NAME.USER]: [owner].filter(Boolean),
         [ENTITY_NAME.TEXT_CHAT]: [...textChats],
-        [ENTITY_NAME.VOICE_CHAT]: [...voiceChats],
         [ENTITY_NAME.ROLE]: [...roles],
         [ENTITY_NAME.CHANNEL]: [...channels],
         [ENTITY_NAME.SERVER]: [server],
@@ -108,13 +102,9 @@ export const getDeepConversation = ({
     const textChat = db.getById('textChat', conversation.textChat);
     invariant(textChat, 'textChat not found');
 
-    const voiceChat = db.getById('voiceChat', conversation.voiceChat);
-    invariant(voiceChat, 'voiceChat not found');
-
     return {
         [ENTITY_NAME.USER]: [secondUser],
         [ENTITY_NAME.TEXT_CHAT]: [textChat],
-        [ENTITY_NAME.VOICE_CHAT]: [voiceChat],
         [ENTITY_NAME.CONVERSATION]: [conversation],
     };
 };
@@ -129,7 +119,6 @@ export const getAppData = async (
         conv_Conversation,
         conv_TextChat,
         conv_User,
-        conv_VoiceChat,
     } = await flattenPopulated('conv_', user.conversations.map((id) => {
         return getDeepConversation({ userId: user.id, conversationId: id });
     }));
@@ -140,7 +129,6 @@ export const getAppData = async (
         server_Server,
         server_TextChat,
         server_User,
-        server_VoiceChat,
     } = await flattenPopulated('server_', user.servers.map((id) => {
         return getDeepServer({ userId: user.id, serverId: id });
     }));
@@ -161,10 +149,6 @@ export const getAppData = async (
             ...conv_User ?? [],
             ...server_User ?? [],
             ...friends,
-        ],
-        [ENTITY_NAME.VOICE_CHAT]: [
-            ...conv_VoiceChat ?? [],
-            ...server_VoiceChat ?? [],
         ],
     };
 };

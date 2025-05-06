@@ -14,6 +14,8 @@ export const useOuterStateSync = ({ textChatId }: Props) => {
     const { setCurrentTextChat } = Store.useActions(Store.App);
 
     useEffect(() => {
+        if (!textChatId) return;
+
         setCurrentTextChat(textChatId);
 
         return () => {
@@ -33,10 +35,13 @@ export const useOuterStateSync = ({ textChatId }: Props) => {
     ] = Store.Users.Api.useUserMarkTextChatAsReadMutation();
 
     useEffect(() => {
+        if (!textChatId) return;
+
         void markAsReadTrigger({ textChatId });
     }, [markAsReadTrigger, textChatId]);
 
     useEffect(() => {
+        if (!textChatId) return;
         if (messageCount === undefined) return;
         if (prevMessageCount === undefined) return;
         if (prevMessageCount === messageCount) return;

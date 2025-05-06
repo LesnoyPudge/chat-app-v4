@@ -28,22 +28,14 @@ export const Header: FC = () => {
         toggle,
         shouldShowExtraPanel,
     } = ChatPageTemplate.useChatPageTemplate();
-    const { channelId } = Navigator.useParams('channel');
+    const parsed = Navigator.useParamsValidator('channel');
     const { t } = useTrans();
     const toggleButtonRef = useRefManager<HTMLButtonElement>(null);
 
-    const isTextChannel = Store.useSelector(
-        Store.Channels.Selectors.selectIsTextChannelById(channelId),
-    );
+    const channelId = parsed.success ? parsed.output.channelId : undefined;
 
     const name = Store.useSelector(
         Store.Channels.Selectors.selectNameById(channelId),
-    );
-
-    const sprite = (
-        isTextChannel
-            ? ASSETS.IMAGES.SPRITE.TEXT_ROOM_ICON
-            : ASSETS.IMAGES.SPRITE.VOICE_ROOM_ICON
     );
 
     const toggleButtonDescription = (
@@ -60,7 +52,7 @@ export const Header: FC = () => {
             <Placeholder.With reveal={!!name}>
                 <Sprite
                     className={styles.icon}
-                    sprite={sprite}
+                    sprite={ASSETS.IMAGES.SPRITE.TEXT_ROOM_ICON}
                 />
 
                 <Heading.Node className={styles.heading}>

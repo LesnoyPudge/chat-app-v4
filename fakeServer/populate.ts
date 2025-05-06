@@ -225,17 +225,6 @@ const createServer = deferred(async (
         });
     }
 
-    const voiceChats = voiceChatIds.map((channelId, index) => {
-        const id = voiceChannelIds[index];
-        invariant(id);
-
-        return Dummies.voiceChatChannel({
-            id,
-            channel: channelId,
-            server: serverId,
-        });
-    });
-
     const textChannels = textChannelIds.map((id, index) => {
         const textChat = textChats[index]?.chat;
         invariant(textChat);
@@ -246,31 +235,13 @@ const createServer = deferred(async (
             roleWhitelist: [],
             server: serverId,
             textChat: textChat.id,
-            voiceChat: null,
-        });
-    });
-
-    const voiceChannels = voiceChannelIds.map((id, index) => {
-        const voiceChat = voiceChats[index];
-        invariant(voiceChat);
-
-        return Dummies.channel({
-            id,
-            name: faker.animal.petName(),
-            roleWhitelist: [],
-            server: serverId,
-            voiceChat: voiceChat.id,
-            textChat: null,
         });
     });
 
     const server = Dummies.server({
         avatar: null,
         id: serverId,
-        channels: extractIds([
-            ...textChannels,
-            ...voiceChannels,
-        ]),
+        channels: extractIds(textChannels),
         identifier: faker.string.sample(),
         members: [...new Set([
             ...extractIds(members),
@@ -287,9 +258,7 @@ const createServer = deferred(async (
         owner,
         roles,
         textChats: textChats.flatMap(({ chat }) => chat),
-        voiceChats,
         textChannels,
-        voiceChannels,
         messages: textChats.flatMap(({ messages }) => messages),
     };
 });
@@ -321,21 +290,14 @@ const createConversation = deferred(async (myId: string, userId: string) => {
         messages: extractIds(messages),
     });
 
-    const voiceChat = Dummies.voiceChatConversation({
-        id: uuid(),
-        conversation: id,
-    });
-
     const conversation = Dummies.conversation({
         id,
         textChat: textChat.id,
-        voiceChat: voiceChat.id,
         members: [myId, userId],
     });
 
     return {
         textChat,
-        voiceChat,
         conversation,
         messages,
     };
@@ -466,8 +428,6 @@ export const populate = async ({
         servers_server = [],
         servers_textChannels = [],
         servers_textChats = [],
-        servers_voiceChannels = [],
-        servers_voiceChats = [],
     } = await defer(() => flattenPopulated(
         'servers_',
         Promise.all(createArray(mul(3)).map(async () => {
@@ -487,8 +447,6 @@ export const populate = async ({
         my_servers_server = [],
         my_servers_textChannels = [],
         my_servers_textChats = [],
-        my_servers_voiceChannels = [],
-        my_servers_voiceChats = [],
     } = await defer(() => flattenPopulated(
         'my_servers_',
         Promise.all(createArray(mul(1)).map(() => {
@@ -504,8 +462,6 @@ export const populate = async ({
         mutedServers_server = [],
         mutedServers_textChannels = [],
         mutedServers_textChats = [],
-        mutedServers_voiceChannels = [],
-        mutedServers_voiceChats = [],
     } = await defer(() => flattenPopulated(
         'mutedServers_',
         Promise.all(createArray(mul(2)).map(async () => {
@@ -532,7 +488,6 @@ export const populate = async ({
         conv_conversation = [],
         conv_messages = [],
         conv_textChat = [],
-        conv_voiceChat = [],
     } = await defer(() => flattenPopulated(
         'conv_',
         Promise.all(friendsWithConv.map(async ({ id }) => {
@@ -559,7 +514,6 @@ export const populate = async ({
         mutedConv_conversation = [],
         mutedConv_messages = [],
         mutedConv_textChat = [],
-        mutedConv_voiceChat = [],
     } = await defer(() => flattenPopulated(
         'mutedConv_',
         Promise.all(friendsWithMutedConv.map(async ({ id }) => {
@@ -586,7 +540,6 @@ export const populate = async ({
         hiddenConv_conversation = [],
         hiddenConv_messages = [],
         hiddenConv_textChat = [],
-        hiddenConv_voiceChat = [],
     } = await defer(() => flattenPopulated(
         'hiddenConv_',
         Promise.all(friendsWithHiddenConv.map(async ({ id }) => {
@@ -616,11 +569,8 @@ export const populate = async ({
         ]),
         channel: combineToTable([
             ...servers_textChannels,
-            ...servers_voiceChannels,
             ...my_servers_textChannels,
-            ...my_servers_voiceChannels,
             ...mutedServers_textChannels,
-            ...mutedServers_voiceChannels,
         ]),
         conversation: combineToTable([
             ...conv_conversation,
@@ -657,15 +607,6 @@ export const populate = async ({
             ...conv_textChat,
             ...mutedConv_textChat,
             ...hiddenConv_textChat,
-        ]),
-        voiceChat: combineToTable([
-            ...servers_voiceChats,
-            ...my_servers_voiceChats,
-            ...mutedServers_voiceChats,
-            ...mutedServers_voiceChats,
-            ...conv_voiceChat,
-            ...mutedConv_voiceChat,
-            ...hiddenConv_voiceChat,
         ]),
     });
 };

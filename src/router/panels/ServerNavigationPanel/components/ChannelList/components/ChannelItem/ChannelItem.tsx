@@ -1,8 +1,21 @@
-import { Button, KeyboardNavigation, MobileMenu, Overlay, Placeholder, Sprite, VirtualList, WithPermission } from '@/components';
+import {
+    Button,
+    KeyboardNavigation,
+    MobileMenu,
+    Overlay,
+    Placeholder,
+    Sprite,
+    VirtualList,
+    WithPermission,
+} from '@/components';
 import { Navigator, Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
-import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
+import {
+    useFunction,
+    useRefManager,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@/utils';
 import { FC, memo, useRef } from 'react';
 import { decorate } from '@lesnoypudge/macro';
@@ -92,13 +105,6 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
         closeMenu();
     });
 
-    const isTextChannel = channel?.voiceChat === null;
-    const channelTypeSprite = (
-        isTextChannel
-            ? ASSETS.IMAGES.SPRITE.TEXT_ROOM_ICON
-            : ASSETS.IMAGES.SPRITE.VOICE_ROOM_ICON
-    );
-
     return (
         <li
             className={cn(
@@ -124,7 +130,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
                     <>
                         <Sprite
                             className={styles.channelTypeIcon}
-                            sprite={channelTypeSprite}
+                            sprite={ASSETS.IMAGES.SPRITE.TEXT_ROOM_ICON}
                         />
 
                         <span className={styles.name}>

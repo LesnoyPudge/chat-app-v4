@@ -11,20 +11,20 @@ const styles = createStyles({
 export const SendMessageInput = () => {
     const { channelId } = Navigator.useParams('channel');
 
-    const channel = Store.useSelector(
-        Store.Channels.Selectors.selectById(channelId),
+    const textChatId = Store.useSelector(
+        Store.Channels.Selectors.selectTextChatById(channelId),
     );
 
-    const shouldShowInput = !!channel;
-    const shouldShowPlaceholder = !channel;
+    const shouldShowInput = !!textChatId;
+    const shouldShowPlaceholder = !textChatId;
 
     return (
         <div className={styles.wrapper}>
             <If condition={shouldShowInput}>
-                <With value={channel?.textChat}>
-                    {(textChat) => (
+                <With value={textChatId}>
+                    {(textChatId) => (
                         <MessageEditor.Presets.SendMessageInput
-                            textChatId={textChat}
+                            textChatId={textChatId}
                         />
                     )}
                 </With>

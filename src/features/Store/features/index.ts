@@ -6,4 +6,3 @@ export * from './Roles';
 export * from './Servers';
 export * from './TextChats';
 export * from './Users';
-export * from './VoiceChats';

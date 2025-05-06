@@ -30,7 +30,7 @@
         "@fluentui/react-context-selector": "^9.1.76",
         "@lesnoypudge/types-utils-base": "^3.5.0",
         "@lesnoypudge/utils": "^19.5.2",
-        "@lesnoypudge/utils-react": "^18.2.0",
+        "@lesnoypudge/utils-react": "^18.2.1",
         "@lesnoypudge/utils-web": "^3.4.1",
         "@reduxjs/toolkit": "^2.5.1",
         "@tailwindcss/container-queries": "^0.1.1",

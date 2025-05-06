@@ -31,6 +31,4 @@ export namespace Store {
     export import TextChats = features.TextChats;
 
     export import Users = features.Users;
-
-    export import VoiceChats = features.VoiceChats;
 }

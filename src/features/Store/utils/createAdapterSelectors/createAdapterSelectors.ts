@@ -37,9 +37,9 @@ export const createAdapterSelectors = <
     const selectById = createSelector.withParams(
         (id: _State['id'] | undefined) => {
             return (query) => {
-                if (!id) return;
-
                 const entities = query(selectEntities);
+
+                if (!id) return;
 
                 return entities[id];
             };
@@ -49,9 +49,9 @@ export const createAdapterSelectors = <
     const selectIsExistsById = createSelector.withParams(
         (id: _State['id'] | undefined) => {
             return (query): boolean => {
-                if (!id) return false;
-
                 const entities = query(selectEntities);
+
+                if (!id) return false;
 
                 return id in entities;
             };
@@ -61,9 +61,9 @@ export const createAdapterSelectors = <
     const selectByIds = createSelector.withParams(
         (...ids: _State['id'][]) => {
             return (query) => {
-                if (!ids) return [];
-
                 const entities = query(selectEntities);
+
+                if (!ids) return [];
 
                 return ids.map((id) => entities[id]).filter(Boolean);
             };
@@ -80,9 +80,9 @@ export const createAdapterSelectors = <
     const selectUndefinedIdsByIds = createSelector.withParams(
         (...ids: _State['id'][]) => {
             return (query) => {
-                if (!ids) return [];
-
                 const entities = query(selectEntities);
+
+                if (!ids) return [];
 
                 return ids.filter((id) => !entities[id]);
             };

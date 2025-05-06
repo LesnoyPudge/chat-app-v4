@@ -17,8 +17,8 @@ export const Sounds: FC = () => {
 
                 (
                     state.value
-                        ? soundManager.play('1', ASSETS.SOUNDS.DISCORD_MUTE)
-                        : soundManager.play('', ASSETS.SOUNDS.DISCORD_UNMUTE)
+                        ? soundManager.play(ASSETS.SOUNDS.DISCORD_MUTE)
+                        : soundManager.play(ASSETS.SOUNDS.DISCORD_UNMUTE)
                 );
             }}>
                 <>toggle {String(state.value)}</>
@@ -36,7 +36,7 @@ export const Sounds: FC = () => {
                     >
                         <button
                             onClick={() => {
-                                soundManager.play('', ASSETS.SOUNDS[name]);
+                                soundManager.play(ASSETS.SOUNDS[name]);
                             }}
                         >
                             <>sound on: {name}</>
@@ -44,7 +44,7 @@ export const Sounds: FC = () => {
 
                         <button
                             onClick={() => {
-                                soundManager.stop('', ASSETS.SOUNDS[name]);
+                                soundManager.stop(ASSETS.SOUNDS[name]);
                             }}
                         >
                             <>sound off: {name}</>

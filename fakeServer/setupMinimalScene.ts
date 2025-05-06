@@ -33,16 +33,10 @@ export const setupMinimalScene = async (myId: string) => {
         id: uuid(),
         members: [me.id, conversationSecondUser.id],
         textChat: textChatId,
-        voiceChat: uuid(),
     });
 
     me.conversations.push(conversation.id);
     conversationSecondUser.conversations.push(conversation.id);
-
-    const voiceChat = Dummies.voiceChatConversation({
-        id: conversation.voiceChat,
-        conversation: conversation.id,
-    });
 
     const messageListSize = 200;
     let prevMessageCreatedAt = Date.now();
@@ -96,9 +90,6 @@ export const setupMinimalScene = async (myId: string) => {
         ]),
         textChat: combineToTable([
             textChat,
-        ]),
-        voiceChat: combineToTable([
-            voiceChat,
         ]),
     });
 };

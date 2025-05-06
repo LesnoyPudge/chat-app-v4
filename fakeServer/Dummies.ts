@@ -1,5 +1,5 @@
 import { ClientEntities } from '@/types';
-import { inRange, invariant } from '@lesnoypudge/utils';
+import { inRange } from '@lesnoypudge/utils';
 import { nanoid } from '@reduxjs/toolkit';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { v4 as uuid } from 'uuid';
@@ -13,15 +13,12 @@ export class Dummies {
                 ClientEntities.Channel.Base,
                 'id'
                 | 'textChat'
-                | 'voiceChat'
                 | 'roleWhitelist'
                 | 'server'
                 | 'name'
             >
         ),
     ): ClientEntities.Channel.Base {
-        invariant(data.textChat ?? data.voiceChat, 'chat not provided');
-
         return {
             ...data,
         } as ClientEntities.Channel.Base;
@@ -31,7 +28,7 @@ export class Dummies {
         data: (
             Pick<
                 ClientEntities.Conversation.Base,
-                'id' | 'textChat' | 'voiceChat' | 'members'
+                'id' | 'textChat' | 'members'
             >
         ),
     ): ClientEntities.Conversation.Base {
@@ -156,7 +153,7 @@ export class Dummies {
             mutedConversations: [],
             hiddenConversations: [],
             isDeleted: false,
-            lastSeenMessages: [],
+            lastSeenMessages: {},
             mutedServers: [],
             servers: [],
             settings: {
@@ -197,41 +194,6 @@ export class Dummies {
             server: null,
             messageCount: data.messages.length,
             channel: null,
-            createdAt: Date.now(),
-            updatedAt: Date.now(),
-        };
-    }
-
-    static voiceChatChannel(
-        data: T.SetNonNullable<Pick<
-            ClientEntities.TextChat.Base,
-            'id' | 'channel' | 'server'
-        >>,
-    ): ClientEntities.VoiceChat.Base {
-        return {
-            ...data,
-            deafen: [],
-            muted: [],
-            participants: [],
-            conversation: null,
-            createdAt: Date.now(),
-            updatedAt: Date.now(),
-        };
-    }
-
-    static voiceChatConversation(
-        data: T.SetNonNullable<Pick<
-            ClientEntities.VoiceChat.Base,
-            'id' | 'conversation'
-        >>,
-    ): ClientEntities.VoiceChat.Base {
-        return {
-            ...data,
-            server: null,
-            channel: null,
-            deafen: [],
-            muted: [],
-            participants: [],
             createdAt: Date.now(),
             updatedAt: Date.now(),
         };

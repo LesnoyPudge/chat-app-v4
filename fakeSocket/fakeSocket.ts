@@ -25,7 +25,6 @@ class FakeSocket {
             Servers: new Map(),
             TextChats: new Map(),
             Users: new Map(),
-            VoiceChats: new Map(),
         };
     }
 
@@ -263,7 +262,6 @@ class FakeSocket {
             Servers: Object.values(storage.server),
             TextChats: Object.values(storage.textChat),
             Users: Object.values(storage.user),
-            VoiceChats: Object.values(storage.voiceChat),
         }));
     }
 }

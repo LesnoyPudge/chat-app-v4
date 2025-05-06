@@ -42,7 +42,7 @@ export const {
 });
 
 export const selectDefinedMessageIdsById = createSelector.withParams(
-    (textChatId: string) => (query) => {
+    (textChatId: string | undefined) => (query) => {
         const allMessagesIds = query(selectMessagesById(textChatId));
         if (!allMessagesIds?.length) return allMessagesIds;
 
@@ -54,7 +54,7 @@ export const selectDefinedMessageIdsById = createSelector.withParams(
 );
 
 const selectFirstDefinedMessageIdById = createSelector.withParams(
-    (textChatId: string) => (query) => {
+    (textChatId: string | undefined) => (query) => {
         const allMessagesIds = query(selectMessagesById(textChatId));
         if (!allMessagesIds?.length) return;
 
@@ -70,7 +70,7 @@ const selectFirstDefinedMessageIdById = createSelector.withParams(
 );
 
 export const selectFirstDefinedMessageIndexById = createSelector.withParams(
-    (textChatId: string) => (query) => {
+    (textChatId: string | undefined) => (query) => {
         const firstMessageId = query(
             selectFirstDefinedMessageIdById(textChatId),
         );
@@ -86,7 +86,7 @@ export const selectFirstDefinedMessageIndexById = createSelector.withParams(
 );
 
 export const selectLastDefinedMessageIndexById = createSelector.withParams(
-    (textChatId: string) => (query) => {
+    (textChatId: string | undefined) => (query) => {
         const definedMessageIds = query(
             selectDefinedMessageIdsById(textChatId),
         );
@@ -116,17 +116,15 @@ export const selectUnreadMessageCountById = createSelector.withParams(
         const currentTextChatId = query(App.Selectors.selectCurrentTextChat);
         if (textChatId === currentTextChatId) return 0;
 
-        const lastSeenList = query(
+        const { lastSeenMessages } = query(
             Users.Selectors.selectCurrentUser,
-        ).lastSeenMessages;
+        );
 
-        const foundItem = lastSeenList.find((v) => {
-            return v.textChatId === textChatId;
-        });
-        if (!foundItem) return totalCount;
+        const foundIndex = lastSeenMessages[textChatId];
+        if (!foundIndex) return totalCount;
 
 
-        const diff = Math.max(0, totalCount - foundItem.lastIndex + 1);
+        const diff = Math.max(0, totalCount - foundIndex + 1);
 
         return diff;
     },

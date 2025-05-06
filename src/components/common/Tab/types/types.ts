@@ -1,6 +1,10 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { ContextSelectable, Iterate, useRefManager } from '@lesnoypudge/utils-react';
+import {
+    ContextSelectable,
+    Iterate,
+    useRefManager,
+} from '@lesnoypudge/utils-react';
 import { PropsWithChildren, ReactNode } from 'react';
 import { Direction } from '@/types';
 
@@ -64,7 +68,7 @@ export namespace Types {
         export type Props<_Tabs extends GenericTabs> = (
             RT.PropsWithClassName
             & RT.PropsWithRequiredRenderFunction<
-                Iterate.ChildrenArgs<keyof _Tabs>
+                Iterate.ChildrenArgsWithItems<keyof _Tabs>
             >
             & {
                 context: ContextSelectable.createContext.ContextSelectable<

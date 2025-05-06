@@ -88,10 +88,6 @@ namespace WithIds {
         textChatIds: Entities.TextChat.Id[];
     };
 
-    export type VoiceChat = {
-        voiceChatIds: Entities.VoiceChat.Id[];
-    };
-
     export type File = {
         fileIds: Entities.File.Id[];
     };
@@ -126,7 +122,6 @@ type AppData = {
     [ENTITY_NAME.SERVER]: Entities.Server.Base[];
     [ENTITY_NAME.TEXT_CHAT]: Entities.TextChat.Base[];
     [ENTITY_NAME.USER]: Entities.User.Base[];
-    [ENTITY_NAME.VOICE_CHAT]: Entities.VoiceChat.Base[];
 };
 
 namespace EndpointsV1 {
@@ -531,7 +526,6 @@ namespace EndpointsV1 {
                 | 'Channel'
                 | 'Role'
                 | 'TextChat'
-                | 'VoiceChat'
             >;
         }
 
@@ -640,7 +634,7 @@ namespace EndpointsV1 {
 
             export type Response = Pick<
                 AppData,
-                'Conversation' | 'User' | 'TextChat' | 'VoiceChat'
+                'Conversation' | 'User' | 'TextChat'
             >;
         }
 
@@ -778,24 +772,6 @@ namespace EndpointsV1 {
 
             export type Response = Entities.Message.Base[];
         }
-    }
-
-    export namespace VoiceChat {
-        const BasePath = ENTITY_NAME.VOICE_CHAT;
-
-        // export namespace GetMany {
-        //     export const ActionName = 'getMany';
-
-        //     export const NamedAction = namedAction(BasePath, ActionName);
-
-        //     export const Path = v1(BasePath, ActionName);
-
-        //     export const Method = HTTP_METHODS.POST;
-
-        //     export type RequestBody = WithIds.VoiceChat;
-
-        //     export type Response = Entities.VoiceChat.Base[];
-        // }
     }
 
     export namespace File {

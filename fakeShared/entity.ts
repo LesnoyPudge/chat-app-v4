@@ -1,4 +1,4 @@
-import { pick } from '@lesnoypudge/utils';
+// import { pick } from '@lesnoypudge/utils';
 
 
 
@@ -6,7 +6,6 @@ export const ENTITY_NAME = {
     USER: 'User',
     MESSAGE: 'Message',
     TEXT_CHAT: 'TextChat',
-    VOICE_CHAT: 'VoiceChat',
     CONVERSATION: 'Conversation',
     ROLE: 'Role',
     CHANNEL: 'Channel',

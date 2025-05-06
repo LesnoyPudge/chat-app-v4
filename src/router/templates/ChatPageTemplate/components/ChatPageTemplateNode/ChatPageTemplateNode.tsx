@@ -1,5 +1,5 @@
 import { cn, createStyles } from '@/utils';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { Types } from '../../types';
 import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
 import { decorate } from '@lesnoypudge/macro';
@@ -21,6 +21,7 @@ const styles = createStyles({
 const { withDecorator } = createWithDecorator(ChatPageTemplateProvider);
 
 decorate(withDisplayName, 'ChatPageTemplateNode', decorate.target);
+decorate(memo, decorate.target);
 decorate(withDecorator, decorate.target);
 
 export const ChatPageTemplateNode: FC<Types.Node.Props> = ({

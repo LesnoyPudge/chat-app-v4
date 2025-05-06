@@ -14,11 +14,7 @@ import {
 import { setupWorker } from 'msw/browser';
 import { db, initDB } from './FakeDB';
 import { Dummies } from './Dummies';
-import {
-    HTTP_METHODS,
-    HTTP_STATUS_CODES,
-    invariant,
-} from '@lesnoypudge/utils';
+import { HTTP_METHODS, HTTP_STATUS_CODES, invariant } from '@lesnoypudge/utils';
 import { env, FLAGS } from '@/vars';
 import { token } from './token';
 import { v4 as uuid } from 'uuid';
@@ -355,27 +351,6 @@ const getRoutes = (): HttpHandler[] => [
                 roleWhitelist: [],
                 server: serverId,
                 textChat: textChat.id,
-                voiceChat: null,
-            }));
-
-            const voiceChannelId = uuid();
-
-            const voiceChat = await db.create(
-                'voiceChat',
-                Dummies.voiceChatChannel({
-                    id: uuid(),
-                    channel: voiceChannelId,
-                    server: serverId,
-                }),
-            );
-
-            const voiceChannel = await db.create('channel', Dummies.channel({
-                id: voiceChannelId,
-                name: 'Text channel',
-                roleWhitelist: [],
-                server: serverId,
-                voiceChat: voiceChat.id,
-                textChat: null,
             }));
 
             const newServer = await db.create('server', Dummies.server({
@@ -384,7 +359,7 @@ const getRoutes = (): HttpHandler[] => [
                 identifier: body.identifier,
                 name: body.name,
                 owner: auth.id,
-                channels: [textChannel.id, voiceChannel.id],
+                channels: [textChannel.id],
                 members: [auth.id],
                 roles: [defaultRole.id, adminRole.id],
             }));
@@ -572,7 +547,6 @@ const getRoutes = (): HttpHandler[] => [
                 Server = [],
                 TextChat = [],
                 User = [],
-                VoiceChat = [],
             } = await flattenPopulated('', body.serverIds.map((id) => {
                 return getDeepServer({
                     userId: auth.id,
@@ -586,7 +560,6 @@ const getRoutes = (): HttpHandler[] => [
                 Server,
                 TextChat,
                 User,
-                VoiceChat,
             });
         },
     ),
@@ -601,7 +574,6 @@ const getRoutes = (): HttpHandler[] => [
                 Conversation = [],
                 TextChat = [],
                 User = [],
-                VoiceChat = [],
             } = await flattenPopulated('', body.conversationIds.map((id) => {
                 return getDeepConversation({
                     userId: auth.id,
@@ -613,7 +585,6 @@ const getRoutes = (): HttpHandler[] => [
                 Conversation,
                 TextChat,
                 User,
-                VoiceChat,
             });
         },
     ),
