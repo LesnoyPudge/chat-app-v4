@@ -4,7 +4,13 @@ import { Store } from '@/features';
 import { injectedStore } from '@/store/utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { deepEqual, invariant, toOneLine } from '@lesnoypudge/utils';
-import { Focus, useBoolean, useCounter, useForceUpdate, useRefManager } from '@lesnoypudge/utils-react';
+import {
+    Focus,
+    useBoolean,
+    useCounter,
+    useForceUpdate,
+    useRefManager,
+} from '@lesnoypudge/utils-react';
 import React, { FC, useEffect, useLayoutEffect, useRef } from 'react';
 import { flushSync } from 'react-dom';
 import { renderToString } from 'react-dom/server';
@@ -151,11 +157,11 @@ export const MeasureSelectorPerf: FC = () => {
 
                 {/* <If condition={state.value}>
                     <Inner key={counter.count}/>
-                </If>
+                </If> */}
 
                 <If condition={!state.value}>
                     <div>hidden</div>
-                </If> */}
+                </If>
             </div>
         </Scrollable>
     );

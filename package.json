@@ -68,6 +68,7 @@
         "@lesnoypudge/eslint-config": "^12.0.3",
         "@lesnoypudge/formatter-config": "^8.0.0",
         "@lesnoypudge/macro": "^1.0.2",
+        "@lesnoypudge/react-if": "^1.0.0",
         "@lesnoypudge/types-global-base": "^4.0.0",
         "@lesnoypudge/types-global-node": "^1.0.1",
         "@lesnoypudge/types-global-react": "^5.0.0",
@@ -106,7 +107,6 @@
         "vite-bundle-analyzer": "^0.20.1",
         "vite-plugin-checker": "^0.9.1",
         "vite-plugin-pwa": "^1.0.0",
-        "vite-plugin-react-control-statements": "^1.0.2",
         "vite-plugin-restart": "^0.4.2",
         "vite-plugin-run": "^0.6.1",
         "vite-tsconfig-paths": "^5.1.4"

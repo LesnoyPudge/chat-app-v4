@@ -22,7 +22,7 @@ export const HomePageButton: FC = () => {
 
     const handleClick = useFunction(() => {
         navigateTo.root();
-        if (isInRoot) startTransition(closeMenu);
+        startTransition(closeMenu);
     });
 
     const isInRootOrConversation = isInRoot || isInAnyConversation;

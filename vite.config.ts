@@ -9,7 +9,7 @@ import url from 'node:url';
 import { debarrelPlugin } from './vitePlugins';
 // import ViteRestart from 'vite-plugin-restart';
 // import { run } from 'vite-plugin-run';
-import reactControlStatements from 'vite-plugin-react-control-statements';
+import { babelPluginReactIf } from '@lesnoypudge/react-if';
 
 
 
@@ -142,6 +142,7 @@ const config: UserConfigFn = ({ mode }) => {
                 babel: {
                     comments: isDev,
                     plugins: [
+                        babelPluginReactIf,
                         // unstable, multiple crashes
                         // [
                         //     'babel-plugin-react-compiler',
@@ -158,7 +159,6 @@ const config: UserConfigFn = ({ mode }) => {
                     ].filter((item) => typeof item !== 'boolean'),
                 },
             }),
-            reactControlStatements(),
             checker({ typescript: true }),
             // FOR SOME REASON PREVENTS MSW FROM WORKING AFTER RELOAD
             // SHOULD PROBABLY ADD AN EXCEPTION FOR MSW

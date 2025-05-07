@@ -2,15 +2,20 @@ import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { memo, useState } from 'react';
 import { Placeholder } from '@/components';
 import { isDev, isProd } from '@/vars';
-import { renderFunction, useTimeout, withDisplayName } from '@lesnoypudge/utils-react';
+import {
+    renderFunction,
+    useTimeout,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
 import { decorate } from '@lesnoypudge/macro';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
 export namespace WithPlaceholder {
     export type Props<_Value> = (
         Placeholder.Node.Props
-        & RT.PropsWithRenderFunctionOrNode<[value: NonNullable<_Value>]>
+        & RT.PropsWithRenderFunctionOrNode<[value: T.Truthy<_Value>]>
         & {
             reveal: _Value;
         }
@@ -45,7 +50,7 @@ export const WithPlaceholder = <_Value,>({
     return (
         <>
             <If condition={showChildren}>
-                {renderFunction(children, reveal!)}
+                {renderFunction(children, reveal as T.Truthy<_Value>)}
             </If>
 
             <If condition={showPlaceholder}>

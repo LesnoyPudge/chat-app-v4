@@ -43,8 +43,7 @@ export const Header: FC = () => {
 
     const handleClick = useFunction(() => {
         navigateTo.root();
-
-        if (isInRoot) startTransition(closeMenu);
+        startTransition(closeMenu);
     });
 
     return (
