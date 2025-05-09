@@ -1,10 +1,6 @@
 import { DialogBlocks, Form, Tab } from '@/components';
 import { decorate } from '@lesnoypudge/macro';
-import {
-    createWithDecorator,
-    useFunction,
-    withDisplayName,
-} from '@lesnoypudge/utils-react';
+import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
 import { AppearanceTab, Navigation, ProfileTab } from './components';
 import { Store } from '@/features';
@@ -60,11 +56,7 @@ const { withDecorator } = createWithDecorator<
 decorate(withDisplayName, 'AppSettingsDialog', decorate.target);
 
 export const AppSettingsDialog = withDecorator(() => {
-    const {
-        closeMenu,
-        triggerScreenShake,
-        resetShakeStacks,
-    } = DialogBlocks.FullScreen.useContextProxy();
+    const { resetShakeStacks } = DialogBlocks.FullScreen.useContextProxy();
 
     const [
         updateProfile,
@@ -93,14 +85,9 @@ export const AppSettingsDialog = withDecorator(() => {
         },
     });
 
-    const isDirty = Form.useStore(form.api.store, (v) => v.isDirty);
-
-    const handleTabChange: Tab.Types.OnTabChange = useFunction((prevent) => {
-        if (!isDirty) return closeMenu();
-
-        prevent();
-        triggerScreenShake();
-    });
+    const {
+        handleTabChange,
+    } = DialogBlocks.FullScreen.useHandleTabChange(form);
 
     return (
         <AppSettingsForm.Provider form={form}>

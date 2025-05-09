@@ -1,6 +1,7 @@
 import * as components from './components';
 import * as context from './context';
 import * as types from './types';
+import * as hooks from './hooks';
 
 
 
@@ -19,6 +20,10 @@ export namespace FullScreenDialogBlocks {
         FullScreenDialogBlocksNavigationItem: NavigationItem,
         FullScreenDialogBlocksTabTitle: TabTitle,
     } = components;
+
+    export const {
+        useFullScreenDialogBlocksHandleTabChange: useHandleTabChange,
+    } = hooks;
 
     export const {
         FullScreenDialogBlocksContext: Context,
