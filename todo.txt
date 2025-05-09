@@ -17,7 +17,6 @@ https://fluid.tw/
 -? ИСПОЛЬЗОВАТЬ ВСЕ РЕЛАТИВНЫЕ ПУТИ
 -? fix all eslint violations :)
 -? UPDATE ALL FORM RELATED CODE TO TANSTACK FORM VERSION 1+
-- добавить обработчики эндпоинтов из контекстных меню
 -??? найти баг при котором ViewportListInner бесконечно перерендеривается
 - полностью пересмотреть фонт, разобраться с особенностями, убрать размытие, проверить отступы и центровку (ТЕКСТ НЕ ЦЕНТРОВАН ОТНОСИТЕЛЬНО СВОЕГО ЖЕ КОНТЕЙНЕРА)
 -? лениво загружать роутер? он весит много и не нужен во время загрузки
@@ -25,18 +24,35 @@ https://fluid.tw/
 - refactor utils-react so that entities uses Types instead of nested namespaces
 - refactor utils-react so that it uses '@/path' instead of '@path'
 -??? create library 'is', with many functions like is(someValue).equal.shallow(otherValue), is(maybeValue).defined(). the feature is that it comes with babel plugin to transform this code in prod into shallowEqual(someValue, otherValue), maybeValue !== undefined.
-
+-? in case of using styleX, create babel plugin for ease of applying styles:
+<div 
+    // instead of this
+    {...stylex.props(styles.card)} 
+    // do this
+    styleX={styles.card}
+    // or this
+    styleX={[
+        styles.card, 
+        styles.cardDynamic(42), 
+        !!Math.random() ? styles.cardA : null, 
+        Math.random() && styles.cardB
+    ]} 
+/>
 
 
 --- local goals ---
 -? investigate long initialization (before loading screen)
--? сделать тэмплейт для модалок через рендер пропы
--? изменить как entity id передаются в компоненты? сделать через контекст из за чего будет меньше дрилинга?
+-? изменить как entity id передаются в компоненты? сделать через контекст из за чего будет меньше дрилинга? (только внутри замкнутых компонентов)
 -? investigate infinite rerenders in VirtualListInner (list mutation on every frame, maybe indexes, maybe should install older version, in previous project version is 7.0.0, in current 7.1.2)
 -? убрать автопереход? или фэтчить доступные каналы заранее
 -? убрать серектор по ids, заменить на селект по id овнера (например textChatId вместо messageIds)
 -? протестировать кэш селекторов, они подозрительно медленные
+- добавить обработчики эндпоинтов из контекстных меню
+- изменить все импорты использующие либы напрямую на импорт из @/libs
+
 
 
 
 --- current goals ---
+- сделать все диалоги (убрать те что в падлу делать (роли и другие нереализованные фичи))
+-? сделать тэмплейт для диалогов через рендер пропы

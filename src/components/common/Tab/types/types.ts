@@ -15,6 +15,8 @@ export namespace Types {
 
     export type GenericTabs = Record<string, ReactNode>;
 
+    export type OnTabChange = (prevent: VoidFunction) => void;
+
     export namespace TabContextProvider {
         export type Props<_Tabs extends GenericTabs> = (
             PropsWithChildren
@@ -25,7 +27,7 @@ export namespace Types {
                 orientation?: Orientation;
                 tabs: _Tabs;
                 initialTab: keyof _Tabs;
-                onTabChange?: (prevent: VoidFunction) => void;
+                onTabChange?: OnTabChange;
             }
         );
     }

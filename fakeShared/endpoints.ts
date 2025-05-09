@@ -326,10 +326,14 @@ namespace EndpointsV1 {
                 Partial<T.Override<
                     Pick<
                         Entities.User.Base,
-                        'name' | 'settings' | 'extraStatus' | 'avatar'
+                        'name' | 'extraStatus' | 'avatar'
                     >,
                     'avatar',
                     Entities.File.Encoded | null
+                >>
+                & T.PartialDeep<Pick<
+                    Entities.User.Base,
+                    'settings'
                 >>
             >;
 

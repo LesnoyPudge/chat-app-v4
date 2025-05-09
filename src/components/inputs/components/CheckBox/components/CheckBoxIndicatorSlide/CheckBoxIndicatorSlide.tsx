@@ -1,9 +1,10 @@
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { cn, createStyles } from '@/utils';
-import { animate, m, useMotionValue, useTransform } from 'motion/react';
+import { animate, useMotionValue, useTransform } from 'motion/react';
 import { FC } from 'react';
 import { useUpdateEffect } from '@lesnoypudge/utils-react';
 import { useCheckBoxContext } from '../../hooks';
+import { Motion } from '@/libs';
 
 
 
@@ -99,30 +100,30 @@ export const CheckBoxIndicatorSlide: FC<RT.PropsWithClassName> = ({
             className,
         )}>
             <div className={styles.inner}>
-                <m.div
+                <Motion.div
                     className={styles.ball}
                     style={ballAnimated}
                 >
                     <div className={styles.barsWrapper}>
-                        <m.div
+                        <Motion.div
                             className={cn(
                                 styles.bars.base,
                                 value && styles.bars.active,
                             )}
                             style={firstBarAnimated}
                         >
-                        </m.div>
+                        </Motion.div>
 
-                        <m.div
+                        <Motion.div
                             className={cn(
                                 styles.bars.base,
                                 value && styles.bars.active,
                             )}
                             style={secondBarAnimated}
                         >
-                        </m.div>
+                        </Motion.div>
                     </div>
-                </m.div>
+                </Motion.div>
             </div>
         </div>
     );

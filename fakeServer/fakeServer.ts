@@ -523,7 +523,7 @@ const getRoutes = (): HttpHandler[] => [
                 }
 
                 if (body.settings) {
-                    userToUpdate.settings = body.settings;
+                    Object.assign(userToUpdate.settings, body.settings);
                 }
 
                 return userToUpdate;

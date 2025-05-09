@@ -3,6 +3,7 @@ import { useRefManager } from '@lesnoypudge/utils-react';
 import { PropsWithChildren, RefObject } from 'react';
 import { KeyboardNavigationInstance } from '../instance';
 import { Direction } from '@/types';
+import { RT } from '@lesnoypudge/types-utils-react/namespace';
 
 
 
@@ -65,6 +66,18 @@ export namespace Types {
                 onIdChange?: Instance.OnIdChangeListener;
             }
         )>;
+    }
+
+    export namespace Item {
+        export type ChildrenProps = (
+            useCommonItem.Props
+            & useCommonItem.Return
+        );
+
+        export type Props = (
+            RT.PropsWithRenderFunction<[props: ChildrenProps]>
+            & Pick<useCommonItem.Props, 'itemId'>
+        );
     }
 
     export namespace useCommonItem {

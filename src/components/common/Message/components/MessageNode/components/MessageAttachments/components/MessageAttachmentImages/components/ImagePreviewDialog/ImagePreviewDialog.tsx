@@ -1,6 +1,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { createWithDecorator, useFunction } from '@lesnoypudge/utils-react';
-import { Button, DialogBlocks, ExternalLink, Image, Overlay } from '@/components';
+import {
+    Button,
+    DialogBlocks,
+    ExternalLink,
+    Image,
+    Overlay,
+} from '@/components';
 import { useTrans } from '@/hooks';
 import { createStyles } from '@/utils';
 import { MouseEvent } from 'react';
@@ -42,7 +48,7 @@ export const ImagePreviewDialog = withDecorator<ImagePreviewDialog.Props>(({
     src,
 }) => {
     const { t } = useTrans();
-    const { closeOverlay } = Overlay.Dialog.useContext();
+    const { closeOverlay } = DialogBlocks.useContextProxy();
 
     const stopPropagation = useFunction((e: MouseEvent) => {
         e.stopPropagation();

@@ -3,6 +3,10 @@ import { Overlay } from '@/components';
 
 
 
-export const DialogContext = ContextSelectable.createContext<
+export const {
+    DialogContext,
+    useDialogContextProxy,
+    useDialogContextSelector,
+} = ContextSelectable.createContextWithHooks<
     Overlay.Dialog.Types.Context
->();
+>().withName('Dialog');

@@ -1,2 +1,2 @@
-export * from './AppSettingsDialog';
+export * from './UserButtons';
 export * from './UserInfo';

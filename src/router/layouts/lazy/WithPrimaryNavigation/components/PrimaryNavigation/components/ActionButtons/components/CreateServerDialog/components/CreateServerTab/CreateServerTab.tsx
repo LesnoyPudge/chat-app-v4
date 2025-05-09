@@ -1,4 +1,11 @@
-import { Button, Form, Image, Sprite, DialogBlocks, Inputs } from '@/components';
+import {
+    Button,
+    Form,
+    Image,
+    Sprite,
+    DialogBlocks,
+    Inputs,
+} from '@/components';
 import { ApiValidators, Endpoints } from '@/fakeShared';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
@@ -69,7 +76,7 @@ export const CreateServerTab: FC = () => {
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
     const [create] = Store.Servers.Api.useServerCreateMutation();
     const { tryNavigateToChannel } = Navigator.useTryNavigateToChannel();
-    const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
+    const { closeOverlay } = DialogBlocks.useContextProxy();
     const { t } = useTrans();
 
     const { form } = Form.useExtendForm(CreateServerForm, {

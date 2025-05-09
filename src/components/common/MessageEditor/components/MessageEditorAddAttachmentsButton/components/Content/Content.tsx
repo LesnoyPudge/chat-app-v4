@@ -1,7 +1,7 @@
 import { cn, createStyles, getAnimationVariants, getAssetUrl } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { ReactNode } from 'react';
-import { Button, Image, Overlay } from '@/components';
+import { Button, DialogBlocks, Image, Overlay } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
 import { createWithDecorator, Heading } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
@@ -81,7 +81,7 @@ export const Content = withDecorator<Content.Props>(({
     header,
 }) => {
     const { t } = useTrans();
-    const { closeOverlay } = Overlay.Dialog.useContext();
+    const { closeOverlay } = DialogBlocks.useContextProxy();
 
     return (
         <Button

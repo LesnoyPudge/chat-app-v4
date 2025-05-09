@@ -3,7 +3,7 @@ import { useAuthScreen } from './useAuthScreen';
 import { createStyles, getAnimationVariants, getAssetUrl } from '@/utils';
 import { CUSTOM_STYLES } from '@/vars';
 import { Image, Scrollable, Tab } from '@/components';
-import { AnimatePresence, m } from 'motion/react';
+import { AnimatePresence } from 'motion/react';
 import {
     ContextSelectable,
     Focus,
@@ -12,6 +12,7 @@ import {
 import { LoginFormComponent, RegistrationFormComponent } from './components';
 import { Screen } from '@/router/layouts/bundled';
 import { ASSETS } from '@/generated/ASSETS';
+import { Motion } from '@/libs';
 
 
 
@@ -79,7 +80,7 @@ export const AuthScreenPure: FC = () => {
                         >
                             <ContextSelectable.ConsumerProxy context={AuthTabContext}>
                                 {({ currentTab }) => (
-                                    <m.div
+                                    <Motion.div
                                         className={styles.itemWrapper}
                                         key={currentTab.identifier}
                                         variants={animationVariants}
@@ -94,7 +95,7 @@ export const AuthScreenPure: FC = () => {
                                         >
                                             {currentTab.tab}
                                         </Focus.Inside>
-                                    </m.div>
+                                    </Motion.div>
                                 )}
                             </ContextSelectable.ConsumerProxy>
                         </Tab.Provider>

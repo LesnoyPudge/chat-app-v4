@@ -23,9 +23,9 @@ export const MobileMenuProvider: FC<PropsWithChildren> = ({
         openMenu: menuState.setTrue,
         toggleMenu: menuState.toggle,
         shouldShowMenu: isDesktop || isMenuActive,
+        shouldFocusMenu: isMobile && isMenuActive,
         shouldShowContent: isDesktop || isContentActive,
         shouldFocusContent: isMobile && isContentActive,
-        shouldFocusMenu: isMobile && isMenuActive,
     };
 
     return (

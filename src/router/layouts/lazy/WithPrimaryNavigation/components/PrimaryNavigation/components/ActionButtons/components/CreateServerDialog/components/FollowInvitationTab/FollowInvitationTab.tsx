@@ -26,7 +26,7 @@ const {
 
 export const FollowInvitationTab: FC = () => {
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
-    const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
+    const { closeOverlay } = DialogBlocks.useContextProxy();
     const { tryNavigateToChannel } = Navigator.useTryNavigateToChannel();
     const [accept] = Store.Servers.Api.useServerAcceptInvitationMutation();
     const { t } = useTrans();

@@ -1,9 +1,9 @@
 import { t } from '@/features';
 import { FormTypes } from '../../types';
-import { HTTP_STATUS_CODES } from '@lesnoypudge/utils';
+import { HTTP_STATUS_CODES, noop } from '@lesnoypudge/utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { useIsMounted } from '@lesnoypudge/utils-react';
-import { useState } from 'react';
+import { mutate, useFunction, useIsMounted } from '@lesnoypudge/utils-react';
+import { useMemo, useState } from 'react';
 import { TanStackForm } from '@/libs';
 
 
@@ -55,7 +55,7 @@ export const useExtendForm: FormTypes.useExtendForm.Fn = (
             setSubmitError(null);
 
             const response = await options.trigger(value);
-            const _et = Object.assign(
+            const _errorTable = Object.assign(
                 defaultErrorTable,
                 options?.errorTable,
             );
@@ -67,13 +67,15 @@ export const useExtendForm: FormTypes.useExtendForm.Fn = (
                     && typeof response.error.status === 'number'
                 ) {
                     const errorName = codeToName[response.error.status];
-                    const errorMessage = _et[errorName].toString();
+                    const errorMessage = _errorTable[errorName].toString();
 
                     setSubmitError(errorMessage);
                     return;
                 }
 
-                const internalError = _et.INTERNAL_SERVER_ERROR.toString();
+                const internalError = (
+                    _errorTable.INTERNAL_SERVER_ERROR.toString()
+                );
 
                 setSubmitError(internalError);
                 return;
@@ -89,6 +91,18 @@ export const useExtendForm: FormTypes.useExtendForm.Fn = (
             options?.onSubmitSuccessMounted?.(response.data);
         },
     });
+
+    const onReset = useFunction(options.onReset ?? noop);
+
+    // patch reset trigger once
+    useMemo(() => {
+        const original = api.reset;
+
+        mutate(api, 'reset', (...args) => {
+            original(...args);
+            onReset();
+        });
+    }, [api, onReset]);
 
     return {
         form: {

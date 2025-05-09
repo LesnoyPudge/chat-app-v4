@@ -204,6 +204,7 @@ export namespace FormTypes {
                     }
                 )>
             );
+            onReset?: VoidFunction;
         };
 
         export type Fn = <

@@ -15,6 +15,7 @@ export namespace KeyboardNavigation {
 
     export const {
         KeyboardNavigationProvider: Provider,
+        KeyboardNavigationItem: Item,
     } = components;
 
     export const {

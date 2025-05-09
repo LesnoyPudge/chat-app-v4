@@ -1,4 +1,5 @@
 {
+    "Dialog.closeButton.text": "Закрыть диалог",
     "Feed.Introduction.text": "Здесь пока нет сообщений",
     "Message.ControlBar.openEditorButton.label": "__NOT_TRANSLATED__",
     "MessageEditor.SendMessageInput.submitButton.labels": "Отправить сообщение"

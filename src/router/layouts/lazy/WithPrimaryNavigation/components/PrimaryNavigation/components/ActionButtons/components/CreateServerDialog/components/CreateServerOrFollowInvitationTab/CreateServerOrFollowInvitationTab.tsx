@@ -13,7 +13,7 @@ const styles = createStyles({
 });
 
 export const CreateServerOrFollowInvitationTab: FC = () => {
-    const { closeOverlay } = ContextSelectable.useProxy(DialogBlocks.Context);
+    const { closeOverlay } = DialogBlocks.useContextProxy();
     const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
     const { t } = useTrans();
 

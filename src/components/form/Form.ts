@@ -31,5 +31,6 @@ export namespace Form {
         FormProvider: Provider,
         Label,
         SubmitButton,
+        ResetButton,
     } = components;
 }
