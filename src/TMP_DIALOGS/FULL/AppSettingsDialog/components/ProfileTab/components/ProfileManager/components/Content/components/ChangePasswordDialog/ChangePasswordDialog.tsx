@@ -1,26 +1,41 @@
-import { Button, FieldLabel, ModalWindow, PasswordTypeToggle, PasswordTypeToggleButton, TextInput, TextInputWrapper } from '@components';
-import { FormikTextInput } from '@libs';
-import { Form, Formik } from 'formik';
-import { FC } from 'react';
-import { ModalContainer, ModalHeader, ModalTitle, ModalSubtitle, ModalContent, ModalFooter } from '../../components';
+import { createWithDecorator } from '@lesnoypudge/utils-react';
+import { DialogBlocks } from '@/components';
+import { useTrans } from '@/hooks';
 
 
 
-interface FormValues {
+type FormValues = {
     oldPassword: string;
     newPassword: string;
     newPasswordAgain: string;
-}
+};
 
-const initialValues: FormValues = { 
-    oldPassword: '', 
+const initialValues: FormValues = {
+    oldPassword: '',
     newPassword: '',
     newPasswordAgain: '',
 };
 
-export const ChangePasswordModal: FC = () => {
+const { withDecorator } = createWithDecorator<
+    DialogBlocks.Types.PublicProps
+>(({ children, controls }) => {
+    const { t } = useTrans();
+
     return (
-        <ModalWindow 
+        <DialogBlocks.Base.Provider
+            label={t('ChangePasswordDialog.label')}
+            controls={controls}
+        >
+            <DialogBlocks.Base.Wrapper>
+                {children}
+            </DialogBlocks.Base.Wrapper>
+        </DialogBlocks.Base.Provider>
+    );
+});
+
+export const ChangePasswordDialog = withDecorator(() => {
+    return (
+        <ModalWindow
             label='Изменить пароль'
             withBackdrop
         >
@@ -157,4 +172,4 @@ export const ChangePasswordModal: FC = () => {
             }}
         </ModalWindow>
     );
-};
+});

@@ -1,2 +1,5 @@
-export * from './DeleteAccountModal';
+
+
+
+export * from './DeleteAccountDialog';
 export * from './ProfileManager';

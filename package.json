@@ -28,7 +28,7 @@
     "dependencies": {
         "@faker-js/faker": "^9.5.0",
         "@fluentui/react-context-selector": "^9.1.76",
-        "@lesnoypudge/types-utils-base": "^3.5.0",
+        "@lesnoypudge/types-utils-base": "^3.7.2",
         "@lesnoypudge/utils": "^19.5.2",
         "@lesnoypudge/utils-react": "^18.3.1",
         "@lesnoypudge/utils-web": "^3.4.1",

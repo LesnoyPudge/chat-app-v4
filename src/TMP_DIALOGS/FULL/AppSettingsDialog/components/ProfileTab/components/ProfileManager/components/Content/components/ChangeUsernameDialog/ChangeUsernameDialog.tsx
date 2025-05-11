@@ -1,24 +1,39 @@
-import { Button, FieldLabel, ModalWindow, PasswordTypeToggle, PasswordTypeToggleButton, TextInput, TextInputWrapper } from '@components';
-import { FormikTextInput } from '@libs';
-import { Form, Formik } from 'formik';
-import { FC } from 'react';
-import { ModalContainer, ModalHeader, ModalTitle, ModalSubtitle, ModalContent, ModalFooter } from '../../components';
+import { DialogBlocks } from '@/components';
+import { useTrans } from '@/hooks';
+import { createWithDecorator } from '@lesnoypudge/utils-react';
 
 
 
-interface FormValues {
+type FormValues = {
     username: string;
     password: string;
-}
+};
 
 const initialValues: FormValues = {
     username: '',
     password: '',
 };
 
-export const ChangeUsernameModal: FC = () => {
+const { withDecorator } = createWithDecorator<
+    DialogBlocks.Types.PublicProps
+>(({ children, controls }) => {
+    const { t } = useTrans();
+
     return (
-        <ModalWindow 
+        <DialogBlocks.Base.Provider
+            label={t('ChangeUsernameDialog.label')}
+            controls={controls}
+        >
+            <DialogBlocks.Base.Wrapper>
+                {children}
+            </DialogBlocks.Base.Wrapper>
+        </DialogBlocks.Base.Provider>
+    );
+});
+
+export const ChangeUsernameDialog = withDecorator(() => {
+    return (
+        <ModalWindow
             label='Изменить имя пользователя'
             withBackdrop
         >
@@ -115,4 +130,4 @@ export const ChangeUsernameModal: FC = () => {
             }}
         </ModalWindow>
     );
-};
+});

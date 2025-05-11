@@ -20,13 +20,25 @@ const styles = createStyles({
     groupGapWrapper: 'mt-5',
 });
 
-const messageFontSizeRange = [12, 14, 16, 18, 20] as (
-    T.UnionToTuple<AppSettingsDialogForm['messageFontSize']>
-);
+const _messageFontSizeRange = [12, 14, 16, 18, 20] as const;
+const messageFontSizeRange = _messageFontSizeRange as T.Writable<
+    typeof _messageFontSizeRange
+>;
 
-const messageGroupSpacingRange = [16, 20] as (
-    T.UnionToTuple<AppSettingsDialogForm['messageGroupSpacing']>
-);
+T.expectType<T.TypeEqual<
+    T.ArrayValues<typeof messageFontSizeRange>,
+    AppSettingsDialogForm['messageFontSize']
+>>(true);
+
+const _messageGroupSpacingRange = [16, 20] as const;
+const messageGroupSpacingRange = _messageGroupSpacingRange as T.Writable<
+    typeof _messageGroupSpacingRange
+>;
+
+T.expectType<T.TypeEqual<
+    T.ArrayValues<typeof messageGroupSpacingRange>,
+    AppSettingsDialogForm['messageGroupSpacing']
+>>(true);
 
 export const AppearanceTab: FC = () => {
     const { t } = useTrans();

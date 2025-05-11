@@ -241,5 +241,16 @@ export const UsersApi = getRootApi().injectEndpoints({
                 body,
             }),
         }),
+
+        [User.DeleteAccount.NamedAction]: build.mutation<
+            User.DeleteAccount.Response,
+            User.DeleteAccount.RequestBody
+        >({
+            query: (body) => ({
+                url: User.DeleteAccount.Path,
+                method: User.DeleteAccount.Method,
+                body,
+            }),
+        }),
     }),
 });

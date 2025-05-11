@@ -1,2 +1,5 @@
-export * from './ChangePasswordModal';
-export * from './ChangeUsernameModal';
+
+
+
+export * from './ChangePasswordDialog';
+export * from './ChangeUsernameDialog';
