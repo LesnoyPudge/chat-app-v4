@@ -5,36 +5,38 @@ import { useTrans } from '@/hooks';
 import { AppearanceTab, Navigation, ProfileTab } from './components';
 import { Store } from '@/features';
 import { Endpoints } from '@/fakeShared';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
-const tabs = Tab.createTabs({
-    profileTab: <ProfileTab/>,
-    appearanceTab: <AppearanceTab/>,
+export const { AppSettingsDialogTabs } = Tab.createTypedTabs({
+    name: 'AppSettingsDialog',
+    tabs: {
+        ProfileTab: <ProfileTab/>,
+        AppearanceTab: <AppearanceTab/>,
+    },
 });
 
-const { tabName } = Tab.createProps(tabs);
-
-export const AppSettingsDialogTabContext = Tab.createTabContext<typeof tabs>();
-
-type AppSettingsForm = (
+export type AppSettingsDialogForm = T.Simplify<Required<(
     Pick<
         Endpoints.V1.User.ProfileUpdate.RequestBody,
-        'avatar'
+        'avatar' | 'bannerColor'
     >
-    & Pick<
-        NonNullable<Endpoints.V1.User.ProfileUpdate.RequestBody['settings']>,
-        'messageDisplayMode' | 'theme'
-    >
-);
+    & NonNullable<Endpoints.V1.User.ProfileUpdate.RequestBody['settings']>
+)>>;
 
-const { AppSettingsForm } = Form.createForm<AppSettingsForm>({
+export const {
+    AppSettingsDialogForm,
+} = Form.createForm<AppSettingsDialogForm>({
     defaultValues: {
         avatar: null,
-        theme: 'dark',
-        messageDisplayMode: 'cozy',
+        theme: 'auto',
+        messageDisplayMode: 'compact',
+        bannerColor: '',
+        messageFontSize: 12,
+        messageGroupSpacing: 16,
     },
-}).withName('AppSettings');
+}).withName('AppSettingsDialog');
 
 const { withDecorator } = createWithDecorator<
     DialogBlocks.Types.PublicProps
@@ -57,31 +59,34 @@ decorate(withDisplayName, 'AppSettingsDialog', decorate.target);
 
 export const AppSettingsDialog = withDecorator(() => {
     const { resetShakeStacks } = DialogBlocks.FullScreen.useContextProxy();
+    const { label } = DialogBlocks.useContextProxy();
 
     const [
         updateProfile,
     ] = Store.Users.Api.useUserProfileUpdateMutation();
 
-    const {
-        theme,
-        messageDisplayMode,
-    } = Store.useSelector(Store.Users.Selectors.selectCurrentUserSettings);
+    const bannerColor = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserBannerColor,
+    );
 
-    const { form } = Form.useExtendForm(AppSettingsForm, {
-        trigger: ({ avatar, messageDisplayMode, theme }) => {
+    const settings = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserSettings,
+    );
+
+    const { form } = Form.useExtendForm(AppSettingsDialogForm, {
+        trigger: ({ avatar, bannerColor, ...rest }) => {
             return updateProfile({
                 avatar,
-                settings: {
-                    theme,
-                    messageDisplayMode,
-                },
+                bannerColor,
+                settings: rest,
             });
         },
         onSubmitSuccess: resetShakeStacks,
         onReset: resetShakeStacks,
         defaultValues: {
-            messageDisplayMode,
-            theme,
+            avatar: null,
+            bannerColor,
+            ...settings,
         },
     });
 
@@ -90,11 +95,10 @@ export const AppSettingsDialog = withDecorator(() => {
     } = DialogBlocks.FullScreen.useHandleTabChange(form);
 
     return (
-        <AppSettingsForm.Provider form={form}>
-            <Tab.Provider
-                context={AppSettingsDialogTabContext}
-                tabs={tabs}
-                initialTab={tabName.profileTab}
+        <AppSettingsDialogForm.Provider form={form}>
+            <AppSettingsDialogTabs.Provider
+                label={label}
+                initialTab={AppSettingsDialogTabs.tabNameTable.ProfileTab}
                 onTabChange={handleTabChange}
             >
                 <Form.Node>
@@ -104,11 +108,11 @@ export const AppSettingsDialog = withDecorator(() => {
                         </DialogBlocks.FullScreen.NavigationSide>
 
                         <DialogBlocks.FullScreen.ContentSide>
-                            <Tab.Current context={AppSettingsDialogTabContext}/>
+                            <AppSettingsDialogTabs.Current/>
                         </DialogBlocks.FullScreen.ContentSide>
                     </DialogBlocks.FullScreen.Wrapper>
                 </Form.Node>
-            </Tab.Provider>
-        </AppSettingsForm.Provider>
+            </AppSettingsDialogTabs.Provider>
+        </AppSettingsDialogForm.Provider>
     );
 });

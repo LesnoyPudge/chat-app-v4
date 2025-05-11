@@ -14,3 +14,9 @@ export const ACCEPTED_FILE_TYPE = {
     ALL: '*',
     IMAGES: 'image/jpeg, image/png, image/webp',
 } as const;
+
+export const SOCIAL_LINKS = {
+    TWITTER: 'https://twitter.com/discord',
+    FACEBOOK: 'https://www.facebook.com/discord',
+    INSTAGRAM: 'https://www.instagram.com/discord',
+};

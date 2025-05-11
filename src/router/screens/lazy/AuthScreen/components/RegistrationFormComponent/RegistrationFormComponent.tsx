@@ -4,7 +4,7 @@ import { useTrans } from '@/hooks';
 import { Heading, ContextSelectable } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
 import { FC } from 'react';
-import { AuthTabContext } from '../../AuthScreen';
+import { AuthTabs } from '../../AuthScreen';
 import { WithLoadingIndicator } from '../LoadingIndicator';
 import { Store } from '@/features';
 
@@ -37,7 +37,7 @@ const { RegistrationForm } = Form.createForm<
 export const RegistrationFormComponent: FC = () => {
     const [registration] = Store.Users.Api.useUserRegistrationMutation();
     const { t } = useTrans();
-    const { changeTab } = ContextSelectable.useProxy(AuthTabContext);
+    const { changeTab } = AuthTabs.useProxy();
 
     const { form } = Form.useExtendForm(RegistrationForm, {
         trigger: registration,
@@ -108,7 +108,7 @@ export const RegistrationFormComponent: FC = () => {
                 <Button
                     className={styles.loginFormButton}
                     stylingPreset='link'
-                    onLeftClick={changeTab.login}
+                    onLeftClick={changeTab.Login}
                 >
                     {t('RegistrationForm.loginSuggestion')}
                 </Button>

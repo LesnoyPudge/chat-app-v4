@@ -1,148 +1,164 @@
-import { AppSettingsModalTabs, RadioInputIndicator, Separator, SliderInput, TabContext, TabPanel } from '@components';
-import { FormikRadioInput, HeadingLevel } from '@libs';
-import { FC, useContext } from 'react';
-import { SettingsGroupTitle } from '..';
-import { TabTitle } from '../../../components';
+import { FC } from 'react';
 import { ChatExample } from './components';
+import {
+    AppSettingsDialogForm,
+    AppSettingsDialogTabs,
+} from '../../AppSettingsDialog';
+import { Heading } from '@lesnoypudge/utils-react';
+import { DialogBlocks, Inputs, Separator } from '@/components';
+import { SettingsGroupTitle } from '../SettingsGroupTitle';
+import { createStyles } from '@/utils';
+import { useTrans } from '@/hooks';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
+
+const styles = createStyles({
+    themeWrapper: 'mt-8',
+    themeInputsWrapper: 'grid gap-2',
+    displayModeInputsWrapper: 'grid gap-2',
+    groupGapWrapper: 'mt-5',
+});
+
+const messageFontSizeRange = [12, 14, 16, 18, 20] as (
+    T.UnionToTuple<AppSettingsDialogForm['messageFontSize']>
+);
+
+const messageGroupSpacingRange = [16, 20] as (
+    T.UnionToTuple<AppSettingsDialogForm['messageGroupSpacing']>
+);
 
 export const AppearanceTab: FC = () => {
-    const { tabPanelProps } = useContext<TabContext<AppSettingsModalTabs>>(TabContext);
+    const { t } = useTrans();
 
     return (
-        <HeadingLevel>
-            <TabPanel {...tabPanelProps.appearanceTab}>
-                <TabTitle>
-                    <>Внешний вид</>
-                </TabTitle>
+        <Heading.Provider>
+            <AppSettingsDialogTabs.Panel.AppearanceTab>
+                <DialogBlocks.FullScreen.TabTitle>
+                    {t('AppSettingsDialog.AppearanceTab.title')}
+                </DialogBlocks.FullScreen.TabTitle>
 
                 <ChatExample/>
 
-                <HeadingLevel>
-                    <div className='mt-8'>
+                <Heading.Provider>
+                    <div className={styles.themeWrapper}>
                         <SettingsGroupTitle>
-                            <>Тема</>
+                            {t('AppSettingsDialog.AppearanceTab.theme.title')}
                         </SettingsGroupTitle>
 
-                        <div className='grid gap-2'>
-                            <FormikRadioInput
-                                name='theme'
-                                label='Тёмная тема'
-                                value='dark'
+                        <div className={styles.themeInputsWrapper}>
+                            <Inputs.RadioInput.Provider
+                                label={t('AppSettingsDialog.AppearanceTab.theme.dark.label')}
+                                name={AppSettingsDialogForm.names.theme}
+                                valueName='dark'
                             >
-                                {({ checked }) => (
-                                    <>
-                                        <RadioInputIndicator checked={checked}/>
+                                <Inputs.RadioInput.Indicator/>
 
-                                        <strong>Тёмная</strong>
-                                    </>
-                                )}
-                            </FormikRadioInput>
+                                <strong>
+                                    {t('AppSettingsDialog.AppearanceTab.theme.dark.label')}
+                                </strong>
+                            </Inputs.RadioInput.Provider>
 
-                            <FormikRadioInput
-                                name='theme'
-                                label='Светлая тема'
-                                value='light'
+                            <Inputs.RadioInput.Provider
+                                label={t('AppSettingsDialog.AppearanceTab.theme.light.label')}
+                                name={AppSettingsDialogForm.names.theme}
+                                valueName='light'
                             >
-                                {({ checked }) => (
-                                    <>
-                                        <RadioInputIndicator checked={checked}/>
+                                <Inputs.RadioInput.Indicator/>
 
-                                        <strong>Светлая</strong>
-                                    </>
-                                )}
-                            </FormikRadioInput>
+                                <strong>
+                                    {t('AppSettingsDialog.AppearanceTab.theme.light.label')}
+                                </strong>
+                            </Inputs.RadioInput.Provider>
 
-                            <FormikRadioInput
-                                name='theme'
-                                label='Автоматически'
-                                value='auto'
+                            <Inputs.RadioInput.Provider
+                                label={t('AppSettingsDialog.AppearanceTab.theme.auto.label')}
+                                name={AppSettingsDialogForm.names.theme}
+                                valueName='auto'
                             >
-                                {({ checked }) => (
-                                    <>
-                                        <RadioInputIndicator checked={checked}/>
+                                <Inputs.RadioInput.Indicator/>
 
-                                        <strong>Синхронизация с компьютером</strong>
-                                    </>
-                                )}
-                            </FormikRadioInput>
+                                <strong>
+                                    {t('AppSettingsDialog.AppearanceTab.theme.auto.label')}
+                                </strong>
+                            </Inputs.RadioInput.Provider>
                         </div>
                     </div>
-                </HeadingLevel>
+                </Heading.Provider>
 
-                <Separator spacing={40}/>
+                <Separator spacing={40} length='100%' thickness={2}/>
 
-                <HeadingLevel>
+                <Heading.Node>
                     <SettingsGroupTitle>
-                        <>Отображение сообщений</>
+                        {t('AppSettingsDialog.AppearanceTab.messageDisplayMode.title')}
                     </SettingsGroupTitle>
 
-                    <div className='grid gap-2'>
-                        <FormikRadioInput
-                            name='messageDisplayMode'
-                            label='Стандартное отображение'
-                            value='cozy'
+                    <div className={styles.displayModeInputsWrapper}>
+                        <Inputs.RadioInput.Provider
+                            label={t('AppSettingsDialog.AppearanceTab.messageDisplayMode.cozy.label')}
+                            name={AppSettingsDialogForm.names.messageDisplayMode}
+                            valueName='cozy'
                         >
-                            {({ checked }) => (
-                                <>
-                                    <RadioInputIndicator checked={checked}/>
+                            <Inputs.RadioInput.Indicator/>
 
-                                    <span>
-                                        <strong>Уютно</strong>
-                                        <> — современно, красиво и приятно для глаз.</>
-                                    </span>
-                                </>
-                            )}
-                        </FormikRadioInput>
+                            <span>
+                                <strong>
+                                    {t('AppSettingsDialog.AppearanceTab.messageDisplayMode.cozy.description.value')}
+                                </strong>
 
-                        <FormikRadioInput
-                            name='messageDisplayMode'
-                            label='Компактное отображение'
-                            value='compact'
+                                {t('AppSettingsDialog.AppearanceTab.messageDisplayMode.cozy.description.desc')}
+                            </span>
+                        </Inputs.RadioInput.Provider>
+
+                        <Inputs.RadioInput.Provider
+                            label={t('AppSettingsDialog.AppearanceTab.messageDisplayMode.compact.label')}
+                            name={AppSettingsDialogForm.names.messageDisplayMode}
+                            valueName='compact'
                         >
-                            {({ checked }) => (
-                                <>
-                                    <RadioInputIndicator checked={checked}/>
+                            <Inputs.RadioInput.Indicator/>
 
-                                    <span>
-                                        <strong>Компактно</strong>
-                                        <> — на экране помещается больше сообщений.</>
-                                    </span>
-                                </>
-                            )}
-                        </FormikRadioInput>
+                            <span>
+                                <strong>
+                                    {t('AppSettingsDialog.AppearanceTab.messageDisplayMode.compact.description.value')}
+                                </strong>
+
+                                {t('AppSettingsDialog.AppearanceTab.messageDisplayMode.compact.description.desc')}
+                            </span>
+                        </Inputs.RadioInput.Provider>
                     </div>
-                </HeadingLevel>
+                </Heading.Node>
 
-                <Separator spacing={40}/>
+                <Separator spacing={40} length='100%' thickness={2}/>
 
-                <HeadingLevel>
+                <Heading.Provider>
                     <SettingsGroupTitle>
-                        <>Масштабирование текста в чате</>
+                        {t('AppSettingsDialog.AppearanceTab.messageFontSize.title')}
                     </SettingsGroupTitle>
 
-                    <SliderInput
-                        // name='message-font-size'
-                        start={14}
-                        range={[12, 14, 15, 16, 18, 20]}
-                    />
-                </HeadingLevel>
+                    <Inputs.SliderInput.Provider
+                        label={t('AppSettingsDialog.AppearanceTab.messageFontSize.title')}
+                        name={AppSettingsDialogForm.names.messageFontSize}
+                        range={messageFontSizeRange}
+                    >
+                        <Inputs.SliderInput.Node/>
+                    </Inputs.SliderInput.Provider>
+                </Heading.Provider>
 
-                <HeadingLevel>
-                    <div className='mt-5'>
+                <Heading.Provider>
+                    <div className={styles.groupGapWrapper}>
                         <SettingsGroupTitle>
-                            <>Расстояние между группами сообщений</>
+                            {t('AppSettingsDialog.AppearanceTab.messageGroupGap.title')}
                         </SettingsGroupTitle>
-
-                        <SliderInput
-                            // name='message-group-gap'
-                            start={4}
-                            range={[0, 4, 8, 16, 24]}
-                        />
+                        <Inputs.SliderInput.Provider
+                            label={t('AppSettingsDialog.AppearanceTab.messageGroupGap.title')}
+                            name={AppSettingsDialogForm.names.messageGroupSpacing}
+                            range={messageGroupSpacingRange}
+                        >
+                            <Inputs.SliderInput.Node/>
+                        </Inputs.SliderInput.Provider>
                     </div>
-                </HeadingLevel>
-            </TabPanel>
-        </HeadingLevel>
+                </Heading.Provider>
+            </AppSettingsDialogTabs.Panel.AppearanceTab>
+        </Heading.Provider>
     );
 };

@@ -33,8 +33,8 @@ export const createProps = <
         return acc;
     }, {});
 
-    const tabName = tabNames.reduce<
-        Types.Context<_Tabs>['tabName']
+    const tabNameTable = tabNames.reduce<
+        Types.Context<_Tabs>['tabNameTable']
     >((acc, name) => {
         acc[name] = name;
 
@@ -45,6 +45,6 @@ export const createProps = <
         tabProps,
         tabPanelProps,
         tabNames,
-        tabName,
+        tabNameTable,
     };
 };

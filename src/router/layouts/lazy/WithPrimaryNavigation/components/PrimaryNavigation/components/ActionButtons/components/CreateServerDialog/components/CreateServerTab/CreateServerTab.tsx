@@ -7,9 +7,8 @@ import {
     Inputs,
 } from '@/components';
 import { ApiValidators, Endpoints } from '@/fakeShared';
-import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
-import { CreateServerTabContext } from '../../CreateServerDialog';
+import { CreateServerTabs } from '../../CreateServerDialog';
 import { useTrans } from '@/hooks';
 import { createStyles } from '@/utils';
 import { Navigator, Store } from '@/features';
@@ -73,7 +72,7 @@ const {
 }).withName('CreateServer');
 
 export const CreateServerTab: FC = () => {
-    const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
+    const { changeTab } = CreateServerTabs.useProxy();
     const [create] = Store.Servers.Api.useServerCreateMutation();
     const { tryNavigateToChannel } = Navigator.useTryNavigateToChannel();
     const { closeOverlay } = DialogBlocks.useContextProxy();
@@ -174,7 +173,7 @@ export const CreateServerTab: FC = () => {
                     <Button
                         stylingPreset='lite'
                         size='medium'
-                        onLeftClick={changeTab.createServerOrFollowInvitation}
+                        onLeftClick={changeTab.CreateServerOrFollowInvitation}
                     >
                         {t('CreateServerDialog.CreateServerTab.backButton.text')}
                     </Button>

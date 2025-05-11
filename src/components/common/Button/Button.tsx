@@ -10,7 +10,8 @@ import { FC, memo } from 'react';
 
 
 export namespace Button {
-    type StylingPresets = (
+    type StylingPresets = keyof Pick<
+        typeof styles,
         'brand'
         | 'link'
         | 'lite'
@@ -18,7 +19,7 @@ export namespace Button {
         | 'brandDanger'
         | 'brandPositive'
         | 'invisibleBrand'
-    );
+    >;
 
     export type Props = T.Simplify<
         RT.PropsWithChildrenAndClassName
@@ -27,7 +28,7 @@ export namespace Button {
             id?: string;
             style?: React.CSSProperties;
             stylingPreset?: StylingPresets;
-            size?: 'small' | 'medium' | 'big';
+            size?: keyof typeof styles.sizes;
             type?: 'button' | 'submit' | 'reset';
             isActive?: boolean;
             isDisabled?: boolean;

@@ -1,6 +1,8 @@
 {
+    "AppSettingsDialog.AppearanceTab.ChatExample.message.6": "__NOT_TRANSLATED__",
     "Dialog.closeButton.text": "Закрыть диалог",
     "Feed.Introduction.text": "Здесь пока нет сообщений",
+    "FriendsPanel.Navigation.tablist.label": "Выбор категории для сортировки пользователей",
     "Message.ControlBar.openEditorButton.label": "__NOT_TRANSLATED__",
     "MessageEditor.SendMessageInput.submitButton.labels": "Отправить сообщение"
 }

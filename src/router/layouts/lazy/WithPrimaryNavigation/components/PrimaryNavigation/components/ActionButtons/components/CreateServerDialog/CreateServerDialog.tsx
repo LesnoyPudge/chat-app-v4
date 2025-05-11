@@ -7,19 +7,17 @@ import {
 import { useTrans } from '@/hooks';
 import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
 import { decorate } from '@lesnoypudge/macro';
-import { FC } from 'react';
 
 
 
-const tabs = Tab.createTabs({
-    createServerOrFollowInvitation: <CreateServerOrFollowInvitationTab/>,
-    followInvitation: <FollowInvitationTab/>,
-    createServer: <CreateServerTab/>,
+export const { CreateServerTabs } = Tab.createTypedTabs({
+    name: 'CreateServer',
+    tabs: {
+        CreateServerOrFollowInvitation: <CreateServerOrFollowInvitationTab/>,
+        FollowInvitation: <FollowInvitationTab/>,
+        CreateServer: <CreateServerTab/>,
+    },
 });
-
-const { tabName } = Tab.createProps(tabs);
-
-export const CreateServerTabContext = Tab.createTabContext<typeof tabs>();
 
 const { withDecorator } = createWithDecorator<
     DialogBlocks.Types.PublicProps
@@ -41,13 +39,14 @@ const { withDecorator } = createWithDecorator<
 decorate(withDisplayName, 'CreateServerDialog', decorate.target);
 
 export const CreateServerDialog = withDecorator(() => {
+    const { label } = DialogBlocks.useContextProxy();
+
     return (
-        <Tab.Provider
-            context={CreateServerTabContext}
-            tabs={tabs}
-            initialTab={tabName.createServerOrFollowInvitation}
+        <CreateServerTabs.Provider
+            label={label}
+            initialTab={CreateServerTabs.tabNameTable.CreateServerOrFollowInvitation}
         >
-            <Tab.Current context={CreateServerTabContext}/>
-        </Tab.Provider>
+            <CreateServerTabs.Current/>
+        </CreateServerTabs.Provider>
     );
 });

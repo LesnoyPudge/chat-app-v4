@@ -1,38 +1,39 @@
-import { Button, ChangeEmailModal, ChangePasswordModal, ChangeUsernameModal, OverlayContextProvider } from '@components';
-import { Heading } from '@libs';
-import { conditional } from '@utils';
+import { Button, Overlay } from '@/components';
+import { Store } from '@/features';
+import { useTrans } from '@/hooks';
+import { createStyles } from '@/utils';
+import { Heading } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
-import { useToggle } from 'usehooks-ts';
+import { ChangePasswordDialog, ChangeUsernameDialog } from './components';
 
 
 
-const styles = {
-    list: 'flex flex-col gap-6 p-4 bg-primary-300 rounded-lg',
-    row: 'flex w-full gap-4 items-center',
-    infoWrapper: 'flex flex-col min-w-0 mr-auto',
-    infoTitle: 'font-bold uppercase text-xs text-color-secondary mb-1',
+const styles = createStyles({
+    list: 'flex flex-col gap-6 rounded-lg bg-primary-300 p-4',
+    row: 'flex w-full items-center gap-4',
+    infoWrapper: 'mr-auto flex min-w-0 flex-col',
+    infoTitle: 'mb-1 text-xs font-bold uppercase text-color-secondary',
     infoValueWrapper: 'flex gap-2',
-    infoValue: 'text-color-primary truncated',
-    revealInfoValueButton: 'text-color-link p-0 min-h-0 h-auto',
-};
+    infoValue: 'truncate text-color-primary',
+    revealInfoValueButton: 'h-auto min-h-0 p-0 text-color-link',
+});
 
 export const Content: FC = () => {
-    const [isEmailRevealed, toggleIsEmailRevealed] = useToggle(false);
+    const { t } = useTrans();
+    const usernameControls = Overlay.useControls();
+    const passwordControls = Overlay.useControls();
 
-    const username = 'лошок111';
-    const revealedEmail = 'wow@mail.ru';
-    const splittedEmail = revealedEmail.split('@');
-    const unrevealedEmail = '*'.repeat(splittedEmail[0].length) + '@' + splittedEmail[1];
-    const email = conditional(revealedEmail, unrevealedEmail, isEmailRevealed);
-    const revealEmailButtonText = conditional('Скрыть', 'Показать', isEmailRevealed);
+    const username = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserName,
+    );
 
     return (
         <ul className={styles.list}>
             <li className={styles.row}>
                 <div className={styles.infoWrapper}>
-                    <Heading className={styles.infoTitle}>
-                        <>Имя пользователя</>
-                    </Heading>
+                    <Heading.Node className={styles.infoTitle}>
+                        {t('AppSettingsDialog.ProfileTab.ProfileManager.username.title')}
+                    </Heading.Node>
 
                     <div className={styles.infoValueWrapper}>
                         <span className={styles.infoValue}>
@@ -40,71 +41,25 @@ export const Content: FC = () => {
                         </span>
                     </div>
                 </div>
-    
-                <OverlayContextProvider>
-                    {({ openOverlay, isOverlayExist }) => (
-                        <>
-                            <Button
-                                stylingPreset='brandNeutral'
-                                label='Изменить имя'
-                                hasPopup='dialog'
-                                isActive={isOverlayExist}
-                                onLeftClick={openOverlay}
-                            >
-                                <>Изменить</>
-                            </Button>
 
-                            <ChangeUsernameModal/>
-                        </>
-                    )}
-                </OverlayContextProvider>
+                <Button
+                    stylingPreset='brandNeutral'
+                    label={t('AppSettingsDialog.ProfileTab.ProfileManager.username.changeButton.label')}
+                    hasPopup='dialog'
+                    isActive={usernameControls.isOpen}
+                    onLeftClick={usernameControls.open}
+                >
+                    {t('COMMON.Change')}
+                </Button>
+
+                <ChangeUsernameDialog controls={usernameControls}/>
             </li>
 
             <li className={styles.row}>
                 <div className={styles.infoWrapper}>
-                    <Heading className={styles.infoTitle}>
-                        <>Электронная почта</>
-                    </Heading>
-
-                    <div className={styles.infoValueWrapper}>
-                        <span className={styles.infoValue}>
-                            {email}
-                        </span>
-
-                        <Button
-                            className={styles.revealInfoValueButton}
-                            stylingPreset='lite'
-                            onLeftClick={toggleIsEmailRevealed}
-                        >
-                            {revealEmailButtonText}
-                        </Button>
-                    </div>
-                </div>
-
-                <OverlayContextProvider>
-                    {({ openOverlay, isOverlayExist }) => (
-                        <>
-                            <Button
-                                stylingPreset='brandNeutral'
-                                label='Изменить электронную почту'
-                                hasPopup='dialog'
-                                isActive={isOverlayExist}
-                                onLeftClick={openOverlay}
-                            >
-                                <>Изменить</>
-                            </Button>
-
-                            <ChangeEmailModal/>
-                        </>
-                    )}
-                </OverlayContextProvider>
-            </li>
-
-            <li className={styles.row}>
-                <div className={styles.infoWrapper}>
-                    <Heading className={styles.infoTitle}>
-                        <>Пароль</>
-                    </Heading>
+                    <Heading.Node className={styles.infoTitle}>
+                        {t('AppSettingsDialog.ProfileTab.ProfileManager.password.title')}
+                    </Heading.Node>
 
                     <div className={styles.infoValueWrapper}>
                         <span className={styles.infoValue}>
@@ -112,24 +67,18 @@ export const Content: FC = () => {
                         </span>
                     </div>
                 </div>
-    
-                <OverlayContextProvider>
-                    {({ openOverlay, isOverlayExist }) => (
-                        <>
-                            <Button
-                                stylingPreset='brandNeutral'
-                                label='Изменить пароль'
-                                hasPopup='dialog'
-                                isActive={isOverlayExist}
-                                onLeftClick={openOverlay}
-                            >
-                                <>Изменить</>
-                            </Button>
 
-                            <ChangePasswordModal/>
-                        </>
-                    )}
-                </OverlayContextProvider>
+                <Button
+                    stylingPreset='brandNeutral'
+                    label={t('AppSettingsDialog.ProfileTab.ProfileManager.password.changeButton.label')}
+                    hasPopup='dialog'
+                    isActive={passwordControls.isOpen}
+                    onLeftClick={passwordControls.open}
+                >
+                    {t('COMMON.Change')}
+                </Button>
+
+                <ChangePasswordDialog controls={passwordControls}/>
             </li>
         </ul>
     );

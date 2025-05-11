@@ -1,5 +1,8 @@
 import { Endpoints } from '@/fakeShared';
 import { getRootApi } from '@/store/utils';
+
+
+
 import User = Endpoints.V1.User;
 
 
@@ -228,5 +231,15 @@ export const UsersApi = getRootApi().injectEndpoints({
                 }),
             })
         ),
+        [User.Logout.NamedAction]: build.mutation<
+            User.Logout.Response,
+            User.Logout.RequestBody
+        >({
+            query: (body) => ({
+                url: User.Logout.Path,
+                method: User.Logout.Method,
+                body,
+            }),
+        }),
     }),
 });

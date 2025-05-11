@@ -1,53 +1,49 @@
-import { FC, useContext } from 'react';
-import { AppSettingsModalTabs, Button, DeleteAccountModal, OverlayContextProvider, Separator, TabContext, TabPanel } from '@components';
-import { ProfileManager } from './components';
-import { HeadingLevel } from '@libs';
+import { FC } from 'react';
 import { SettingsDescription, SettingsGroupTitle } from '..';
-import { TabTitle } from '../../../components';
+import { AppSettingsDialogTabs } from '../../AppSettingsDialog';
+import { Heading } from '@lesnoypudge/utils-react';
+import { Button, DialogBlocks, Overlay, Separator } from '@/components';
+import { useTrans } from '@/hooks';
+import { ProfileManager, DeleteAccountDialog } from './components';
 
 
 
 export const ProfileTab: FC = () => {
-    const { tabPanelProps } = useContext<TabContext<AppSettingsModalTabs>>(TabContext);
+    const { t } = useTrans();
+    const controls = Overlay.useControls();
 
     return (
-        <HeadingLevel>
-            <TabPanel {...tabPanelProps.profileTab}>
-                <TabTitle>
-                    <>Моя учётная запись</>
-                </TabTitle>
+        <Heading.Provider>
+            <AppSettingsDialogTabs.Panel.ProfileTab>
+                <DialogBlocks.FullScreen.TabTitle>
+                    {t('AppSettingsDialog.Navigation.profileTab.title')}
+                </DialogBlocks.FullScreen.TabTitle>
 
                 <ProfileManager/>
 
-                <Separator spacing={40}/>
+                <Separator spacing={40} thickness={2} length='100%'/>
 
-                <HeadingLevel>
+                <Heading.Provider>
                     <SettingsGroupTitle className='mb-2'>
-                        <>Удаление учётной записи</>
+                        {t('AppSettingsDialog.Navigation.profileTab.groupTitle')}
                     </SettingsGroupTitle>
 
                     <SettingsDescription className='mb-4'>
-                        <>Удалив учётную запись, вы не сможете восстановить её.</>
+                        {t('AppSettingsDialog.Navigation.profileTab.description')}
                     </SettingsDescription>
 
-                    <OverlayContextProvider>
-                        {({ openOverlay, isOverlayExist }) => (
-                            <>
-                                <Button
-                                    stylingPreset='brandDanger'
-                                    hasPopup='dialog'
-                                    isActive={isOverlayExist}
-                                    onLeftClick={openOverlay}
-                                >
-                                    <>Удалить учётную запись</>
-                                </Button>
+                    <Button
+                        stylingPreset='brandDanger'
+                        hasPopup='dialog'
+                        isActive={controls.isOpen}
+                        onLeftClick={controls.open}
+                    >
+                        {t('AppSettingsDialog.Navigation.profileTab.deleteButton.text')}
+                    </Button>
 
-                                <DeleteAccountModal/>
-                            </>
-                        )}
-                    </OverlayContextProvider>
-                </HeadingLevel>
-            </TabPanel>
-        </HeadingLevel>
+                    <DeleteAccountDialog controls={controls}/>
+                </Heading.Provider>
+            </AppSettingsDialogTabs.Panel.ProfileTab>
+        </Heading.Provider>
     );
 };

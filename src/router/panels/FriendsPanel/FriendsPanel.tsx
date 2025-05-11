@@ -2,6 +2,7 @@ import { Tab } from '@/components';
 import { FC } from 'react';
 import { Content, Navigation } from './components';
 import { createStyles } from '@/utils';
+import { useTrans } from '@/hooks';
 
 
 
@@ -18,11 +19,15 @@ const tabs = Tab.createTabs({
 
 export type FriendsPanelTabs = typeof tabs;
 
-export const FriendsPanelTabsContext = Tab.createTabContext<
-    FriendsPanelTabs
->();
+export const {
+    FriendsPanelTabsContext,
+    useFriendsPanelTabsContextProxy,
+    useFriendsPanelTabsContextSelector,
+} = Tab.createTabContext<FriendsPanelTabs>().withName('FriendsPanelTabs');
 
 export const FriendsPanel: FC = () => {
+    const { t } = useTrans();
+
     return (
         <div className={styles.wrapper}>
             <Tab.Provider
@@ -30,6 +35,7 @@ export const FriendsPanel: FC = () => {
                 tabs={tabs}
                 initialTab='online'
                 orientation='horizontal'
+                label={t('FriendsPanel.tabsLabel')}
             >
                 <Navigation/>
 

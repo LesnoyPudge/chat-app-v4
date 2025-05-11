@@ -1,19 +1,19 @@
-import { PropsWithChildrenAndClassName } from '@types';
-import { twClassNames } from '@utils';
+import { cn, createStyles } from '@/utils';
+import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { FC } from 'react';
 
 
 
-const styles = {
-    base: 'text-color-secondary text-sm',
-};
+const styles = createStyles({
+    base: 'text-sm text-color-secondary',
+});
 
-export const SettingsDescription: FC<PropsWithChildrenAndClassName> = ({
+export const SettingsDescription: FC<RT.PropsWithChildrenAndClassName> = ({
     className = '',
     children,
 }) => {
     return (
-        <p className={twClassNames(styles.base, className)}>
+        <p className={cn(styles.base, className)}>
             {children}
         </p>
     );

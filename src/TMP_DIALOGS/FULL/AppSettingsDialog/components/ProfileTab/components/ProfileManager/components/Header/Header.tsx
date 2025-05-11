@@ -1,67 +1,97 @@
+import { Avatar, Inputs } from '@/components';
+import { Store } from '@/features';
+import { createStyles, MBToBytes } from '@/utils';
+import { ACCEPTED_FILE_TYPE } from '@/vars';
 import { FC } from 'react';
-import { UserStatus, Image, FileInput } from '@components';
-import { FormikFileInput } from '@libs';
-import { MBToBytes, getAvatarPath } from '@utils';
-import { MIME } from '@vars';
-import { useMemoSelector } from '@redux/hooks';
-import { AppSelectors } from '@redux/features';
+import { AppSettingsDialogForm } from '../../../../../../AppSettingsDialog';
+import { useTrans } from '@/hooks';
 
 
 
-const styles = {
+const styles = createStyles({
     header: 'flex h-14',
-    avatarWrapper: 'w-[94px] relative',
-    avatarInner: `absolute w-full aspect-square bottom-0 
-    bg-primary-500 rounded-full p-[7px]`,
-    avatarButton: 'relative w-full h-full rounded-full group',
-    avatarOverlay: `grid place-items-center absolute inset-0 
-    rounded-full opacity-0 bg-black/80 pointer-events-none 
-    group-focus-within:opacity-100 group-hover:opacity-100 transition-all`,
-    avatarOverlayText: 'uppercase font-bold text-2xs text-white text-center',
-    avatar: 'w-full h-full rounded-full',
-    username: 'ml-4 text-xl text-color-primary font-medium',
-};
+    avatarWrapper: 'relative w-[94px]',
+    avatarInner: `
+        absolute 
+        bottom-0 
+        aspect-square 
+        w-full 
+        rounded-full 
+        bg-primary-500 
+        p-[7px]
+    `,
+    avatarButton: 'group relative h-full w-full rounded-full',
+    avatarOverlay: `
+        pointer-events-none 
+        absolute 
+        inset-0 
+        grid 
+        place-items-center 
+        rounded-full 
+        bg-black/80 
+        opacity-0 
+        transition-all  
+        group-hover-focus-within:opacity-100
+    `,
+    avatarOverlayText: `
+        text-center 
+        text-10-12 
+        font-bold 
+        uppercase 
+        text-white
+    `,
+    avatar: 'size-full rounded-full',
+    username: 'ml-4 text-xl font-medium text-color-primary',
+});
 
 export const Header: FC = () => {
-    const avatarId = useMemoSelector((state) => AppSelectors.selectMe(state).avatarId, []);
+    const { t } = useTrans();
+    const avatar = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserAvatar,
+    );
+
+    const defaultAvatar = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserDefaultAvatar,
+    );
+
+    const username = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserName,
+    );
 
     return (
         <div className={styles.header}>
             <div className={styles.avatarWrapper}>
                 <div className={styles.avatarInner}>
-                    <FormikFileInput
-                        label='Изображение вашего профиля'
-                        name='avatar'
-                        options={{
-                            accept: MIME.IMAGES,
-                            amountLimit: 1,
-                            sizeLimit: MBToBytes(1),
-                        }}
+                    <Inputs.FileInput.Provider
+                        accept={ACCEPTED_FILE_TYPE.IMAGES}
+                        amountLimit={1}
+                        label={t('AppSettingsDialog.ProfileTab.Header.avatar.label')}
+                        sizeLimit={MBToBytes(1)}
+                        name={AppSettingsDialogForm.names.avatar}
                     >
-                        {({ value, fileInputProps }) => (
-                            <FileInput
+                        {({ value }) => (
+                            <Inputs.FileInput.Node
                                 className={styles.avatarButton}
-                                {...fileInputProps}
                             >
-                                <Image
+                                <Avatar.User
                                     className={styles.avatar}
-                                    src={value?.base64 ?? getAvatarPath(avatarId)}
-                                    alt='Изображение профиля'
+                                    avatar={value?.base64 ?? avatar}
+                                    defaultAvatar={defaultAvatar}
                                 />
 
                                 <div className={styles.avatarOverlay}>
                                     <div className={styles.avatarOverlayText}>
-                                        <>Изменить <br/> аватар</>
+                                        {t('AppSettingsDialog.ProfileTab.Header.avatar.text')}
                                     </div>
                                 </div>
-                            </FileInput>
+                            </Inputs.FileInput.Node>
                         )}
-                    </FormikFileInput>
+                    </Inputs.FileInput.Provider>
                 </div>
             </div>
 
             <span className={styles.username}>
-                <>лошок111</>
+                {username}
             </span>
         </div>
     );

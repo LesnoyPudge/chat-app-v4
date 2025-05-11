@@ -153,6 +153,11 @@ export class Dummies {
             mutedConversations: [],
             hiddenConversations: [],
             isDeleted: false,
+            bannerColor: [
+                '#3FA7D6',
+                '#F2B134',
+                '#7C4DFF',
+            ][inRange(0, 2)]!,
             lastSeenMessages: {},
             mutedServers: [],
             servers: [],

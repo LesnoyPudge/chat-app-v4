@@ -1,88 +1,116 @@
-import { List, Message, RTETypes } from '@components';
-import { createSingleMessage, noop, twClassNames } from '@utils';
-import { FC } from 'react';
-import { Descendant } from 'slate';
+import { Form, Message, RTE } from '@/components';
+import { Iterate } from '@lesnoypudge/utils-react';
+import { Dummies } from '@/fakeServer';
+import { FC, useMemo } from 'react';
+import { useTrans } from '@/hooks';
+import { Store } from '@/features';
+import { AppSettingsDialogForm } from '../../../../AppSettingsDialog';
 
 
-
-const messagesContent: RTETypes.Nodes[] = [
-    [
-        {
-            type: 'paragraph',
-            children: [{ text: 'Посмотрите на меня, я прекрасная бабочка!' }],
-        },
-    ],
-    [
-        {
-            type: 'paragraph',
-            children: [
-                {
-                    text: 'Я порхаю при свете луны',
-                },
-                {
-                    type: 'emoji',
-                    code: ':smile:',
-                    children: [{ text: ':smile:' }],
-                },
-            ],
-        },
-    ],
-    [
-        {
-            type: 'paragraph',
-            children: [{ text: 'Я жду день, когда' }],
-        },
-    ],
-    [
-        {
-            type: 'paragraph',
-            children: [{ text: 'Компактный режим будет включён...' }],
-        },
-    ],
-    [
-        {
-            type: 'paragraph',
-            children: [{ text: 'О, вот и он!' }],
-        },
-    ],
-];
 
 const styles = {
-    wrapper: `flex flex-col justify-center h-[180px] overflow-hidden 
-    rounded-md bg-primary-300`,
-    message: 'pointer-events-none',
-    messageWithHead: 'message-group-head',
+    wrapper: `
+        flex 
+        flex-col 
+        justify-center 
+        h-[180px] 
+        overflow-hidden 
+        rounded-md 
+        bg-primary-300
+        pointer-events-none
+    `,
 };
 
-const messageList = Array(5).fill(null).map((_, i) => ({
-    withHead: i % 2 === 0,
-    message: createSingleMessage(messagesContent[i]),
-}));
+
 
 export const ChatExample: FC = () => {
+    const { t } = useTrans();
+
+    const userId = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserId,
+    );
+
+    const messageDisplayMode = AppSettingsDialogForm.useField(
+        AppSettingsDialogForm.names.messageDisplayMode,
+    );
+
+    const messageDisplayModeValue = Form.useStore(
+        messageDisplayMode.field.store, (v) => v.value,
+    );
+
+    const messagesContent: RTE.Types.Nodes[] = useMemo(() => [
+        [
+            {
+                type: 'paragraph',
+                children: [{ text: t('AppSettingsDialog.AppearanceTab.ChatExample.message.1') }],
+            },
+        ],
+        [
+            {
+                type: 'paragraph',
+                children: [
+                    {
+                        text: t('AppSettingsDialog.AppearanceTab.ChatExample.message.2'),
+                    },
+                    {
+                        type: 'emoji',
+                        code: ':smile:',
+                        children: [{ text: ':smile:' }],
+                    },
+                ],
+            },
+        ],
+        [
+            {
+                type: 'paragraph',
+                children: [{ text: t('AppSettingsDialog.AppearanceTab.ChatExample.message.3') }],
+            },
+        ],
+        [
+            {
+                type: 'paragraph',
+                children: [{ text: t('AppSettingsDialog.AppearanceTab.ChatExample.message.4') }],
+            },
+        ],
+        [
+            {
+                type: 'paragraph',
+                children: [{ text: t('AppSettingsDialog.AppearanceTab.ChatExample.message.5') }],
+            },
+        ],
+    ], []);
+
+    const messageList = useMemo(() => Array.from({
+        length: messagesContent.length,
+    }, (_, i) => ({
+        withHead: i % 2 === 0,
+        message: Dummies.message({
+            id: String(i),
+            author: userId,
+            attachments: [],
+            channel: null,
+            content: JSON.stringify(messagesContent[i]),
+            conversation: '',
+            index: i,
+            server: null,
+            textChat: '',
+        }),
+    })), [messagesContent, userId]);
+
     return (
         <div className={styles.wrapper}>
-            <List list={messageList}>
-                {({ message, withHead }) => {
-                    return (
-                        <Message
-                            className={twClassNames(
-                                styles.message,
-                                { [styles.messageWithHead]: withHead },
-                            )}
-                            message={message}
+            <Message.RedactorProvider>
+                <Iterate items={messageList} getKey={(_, i) => i}>
+                    {({ message, withHead }) => (
+                        <Message.Node
                             isGroupHead={withHead}
-                            isInRedactorMode={false}
-                            displayMode='cozy'
+                            message={message}
+                            messageDisplayMode={messageDisplayModeValue}
                             tabIndex={-1}
-                            addReaction={noop}
-                            closeEditor={noop}
-                            openEditor={noop}
-                            saveEditor={noop}
                         />
-                    );
-                }}
-            </List>
+                    )}
+                </Iterate>
+            </Message.RedactorProvider>
         </div>
     );
 };

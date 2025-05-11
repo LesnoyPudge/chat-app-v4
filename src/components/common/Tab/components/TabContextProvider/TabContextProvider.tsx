@@ -12,14 +12,15 @@ export const TabContextProvider = <
     tabs,
     orientation = 'horizontal',
     initialTab,
+    label,
     onTabChange,
     children,
-}: Types.TabContextProvider.Props<_Tabs>) => {
+}: Types.Provider.Props<_Tabs>) => {
     const {
         tabNames,
         tabPanelProps,
         tabProps,
-        tabName,
+        tabNameTable,
     } = useConst(() => createProps(tabs));
 
     const listRef = useRefManager<HTMLDivElement>(null);
@@ -87,11 +88,12 @@ export const TabContextProvider = <
         changeTab,
         isActive,
         tabNames,
-        tabName,
+        tabNameTable,
         _listRef: listRef,
         orientation,
         tabProps,
         _tabPanelProps: tabPanelProps,
+        label,
     } satisfies Types.Context<_Tabs>;
 
     const TabContext = context;

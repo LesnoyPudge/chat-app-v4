@@ -29,13 +29,13 @@ const styles = createStyles({
 type Props = (
     RT.PropsWithChildrenAndClassName
     & {
-        isActive: boolean;
+        isActive?: boolean;
     }
 );
 
 export const FullScreenDialogBlocksNavigationItem: FC<Props> = ({
     className = '',
-    isActive,
+    isActive = false,
     children,
 }) => {
     return (

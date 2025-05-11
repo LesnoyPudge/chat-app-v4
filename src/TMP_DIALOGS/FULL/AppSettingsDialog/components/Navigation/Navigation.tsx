@@ -1,133 +1,143 @@
-import { AppSettingsModalTabs, Button,SpriteImage, Link, Separator, TabContext, TabList , MoveFocusInside } from '@components';
-import { useKeyboardNavigation } from '@hooks';
-import { objectKeysToIdArray } from '@utils';
-import { FC, useContext, useRef } from 'react';
+import {
+    Button,
+    DialogBlocks,
+    ExternalLink,
+    Separator,
+    Sprite,
+} from '@/components';
+import { createStyles, localStorageApi } from '@/utils';
+import { FC } from 'react';
+import { AppSettingsDialogTabs } from '../../AppSettingsDialog';
+import { useTrans } from '@/hooks';
+import { ASSETS } from '@/generated/ASSETS';
+import { useFunction } from '@lesnoypudge/utils-react';
+import { Store } from '@/features';
+import { SOCIAL_LINKS } from '@/vars';
 
-import { NavigationHeading, NavigationItem } from '../../../components';
 
 
-
-const styles = {
+const styles = createStyles({
     button: 'group w-full',
-    logoutButton: 'hover:fill-icon-100 flex justify-between items-center',
-    logoutIcon: 'h-4 w-4 fill-icon-200',
-    socialWrapper: 'flex gap-1.5 mt-2 px-2.5',
-    socialIconWrapper: 'p-1 fill-icon-200 hover:fill-icon-100 focus-visible:fill-icon-100',
-    socialIcon: 'h-5 w-5',
-};
+    logoutButton: 'flex items-center justify-between hover:fill-icon-100',
+    logoutIcon: 'size-4 fill-icon-200',
+    socialWrapper: 'mt-2 flex gap-1.5 px-2.5',
+    socialLink: 'fill-icon-200 p-1 hover-focus-visible:fill-icon-100',
+    socialIcon: 'size-5',
+});
 
 export const Navigation: FC = () => {
-    const { changeTab, tabs, isActive, tabProps } = useContext<TabContext<AppSettingsModalTabs>>(TabContext);
-    const tabsRef = useRef(objectKeysToIdArray(tabs));
-    const {
-        getIsFocused,
-        getTabIndex,
-        withFocusSet,
-        setRoot,
-    } = useKeyboardNavigation(tabsRef);
+    const { t } = useTrans();
+
+    const [
+        logoutTrigger,
+        logoutHelpers,
+    ] = Store.Users.Api.useUserLogoutMutation();
+
+    const handleLogout = useFunction(() => {
+        void logoutTrigger({
+            refreshToken: localStorageApi.get('refreshToken'),
+        });
+    });
 
     return (
-        <div>
-            <TabList
-                label='Настройки приложения'
-                orientation='vertical'
-                tabIndex={0}
-                innerRef={setRoot}
-            >
-                <NavigationHeading>
-                    <>Настройки пользователя</>
-                </NavigationHeading>
+        <>
+            <AppSettingsDialogTabs.List>
+                <DialogBlocks.FullScreen.NavigationHeading>
+                    {t('AppSettingsDialog.Navigation.profileTabLabel')}
+                </DialogBlocks.FullScreen.NavigationHeading>
 
-                <MoveFocusInside enabled={getIsFocused(tabs.profileTab.identifier)}>
-                    <Button
-                        className={styles.button}
-                        isActive={isActive.profileTab}
-                        label='Моя учётная запись'
-                        tabIndex={getTabIndex(tabs.profileTab.identifier)}
-                        {...tabProps.profileTab}
-                        onLeftClick={withFocusSet(tabs.profileTab.identifier, changeTab.profileTab)}
-                    >
-                        <NavigationItem isActive={isActive.profileTab}>
-                            <>Моя учётная запись</>
-                        </NavigationItem>
-                    </Button>
-                </MoveFocusInside>
+                <AppSettingsDialogTabs.Item.ProfileTab>
+                    {(tabProps) => (
+                        <DialogBlocks.FullScreen.NavigationItem {...tabProps}>
+                            <Button
+                                {...tabProps}
+                                size='wide'
+                                label={t('AppSettingsDialog.Navigation.profileTabButton.label')}
+                            >
+                                {t('AppSettingsDialog.Navigation.profileTabButton.label')}
+                            </Button>
+                        </DialogBlocks.FullScreen.NavigationItem>
+                    )}
+                </AppSettingsDialogTabs.Item.ProfileTab>
 
-                <Separator spacing={16}/>
+                <Separator spacing={16} thickness={2} length='100%'/>
 
-                <NavigationHeading>
-                    <>Настройки приложения</>
-                </NavigationHeading>
+                <DialogBlocks.FullScreen.NavigationHeading>
+                    {t('AppSettingsDialog.Navigation.appearanceTabLabel')}
+                </DialogBlocks.FullScreen.NavigationHeading>
 
-                <MoveFocusInside enabled={getIsFocused(tabs.appearanceTab.identifier)}>
-                    <Button
-                        className={styles.button}
-                        isActive={isActive.appearanceTab}
-                        label='Внешний вид'
-                        tabIndex={getTabIndex(tabs.appearanceTab.identifier)}
-                        {...tabProps.appearanceTab}
-                        onLeftClick={withFocusSet(tabs.appearanceTab.identifier, changeTab.appearanceTab)}
-                    >
-                        <NavigationItem isActive={isActive.appearanceTab}>
-                            <>Внешний вид</>
-                        </NavigationItem>
-                    </Button>
-                </MoveFocusInside>
-            </TabList>
+                <AppSettingsDialogTabs.Item.AppearanceTab>
+                    {(tabProps) => (
+                        <DialogBlocks.FullScreen.NavigationItem {...tabProps}>
+                            <Button
+                                {...tabProps}
+                                size='wide'
+                                label={t('AppSettingsDialog.Navigation.appearanceTabButton.label')}
+                            >
+                                {t('AppSettingsDialog.Navigation.appearanceTabButton.label')}
+                            </Button>
+                        </DialogBlocks.FullScreen.NavigationItem>
+                    )}
+                </AppSettingsDialogTabs.Item.AppearanceTab>
+            </AppSettingsDialogTabs.List>
 
-            <Separator spacing={16}/>
+            <Separator spacing={16} thickness={2} length='100%'/>
 
-            <Button
-                className={styles.button}
-                label='Выйти за аккаунта'
-                onLeftClick={() => console.log('click on logout button')}
-            >
-                <NavigationItem className={styles.logoutButton}>
-                    <span>Выйти</span>
+            <DialogBlocks.FullScreen.NavigationItem>
+                <Button
+                    className={styles.logoutButton}
+                    label={t('AppSettingsDialog.Navigation.logoutButton.label')}
+                    size='wide'
+                    isLoading={logoutHelpers.isLoading}
+                    onLeftClick={handleLogout}
+                >
+                    <span>
+                        {t('AppSettingsDialog.Navigation.logoutButton.text')}
+                    </span>
 
-                    <SpriteImage
+                    <Sprite
                         className={styles.logoutIcon}
-                        name='DOORWAY_ICON'
+                        sprite={ASSETS.IMAGES.SPRITE.DOORWAY_ICON}
                     />
-                </NavigationItem>
-            </Button>
+                </Button>
+            </DialogBlocks.FullScreen.NavigationItem>
 
-            <Separator spacing={16}/>
+            <Separator spacing={16} thickness={2} length='100%'/>
 
             <div className={styles.socialWrapper}>
-                <Link
-                    className={styles.socialIconWrapper}
-                    href='https://twitter.com/discord'
-                    label='Мы в twitter'
+                <ExternalLink
+                    className={styles.socialLink}
+                    href={SOCIAL_LINKS.TWITTER}
+                    label='Twitter'
                 >
-                    <SpriteImage
+                    <Sprite
                         className={styles.socialIcon}
-                        name='TWITTER_ICON'
+                        sprite={ASSETS.IMAGES.SPRITE.TWITTER_ICON}
                     />
-                </Link>
+                </ExternalLink>
 
-                <Link
-                    className={styles.socialIconWrapper}
-                    href='https://www.facebook.com/discord'
-                    label='Мы в facebook'
+                <ExternalLink
+                    className={styles.socialLink}
+                    href={SOCIAL_LINKS.FACEBOOK}
+                    label='Facebook'
                 >
-                    <SpriteImage
+                    <Sprite
                         className={styles.socialIcon}
-                        name='FACEBOOK_ICON'
+                        sprite={ASSETS.IMAGES.SPRITE.FACEBOOK_ICON}
                     />
-                </Link>
+                </ExternalLink>
 
-                <Link
-                    className={styles.socialIconWrapper}
-                    href='https://www.instagram.com/discord/'
-                    label='Мы в instagram'
+                <ExternalLink
+                    className={styles.socialLink}
+                    href={SOCIAL_LINKS.INSTAGRAM}
+                    label='Instagram'
                 >
-                    <SpriteImage
+                    <Sprite
                         className={styles.socialIcon}
-                        name='INSTAGRAM_ICON'
+                        sprite={ASSETS.IMAGES.SPRITE.INSTAGRAM_ICON}
                     />
-                </Link>
+                </ExternalLink>
             </div>
-        </div>
+        </>
     );
 };

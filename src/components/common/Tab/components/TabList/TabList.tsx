@@ -2,21 +2,21 @@ import { KeyboardNavigation } from '@/components';
 import { Types } from '../../types/types';
 import { ContextSelectable, Iterate } from '@lesnoypudge/utils-react';
 import { isDev } from '@/vars';
-import { invariant, never } from '@lesnoypudge/utils';
+import { invariant, isCallable, never } from '@lesnoypudge/utils';
 
 
 
 export const TabList = <_Tabs extends Types.GenericTabs>({
     className = '',
-    label,
     context,
     children,
-}: Types.TabList.Props<_Tabs>) => {
+}: Types.List.Props<_Tabs>) => {
     const {
         _listRef,
         orientation,
         tabNames,
         initialTabName,
+        label,
     } = ContextSelectable.useProxy(context);
 
     if (isDev) {
@@ -42,6 +42,19 @@ export const TabList = <_Tabs extends Types.GenericTabs>({
                 : never('Initial tab name should be first or last in the list')
     );
 
+    const _children = (
+        isCallable(children)
+            ? (
+                    <Iterate
+                        items={tabNames}
+                        getKey={(v) => v as string}
+                    >
+                        {children}
+                    </Iterate>
+                )
+            : children
+    );
+
     return (
         <div
             className={className}
@@ -57,12 +70,7 @@ export const TabList = <_Tabs extends Types.GenericTabs>({
                 direction={orientation}
                 takeInitialIdFrom={startFrom}
             >
-                <Iterate
-                    items={tabNames}
-                    getKey={(v) => v as string}
-                >
-                    {children}
-                </Iterate>
+                {_children}
             </KeyboardNavigation.Provider>
         </div>
     );

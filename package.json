@@ -30,7 +30,7 @@
         "@fluentui/react-context-selector": "^9.1.76",
         "@lesnoypudge/types-utils-base": "^3.5.0",
         "@lesnoypudge/utils": "^19.5.2",
-        "@lesnoypudge/utils-react": "^18.2.1",
+        "@lesnoypudge/utils-react": "^18.3.1",
         "@lesnoypudge/utils-web": "^3.4.1",
         "@reduxjs/toolkit": "^2.5.1",
         "@tailwindcss/container-queries": "^0.1.1",
@@ -65,7 +65,7 @@
     "devDependencies": {
         "@axe-core/react": "^4.10.1",
         "@dotenvx/dotenvx": "^1.42.0",
-        "@lesnoypudge/eslint-config": "^12.0.3",
+        "@lesnoypudge/eslint-config": "^13.0.1",
         "@lesnoypudge/formatter-config": "^8.0.0",
         "@lesnoypudge/macro": "^1.0.2",
         "@lesnoypudge/react-if": "^1.0.0",

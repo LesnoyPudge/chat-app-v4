@@ -4,7 +4,7 @@ import {
 } from '../FullScreenDialogBlocksMobileControls';
 import { createStyles } from '@/utils';
 import { useFullScreenDialogBlocksContextProxy } from '../../context';
-import { Focus, useRefManager } from '@lesnoypudge/utils-react';
+import { Focus, Heading, useRefManager } from '@lesnoypudge/utils-react';
 import { Scrollable } from '@/components';
 import {
     FullScreenDialogBlocksCloseButton,
@@ -70,7 +70,9 @@ export const FullScreenDialogBlocksContentSide: FC<PropsWithChildren> = ({
                 <div className={styles.contentWrapper}>
                     <FullScreenDialogBlocksMobileControls forceMenuButton/>
 
-                    {children}
+                    <Heading.Provider>
+                        {children}
+                    </Heading.Provider>
                 </div>
             </Scrollable>
 

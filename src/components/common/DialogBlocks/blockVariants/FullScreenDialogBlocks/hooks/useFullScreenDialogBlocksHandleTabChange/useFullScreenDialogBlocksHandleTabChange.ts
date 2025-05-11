@@ -1,12 +1,12 @@
 import { useFunction } from '@lesnoypudge/utils-react';
 import { Form, Tab } from '@/components';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { useFullScreenDialogBlocksContextProxy } from '../../context';
 
 
 
 export const useFullScreenDialogBlocksHandleTabChange = (
-    form: Form.Types.FormContext,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    form: Form.Types.FormContext<any>,
 ) => {
     const {
         closeMenu,

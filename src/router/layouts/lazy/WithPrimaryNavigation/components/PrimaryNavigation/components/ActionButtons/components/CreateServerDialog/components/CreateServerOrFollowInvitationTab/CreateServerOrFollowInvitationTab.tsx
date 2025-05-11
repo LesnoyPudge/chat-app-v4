@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Button, DialogBlocks } from '@/components';
-import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { CreateServerTabContext } from '../../CreateServerDialog';
+import { CreateServerTabs } from '../../CreateServerDialog';
 import { useTrans } from '@/hooks';
 import { createStyles } from '@/utils';
 
@@ -14,7 +13,7 @@ const styles = createStyles({
 
 export const CreateServerOrFollowInvitationTab: FC = () => {
     const { closeOverlay } = DialogBlocks.useContextProxy();
-    const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
+    const { changeTab } = CreateServerTabs.useProxy();
     const { t } = useTrans();
 
     return (
@@ -34,7 +33,7 @@ export const CreateServerOrFollowInvitationTab: FC = () => {
                     className={styles.button}
                     stylingPreset='brand'
                     size='medium'
-                    onLeftClick={changeTab.createServer}
+                    onLeftClick={changeTab.CreateServer}
                 >
                     {t('CreateServerDialog.CreateServerOrFollowInvitationTab.goToCreateServerButton.text')}
                 </Button>
@@ -43,7 +42,7 @@ export const CreateServerOrFollowInvitationTab: FC = () => {
                     className={styles.button}
                     stylingPreset='brand'
                     size='medium'
-                    onLeftClick={changeTab.followInvitation}
+                    onLeftClick={changeTab.FollowInvitation}
                 >
                     {t('CreateServerDialog.CreateServerOrFollowInvitationTab.goToFollowInvitationButton.text')}
                 </Button>

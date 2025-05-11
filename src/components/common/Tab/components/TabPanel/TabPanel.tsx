@@ -8,7 +8,7 @@ export const TabPanel = <_Tabs extends Types.GenericTabs>({
     context,
     tabName,
     children,
-}: Types.TabPanel.Props<_Tabs>) => {
+}: Types.Panel.Props<_Tabs>) => {
     const tabPanelProps = ContextSelectable.useSelector(context, (v) => {
         return v._tabPanelProps[tabName];
     });
@@ -17,7 +17,6 @@ export const TabPanel = <_Tabs extends Types.GenericTabs>({
         <div
             className={className}
             {...tabPanelProps}
-            aria-labelledby=''
         >
             {children}
         </div>

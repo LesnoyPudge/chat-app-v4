@@ -1,4 +1,8 @@
-import { createAdapterFieldSelectors, createAdapterSelectors, createSelector } from '@/store/utils';
+import {
+    createAdapterFieldSelectors,
+    createAdapterSelectors,
+    createSelector,
+} from '@/store/utils';
 import { App } from '@/store/features';
 import { invariant } from '@lesnoypudge/utils';
 import { UsersSlice } from './UsersSlice';
@@ -24,7 +28,13 @@ export const {
     selectAvatarById,
     selectDefaultAvatarById,
 } = createAdapterFieldSelectors({
-    keys: ['status', 'extraStatus', 'name', 'avatar', 'defaultAvatar'],
+    keys: [
+        'status',
+        'extraStatus',
+        'name',
+        'avatar',
+        'defaultAvatar',
+    ],
     selectById,
     slice: UsersSlice,
 });
@@ -89,6 +99,38 @@ export const selectCurrentUserSettings = (
 
         return user.settings;
     }, `${UsersSlice.name}/selectCurrentUserSettings`)
+);
+
+export const selectCurrentUserName = (
+    createSelector((query) => {
+        const user = query(selectCurrentUser);
+
+        return user.name;
+    }, `${UsersSlice.name}/selectCurrentUserName`)
+);
+
+export const selectCurrentUserBannerColor = (
+    createSelector((query) => {
+        const user = query(selectCurrentUser);
+
+        return user.bannerColor;
+    }, `${UsersSlice.name}/selectCurrentUserBannerColor`)
+);
+
+export const selectCurrentUserAvatar = (
+    createSelector((query) => {
+        const user = query(selectCurrentUser);
+
+        return user.avatar;
+    }, `${UsersSlice.name}/selectCurrentUserAvatar`)
+);
+
+export const selectCurrentUserDefaultAvatar = (
+    createSelector((query) => {
+        const user = query(selectCurrentUser);
+
+        return user.defaultAvatar;
+    }, `${UsersSlice.name}/selectCurrentUserDefaultAvatar`)
 );
 
 export const selectPresenceStatusById = (

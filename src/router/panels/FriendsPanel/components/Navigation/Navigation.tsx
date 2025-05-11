@@ -1,12 +1,23 @@
 import { createStyles } from '@/utils';
-import { Button, KeyboardNavigation, Overlay, Scrollable, Separator, Sprite, Tab } from '@/components';
+import {
+    Button,
+    KeyboardNavigation,
+    Overlay,
+    Scrollable,
+    Separator,
+    Sprite,
+    Tab,
+} from '@/components';
 import { FC, PropsWithChildren, useRef } from 'react';
 import { ContextSelectable, Heading } from '@lesnoypudge/utils-react';
-import { FriendsPanelTabs, FriendsPanelTabsContext } from '../../FriendsPanel';
+import {
+    FriendsPanelTabs,
+    FriendsPanelTabsContext,
+    useFriendsPanelTabsContextProxy,
+} from '../../FriendsPanel';
 import { useTrans } from '@/hooks';
 import { TopBar } from '@/router/layouts/bundled';
 import { ASSETS } from '@/generated/ASSETS';
-// import { AddFriendModal } from "./components";
 
 
 
@@ -54,7 +65,7 @@ const Item: FC<ItemProps> = ({
         changeTab,
         isActive,
         tabProps,
-    } = ContextSelectable.useProxy(FriendsPanelTabsContext);
+    } = useFriendsPanelTabsContextProxy();
 
     const { setId, tabIndex } = KeyboardNavigation.useCommonItem({
         itemId: tabName,
@@ -115,7 +126,6 @@ export const Navigation: FC = () => {
 
                     <Tab.List
                         className={styles.tabList}
-                        label={t('FriendsPanel.Navigation.tablist.label')}
                         context={FriendsPanelTabsContext}
                     >
                         {(tabName) => (

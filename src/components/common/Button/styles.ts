@@ -29,6 +29,7 @@ export const styles = createStyles({
         small: 'min-h-[32px] min-w-[60px]',
         medium: 'min-h-[38px] min-w-[96px]',
         big: 'min-h-[44px] min-w-[130px]',
+        wide: 'w-full',
     },
 
     brand: {

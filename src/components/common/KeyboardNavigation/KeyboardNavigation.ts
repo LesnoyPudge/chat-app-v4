@@ -4,11 +4,12 @@ import * as hooks from './hooks';
 import * as types from './types';
 
 
+
 export namespace KeyboardNavigation {
     export import Types = types.Types;
 
     export const {
-        KeyboardNavigationContext,
+        KeyboardNavigationContext: Context,
         useKeyboardNavigationContextProxy: useContextProxy,
         useKeyboardNavigationContextSelector: useContextSelector,
     } = context;

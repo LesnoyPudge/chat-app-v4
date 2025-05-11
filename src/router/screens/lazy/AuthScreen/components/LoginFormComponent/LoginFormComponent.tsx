@@ -4,7 +4,7 @@ import { useTrans } from '@/hooks';
 import { Heading, ContextSelectable } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
 import { FC } from 'react';
-import { AuthTabContext } from '../../AuthScreen';
+import { AuthTabs } from '../../AuthScreen';
 import { WithLoadingIndicator } from '../LoadingIndicator';
 import { Store } from '@/features';
 
@@ -36,7 +36,7 @@ const { LoginForm } = Form.createForm<Endpoints.V1.User.Login.RequestBody>({
 export const LoginFormComponent: FC = () => {
     const [login] = Store.Users.Api.useUserLoginMutation();
     const { t } = useTrans();
-    const { changeTab } = ContextSelectable.useProxy(AuthTabContext);
+    const { changeTab } = AuthTabs.useProxy();
 
     const { form } = Form.useExtendForm(LoginForm, {
         trigger: login,
@@ -105,7 +105,7 @@ export const LoginFormComponent: FC = () => {
 
                     <Button
                         stylingPreset='link'
-                        onLeftClick={changeTab.registration}
+                        onLeftClick={changeTab.Registration}
                     >
                         {t('LoginForm.registrationButton')}
                     </Button>

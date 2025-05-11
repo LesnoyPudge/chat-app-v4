@@ -1,5 +1,6 @@
 import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { Heading } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 
 
@@ -23,8 +24,8 @@ export const FullScreenDialogBlocksNavigationHeading: FC<
     children,
 }) => {
     return (
-        <div className={cn(styles.heading, className)}>
+        <Heading.Node className={cn(styles.heading, className)}>
             {children}
-        </div>
+        </Heading.Node>
     );
 };

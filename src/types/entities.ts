@@ -52,6 +52,7 @@ export namespace ClientEntities {
             defaultAvatar: DefaultAvatar;
             avatar: File.Id | null;
             settings: Settings;
+            bannerColor: string;
             status: Status;
             extraStatus: ExtraStatus;
             accessCode: string;

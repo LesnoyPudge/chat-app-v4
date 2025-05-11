@@ -1,31 +1,27 @@
-import { HeadingLevel } from '@libs';
-import { PropsWithClassName } from '@types';
-import { twClassNames } from '@utils';
 import { FC } from 'react';
 import { Banner, Header, Content } from './components';
+import { createStyles } from '@/utils';
+import { Heading } from '@lesnoypudge/utils-react';
 
 
 
-const styles = {
+const styles = createStyles({
     wrapper: 'flex flex-col',
-    userInfo: 'flex flex-col gap-4 p-4 bg-primary-500 rounded-b-lg',
-    content: 'flex flex-col gap-6 p-4 bg-primary-300 rounded-lg',
-};
+    userInfo: 'flex flex-col gap-4 rounded-b-lg bg-primary-500 p-4',
+});
 
-export const ProfileManager: FC<PropsWithClassName> = ({
-    className = '',
-}) => {
+export const ProfileManager: FC = () => {
     return (
-        <HeadingLevel>
-            <div className={twClassNames(styles.wrapper, className)}>
+        <Heading.Provider>
+            <div className={styles.wrapper}>
                 <Banner/>
-                
+
                 <div className={styles.userInfo}>
                     <Header/>
 
                     <Content/>
                 </div>
             </div>
-        </HeadingLevel>
+        </Heading.Provider>
     );
 };

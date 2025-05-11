@@ -5,4 +5,12 @@ import { Types } from '../../types/types';
 
 export const createTabContext = <
     _Tabs extends Types.GenericTabs,
->() => ContextSelectable.createContext<Types.Context<_Tabs>>();
+>() => {
+    return {
+        withName: <_Name extends string>(name: _Name) => {
+            return ContextSelectable.createContextWithHooks<
+                Types.Context<_Tabs>
+            >().withName(name);
+        },
+    };
+};

@@ -326,7 +326,7 @@ namespace EndpointsV1 {
                 Partial<T.Override<
                     Pick<
                         Entities.User.Base,
-                        'name' | 'extraStatus' | 'avatar'
+                        'name' | 'extraStatus' | 'avatar' | 'bannerColor'
                     >,
                     'avatar',
                     Entities.File.Encoded | null

@@ -5,14 +5,16 @@ import { CUSTOM_STYLES } from '@/vars';
 import { Image, Scrollable, Tab } from '@/components';
 import { AnimatePresence } from 'motion/react';
 import {
-    ContextSelectable,
+    createWithDecorator,
     Focus,
     useRefManager,
+    withDisplayName,
 } from '@lesnoypudge/utils-react';
 import { LoginFormComponent, RegistrationFormComponent } from './components';
 import { Screen } from '@/router/layouts/bundled';
 import { ASSETS } from '@/generated/ASSETS';
 import { Motion } from '@/libs';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
@@ -53,15 +55,29 @@ const { animationVariants } = getAnimationVariants.custom({
     },
 });
 
-const tabs = Tab.createTabs({
-    login: <LoginFormComponent/>,
-    registration: <RegistrationFormComponent/>,
+export const { AuthTabs } = Tab.createTypedTabs({
+    name: 'Auth',
+    tabs: {
+        Login: <LoginFormComponent/>,
+        Registration: <RegistrationFormComponent/>,
+    },
 });
 
-export const AuthTabContext = Tab.createTabContext<typeof tabs>();
+const { withDecorator } = createWithDecorator(({ children }) => (
+    <AuthTabs.Provider
+        label=''
+        initialTab={AuthTabs.tabNameTable.Login}
+    >
+        {children}
+    </AuthTabs.Provider>
+));
+
+decorate(withDisplayName, 'AuthScreenPure', decorate.target);
+decorate(withDecorator, decorate.target);
 
 export const AuthScreenPure: FC = () => {
     const containerRef = useRefManager<HTMLDivElement>(null);
+    const { currentTab } = AuthTabs.useProxy();
 
     return (
         <Screen>
@@ -73,32 +89,27 @@ export const AuthScreenPure: FC = () => {
             <Scrollable className={styles.scrollable}>
                 <div className={styles.content}>
                     <AnimatePresence mode='wait'>
-                        <Tab.Provider
-                            context={AuthTabContext}
-                            tabs={tabs}
-                            initialTab='login'
+                        <AuthTabs.Provider
+                            label=''
+                            initialTab={AuthTabs.tabNameTable.Login}
                         >
-                            <ContextSelectable.ConsumerProxy context={AuthTabContext}>
-                                {({ currentTab }) => (
-                                    <Motion.div
-                                        className={styles.itemWrapper}
-                                        key={currentTab.identifier}
-                                        variants={animationVariants}
-                                        initial={animationVariants.hidden.key}
-                                        animate={animationVariants.visible.key}
-                                        exit={animationVariants.hidden.key}
-                                        ref={containerRef}
-                                    >
-                                        <Focus.Inside
-                                            isEnabled={true}
-                                            containerRef={containerRef}
-                                        >
-                                            {currentTab.tab}
-                                        </Focus.Inside>
-                                    </Motion.div>
-                                )}
-                            </ContextSelectable.ConsumerProxy>
-                        </Tab.Provider>
+                            <Motion.div
+                                className={styles.itemWrapper}
+                                key={currentTab.identifier}
+                                variants={animationVariants}
+                                initial={animationVariants.hidden.key}
+                                animate={animationVariants.visible.key}
+                                exit={animationVariants.hidden.key}
+                                ref={containerRef}
+                            >
+                                <Focus.Inside
+                                    isEnabled={true}
+                                    containerRef={containerRef}
+                                >
+                                    {currentTab.tab}
+                                </Focus.Inside>
+                            </Motion.div>
+                        </AuthTabs.Provider>
                     </AnimatePresence>
                 </div>
             </Scrollable>

@@ -1,8 +1,7 @@
 import { Button, Form, DialogBlocks, Inputs } from '@/components';
 import { ApiValidators, Endpoints } from '@/fakeShared';
-import { ContextSelectable, useMountedWrapper } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
-import { CreateServerTabContext } from '../../CreateServerDialog';
+import { CreateServerTabs } from '../../CreateServerDialog';
 import { createStyles } from '@/utils';
 import { useTrans } from '@/hooks';
 import { Navigator, Store } from '@/features';
@@ -25,7 +24,7 @@ const {
 }).withName('FollowInvitation');
 
 export const FollowInvitationTab: FC = () => {
-    const { changeTab } = ContextSelectable.useProxy(CreateServerTabContext);
+    const { changeTab } = CreateServerTabs.useProxy();
     const { closeOverlay } = DialogBlocks.useContextProxy();
     const { tryNavigateToChannel } = Navigator.useTryNavigateToChannel();
     const [accept] = Store.Servers.Api.useServerAcceptInvitationMutation();
@@ -76,7 +75,7 @@ export const FollowInvitationTab: FC = () => {
                     <Button
                         stylingPreset='lite'
                         size='medium'
-                        onLeftClick={changeTab.createServerOrFollowInvitation}
+                        onLeftClick={changeTab.CreateServerOrFollowInvitation}
                     >
                         {t('CreateServerDialog.FollowInvitationTab.goBackButton.text')}
                     </Button>
