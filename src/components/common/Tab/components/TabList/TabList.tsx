@@ -1,8 +1,12 @@
 import { KeyboardNavigation } from '@/components';
 import { Types } from '../../types/types';
-import { ContextSelectable, Iterate } from '@lesnoypudge/utils-react';
+import {
+    ContextSelectable,
+    Iterate,
+    useFunction,
+} from '@lesnoypudge/utils-react';
 import { isDev } from '@/vars';
-import { invariant, isCallable, never } from '@lesnoypudge/utils';
+import { invariant, isCallable } from '@lesnoypudge/utils';
 
 
 
@@ -19,6 +23,10 @@ export const TabList = <_Tabs extends Types.GenericTabs>({
         label,
     } = ContextSelectable.useProxy(context);
 
+    const currentTab = ContextSelectable.useSelector(
+        context, (v) => v.currentTab,
+    );
+
     if (isDev) {
         const nonStringFound = tabNames.find((item) => {
             return typeof item !== 'string';
@@ -30,17 +38,6 @@ export const TabList = <_Tabs extends Types.GenericTabs>({
             'Use sting as initialTabName',
         );
     }
-
-    const index = tabNames.indexOf(initialTabName);
-    const startFrom: (
-        KeyboardNavigation.Types.Provider.Props['takeInitialIdFrom']
-    ) = (
-        index === 0
-            ? 'start'
-            : index === tabNames.length - 1
-                ? 'end'
-                : never('Initial tab name should be first or last in the list')
-    );
 
     const _children = (
         isCallable(children)
@@ -55,6 +52,8 @@ export const TabList = <_Tabs extends Types.GenericTabs>({
             : children
     );
 
+    const getInitialId = useFunction(() => String(currentTab.identifier));
+
     return (
         <div
             className={className}
@@ -68,7 +67,7 @@ export const TabList = <_Tabs extends Types.GenericTabs>({
                 list={tabNames as string[]}
                 wrapperRef={_listRef}
                 direction={orientation}
-                takeInitialIdFrom={startFrom}
+                takeInitialIdFrom={getInitialId}
             >
                 {_children}
             </KeyboardNavigation.Provider>

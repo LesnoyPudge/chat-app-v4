@@ -3,6 +3,7 @@ import { ReduxReact } from '@/libs';
 import {
     createWithDecorator,
     ErrorThrower,
+    Heading,
     withDisplayName,
 } from '@lesnoypudge/utils-react';
 import { LazyMotion, MotionConfig } from 'motion/react';
@@ -23,19 +24,21 @@ const loadDomAnimation = async () => {
 const {
     withDecorator: withFirstDecorator,
 } = createWithDecorator(({ children }) => (
-    <ReduxReact.Provider store={store}>
-        <LazyModules.Provider>
-            <WithLazySVGResources>
-                <LazyMotion features={loadDomAnimation} strict>
-                    <MotionConfig reducedMotion='user'>
-                        <BrowserRouter>
-                            {children}
-                        </BrowserRouter>
-                    </MotionConfig>
-                </LazyMotion>
-            </WithLazySVGResources>
-        </LazyModules.Provider>
-    </ReduxReact.Provider>
+    <Heading.Provider startFrom={2}>
+        <ReduxReact.Provider store={store}>
+            <LazyModules.Provider>
+                <WithLazySVGResources>
+                    <LazyMotion features={loadDomAnimation} strict>
+                        <MotionConfig reducedMotion='user'>
+                            <BrowserRouter>
+                                {children}
+                            </BrowserRouter>
+                        </MotionConfig>
+                    </LazyMotion>
+                </WithLazySVGResources>
+            </LazyModules.Provider>
+        </ReduxReact.Provider>
+    </Heading.Provider>
 ));
 
 

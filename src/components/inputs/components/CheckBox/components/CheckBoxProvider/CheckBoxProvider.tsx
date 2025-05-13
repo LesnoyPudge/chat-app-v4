@@ -15,8 +15,8 @@ export const CheckBoxProvider = Form.createFieldProvider<
     children,
 }) => {
     const { field, id } = Form.useFieldContext<boolean>();
-    const error = Form.useFieldError();
-    const value = Form.useStore(field.store, (v) => v.value);
+    const error = Form.useFieldError(field);
+    const value = Form.useFieldValue(field);
 
     const contextValue: CheckBoxTypes.Context = {
         id,

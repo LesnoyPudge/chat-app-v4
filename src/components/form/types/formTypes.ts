@@ -64,7 +64,7 @@ export namespace FormTypes {
     >;
 
     export type GenericNameWrapper<
-        _Shape extends T.UnknownRecord = T.UnknownRecord,
+        _Shape extends T.AnyRecord = T.AnyRecord,
     > = Record<'_', TanStackForm.DeepKeys<_Shape>>;
 
     export type FormContext<
@@ -126,6 +126,26 @@ export namespace FormTypes {
         > = (props: Props<_Value>) => ReactNode;
     }
 
+    export type UseField = <
+        _Shape extends T.UnknownRecord,
+        _Name extends FormTypes.GenericNameWrapper<_Shape>,
+    >(
+        form: FormContext<_Shape>,
+        name: _Name,
+    ) => FormTypes.FieldApiWrapper<_Shape[_Name['_']]>;
+
+    export type UseFieldApi = <_Value>(
+        name: FormTypes.GenericNameWrapper
+    ) => FormTypes.FieldApiWrapper<_Value>;
+
+    export type UseFieldValue = <_Value = unknown>(
+        fieldApi: FormTypes.FieldApiWrapper<_Value>
+    ) => _Value;
+
+    export type UseFieldError = (
+        fieldApi: FormTypes.FieldApiWrapper<any>
+    ) => string | null;
+
     export namespace createForm {
         type Fields<_Shape extends T.AnyRecord> = {
             [_Key in keyof _Shape]: {
@@ -133,11 +153,7 @@ export namespace FormTypes {
             }
         };
 
-        type UseForm<
-            _Shape extends T.UnknownRecord,
-        > = () => FormContext<_Shape>;
-
-        type UseField<
+        type UseFieldContext<
             _Shape extends T.UnknownRecord,
         > = <
             _Name extends GenericNameWrapper<_Shape>,
@@ -153,14 +169,29 @@ export namespace FormTypes {
             _Value,
         > = (props: FieldProvider.Props<_Value>) => ReactNode;
 
+        type UseFieldApi<_Shape extends T.UnknownRecord> = <
+            _Name extends GenericNameWrapper<_Shape>,
+        >(name: _Name) => FormTypes.FieldApiWrapper<_Shape[_Name['_']]>;
+
+        type UseFieldError<_Shape extends T.UnknownRecord> = <
+            _Name extends GenericNameWrapper<_Shape>,
+        >(name: _Name) => ReturnType<FormTypes.UseFieldError>;
+
+        type UseFieldValue<_Shape extends T.UnknownRecord> = <
+            _Name extends GenericNameWrapper<_Shape>,
+        >(name: _Name) => _Shape[_Name['_']];
+
         export type Result<
             _Shape extends T.AnyRecord,
             _Name extends string,
         > = {
             name: `${_Name}Form`;
             options: FormOptionsWrapper<_Shape>;
-            useForm: UseForm<_Shape>;
-            useField: UseField<_Shape>;
+            useFormContext: UseFormContext<_Shape>;
+            useFieldContext: UseFieldContext<_Shape>;
+            useFieldApi: UseFieldApi<_Shape>;
+            useFieldError: UseFieldError<_Shape>;
+            useFieldValue: UseFieldValue<_Shape>;
             names: Fields<_Shape>;
             Provider: TypedFormProvider<_Shape>;
             FieldProvider: TypedFieldProvider<_Shape>;
@@ -242,5 +273,14 @@ export namespace FormTypes {
         >(
             selector: (formStore: FormStateWrapper) => _ReturnValue
         ) => _ReturnValue;
+    }
+
+    export namespace Node {
+        export type Props = (
+            RT.PropsWithChildrenAndClassName
+            & {
+                contents?: boolean;
+            }
+        );
     }
 }

@@ -1,5 +1,6 @@
 import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { Heading } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 
 
@@ -15,8 +16,8 @@ export const FullScreenDialogBlocksTabTitle: FC<
     children,
 }) => {
     return (
-        <div className={cn(styles.base, className)}>
+        <Heading.Node className={cn(styles.base, className)}>
             {children}
-        </div>
+        </Heading.Node>
     );
 };

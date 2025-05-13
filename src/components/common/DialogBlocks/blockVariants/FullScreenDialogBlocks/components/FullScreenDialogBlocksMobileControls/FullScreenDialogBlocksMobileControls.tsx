@@ -27,7 +27,7 @@ export const FullScreenDialogBlocksMobileControls: FC<Props> = ({
     forceMenuButton = false,
 }) => {
     const { t } = useTrans();
-    const isDirty = Form.useFormStore((v) => v.isDirty);
+    const isChanged = Form.useFormStore((v) => !v.isDefaultValue);
     const {
         isMenuOpen,
         isMobile,
@@ -36,7 +36,7 @@ export const FullScreenDialogBlocksMobileControls: FC<Props> = ({
     } = useFullScreenDialogBlocksContextProxy();
 
     const handleClick = useFunction(() => {
-        if (isDirty) return triggerScreenShake();
+        if (isChanged) return triggerScreenShake();
 
         openMenu();
     });

@@ -107,13 +107,13 @@ export const Render = {
 
                 case RTEModules.Emoji.isEmoji(node): {
                     return (
-                        <SerializedEmoji element={node}/>
+                        <SerializedEmoji key={key} element={node}/>
                     );
                 }
 
                 case RTEModules.Link.isLink(node): {
                     return (
-                        <SerializedLink element={node}>
+                        <SerializedLink key={key} element={node}>
                             {children}
                         </SerializedLink>
                     );

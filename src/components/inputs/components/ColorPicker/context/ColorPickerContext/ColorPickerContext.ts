@@ -3,6 +3,10 @@ import { ColorPickerTypes } from '../../types';
 
 
 
-export const ColorPickerContext = ContextSelectable.createContext<
+export const {
+    ColorPickerContext,
+    useColorPickerContextProxy,
+    useColorPickerContextSelector,
+} = ContextSelectable.createContextWithHooks<
     ColorPickerTypes.Context
->();
+>().withName('ColorPicker');

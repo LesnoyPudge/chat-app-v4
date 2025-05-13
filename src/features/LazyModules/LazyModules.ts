@@ -1,4 +1,9 @@
-import { autoBind, catchErrorAsync, ListenerStore, noop } from '@lesnoypudge/utils';
+import {
+    autoBind,
+    catchErrorAsync,
+    ListenerStore,
+    noop,
+} from '@lesnoypudge/utils';
 import { modules } from './modules';
 import { LoadingState } from './vars';
 
@@ -63,7 +68,7 @@ export class LazyModules {
             this.state = LoadingState.Error;
             this.listeners.triggerAll(false);
 
-            throw new Error('Failed to load lazy modules');
+            throw new Error(`Failed to load lazy modules: ${error}`);
         }
 
         this.state = LoadingState.Success;

@@ -1,12 +1,18 @@
 import { FC, FormEvent } from 'react';
 import { useFormContext } from '../../hooks';
 import { useFunction } from '@lesnoypudge/utils-react';
-import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { FormTypes } from '../../types';
+import { cn, createStyles } from '@/utils';
 
 
 
-export const FormNode: FC<RT.PropsWithChildrenAndClassName> = ({
+const styles = createStyles({
+    contents: 'contents',
+});
+
+export const FormNode: FC<FormTypes.Node.Props> = ({
     className = '',
+    contents = false,
     children,
 }) => {
     const { api, name } = useFormContext();
@@ -25,7 +31,10 @@ export const FormNode: FC<RT.PropsWithChildrenAndClassName> = ({
 
     return (
         <form
-            className={className}
+            className={cn(
+                contents && styles.contents,
+                className,
+            )}
             data-form-name={name}
             action='#'
             onSubmit={handleSubmit}

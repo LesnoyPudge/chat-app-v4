@@ -13,9 +13,6 @@ export namespace Types {
             triggerScreenShake: VoidFunction;
             shakeX: MotionValue<string>;
             shakeY: MotionValue<string>;
-            // use form context instead of isDirty?
-            // isDirtyRef: ReturnType<typeof useRefWithSetter<boolean>>[0];
-            // setIsDirty: ReturnType<typeof useRefWithSetter<boolean>>[1];
         }
     )>;
 }

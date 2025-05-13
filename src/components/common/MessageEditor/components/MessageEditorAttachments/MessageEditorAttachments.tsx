@@ -18,9 +18,10 @@ export const MessageEditorAttachments: FC<RT.PropsWithClassName> = ({
     className = '',
 }) => {
     const { attachmentsName } = useMessageEditorContext();
-    const attachments = Form.useFieldValue<
+    const fieldApi = Form.useFieldApi<
         Types.MessageAttachments
     >(attachmentsName);
+    const attachments = Form.useFieldValue(fieldApi);
 
     if (!attachments?.length) return null;
 

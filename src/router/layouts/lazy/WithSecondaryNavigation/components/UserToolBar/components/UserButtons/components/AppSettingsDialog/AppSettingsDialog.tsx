@@ -1,87 +1,125 @@
-import { FC } from 'react';
-// import { AppearanceTab, Navigation, ProfileTab } from './components';
-import { Overlay } from '@/components';
+import { DialogBlocks, Form, Tab } from '@/components';
+import { decorate } from '@lesnoypudge/macro';
+import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
+import { useTrans } from '@/hooks';
+import { AppearanceTab, Navigation, ProfileTab } from './components';
+import { Store } from '@/features';
+import { Endpoints } from '@/fakeShared';
+import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
-// export type AppSettingsFullScreenDialogTabs = typeof tabs;
+export const { AppSettingsDialogTabs } = Tab.createTypedTabs({
+    name: 'AppSettingsDialog',
+    tabs: {
+        ProfileTab: <ProfileTab/>,
+        AppearanceTab: <AppearanceTab/>,
+    },
+});
 
-// const transitionOptions = getTransitionOptions.fullScreenDialog();
+export type AppSettingsDialogForm = T.Simplify<Required<(
+    Pick<
+        Endpoints.V1.User.ProfileUpdate.RequestBody,
+        'avatar' | 'bannerColor'
+    >
+    & NonNullable<Endpoints.V1.User.ProfileUpdate.RequestBody['settings']>
+)>>;
 
-// const tabs = {
-//     profileTab: <ProfileTab/>,
-//     appearanceTab: <AppearanceTab/>,
-// };
+export const {
+    AppSettingsDialogForm,
+} = Form.createForm<AppSettingsDialogForm>({
+    defaultValues: {
+        avatar: null,
+        theme: 'auto',
+        messageDisplayMode: 'compact',
+        bannerColor: '',
+        messageFontSize: 12,
+        messageGroupSpacing: 16,
+    },
+}).withName('AppSettingsDialog');
 
-export namespace AppSettingsDialog {
-    export type Props = Overlay.Types.WithControls;
-}
+const { withDecorator } = createWithDecorator<
+    DialogBlocks.Types.PublicProps
+>(({ children, controls }) => {
+    const { t } = useTrans();
 
-export const AppSettingsDialog: FC<AppSettingsDialog.Props> = ({
-    controls,
-}) => {
-    return null;
-    // const initialValues = {
-    //     avatar: '',
-    //     theme: 'dark',
-    //     messageDisplayMode: 'cozy',
-    // };
+    return (
+        <DialogBlocks.FullScreen.Provider
+            label={t('AppSettingsDialog.label')}
+            controls={controls}
+        >
+            <DialogBlocks.FullScreen.Wrapper>
+                {children}
+            </DialogBlocks.FullScreen.Wrapper>
+        </DialogBlocks.FullScreen.Provider>
+    );
+});
 
-    // const handleSubmit = (values: any) => {
-    //     console.log(values);
-    // };
+decorate(withDisplayName, 'AppSettingsDialog', decorate.target);
 
-    // return (
-    //     <DialogWindow
-    //         label='Настройки приложения'
-    //         transitionOptions={transitionOptions}
-    //     >
-    //         <FullScreenDialogContextProvider>
-    //             <ContextConsumerProxy context={FullScreenDialogContext}>
-    //                 {({
-    //                     resetShakeStacks, triggerScreenShake,
-    //                     closeMobileMenu, withResetShakeStacks,
-    //                     setIsDirty, isDirtyRef,
-    //                 }) => (
-    //                     <Formik
-    //                         initialValues={initialValues}
-    //                         onSubmit={withResetShakeStacks(handleSubmit)}
-    //                         onReset={resetShakeStacks}
-    //                     >
-    //                         {({ dirty }) => {
-    //                             setIsDirty(dirty);
+export const AppSettingsDialog = withDecorator(() => {
+    const { resetShakeStacks } = DialogBlocks.FullScreen.useContextProxy();
+    const { label } = DialogBlocks.useContextProxy();
 
-    //                             return (
-    //                                 <TabContextProvider
-    //                                     tabs={tabs}
-    //                                     onTabChange={(prevent) => {
-    //                                         if (!isDirtyRef.current) {
-    //                                             return closeMobileMenu();
-    //                                         }
-    //                                         prevent();
-    //                                         triggerScreenShake();
-    //                                     }}
-    //                                 >
-    //                                     {({ currentTab }) => (
-    //                                         <Form>
-    //                                             <FullScreenDialogWrapper>
-    //                                                 <FullScreenDialogNavigationSide>
-    //                                                     <Navigation/>
-    //                                                 </FullScreenDialogNavigationSide>
+    const [
+        updateProfile,
+    ] = Store.Users.Api.useUserProfileUpdateMutation();
 
-    //                                                 <FullScreenDialogContentSide>
-    //                                                     {currentTab.tab}
-    //                                                 </FullScreenDialogContentSide>
-    //                                             </FullScreenDialogWrapper>
-    //                                         </Form>
-    //                                     )}
-    //                                 </TabContextProvider>
-    //                             );
-    //                         }}
-    //                     </Formik>
-    //                 )}
-    //             </ContextConsumerProxy>
-    //         </FullScreenDialogContextProvider>
-    //     </DialogWindow>
-    // );
-};
+    const bannerColor = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserBannerColor,
+    );
+
+    const settings = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserSettings,
+    );
+
+    const { form } = Form.useExtendForm(AppSettingsDialogForm, {
+        trigger: ({ avatar, bannerColor, ...rest }) => {
+            return updateProfile({
+                avatar,
+                bannerColor,
+                settings: rest,
+            });
+        },
+        onSubmitSuccess: resetShakeStacks,
+        onReset: resetShakeStacks,
+        defaultValues: {
+            avatar: null,
+            bannerColor,
+            ...settings,
+        },
+    });
+
+    const theme = Form.useFieldValue(
+        Form.useField(form, AppSettingsDialogForm.names.theme),
+    );
+
+    const {
+        handleTabChange,
+    } = DialogBlocks.FullScreen.useHandleTabChange(form);
+
+    return (
+        <AppSettingsDialogForm.Provider form={form}>
+            <AppSettingsDialogTabs.Provider
+                label={label}
+                initialTab={AppSettingsDialogTabs.tabNameTable.ProfileTab}
+                onTabChange={handleTabChange}
+                orientation='vertical'
+            >
+                <Form.Node>
+                    <div data-theme={theme}>
+                        <DialogBlocks.FullScreen.Shaker>
+                            <DialogBlocks.FullScreen.NavigationSide>
+                                <Navigation/>
+                            </DialogBlocks.FullScreen.NavigationSide>
+
+                            <DialogBlocks.FullScreen.ContentSide>
+                                <AppSettingsDialogTabs.Current/>
+                            </DialogBlocks.FullScreen.ContentSide>
+                        </DialogBlocks.FullScreen.Shaker>
+                    </div>
+                </Form.Node>
+            </AppSettingsDialogTabs.Provider>
+        </AppSettingsDialogForm.Provider>
+    );
+});

@@ -18,8 +18,8 @@ export const TextAreaProvider = Form.createFieldProvider<
     children,
 }) => {
     const { field, required, id } = Form.useFieldContext<string>();
-    const error = Form.useFieldError();
-    const value = Form.useStore(field.store, (v) => v.value);
+    const error = Form.useFieldError(field);
+    const value = Form.useFieldValue(field);
 
     const contextValue: TextAreaTypes.Context = {
         id,

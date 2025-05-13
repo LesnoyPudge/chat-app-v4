@@ -1,4 +1,10 @@
-import { autoBind, invariant, ListenerStore, shallowEqual } from '@lesnoypudge/utils';
+import {
+    autoBind,
+    invariant,
+    isCallable,
+    ListenerStore,
+    shallowEqual,
+} from '@lesnoypudge/utils';
 import { Types } from '../../types';
 
 
@@ -245,6 +251,13 @@ export class KeyboardNavigationInstance {
     }
 
     private getInitialIndex(list: string[]) {
+        if (isCallable(this.options.takeInitialIdFrom)) {
+            return Math.max(
+                0,
+                list.indexOf(this.options.takeInitialIdFrom()),
+            );
+        }
+
         const index = (
             this.options.takeInitialIdFrom === 'start'
                 ? 0

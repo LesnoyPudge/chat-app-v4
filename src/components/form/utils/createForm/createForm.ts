@@ -1,5 +1,5 @@
 import { TanStackForm } from '@/libs';
-import { useFieldContext, useFormContext } from '../../hooks';
+import * as hooks from '../../hooks';
 import { FormTypes } from '../../types';
 import { FieldProvider, FormProvider } from '../../components';
 
@@ -13,9 +13,10 @@ export const createForm: FormTypes.createForm.Fn = (
             const formName = `${name}Form` as const;
             const values = options.defaultValues;
 
+            type Shape = typeof values;
 
             type Result = FormTypes.createForm.Result<
-               typeof values,
+                Shape,
                 _Name
             >;
 
@@ -28,18 +29,27 @@ export const createForm: FormTypes.createForm.Fn = (
                     }, {})
             );
 
-            const useField = <
-                _FieldName extends FormTypes.GenericNameWrapper<typeof values>,
-            >() => {
-                return useFieldContext() as FormTypes.FieldContext<
-                    (typeof values)[_FieldName['_']]
-                >;
+            const useFieldContext: Result['useFieldContext'] = () => {
+                return hooks.useFieldContext();
             };
 
-            const useForm = () => {
-                return useFormContext() as FormTypes.FormContext<
-                    typeof values
-                >;
+            const useFormContext: Result['useFormContext'] = () => {
+                return hooks.useFormContext();
+            };
+
+            const useFieldApi: Result['useFieldApi'] = (name) => {
+                return hooks.useFieldApi(name);
+            };
+
+            const useFieldError: Result['useFieldError'] = (name) => {
+                const api = hooks.useFieldApi(name);
+                return hooks.useFieldError(api);
+            };
+
+            const useFieldValue: Result['useFieldValue'] = (name) => {
+                const api = hooks.useFieldApi(name);
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                return hooks.useFieldValue(api) as Shape[(typeof name)['_']];
             };
 
             const result: Result = {
@@ -48,8 +58,11 @@ export const createForm: FormTypes.createForm.Fn = (
                 names,
                 Provider: FormProvider,
                 FieldProvider,
-                useField,
-                useForm,
+                useFieldContext,
+                useFormContext,
+                useFieldApi,
+                useFieldError,
+                useFieldValue,
             };
 
             type Return = FormTypes.createForm.Return<

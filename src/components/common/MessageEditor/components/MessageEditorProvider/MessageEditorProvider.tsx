@@ -30,7 +30,8 @@ export const MessageEditorProvider: FC<Types.Provider.Props> = withDecorator(({
     form: _,
 }) => {
     const { t } = useTrans();
-    const content = Form.useFieldValue<Types.MessageContent>(contentName);
+    const fieldApi = Form.useFieldApi<Types.MessageContent>(contentName);
+    const content = Form.useFieldValue(fieldApi);
     const isSubmitting = Form.useFormStore((v) => v.isSubmitting);
     const { api } = Form.useFormContext();
     const field = Form.useFieldApi(contentName);

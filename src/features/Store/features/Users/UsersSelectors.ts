@@ -125,6 +125,14 @@ export const selectCurrentUserAvatar = (
     }, `${UsersSlice.name}/selectCurrentUserAvatar`)
 );
 
+export const selectCurrentUserPassword = (
+    createSelector((query) => {
+        const user = query(selectCurrentUser);
+
+        return user.password;
+    }, `${UsersSlice.name}/selectCurrentUserPassword`)
+);
+
 export const selectCurrentUserDefaultAvatar = (
     createSelector((query) => {
         const user = query(selectCurrentUser);

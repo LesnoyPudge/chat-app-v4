@@ -17,8 +17,9 @@ export namespace FullScreenDialogBlocks {
         FullScreenDialogBlocksNavigationSide: NavigationSide,
         FullScreenDialogBlocksContentSide: ContentSide,
         FullScreenDialogBlocksNavigationHeading: NavigationHeading,
-        FullScreenDialogBlocksNavigationItem: NavigationItem,
+        FullScreenDialogBlocksNavigationButton: NavigationButton,
         FullScreenDialogBlocksTabTitle: TabTitle,
+        FullScreenDialogBlocksShaker: Shaker,
     } = components;
 
     export const {

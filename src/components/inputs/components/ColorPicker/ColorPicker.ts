@@ -1,6 +1,5 @@
 import * as components from './components';
 import * as context from './context';
-import * as hooks from './hooks';
 import * as types from './types';
 
 
@@ -15,9 +14,7 @@ export namespace ColorPicker {
 
     export const {
         ColorPickerContext: Context,
+        useColorPickerContextProxy: useProxy,
+        useColorPickerContextSelector: useSelector,
     } = context;
-
-    export const {
-        useColorPickerContext: useContext,
-    } = hooks;
 }

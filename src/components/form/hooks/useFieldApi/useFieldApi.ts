@@ -4,12 +4,8 @@ import { FormTypes } from '../../types';
 
 
 
-export const useFieldApi = <_Value>(
-    name: FormTypes.GenericNameWrapper,
-) => {
+export const useFieldApi: FormTypes.UseFieldApi = (name) => {
     const { api } = useFormContext();
 
-    return TanStackForm.useField({ form: api, name: name._ }) as (
-        FormTypes.FieldApiWrapper<_Value>
-    );
+    return TanStackForm.useField({ form: api, name: name._ });
 };

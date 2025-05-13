@@ -138,7 +138,7 @@ export const UserButtons: FC = () => {
             <>
                 <Button
                     className={styles.button}
-                    label='Открыть настройки'
+                    label={t('AppSettingsDialog.openDialogButton.label')}
                     hasPopup='dialog'
                     isActive={controls.isOpen}
                     innerRef={settingsButtonRef}

@@ -44,11 +44,13 @@ export const RadioInputNode: FC<RadioInputTypes.Node.Props> = ({
         innerRef,
     } = useRadioInputContext();
 
+    const isChecked = value === valueName;
+
     return (
         <label
             className={cn(
                 styles.label.base,
-                value && styles.label.active,
+                isChecked && styles.label.active,
                 className,
             )}
         >
@@ -58,7 +60,7 @@ export const RadioInputNode: FC<RadioInputTypes.Node.Props> = ({
                 type='radio'
                 name={name}
                 value={valueName}
-                checked={value}
+                checked={isChecked}
                 aria-label={label}
                 disabled={disabled}
                 readOnly={readOnly}

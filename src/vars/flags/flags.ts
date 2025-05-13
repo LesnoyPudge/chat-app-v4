@@ -19,7 +19,7 @@ export namespace FLAGS {
         prod: true,
         setup: false,
         globalLoader: false,
-        lazyModules: false,
+        lazyModules: true,
         fakeServer: false,
         scenarios: true,
         selectors: true,

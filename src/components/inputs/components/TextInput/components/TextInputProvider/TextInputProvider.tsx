@@ -28,8 +28,8 @@ export const TextInputProvider = Form.createFieldProvider<
 
     const { field, required, id } = Form.useFieldContext<string>();
     const [changeableType, setChangeableType] = useState(type);
-    const error = Form.useFieldError();
-    const value = Form.useStore(field.store, (v) => v.value);
+    const error = Form.useFieldError(field);
+    const value = Form.useFieldValue(field);
 
     const contextValue: TextInputTypes.Context = {
         id,

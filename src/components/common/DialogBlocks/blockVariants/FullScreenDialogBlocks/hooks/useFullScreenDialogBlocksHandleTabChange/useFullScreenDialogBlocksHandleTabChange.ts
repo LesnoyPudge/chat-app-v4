@@ -13,10 +13,10 @@ export const useFullScreenDialogBlocksHandleTabChange = (
         triggerScreenShake,
     } = useFullScreenDialogBlocksContextProxy();
 
-    const isDirty = Form.useStore(form.api.store, (v) => v.isDirty);
+    const isChanged = Form.useStore(form.api.store, (v) => !v.isDefaultValue);
 
     const handleTabChange: Tab.Types.OnTabChange = useFunction((prevent) => {
-        if (!isDirty) return closeMenu();
+        if (!isChanged) return closeMenu();
 
         prevent();
         triggerScreenShake();

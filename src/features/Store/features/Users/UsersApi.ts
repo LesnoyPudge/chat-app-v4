@@ -252,5 +252,15 @@ export const UsersApi = getRootApi().injectEndpoints({
                 body,
             }),
         }),
+        [User.CredentialsUpdate.NamedAction]: build.mutation<
+            User.CredentialsUpdate.Response,
+            User.CredentialsUpdate.RequestBody
+        >({
+            query: (body) => ({
+                url: User.CredentialsUpdate.Path,
+                method: User.CredentialsUpdate.Method,
+                body,
+            }),
+        }),
     }),
 });

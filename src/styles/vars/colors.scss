@@ -2,115 +2,114 @@
 
 
 
-:root {
-    $themed-colors-map: (
-        '--color-primary-100': (
-            dark: hsl(218, 8%, 27%),
-            light: hsl(210, 11%, 93%)
-        ),
-        '--color-primary-200': (
-            dark: hsl(220, 8%, 23%),
-            light: hsl(0, 0%, 100%)
-        ),
-        '--color-primary-300': (
-            dark: hsl(223, 7%, 20%),
-            light: hsl(220, 13%, 95%)
-        ),
-        '--color-primary-400': (
-            dark: hsl(220, 7%, 17%),
-            light: hsl(210, 11%, 93%)
-        ),
-        '--color-primary-500': (
-            dark: hsl(216, 7%, 14%),
-            light: hsl(216, 10%, 90%)
-        ),
-        '--color-primary-600': (
-            dark: hsl(225, 8%, 10%),
-            light: hsl(0, 0%, 100%)
-        ),
+$themed-colors-map: (
+    '--color-primary-100': (
+        dark: hsl(218, 8%, 27%),
+        light: hsl(210, 11%, 93%)
+    ),
+    '--color-primary-200': (
+        dark: hsl(220, 8%, 23%),
+        light: hsl(0, 0%, 100%)
+    ),
+    '--color-primary-300': (
+        dark: hsl(223, 7%, 20%),
+        light: hsl(220, 13%, 95%)
+    ),
+    '--color-primary-400': (
+        dark: hsl(220, 7%, 17%),
+        light: hsl(210, 11%, 93%)
+    ),
+    '--color-primary-500': (
+        dark: hsl(216, 7%, 14%),
+        light: hsl(216, 10%, 90%)
+    ),
+    '--color-primary-600': (
+        dark: hsl(225, 8%, 10%),
+        light: hsl(0, 0%, 100%)
+    ),
 
-        '--color-primary-hover': (
-            dark: hsla(219, 8%, 34%, 0.4),
-            light: rgba(106, 116, 128, 0.16)
-        ),
-        '--color-primary-active': (
-            dark: hsla(217, 8%, 34%, 0.48),
-            light: rgba(106, 116, 128, 0.2)
-        ),
-        '--color-primary-selected': (
-            dark: hsla(217, 8%, 34%, 0.6),
-            light: rgba(106, 116, 128, 0.24)
-        ),
+    '--color-primary-hover': (
+        dark: hsla(219, 8%, 34%, 0.4),
+        light: rgba(106, 116, 128, 0.16)
+    ),
+    '--color-primary-active': (
+        dark: hsla(217, 8%, 34%, 0.48),
+        light: rgba(106, 116, 128, 0.2)
+    ),
+    '--color-primary-selected': (
+        dark: hsla(217, 8%, 34%, 0.6),
+        light: rgba(106, 116, 128, 0.24)
+    ),
 
-        '--color-focus': (
-            dark: hsl(197, 100%, 60%),
-            light: hsl(212, 100%, 44%)
-        ),
+    '--color-focus': (
+        dark: hsl(197, 100%, 60%),
+        light: hsl(212, 100%, 44%)
+    ),
 
-        '--color-icon-100': (
-            dark: hsl(210, 3%, 87%),
-            light: hsl(210, 10%, 20%)
-        ),
-        '--color-icon-200': (
-            dark: hsl(216, 4%, 74%),
-            light: hsl(215, 10%, 34%)
-        ),
-        '--color-icon-300': (
-            dark: hsl(218, 4%, 56%),
-            light: hsl(216, 8%, 26%)
-        ),
+    '--color-icon-100': (
+        dark: hsl(210, 3%, 87%),
+        light: hsl(210, 10%, 20%)
+    ),
+    '--color-icon-200': (
+        dark: hsl(216, 4%, 74%),
+        light: hsl(215, 10%, 34%)
+    ),
+    '--color-icon-300': (
+        dark: hsl(218, 4%, 56%),
+        light: hsl(216, 8%, 26%)
+    ),
 
-        '--color-white-black': (
-            dark: white,
-            light: black
-        ),
-        '--color-black-white': (
-            dark: black,
-            light: white
-        ),
+    '--color-white-black': (
+        dark: white,
+        light: black
+    ),
+    '--color-black-white': (
+        dark: black,
+        light: white
+    ),
 
-        '--color-font-primary': (
-            dark: hsl(0, 0%, 100%),
-            light: hsl(240, 8%, 3%)
-        ),
-        '--color-font-secondary': (
-            dark: hsl(216, 4%, 74%),
-            light: hsl(215, 10%, 34%)
-        ),
-        '--color-font-base': (
-            dark: hsl(210, 3%, 87%),
-            light: hsl(210, 10%, 20%)
-        ),
-        '--color-font-muted': (
-            dark: hsl(214, 4%, 65%),
-            light: hsl(213, 10%, 41%)
-        )
-    );
-    @mixin themed-colors($mode) {
-        @each $var, $values in $themed-colors-map {
-            @if not map.has-key($values, $mode) {
-                @error "Theme mode '#{$mode}' not defined for variable #{$var}";
-            }
-            #{$var}: map.get($values, $mode);
+    '--color-font-primary': (
+        dark: hsl(0, 0%, 100%),
+        light: hsl(240, 8%, 3%)
+    ),
+    '--color-font-secondary': (
+        dark: hsl(216, 4%, 74%),
+        light: hsl(215, 10%, 34%)
+    ),
+    '--color-font-base': (
+        dark: hsl(210, 3%, 87%),
+        light: hsl(210, 10%, 20%)
+    ),
+    '--color-font-muted': (
+        dark: hsl(214, 4%, 65%),
+        light: hsl(213, 10%, 41%)
+    )
+);
+
+@mixin themed-colors($mode) {
+    @each $var, $values in $themed-colors-map {
+        @if not map.has-key($values, $mode) {
+            @error "Theme mode '#{$mode}' not defined for variable #{$var}";
         }
+        #{$var}: map.get($values, $mode);
+    }
+}
+
+[data-theme=dark] { 
+    @include themed-colors('dark'); 
+}
+
+[data-theme=light] {
+    @include themed-colors('light'); 
+}
+
+[data-theme=auto] {
+    @media (prefers-color-scheme: dark) {
+        @include themed-colors('dark');
     }
 
-    &[data-theme=dark] { 
-        @include themed-colors('dark'); 
-    }
-
-    &[data-theme=light] {
-        @include themed-colors('light'); 
-    }
-    
-    &[data-theme=auto] {
-        @media (prefers-color-scheme: dark) {
-            @include themed-colors('dark');
-        }
-
-        @media (prefers-color-scheme: light) {
-            @include themed-colors('light');
-        }
+    @media (prefers-color-scheme: light) {
+        @include themed-colors('light');
     }
 }
 

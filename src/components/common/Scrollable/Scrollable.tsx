@@ -11,7 +11,7 @@ import { Direction } from '@/types';
 
 
 const styles = createStyles({
-    wrapper: 'max-h-full max-w-full',
+    wrapper: 'max-h-full max-w-[100dvw]',
 });
 
 export namespace Scrollable {

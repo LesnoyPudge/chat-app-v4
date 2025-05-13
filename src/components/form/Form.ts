@@ -17,6 +17,7 @@ export namespace Form {
         useFieldApi,
         useFieldValue,
         useFormStore,
+        useField,
     } = hooks;
 
     export const {

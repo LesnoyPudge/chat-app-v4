@@ -16,7 +16,7 @@ export namespace RadioInputTypes {
             required: boolean;
             readOnly: boolean;
             disabled: boolean;
-            value: boolean;
+            value: string;
             label: string;
             error: string | null;
             setValue: Form.Types.SetValue<Context['value']>;

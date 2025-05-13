@@ -2,6 +2,7 @@ import { RadioInputTypes } from '../../types';
 import { RadioInputContext } from '../../context';
 import { renderFunction, useFunction } from '@lesnoypudge/utils-react';
 import { Form } from '@/components';
+import { invariant } from '@lesnoypudge/utils';
 
 
 
@@ -15,9 +16,14 @@ export const RadioInputProvider = Form.createFieldProvider<
     valueName,
     children,
 }) => {
-    const { field, required, id } = Form.useFieldContext<boolean>();
-    const error = Form.useFieldError();
-    const value = Form.useStore(field.store, (v) => v.value);
+    const { field, required, id } = Form.useFieldContext<string>();
+    const error = Form.useFieldError(field);
+    const value = Form.useFieldValue(field);
+
+    invariant(
+        typeof value === 'string',
+        'Radio input should take string values',
+    );
 
     const contextValue: RadioInputTypes.Context = {
         id,
@@ -27,7 +33,11 @@ export const RadioInputProvider = Form.createFieldProvider<
         valueName,
         name: field.name,
         onBlur: field.handleBlur,
-        onChange: useFunction((e) => field.handleChange(e.target.checked)),
+        onChange: useFunction((e) => {
+            if (!e.target.checked) return;
+
+            field.handleChange(valueName);
+        }),
         readOnly,
         required,
         setValue: field.setValue,

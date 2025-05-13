@@ -31,13 +31,14 @@ const styles = createStyles({
 export const RadioInputIndicator: FC<RT.PropsWithClassName> = ({
     className = '',
 }) => {
-    const { value } = useRadioInputContext();
+    const { value, valueName } = useRadioInputContext();
+    const isChecked = value === valueName;
 
     return (
         <div className={cn(styles.wrapper, className)}>
             <div className={cn(
                 styles.inner.base,
-                value && styles.inner.active,
+                isChecked && styles.inner.active,
             )}>
             </div>
         </div>

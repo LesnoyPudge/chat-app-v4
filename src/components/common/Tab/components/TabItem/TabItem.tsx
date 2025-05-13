@@ -17,12 +17,15 @@ export const TabItem = <
     children,
 }: Types.Item.Props<_Tabs>) => {
     const elementRef = useRefManager<HTMLButtonElement>(null);
+
     const changeTab = ContextSelectable.useSelector(
         context, (v) => v.changeTab[tabName],
     );
+
     const { controls, id, role } = ContextSelectable.useSelector(
         context, (v) => v.tabProps[tabName],
     );
+
     const isCurrentTab = ContextSelectable.useSelector(
         context, (v) => v.isActive[tabName],
     );

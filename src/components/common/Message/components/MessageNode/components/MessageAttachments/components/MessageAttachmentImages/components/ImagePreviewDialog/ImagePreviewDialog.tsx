@@ -1,12 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { createWithDecorator, useFunction } from '@lesnoypudge/utils-react';
-import {
-    Button,
-    DialogBlocks,
-    ExternalLink,
-    Image,
-    Overlay,
-} from '@/components';
+import { Button, DialogBlocks, ExternalLink, Image } from '@/components';
 import { useTrans } from '@/hooks';
 import { createStyles } from '@/utils';
 import { MouseEvent } from 'react';
@@ -26,7 +20,9 @@ const {
             controls={controls}
             label={t('Message.Attachments.ImagePreviewDialog.label')}
         >
-            {children}
+            <DialogBlocks.Base.Wrapper>
+                {children}
+            </DialogBlocks.Base.Wrapper>
         </DialogBlocks.Base.Provider>
     );
 });
@@ -55,7 +51,7 @@ export const ImagePreviewDialog = withDecorator<ImagePreviewDialog.Props>(({
     });
 
     return (
-        <DialogBlocks.Base.Wrapper>
+        <DialogBlocks.Base.Inner>
             <DialogBlocks.Base.Content className={styles.content}>
                 <div onContextMenu={stopPropagation}>
                     <Image
@@ -81,6 +77,6 @@ export const ImagePreviewDialog = withDecorator<ImagePreviewDialog.Props>(({
                     {t('COMMON.Close')}
                 </Button>
             </DialogBlocks.Base.Footer>
-        </DialogBlocks.Base.Wrapper>
+        </DialogBlocks.Base.Inner>
     );
 });

@@ -1,7 +1,12 @@
 import { Types } from '../../types';
 import { cn, createStyles } from '@/utils';
 import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
-import { CompactMessage, CozyMessage, MessageControlBar, MessageProvider } from './components';
+import {
+    CompactMessage,
+    CozyMessage,
+    MessageControlBar,
+    MessageProvider,
+} from './components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { useIsMessageRedactorActive, useMessageContext } from '../../hooks';
 import { toOneLine } from '@lesnoypudge/utils';
@@ -19,7 +24,6 @@ const styles = createStyles({
         hover-focus-within:bg-primary-300
     `,
 });
-
 
 type DecoratorProps = T.Except<
     Types.Node.Props,

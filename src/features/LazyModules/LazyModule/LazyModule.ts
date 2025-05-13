@@ -1,4 +1,11 @@
-import { autoBind, catchErrorAsync, invariant, ListenerStore, promiseRetry, promiseTimeout } from '@lesnoypudge/utils';
+import {
+    autoBind,
+    catchErrorAsync,
+    invariant,
+    ListenerStore,
+    promiseRetry,
+    promiseTimeout,
+} from '@lesnoypudge/utils';
 import { LoadingState } from '../vars';
 import { secondsToMilliseconds } from 'date-fns';
 import { logger } from '@/utils';
@@ -61,16 +68,16 @@ export class LazyModule<_Value> {
 
             this.listeners.triggerAll(this.value);
 
-            logger.lazyModules.log(`LazyModules: "${this.name}" ready`);
+            logger.lazyModules.log(`LazyModule: "${this.name}" ready`);
 
             return value;
         }
 
-        logger.lazyModules.log(`LazyModules: "${this.name}" failed`);
+        logger.lazyModules.log(`LazyModule: "${this.name}" failed`);
 
         this.state = LoadingState.Error;
 
-        throw new Error(`Failed to load lazy module: ${this.name}`);
+        throw new Error(this.name);
     }
 
     getLoadedValue() {

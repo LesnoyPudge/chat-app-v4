@@ -1,4 +1,4 @@
-import { useFunction } from '@lesnoypudge/utils-react';
+import { useFunction, useInterval } from '@lesnoypudge/utils-react';
 import { logger } from '@/utils';
 import { useEffect, useRef } from 'react';
 import {
@@ -18,6 +18,8 @@ type Props = (
         'className'
     >
 );
+
+// const CHECK_DELAY = 1_000;
 
 export const useDebug = ({
     instanceRef,
@@ -42,6 +44,7 @@ export const useDebug = ({
         );
 
         if (isOverflowingWindow) {
+            // debugger;
             shouldReportCheckWindowOverflowRef.current = false;
             logger._warns.warn(
                 `scrollable is overflowing window`,
@@ -117,4 +120,8 @@ export const useDebug = ({
     useEffect(checkWindowOverflow);
     useEffect(checkParentOverflow);
     useEffect(checkInvalidClassName);
+
+    // useInterval(checkWindowOverflow, CHECK_DELAY);
+    // useInterval(checkParentOverflow, CHECK_DELAY);
+    // useInterval(checkInvalidClassName, CHECK_DELAY);
 };

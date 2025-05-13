@@ -1,10 +1,10 @@
 import { cn, createStyles } from '@/utils';
-import { FC } from 'react';
-import { ColorButton } from './components';
-import { Iterate } from '@lesnoypudge/utils-react';
-import { HexColorInput, HexColorPicker } from 'react-colorful';
-import { useColorPickerContext } from '../../hooks';
+import { FC, memo } from 'react';
+import { ColorButton, ColorInput, ColorTextInput } from './components';
+import { Iterate, withDisplayName } from '@lesnoypudge/utils-react';
+import { useColorPickerContextProxy } from '../../context';
 import { ColorPickerTypes } from '../../types';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
@@ -23,6 +23,9 @@ const styles = createStyles({
     presetsWrapper: 'flex justify-between gap-1',
 });
 
+decorate(withDisplayName, 'ColorPickerNode', decorate.target);
+decorate(memo, decorate.target);
+
 export const ColorPickerNode: FC<ColorPickerTypes.Node.Props> = ({
     className = '',
 }) => {
@@ -30,10 +33,8 @@ export const ColorPickerNode: FC<ColorPickerTypes.Node.Props> = ({
         colorPresets,
         id,
         label,
-        value,
         innerRef,
-        setValue,
-    } = useColorPickerContext();
+    } = useColorPickerContextProxy();
 
     const withColorPresets = !!colorPresets.length;
 
@@ -48,18 +49,9 @@ export const ColorPickerNode: FC<ColorPickerTypes.Node.Props> = ({
             ref={innerRef}
             aria-label={label}
         >
-            <HexColorPicker
-                color={value}
-                onChange={setValue}
-            />
+            <ColorInput/>
 
-            <HexColorInput
-                className={styles.colorInput}
-                color={value}
-                prefix='#'
-                prefixed
-                onChange={setValue}
-            />
+            <ColorTextInput className={styles.colorInput}/>
 
             <If condition={withColorPresets}>
                 <div className={styles.presetsWrapper}>

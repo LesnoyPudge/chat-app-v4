@@ -1,9 +1,18 @@
 import { ColorPickerTypes } from '../../types';
 import { ColorPickerContext } from '../../context';
 import { Form } from '@/components';
-import { renderFunction } from '@lesnoypudge/utils-react';
+import {
+    renderFunction,
+    useThrottled,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
+import { decorate } from '@lesnoypudge/macro';
+import { memo } from 'react';
 
 
+
+decorate(withDisplayName, 'ColorPickerProvider', decorate.target);
+decorate(memo, decorate.target);
 
 export const ColorPickerProvider = Form.createFieldProvider<
     ColorPickerTypes.Provider.Props
@@ -14,15 +23,17 @@ export const ColorPickerProvider = Form.createFieldProvider<
     children,
 }) => {
     const { field, id } = Form.useFieldContext<string>();
-    const error = Form.useFieldError();
-    const value = Form.useStore(field.store, (v) => v.value);
+    const error = Form.useFieldError(field);
+    const value = Form.useFieldValue(field);
+
+    const setValue = useThrottled(field.setValue, 1_000 / 30);
 
     const contextValue: ColorPickerTypes.Context = {
         id,
         error,
         label,
         colorPresets,
-        setValue: field.setValue,
+        setValue,
         value,
         innerRef,
     };

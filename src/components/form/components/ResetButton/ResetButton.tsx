@@ -18,19 +18,19 @@ export const ResetButton: FC<ResetButton.Props> = ({
     isDisabled,
     ...rest
 }) => {
-    const isDirty = useFormStore((v) => v.isDirty);
+    const isChanged = useFormStore((v) => !v.isDefaultValue);
     const isSubmitting = useFormStore((v) => v.isSubmitting);
 
     const shouldDisable = (
         isSubmitting
-        || !isDirty
+        || !isChanged
         || isDisabled
     );
 
     return (
         <Button
             className={className}
-            type='submit'
+            type='reset'
             isDisabled={shouldDisable}
             {...rest}
         >

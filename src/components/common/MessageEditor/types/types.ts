@@ -1,4 +1,4 @@
-import { Form, Inputs, Overlay, RTE } from '@/components';
+import { Form, Inputs, RTE } from '@/components';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { PropsWithChildren } from 'react';
 

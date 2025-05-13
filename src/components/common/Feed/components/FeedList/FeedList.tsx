@@ -1,15 +1,13 @@
-import {
-    FC,
-    memo,
-    useLayoutEffect,
-    useMemo,
-    useRef,
-} from 'react';
+import { FC, memo, useLayoutEffect, useMemo, useRef } from 'react';
 import { invariant } from '@lesnoypudge/utils';
 import { useFeedContextProxy } from '../../context';
 import { FeedItem } from '../FeedItem';
 import { Store } from '@/features';
-import { useFunction, usePrevious, withDisplayName } from '@lesnoypudge/utils-react';
+import {
+    useFunction,
+    usePrevious,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
 import { Message, VirtualList } from '@/components';
 import { decorate } from '@lesnoypudge/macro';
 

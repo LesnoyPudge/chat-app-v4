@@ -5,10 +5,7 @@ import {
     Heading,
 } from '@lesnoypudge/utils-react';
 import { FLAGS, isDev } from '@/vars';
-import {
-    GlobalLoader,
-    GlobalProviders,
-} from './components';
+import { GlobalLoader, GlobalProviders } from './components';
 import { ErrorScreen } from '@/router/screens/bundled';
 import { useDebug, usePreventDefault, useHTMLVars } from './hooks';
 import { Router } from '@/router';
@@ -37,15 +34,13 @@ export const Root: FC = () => {
                 scrollLock={false}
                 noIsolation
             >
-                <Heading.Provider>
-                    <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
-                        <GlobalProviders>
-                            <GlobalLoader.Wrapper>
-                                <Router/>
-                            </GlobalLoader.Wrapper>
-                        </GlobalProviders>
-                    </ErrorBoundary.Node>
-                </Heading.Provider>
+                <ErrorBoundary.Node FallbackComponent={ErrorScreen}>
+                    <GlobalProviders>
+                        <GlobalLoader.Wrapper>
+                            <Router/>
+                        </GlobalLoader.Wrapper>
+                    </GlobalProviders>
+                </ErrorBoundary.Node>
 
                 <DevTools/>
             </Focus.Lock>

@@ -37,7 +37,7 @@ export namespace Types {
         export type Options = {
             list: string[];
             loop: boolean;
-            takeInitialIdFrom: 'start' | 'end';
+            takeInitialIdFrom: 'start' | 'end' | (() => string);
         };
 
         export type UpdatableOptions = Partial<Options>;

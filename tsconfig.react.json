@@ -123,8 +123,11 @@
                 "../@lesnoypudge-utils/build"
             ],
             "_@lesnoypudge/utils-web": [
-                "../@lesnoypudge/utils-web/build"
+                "../@lesnoypudge-utils-web/build"
             ],
+            // "@lesnoypudge/types-utils-base": [
+            //     "../@lesnoypudge-types-utils-base"
+            // ]
         },
         "jsx": "preserve",
         "lib": [

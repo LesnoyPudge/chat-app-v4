@@ -47,7 +47,7 @@ const { animationVariants } = getAnimationVariants.custom({
     },
     visible: {
         opacity: 1,
-        translateY: 0,
+        translateY: '0%',
         scale: 1,
         transition: {
             duration: 0.3,
@@ -80,19 +80,19 @@ export const AuthScreenPure: FC = () => {
     const { currentTab } = AuthTabs.useProxy();
 
     return (
-        <Screen>
-            <Image
-                className={styles.bg}
-                src={getAssetUrl(ASSETS.IMAGES.COMMON.FANCY_BG)}
-            />
+        <AuthTabs.Provider
+            label=''
+            initialTab={AuthTabs.tabNameTable.Login}
+        >
+            <Screen>
+                <Image
+                    className={styles.bg}
+                    src={getAssetUrl(ASSETS.IMAGES.COMMON.FANCY_BG)}
+                />
 
-            <Scrollable className={styles.scrollable}>
-                <div className={styles.content}>
-                    <AnimatePresence mode='wait'>
-                        <AuthTabs.Provider
-                            label=''
-                            initialTab={AuthTabs.tabNameTable.Login}
-                        >
+                <Scrollable className={styles.scrollable}>
+                    <div className={styles.content}>
+                        <AnimatePresence mode='wait'>
                             <Motion.div
                                 className={styles.itemWrapper}
                                 key={currentTab.identifier}
@@ -109,11 +109,11 @@ export const AuthScreenPure: FC = () => {
                                     {currentTab.tab}
                                 </Focus.Inside>
                             </Motion.div>
-                        </AuthTabs.Provider>
-                    </AnimatePresence>
-                </div>
-            </Scrollable>
-        </Screen>
+                        </AnimatePresence>
+                    </div>
+                </Scrollable>
+            </Screen>
+        </AuthTabs.Provider>
     );
 };
 

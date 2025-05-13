@@ -42,11 +42,13 @@ export const CreateServerDialog = withDecorator(() => {
     const { label } = DialogBlocks.useContextProxy();
 
     return (
-        <CreateServerTabs.Provider
-            label={label}
-            initialTab={CreateServerTabs.tabNameTable.CreateServerOrFollowInvitation}
-        >
-            <CreateServerTabs.Current/>
-        </CreateServerTabs.Provider>
+        <DialogBlocks.Base.Inner>
+            <CreateServerTabs.Provider
+                label={label}
+                initialTab={CreateServerTabs.tabNameTable.CreateServerOrFollowInvitation}
+            >
+                <CreateServerTabs.Current/>
+            </CreateServerTabs.Provider>
+        </DialogBlocks.Base.Inner>
     );
 });

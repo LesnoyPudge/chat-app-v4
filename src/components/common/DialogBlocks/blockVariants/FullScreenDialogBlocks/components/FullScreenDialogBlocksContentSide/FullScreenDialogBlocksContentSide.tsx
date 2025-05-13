@@ -26,6 +26,7 @@ const styles = createStyles({
         mobile:max-w-full 
         mobile:px-4
     `,
+    scrollable: 'size-full',
     toolbarWrapper: `
         pointer-events-none 
         absolute 
@@ -66,7 +67,7 @@ export const FullScreenDialogBlocksContentSide: FC<PropsWithChildren> = ({
             className={styles.wrapper}
             ref={containerRef}
         >
-            <Scrollable>
+            <Scrollable className={styles.scrollable}>
                 <div className={styles.contentWrapper}>
                     <FullScreenDialogBlocksMobileControls forceMenuButton/>
 

@@ -1,4 +1,5 @@
 import {
+    Heading,
     useBoolean,
     useFunction,
     useLatest,
@@ -62,7 +63,9 @@ export const BaseOverlayProvider: FC<Overlay.BaseOverlay.Types.Provider.Props> =
 
     return (
         <Overlay.BaseOverlay.Context.Provider value={contextValues}>
-            {children}
+            <Heading.Provider startFrom={2}>
+                {children}
+            </Heading.Provider>
         </Overlay.BaseOverlay.Context.Provider>
     );
 };

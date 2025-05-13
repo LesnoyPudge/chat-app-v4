@@ -32,8 +32,8 @@ export const FileInputProvider = Form.createFieldProvider(<
     const { field, required, id } = Form.useFieldContext<
         FileInputTypes.Context['value']
     >();
-    const error = Form.useFieldError();
-    const value = Form.useStore(field.store, (v) => v.value);
+    const error = Form.useFieldError(field);
+    const value = Form.useFieldValue(field);
 
     const isMultiple = amountLimit > 1;
 

@@ -153,17 +153,27 @@ export const getAnimationVariants = {
         initial: {
             opacity: 0,
             scale: 1.2,
+            transition: {
+                duration: 0.2,
+                ease: 'backOut',
+            },
         },
         animate: {
             opacity: 1,
             scale: 1,
+            transition: {
+                duration: 0.2,
+                ease: 'backOut',
+            },
         },
         exit: {
             opacity: 0,
             scale: 1.2,
+            transition: {
+                duration: 0.2,
+                ease: 'backOut',
+            },
         },
-    }, {
-        duration: 0.2,
     }),
 
     popoverMenu: factory({
@@ -206,17 +216,5 @@ export const getAnimationVariants = {
     }, {
         duration: 0.125,
         ease: 'backOut',
-    }),
-
-    withHalfScale: factory({
-        initial: {
-            scale: 0.5,
-        },
-        animate: {
-            scale: 1,
-        },
-        exit: {
-            scale: 0.5,
-        },
     }),
 };

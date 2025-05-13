@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ColorPickerTypes } from '../../../../types';
 import { useFunction } from '@lesnoypudge/utils-react';
-import { useColorPickerContext } from '../../../../hooks';
+import { useColorPickerContextProxy } from '../../../../context';
 import { createStyles } from '@/utils';
 import { Button } from '@/components';
 
@@ -18,7 +18,7 @@ const styles = createStyles({
 export const ColorButton: FC<Props> = ({
     color,
 }) => {
-    const { setValue } = useColorPickerContext();
+    const { setValue } = useColorPickerContextProxy();
     const handleChange = useFunction(() => setValue(color));
 
     return (

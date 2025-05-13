@@ -60,9 +60,11 @@ const config: UserConfigFn = ({ mode }) => {
         envPrefix: env._PUBLIC_SAFE_ENV_PREFIX,
         envDir,
         assetsInclude: ['./generated/assets/**/*'],
-        // optimizeDeps: {
-        // force: true,
-        // },
+        optimizeDeps: {
+            // force: true,
+            // include: [],
+            // noDiscovery: true,
+        },
         plugins: [
             // ViteRestart({
             //     restart: [
@@ -153,9 +155,9 @@ const config: UserConfigFn = ({ mode }) => {
                             freezeObjects: 'development',
                         }],
                         'macros',
-                        'closure-elimination',
+                        // 'closure-elimination',
                         'tailcall-optimization',
-                        'autobind-class-methods',
+                        // 'autobind-class-methods',
                     ].filter((item) => typeof item !== 'boolean'),
                 },
             }),

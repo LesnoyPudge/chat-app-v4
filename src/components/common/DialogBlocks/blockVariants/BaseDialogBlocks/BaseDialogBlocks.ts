@@ -16,4 +16,6 @@ export namespace BaseDialogBlocks {
     export import Wrapper = c1.BaseDialogBlocksWrapper;
 
     export import Provider = c1.BaseDialogBlocksProvider;
+
+    export import Inner = c1.BaseDialogBlocksInner;
 }

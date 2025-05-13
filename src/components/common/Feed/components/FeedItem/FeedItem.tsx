@@ -14,8 +14,8 @@ import { decorate } from '@lesnoypudge/macro';
 
 const styles = createStyles({
     wrapper: {
-        base: 'pt-[--message-gap]',
-        resetPadding: VirtualList.Styles.resetItemPaddingTop,
+        base: VirtualList.Styles.resetItemPaddingTop,
+        withPadding: 'pt-[--message-group-spacing]',
     },
 });
 
@@ -129,13 +129,13 @@ export const FeedItem: FC<FeedItem.Props> = ({
         previousMessageCreatedAt,
     ]);
 
-    const shouldResetPadding = message.index === 0;
+    const withPadding = isGroupHead && (message.index !== 0);
 
     return (
         <div
             className={cn(
                 styles.wrapper.base,
-                shouldResetPadding && styles.wrapper.resetPadding,
+                withPadding && styles.wrapper.withPadding,
             )}
             onClick={setId}
             onAuxClick={setId}

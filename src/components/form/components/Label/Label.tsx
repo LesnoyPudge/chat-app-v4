@@ -29,7 +29,7 @@ export const Label: FC<RT.PropsWithChildrenAndClassName> = ({
     children,
 }) => {
     const { id, field, required } = useFieldContext();
-    const error = useFieldError();
+    const error = useFieldError(field);
 
     const isTouched = useStore(
         field.store, (v) => v.meta.isTouched,

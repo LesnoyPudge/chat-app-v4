@@ -4,6 +4,8 @@ import { FC } from 'react';
 import { useSliderInputContext } from '../../hooks';
 import { useSliderInput } from './hooks';
 import { SliderInputTypes } from '../../types';
+import './SliderInput.scss';
+import 'nouislider/dist/nouislider.css';
 
 
 
