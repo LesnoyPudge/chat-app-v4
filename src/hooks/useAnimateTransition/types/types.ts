@@ -3,10 +3,14 @@ import { AnimationPlaybackControls, MotionValue } from 'motion/react';
 
 
 export namespace Types {
+    export type OnEnter = () => { then: AnimationPlaybackControls['then'] };
+
+    export type OnExit = () => { then: AnimationPlaybackControls['then'] };
+
     export type Options = {
         isExist: boolean;
         progress: MotionValue;
-        onEnter?: () => { then: AnimationPlaybackControls['then'] };
-        onExit?: () => { then: AnimationPlaybackControls['then'] };
+        onEnter?: OnEnter;
+        onExit?: OnExit;
     };
 }

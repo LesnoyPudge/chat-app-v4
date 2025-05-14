@@ -15,6 +15,9 @@ export const BaseOverlayProvider: FC<Overlay.BaseOverlay.Types.Provider.Props> =
     initialState,
     disabled = false,
     controls,
+    onEnter,
+    onExit,
+    progress,
     children,
 }) => {
     const _initialState = controls?.isOpen ?? initialState ?? false;
@@ -51,6 +54,9 @@ export const BaseOverlayProvider: FC<Overlay.BaseOverlay.Types.Provider.Props> =
     });
 
     const contextValues: Overlay.BaseOverlay.Types.Context = {
+        progress,
+        onEnter,
+        onExit,
         isOverlayExist,
         isOverlayExistRef,
         closingThrottleRef: isThrottlingRef,

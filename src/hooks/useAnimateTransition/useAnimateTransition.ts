@@ -10,6 +10,12 @@ import { isDev } from '@/vars';
 
 const dev = new Set<MotionValue>();
 
+export namespace useAnimateTransition {
+    export type OnEnter = Types.OnEnter;
+
+    export type OnExit = Types.OnExit;
+}
+
 export const useAnimateTransition = ({
     isExist,
     progress,
