@@ -26,6 +26,9 @@
             // "@/src/*": [
             //     "./src/*"
             // ],
+            "@/entities": [
+                "./src/entities"
+            ],
             "@/libs": [
                 "./src/libs"
             ],

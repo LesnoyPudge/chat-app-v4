@@ -1,13 +1,8 @@
 import { Overlay, RelativelyPositioned } from '@/components';
-import { cn, createStyles, createVariants } from '@/utils';
-import { useTooltip } from './useTooltip';
-import {
-    createWithDecorator,
-    useRefManager,
-    withDisplayName,
-} from '@lesnoypudge/utils-react';
+import { cn, createStyles } from '@/utils';
+import { useTooltip, useTooltipAnimation } from './hooks';
+import { useRefManager } from '@lesnoypudge/utils-react';
 import { Types } from './types';
-import { decorate } from '@lesnoypudge/macro';
 import { FC } from 'react';
 import { Motion } from '@/libs';
 
@@ -27,65 +22,7 @@ const styles = createStyles({
     `,
 });
 
-const variants = createVariants({
-    hidden: (
-        alignment: RelativelyPositioned.useRelativePosition.Alignment,
-    ) => ({
-        opacity: 0,
-        translateY: (
-            alignment === 'top'
-                ? -15
-                : alignment === 'bottom'
-                    ? 15
-                    : 0
-
-        ),
-        translateX: (
-            alignment === 'left'
-                ? -15
-                : alignment === 'right'
-                    ? 15
-                    : 0
-
-        ),
-        transition: {
-            duration: 0.15,
-        },
-    }),
-    visible: () => ({
-        opacity: 1,
-        translateX: 0,
-        translateY: 0,
-        transition: {
-            duration: 0.15,
-        },
-    }),
-});
-
-const { withDecorator } = createWithDecorator<
-    Pick<Types.Node.Props, 'within' | 'leaderElementRef'>
->(({
-    within = false,
-    leaderElementRef,
-    children,
-}) => {
-    const { controls } = useTooltip({
-        leaderElementRef,
-        within,
-    });
-
-    return (
-        <Overlay.BaseOverlay.Provider controls={controls}>
-            <Overlay.BaseOverlay.Wrapper>
-                {children}
-            </Overlay.BaseOverlay.Wrapper>
-        </Overlay.BaseOverlay.Provider>
-    );
-});
-
-decorate(withDisplayName, 'Tooltip', decorate.target);
-
-export const Tooltip: FC<Types.Node.Props> = withDecorator(({
+export const Tooltip: FC<Types.Node.Props> = ({
     className = '',
     leaderElementRef,
     boundsSize = 20,
@@ -93,35 +30,57 @@ export const Tooltip: FC<Types.Node.Props> = withDecorator(({
     spacing = 20,
     swappableAlignment = true,
     unbounded = false,
+    within = false,
+    preferredAlignment,
     children,
-    ...rest
 }) => {
     const followerElementRef = useRefManager<HTMLDivElement>(null);
 
+    const { controls } = useTooltip({
+        leaderElementRef,
+        within,
+    });
+
+    const { alignment } = RelativelyPositioned.useRelativePosition({
+        followerElementRef,
+        leaderElementOrRectRef: leaderElementRef,
+        preferredAlignment,
+        boundsSize,
+        centered,
+        spacing,
+        swappableAlignment,
+        unbounded,
+    });
+
+    const {
+        onEnter,
+        onExit,
+        style,
+        progress,
+    } = useTooltipAnimation(alignment);
+
     return (
-        <RelativelyPositioned.Node
-            leaderElementOrRectRef={leaderElementRef}
-            boundsSize={boundsSize}
-            centered={centered}
-            spacing={spacing}
-            swappableAlignment={swappableAlignment}
-            unbounded={unbounded}
-            {...rest}
+        <Overlay.BaseOverlay.Provider
+            controls={controls}
+            progress={progress}
+            onEnter={onEnter}
+            onExit={onExit}
         >
-            {({ alignment }) => (
-                <Motion.div
-                    className={cn(styles.base, className)}
-                    role='tooltip'
-                    variants={variants}
-                    initial={variants.hidden.key}
-                    animate={variants.visible.key}
-                    exit={variants.hidden.key}
-                    custom={alignment}
+            <Overlay.BaseOverlay.Wrapper>
+                <div
+                    className={RelativelyPositioned.Styles.wrapper}
                     ref={followerElementRef}
                 >
-                    {children}
-                </Motion.div>
-            )}
-        </RelativelyPositioned.Node>
+                    <Motion.div
+                        className={cn(styles.base, className)}
+                        role='tooltip'
+                        ref={followerElementRef}
+                        style={style}
+                    >
+                        {children}
+                    </Motion.div>
+                </div>
+            </Overlay.BaseOverlay.Wrapper>
+        </Overlay.BaseOverlay.Provider>
     );
-});
+};

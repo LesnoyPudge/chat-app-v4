@@ -1,16 +1,27 @@
 import { FC, memo } from 'react';
 import { useEmojiSwitcher } from './hooks';
 import { sharedStyles } from '../../styles';
-import { cn, createStyles, getAnimationVariants } from '@/utils';
+import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
-import { Button, Emoji, EmojiPicker, Overlay, RelativelyPositioned, RTE } from '@/components';
+import {
+    Button,
+    Emoji,
+    EmojiPicker,
+    Overlay,
+    RelativelyPositioned,
+    RTE,
+} from '@/components';
 import { useTrans } from '@/hooks';
-import { useFunction, useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
+import {
+    useFunction,
+    useRefManager,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
 import { decorate } from '@lesnoypudge/macro';
+import { useMotionValue } from 'motion/react';
+import { AnimationPresets } from '@/entities';
 
 
-
-const { animationVariants } = getAnimationVariants.withOpacity();
 
 const styles = createStyles({
     button: 'group/button p-2',
@@ -39,6 +50,10 @@ export const MessageEditorEmojiPickerButton: FC<RT.PropsWithClassName> = ({
     const { insert } = RTE.Modules.Emoji.useInsertEmoji();
     const buttonRef = useRefManager<HTMLButtonElement>(null);
     const { changeEmoji, emojiCode } = useEmojiSwitcher();
+    const progress = useMotionValue(2);
+    const { onEnter, onExit, style } = AnimationPresets.useFade({
+        progress,
+    });
 
     const handleMouseEnter = useFunction(() => {
         if (controls.isOpen) return;
@@ -72,7 +87,10 @@ export const MessageEditorEmojiPickerButton: FC<RT.PropsWithClassName> = ({
 
             <Overlay.Dialog.Provider
                 controls={controls}
-                animationVariants={animationVariants}
+                progress={progress}
+                dialogStyle={style}
+                onEnter={onEnter}
+                onExit={onExit}
                 label={t('MessageEditor.EmojiPickerButton.dialog.label')}
             >
                 <Overlay.Dialog.Wrapper>

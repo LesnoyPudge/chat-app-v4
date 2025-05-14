@@ -11,14 +11,11 @@ import {
 } from '@lesnoypudge/utils-react';
 import { copyToClipboard } from '@lesnoypudge/utils-web';
 import { ClientEntities } from '@/types';
-import {
-    cn,
-    createStyles,
-    getAnimationVariants,
-    getStatusLabel,
-} from '@/utils';
+import { cn, createStyles, getStatusLabel } from '@/utils';
 import { Store } from '@/features';
 import { decorate } from '@lesnoypudge/macro';
+import { useMotionValue } from 'motion/react';
+import { AnimationPresets } from '@/entities';
 
 
 
@@ -27,8 +24,6 @@ type ExtraStatusNames = ClientEntities.User.ExtraStatus;
 const extraStatusNames: ExtraStatusNames[] = [
     'afk', 'default', 'dnd', 'invisible',
 ];
-
-const { animationVariants } = getAnimationVariants.withOpacity();
 
 const styles = createStyles({
     button: 'justify-start',
@@ -51,11 +46,18 @@ const { withDecorator } = createWithDecorator<
     children,
 }) => {
     const { t } = useTrans();
+    const progress = useMotionValue(2);
+    const { onEnter, onExit, style } = AnimationPresets.useFade({
+        progress,
+    });
 
     return (
         <Overlay.Menu.Provider
             label={t('UserMenu.label')}
-            animationVariants={animationVariants}
+            progress={progress}
+            onEnter={onEnter}
+            onExit={onExit}
+            style={style}
             controls={controls}
             leaderElementOrRectRef={leaderElementOrRectRef}
             preferredAlignment='top'

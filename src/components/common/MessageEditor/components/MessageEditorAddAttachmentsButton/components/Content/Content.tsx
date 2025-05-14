@@ -1,10 +1,12 @@
-import { cn, createStyles, getAnimationVariants } from '@/utils';
+import { cn, createStyles } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { ReactNode } from 'react';
 import { Button, DialogBlocks, Image, Overlay } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
 import { createWithDecorator, Heading } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
+import { AnimationPresets } from '@/entities';
+import { useMotionValue } from 'motion/react';
 
 
 
@@ -30,8 +32,6 @@ const styles = createStyles({
     text: 'text-xs',
 });
 
-const { animationVariants } = getAnimationVariants.baseDialog();
-
 type DecoratorProps = (
     Pick<
         Overlay.Dialog.Types.Provider.Props,
@@ -48,13 +48,21 @@ const { withDecorator } = createWithDecorator<DecoratorProps>(({
     withoutPointerEvents,
     children,
 }) => {
+    const progress = useMotionValue(2);
+    const { onEnter, onExit, style } = AnimationPresets.useBaseDialog({
+        progress,
+    });
+
     return (
         <Overlay.Dialog.Provider
             label={label}
             controls={controls}
             withBackdrop
             withoutPointerEvents={withoutPointerEvents}
-            animationVariants={animationVariants}
+            progress={progress}
+            dialogStyle={style}
+            onEnter={onEnter}
+            onExit={onExit}
         >
             <Overlay.Dialog.Wrapper className={styles.dialog}>
                 {children}

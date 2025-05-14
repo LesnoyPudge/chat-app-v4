@@ -24,8 +24,8 @@ export const DialogWrapper: FC<Overlay.Dialog.Types.Wrapper.Props> = ({
     children,
 }) => {
     const {
-        animationVariants,
-        backdropAnimationVariants,
+        dialogStyle,
+        backdropStyle,
         label,
         withBackdrop,
         withoutPointerEvents,
@@ -47,10 +47,7 @@ export const DialogWrapper: FC<Overlay.Dialog.Types.Wrapper.Props> = ({
                             withoutPointerEvents && styles.withoutPointer,
                             !withoutPointerEvents && styles.withPointer,
                         )}
-                        variants={backdropAnimationVariants}
-                        initial={backdropAnimationVariants?.initial.key}
-                        animate={backdropAnimationVariants?.animate.key}
-                        exit={backdropAnimationVariants?.exit.key}
+                        style={backdropStyle}
                         onClick={closeOverlay}
                     >
                     </Motion.div>
@@ -58,10 +55,7 @@ export const DialogWrapper: FC<Overlay.Dialog.Types.Wrapper.Props> = ({
 
                 <Motion.div
                     className={styles.contentWrapper}
-                    variants={animationVariants}
-                    initial={animationVariants?.initial.key}
-                    animate={animationVariants?.animate.key}
-                    exit={animationVariants?.exit.key}
+                    style={dialogStyle}
                 >
                     <div
                         className={cn(

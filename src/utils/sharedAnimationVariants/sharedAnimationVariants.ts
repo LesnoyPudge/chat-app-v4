@@ -1,4 +1,4 @@
-import { invariant, isCallable, merge } from '@lesnoypudge/utils';
+import { invariant, isCallable } from '@lesnoypudge/utils';
 import { TargetAndTransition, Variant, Variants } from 'motion/react';
 
 
@@ -80,119 +80,119 @@ export const createVariants = <_Shape extends Variants>(
     ) as createVariants.VariantsWithKey<keyof _Shape>;
 };
 
-const factory = (
-    shape: createVariants.Shape,
-    sharedTransition?: createVariants.Transition,
-) => {
-    return (
-        extraShape?: createVariants.Shape,
-        extraSharedTransition?: createVariants.Transition,
-    ) => {
-        return {
-            animationVariants: createVariants(
-                merge(shape, extraShape ?? {}),
-                merge(sharedTransition ?? {}, extraSharedTransition ?? {}),
-            ),
-        };
-    };
-};
+// const factory = (
+//     shape: createVariants.Shape,
+//     sharedTransition?: createVariants.Transition,
+// ) => {
+//     return (
+//         extraShape?: createVariants.Shape,
+//         extraSharedTransition?: createVariants.Transition,
+//     ) => {
+//         return {
+//             animationVariants: createVariants(
+//                 merge(shape, extraShape ?? {}),
+//                 merge(sharedTransition ?? {}, extraSharedTransition ?? {}),
+//             ),
+//         };
+//     };
+// };
 
 export const getAnimationVariants = {
-    baseDialog: factory({
-        initial: {
-            opacity: 0,
-            scale: 0.1,
-            transition: {
-                duration: 0.35,
-                ease: 'backOut',
-            },
-        },
-        animate: {
-            opacity: 1,
-            scale: 1,
-            transition: {
-                duration: 0.35,
-                ease: 'backOut',
-            },
-        },
-        exit: {
-            opacity: 0,
-            scale: 0.1,
-            transition: {
-                duration: 0.15,
-                ease: 'backOut',
-            },
-        },
-    }),
+    // baseDialog: factory({
+    //     initial: {
+    //         opacity: 0,
+    //         scale: 0.1,
+    //         transition: {
+    //             duration: 0.35,
+    //             ease: 'backOut',
+    //         },
+    //     },
+    //     animate: {
+    //         opacity: 1,
+    //         scale: 1,
+    //         transition: {
+    //             duration: 0.35,
+    //             ease: 'backOut',
+    //         },
+    //     },
+    //     exit: {
+    //         opacity: 0,
+    //         scale: 0.1,
+    //         transition: {
+    //             duration: 0.15,
+    //             ease: 'backOut',
+    //         },
+    //     },
+    // }),
 
-    baseDialogBackdrop: factory({
-        initial: {
-            opacity: 0,
-            transition: {
-                duration: 0.35,
-                ease: 'backOut',
-            },
-        },
-        animate: {
-            opacity: 1,
-            transition: {
-                duration: 0.35,
-                ease: 'backOut',
-            },
-        },
-        exit: {
-            opacity: 0,
-            transition: {
-                duration: 0.15,
-                ease: 'backOut',
-            },
-        },
-    }),
+    // baseDialogBackdrop: factory({
+    //     initial: {
+    //         opacity: 0,
+    //         transition: {
+    //             duration: 0.35,
+    //             ease: 'backOut',
+    //         },
+    //     },
+    //     animate: {
+    //         opacity: 1,
+    //         transition: {
+    //             duration: 0.35,
+    //             ease: 'backOut',
+    //         },
+    //     },
+    //     exit: {
+    //         opacity: 0,
+    //         transition: {
+    //             duration: 0.15,
+    //             ease: 'backOut',
+    //         },
+    //     },
+    // }),
 
-    fullScreenDialog: factory({
-        initial: {
-            opacity: 0,
-            scale: 1.2,
-            transition: {
-                duration: 0.2,
-                ease: 'backOut',
-            },
-        },
-        animate: {
-            opacity: 1,
-            scale: 1,
-            transition: {
-                duration: 0.2,
-                ease: 'backOut',
-            },
-        },
-        exit: {
-            opacity: 0,
-            scale: 1.2,
-            transition: {
-                duration: 0.2,
-                ease: 'backOut',
-            },
-        },
-    }),
+    // fullScreenDialog: factory({
+    //     initial: {
+    //         opacity: 0,
+    //         scale: 1.2,
+    //         transition: {
+    //             duration: 0.2,
+    //             ease: 'backOut',
+    //         },
+    //     },
+    //     animate: {
+    //         opacity: 1,
+    //         scale: 1,
+    //         transition: {
+    //             duration: 0.2,
+    //             ease: 'backOut',
+    //         },
+    //     },
+    //     exit: {
+    //         opacity: 0,
+    //         scale: 1.2,
+    //         transition: {
+    //             duration: 0.2,
+    //             ease: 'backOut',
+    //         },
+    //     },
+    // }),
 
-    popoverMenu: factory({
-        initial: {
-            scale: 0.95,
-            opacity: 0,
-        },
-        animate: {
-            scale: 1,
-            opacity: 1,
-        },
-        exit: {
-            scale: 0.95,
-            opacity: 0,
-        },
-    }, {
-        duration: 0.15,
-        ease: 'backOut',
-    }),
+    // popoverMenu: factory({
+    //     initial: {
+    //         scale: 0.95,
+    //         opacity: 0,
+    //     },
+    //     animate: {
+    //         scale: 1,
+    //         opacity: 1,
+    //     },
+    //     exit: {
+    //         scale: 0.95,
+    //         opacity: 0,
+    //     },
+    // }, {
+    //     duration: 0.15,
+    //     ease: 'backOut',
+    // }),
 
     custom: <_Shape extends Variants>(
         variants: _Shape,
@@ -203,18 +203,18 @@ export const getAnimationVariants = {
         };
     },
 
-    withOpacity: factory({
-        initial: {
-            opacity: 0,
-        },
-        animate: {
-            opacity: 1,
-        },
-        exit: {
-            opacity: 0,
-        },
-    }, {
-        duration: 0.125,
-        ease: 'backOut',
-    }),
+    // withOpacity: factory({
+    //     initial: {
+    //         opacity: 0,
+    //     },
+    //     animate: {
+    //         opacity: 1,
+    //     },
+    //     exit: {
+    //         opacity: 0,
+    //     },
+    // }, {
+    //     duration: 0.125,
+    //     ease: 'backOut',
+    // }),
 };

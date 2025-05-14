@@ -5,45 +5,24 @@ import { Overlay } from '@/components';
 
 
 
-export const DialogProviderInner: FC<
-    Overlay.Dialog.Types.Provider.InnerProps
-> = ({
-    label,
-    animationVariants,
-    backdropAnimationVariants,
-    withBackdrop = false,
-    withoutPointerEvents = false,
-    children,
-}) => {
-    const popover = ContextSelectable.useSelector(
-        Overlay.Popover.Context,
-        (v) => v,
-    );
-
-    const contextValue: Overlay.Dialog.Types.Context = {
-        ...popover,
-        label,
-        animationVariants,
-        backdropAnimationVariants,
-        withBackdrop,
-        withoutPointerEvents,
-    };
-
-    return (
-        <DialogContext.Provider value={contextValue}>
-            {children}
-        </DialogContext.Provider>
-    );
-};
-
 export const DialogProvider: FC<Overlay.Dialog.Types.Provider.Props> = ({
     children,
     controls,
-    ...rest
+    withBackdrop = false,
+    withoutPointerEvents = false,
+    label,
+    progress,
+    backdropStyle,
+    onEnter,
+    onExit,
+    dialogStyle,
 }) => {
     return (
         <Overlay.BaseOverlay.Provider
             controls={controls}
+            progress={progress}
+            onEnter={onEnter}
+            onExit={onExit}
         >
             <Overlay.Popover.Provider
                 blockable
@@ -52,9 +31,30 @@ export const DialogProvider: FC<Overlay.Dialog.Types.Provider.Props> = ({
                 closeOnEscape
                 focused
             >
-                <DialogProviderInner {...rest}>
-                    {children}
-                </DialogProviderInner>
+                <ContextSelectable.ConsumerSelector
+                    context={Overlay.Popover.Context}
+                    selector={(v) => v}
+                >
+                    {(popover) => {
+                        const value = {
+                            ...popover,
+                            withBackdrop,
+                            withoutPointerEvents,
+                            label,
+                            backdropStyle,
+                            onEnter,
+                            onExit,
+                            dialogStyle,
+                            progress,
+                        } as Overlay.Dialog.Types.Context;
+
+                        return (
+                            <DialogContext.Provider value={value}>
+                                {children}
+                            </DialogContext.Provider>
+                        );
+                    }}
+                </ContextSelectable.ConsumerSelector>
             </Overlay.Popover.Provider>
         </Overlay.BaseOverlay.Provider>
     );

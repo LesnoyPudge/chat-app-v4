@@ -1,16 +1,9 @@
-import { getAnimationVariants } from '@/utils';
 import { FC } from 'react';
 import { Overlay } from '@/components';
+import { AnimationPresets } from '@/entities';
+import { useMotionValue } from 'motion/react';
 
 
-
-const {
-    animationVariants: baseDialogVariants,
-} = getAnimationVariants.baseDialog();
-
-const {
-    animationVariants: baseDialogBackdropVariants,
-} = getAnimationVariants.baseDialogBackdrop();
 
 export namespace BaseDialogBlocksProvider {
     export type Props = Pick<
@@ -25,12 +18,25 @@ export const BaseDialogBlocksProvider: FC<BaseDialogBlocksProvider.Props> = ({
     children,
     ...rest
 }) => {
+    const progress = useMotionValue(2);
+
+    const { onEnter, onExit, style } = AnimationPresets.useBaseDialog({
+        progress,
+    });
+
+    const { style: backdropStyle } = AnimationPresets.useBaseDialogBackdrop({
+        progress,
+    });
+
     return (
         <Overlay.Dialog.Provider
             {...rest}
             withBackdrop
-            animationVariants={baseDialogVariants}
-            backdropAnimationVariants={baseDialogBackdropVariants}
+            backdropStyle={backdropStyle}
+            dialogStyle={style}
+            onEnter={onEnter}
+            onExit={onExit}
+            progress={progress}
         >
             {children}
         </Overlay.Dialog.Provider>

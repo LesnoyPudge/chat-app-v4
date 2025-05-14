@@ -12,4 +12,5 @@ export * from './RouterContextRerenders';
 export * from './ShakeTest';
 export * from './Sounds';
 export * from './TMP';
+export * from './TooltipTest';
 export * from './Virtual';

@@ -1,11 +1,22 @@
-import { Button, EmojiPicker, Overlay, RelativelyPositioned, Sprite } from '@/components';
+import {
+    Button,
+    EmojiPicker,
+    Overlay,
+    RelativelyPositioned,
+    Sprite,
+} from '@/components';
 import { useTrans } from '@/hooks';
-import { createStyles, getAnimationVariants } from '@/utils';
+import { createStyles } from '@/utils';
 import { FC } from 'react';
-import { useMessageContext, useMessageRedactorContext } from '../../../../hooks';
+import {
+    useMessageContext,
+    useMessageRedactorContext,
+} from '../../../../hooks';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { ASSETS } from '@/generated/ASSETS';
 import { Store } from '@/features';
+import { AnimationPresets } from '@/entities';
+import { useMotionValue } from 'motion/react';
 
 
 
@@ -37,8 +48,6 @@ const styles = createStyles({
     tooltip: 'text-sm',
 });
 
-const { animationVariants } = getAnimationVariants.withOpacity();
-
 
 export const MessageControlBar: FC = () => {
     const { t } = useTrans();
@@ -56,6 +65,11 @@ export const MessageControlBar: FC = () => {
     });
 
     const isMessageOwner = userId === message.author;
+
+    const progress = useMotionValue(2);
+    const { onEnter, onExit, style } = AnimationPresets.useFade({
+        progress,
+    });
 
     return (
         <div
@@ -90,7 +104,10 @@ export const MessageControlBar: FC = () => {
 
             <Overlay.Dialog.Provider
                 controls={addReactionControls}
-                animationVariants={animationVariants}
+                progress={progress}
+                dialogStyle={style}
+                onEnter={onEnter}
+                onExit={onExit}
                 label={t('Message.ControlBar.reactionPicker.label')}
             >
                 <Overlay.Dialog.Wrapper>

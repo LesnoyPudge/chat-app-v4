@@ -1,15 +1,11 @@
 import { renderFunction, useRefManager } from '@lesnoypudge/utils-react';
-import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { useRelativePosition } from '../../hooks';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { styles } from '../../styles';
 
 
-
-const styles = createStyles({
-    wrapper: 'fixed max-h-[100dvh] max-w-[100dvw] will-change-transform',
-});
 
 export namespace RelativelyPositionedNode {
     export type RequiredProps = (

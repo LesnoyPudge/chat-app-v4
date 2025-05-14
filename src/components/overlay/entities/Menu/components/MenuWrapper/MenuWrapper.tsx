@@ -1,14 +1,10 @@
 import { Overlay, RelativelyPositioned } from '@/components';
 import { Motion } from '@/libs';
-import { cn, createStyles, getAnimationVariants } from '@/utils';
+import { cn, createStyles } from '@/utils';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 
 
-
-const {
-    animationVariants: defaultMenuVariants,
-} = getAnimationVariants.popoverMenu();
 
 const styles = createStyles({
     content: 'pointer-events-auto',
@@ -23,8 +19,8 @@ export const MenuWrapper: FC<Overlay.Menu.Types.Wrapper.Props> = ({
         preferredAlignment,
         spacing,
         label,
-        animationVariants = defaultMenuVariants,
         centered,
+        style,
     } = ContextSelectable.useProxy(Overlay.Menu.Context);
 
     return (
@@ -41,10 +37,7 @@ export const MenuWrapper: FC<Overlay.Menu.Types.Wrapper.Props> = ({
                         className={cn(styles.content, className)}
                         role='menu'
                         aria-label={label}
-                        variants={animationVariants}
-                        initial={animationVariants.initial.key}
-                        animate={animationVariants.animate.key}
-                        exit={animationVariants.exit.key}
+                        style={style}
                     >
                         {children}
                     </Motion.div>

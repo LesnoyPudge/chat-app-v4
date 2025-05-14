@@ -14,12 +14,10 @@ export const usePresetFullScreenDialog: Types.GenericHook.Fn = ({
         progress,
         enterOptions: {
             duration: 0.2,
-            ease: 'backOut',
             ...extendEnterOptions,
         },
         exitOptions: {
             duration: 0.2,
-            ease: 'backOut',
             ...extendExitOptions,
         },
         style: {

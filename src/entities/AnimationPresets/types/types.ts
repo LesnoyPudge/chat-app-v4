@@ -16,6 +16,10 @@ export namespace Types {
 
     export type Options = ValueAnimationTransition<number>;
 
+    export type WithStyle = {
+        style: Style;
+    };
+
     export namespace GenericHook {
         export type Props = {
             progress: MotionValue<number>;
@@ -24,11 +28,13 @@ export namespace Types {
             extendExitOptions?: Options;
         };
 
-        export type Return = {
-            onEnter: OnEnter;
-            onExit: OnExit;
-            style: Style;
-        };
+        export type Return = T.Simplify<(
+            WithStyle
+            & {
+                onEnter: OnEnter;
+                onExit: OnExit;
+            }
+        )>;
 
         export type Fn = (props: Props) => Return;
     }

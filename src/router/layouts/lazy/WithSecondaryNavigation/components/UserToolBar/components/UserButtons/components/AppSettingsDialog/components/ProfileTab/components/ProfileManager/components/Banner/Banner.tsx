@@ -1,4 +1,4 @@
-import { createStyles, getAnimationVariants } from '@/utils';
+import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { AppSettingsDialogForm } from '../../../../../../AppSettingsDialog';
 import {
@@ -12,6 +12,8 @@ import { useTrans } from '@/hooks';
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { ASSETS } from '@/generated/ASSETS';
 import { ColoredWrapper } from './components';
+import { useMotionValue } from 'motion/react';
+import { AnimationPresets } from '@/entities';
 
 
 
@@ -37,8 +39,6 @@ const styles = createStyles({
     bannerIcon: 'm-auto size-4 transition-none',
 });
 
-const { animationVariants } = getAnimationVariants.withOpacity();
-
 const initialBannerColor = '#a90d0e';
 
 const colorPresets = [
@@ -53,6 +53,10 @@ export const Banner: FC = () => {
     const { t } = useTrans();
     const controls = Overlay.useControls();
     const buttonRef = useRefManager<HTMLButtonElement>(null);
+    const progress = useMotionValue(2);
+    const { onEnter, onExit, style } = AnimationPresets.useFade({
+        progress,
+    });
 
     return (
         <ColoredWrapper className={styles.banner}>
@@ -73,7 +77,10 @@ export const Banner: FC = () => {
             <Overlay.Dialog.Provider
                 controls={controls}
                 label={t('AppSettingsDialog.ProfileTab.bannerColor.label')}
-                animationVariants={animationVariants}
+                progress={progress}
+                dialogStyle={style}
+                onEnter={onEnter}
+                onExit={onExit}
             >
                 <Overlay.Dialog.Wrapper>
                     <RelativelyPositioned.Node

@@ -1,15 +1,12 @@
-import { getAnimationVariants } from '@/utils';
 import { MobileMenu, Overlay } from '@/components';
 import { FullScreenDialogBlocksContext } from '../../context';
 import { Types } from '../../types';
 import { createWithDecorator } from '@lesnoypudge/utils-react';
 import { useShake } from './hooks';
+import { useMotionValue } from 'motion/react';
+import { AnimationPresets } from '@/entities';
 
 
-
-const {
-    animationVariants,
-} = getAnimationVariants.fullScreenDialog();
 
 const { withDecorator } = createWithDecorator(({ children }) => (
     <MobileMenu.Provider>
@@ -33,8 +30,8 @@ export const FullScreenDialogBlocksProvider = withDecorator<
     controls,
     label,
 }) => {
+    const progress = useMotionValue(2);
     const mobileMenu = MobileMenu.useMobileMenu();
-
     const shake = useShake();
 
     const value: Types.Context = {
@@ -42,11 +39,18 @@ export const FullScreenDialogBlocksProvider = withDecorator<
         ...shake,
     };
 
+    const { onEnter, onExit, style } = AnimationPresets.useFullScreenDialog({
+        progress,
+    });
+
     return (
         <Overlay.Dialog.Provider
             controls={controls}
             label={label}
-            animationVariants={animationVariants}
+            progress={progress}
+            dialogStyle={style}
+            onEnter={onEnter}
+            onExit={onExit}
         >
             <FullScreenDialogBlocksContext.Provider value={value}>
                 {children}
