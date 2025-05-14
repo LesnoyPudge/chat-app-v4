@@ -9,6 +9,7 @@ export * from './MessageInputBarTest';
 export * from './MessageTest';
 export * from './MotionTest';
 export * from './RouterContextRerenders';
+export * from './ShakeTest';
 export * from './Sounds';
 export * from './TMP';
 export * from './Virtual';

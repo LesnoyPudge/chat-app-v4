@@ -2,7 +2,7 @@ import { ClientEntities } from '@/types';
 import { FC } from 'react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Image } from '@/components';
-import { cn, getReadFilePath, createStyles } from '@/utils';
+import { cn, resolveImagePath, createStyles } from '@/utils';
 import { useTrans } from '@/hooks';
 import { useBoolean } from '@lesnoypudge/utils-react';
 import { sharedStyles } from '../../vars';
@@ -31,13 +31,22 @@ const styles = createStyles({
     `,
 });
 
+const formatName = (name: string | undefined) => {
+    if (!name) return null;
+
+    return name.split(' ').map((word) => word.charAt(0)).join('');
+};
+
 export namespace ServerAvatar {
     export type Props = (
         RT.PropsWithClassName
         & Partial<Pick<
             ClientEntities.Server.Base,
-            'avatar' | 'name'
+            'name'
         >>
+        & {
+            avatar: resolveImagePath.ImagePointer;
+        }
     );
 }
 
@@ -49,21 +58,18 @@ export const ServerAvatar: FC<ServerAvatar.Props> = ({
     const { t } = useTrans();
     const isLoadedState = useBoolean(false);
 
-    const src = getReadFilePath(avatar);
+    const src = resolveImagePath(avatar);
 
     const showImage = !!src;
     const showName = !showImage && !!name;
+    const showPlaceholder = !isLoadedState.value && !showName;
 
-    const formattedName = (
-        name
-            ? name.split(' ').map((word) => word.charAt(0)).join('')
-            : null
-    );
+    const formattedName = formatName(name);
 
     return (
         <div className={cn(
             sharedStyles.wrapper.base,
-            !isLoadedState.value && !showName && sharedStyles.wrapper.notLoaded,
+            showPlaceholder && sharedStyles.wrapper.notLoaded,
             styles.wrapper.base,
             showName && styles.wrapper.loaded,
             className,

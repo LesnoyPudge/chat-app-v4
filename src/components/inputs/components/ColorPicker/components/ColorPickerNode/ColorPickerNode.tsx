@@ -5,6 +5,7 @@ import { Iterate, withDisplayName } from '@lesnoypudge/utils-react';
 import { useColorPickerContextProxy } from '../../context';
 import { ColorPickerTypes } from '../../types';
 import { decorate } from '@lesnoypudge/macro';
+import './ColorPickerNode.scss';
 
 
 

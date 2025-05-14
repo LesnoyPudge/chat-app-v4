@@ -1,7 +1,7 @@
 import { Avatar, Button, Image, Placeholder, Scrollable } from '@/components';
 import { FC } from 'react';
 import { useInvitationScreen } from './useInvitationScreen';
-import { createStyles, getAssetUrl } from '@/utils';
+import { createStyles } from '@/utils';
 import { CUSTOM_STYLES } from '@/vars';
 import { Heading } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
@@ -65,7 +65,7 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
         <Screen>
             <Image
                 className={styles.bg}
-                src={getAssetUrl(ASSETS.IMAGES.COMMON.FANCY_BG)}
+                pointer={ASSETS.IMAGES.COMMON.FANCY_BG}
             />
 
             <Scrollable className={styles.scrollable}>

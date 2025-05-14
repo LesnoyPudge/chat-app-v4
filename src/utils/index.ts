@@ -1,3 +1,6 @@
+
+
+
 export * from './baseAsyncComponent';
 export * from './basePreloadedComponent';
 export * from './cn';
@@ -8,9 +11,10 @@ export * from './fileSize';
 export * from './formatNotificationCount';
 export * from './getAppElementCount';
 export * from './getAssetUrl';
+export * from './getFilePathById';
 export * from './getHTMLElement';
-export * from './getReadFilePath';
 export * from './getStatusLabel';
 export * from './localStorageApi';
 export * from './logger';
+export * from './resolveImagePath';
 export * from './sharedAnimationVariants';

@@ -1,6 +1,5 @@
 import { createStyles } from '@/utils';
 import { FC, PropsWithChildren } from 'react';
-import { Overlay } from '@/components';
 import { useFullScreenDialogBlocksContextProxy } from '../../context';
 import { Motion } from '@/libs';
 

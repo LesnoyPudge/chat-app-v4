@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import { cn, getReadFilePath, getAssetUrl } from '@/utils';
+import { cn, resolveImagePath } from '@/utils';
 import { ClientEntities, ExtendedRecord } from '@/types';
 import { useTrans } from '@/hooks';
 import { useBoolean, withDisplayName } from '@lesnoypudge/utils-react';
@@ -26,9 +26,12 @@ export namespace UserAvatar {
     export type Props = (
         ExtendedRecord<Pick<
             ClientEntities.User.Base,
-            'avatar' | 'defaultAvatar'
+            'defaultAvatar'
         >, undefined>
         & RT.PropsWithClassName
+        & {
+            avatar: resolveImagePath.ImagePointer;
+        }
     );
 }
 
@@ -44,16 +47,12 @@ export const UserAvatar: FC<UserAvatar.Props> = ({
     const isLoadedState = useBoolean(false);
 
     const defaultAvatarSrc = (
-        (!avatar && defaultAvatar)
-            ? getAssetUrl(avatarIndexToAsset[defaultAvatar])
+        defaultAvatar
+            ? resolveImagePath(avatarIndexToAsset[defaultAvatar])
             : null
     );
 
-    const avatarSrc = (
-        (avatar && !defaultAvatar)
-            ? getReadFilePath(avatar)
-            : null
-    );
+    const avatarSrc = resolveImagePath(avatar);
 
     return (
         <div className={cn(

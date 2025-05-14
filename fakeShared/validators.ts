@@ -6,6 +6,7 @@ import type { RTE } from '@/components';
 import type { ClientEntities } from '@/types';
 import { FILE_MAX_SIZE_BYTES } from './vars';
 import { Valibot } from '@/libs';
+import { extractBase64Data } from '@/fakeShared';
 
 
 
@@ -159,12 +160,12 @@ class SharedValidators {
         type: this.commonString,
         base64: v.pipe(
             this.singleCommonString,
-            v.check((val) => v.safeParse(
+            v.check((value) => v.safeParse(
                 v.pipe(
                     this.singleCommonString,
                     v.base64(),
                 ),
-                val.split('base64,')[1],
+                extractBase64Data(value),
             ).success),
         ),
         name: this.commonString,

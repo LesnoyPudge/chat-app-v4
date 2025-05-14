@@ -1,18 +1,14 @@
-import { ASSETS } from '@/generated/ASSETS';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 
 
-type AssetItem = (
-    T.ValueOf<ASSETS['IMAGES']['COMMON']>
-    | T.ValueOf<ASSETS['IMAGES']['SPRITE']>
-    | T.ValueOf<ASSETS['SOUNDS']>
-    | T.ValueOf<ASSETS['VIDEOS']>
-);
+type AssetItem = {
+    NAME: string;
+    PATH: string;
+};
 
 const cache = new Map<string, string>();
 
-export const getAssetUrl = (assetItem: AssetItem) => {
+export const getAssetUrl = (assetItem: AssetItem): string => {
     const found = cache.get(assetItem.PATH);
     if (found) return found;
 

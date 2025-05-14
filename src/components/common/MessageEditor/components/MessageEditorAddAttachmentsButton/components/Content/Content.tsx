@@ -1,4 +1,4 @@
-import { cn, createStyles, getAnimationVariants, getAssetUrl } from '@/utils';
+import { cn, createStyles, getAnimationVariants } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { ReactNode } from 'react';
 import { Button, DialogBlocks, Image, Overlay } from '@/components';
@@ -97,17 +97,17 @@ export const Content = withDecorator<Content.Props>(({
                 <div className={styles.imageWrapper}>
                     <Image
                         className={cn(styles.image, styles.firstImage)}
-                        src={getAssetUrl(ASSETS.IMAGES.COMMON.FILE_TEXT_IMAGE)}
+                        pointer={ASSETS.IMAGES.COMMON.FILE_TEXT_IMAGE}
                     />
 
                     <Image
                         className={cn(styles.image, styles.secondImage)}
-                        src={getAssetUrl(ASSETS.IMAGES.COMMON.FILE_IMAGE_IMAGE)}
+                        pointer={ASSETS.IMAGES.COMMON.FILE_IMAGE_IMAGE}
                     />
 
                     <Image
                         className={cn(styles.image, styles.thirdImage)}
-                        src={getAssetUrl(ASSETS.IMAGES.COMMON.FILE_CODE_IMAGE)}
+                        pointer={ASSETS.IMAGES.COMMON.FILE_CODE_IMAGE}
                     />
                 </div>
 

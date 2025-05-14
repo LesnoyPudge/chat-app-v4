@@ -1,6 +1,6 @@
 import { Image } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
-import { createStyles, getAssetUrl } from '@/utils';
+import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { ContentContext } from '../../context';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
@@ -29,7 +29,7 @@ export const EmptyListBlock: FC = () => {
         <div className={styles.notFoundWrapper}>
             <Image
                 className={styles.notFoundImage}
-                src={getAssetUrl(ASSETS.IMAGES.COMMON.FRIENDSNOTFOUND)}
+                pointer={ASSETS.IMAGES.COMMON.FRIENDSNOTFOUND}
             />
 
             <div className={styles.notFoundText}>

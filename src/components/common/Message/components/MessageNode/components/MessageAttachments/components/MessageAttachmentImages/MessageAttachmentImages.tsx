@@ -2,7 +2,7 @@ import { Button, Image, Overlay } from '@/components';
 import { Iterate } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 import { useMessageContext } from '../../../../../../hooks';
-import { createStyles, getReadFilePath } from '@/utils';
+import { createStyles, getFilePathById } from '@/utils';
 import { ImagePreviewDialog } from './components';
 import { useTrans } from '@/hooks';
 import './MessageAttachmentImages.scss';
@@ -24,8 +24,10 @@ const Item: FC<ItemProps> = ({
     index,
 }) => {
     const { tabIndex } = useMessageContext();
-    const src = getReadFilePath(id);
+    const src = getFilePathById(id);
     const controls = Overlay.useControls();
+
+    if (!src) return null;
 
     return (
         <li

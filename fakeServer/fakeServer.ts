@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Endpoints } from '@/fakeShared';
+import { Endpoints, extractBase64Data } from '@/fakeShared';
 import { createPromiseLoader, localStorageApi, logger } from '@/utils';
 import {
     delay,
@@ -26,6 +26,9 @@ import {
 } from './utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { scenarios } from './Scenarios';
+
+
+
 import E_Channel = Endpoints.V1.Channel;
 import E_Conversation = Endpoints.V1.Conversation;
 import E_File = Endpoints.V1.File;
@@ -379,7 +382,7 @@ const getRoutes = (): HttpHandler[] => [
             const file = db.getById('file', fileId);
             if (!file) return apiError.badRequest();
 
-            const base64Data = file.base64.split(';base64,')[1];
+            const base64Data = extractBase64Data(file);
             if (!base64Data) return apiError.badRequest();
 
             const buffer = Uint8Array.from(

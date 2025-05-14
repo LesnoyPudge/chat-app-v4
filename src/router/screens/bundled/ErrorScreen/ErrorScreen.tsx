@@ -1,7 +1,7 @@
 import { Button, Image, Scrollable } from '@/components';
 import { useTrans } from '@/hooks';
 import { Heading, Hidden } from '@lesnoypudge/utils-react';
-import { createStyles, getAssetUrl } from '@/utils';
+import { createStyles } from '@/utils';
 import { CUSTOM_STYLES } from '@/vars';
 import { FC } from 'react';
 import { useErrorScreen } from './useErrorScreen';
@@ -43,14 +43,14 @@ export const ErrorScreenPure: FC<ErrorScreenPure.Props> = ({
         <Screen className={styles.screen}>
             <Image
                 className={styles.bg}
-                src={getAssetUrl(ASSETS.IMAGES.COMMON.ERROR_BOUNDARY_BG)}
+                pointer={ASSETS.IMAGES.COMMON.ERROR_BOUNDARY_BG}
             />
 
             <Scrollable className={styles.scrollable}>
                 <div className={styles.content}>
                     <Image
                         className={styles.image}
-                        src={getAssetUrl(ASSETS.IMAGES.COMMON.ERROR_BOUNDARY_IMAGE)}
+                        pointer={ASSETS.IMAGES.COMMON.ERROR_BOUNDARY_IMAGE}
                     />
 
                     <Heading.Node className={styles.heading}>

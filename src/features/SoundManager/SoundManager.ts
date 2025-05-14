@@ -2,7 +2,6 @@ import { ASSETS } from '@/generated/ASSETS';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { getAssetUrl } from '@/utils';
 import { Howl } from 'howler';
-import { autoBind } from '@lesnoypudge/utils';
 
 
 

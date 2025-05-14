@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useAuthScreen } from './useAuthScreen';
-import { createStyles, getAnimationVariants, getAssetUrl } from '@/utils';
+import { createStyles, getAnimationVariants } from '@/utils';
 import { CUSTOM_STYLES } from '@/vars';
 import { Image, Scrollable, Tab } from '@/components';
 import { AnimatePresence } from 'motion/react';
@@ -87,7 +87,7 @@ export const AuthScreenPure: FC = () => {
             <Screen>
                 <Image
                     className={styles.bg}
-                    src={getAssetUrl(ASSETS.IMAGES.COMMON.FANCY_BG)}
+                    pointer={ASSETS.IMAGES.COMMON.FANCY_BG}
                 />
 
                 <Scrollable className={styles.scrollable}>

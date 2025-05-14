@@ -112,7 +112,7 @@ export const CreateServerTab: FC = () => {
                                     <If condition={!!value}>
                                         <Image
                                             className={styles.serverAvatar}
-                                            src={value?.base64}
+                                            pointer={value}
                                             alt={t('CreateServerDialog.CreateServerTab.fileInput.serverImage.alt')}
                                         />
                                     </If>

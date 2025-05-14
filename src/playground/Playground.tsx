@@ -17,6 +17,7 @@ export const Playground: FC = () => {
             {/* <Sections.MeasureSelectorPerf/> */}
             {/* <Sections.MotionTest/> */}
             {/* <Sections.AnimationPresetTest/> */}
+            {/* <Sections.ShakeTest/> */}
         </Screen>
     );
 };

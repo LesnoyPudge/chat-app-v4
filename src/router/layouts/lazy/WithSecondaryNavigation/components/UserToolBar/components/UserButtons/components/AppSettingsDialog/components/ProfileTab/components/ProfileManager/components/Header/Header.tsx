@@ -75,7 +75,7 @@ export const Header: FC = () => {
                             >
                                 <Avatar.User
                                     className={styles.avatar}
-                                    avatar={value?.base64 ?? avatar}
+                                    avatar={value ?? avatar}
                                     defaultAvatar={defaultAvatar}
                                 />
 

@@ -1,7 +1,7 @@
 import { Button, Image, MobileMenu, Scrollable } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
-import { createStyles, getAssetUrl } from '@/utils';
+import { createStyles } from '@/utils';
 import { Heading } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 
@@ -34,7 +34,7 @@ export const ChannelFinderPanel: FC = () => {
                 <div className={styles.inner}>
                     <Image
                         className={styles.image}
-                        src={getAssetUrl(ASSETS.IMAGES.COMMON.ROOMS_NOT_FOUND)}
+                        pointer={ASSETS.IMAGES.COMMON.ROOMS_NOT_FOUND}
                     />
 
                     <div className={styles.text}>

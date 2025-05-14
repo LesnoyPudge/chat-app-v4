@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Image } from '@/components';
 import { useTrans } from '@/hooks';
 import { useBoolean } from '@lesnoypudge/utils-react';
-import { cn, getReadFilePath } from '@/utils';
+import { cn, resolveImagePath } from '@/utils';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { sharedStyles } from '../../vars';
 
@@ -24,7 +24,7 @@ export const BaseAvatar: FC<BaseAvatar.Props> = ({
     const { t } = useTrans();
     const isLoadedState = useBoolean(false);
 
-    const src = getReadFilePath(id);
+    const src = resolveImagePath(id);
 
     return (
         <div className={cn(

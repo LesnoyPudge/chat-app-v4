@@ -3,7 +3,7 @@ import { useMessageContext } from '../../../../../../hooks';
 import { useTrans } from '@/hooks';
 import { Iterate } from '@lesnoypudge/utils-react';
 import { ExternalLink } from '@/components';
-import { createStyles, getReadFilePath } from '@/utils';
+import { createStyles, getFilePathById } from '@/utils';
 
 
 
@@ -28,7 +28,7 @@ export const MessageAttachmentFiles: FC = () => {
                 {(file) => (
                     <li>
                         <ExternalLink
-                            href={getReadFilePath(file.id)}
+                            href={getFilePathById(file.id) ?? ''}
                             tabIndex={tabIndex}
                             download
                         >

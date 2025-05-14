@@ -4,8 +4,7 @@ import { FC } from 'react';
 import { useMessageEditorContext } from '../../../../hooks';
 import { Types } from '../../../../types';
 import { Button, Form, Image, Inputs, Overlay, Sprite } from '@/components';
-import { cn, createStyles, getAssetUrl } from '@/utils';
-import { invariant } from '@lesnoypudge/utils';
+import { cn, createStyles } from '@/utils';
 import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
 
@@ -73,10 +72,10 @@ export const MessageEditorAttachmentItem: FC<
 
     const isFileAnImage = file.type.includes('image');
 
-    const src = (
+    const pointer = (
         isFileAnImage
-            ? file.base64
-            : getAssetUrl(ASSETS.IMAGES.COMMON.FILE_TEXT_IMAGE)
+            ? file
+            : ASSETS.IMAGES.COMMON.FILE_TEXT_IMAGE
     );
 
     const handleClick = useFunction(() => {
@@ -113,7 +112,7 @@ export const MessageEditorAttachmentItem: FC<
                         !isFileAnImage && styles.imageAsIcon,
                     )}
                     alt={file.name}
-                    src={src}
+                    pointer={pointer}
                 />
             </div>
 
