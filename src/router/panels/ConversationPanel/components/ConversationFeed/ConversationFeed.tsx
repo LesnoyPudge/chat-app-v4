@@ -12,7 +12,7 @@ export const ConversationFeed = () => {
 
     return (
         <Feed
-            key={conversationId}
+            key={textChatId}
             textChatId={textChatId}
         />
     );

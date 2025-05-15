@@ -12,7 +12,7 @@ export const ChannelFeed = () => {
 
     return (
         <Feed
-            key={channelId}
+            key={textChatId}
             textChatId={textChatId}
         />
     );

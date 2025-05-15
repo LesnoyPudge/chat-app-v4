@@ -8,6 +8,7 @@ import { createStyles } from '@/utils';
 
 const styles = createStyles({
     wrapper: 'h-full',
+    feed: 'flex min-h-full flex-col justify-end',
 });
 
 export const FeedWrapper: FC<PropsWithChildren> = ({
@@ -27,6 +28,7 @@ export const FeedWrapper: FC<PropsWithChildren> = ({
             apiRef={scrollableApiRef}
         >
             <div
+                className={styles.feed}
                 role='feed'
                 aria-busy
                 aria-label={t('Feed.label')}

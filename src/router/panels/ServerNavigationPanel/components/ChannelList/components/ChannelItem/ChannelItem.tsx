@@ -17,7 +17,7 @@ import {
     withDisplayName,
 } from '@lesnoypudge/utils-react';
 import { cn, createStyles } from '@/utils';
-import { FC, memo, useRef } from 'react';
+import { FC, memo, startTransition, useRef } from 'react';
 import { decorate } from '@lesnoypudge/macro';
 
 
@@ -102,7 +102,7 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
 
     const handleNavigation = useFunction(() => {
         navigate({ serverId, channelId });
-        closeMenu();
+        startTransition(closeMenu);
     });
 
     return (

@@ -95,7 +95,7 @@ export const FeedList: FC = () => {
         if (!virtualizer) return;
 
         const countDiff = count - prevCount;
-        invariant(countDiff > 0);
+        if (countDiff <= 0) return;
 
         const savedPos = savedScrollPositionRef.current;
         const previousIndex = countDiff + savedPos.index;
