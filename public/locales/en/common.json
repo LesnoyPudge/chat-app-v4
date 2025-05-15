@@ -1,4 +1,12 @@
 {
+    "AddFriendsDialog.emptySearch": "__NOT_TRANSLATED__",
+    "AddFriendsDialog.item.addButton.text": "__NOT_TRANSLATED__",
+    "AddFriendsDialog.label": "__NOT_TRANSLATED__",
+    "AddFriendsDialog.notFound": "__NOT_TRANSLATED__",
+    "AddFriendsDialog.searchLabel": "__NOT_TRANSLATED__",
+    "AddFriendsDialog.searchPlaceholder": "__NOT_TRANSLATED__",
+    "AddFriendsDialog.subtitle": "__NOT_TRANSLATED__",
+    "AddFriendsDialog.title": "__NOT_TRANSLATED__",
     "ApiError.BAD_REQUEST": "__NOT_TRANSLATED__",
     "ApiError.FORBIDDEN": "__NOT_TRANSLATED__",
     "ApiError.INTERNAL_SERVER_ERROR": "__NOT_TRANSLATED__",

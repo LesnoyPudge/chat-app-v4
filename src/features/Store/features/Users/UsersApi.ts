@@ -147,6 +147,22 @@ export const UsersApi = getRootApi().injectEndpoints({
                 })) ?? [{ type: 'User', id: 'LIST' }],
             })
         ),
+        [User.GetPossibleFriendsByName.NamedAction]: (
+            build.query<
+                User.GetPossibleFriendsByName.Response,
+                User.GetPossibleFriendsByName.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.GetPossibleFriendsByName.Path,
+                    method: User.GetPossibleFriendsByName.Method,
+                    body,
+                }),
+                providesTags: (result) => result?.map(({ id }) => ({
+                    type: 'User',
+                    id,
+                })) ?? [{ type: 'User', id: 'LIST' }],
+            })
+        ),
         [User.ProfileUpdate.NamedAction]: (
             build.mutation<
                 User.ProfileUpdate.Response,
@@ -179,6 +195,18 @@ export const UsersApi = getRootApi().injectEndpoints({
                 query: (body) => ({
                     url: User.Unblock.Path,
                     method: User.Unblock.Method,
+                    body,
+                }),
+            })
+        ),
+        [User.SendFriendRequest.NamedAction]: (
+            build.mutation<
+                User.SendFriendRequest.Response,
+                User.SendFriendRequest.RequestBody
+            >({
+                query: (body) => ({
+                    url: User.SendFriendRequest.Path,
+                    method: User.SendFriendRequest.Method,
                     body,
                 }),
             })

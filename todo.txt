@@ -52,7 +52,7 @@ https://fluid.tw/
 - FIX FONTS (take from chat-app-v3?)
 - перенести все entity из components в entities
 -? сейчас валидация и ошибки валидации/апи сделаны непонятно как. сделать всю валидацию в fakeShared, отдавать i18n ключ ошибки. нужно убрать errorTable из формы и использовать i18n в обработке ошибок внутри.
-
+-? lib 'is' v2, is.anyOf, is.onlyOne
 
 
 --- current goals ---

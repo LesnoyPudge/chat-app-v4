@@ -18,6 +18,7 @@ import {
 import { useTrans } from '@/hooks';
 import { TopBar } from '@/router/layouts/bundled';
 import { ASSETS } from '@/generated/ASSETS';
+import { AddFriendsDialog } from './components';
 
 
 
@@ -147,7 +148,7 @@ export const Navigation: FC = () => {
                         {t('FriendsPanel.Navigation.addFriendButton')}
                     </Button>
 
-                    {/* <AddFriendModal/> */}
+                    <AddFriendsDialog controls={controls}/>
                 </div>
             </Scrollable>
         </TopBar>

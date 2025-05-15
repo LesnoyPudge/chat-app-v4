@@ -1,11 +1,7 @@
 import { MobileMenu } from '@/components';
 import { Focus, useRefManager } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
-import {
-    ActionButtons,
-    HomePageButton,
-    NavigationList,
-} from './components';
+import { ActionButtons, HomePageButton, NavigationList } from './components';
 import { FC } from 'react';
 
 

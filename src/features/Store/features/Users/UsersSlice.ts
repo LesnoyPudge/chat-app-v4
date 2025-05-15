@@ -32,7 +32,10 @@ export const UsersSlice = createSlice({
         });
 
         builder.addMatcher(
-            UsersApi.endpoints.UserGetMany.matchFulfilled,
+            ReduxToolkit.isAnyOf(
+                UsersApi.endpoints.UserGetMany.matchFulfilled,
+                UsersApi.endpoints.UserGetPossibleFriendsByName.matchFulfilled,
+            ),
             adapter.upsertMany,
         );
 
@@ -55,24 +58,5 @@ export const UsersSlice = createSlice({
                 adapter.upsertMany(state, result);
             },
         );
-
-        // builder.addMatcher(
-        //     ReduxToolkit.isAnyOf(
-        //         UsersApi.endpoints.UserHideConversation.matchFulfilled,
-        //         UsersApi.endpoints.UserMarkConversationNotificationsAsRead.matchFulfilled,
-        //         UsersApi.endpoints.UserMarkServerNotificationsAsRead.matchFulfilled,
-        //         UsersApi.endpoints.UserMuteConversation.matchFulfilled,
-        //         UsersApi.endpoints.UserMuteServer.matchFulfilled,
-        //         UsersApi.endpoints.UserProfileUpdate.matchFulfilled,
-        //         UsersApi.endpoints.UserUnmuteConversation.matchFulfilled,
-        //         UsersApi.endpoints.UserUnmuteServer.matchFulfilled,
-        //         UsersApi.endpoints.UserDeleteFriend.matchFulfilled,
-        //         UsersApi.endpoints.UserUnblock.matchFulfilled,
-        //         UsersApi.endpoints.UserAcceptFriendRequest.matchFulfilled,
-        //         UsersApi.endpoints.UserRejectFriendRequest.matchFulfilled,
-        //         UsersApi.endpoints.UserRevokeFriendRequest.matchFulfilled,
-        //     ),
-        //     adapter.upsertOne,
-        // );
     },
 });

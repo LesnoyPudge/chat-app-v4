@@ -40,47 +40,47 @@ const SOUNDS = ASSETS.SOUNDS;
 const DEFAULT_VOLUME = 0.3;
 const DEFAULT_FADE_DURATION = 100;
 
-const soundApis = {
-    [SOUNDS.DISCORD_INCOMING_CALL.NAME]: new Howl({
-        src: getAssetUrl(SOUNDS.DISCORD_INCOMING_CALL),
-        volume: DEFAULT_VOLUME,
-        loop: true,
-    }),
-    [SOUNDS.DISCORD_DEAFEN.NAME]: new Howl({
-        src: getAssetUrl(SOUNDS.DISCORD_DEAFEN),
-        volume: DEFAULT_VOLUME,
-        loop: false,
-    }),
-    [SOUNDS.DISCORD_MUTE.NAME]: new Howl({
-        src: getAssetUrl(SOUNDS.DISCORD_MUTE),
-        volume: DEFAULT_VOLUME,
-        loop: false,
-    }),
-    [SOUNDS.DISCORD_NOTIFICATION.NAME]: new Howl({
-        src: getAssetUrl(SOUNDS.DISCORD_NOTIFICATION),
-        volume: DEFAULT_VOLUME,
-        loop: false,
-    }),
-    [SOUNDS.DISCORD_OUTGOING_CALL.NAME]: new Howl({
-        src: getAssetUrl(SOUNDS.DISCORD_OUTGOING_CALL),
-        volume: DEFAULT_VOLUME,
-        loop: true,
-    }),
-    [SOUNDS.DISCORD_UNDEAFEN.NAME]: new Howl({
-        src: getAssetUrl(SOUNDS.DISCORD_UNDEAFEN),
-        volume: DEFAULT_VOLUME,
-        loop: false,
-    }),
-    [SOUNDS.DISCORD_UNMUTE.NAME]: new Howl({
-        src: getAssetUrl(SOUNDS.DISCORD_UNMUTE),
-        volume: DEFAULT_VOLUME,
-        loop: false,
-    }),
-} satisfies Record<AssetItem['NAME'], Howl>;
-
 const createConfiguredSounds = (
     optionTable: ConfiguredSoundOptionRecord,
 ): ConfiguredSounds => {
+    const soundApis = {
+        [SOUNDS.DISCORD_INCOMING_CALL.NAME]: new Howl({
+            src: getAssetUrl(SOUNDS.DISCORD_INCOMING_CALL),
+            volume: DEFAULT_VOLUME,
+            loop: true,
+        }),
+        [SOUNDS.DISCORD_DEAFEN.NAME]: new Howl({
+            src: getAssetUrl(SOUNDS.DISCORD_DEAFEN),
+            volume: DEFAULT_VOLUME,
+            loop: false,
+        }),
+        [SOUNDS.DISCORD_MUTE.NAME]: new Howl({
+            src: getAssetUrl(SOUNDS.DISCORD_MUTE),
+            volume: DEFAULT_VOLUME,
+            loop: false,
+        }),
+        [SOUNDS.DISCORD_NOTIFICATION.NAME]: new Howl({
+            src: getAssetUrl(SOUNDS.DISCORD_NOTIFICATION),
+            volume: DEFAULT_VOLUME,
+            loop: false,
+        }),
+        [SOUNDS.DISCORD_OUTGOING_CALL.NAME]: new Howl({
+            src: getAssetUrl(SOUNDS.DISCORD_OUTGOING_CALL),
+            volume: DEFAULT_VOLUME,
+            loop: true,
+        }),
+        [SOUNDS.DISCORD_UNDEAFEN.NAME]: new Howl({
+            src: getAssetUrl(SOUNDS.DISCORD_UNDEAFEN),
+            volume: DEFAULT_VOLUME,
+            loop: false,
+        }),
+        [SOUNDS.DISCORD_UNMUTE.NAME]: new Howl({
+            src: getAssetUrl(SOUNDS.DISCORD_UNMUTE),
+            volume: DEFAULT_VOLUME,
+            loop: false,
+        }),
+    } satisfies Record<AssetItem['NAME'], Howl>;
+
     return (
         Object.keys<typeof optionTable>(optionTable)
             .reduce<ConfiguredSounds>(<
@@ -101,50 +101,64 @@ const createConfiguredSounds = (
     );
 };
 
-const configuredSounds = createConfiguredSounds({
-    [SOUNDS.DISCORD_INCOMING_CALL.NAME]: {
-        throttleDelay: null,
-        isBlockable: true,
-        isBlocking: true,
-        interruptedBy: null,
-    },
-    [SOUNDS.DISCORD_DEAFEN.NAME]: {
-        throttleDelay: null,
-        isBlockable: false,
-        isBlocking: false,
-        interruptedBy: [SOUNDS.DISCORD_UNDEAFEN.NAME],
-    },
-    [SOUNDS.DISCORD_MUTE.NAME]: {
-        throttleDelay: null,
-        isBlockable: false,
-        isBlocking: false,
-        interruptedBy: [SOUNDS.DISCORD_UNMUTE.NAME],
-    },
-    [SOUNDS.DISCORD_NOTIFICATION.NAME]: {
-        throttleDelay: 3_000,
-        isBlockable: false,
-        isBlocking: false,
-        interruptedBy: null,
-    },
-    [SOUNDS.DISCORD_OUTGOING_CALL.NAME]: {
-        throttleDelay: null,
-        isBlockable: true,
-        isBlocking: true,
-        interruptedBy: null,
-    },
-    [SOUNDS.DISCORD_UNDEAFEN.NAME]: {
-        throttleDelay: null,
-        isBlockable: false,
-        isBlocking: false,
-        interruptedBy: [SOUNDS.DISCORD_DEAFEN.NAME],
-    },
-    [SOUNDS.DISCORD_UNMUTE.NAME]: {
-        throttleDelay: null,
-        isBlockable: false,
-        isBlocking: false,
-        interruptedBy: [SOUNDS.DISCORD_MUTE.NAME],
-    },
-});
+const lazyCreateConfiguredSounds = () => {
+    return createConfiguredSounds({
+        [SOUNDS.DISCORD_INCOMING_CALL.NAME]: {
+            throttleDelay: null,
+            isBlockable: true,
+            isBlocking: true,
+            interruptedBy: null,
+        },
+        [SOUNDS.DISCORD_DEAFEN.NAME]: {
+            throttleDelay: null,
+            isBlockable: false,
+            isBlocking: false,
+            interruptedBy: [SOUNDS.DISCORD_UNDEAFEN.NAME],
+        },
+        [SOUNDS.DISCORD_MUTE.NAME]: {
+            throttleDelay: null,
+            isBlockable: false,
+            isBlocking: false,
+            interruptedBy: [SOUNDS.DISCORD_UNMUTE.NAME],
+        },
+        [SOUNDS.DISCORD_NOTIFICATION.NAME]: {
+            throttleDelay: 3_000,
+            isBlockable: false,
+            isBlocking: false,
+            interruptedBy: null,
+        },
+        [SOUNDS.DISCORD_OUTGOING_CALL.NAME]: {
+            throttleDelay: null,
+            isBlockable: true,
+            isBlocking: true,
+            interruptedBy: null,
+        },
+        [SOUNDS.DISCORD_UNDEAFEN.NAME]: {
+            throttleDelay: null,
+            isBlockable: false,
+            isBlocking: false,
+            interruptedBy: [SOUNDS.DISCORD_DEAFEN.NAME],
+        },
+        [SOUNDS.DISCORD_UNMUTE.NAME]: {
+            throttleDelay: null,
+            isBlockable: false,
+            isBlocking: false,
+            interruptedBy: [SOUNDS.DISCORD_MUTE.NAME],
+        },
+    });
+};
+
+const getConfiguredSounds = (() => {
+    let configuredSounds: ConfiguredSounds;
+
+    return () => {
+        if (configuredSounds) return configuredSounds;
+
+        configuredSounds = lazyCreateConfiguredSounds();
+
+        return configuredSounds;
+    };
+})();
 
 const timeoutIds = (
     Object.keys<typeof SOUNDS>(SOUNDS)
@@ -166,6 +180,7 @@ export const soundManager = (() => {
     const currentlyPlayingSounds = new Set<AssetNames>();
 
     const stop = (item: AssetItem) => {
+        const configuredSounds = getConfiguredSounds();
         const sound = configuredSounds[item.NAME];
         if (!currentlyPlayingSounds.has(sound.name)) return;
 
@@ -188,6 +203,7 @@ export const soundManager = (() => {
     };
 
     const play = (item: AssetItem) => {
+        const configuredSounds = getConfiguredSounds();
         const currentSound = configuredSounds[item.NAME];
 
         if (currentlyPlayingSounds.has(currentSound.name)) return;

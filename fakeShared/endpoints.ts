@@ -313,6 +313,22 @@ namespace EndpointsV1 {
             export type Response = Entities.User.Base[];
         }
 
+        export namespace GetPossibleFriendsByName {
+            export const ActionName = 'getPossibleFriendsByName';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = {
+                name: string;
+            };
+
+            export type Response = Entities.User.Base[];
+        }
+
         export namespace ProfileUpdate {
             export const ActionName = 'profileUpdate';
 
@@ -366,6 +382,20 @@ namespace EndpointsV1 {
             export type RequestBody = WithId.Target;
 
             export type Response = Entities.User.Base;
+        }
+
+        export namespace SendFriendRequest {
+            export const ActionName = 'sendFriendRequest';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = WithId.Target;
+
+            export type Response = void;
         }
 
         export namespace AcceptFriendRequest {
