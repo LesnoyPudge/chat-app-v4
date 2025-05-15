@@ -3,7 +3,7 @@ import { HistoryEditor } from 'slate-history';
 import { ReactEditor } from 'slate-react';
 import { EmojiStore } from '@/features';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { KeyboardEvent, PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
 
 

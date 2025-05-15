@@ -18,16 +18,18 @@ export const Events = {
             value: RTETypes.Nodes,
             editor: RTETypes.Editor
         ) => void = noop,
-        extraHandlers: ((e: React.KeyboardEvent) => boolean)[] = [],
+        extraHandlers: ((e: KeyboardEvent) => boolean)[] = [],
     ) => {
-        return (e: React.KeyboardEvent) => {
+        return (e: KeyboardEvent) => {
             if (!editor.selection) return;
+
+            e.stopPropagation();
 
             for (const extraHandler of extraHandlers) {
                 if (extraHandler(e)) return;
             }
 
-            if (isSelectLeftHotkey(e.nativeEvent)) {
+            if (isSelectLeftHotkey(e)) {
                 e.preventDefault();
 
                 Transforms.move(editor, {
@@ -38,7 +40,7 @@ export const Events = {
                 return;
             }
 
-            if (isSelectRightHotkey(e.nativeEvent)) {
+            if (isSelectRightHotkey(e)) {
                 e.preventDefault();
 
                 Transforms.move(editor, {
@@ -49,7 +51,7 @@ export const Events = {
                 return;
             }
 
-            if (isSubmitHotkey(e.nativeEvent)) {
+            if (isSubmitHotkey(e)) {
                 e.preventDefault();
 
                 onSubmit(editor.children, editor);
@@ -57,10 +59,10 @@ export const Events = {
                 return;
             }
 
-            if (isDeleteBackwardHotkey(e.nativeEvent)) {
+            if (isDeleteBackwardHotkey(e)) {
                 e.preventDefault();
 
-                // 'manual delete for android'
+                // manual delete for android
                 Transforms.delete(editor, {
                     reverse: true,
                     distance: 1,

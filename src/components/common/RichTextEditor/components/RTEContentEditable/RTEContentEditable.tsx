@@ -1,10 +1,11 @@
-import { CSSProperties, FC } from 'react';
-import { Editable, useSlate } from 'slate-react';
+import { CSSProperties, FC, useEffect } from 'react';
+import { Editable, ReactEditor, useSlate } from 'slate-react';
 import { cn, createStyles } from '@/utils';
 import { RTEContext } from '../../context';
 import { RTEModules } from '../../RTEModules';
 import { ContextSelectable, useFunction } from '@lesnoypudge/utils-react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
+import { addEventListener } from '@lesnoypudge/utils-web';
 
 
 
@@ -22,6 +23,7 @@ export const RTEContentEditable: FC<RT.PropsWithClassName> = ({
     className = '',
 }) => {
     const editor = useSlate();
+
     const {
         onSubmit,
         onBlur,
@@ -33,11 +35,17 @@ export const RTEContentEditable: FC<RT.PropsWithClassName> = ({
         disabled,
     } = ContextSelectable.useProxy(RTEContext);
 
-    const handleOnKeyDown = useFunction(RTEModules.Events.KeyDown(
+    const handleKeyDown = useFunction(RTEModules.Events.KeyDown(
         editor,
         onSubmit,
         [onKeyDown],
     ));
+
+    useEffect(() => {
+        const editorNode = ReactEditor.toDOMNode(editor, editor);
+
+        return addEventListener(editorNode, 'keydown', handleKeyDown);
+    }, [editor, handleKeyDown]);
 
     const handleFocus = useFunction(RTEModules.Events.Focus(editor));
 
@@ -48,7 +56,6 @@ export const RTEContentEditable: FC<RT.PropsWithClassName> = ({
             renderElement={RTEModules.Render.renderElement}
             renderLeaf={RTEModules.Render.renderLeaf}
             renderPlaceholder={RTEModules.Render.renderPlaceholder}
-            onKeyDown={handleOnKeyDown}
             onFocus={handleFocus}
             onBlur={onBlur}
             aria-label={label}
