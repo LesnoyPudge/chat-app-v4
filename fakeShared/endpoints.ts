@@ -555,7 +555,12 @@ namespace EndpointsV1 {
 
             export type RequestBody = T.Simplify<(
                 WithId.Server
-                & Pick<Entities.Server.Base, 'name'>
+                & Partial<Pick<Entities.Server.Base, 'name'>>
+                & Partial<T.Override<
+                    Pick<Entities.Server.Base, 'avatar'>,
+                    'avatar',
+                    Entities.File.Encoded | null
+                >>
             )>;
 
             export type Response = Entities.Server.Base;

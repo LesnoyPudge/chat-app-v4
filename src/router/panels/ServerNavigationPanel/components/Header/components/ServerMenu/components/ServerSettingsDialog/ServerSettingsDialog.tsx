@@ -1,41 +1,46 @@
-
-
-
-// export type ChannelSettingsModalTabs = typeof tabs;
-
-import { DialogBlocks } from '@/components';
+import { DialogBlocks, Form, Tab } from '@/components';
+import { Store } from '@/features';
 import { useTrans } from '@/hooks';
-import { createWithDecorator } from '@lesnoypudge/utils-react';
+import { decorate } from '@lesnoypudge/macro';
+import { invariant } from '@lesnoypudge/utils';
+import {
+    ContextSelectable,
+    createWithDecorator,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
+import { BannedTab, MembersTab, Navigation, OverviewTab } from './components';
+import { Endpoints } from 'fakeShared/endpoints';
+import { T } from '@lesnoypudge/types-utils-base';
 
 
 
-// export type ChannelSettingsModalFormValues = {
-//     channelId: string;
-//     channelName: string;
-//     channelImage: EncodedFile[];
-//     channelIsPrivate: boolean;
-//     roleId: string;
-//     roleName: string;
-//     roleColorHEX: string;
-//     roleImage: EncodedFile[];
-//     roleChannelControl: boolean;
-//     roleRoomControl: boolean;
-//     roleCreateInvitation: boolean;
-//     roleKickMember: boolean;
-//     roleBanMember: boolean;
-//     roleSendMessage: boolean;
-//     roleIsAdministrator: boolean;
-//     roleMembers: string[];
-// };
+export const {
+    ServerSettingsDialogContext,
+    useServerSettingsDialogContextProxy,
+} = ContextSelectable.createContextWithHooks<{
+    serverId: string;
+}>().withName('ServerSettingsDialog');
 
-// const transitionOptions = getTransitionOptions.fullScreenModal();
+export const { ServerSettingsDialogTabs } = Tab.createTypedTabs({
+    name: 'ServerSettingsDialog',
+    tabs: {
+        OverviewTab: <OverviewTab/>,
+        MembersTab: <MembersTab/>,
+        BannedTab: <BannedTab/>,
+    },
+});
 
-// const tabs = {
-//     overviewTab: <OverviewTab/>,
-//     rolesTab: <RolesTab/>,
-//     membersTab: <MembersTab/>,
-//     bannedTab: <BannedTab/>,
-// };
+type FormValues = T.Except<
+    Required<Endpoints.V1.Server.Update.RequestBody>,
+    'serverId'
+>;
+
+export const { ServerSettingsForm } = Form.createForm<FormValues>({
+    defaultValues: {
+        name: '',
+        avatar: null,
+    },
+}).withName('ServerSettings');
 
 const { withDecorator } = createWithDecorator<
     DialogBlocks.Types.PublicProps
@@ -58,84 +63,56 @@ type Props = {
     serverId: string;
 };
 
-export const ServerSettingsDialog = withDecorator<Props>(() => {
-    return <div>wow</div>;
-    // const initialValues: ChannelSettingsModalFormValues = {
-    //     channelId: 'someChannelID',
-    //     channelName: 'coolChannel',
-    //     channelImage: [],
-    //     channelIsPrivate: false,
-    //     roleId: 'id1',
-    //     roleName: 'roleName',
-    //     roleColorHEX: '#fff',
-    //     roleImage: [],
-    //     roleBanMember: true,
-    //     roleChannelControl: true,
-    //     roleCreateInvitation: false,
-    //     roleIsAdministrator: false,
-    //     roleKickMember: false,
-    //     roleRoomControl: false,
-    //     roleSendMessage: false,
-    //     roleMembers: Array.from({ length: 29 }).fill('').map((_, index) => index.toString()),
-    // };
+decorate(withDisplayName, 'ServerSettingsDialog', decorate.target);
 
-    // const handleSubmit = (values: ChannelSettingsModalFormValues) => {
-    //     console.log(values);
-    // };
+export const ServerSettingsDialog = withDecorator<Props>(({
+    serverId,
+}) => {
+    const { resetShakeStacks } = DialogBlocks.FullScreen.useContextProxy();
+    const { label } = DialogBlocks.useContextProxy();
+    const [updateTrigger] = Store.Servers.Api.useServerUpdateMutation();
 
-    // return (
-    //     <ModalWindow
-    //         label='Настройки канала'
-    //         transitionOptions={transitionOptions}
-    //     >
-    //         <FullScreenModalContextProvider>
-    //             <ContextConsumerProxy context={FullScreenModalContext}>
-    //                 {({
-    //                     resetShakeStacks, triggerScreenShake,
-    //                     closeMobileMenu, withResetShakeStacks,
-    //                     setIsDirty, isDirtyRef,
-    //                 }) => (
-    //                     <Formik
-    //                         initialValues={initialValues}
-    //                         onSubmit={withResetShakeStacks(handleSubmit)}
-    //                         onReset={resetShakeStacks}
-    //                         enableReinitialize
-    //                     >
-    //                         {({ dirty }) => {
-    //                             setIsDirty(dirty);
+    const serverName = Store.useSelector(
+        Store.Servers.Selectors.selectNameById(serverId),
+    );
+    invariant(serverName);
 
-    //                             return (
-    //                                 <TabContextProvider
-    //                                     tabs={tabs}
-    //                                     onTabChange={(prevent) => {
-    //                                         if (!isDirtyRef.current) {
-    //                                             closeMobileMenu();
-    //                                             return;
-    //                                         }
-    //                                         prevent();
-    //                                         triggerScreenShake();
-    //                                     }}
-    //                                 >
-    //                                     {({ currentTab }) => (
-    //                                         <Form>
-    //                                             <FullScreenModalWrapper>
-    //                                                 <FullScreenModalNavigationSide>
-    //                                                     <Navigation/>
-    //                                                 </FullScreenModalNavigationSide>
+    const { form } = Form.useExtendForm(ServerSettingsForm, {
+        trigger: ({ name }) => updateTrigger({ serverId, name }),
+        defaultValues: {
+            name: serverName,
+            avatar: null,
+        },
+        onSubmitSuccess: resetShakeStacks,
+        onReset: resetShakeStacks,
+    });
 
-    //                                                 <FullScreenModalContentSide>
-    //                                                     {currentTab.tab}
-    //                                                 </FullScreenModalContentSide>
-    //                                             </FullScreenModalWrapper>
-    //                                         </Form>
-    //                                     )}
-    //                                 </TabContextProvider>
-    //                             );
-    //                         }}
-    //                     </Formik>
-    //                 )}
-    //             </ContextConsumerProxy>
-    //         </FullScreenModalContextProvider>
-    //     </ModalWindow>
-    // );
+    const {
+        handleTabChange,
+    } = DialogBlocks.FullScreen.useHandleTabChange(form);
+
+    return (
+        <ServerSettingsDialogContext.Provider value={{ serverId }}>
+            <ServerSettingsForm.Provider form={form}>
+                <ServerSettingsDialogTabs.Provider
+                    label={label}
+                    initialTab={ServerSettingsDialogTabs.tabNameTable.OverviewTab}
+                    onTabChange={handleTabChange}
+                    orientation='vertical'
+                >
+                    <Form.Node contents>
+                        <DialogBlocks.FullScreen.Shaker>
+                            <DialogBlocks.FullScreen.NavigationSide>
+                                <Navigation/>
+                            </DialogBlocks.FullScreen.NavigationSide>
+
+                            <DialogBlocks.FullScreen.ContentSide>
+                                <ServerSettingsDialogTabs.Current/>
+                            </DialogBlocks.FullScreen.ContentSide>
+                        </DialogBlocks.FullScreen.Shaker>
+                    </Form.Node>
+                </ServerSettingsDialogTabs.Provider>
+            </ServerSettingsForm.Provider>
+        </ServerSettingsDialogContext.Provider>
+    );
 });

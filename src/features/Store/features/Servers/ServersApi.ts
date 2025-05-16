@@ -70,6 +70,19 @@ export const ServersApi = getRootApi().injectEndpoints({
             })
         ),
 
+        [Server.Update.NamedAction]: (
+            build.mutation<
+                Server.Update.Response,
+                Server.Update.RequestBody
+            >({
+                query: (body) => ({
+                    url: Server.Update.Path,
+                    method: Server.Update.Method,
+                    body,
+                }),
+            })
+        ),
+
         [Server.GetMany.NamedAction]: (
             build.query<
                 Server.GetMany.Response,

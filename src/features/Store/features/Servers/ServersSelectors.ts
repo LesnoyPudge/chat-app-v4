@@ -30,6 +30,7 @@ export const {
     selectChannelsById,
     selectInvitationsById,
     selectOwnerById,
+    selectAvatarById,
 } = createAdapterFieldSelectors({
     keys: [
         'members',
@@ -37,6 +38,7 @@ export const {
         'channels',
         'invitations',
         'owner',
+        'avatar',
     ],
     selectById,
     slice: ServersSlice,
