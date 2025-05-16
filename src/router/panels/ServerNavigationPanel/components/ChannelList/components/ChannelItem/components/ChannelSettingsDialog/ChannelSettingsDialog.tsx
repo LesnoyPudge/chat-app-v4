@@ -1,36 +1,25 @@
-import { DialogBlocks } from '@/components';
+import { DialogBlocks, Form, Tab } from '@/components';
+import { Store } from '@/features';
 import { useTrans } from '@/hooks';
-import { createWithDecorator } from '@lesnoypudge/utils-react';
+import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
+import { Navigation, OverviewTab } from './components';
+import { invariant } from '@lesnoypudge/utils';
+import { decorate } from '@lesnoypudge/macro';
 
 
 
-// export interface ChannelSettingsModalFormValues {
-//     channelId: string;
-//     channelName: string,
-//     channelImage: EncodedFile[],
-//     channelIsPrivate: boolean,
-//     roleId: string,
-//     roleName: string,
-//     roleColorHEX: string,
-//     roleImage: EncodedFile[],
-//     roleChannelControl: boolean;
-//     roleRoomControl: boolean;
-//     roleCreateInvitation: boolean;
-//     roleKickMember: boolean;
-//     roleBanMember: boolean;
-//     roleSendMessage: boolean;
-//     roleIsAdministrator: boolean;
-//     roleMembers: string[];
-// }
+export const { ChannelSettingsDialogTabs } = Tab.createTypedTabs({
+    name: 'ChannelSettingsDialog',
+    tabs: {
+        OverviewTab: <OverviewTab/>,
+    },
+});
 
-// const transitionOptions = getTransitionOptions.fullScreenModal();
-
-// const tabs = {
-//     overviewTab: <OverviewTab/>,
-//     rolesTab: <RolesTab/>,
-//     membersTab: <MembersTab/>,
-//     bannedTab: <BannedTab/>,
-// };
+export const { ChannelSettingsForm } = Form.createForm({
+    defaultValues: {
+        name: '',
+    },
+}).withName('ChannelSettings');
 
 const { withDecorator } = createWithDecorator<
     DialogBlocks.Types.PublicProps
@@ -50,88 +39,56 @@ const { withDecorator } = createWithDecorator<
 });
 
 type Props = {
-    serverId: string;
     channelId: string;
 };
 
-export const ChannelSettingsDialog = withDecorator<Props>(() => {
-    return <div>wow</div>;
-    // const initialValues: ChannelSettingsModalFormValues = {
-    //     channelId: 'someChannelID',
-    //     channelName: 'coolChannel',
-    //     channelImage: [],
-    //     channelIsPrivate: false,
-    //     roleId: 'id1',
-    //     roleName: 'roleName',
-    //     roleColorHEX: '#fff',
-    //     roleImage: [],
-    //     roleBanMember: true,
-    //     roleChannelControl: true,
-    //     roleCreateInvitation: false,
-    //     roleIsAdministrator: false,
-    //     roleKickMember: false,
-    //     roleRoomControl: false,
-    //     roleSendMessage: false,
-    //     roleMembers: Array(29).fill('').map((_, index) => index.toString()),
-    // };
+decorate(withDisplayName, 'ChannelSettingsDialog', decorate.target);
 
-    // const handleSubmit = (values: ChannelSettingsModalFormValues) => {
-    //     console.log(values)
-    // }
+export const ChannelSettingsDialog = withDecorator<Props>(({
+    channelId,
+}) => {
+    const { resetShakeStacks } = DialogBlocks.FullScreen.useContextProxy();
+    const { label } = DialogBlocks.useContextProxy();
+    const [updateTrigger] = Store.Channels.Api.useChannelUpdateMutation();
 
-    // return (
-    //     <ModalWindow
-    //         label='Настройки канала'
-    //         transitionOptions={transitionOptions}
-    //     >
-    //         <FullScreenModalContextProvider>
-    //             <ContextConsumerProxy context={FullScreenModalContext}>
-    //                 {({
-    //                     resetShakeStacks, triggerScreenShake,
-    //                     closeMobileMenu, withResetShakeStacks,
-    //                     setIsDirty, isDirtyRef
-    //                 }) => (
-    //                     <Formik
-    //                         initialValues={initialValues}
-    //                         onSubmit={withResetShakeStacks(handleSubmit)}
-    //                         onReset={resetShakeStacks}
-    //                         enableReinitialize
-    //                     >
-    //                         {({ dirty }) => {
-    //                             setIsDirty(dirty);
+    const channelName = Store.useSelector(
+        Store.Channels.Selectors.selectNameById(channelId),
+    );
+    invariant(channelName);
 
-    //                             return (
-    //                                 <TabContextProvider
-    //                                     tabs={tabs}
-    //                                     onTabChange={(prevent) => {
-    //                                         if (!isDirtyRef.current) {
-    //                                             closeMobileMenu()
-    //                                             return;
-    //                                         }
-    //                                         prevent();
-    //                                         triggerScreenShake();
-    //                                     }}
-    //                                 >
-    //                                     {({ currentTab }) => (
-    //                                         <Form>
-    //                                             <FullScreenModalWrapper>
-    //                                                 <FullScreenModalNavigationSide>
-    //                                                     <Navigation/>
-    //                                                 </FullScreenModalNavigationSide>
+    const { form } = Form.useExtendForm(ChannelSettingsForm, {
+        trigger: ({ name }) => updateTrigger({ channelId, name }),
+        defaultValues: {
+            name: channelName,
+        },
+        onSubmitSuccess: resetShakeStacks,
+        onReset: resetShakeStacks,
+    });
 
-    //                                                 <FullScreenModalContentSide>
-    //                                                     {currentTab.tab}
-    //                                                 </FullScreenModalContentSide>
-    //                                             </FullScreenModalWrapper>
-    //                                         </Form>
-    //                                     )}
-    //                                 </TabContextProvider>
-    //                             )
-    //                         }}
-    //                     </Formik>
-    //                 )}
-    //             </ContextConsumerProxy>
-    //         </FullScreenModalContextProvider>
-    //     </ModalWindow>
-    // );
+    const {
+        handleTabChange,
+    } = DialogBlocks.FullScreen.useHandleTabChange(form);
+
+    return (
+        <ChannelSettingsForm.Provider form={form}>
+            <ChannelSettingsDialogTabs.Provider
+                label={label}
+                initialTab={ChannelSettingsDialogTabs.tabNameTable.OverviewTab}
+                onTabChange={handleTabChange}
+                orientation='vertical'
+            >
+                <Form.Node contents>
+                    <DialogBlocks.FullScreen.Shaker>
+                        <DialogBlocks.FullScreen.NavigationSide>
+                            <Navigation channelId={channelId}/>
+                        </DialogBlocks.FullScreen.NavigationSide>
+
+                        <DialogBlocks.FullScreen.ContentSide>
+                            <ChannelSettingsDialogTabs.Current/>
+                        </DialogBlocks.FullScreen.ContentSide>
+                    </DialogBlocks.FullScreen.Shaker>
+                </Form.Node>
+            </ChannelSettingsDialogTabs.Provider>
+        </ChannelSettingsForm.Provider>
+    );
 });

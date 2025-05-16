@@ -74,13 +74,11 @@ export const AppSettingsDialog = withDecorator(() => {
     );
 
     const { form } = Form.useExtendForm(AppSettingsDialogForm, {
-        trigger: ({ avatar, bannerColor, ...rest }) => {
-            return updateProfile({
-                avatar,
-                bannerColor,
-                settings: rest,
-            });
-        },
+        trigger: ({ avatar, bannerColor, ...rest }) => updateProfile({
+            avatar,
+            bannerColor,
+            settings: rest,
+        }),
         onSubmitSuccess: resetShakeStacks,
         onReset: resetShakeStacks,
         defaultValues: {
@@ -106,7 +104,7 @@ export const AppSettingsDialog = withDecorator(() => {
                 onTabChange={handleTabChange}
                 orientation='vertical'
             >
-                <Form.Node>
+                <Form.Node contents>
                     <div data-theme={theme}>
                         <DialogBlocks.FullScreen.Shaker>
                             <DialogBlocks.FullScreen.NavigationSide>

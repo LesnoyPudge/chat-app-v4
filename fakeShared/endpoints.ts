@@ -544,6 +544,23 @@ namespace EndpointsV1 {
             export type Response = Entities.Server.Base;
         }
 
+        export namespace Update {
+            export const ActionName = 'update';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = T.Simplify<(
+                WithId.Server
+                & Pick<Entities.Server.Base, 'name'>
+            )>;
+
+            export type Response = Entities.Server.Base;
+        }
+
         export namespace Delete {
             export const ActionName = 'delete';
 
@@ -696,6 +713,37 @@ namespace EndpointsV1 {
             )>;
 
             export type Response = Entities.Channel.Base;
+        }
+
+        export namespace Update {
+            export const ActionName = 'update';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = T.Simplify<(
+                WithId.Channel
+                & Pick<Entities.Channel.Base, 'name'>
+            )>;
+
+            export type Response = Entities.Channel.Base;
+        }
+
+        export namespace Delete {
+            export const ActionName = 'delete';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = WithId.Channel;
+
+            export type Response = void;
         }
     }
 

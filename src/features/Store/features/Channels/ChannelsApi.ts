@@ -35,5 +35,29 @@ export const ChannelsApi = getRootApi().injectEndpoints({
                 }),
             })
         ),
+        [Channel.Update.NamedAction]: (
+            build.mutation<
+                Channel.Update.Response,
+                Channel.Update.RequestBody
+            >({
+                query: (body) => ({
+                    url: Channel.Update.Path,
+                    method: Channel.Update.Method,
+                    body,
+                }),
+            })
+        ),
+        [Channel.Delete.NamedAction]: (
+            build.mutation<
+                Channel.Delete.Response,
+                Channel.Delete.RequestBody
+            >({
+                query: (body) => ({
+                    url: Channel.Delete.Path,
+                    method: Channel.Delete.Method,
+                    body,
+                }),
+            })
+        ),
     }),
 });

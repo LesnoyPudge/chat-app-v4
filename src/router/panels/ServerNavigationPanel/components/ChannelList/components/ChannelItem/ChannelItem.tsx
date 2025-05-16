@@ -163,7 +163,6 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
                             <ChannelSettingsDialog
                                 controls={controls}
                                 channelId={channelId}
-                                serverId={serverId}
                             />
 
                             <Overlay.Tooltip

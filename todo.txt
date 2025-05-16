@@ -56,9 +56,14 @@ https://fluid.tw/
 
 
 --- current goals ---
+- проверить что бы у всех кнопок которые открывают оверлеи был атрибут hasPopup='dialog / menu'
+- populate friend requests
+- populate friends
+- ответы от всех запросов обрабатывать в слайсах (устанавливать новые значения)
 - перенести валидацию в fakeShared/validators ApiValidators или в места использования
 - добавить каждой форме Form.Error
 - при создании сервера он не появляется в навигации. либо он не устанавливается в сторе или селектор не перерендеривается
 - dialogs to do:
-    -? ChannelSettingsDialog
+    - DeleteRoomModal
+    - ChannelSettingsDialog
     - ServerSettingsDialog (не делать роли)

@@ -30,8 +30,9 @@ export const {
 export const {
     selectTextChatById,
     selectNameById,
+    selectServerById,
 } = createAdapterFieldSelectors({
-    keys: ['textChat', 'name'],
+    keys: ['textChat', 'name', 'server'],
     slice: ChannelsSlice,
     selectById,
 });
