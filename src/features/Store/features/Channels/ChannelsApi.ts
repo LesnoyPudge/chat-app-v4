@@ -1,8 +1,9 @@
 import { Endpoints } from '@/fakeShared';
 import { getRootApi } from '@/store/utils';
+
+
+
 import Channel = Endpoints.V1.Channel;
-
-
 
 export const ChannelsApi = getRootApi().injectEndpoints({
     endpoints: (build) => ({
@@ -20,6 +21,18 @@ export const ChannelsApi = getRootApi().injectEndpoints({
                     type: 'Channel',
                     id,
                 })) ?? [{ type: 'Channel', id: 'LIST' }],
+            })
+        ),
+        [Channel.Create.NamedAction]: (
+            build.mutation<
+                Channel.Create.Response,
+                Channel.Create.RequestBody
+            >({
+                query: (body) => ({
+                    url: Channel.Create.Path,
+                    method: Channel.Create.Method,
+                    body,
+                }),
             })
         ),
     }),

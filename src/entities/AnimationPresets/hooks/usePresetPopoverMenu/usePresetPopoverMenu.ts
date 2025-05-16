@@ -13,18 +13,18 @@ export const usePresetPopoverMenu: Types.GenericHook.Fn = ({
     return usePresetCustom({
         progress,
         enterOptions: {
-            duration: 0.15,
+            duration: 0.25,
             ease: 'backOut',
             ...extendEnterOptions,
         },
         exitOptions: {
-            duration: 0.15,
+            duration: 0.25,
             ease: 'backOut',
             ...extendExitOptions,
         },
         style: {
             opacity: useTransform(progress, [0, 1, 2], [0, 1, 0]),
-            scale: useTransform(progress, [0, 1, 2], [0.95, 1, 0.95]),
+            scale: useTransform(progress, [0, 1, 2], [0.75, 1, 0.75]),
             ...extendStyle,
         },
     });

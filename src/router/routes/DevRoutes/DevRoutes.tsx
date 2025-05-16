@@ -40,6 +40,7 @@ const pathNameToComponent = {
                 members: [],
                 roles: [],
             })}
+            isLoading={false}
             acceptInvitation={noop}
         />
     ),

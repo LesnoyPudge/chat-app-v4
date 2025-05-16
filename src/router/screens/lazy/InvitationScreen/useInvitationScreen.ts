@@ -5,7 +5,11 @@ import { Navigator, Store } from '@/features';
 
 export const useInvitationScreen = () => {
     const { invitationCode } = Navigator.useParams('invitation');
-    const [accept] = Store.Servers.Api.useServerAcceptInvitationMutation();
+    const [
+        accept,
+        { isLoading },
+    ] = Store.Servers.Api.useServerAcceptInvitationMutation();
+
     const { data } = Store.Servers.Api.useServerGetByInvitationCodeQuery({
         invitationCode,
     });
@@ -17,5 +21,6 @@ export const useInvitationScreen = () => {
     return {
         server: data,
         acceptInvitation,
+        isLoading,
     };
 };

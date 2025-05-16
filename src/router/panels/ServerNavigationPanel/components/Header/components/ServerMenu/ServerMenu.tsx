@@ -1,9 +1,22 @@
-import { ActionMenu, Button, Overlay, Sprite } from '@/components';
+import {
+    ActionMenu,
+    Button,
+    Overlay,
+    Sprite,
+    WithPermission,
+} from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
 import { useTrans } from '@/hooks';
 import { createWithDecorator, withDisplayName } from '@lesnoypudge/utils-react';
 import { cn } from '@/utils';
 import { decorate } from '@lesnoypudge/macro';
+import { Navigator } from '@/features';
+import {
+    DeleteServerDialog,
+    InviteToServerDialog,
+    LeaveServerDialog,
+    ServerSettingsDialog,
+} from './components';
 
 
 
@@ -35,7 +48,9 @@ decorate(withDisplayName, 'ServerMenu', decorate.target);
 
 export const ServerMenu = withDecorator(() => {
     const { t } = useTrans();
-    const inviteFriendsControls = Overlay.useControls();
+    const { serverId } = Navigator.useParams('server');
+
+    const inviteToServerControls = Overlay.useControls();
     const serverSettingsControls = Overlay.useControls();
     const leaveServerControls = Overlay.useControls();
     const deleteServerControls = Overlay.useControls();
@@ -47,12 +62,12 @@ export const ServerMenu = withDecorator(() => {
                     className={ActionMenu.styles.button}
                     {...ActionMenu.buttonProps}
                     hasPopup='dialog'
-                    isActive={inviteFriendsControls.isOpen}
-                    label={t('ServerMenu.inviteFriends')}
-                    onLeftClick={inviteFriendsControls.open}
+                    isActive={inviteToServerControls.isOpen}
+                    label={t('ServerMenu.inviteToServer')}
+                    onLeftClick={inviteToServerControls.open}
                 >
                     <span>
-                        {t('ServerMenu.inviteFriends')}
+                        {t('ServerMenu.inviteToServer')}
                     </span>
 
                     <Sprite
@@ -65,10 +80,13 @@ export const ServerMenu = withDecorator(() => {
                     />
                 </Button>
 
-                {/* <InviteToChannelDialog/> */}
+                <InviteToServerDialog
+                    controls={inviteToServerControls}
+                    serverId={serverId}
+                />
             </>
 
-            <>
+            <WithPermission.ServerControl serverId={serverId}>
                 <Button
                     className={ActionMenu.styles.button}
                     {...ActionMenu.buttonProps}
@@ -91,8 +109,11 @@ export const ServerMenu = withDecorator(() => {
                     />
                 </Button>
 
-                {/* <ChannelSettingsDialog/> */}
-            </>
+                <ServerSettingsDialog
+                    controls={serverSettingsControls}
+                    serverId={serverId}
+                />
+            </WithPermission.ServerControl>
 
             <>
                 <Button
@@ -117,10 +138,13 @@ export const ServerMenu = withDecorator(() => {
                     />
                 </Button>
 
-                {/* <LeaveChannelDialog/> */}
+                <LeaveServerDialog
+                    controls={leaveServerControls}
+                    serverId={serverId}
+                />
             </>
 
-            <>
+            <WithPermission.Admin serverId={serverId}>
                 <Button
                     className={ActionMenu.styles.button}
                     {...ActionMenu.buttonProps}
@@ -143,8 +167,11 @@ export const ServerMenu = withDecorator(() => {
                     />
                 </Button>
 
-                {/* <DeleteChannelDialog/> */}
-            </>
+                <DeleteServerDialog
+                    controls={deleteServerControls}
+                    serverId={serverId}
+                />
+            </WithPermission.Admin>
         </ActionMenu.Wrapper>
     );
 });

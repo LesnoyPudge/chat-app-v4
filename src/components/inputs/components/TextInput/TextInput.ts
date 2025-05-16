@@ -5,6 +5,7 @@ import * as types from './types';
 import * as utils from './utils';
 
 
+
 export namespace TextInput {
     export import Types = types.TextInputTypes;
 

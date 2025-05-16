@@ -5,6 +5,7 @@ import { Heading, useRefManager } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { Navigator, Store } from '@/features';
+import { CreateChannelDialog } from './components';
 
 
 
@@ -58,7 +59,10 @@ export const AddChannel: FC = () => {
                 </Overlay.Tooltip>
             </Placeholder.With>
 
-            {/* <CreateRoomDialog/> */}
+            <CreateChannelDialog
+                controls={controls}
+                serverId={serverId}
+            />
         </div>
     );
 };

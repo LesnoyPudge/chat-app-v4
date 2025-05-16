@@ -38,7 +38,6 @@ export const FollowInvitationTab: FC = () => {
         },
     });
 
-
     return (
         <Form.Provider form={form}>
             <Form.Node>

@@ -2,18 +2,18 @@ import { sharedValidators } from '@/fakeShared';
 import { parseJSON } from '@lesnoypudge/utils';
 import { ClientEntities } from '@/types';
 import { env } from '@/vars';
-import * as v from 'valibot';
+import { Valibot } from '@/libs';
 
 
 
-const jwtSchema = v.object({
-    payload: v.object({
+const jwtSchema = Valibot.object({
+    payload: Valibot.object({
         id: sharedValidators.id,
         password: sharedValidators.commonString,
     }),
     secret: sharedValidators.commonString,
-    options: v.object({
-        expiresAt: v.number(),
+    options: Valibot.object({
+        expiresAt: Valibot.number(),
     }),
 });
 
@@ -37,7 +37,7 @@ const fakeJwt = {
         secret: string,
     ): ClientEntities.User.TokenData | null => {
         const parsed = parseJSON(token);
-        const validated = v.safeParse(jwtSchema, parsed);
+        const validated = Valibot.safeParse(jwtSchema, parsed);
         if (!validated.success) return null;
 
         const { output } = validated;

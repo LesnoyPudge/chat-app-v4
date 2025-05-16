@@ -54,6 +54,7 @@ export const TextInputNodePure: FC<TextInputTypes.NodePure.Props> = ({
                 aria-label={label}
                 aria-invalid={!!error}
                 aria-describedby={errorId}
+                required={required}
                 ref={innerRef}
                 value={value}
                 type={type}

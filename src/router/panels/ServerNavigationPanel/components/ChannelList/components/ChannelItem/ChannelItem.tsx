@@ -19,6 +19,7 @@ import {
 import { cn, createStyles } from '@/utils';
 import { FC, memo, startTransition, useRef } from 'react';
 import { decorate } from '@lesnoypudge/macro';
+import { ChannelSettingsDialog } from './components';
 
 
 
@@ -159,7 +160,11 @@ export const ChannelItem: FC<ChannelItem.Props> = ({
                                 />
                             </Button>
 
-                            {/* <ChannelSettingsDialog/> */}
+                            <ChannelSettingsDialog
+                                controls={controls}
+                                channelId={channelId}
+                                serverId={serverId}
+                            />
 
                             <Overlay.Tooltip
                                 preferredAlignment='right'

@@ -3,6 +3,7 @@ import { inRange } from '@lesnoypudge/utils';
 import { nanoid } from '@reduxjs/toolkit';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { v4 as uuid } from 'uuid';
+import { faker } from '@faker-js/faker';
 
 
 
@@ -111,7 +112,12 @@ export class Dummies {
         return {
             ...data,
             banned: [],
-            invitations: [],
+            invitations: [{
+                creator: data.owner,
+                code: faker.string.alphanumeric({ casing: 'mixed', length: 6 }),
+                createdAt: Date.now(),
+                expiresAt: null,
+            }],
             isPrivate: false,
             onlineMemberCount: 0,
             memberCount: 0,

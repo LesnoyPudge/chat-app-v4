@@ -21,7 +21,7 @@ export const MenuProvider: FC<Overlay.Menu.Types.Provider.Props> = ({
     const progress = _progress ?? defaultProgress;
 
     const defaultAnimation = AnimationPresets.usePopoverMenu({
-        progress: _progress ?? defaultProgress,
+        progress,
     });
 
     const onEnter = _progress ? _onEnter : defaultAnimation.onEnter;

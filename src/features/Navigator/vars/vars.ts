@@ -1,5 +1,7 @@
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
+
+
 export const navigatorDevPath = {
     playground: '/dev',
     playgroundAuthorized: '/dev-auth',
@@ -59,7 +61,7 @@ export const params = {
 class Paths {
     root = `/` as const;
     auth = `/auth` as const;
-    invitation = `/invitation/${params.invitationCode}` as const;
+    invitation = `/i/${params.invitationCode}` as const;
     conversation = `/conversation/${params.conversationId}` as const;
     server = `/server/${params.serverId}` as const;
     channel = `${this.server}/channel/${params.channelId}` as const;

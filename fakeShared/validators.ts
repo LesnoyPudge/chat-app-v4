@@ -18,7 +18,7 @@ const schema = <
     schema: Valibot.GenericSchema<_Shape>,
 ) => schema;
 
-const VALIDATION_ERRORS = {
+export const VALIDATION_ERRORS = {
     REQUIRED: () => t('ValidationErrors.required').toString(),
     INVALID_EMAIL: () => t('ValidationErrors.invalidEmail').toString(),
     BAD_VALUE: () => t('ValidationErrors.badValue').toString(),

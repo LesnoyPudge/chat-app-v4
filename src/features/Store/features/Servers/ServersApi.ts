@@ -1,5 +1,8 @@
 import { Endpoints } from '@/fakeShared';
 import { getRootApi } from '@/store/utils';
+
+
+
 import Server = Endpoints.V1.Server;
 
 
@@ -131,6 +134,19 @@ export const ServersApi = getRootApi().injectEndpoints({
                 query: (body) => ({
                     url: Server.BanMember.Path,
                     method: Server.BanMember.Method,
+                    body,
+                }),
+            })
+        ),
+
+        [Server.Delete.NamedAction]: (
+            build.mutation<
+                Server.Delete.Response,
+                Server.Delete.RequestBody
+            >({
+                query: (body) => ({
+                    url: Server.Delete.Path,
+                    method: Server.Delete.Method,
                     body,
                 }),
             })

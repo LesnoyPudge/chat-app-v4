@@ -26,21 +26,22 @@ export const PopoverProvider: FC<Overlay.Popover.Types.Provider.Props> = ({
         (v) => v,
     );
 
-    const upperChildren = ContextSelectable.useSelector(
+    const upperBlockingChildren = ContextSelectable.useSelector(
         Overlay.Popover.Context,
         (v) => (v as Overlay.Popover.Types.Context | undefined)?.blockingChildren,
     );
 
     useEffect(() => {
         if (!blocking) return;
-        if (!upperChildren) return;
+        if (!upperBlockingChildren) return;
+        if (!overlay.isOverlayExist) return;
 
-        upperChildren.add(id);
+        upperBlockingChildren.add(id);
 
         return () => {
-            upperChildren.delete(id);
+            upperBlockingChildren.delete(id);
         };
-    }, [blocking, id, upperChildren]);
+    }, [blocking, id, upperBlockingChildren, overlay.isOverlayExist]);
 
     const handleClickOutside = useFunction(() => {
         if (!closeOnClickOutside) return;
@@ -53,6 +54,7 @@ export const PopoverProvider: FC<Overlay.Popover.Types.Provider.Props> = ({
 
     const handleEscape = useFunction(() => {
         if (!closeOnEscape) return;
+
         if (!overlay.isOverlayExist) return;
         if (!blockable) return overlay.closeOverlay();
         if (blockingChildren.size) return;

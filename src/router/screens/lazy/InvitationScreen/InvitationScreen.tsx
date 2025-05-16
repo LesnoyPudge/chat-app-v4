@@ -58,6 +58,7 @@ const styles = createStyles({
 export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
     acceptInvitation,
     server,
+    isLoading,
 }) => {
     const { t } = useTrans();
 
@@ -116,6 +117,7 @@ export const InvitationScreenPure: FC<InvitationScreenPure.Props> = ({
                             size='big'
                             stylingPreset='brand'
                             isDisabled={!server}
+                            isLoading={isLoading}
                             onLeftClick={acceptInvitation}
                         >
                             {t('InvitationScreen.button')}
