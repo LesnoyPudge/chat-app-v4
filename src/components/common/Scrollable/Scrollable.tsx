@@ -3,12 +3,21 @@ import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { useMergeRefs, useRefManager } from '@lesnoypudge/utils-react';
 import { OverlayScrollbars } from 'overlayscrollbars';
 import { FC, MutableRefObject, RefObject } from 'react';
-import { useInit, useDebug } from './hooks';
+import { useInit } from './hooks';
 import 'overlayscrollbars/overlayscrollbars.css';
 import './Scrollable.scss';
 import { Direction } from '@/types';
+import { isDev } from '@/vars';
+import { noop } from '@lesnoypudge/utils';
+import { T } from '@lesnoypudge/types-utils-base';
 
 
+
+const useDebug = (
+    isDev
+        ? await import('./hooks/useDebug').then((v) => v.useDebug)
+        : noop as T.AnyFunction
+);
 
 const styles = createStyles({
     wrapper: 'max-h-full max-w-[100dvw]',

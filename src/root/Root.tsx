@@ -2,16 +2,23 @@ import {
     ControllableStrictMode,
     ErrorBoundary,
     Focus,
-    Heading,
 } from '@lesnoypudge/utils-react';
 import { FLAGS, isDev } from '@/vars';
 import { GlobalLoader, GlobalProviders } from './components';
 import { ErrorScreen } from '@/router/screens/bundled';
-import { useDebug, usePreventDefault, useHTMLVars } from './hooks';
+import { usePreventDefault, useHTMLVars } from './hooks';
 import { Router } from '@/router';
 import { FC } from 'react';
+import { noop } from '@lesnoypudge/utils';
+import { T } from '@lesnoypudge/types-utils-base';
 
 
+
+const useDebug = (
+    isDev
+        ? await import('./hooks/useDebug').then((v) => v.useDebug)
+        : noop as T.AnyFunction
+);
 
 const DevTools = (
     isDev
