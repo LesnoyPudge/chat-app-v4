@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { SettingsDescription, SettingsGroupTitle } from '..';
+import { SettingsDescription } from '../SettingsDescription';
+import { SettingsGroupTitle } from '../SettingsGroupTitle';
 import { AppSettingsDialogTabs } from '../../AppSettingsDialog';
 import { Heading } from '@lesnoypudge/utils-react';
 import { Button, DialogBlocks, Overlay, Separator } from '@/components';

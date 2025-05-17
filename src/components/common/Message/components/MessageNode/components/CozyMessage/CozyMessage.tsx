@@ -1,5 +1,7 @@
 import { createStyles } from '@/utils';
-import { MessageAdditions, MessageContent, MessageUsername } from '..';
+import { MessageAdditions } from '../MessageAdditions';
+import { MessageContent } from '../MessageContent';
+import { MessageUsername } from '../MessageUsername';
 import { useMessageContext } from '../../../../hooks';
 import { FC } from 'react';
 import { MessageCreatedTimestamp } from '../../components';

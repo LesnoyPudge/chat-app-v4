@@ -24,7 +24,8 @@ const getFilesRecursively = (directory: string): string[] => {
 
 const isInvalidPath = (importPath: string): boolean => {
     // const regex = /^(?:src(?:\/.+)?|\.\.(?:\/.+)?|\.)$/;
-    const regex = /^(\.{1,2}$|src(\/.*)?$|\.\.\/.*$)/;
+    // const regex = /^(\.{1,2}$|src(\/.*)?$|\.\.\/.*$)/;
+    const regex = /^(\.{1,2}$|src(\/.*)?$)/;
     return regex.test(importPath);
 };
 

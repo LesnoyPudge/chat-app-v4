@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from 'react';
 import { useMessageContext } from '../../../../hooks';
-import { MessageTimestamp } from '..';
+import { MessageTimestamp } from '../MessageTimestamp';
 
 
 

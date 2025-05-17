@@ -1,7 +1,13 @@
 import { cn, createStyles } from '@/utils';
-import { useIsMessageRedactorActive, useMessageContext } from '../../../../hooks';
+import {
+    useIsMessageRedactorActive,
+    useMessageContext,
+} from '../../../../hooks';
 import { FC } from 'react';
-import { MessageAdditions, MessageContent, MessageCreatedTimestamp, MessageUsername } from '..';
+import { MessageAdditions } from '../MessageAdditions';
+import { MessageContent } from '../MessageContent';
+import { MessageCreatedTimestamp } from '../MessageCreatedTimestamp';
+import { MessageUsername } from '../MessageUsername';
 import { WHITESPACE } from '@/vars';
 import { formatSimpleTimestamp } from '../../utils';
 

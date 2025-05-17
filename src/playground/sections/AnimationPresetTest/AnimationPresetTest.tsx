@@ -5,7 +5,7 @@ import { If } from '@lesnoypudge/react-if';
 import { useBoolean } from '@lesnoypudge/utils-react';
 import { useMotionValue } from 'motion/react';
 import { FC } from 'react';
-import { AnimationPresets } from 'src/entities/AnimationPresets';
+import { AnimationPresets } from '@/entities';
 
 
 

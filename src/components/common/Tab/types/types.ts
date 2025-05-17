@@ -7,8 +7,7 @@ import {
 } from '@lesnoypudge/utils-react';
 import { PropsWithChildren, ReactNode } from 'react';
 import { Direction } from '@/types';
-import { KeyboardNavigation } from 'src/components/common/KeyboardNavigation';
-import { Button } from 'src/components/common/Button';
+import { Button } from '@/components';
 
 
 

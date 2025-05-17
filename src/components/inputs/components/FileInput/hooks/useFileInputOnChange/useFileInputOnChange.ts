@@ -1,7 +1,7 @@
 import { useFunction, useIsMounted } from '@lesnoypudge/utils-react';
 import { ChangeEvent } from 'react';
 import { encodeFiles } from './utils';
-import { useFileInputContext } from '..';
+import { useFileInputContext } from '../useFileInputContext';
 
 
 

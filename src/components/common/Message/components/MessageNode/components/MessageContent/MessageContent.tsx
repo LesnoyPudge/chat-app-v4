@@ -1,8 +1,11 @@
 import { cn, createStyles } from '@/utils';
 import { FC } from 'react';
-import { useIsMessageRedactorActive, useMessageContext } from '../../../../hooks';
+import {
+    useIsMessageRedactorActive,
+    useMessageContext,
+} from '../../../../hooks';
 import { RTE } from '@/components';
-import { MessageModifiedTimestamp } from '..';
+import { MessageModifiedTimestamp } from '../MessageModifiedTimestamp';
 import { useTrans } from '@/hooks';
 import { WHITESPACE } from '@/vars';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
