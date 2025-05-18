@@ -395,7 +395,7 @@ namespace EndpointsV1 {
 
             export type RequestBody = WithId.Target;
 
-            export type Response = void;
+            export type Response = Entities.User.Base;
         }
 
         export namespace AcceptFriendRequest {
@@ -517,7 +517,7 @@ namespace EndpointsV1 {
                 invitationCode: string;
             };
 
-            export type Response = Entities.Server.Base;
+            export type Response = Entities.User.Base;
         }
 
         export namespace Create {
@@ -641,7 +641,29 @@ namespace EndpointsV1 {
             export type RequestBody = (
                 WithId.Server
                 & {
-                    limit: number;
+                    limit: number | null;
+                }
+            );
+
+            export type Response = Pick<
+                AppData,
+                'User'
+            >;
+        }
+
+        export namespace GetBannedUsers {
+            export const ActionName = 'getBannedUsers';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = (
+                WithId.Server
+                & {
+                    limit: number | null;
                 }
             );
 
@@ -670,6 +692,23 @@ namespace EndpointsV1 {
 
         export namespace BanMember {
             export const ActionName = 'banMember';
+
+            export const NamedAction = namedAction(BasePath, ActionName);
+
+            export const Path = v1(BasePath, ActionName);
+
+            export const Method = HTTP_METHODS.POST;
+
+            export type RequestBody = (
+                WithId.Server
+                & WithId.Target
+            );
+
+            export type Response = void;
+        }
+
+        export namespace UnBanMember {
+            export const ActionName = 'unBanMember';
 
             export const NamedAction = namedAction(BasePath, ActionName);
 

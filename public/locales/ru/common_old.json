@@ -10,5 +10,7 @@
     "MessageEditor.SendMessageInput.submitButton.labels": "Отправить сообщение",
     "ServerMenu.inviteFriends": "Пригласить друзей",
     "ServerSettingsDialog.AvatarUploader.avatarField.label": "__NOT_TRANSLATED__",
-    "ServerSettingsDialog.AvatarUploader.overlay.text": "Сменить\nаватар"
+    "ServerSettingsDialog.AvatarUploader.overlay.text": "Сменить\nаватар",
+    "ServerSettingsDialog.MembersTab.item.unBan.label": "__NOT_TRANSLATED__",
+    "ServerSettingsDialog.MembersTab.item.unBan.tooltip": "__NOT_TRANSLATED__"
 }

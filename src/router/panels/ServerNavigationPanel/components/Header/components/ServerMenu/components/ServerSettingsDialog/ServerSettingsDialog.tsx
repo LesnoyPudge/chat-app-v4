@@ -8,7 +8,7 @@ import {
     createWithDecorator,
     withDisplayName,
 } from '@lesnoypudge/utils-react';
-import { MembersTab, Navigation, OverviewTab } from './components';
+import { BannedTab, MembersTab, Navigation, OverviewTab } from './components';
 import { Endpoints } from 'fakeShared/endpoints';
 import { T } from '@lesnoypudge/types-utils-base';
 
@@ -26,9 +26,7 @@ export const { ServerSettingsDialogTabs } = Tab.createTypedTabs({
     tabs: {
         OverviewTab: <OverviewTab/>,
         MembersTab: <MembersTab/>,
-        BannedTab: <>banned</>,
-        // MembersTab: <MembersTab/>,
-        // BannedTab: <BannedTab/>,
+        BannedTab: <BannedTab/>,
     },
 });
 

@@ -28,7 +28,7 @@ export const MemberList: FC = () => {
 
     const { isLoading } = Store.Servers.Api.useServerGetMembersQuery({
         serverId,
-        limit: Infinity,
+        limit: null,
     });
 
     const ids = [...onlineMemberIds, ...offlineMemberIds];

@@ -100,6 +100,19 @@ export const ServersApi = getRootApi().injectEndpoints({
             })
         ),
 
+        [Server.GetBannedUsers.NamedAction]: (
+            build.query<
+                Server.GetBannedUsers.Response,
+                Server.GetBannedUsers.RequestBody
+            >({
+                query: (body) => ({
+                    url: Server.GetBannedUsers.Path,
+                    method: Server.GetBannedUsers.Method,
+                    body,
+                }),
+            })
+        ),
+
         [Server.GetManyDeep.NamedAction]: (
             build.query<
                 Server.GetManyDeep.Response,
@@ -147,6 +160,19 @@ export const ServersApi = getRootApi().injectEndpoints({
                 query: (body) => ({
                     url: Server.BanMember.Path,
                     method: Server.BanMember.Method,
+                    body,
+                }),
+            })
+        ),
+
+        [Server.UnBanMember.NamedAction]: (
+            build.mutation<
+                Server.UnBanMember.Response,
+                Server.UnBanMember.RequestBody
+            >({
+                query: (body) => ({
+                    url: Server.UnBanMember.Path,
+                    method: Server.UnBanMember.Method,
                     body,
                 }),
             })

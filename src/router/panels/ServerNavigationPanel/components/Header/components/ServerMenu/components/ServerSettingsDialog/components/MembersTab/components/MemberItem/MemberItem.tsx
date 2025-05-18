@@ -1,18 +1,51 @@
-import { createStyles } from '@/utils';
+import {
+    Avatar,
+    Button,
+    KeyboardNavigation,
+    Overlay,
+    Sprite,
+    VirtualList,
+} from '@/components';
+import { Store } from '@/features';
+import { ASSETS } from '@/generated/ASSETS';
+import { cn, createStyles } from '@/utils';
 import { decorate } from '@lesnoypudge/macro';
-import { withDisplayName } from '@lesnoypudge/utils-react';
+import {
+    useFunction,
+    useRefManager,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
 import { FC, memo } from 'react';
+import {
+    useServerSettingsDialogContextProxy,
+} from '../../../../ServerSettingsDialog';
+import { useTrans } from '@/hooks';
+import { If } from '@lesnoypudge/react-if';
 
 
 
 const styles = createStyles({
-    item: 'flex items-center gap-3 py-4',
+    item: {
+        base: `
+            ${VirtualList.Styles.resetItemMarginTop}
+            mt-1 
+            flex 
+            justify-between 
+            gap-1 
+            rounded
+            fill-icon-100
+            p-1
+            hover-focus-within:bg-primary-hover
+            hover-focus-within:fill-danger
+        `,
+        active: 'bg-primary-hover fill-danger',
+    },
+    infoWrapper: 'flex items-center gap-1',
+    buttonsWrapper: 'flex gap-1',
     avatar: 'size-10',
-    username: 'truncate text-sm font-medium text-color-primary',
-    buttonArea: 'ml-auto flex gap-2',
-    button: 'size-9 rounded-full bg-primary-400 fill-icon-100',
-    dangerButton: 'fill-danger',
-    icon: 'm-auto size-5',
+    username: 'truncate',
+    button: 'size-10 rounded-full p-2',
+    icon: 'size-full',
 });
 
 type Props = {
@@ -25,132 +58,121 @@ decorate(memo, decorate.target);
 export const MemberItem: FC<Props> = ({
     userId,
 }) => {
-    return <div>{userId}</div>;
-    // return (
-    //     <div className={styles.item}>
-    //         <UserAvatar
-    //             className={styles.avatar}
-    //             avatarId={member.avatar}
-    //             username={member.name}
-    //         />
+    const { t } = useTrans();
+    const { serverId } = useServerSettingsDialogContextProxy();
+    const elementRef = useRefManager<HTMLLIElement>(null);
+    const kickButtonRef = useRefManager<HTMLButtonElement>(null);
+    const banButtonRef = useRefManager<HTMLButtonElement>(null);
 
-    //         <div className={styles.username}>
-    //             {member.name}
-    //         </div>
+    const currentUserId = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserId,
+    );
 
-    //         <div className={styles.buttonArea}>
-    //             <Ref<HTMLButtonElement>>
-    //                 {(ref) => (
-    //                     <>
-    //                         <OverlayContextProvider>
-    //                             {({ openOverlay, isOverlayExist }) => (
-    //                                 <>
-    //                                     <Button
-    //                                         className={twClassNames(styles.button, styles.dangerButton)}
-    //                                         label='Выгнать пользователя'
-    //                                         hasPopup='dialog'
-    //                                         isActive={isOverlayExist}
-    //                                         innerRef={ref}
-    //                                         onLeftClick={openOverlay}
-    //                                     >
-    //                                         <SpriteImage
-    //                                             className={styles.icon}
-    //                                             name='DOORWAY_ICON'
-    //                                         />
-    //                                     </Button>
+    const {
+        isCurrentId,
+        setId,
+        tabIndex,
+    } = KeyboardNavigation.useCommonItem({
+        itemId: userId,
+        elementRef,
+    });
 
-    //                                     <KickMemberModal
-    //                                         channelId={values.channelId}
-    //                                         memberId={member.id}
-    //                                     />
-    //                                 </>
-    //                             )}
-    //                         </OverlayContextProvider>
+    const avatar = Store.useSelector(
+        Store.Users.Selectors.selectAvatarById(userId),
+    );
 
-    //                         <Tooltip
-    //                             preferredAlignment='top'
-    //                             leaderElementRef={ref}
-    //                         >
-    //                             <>Выгнать</>
-    //                         </Tooltip>
-    //                     </>
-    //                 )}
-    //             </Ref>
+    const defaultAvatar = Store.useSelector(
+        Store.Users.Selectors.selectDefaultAvatarById(userId),
+    );
 
-    //             <Ref>
-    //                 {(ref) => (
-    //                     <>
-    //                         <OverlayContextProvider>
-    //                             {({ openOverlay, isOverlayExist }) => (
-    //                                 <>
-    //                                     <Button
-    //                                         className={twClassNames(styles.button, styles.dangerButton)}
-    //                                         label='Забанить пользователя'
-    //                                         hasPopup='dialog'
-    //                                         isActive={isOverlayExist}
-    //                                         onLeftClick={openOverlay}
-    //                                     >
-    //                                         <SpriteImage
-    //                                             className={styles.icon}
-    //                                             name='CROSS_ICON'
-    //                                         />
-    //                                     </Button>
+    const name = Store.useSelector(
+        Store.Users.Selectors.selectNameById(userId),
+    );
 
-    //                                     <BanMemberModal
-    //                                         channelId={values.channelId}
-    //                                         memberId={member.id}
-    //                                     />
-    //                                 </>
-    //                             )}
-    //                         </OverlayContextProvider>
+    const [
+        kickTrigger,
+        kickHelpers,
+    ] = Store.Servers.Api.useServerKickMemberMutation();
 
-    //                         <Tooltip
-    //                             preferredAlignment='top'
-    //                             leaderElementRef={ref}
-    //                         >
-    //                             <>Забанить</>
-    //                         </Tooltip>
-    //                     </>
-    //                 )}
-    //             </Ref>
+    const [
+        banTrigger,
+        banHelpers,
+    ] = Store.Servers.Api.useServerBanMemberMutation();
 
-    //             <Ref<HTMLButtonElement>>
-    //                 {(ref) => (
-    //                     <>
-    //                         <OverlayContextProvider>
-    //                             {({ isOverlayExist, openOverlay }) => (
-    //                                 <>
-    //                                     <Button
-    //                                         className={styles.button}
-    //                                         label='Передать права на канал'
-    //                                         hasPopup='dialog'
-    //                                         isActive={isOverlayExist}
-    //                                         onLeftClick={openOverlay}
-    //                                     >
-    //                                         <SpriteImage
-    //                                             className={styles.icon}
-    //                                             name='CROWN_ICON'
-    //                                         />
-    //                                     </Button>
+    const handleKick = useFunction(() => {
+        void kickTrigger({ serverId, targetId: userId });
+    });
 
-    //                                     <ChangeChannelOwnerModal
-    //                                         channelId={values.channelId}
-    //                                         memberId={member.id}
-    //                                     />
-    //                                 </>
-    //                             )}
-    //                         </OverlayContextProvider>
+    const handleBan = useFunction(() => {
+        void banTrigger({ serverId, targetId: userId });
+    });
 
-    //                         <Tooltip
-    //                             preferredAlignment='top'
-    //                             leaderElementRef={ref}
-    //                         >
-    //                             <>Передать права на канал</>
-    //                         </Tooltip>
-    //                     </>
-    //                 )}
-    //             </Ref>
-    //         </div>
-    //     </div>
-    // );
+    const isCurrentUser = currentUserId === userId;
+
+    return (
+        <li className={cn(
+            styles.item.base,
+            isCurrentId && styles.item.active,
+        )}>
+            <div className={styles.infoWrapper}>
+                <Avatar.User
+                    className={styles.avatar}
+                    avatar={avatar}
+                    defaultAvatar={defaultAvatar}
+                />
+
+                <div className={styles.username}>
+                    {name}
+                </div>
+            </div>
+
+            <If condition={!isCurrentUser}>
+                <div className={styles.buttonsWrapper}>
+                    <Button
+                        className={styles.button}
+                        tabIndex={tabIndex}
+                        isLoading={kickHelpers.isLoading}
+                        innerRef={kickButtonRef}
+                        label={t('ServerSettingsDialog.MembersTab.item.kick.label')}
+                        onLeftClick={handleKick}
+                        onAnyClick={setId}
+                    >
+                        <Sprite
+                            className={styles.icon}
+                            sprite={ASSETS.IMAGES.SPRITE.DOORWAY_ICON}
+                        />
+                    </Button>
+
+                    <Overlay.Tooltip
+                        leaderElementRef={kickButtonRef}
+                        preferredAlignment='top'
+                    >
+                        {t('ServerSettingsDialog.MembersTab.item.kick.tooltip')}
+                    </Overlay.Tooltip>
+
+                    <Button
+                        className={styles.button}
+                        tabIndex={tabIndex}
+                        isLoading={banHelpers.isLoading}
+                        innerRef={banButtonRef}
+                        label={t('ServerSettingsDialog.MembersTab.item.ban.label')}
+                        onLeftClick={handleBan}
+                        onAnyClick={setId}
+                    >
+                        <Sprite
+                            className={styles.icon}
+                            sprite={ASSETS.IMAGES.SPRITE.CROSS_ICON}
+                        />
+                    </Button>
+
+                    <Overlay.Tooltip
+                        leaderElementRef={banButtonRef}
+                        preferredAlignment='top'
+                    >
+                        {t('ServerSettingsDialog.MembersTab.item.ban.tooltip')}
+                    </Overlay.Tooltip>
+                </div>
+            </If>
+        </li>
+    );
 };

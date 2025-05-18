@@ -16,7 +16,7 @@ import {
 import { useRefManager } from '@lesnoypudge/utils-react';
 import { Store } from '@/features';
 import { createStyles } from '@/utils';
-import { MemberItem } from './components';
+import { BannedItem } from './components';
 
 
 
@@ -38,7 +38,7 @@ const styles = createStyles({
     scrollable: 'h-full',
 });
 
-export const MembersTab: FC = () => {
+export const BannedTab: FC = () => {
     const { t } = useTrans();
     const wrapperRef = useRefManager<HTMLUListElement>(null);
     const search = SearchBar.useControls('');
@@ -48,52 +48,52 @@ export const MembersTab: FC = () => {
         data,
         isLoading,
         isSuccess,
-    } = Store.Servers.Api.useServerGetMembersQuery({
+    } = Store.Servers.Api.useServerGetBannedUsersQuery({
         serverId,
         limit: null,
     });
 
-    const members = data?.User;
+    const users = data?.User;
 
-    const filteredMemberIds = useMemo(() => {
-        if (!members) return [];
+    const filteredUserIds = useMemo(() => {
+        if (!users) return [];
 
-        const _members = search.deferredValue ? members.filter((member) => {
+        const _members = search.deferredValue ? users.filter((member) => {
             return member.name.includes(search.deferredValue);
-        }) : members;
+        }) : users;
 
         return _members.map(({ id }) => id);
-    }, [members, search.deferredValue]);
+    }, [users, search.deferredValue]);
 
     const shouldShowPlaceholder = isLoading || !isSuccess;
     const shouldShowNotFound = (
         !isLoading
         && isSuccess
         && !!search.deferredValue
-        && !filteredMemberIds.length
+        && !filteredUserIds.length
     );
     const shouldShowList = (
         !isLoading
         && isSuccess
-        && !!filteredMemberIds.length
+        && !!filteredUserIds.length
     );
 
     return (
-        <ServerSettingsDialogTabs.Panel.MembersTab>
+        <ServerSettingsDialogTabs.Panel.BannedTab>
             <DialogBlocks.FullScreen.TabTitle>
-                {t('ServerSettingsDialog.MembersTab.title')}
+                {t('ServerSettingsDialog.BannedTab.title')}
             </DialogBlocks.FullScreen.TabTitle>
 
             <div className={styles.infoWrapper}>
                 <div className={styles.info}>
                     <Placeholder.With
                         className={styles.infoPlaceholder}
-                        reveal={members}
+                        reveal={users}
                     >
-                        {(members) => (
+                        {(users) => (
                             <span>
-                                {t('ServerSettingsDialog.MembersTab.membersTotalCount', {
-                                    membersCount: members.length,
+                                {t('ServerSettingsDialog.BannedTab.totalCount', {
+                                    totalCount: users.length,
                                 })}
                             </span>
                         )}
@@ -101,11 +101,11 @@ export const MembersTab: FC = () => {
 
                     <Placeholder.With
                         className={styles.infoPlaceholder}
-                        reveal={members}
+                        reveal={users}
                     >
                         <span>
-                            {t('ServerSettingsDialog.MembersTab.membersFilteredCount', {
-                                filteredCount: filteredMemberIds.length,
+                            {t('ServerSettingsDialog.BannedTab.filteredCount', {
+                                filteredCount: filteredUserIds.length,
                             })}
                         </span>
                     </Placeholder.With>
@@ -113,8 +113,8 @@ export const MembersTab: FC = () => {
 
                 <SearchBar.Node
                     className={styles.searchBar}
-                    placeholder={t('ServerSettingsDialog.MembersTab.search.placeholder')}
-                    label={t('ServerSettingsDialog.MembersTab.search.label')}
+                    placeholder={t('ServerSettingsDialog.BannedTab.search.placeholder')}
+                    label={t('ServerSettingsDialog.BannedTab.search.label')}
                     {...search}
                 />
             </div>
@@ -132,7 +132,7 @@ export const MembersTab: FC = () => {
 
                 <If condition={shouldShowNotFound}>
                     <div className={styles.notFound}>
-                        {t('ServerSettingsDialog.MembersTab.notFound')}
+                        {t('ServerSettingsDialog.BannedTab.notFound')}
                     </div>
                 </If>
 
@@ -140,16 +140,16 @@ export const MembersTab: FC = () => {
                     <Scrollable className={styles.scrollable}>
                         <ul ref={wrapperRef}>
                             <VirtualList.Node
-                                items={filteredMemberIds}
+                                items={filteredUserIds}
                                 getId={(v) => v}
                                 wrapperRef={wrapperRef}
                             >
-                                {(id) => <MemberItem userId={id}/>}
+                                {(id) => <BannedItem userId={id}/>}
                             </VirtualList.Node>
                         </ul>
                     </Scrollable>
                 </If>
             </div>
-        </ServerSettingsDialogTabs.Panel.MembersTab>
+        </ServerSettingsDialogTabs.Panel.BannedTab>
     );
 };

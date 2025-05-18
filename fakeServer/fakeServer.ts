@@ -1,31 +1,7 @@
-
-
-import { Endpoints, extractBase64Data } from '@/fakeShared';
-import { createPromiseLoader, localStorageApi, logger } from '@/utils';
-import {
-    delay,
-    DefaultBodyType,
-    http,
-    HttpResponse,
-    StrictRequest,
-    StrictResponse,
-    HttpHandler,
-} from 'msw';
+import { createPromiseLoader, logger } from '@/utils';
 import { setupWorker } from 'msw/browser';
-import { db, initDB } from './FakeDB';
-import { Dummies } from './Dummies';
-import { HTTP_METHODS, HTTP_STATUS_CODES, invariant } from '@lesnoypudge/utils';
+import { initDB } from './FakeDB';
 import { env, FLAGS } from '@/vars';
-import { token } from './token';
-import { v4 as uuid } from 'uuid';
-import {
-    flattenPopulated,
-    getAppData,
-    getDeepConversation,
-    getDeepServer,
-} from './utils';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { scenarios } from './Scenarios';
 import { getRoutes } from './routes';
 
 

@@ -125,19 +125,18 @@ export class FakeDB {
     >(
         tableKey: _Key,
         id: string,
-        fn: (item: FakeDB.Storage[_Key][string]) => (
+        updater: (item: FakeDB.Storage[_Key][string]) => (
             T.Promisable<FakeDB.Storage[_Key][string]>
         ),
     ): Promise<FakeDB.Storage[_Key][string] | undefined> {
         invariant(this.storage);
 
-        const item = this.storage[tableKey][id] as FakeDB.Storage[_Key][string] | undefined;
+        const item = this.storage[tableKey][id] as (
+            FakeDB.Storage[_Key][string] | undefined
+        );
         if (!item) return undefined;
 
-        const updatedItem = {
-            ...item,
-            ...await fn(item),
-        };
+        const updatedItem = await updater(item);
 
         this.storage[tableKey][id] = updatedItem;
 
