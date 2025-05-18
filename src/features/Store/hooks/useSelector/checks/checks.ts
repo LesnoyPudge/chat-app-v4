@@ -6,8 +6,8 @@ import { getSelectorName } from '../utils';
 
 
 
-const SLOW_FIRST_RUN_THRESHOLD = 5;
-const SLOW_SECOND_RUN_THRESHOLD = 2;
+const SLOW_FIRST_RUN_THRESHOLD = 10;
+const SLOW_SECOND_RUN_THRESHOLD = 3;
 
 export const checks = (() => {
     const detectBrokenStats = (selector: T.AnyFunction) => {

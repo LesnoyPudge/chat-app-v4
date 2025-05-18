@@ -1,26 +1,15 @@
 import { Overlay } from '@/components';
 import { FC, PropsWithChildren, useRef } from 'react';
 import { GlobalLoaderContext } from '../../context';
-import { getAnimationVariants } from '@/utils';
 import { Motion } from '@/libs';
 import { GlobalLoaderScreen } from '@/router/screens/bundled';
 import { Types } from '../../types';
 import { LazyModules } from '@/root/components';
 import { useFunction } from '@lesnoypudge/utils-react';
+import { AnimationPresets } from '@/entities';
+import { useMotionValue, useTransform } from 'motion/react';
 
 
-
-const { animationVariants } = getAnimationVariants.custom({
-    initial: {
-        opacity: 1,
-        scale: 1,
-    },
-    animate: {},
-    exit: {
-        opacity: 0,
-        scale: 1.5,
-    },
-});
 
 export const GlobalLoaderWrapper: FC<PropsWithChildren> = ({
     children,
@@ -49,13 +38,27 @@ export const GlobalLoaderWrapper: FC<PropsWithChildren> = ({
         disable,
     };
 
+    const progress = useMotionValue(2);
+    const { onEnter, onExit, style } = AnimationPresets.useCustom({
+        progress,
+        style: {
+            opacity: useTransform(progress, [0, 1, 2], [0, 1, 1]),
+            scale: useTransform(progress, [0, 1, 2], [1.5, 1, 1]),
+        },
+    });
+
     return (
         <GlobalLoaderContext.Provider value={value}>
             <If condition={isLoaded}>
                 {children}
             </If>
 
-            <Overlay.BaseOverlay.Provider controls={controls}>
+            <Overlay.BaseOverlay.Provider
+                controls={controls}
+                progress={progress}
+                onEnter={onEnter}
+                onExit={onExit}
+            >
                 <Overlay.Popover.Provider
                     focused
                     blockable
@@ -63,12 +66,7 @@ export const GlobalLoaderWrapper: FC<PropsWithChildren> = ({
                 >
                     <Overlay.BaseOverlay.Wrapper>
                         <Overlay.Popover.Wrapper>
-                            <Motion.div
-                                variants={animationVariants}
-                                initial={animationVariants.initial.key}
-                                animate={animationVariants.animate.key}
-                                exit={animationVariants.exit.key}
-                            >
+                            <Motion.div style={style}>
                                 <GlobalLoaderScreen/>
                             </Motion.div>
                         </Overlay.Popover.Wrapper>

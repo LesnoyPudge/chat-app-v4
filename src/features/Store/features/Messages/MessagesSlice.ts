@@ -1,4 +1,10 @@
-import { createEntityAdapter, createEntityExtraReducers, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import {
+    createEntityAdapter,
+    createEntityExtraReducers,
+    createSlice,
+    createSocketExtraReducers,
+    extractReducersFromAdapter,
+} from '@/store/utils';
 import { Users } from '../Users';
 import { ReduxToolkit } from '@/libs';
 import { MessagesTypes } from './MessagesTypes';
@@ -26,15 +32,11 @@ export const MessagesSlice = createSlice({
         });
 
         builder.addMatcher(
-            MessagesApi.endpoints.MessageGetManyByTextChatId.matchFulfilled,
-            adapter.upsertMany,
-        );
-
-        builder.addMatcher(
             ReduxToolkit.isAnyOf(
                 Users.Api.endpoints.UserLogin.matchFulfilled,
                 Users.Api.endpoints.UserRegistration.matchFulfilled,
                 Users.Api.endpoints.UserRefresh.matchFulfilled,
+                MessagesApi.endpoints.MessageGetManyByTextChatId.matchFulfilled,
             ),
             (state, { payload }) => {
                 adapter.upsertMany(state, payload.Message);

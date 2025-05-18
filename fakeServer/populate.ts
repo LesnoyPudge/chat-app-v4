@@ -150,7 +150,7 @@ const createServer = deferred(async (
 
     owner.servers.push(serverId);
 
-    const members: ClientEntities.User.Base[] = [owner];
+    const members: ClientEntities.User.Base[] = [];
 
     for (let i = 0; i < inRange(1, mul(5)); i++) {
         const user = await createUser();
@@ -179,10 +179,8 @@ const createServer = deferred(async (
     });
 
     const textChatIds = createArray(inRange(mul(1), mul(5))).map(() => uuid());
-    const voiceChatIds = createArray(inRange(mul(1), mul(5))).map(() => uuid());
 
     const textChannelIds = createArray(textChatIds.length).map(() => uuid());
-    const voiceChannelIds = createArray(voiceChatIds.length).map(() => uuid());
 
     const textChats: {
         chat: ClientEntities.TextChat.Base;
@@ -238,6 +236,15 @@ const createServer = deferred(async (
         });
     });
 
+    const bannedUsers: ClientEntities.User.Base[] = [];
+
+    for (let i = 0; i < inRange(1, mul(5)); i++) {
+        const user = await createUser();
+        bannedUsers.push(user);
+    }
+
+    const isMyServer = myId === owner.id;
+
     const server = Dummies.server({
         avatar: null,
         id: serverId,
@@ -246,13 +253,16 @@ const createServer = deferred(async (
         members: [...new Set([
             ...extractIds(members),
             myId,
+            owner.id,
         ])],
-        name: faker.company.name(),
+        name: isMyServer ? `MY SERVER ${uuid()}` : faker.company.name(),
         owner: owner.id,
         roles: extractIds(roles),
+        banned: extractIds(bannedUsers),
     });
 
     return {
+        banned: bannedUsers,
         members,
         server,
         owner,
@@ -341,7 +351,7 @@ export const populate = async ({
     const me = Dummies.user(oldMe);
 
     const friends = await defer(() => Promise.all(
-        createArray(mul(3)).map(async () => {
+        createArray(mul(5)).map(async () => {
             const user = await createUser();
 
             user.friends = [me.id];
@@ -355,7 +365,7 @@ export const populate = async ({
         blocked_user = [],
     } = await defer(() => flattenPopulated(
         'blocked_',
-        Promise.all(createArray(mul(3)).map(async () => {
+        Promise.all(createArray(mul(5)).map(async () => {
             const user = await createUser();
 
             me.blocked.push(user.id);
@@ -428,6 +438,7 @@ export const populate = async ({
         servers_server = [],
         servers_textChannels = [],
         servers_textChats = [],
+        servers_banned = [],
     } = await defer(() => flattenPopulated(
         'servers_',
         Promise.all(createArray(mul(3)).map(async () => {
@@ -447,6 +458,7 @@ export const populate = async ({
         my_servers_server = [],
         my_servers_textChannels = [],
         my_servers_textChats = [],
+        my_servers_banned = [],
     } = await defer(() => flattenPopulated(
         'my_servers_',
         Promise.all(createArray(mul(1)).map(() => {
@@ -462,6 +474,7 @@ export const populate = async ({
         mutedServers_server = [],
         mutedServers_textChannels = [],
         mutedServers_textChats = [],
+        mutedServers_banned = [],
     } = await defer(() => flattenPopulated(
         'mutedServers_',
         Promise.all(createArray(mul(2)).map(async () => {
@@ -566,6 +579,9 @@ export const populate = async ({
             ...IFR_user,
             ...OFR_user,
             ...blocked_user,
+            ...servers_banned,
+            ...my_servers_banned,
+            ...mutedServers_banned,
         ]),
         channel: combineToTable([
             ...servers_textChannels,

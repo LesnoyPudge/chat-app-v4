@@ -1,5 +1,8 @@
 import { Endpoints } from '@/fakeShared';
 import { getRootApi } from '@/store/utils';
+
+
+
 import Message = Endpoints.V1.Message;
 
 
@@ -52,7 +55,7 @@ export const MessagesApi = getRootApi().injectEndpoints({
                     method: Message.GetManyByTextChatId.Method,
                     body,
                 }),
-                providesTags: (result) => result?.map(({ id }) => ({
+                providesTags: (result) => result?.Message.map(({ id }) => ({
                     type: 'Message',
                     id,
                 })) ?? [{ type: 'Message', id: 'LIST' }],

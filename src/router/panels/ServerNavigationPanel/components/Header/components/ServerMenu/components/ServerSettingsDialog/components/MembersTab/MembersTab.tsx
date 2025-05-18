@@ -59,7 +59,9 @@ export const MembersTab: FC = () => {
         if (!members) return [];
 
         const _members = search.deferredValue ? members.filter((member) => {
-            return member.name.includes(search.deferredValue);
+            return member.name.toLowerCase().includes(
+                search.deferredValue.toLowerCase(),
+            );
         }) : members;
 
         return _members.map(({ id }) => id);

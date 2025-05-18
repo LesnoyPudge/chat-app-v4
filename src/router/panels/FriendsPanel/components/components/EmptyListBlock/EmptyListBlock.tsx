@@ -2,9 +2,9 @@ import { Image } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
 import { createStyles } from '@/utils';
 import { FC } from 'react';
-import { ContentContext } from '../../context';
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
+import { ContentContext } from '../../ContentContext';
 
 
 

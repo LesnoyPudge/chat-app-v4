@@ -4,6 +4,9 @@ import { useTrans } from '@/hooks';
 import { Store } from '@/features';
 import { useFunction } from '@lesnoypudge/utils-react';
 import { ASSETS } from '@/generated/ASSETS';
+import { FriendsPanelTabs } from '../../FriendsPanel';
+import { sharedStyles } from '../../sharedStyles';
+import { useContentContextSelector } from '../ContentContext';
 
 
 
@@ -36,22 +39,30 @@ const ActionButtons: FC<Pick<BaseActionButton.Props, 'userId'>> = ({
 };
 
 export const BlockedUsersTab: FC = () => {
-    const blocked = Store.useSelector(
-        Store.Users.Selectors.selectCurrentUserBlockedIds,
-    );
+    const filteredBlockedIds = useContentContextSelector((v) => {
+        return v.filteredBlockedIds;
+    });
+
+    const blockedIds = useContentContextSelector((v) => {
+        return v.blockedIds;
+    });
 
     Store.Users.Api.useUserGetManyQuery({
-        userIds: blocked,
-    }, { skip: !blocked.length });
+        userIds: blockedIds,
+    }, { skip: !blockedIds.length });
 
     return (
-        <List userIds={blocked}>
-            {(id) => (
-                <ListItem
-                    userId={id}
-                    renderActionButtons={(id) => <ActionButtons userId={id}/>}
-                />
-            )}
-        </List>
+        <FriendsPanelTabs.Panel.Blocked className={sharedStyles.tabWrapper}>
+            <List userIds={filteredBlockedIds}>
+                {(id) => (
+                    <ListItem
+                        userId={id}
+                        renderActionButtons={(id) => (
+                            <ActionButtons userId={id}/>
+                        )}
+                    />
+                )}
+            </List>
+        </FriendsPanelTabs.Panel.Blocked>
     );
 };

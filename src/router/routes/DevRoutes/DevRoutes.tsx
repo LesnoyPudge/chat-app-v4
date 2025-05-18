@@ -39,6 +39,7 @@ const pathNameToComponent = {
                 channels: [],
                 members: [],
                 roles: [],
+                banned: [],
             })}
             isLoading={false}
             acceptInvitation={noop}

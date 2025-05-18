@@ -31,7 +31,7 @@ export const MemberList: FC = () => {
         limit: null,
     });
 
-    const ids = [...onlineMemberIds, ...offlineMemberIds];
+    const ids = [...new Set([...onlineMemberIds, ...offlineMemberIds])];
 
     if (isLoading || !ids.length) {
         return <MemberListPlaceholder/>;

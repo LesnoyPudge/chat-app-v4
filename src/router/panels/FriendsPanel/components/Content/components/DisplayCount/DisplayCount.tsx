@@ -1,8 +1,9 @@
 import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
-import { ContentContext } from '../../context';
+import { ContentContext } from '../../../ContentContext';
 import { createStyles } from '@/utils';
 import { useTrans } from '@/hooks';
+
 
 
 const styles = createStyles({

@@ -107,11 +107,11 @@ export class Dummies {
             | 'channels'
             | 'roles'
             | 'members'
+            | 'banned'
         >,
     ): ClientEntities.Server.Base {
         return {
             ...data,
-            banned: [],
             invitations: [{
                 creator: data.owner,
                 code: faker.string.alphanumeric({ casing: 'mixed', length: 6 }),
@@ -120,7 +120,7 @@ export class Dummies {
             }],
             isPrivate: false,
             onlineMemberCount: 0,
-            memberCount: 0,
+            memberCount: data.members.length,
             createdAt: Date.now(),
             updatedAt: Date.now(),
         };

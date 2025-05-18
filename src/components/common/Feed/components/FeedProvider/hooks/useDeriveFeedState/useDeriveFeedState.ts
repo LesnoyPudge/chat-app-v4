@@ -43,7 +43,8 @@ export const useDeriveFeedState = ({
 
     // there is unloaded messages
     const shouldShowMessagePlaceholder = (
-        firstDefinedMessageIndex !== 0
+        !!definedMessageCount
+        && firstDefinedMessageIndex !== 0
     );
 
     // all old messages are loaded, should show intro

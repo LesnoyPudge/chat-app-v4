@@ -35,6 +35,7 @@ export const MessageEditorSendMessageInput: FC<
                 content: JSON.stringify(data.content),
             });
         },
+        onSubmitSuccessMounted: (_, api) => api.reset(),
     });
 
     return (

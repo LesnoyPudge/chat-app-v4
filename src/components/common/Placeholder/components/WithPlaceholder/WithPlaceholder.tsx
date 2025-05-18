@@ -30,19 +30,20 @@ export const WithPlaceholder = <_Value,>({
     children,
     ...rest
 }: WithPlaceholder.Props<_Value>) => {
-    let devReveal = isProd;
+    // let devReveal = isProd || true;
+    const devReveal = true;
 
-    if (isDev) {
-        // eslint-disable-next-line react-compiler/react-compiler, react-hooks/rules-of-hooks
-        const [state, setState] = useState(false);
+    // if (isDev) {
+    //     // eslint-disable-next-line react-compiler/react-compiler, react-hooks/rules-of-hooks
+    //     const [state, setState] = useState(false);
 
-        // eslint-disable-next-line react-compiler/react-compiler, react-hooks/rules-of-hooks
-        useTimeout(() => {
-            setState(true);
-        }, 5_000);
+    //     // eslint-disable-next-line react-compiler/react-compiler, react-hooks/rules-of-hooks
+    //     useTimeout(() => {
+    //         setState(true);
+    //     }, 5_000);
 
-        devReveal = state;
-    }
+    //     devReveal = state;
+    // }
 
     const showChildren = devReveal && !!reveal;
     const showPlaceholder = !showChildren;

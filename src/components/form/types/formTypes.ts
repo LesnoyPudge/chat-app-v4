@@ -21,8 +21,12 @@ export namespace FormTypes {
     export type ValidationError = TanStackForm.StandardSchemaV1Issue;
 
     type SubmitResolve<
+        _Shape extends T.UnknownRecord,
         _SubmitResult,
-    > = (data: _SubmitResult) => void;
+    > = (
+        data: _SubmitResult,
+        formApi: BasicFormApiWrapper<_Shape>
+    ) => void;
 
     type FormOptionsWrapper<
         _Shape extends T.UnknownRecord,
@@ -36,8 +40,8 @@ export namespace FormTypes {
             'onSubmit'
         >
         & {
-            onSubmitSuccess?: SubmitResolve<_SubmitResult>;
-            onSubmitSuccessMounted?: SubmitResolve<_SubmitResult>;
+            onSubmitSuccess?: SubmitResolve<_Shape, _SubmitResult>;
+            onSubmitSuccessMounted?: SubmitResolve<_Shape, _SubmitResult>;
             errorTable?: Partial<ErrorTable>;
             validator?: Valibot.GenericSchema<_Shape>;
         }
@@ -45,6 +49,13 @@ export namespace FormTypes {
 
     type FormApiWrapper<_Shape extends T.UnknownRecord> = (
         TanStackForm.ReactFormExtendedApi<
+            _Shape,
+            any, any, any, any, any, any, any, any, any
+        >
+    );
+
+    type BasicFormApiWrapper<_Shape extends T.UnknownRecord> = (
+        TanStackForm.FormApi<
             _Shape,
             any, any, any, any, any, any, any, any, any
         >

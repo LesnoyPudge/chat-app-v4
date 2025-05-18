@@ -2,7 +2,7 @@ import { createStyles } from '@/utils';
 
 
 
-export const sharedStyles = createStyles({
+const styles = createStyles({
     inner: `
         min-h-[--message-editor-height] 
         rounded-lg 
@@ -15,10 +15,16 @@ export const sharedStyles = createStyles({
         h-[--message-editor-height] 
         shrink-0
     `,
-    buttonWithIcon: 'group/button p-2.5',
+    buttonWithIcon: `
+        group/button 
+        p-2.5
+        data-[loading=true]:animate-pulse
+    `,
     buttonIcon: `
         size-full 
         fill-icon-200
         group-hover-focus-visible/button:fill-icon-100
     `,
 });
+
+export const sharedStyles = styles;

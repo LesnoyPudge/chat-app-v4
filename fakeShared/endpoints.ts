@@ -957,7 +957,10 @@ namespace EndpointsV1 {
                 }
             );
 
-            export type Response = Entities.Message.Base[];
+            export type Response = Pick<
+                AppData,
+                'User' | 'Message'
+            >;
         }
     }
 

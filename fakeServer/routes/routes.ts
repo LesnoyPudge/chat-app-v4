@@ -151,7 +151,7 @@ class UserRoutes {
                 return (
                     !excludeList.has(v.id)
                     && !v.blocked.includes(auth.id)
-                    && v.name.includes(body.name)
+                    && v.name.toLowerCase().includes(body.name.toLowerCase())
                 );
             });
 
@@ -233,7 +233,7 @@ class UserRoutes {
                 ..._user,
                 lastSeenMessages: {
                     ..._user.lastSeenMessages,
-                    [textChat.id]: textChat.messageCount,
+                    [textChat.id]: textChat.messageCount - 1,
                 },
             }));
             invariantBadRequest(updated);
@@ -254,7 +254,7 @@ class UserRoutes {
 
             const updated = await db.update('user', auth.id, (_user) => {
                 textChats.forEach(({ id, messageCount }) => {
-                    _user.lastSeenMessages[id] = messageCount;
+                    _user.lastSeenMessages[id] = messageCount - 1;
                 });
 
                 return _user;
@@ -278,7 +278,7 @@ class UserRoutes {
                 ..._user,
                 lastSeenMessages: {
                     ..._user.lastSeenMessages,
-                    [textChat.id]: textChat.messageCount,
+                    [textChat.id]: textChat.messageCount - 1,
                 },
             }));
             invariantBadRequest(updated);
@@ -334,6 +334,7 @@ class UserRoutes {
             const user = await db.update('user', auth.id, async (userToUpdate) => {
                 if (
                     'avatar' in body
+                    && body.avatar
                     && userToUpdate.avatar
                 ) {
                     await db.delete('file', userToUpdate.avatar);
@@ -729,6 +730,7 @@ class ServerRoutes {
                 channels: [textChannel.id],
                 members: [auth.id],
                 roles: [defaultRole.id, adminRole.id],
+                banned: [],
             }));
 
             return jsonResponse(newServer);
@@ -920,7 +922,7 @@ class ServerRoutes {
         async ({ body, auth }) => {
             const updated = await db.update(
                 'server', body.serverId, async (_server) => {
-                    if ('avatar' in body && _server.avatar) {
+                    if ('avatar' in body && body.avatar && _server.avatar) {
                         await db.delete('file', _server.avatar);
                     }
 
@@ -1165,7 +1167,15 @@ class MessageRoutes {
                 textChat.messages.slice(sliceFrom, sliceTo),
             );
 
-            return jsonResponse(messages);
+            const authors = db.getByIds(
+                'user',
+                messages.map((v) => v.author),
+            );
+
+            return jsonResponse({
+                User: authors,
+                Message: messages,
+            });
         },
     );
 

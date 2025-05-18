@@ -50,7 +50,7 @@ export const useExtendForm: FormTypes.useExtendForm.Fn = (
         ...createdForm.options,
         ...options,
         validators,
-        onSubmit: async ({ value }) => {
+        onSubmit: async ({ value, formApi }) => {
             // reset error on submit attempt
             setSubmitError(null);
 
@@ -84,11 +84,11 @@ export const useExtendForm: FormTypes.useExtendForm.Fn = (
             // ignore unmounted error
             if (response.error) return;
 
-            options?.onSubmitSuccess?.(response.data);
+            options?.onSubmitSuccess?.(response.data, formApi);
 
             if (!getIsMounted()) return;
 
-            options?.onSubmitSuccessMounted?.(response.data);
+            options?.onSubmitSuccessMounted?.(response.data, formApi);
         },
     });
 

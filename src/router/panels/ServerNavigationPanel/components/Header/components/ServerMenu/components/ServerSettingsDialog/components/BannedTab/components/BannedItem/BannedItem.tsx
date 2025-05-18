@@ -93,10 +93,14 @@ export const BannedItem: FC<Props> = ({
     });
 
     return (
-        <li className={cn(
-            styles.item.base,
-            isCurrentId && styles.item.active,
-        )}>
+        <li
+            className={cn(
+                styles.item.base,
+                isCurrentId && styles.item.active,
+            )}
+            ref={elementRef}
+            tabIndex={tabIndex}
+        >
             <div className={styles.infoWrapper}>
                 <Avatar.User
                     className={styles.avatar}

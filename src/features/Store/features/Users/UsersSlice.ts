@@ -8,7 +8,7 @@ import {
     extractReducersFromAdapter,
 } from '@/store/utils';
 import { ReduxToolkit } from '@/libs';
-import { Servers, Conversations } from '@/store/features';
+import { Servers, Conversations, Messages } from '@/store/features';
 
 
 
@@ -46,7 +46,9 @@ export const UsersSlice = createSlice({
                 UsersApi.endpoints.UserRefresh.matchFulfilled,
                 Servers.Api.endpoints.ServerGetManyDeep.matchFulfilled,
                 Servers.Api.endpoints.ServerGetMembers.matchFulfilled,
+                Servers.Api.endpoints.ServerGetBannedUsers.matchFulfilled,
                 Conversations.Api.endpoints.ConversationGetManyDeep.matchFulfilled,
+                Messages.Api.endpoints.MessageGetManyByTextChatId.matchFulfilled,
             ),
             (state, { payload }) => {
                 const result = payload.User;

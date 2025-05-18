@@ -73,8 +73,6 @@ export const PlaceholderNode: FC<PlaceholderNode.Props> = ({
             ref={elementRef}
         >
             {ZERO_WIDTH_NON_JOINER}
-
-            {/* <br/> */}
         </div>
     );
 };

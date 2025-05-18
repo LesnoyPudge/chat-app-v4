@@ -6,19 +6,14 @@ import {
     Scrollable,
     Separator,
     Sprite,
-    Tab,
 } from '@/components';
 import { FC, PropsWithChildren, useRef } from 'react';
-import { ContextSelectable, Heading } from '@lesnoypudge/utils-react';
-import {
-    FriendsPanelTabs,
-    FriendsPanelTabsContext,
-    useFriendsPanelTabsContextProxy,
-} from '../../FriendsPanel';
+import { Heading } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
 import { TopBar } from '@/router/layouts/bundled';
 import { ASSETS } from '@/generated/ASSETS';
 import { AddFriendsDialog } from './components';
+import { FriendsPanelTabs } from '../../FriendsPanel';
 
 
 
@@ -53,7 +48,7 @@ const separatorProps: Separator.Props = {
 type ItemProps = (
     PropsWithChildren
     & {
-        tabName: keyof FriendsPanelTabs;
+        tabName: keyof typeof FriendsPanelTabs.tabNameTable;
     }
 );
 
@@ -66,7 +61,7 @@ const Item: FC<ItemProps> = ({
         changeTab,
         isActive,
         tabProps,
-    } = useFriendsPanelTabsContextProxy();
+    } = FriendsPanelTabs.useProxy();
 
     const { setId, tabIndex } = KeyboardNavigation.useCommonItem({
         itemId: tabName,
@@ -93,14 +88,16 @@ export const Navigation: FC = () => {
     const { t } = useTrans();
     const {
         orientation,
-    } = ContextSelectable.useProxy(FriendsPanelTabsContext);
+    } = FriendsPanelTabs.useProxy();
     const controls = Overlay.useControls();
 
-    const buttonText: Record<keyof FriendsPanelTabs, string> = {
-        all: t('FriendsPanel.Navigation.all.button.label'),
-        blocked: t('FriendsPanel.Navigation.blocked.button.label'),
-        pending: t('FriendsPanel.Navigation.pending.button.label'),
-        online: t('FriendsPanel.Navigation.online.button.label'),
+    const buttonText: Record<
+        keyof typeof FriendsPanelTabs.tabNameTable, string
+    > = {
+        All: t('FriendsPanel.Navigation.all.button.label'),
+        Blocked: t('FriendsPanel.Navigation.blocked.button.label'),
+        Pending: t('FriendsPanel.Navigation.pending.button.label'),
+        Online: t('FriendsPanel.Navigation.online.button.label'),
     };
 
     return (
@@ -125,16 +122,13 @@ export const Navigation: FC = () => {
 
                     <Separator {...separatorProps}/>
 
-                    <Tab.List
-                        className={styles.tabList}
-                        context={FriendsPanelTabsContext}
-                    >
+                    <FriendsPanelTabs.List className={styles.tabList}>
                         {(tabName) => (
                             <Item tabName={tabName}>
                                 {buttonText[tabName]}
                             </Item>
                         )}
-                    </Tab.List>
+                    </FriendsPanelTabs.List>
 
                     <Separator {...separatorProps}/>
 

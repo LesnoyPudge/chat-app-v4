@@ -80,9 +80,13 @@ export const EmojiPicker: FC<EmojiPicker.Props> = ({
     const filteredList = useMemo(() => {
         return EmojiStore.emojis.filter((emoji) => {
             return (
-                emoji.code.includes(search.deferredValue)
+                emoji.code.toLowerCase().includes(
+                    search.deferredValue.toLowerCase(),
+                )
                 || emoji.aliases.some((code) => {
-                    return code.includes(search.deferredValue);
+                    return code.toLowerCase().includes(
+                        search.deferredValue.toLowerCase(),
+                    );
                 })
             );
         });

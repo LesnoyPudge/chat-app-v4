@@ -4,6 +4,9 @@ import { useTrans } from '@/hooks';
 import { Store } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { useFunction, useLatest } from '@lesnoypudge/utils-react';
+import { FriendsPanelTabs } from '../../FriendsPanel';
+import { sharedStyles } from '../../sharedStyles';
+import { useContentContextSelector } from '../ContentContext';
 
 
 
@@ -93,46 +96,45 @@ const ActionButtons: FC<Props> = ({
 
 export const PendingRequestsTab: FC = () => {
     const { t } = useTrans();
-    const incomingIds = Store.useSelector(
-        Store.Users.Selectors.selectCurrentUserIncomingRequestUserIds,
-    );
-    const outgoingIds = Store.useSelector(
-        Store.Users.Selectors.selectCurrentUserOutgoingRequestUserIds,
-    );
 
-    const ids = [...incomingIds, ...outgoingIds];
+    const pendingIds = useContentContextSelector((v) => v.pendingIds);
+    const incomingIds = useContentContextSelector((v) => v.incomingIds);
+    const filteredPendingIds = useContentContextSelector((v) => {
+        return v.filteredPendingIds;
+    });
 
     Store.Users.Api.useUserGetManyQuery({
-        userIds: ids,
-    }, { skip: !ids.length });
+        userIds: pendingIds,
+    }, { skip: !pendingIds.length });
 
     const incomingSet = useLatest(new Set(incomingIds));
 
-    const getType = (id: string) => {
+    const getType = useFunction((id: string) => {
         return incomingSet.current.has(id) ? 'incoming' : 'outgoing';
-    };
+    });
 
-    const getExtraInfo = (id: string) => {
+    const getExtraInfo = useFunction((id: string) => {
         return incomingSet.current.has(id)
             ? t('FriendsPanel.PendingRequests.incoming.extraInfo')
             : t('FriendsPanel.PendingRequests.outgoing.extraInfo');
-    };
+    });
 
     return (
-        <List userIds={ids}
-        >
-            {(id) => (
-                <ListItem
-                    userId={id}
-                    renderActionButtons={(id) => (
-                        <ActionButtons
-                            userId={id}
-                            type={getType(id)}
-                        />
-                    )}
-                    renderExtraInfo={getExtraInfo}
-                />
-            )}
-        </List>
+        <FriendsPanelTabs.Panel.Pending className={sharedStyles.tabWrapper}>
+            <List userIds={filteredPendingIds}>
+                {(id) => (
+                    <ListItem
+                        userId={id}
+                        renderActionButtons={(id) => (
+                            <ActionButtons
+                                userId={id}
+                                type={getType(id)}
+                            />
+                        )}
+                        renderExtraInfo={getExtraInfo}
+                    />
+                )}
+            </List>
+        </FriendsPanelTabs.Panel.Pending>
     );
 };

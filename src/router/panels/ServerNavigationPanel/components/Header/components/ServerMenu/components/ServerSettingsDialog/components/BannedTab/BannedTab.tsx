@@ -59,7 +59,9 @@ export const BannedTab: FC = () => {
         if (!users) return [];
 
         const _members = search.deferredValue ? users.filter((member) => {
-            return member.name.includes(search.deferredValue);
+            return member.name.toLowerCase().includes(
+                search.deferredValue.toLowerCase(),
+            );
         }) : users;
 
         return _members.map(({ id }) => id);

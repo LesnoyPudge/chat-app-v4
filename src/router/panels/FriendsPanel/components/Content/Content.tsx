@@ -1,23 +1,14 @@
 import { createStyles } from '@/utils';
-import { ReactNode } from 'react';
-import { FriendsPanelTabsContext } from '../../FriendsPanel';
-import { ContextSelectable } from '@lesnoypudge/utils-react';
-import { Scrollable, SearchBar, Separator, Tab } from '@/components';
-import {
-    AllFriendsTab,
-    BlockedUsersTab,
-    OnlineFriendsTab,
-    PendingRequestsTab,
-} from './tabs';
+import { SearchBar, Separator } from '@/components';
 import { useTrans } from '@/hooks';
-import { ContentContextProvider, DisplayCount, EmptyListBlock } from './components';
+import { ContentContextProvider, DisplayCount } from './components';
+import { FriendsPanelTabs } from '../../FriendsPanel';
 
 
 
 const styles = createStyles({
     searchBar: 'h-9 w-full',
     infoWrapper: 'px-7 pt-4',
-    tabWrapper: 'h-full overflow-hidden px-7 pb-4',
     scrollable: 'h-full',
 });
 
@@ -30,16 +21,6 @@ export namespace Content {
 export const Content = () => {
     const { t } = useTrans();
     const search = SearchBar.useControls('');
-    const {
-        currentTab,
-    } = ContextSelectable.useProxy(FriendsPanelTabsContext);
-
-    const tabNameToTabComponent = {
-        all: <AllFriendsTab/>,
-        blocked: <BlockedUsersTab/>,
-        online: <OnlineFriendsTab/>,
-        pending: <PendingRequestsTab/>,
-    } satisfies Record<typeof currentTab.identifier, ReactNode>;
 
     return (
         <ContentContextProvider searchValue={search.deferredValue.trim()}>
@@ -47,9 +28,8 @@ export const Content = () => {
                 <SearchBar.Node
                     className={styles.searchBar}
                     label={t('FriendsPanel.Navigation.searchLabel')}
-                    setValue={search.setValue}
                     placeholder={t('FriendsPanel.Navigation.searchLabel')}
-                    value={search.value}
+                    {...search}
                 />
 
                 <DisplayCount/>
@@ -61,17 +41,7 @@ export const Content = () => {
                 />
             </div>
 
-            <Tab.Panel
-                className={styles.tabWrapper}
-                context={FriendsPanelTabsContext}
-                tabName={currentTab.identifier}
-            >
-                <Scrollable className={styles.scrollable}>
-                    {tabNameToTabComponent[currentTab.identifier]}
-
-                    <EmptyListBlock/>
-                </Scrollable>
-            </Tab.Panel>
+            <FriendsPanelTabs.Current/>
         </ContentContextProvider>
     );
 };
