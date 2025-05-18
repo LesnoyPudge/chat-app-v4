@@ -59,6 +59,7 @@ https://fluid.tw/
 - проверить что бы у всех кнопок которые открывают оверлеи был атрибут hasPopup='dialog / menu'
 - populate friend requests
 - populate friends
+- populate blocked
 - ответы от всех запросов обрабатывать в слайсах (устанавливать новые значения)
 - перенести валидацию в fakeShared/validators ApiValidators или в места использования
 - добавить каждой форме Form.Error

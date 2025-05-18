@@ -26,6 +26,7 @@ const styles = createStyles({
         mobile:max-w-full 
         mobile:px-4
     `,
+    content: 'pl-10 pt-[60px] mobile:pl-0',
     scrollable: 'size-full',
     toolbarWrapper: `
         pointer-events-none 
@@ -71,9 +72,11 @@ export const FullScreenDialogBlocksContentSide: FC<PropsWithChildren> = ({
                 <div className={styles.contentWrapper}>
                     <FullScreenDialogBlocksMobileControls forceMenuButton/>
 
-                    <Heading.Provider>
-                        {children}
-                    </Heading.Provider>
+                    <div className={styles.content}>
+                        <Heading.Provider>
+                            {children}
+                        </Heading.Provider>
+                    </div>
                 </div>
             </Scrollable>
 

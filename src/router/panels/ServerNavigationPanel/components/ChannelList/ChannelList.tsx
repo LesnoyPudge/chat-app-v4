@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { ChannelItem } from './components';
-import { cn, createStyles, getHTMLElement } from '@/utils';
+import { createStyles, getHTMLElement } from '@/utils';
 import { useTrans } from '@/hooks';
-import { Iterate, useRefManager } from '@lesnoypudge/utils-react';
-import { Placeholder, Scrollable, VirtualList } from '@/components';
+import { useRefManager } from '@lesnoypudge/utils-react';
+import { PlaceholderList, Scrollable, VirtualList } from '@/components';
 import { Navigator, Store } from '@/features';
 
 
@@ -11,8 +11,6 @@ import { Navigator, Store } from '@/features';
 const styles = createStyles({
     wrapper: 'mt-4',
     list: 'flex flex-col',
-    placeholderItem: 'h-9',
-    placeholderListGap: 'gap-1',
 });
 
 const placeholderCount = Math.round(getHTMLElement.appRoot.clientHeight / 36);
@@ -36,18 +34,11 @@ export const ChannelList: FC = () => {
             autoHide
         >
             <If condition={shouldShowPlaceholder}>
-                <div className={cn(styles.list, styles.placeholderListGap)}>
-                    <Iterate
-                        count={placeholderCount}
-                        getKey={(i) => i}
-                    >
-                        {() => (
-                            <Placeholder.Node
-                                className={styles.placeholderItem}
-                            />
-                        )}
-                    </Iterate>
-                </div>
+                <PlaceholderList
+                    count={placeholderCount}
+                    gap={4}
+                    itemSize={36}
+                />
             </If>
 
             <If condition={shouldShowList}>

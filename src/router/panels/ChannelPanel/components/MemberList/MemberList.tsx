@@ -28,7 +28,6 @@ export const MemberList: FC = () => {
 
     const { isLoading } = Store.Servers.Api.useServerGetMembersQuery({
         serverId,
-        // omit load on scroll for simplicity
         limit: Infinity,
     });
 

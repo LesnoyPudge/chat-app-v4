@@ -66,7 +66,7 @@ export const Header: FC = () => {
                         accept={ACCEPTED_FILE_TYPE.IMAGES}
                         amountLimit={1}
                         label={t('AppSettingsDialog.ProfileTab.Header.avatar.label')}
-                        sizeLimit={MBToBytes(1)}
+                        sizeLimit={MBToBytes(5)}
                         name={AppSettingsDialogForm.names.avatar}
                     >
                         {({ value }) => (

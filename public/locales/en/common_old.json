@@ -8,5 +8,7 @@
     "LeaveServerDialog.warning": "__NOT_TRANSLATED__",
     "Message.ControlBar.openEditorButton.label": "__NOT_TRANSLATED__",
     "MessageEditor.SendMessageInput.submitButton.labels": "__NOT_TRANSLATED__",
-    "ServerMenu.inviteFriends": "__NOT_TRANSLATED__"
+    "ServerMenu.inviteFriends": "__NOT_TRANSLATED__",
+    "ServerSettingsDialog.AvatarUploader.avatarField.label": "__NOT_TRANSLATED__",
+    "ServerSettingsDialog.AvatarUploader.overlay.text": "__NOT_TRANSLATED__"
 }

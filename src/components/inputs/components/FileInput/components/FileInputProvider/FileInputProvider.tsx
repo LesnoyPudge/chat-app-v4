@@ -37,7 +37,7 @@ export const FileInputProvider = Form.createFieldProvider(<
 
     const isMultiple = amountLimit > 1;
 
-    const getFiles = (newFiles: FileInputTypes.Context['value']) => {
+    const extractFiles = (newFiles: FileInputTypes.Context['value']) => {
         if (newFiles === null) return null;
 
         if (Array.isArray(newFiles)) {
@@ -47,24 +47,15 @@ export const FileInputProvider = Form.createFieldProvider(<
         return isMultiple ? [newFiles] : newFiles;
     };
 
-    const getFileArray = (files: FileInputTypes.Context['value']) => {
-        if (files === null) return [];
-
-        return Array.isArray(files) ? files : [files];
-    };
-
     const setValue: (
         FileInputTypes.Context['setValue']
     ) = useFunction((updaterOrValue) => {
         if (isCallable(updaterOrValue)) {
-            field.setValue((prev) => getFiles(updaterOrValue(prev)));
+            field.setValue((prev) => extractFiles(updaterOrValue(prev)));
             return;
         }
 
-        field.setValue((prev) => getFiles([
-            ...getFileArray(prev),
-            ...getFileArray(updaterOrValue),
-        ]));
+        field.setValue(extractFiles(updaterOrValue));
     });
 
     const contextValue: FileInputTypes.Context = {

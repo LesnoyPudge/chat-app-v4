@@ -10,6 +10,7 @@ export * from './Message';
 export * from './MessageEditor';
 export * from './MobileMenu';
 export * from './Placeholder';
+export * from './PlaceholderList';
 export * from './PresenceStatus';
 export * from './RelativelyPositioned';
 export * from './RichTextEditor';

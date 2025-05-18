@@ -8,5 +8,7 @@
     "LeaveServerDialog.warning": "Вы уверены, что хотите покинуть <strong>сервер {{serverName}}</strong>?<br/> Вы не сможете вернуться на этот сервер, пока вас снова не пригласят.",
     "Message.ControlBar.openEditorButton.label": "__NOT_TRANSLATED__",
     "MessageEditor.SendMessageInput.submitButton.labels": "Отправить сообщение",
-    "ServerMenu.inviteFriends": "Пригласить друзей"
+    "ServerMenu.inviteFriends": "Пригласить друзей",
+    "ServerSettingsDialog.AvatarUploader.avatarField.label": "__NOT_TRANSLATED__",
+    "ServerSettingsDialog.AvatarUploader.overlay.text": "Сменить\nаватар"
 }

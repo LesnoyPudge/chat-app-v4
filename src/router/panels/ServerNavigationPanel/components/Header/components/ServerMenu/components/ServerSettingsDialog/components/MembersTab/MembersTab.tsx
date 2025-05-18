@@ -1,205 +1,138 @@
-import { BanMemberModal, Button, ChangeChannelOwnerModal, ChannelSettingsModalFormValues, ChannelSettingsModalTabs,SpriteImage, KickMemberModal, OverlayContextProvider, Ref, SearchBar, Separator, TabContext, TabPanel, Tooltip, UserAvatar } from '@components';
-import { useTextInput } from '@hooks';
-import { twClassNames } from '@utils';
-import { useFormikContext } from 'formik';
-import { FC, useContext } from 'react';
-import { TabTitle } from '../../../components';
+import {
+    DialogBlocks,
+    Placeholder,
+    PlaceholderList,
+    Scrollable,
+    SearchBar,
+    Separator,
+    VirtualList,
+} from '@/components';
+import { useTrans } from '@/hooks';
+import { FC, useMemo } from 'react';
+import {
+    ServerSettingsDialogTabs,
+    useServerSettingsDialogContextProxy,
+} from '../../ServerSettingsDialog';
+import { useRefManager } from '@lesnoypudge/utils-react';
+import { Store } from '@/features';
+import { createStyles } from '@/utils';
+import { MemberItem } from './components';
 
 
 
-const styles = {
-    wrapper: 'pl-10',
-    header: 'sticky top-0 z-10 pt-[60px] bg-primary-200',
-    infoWrapper: 'flex gap-4 justify-between items-center flex-wrap mb-5',
-    info: 'flex gap-4 shrink-0 text-color-secondary',
+const styles = createStyles({
+    infoWrapper: `
+        mb-5 
+        flex 
+        w-full 
+        flex-wrap 
+        items-center 
+        justify-between 
+        gap-4
+    `,
+    info: 'flex w-full shrink-0 gap-4 text-color-secondary',
     searchBar: 'h-7 max-w-[300px]',
-    list: 'flex flex-col gap-5 pb-24',
-    item: 'flex items-center gap-3 py-4',
-    avatar: 'w-10 h-10',
-    username: 'truncate font-medium text-sm text-color-primary',
-    buttonArea: 'flex gap-2 ml-auto',
-    button: 'w-9 h-9 bg-primary-400 fill-icon-100 rounded-full',
-    dangerButton: 'fill-danger',
-    icon: 'w-5 h-5 m-auto',
-};
+    contentWrapper: 'h-full max-h-[500px] overflow-hidden',
+});
 
 export const MembersTab: FC = () => {
-    const { tabPanelProps } = useContext<TabContext<ChannelSettingsModalTabs>>(TabContext);
-    const { value, handleChange, handleReset } = useTextInput();
-    const { values } = useFormikContext<ChannelSettingsModalFormValues>();
+    const { t } = useTrans();
+    const wrapperRef = useRefManager<HTMLUListElement>(null);
+    const search = SearchBar.useControls('');
+    const { serverId } = useServerSettingsDialogContextProxy();
 
-    const members = [...Array(20)].map((_, index) => ({
-        id: index.toString(),
-        name: `member ${index}`,
-        avatar: `https://i.pravatar.cc/${50}`,
-    }));
-
-    const filteredMembers = !value ? members : members.filter((member) => {
-        return member.name.includes(value);
+    const {
+        data,
+        isLoading,
+        isSuccess,
+    } = Store.Servers.Api.useServerGetMembersQuery({
+        serverId,
+        limit: Infinity,
     });
 
+    const members = data?.User;
+
+    const filteredMemberIds = useMemo(() => {
+        if (!members) return [];
+
+        const _members = search.deferredValue ? members.filter((member) => {
+            return member.name.includes(search.deferredValue);
+        }) : members;
+
+        return _members.map(({ id }) => id);
+    }, [members, search.deferredValue]);
+
+    const shouldShowPlaceholder = isLoading || !isSuccess;
+    const shouldShowNotFound = (
+        !isLoading
+        && isSuccess
+        && !!search.deferredValue
+        && !filteredMemberIds.length
+    );
+    const shouldShowList = (
+        !isLoading
+        && isSuccess
+        && !!filteredMemberIds.length
+    );
+
     return (
-        <TabPanel
-            className={styles.wrapper}
-            {...tabPanelProps.membersTab}
-        >
-            <div className={styles.header}>
-                <TabTitle>
-                    <>Участники канала</>
-                </TabTitle>
+        <ServerSettingsDialogTabs.Panel.MembersTab>
+            <DialogBlocks.FullScreen.TabTitle>
+                {t('ServerSettingsDialog.MembersTab.title')}
+            </DialogBlocks.FullScreen.TabTitle>
 
-                <div className={styles.infoWrapper}>
-                    <div className={styles.info}>
-                        <span>Всего — {members.length}</span>
-                        <span>Показано — {filteredMembers.length}</span>
-                    </div>
+            <div className={styles.infoWrapper}>
+                <div className={styles.info}>
+                    <Placeholder.With reveal={members}>
+                        {(members) => (
+                            <span>Всего — {members.length}</span>
+                        )}
+                    </Placeholder.With>
 
-                    <SearchBar
-                        className={styles.searchBar}
-                        value={value}
-                        placeholder='Имя или роль участника'
-                        label='Поиск по имени или роли участника'
-                        onChange={handleChange}
-                        onReset={handleReset}
-                    />
+                    <Placeholder.With reveal={members}>
+                        <span>Показано — {filteredMemberIds.length}</span>
+                    </Placeholder.With>
                 </div>
 
-                <Separator spacing={0}/>
+                <SearchBar.Node
+                    className={styles.searchBar}
+                    placeholder='Имя или роль участника'
+                    label='Поиск по имени или роли участника'
+                    {...search}
+                />
             </div>
 
-            <div className={styles.list}>
-                {filteredMembers.map((member) => (
-                    <div key={member.id}>
-                        <div className={styles.item}>
-                            <UserAvatar
-                                className={styles.avatar}
-                                avatarId={member.avatar}
-                                username={member.name}
-                            />
+            <Separator spacing={20} thickness={2} length='100%'/>
 
-                            <div className={styles.username}>
-                                {member.name}
-                            </div>
+            <div className={styles.contentWrapper}>
+                <If condition={shouldShowPlaceholder}>
+                    <PlaceholderList
+                        count={40}
+                        gap={2}
+                        itemSize={40}
+                    />
+                </If>
 
-                            <div className={styles.buttonArea}>
-                                <Ref<HTMLButtonElement>>
-                                    {(ref) => (
-                                        <>
-                                            <OverlayContextProvider>
-                                                {({ openOverlay, isOverlayExist }) => (
-                                                    <>
-                                                        <Button
-                                                            className={twClassNames(styles.button, styles.dangerButton)}
-                                                            label='Выгнать пользователя'
-                                                            hasPopup='dialog'
-                                                            isActive={isOverlayExist}
-                                                            innerRef={ref}
-                                                            onLeftClick={openOverlay}
-                                                        >
-                                                            <SpriteImage
-                                                                className={styles.icon}
-                                                                name='DOORWAY_ICON'
-                                                            />
-                                                        </Button>
-
-                                                        <KickMemberModal
-                                                            channelId={values.channelId}
-                                                            memberId={member.id}
-                                                        />
-                                                    </>
-                                                )}
-                                            </OverlayContextProvider>
-
-                                            <Tooltip
-                                                preferredAlignment='top'
-                                                leaderElementRef={ref}
-                                            >
-                                                <>Выгнать</>
-                                            </Tooltip>
-                                        </>
-                                    )}
-                                </Ref>
-
-                                <Ref>
-                                    {(ref) => (
-                                        <>
-                                            <OverlayContextProvider>
-                                                {({ openOverlay, isOverlayExist }) => (
-                                                    <>
-                                                        <Button
-                                                            className={twClassNames(styles.button, styles.dangerButton)}
-                                                            label='Забанить пользователя'
-                                                            hasPopup='dialog'
-                                                            isActive={isOverlayExist}
-                                                            onLeftClick={openOverlay}
-                                                        >
-                                                            <SpriteImage
-                                                                className={styles.icon}
-                                                                name='CROSS_ICON'
-                                                            />
-                                                        </Button>
-
-                                                        <BanMemberModal
-                                                            channelId={values.channelId}
-                                                            memberId={member.id}
-                                                        />
-                                                    </>
-                                                )}
-                                            </OverlayContextProvider>
-
-                                            <Tooltip
-                                                preferredAlignment='top'
-                                                leaderElementRef={ref}
-                                            >
-                                                <>Забанить</>
-                                            </Tooltip>
-                                        </>
-                                    )}
-                                </Ref>
-
-                                <Ref<HTMLButtonElement>>
-                                    {(ref) => (
-                                        <>
-                                            <OverlayContextProvider>
-                                                {({ isOverlayExist, openOverlay }) => (
-                                                    <>
-                                                        <Button
-                                                            className={styles.button}
-                                                            label='Передать права на канал'
-                                                            hasPopup='dialog'
-                                                            isActive={isOverlayExist}
-                                                            onLeftClick={openOverlay}
-                                                        >
-                                                            <SpriteImage
-                                                                className={styles.icon}
-                                                                name='CROWN_ICON'
-                                                            />
-                                                        </Button>
-
-                                                        <ChangeChannelOwnerModal
-                                                            channelId={values.channelId}
-                                                            memberId={member.id}
-                                                        />
-                                                    </>
-                                                )}
-                                            </OverlayContextProvider>
-
-                                            <Tooltip
-                                                preferredAlignment='top'
-                                                leaderElementRef={ref}
-                                            >
-                                                <>Передать права на канал</>
-                                            </Tooltip>
-                                        </>
-                                    )}
-                                </Ref>
-                            </div>
-                        </div>
-
-                        <Separator spacing={0}/>
+                <If condition={shouldShowNotFound}>
+                    <div>
+                        <span>not found</span>
                     </div>
-                ))}
+                </If>
+
+                <If condition={shouldShowList}>
+                    <Scrollable className='h-full'>
+                        <ul ref={wrapperRef}>
+                            <VirtualList.Node
+                                items={filteredMemberIds}
+                                getId={(v) => v}
+                                wrapperRef={wrapperRef}
+                            >
+                                {(id) => <MemberItem userId={id}/>}
+                            </VirtualList.Node>
+                        </ul>
+                    </Scrollable>
+                </If>
             </div>
-        </TabPanel>
+        </ServerSettingsDialogTabs.Panel.MembersTab>
     );
 };
