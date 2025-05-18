@@ -1,4 +1,4 @@
-import { localStorageApi } from '@/utils';
+import { localStorageApi, logger } from '@/utils';
 import {
     delay,
     DefaultBodyType,
@@ -146,6 +146,8 @@ export const route = <
                         if (handlerResult === 'unhandled') continue;
 
                         if (error) {
+                            logger.fakeServer.error(error);
+
                             if (typeof error === 'number') {
                                 return toError(error);
                             }

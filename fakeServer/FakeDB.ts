@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-dynamic-delete */
 import { socket } from '@/fakeSocket';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
-import { invariant, merge } from '@lesnoypudge/utils';
+import { autoBind, capitalize, invariant, merge } from '@lesnoypudge/utils';
 import { ClientEntities } from '@/types';
 import { env } from '@/vars';
 import localforage from 'localforage';
@@ -9,10 +9,6 @@ import localforage from 'localforage';
 
 
 export namespace FakeDB {
-    export type Options = {
-        socket?: typeof socket;
-    };
-
     export type Storage = {
         channel: Record<string, ClientEntities.Channel.Base>;
         conversation: Record<string, ClientEntities.Conversation.Base>;
@@ -31,7 +27,7 @@ export class FakeDB {
     private dbName: string;
     private externalStorage: LocalForage | undefined;
 
-    constructor(_: FakeDB.Options) {
+    constructor() {
         this.version = 1;
         this.dbName = `db-${this.version}`;
         this.externalStorage = localforage;
@@ -44,6 +40,8 @@ export class FakeDB {
             storeName: this.dbName, // Should be alphanumeric, with underscores.
             // description: 'some description',
         });
+
+        autoBind(this);
     }
 
     async init() {
@@ -110,14 +108,19 @@ export class FakeDB {
         _Key extends keyof FakeDB.Storage,
     >(
         tableKey: _Key,
-        data: FakeDB.Storage[_Key][string],
+        item: FakeDB.Storage[_Key][string],
     ): Promise<FakeDB.Storage[_Key][string]> {
         invariant(this.storage);
 
-        this.storage[tableKey][data.id] = data;
+        this.storage[tableKey][item.id] = item;
+
         await this.saveStorage();
 
-        return data;
+        socket.sendEventAddData({
+            [capitalize(tableKey)]: [item],
+        });
+
+        return item;
     }
 
     async update<
@@ -142,6 +145,10 @@ export class FakeDB {
 
         await this.saveStorage();
 
+        socket.sendEventAddData({
+            [capitalize(tableKey)]: [item],
+        });
+
         return updatedItem;
     }
 
@@ -157,6 +164,10 @@ export class FakeDB {
         delete this.storage[tableKey][id];
 
         await this.saveStorage();
+
+        socket.sendEventRemoveData({
+            [capitalize(tableKey)]: [item],
+        });
 
         return true;
     }
@@ -232,9 +243,7 @@ export const initDB = async () => {
     isLoading = true;
 
     try {
-        db = await new FakeDB({
-            socket,
-        }).init();
+        db = await new FakeDB().init();
     } catch (error) {
         isLoading = false;
         throw error;
