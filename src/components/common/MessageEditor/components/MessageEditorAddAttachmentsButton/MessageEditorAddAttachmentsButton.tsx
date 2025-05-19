@@ -7,7 +7,11 @@ import { useMessageEditorContext } from '../../hooks';
 import { ACCEPTED_FILE_TYPE } from '@/vars';
 import { useTrans } from '@/hooks';
 import { useFileDrop } from './hooks';
-import { FileDropDialog, OverflowLimitDialog, SizeLimitDialog } from './components';
+import {
+    FileDropDialog,
+    OverflowLimitDialog,
+    SizeLimitDialog,
+} from './components';
 import { FILE_MAX_SIZE_BYTES } from '@/fakeShared';
 
 

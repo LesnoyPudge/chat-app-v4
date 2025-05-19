@@ -1,5 +1,9 @@
 import { ListenerStore } from '@lesnoypudge/utils';
-import { useConst, useFunction, useUnmountEffect } from '@lesnoypudge/utils-react';
+import {
+    useConst,
+    useFunction,
+    useUnmountEffect,
+} from '@lesnoypudge/utils-react';
 import { useEffect } from 'react';
 
 

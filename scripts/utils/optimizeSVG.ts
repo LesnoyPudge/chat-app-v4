@@ -1,6 +1,7 @@
 import { optimize } from 'svgo';
 
 
+
 export const optimizeSVG = ({
     data,
     name,

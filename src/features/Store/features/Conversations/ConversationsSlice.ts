@@ -1,4 +1,10 @@
-import { createEntityAdapter, createEntityExtraReducers, createSlice, createSocketExtraReducers, extractReducersFromAdapter } from '@/store/utils';
+import {
+    createEntityAdapter,
+    createEntityExtraReducers,
+    createSlice,
+    createSocketExtraReducers,
+    extractReducersFromAdapter,
+} from '@/store/utils';
 import { ConversationsApi } from './ConversationsApi';
 import { Users } from '../Users';
 import { ReduxToolkit } from '@/libs';

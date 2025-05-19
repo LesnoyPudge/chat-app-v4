@@ -1,4 +1,7 @@
-import { createAdapterFieldSelectors, createAdapterSelectors } from '@/store/utils';
+import {
+    createAdapterFieldSelectors,
+    createAdapterSelectors,
+} from '@/store/utils';
 import { MessagesSlice } from './MessagesSlice';
 
 

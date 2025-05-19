@@ -33,8 +33,8 @@ void countCode([
     './src',
     './fakeServer',
     './fakeShared',
+    './fakeSocket',
     './scripts',
     './twPlugins',
     './vitePlugins',
-    './WIP',
 ]);

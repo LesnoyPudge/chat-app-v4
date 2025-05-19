@@ -1,6 +1,10 @@
 import { Button, Overlay, ActionMenu, WithPermission } from '@/components';
 import { Navigator, Store } from '@/features';
-import { createWithDecorator, withDisplayName, useFunction } from '@lesnoypudge/utils-react';
+import {
+    createWithDecorator,
+    withDisplayName,
+    useFunction,
+} from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
 import { decorate } from '@lesnoypudge/macro';
 

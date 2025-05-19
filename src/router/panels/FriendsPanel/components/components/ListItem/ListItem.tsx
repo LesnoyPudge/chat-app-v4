@@ -1,4 +1,9 @@
-import { Avatar, KeyboardNavigation, Placeholder, VirtualList } from '@/components';
+import {
+    Avatar,
+    KeyboardNavigation,
+    Placeholder,
+    VirtualList,
+} from '@/components';
 import { Store } from '@/features';
 import { createStyles } from '@/utils';
 import { decorate } from '@lesnoypudge/macro';

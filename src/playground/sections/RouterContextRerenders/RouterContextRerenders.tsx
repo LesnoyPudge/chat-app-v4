@@ -2,6 +2,7 @@ import { Navigator } from '@/features';
 import { FC } from 'react';
 
 
+
 export const RouterContextRerenders: FC = () => {
     return (
         <Navigator.Provider>

@@ -1,5 +1,9 @@
 import { ReduxToolkit } from '@/libs';
-import { addStatsToSelectors, withStateReducers, withStateSelectors } from './utils';
+import {
+    addStatsToSelectors,
+    withStateReducers,
+    withStateSelectors,
+} from './utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 
 

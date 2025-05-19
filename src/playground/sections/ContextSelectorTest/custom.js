@@ -1,5 +1,8 @@
 // @ts-nocheck
-import { useFunction, useIsomorphicLayoutEffect } from '@lesnoypudge/utils-react';
+import {
+    useFunction,
+    useIsomorphicLayoutEffect,
+} from '@lesnoypudge/utils-react';
 import * as React from 'react';
 import {
     unstable_NormalPriority as NormalPriority,

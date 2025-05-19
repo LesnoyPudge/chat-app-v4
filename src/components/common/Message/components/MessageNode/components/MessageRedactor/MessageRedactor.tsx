@@ -1,5 +1,9 @@
 import { cn, createStyles } from '@/utils';
-import { useIsMessageRedactorActive, useMessageContext, useMessageRedactorContext } from '../../../../hooks';
+import {
+    useIsMessageRedactorActive,
+    useMessageContext,
+    useMessageRedactorContext,
+} from '../../../../hooks';
 import { FC } from 'react';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { Button, Form, MessageEditor } from '@/components';

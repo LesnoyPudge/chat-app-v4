@@ -1,1 +1,4 @@
-export * from './MessageEditorPlaceholder'
+
+
+
+export * from './MessageEditorPlaceholder';

@@ -5,10 +5,22 @@ import { cn, createStyles } from '@/utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { HTTP_STATUS_CODES } from '@lesnoypudge/utils';
-import { ContextSelectable, createWithDecorator, useFunction, useIsMounted } from '@lesnoypudge/utils-react';
+import {
+    ContextSelectable,
+    createWithDecorator,
+    useFunction,
+    useIsMounted,
+} from '@lesnoypudge/utils-react';
 import { Endpoints } from 'fakeShared/endpoints';
 import { ApiValidators } from 'fakeShared/validators';
-import { ChangeEvent, FC, FormEvent, PropsWithChildren, ReactNode, useState } from 'react';
+import {
+    ChangeEvent,
+    FC,
+    FormEvent,
+    PropsWithChildren,
+    ReactNode,
+    useState,
+} from 'react';
 
 
 
@@ -718,8 +730,7 @@ export const FormTest = () => {
 
     const { form } = Form.useExtendForm(LoginForm, {
         trigger: triggerLogin,
-        onSubmitSuccess: async (data) => {
-            // Do something with form data
+        onSubmitSuccess: (data) => {
             console.log(data);
         },
         validator: ApiValidators.UserLogin,

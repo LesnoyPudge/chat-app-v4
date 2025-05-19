@@ -1,8 +1,5 @@
 import { NavigateOptions } from 'react-router';
-import {
-    ContextSelectable,
-    useConst,
-} from '@lesnoypudge/utils-react';
+import { ContextSelectable, useConst } from '@lesnoypudge/utils-react';
 import { navigatorDevPath, navigatorPath } from '../../vars';
 import { NavigatorContext } from '../../context';
 

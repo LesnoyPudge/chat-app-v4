@@ -4,6 +4,7 @@ import { RTETypes } from '../../../types';
 import { RTEModules } from '../..';
 
 
+
 export const Text = {
     createText: <_Text extends string>(
         text: _Text,

@@ -1,7 +1,11 @@
 import { useTrans } from '@/hooks';
 import { ASSETS } from '@/generated/ASSETS';
 import { Navigator, Store } from '@/features';
-import { useFunction, useIsMounted, withDisplayName } from '@lesnoypudge/utils-react';
+import {
+    useFunction,
+    useIsMounted,
+    withDisplayName,
+} from '@lesnoypudge/utils-react';
 import { BaseActionButton } from '../BaseActionButton';
 import { FC, memo } from 'react';
 import { decorate } from '@lesnoypudge/macro';

@@ -1,9 +1,4 @@
-import {
-    FC,
-    useMemo,
-    useEffect,
-    useRef,
-} from 'react';
+import { FC, useMemo, useEffect, useRef } from 'react';
 import { Slate } from 'slate-react';
 import { RTETypes } from '../../types';
 import { RTEModules } from '../../RTEModules';

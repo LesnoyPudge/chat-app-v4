@@ -4,7 +4,12 @@ import { FC, useRef } from 'react';
 import { useDevTools } from './hooks';
 import { KEY } from '@lesnoypudge/utils';
 import { rawActions } from './actions';
-import { createWithDecorator, Focus, Iterate, useHotKey } from '@lesnoypudge/utils-react';
+import {
+    createWithDecorator,
+    Focus,
+    Iterate,
+    useHotKey,
+} from '@lesnoypudge/utils-react';
 import { createPortal } from 'react-dom';
 
 
