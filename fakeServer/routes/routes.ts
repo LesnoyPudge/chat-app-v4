@@ -8,6 +8,7 @@ import {
     withAuth,
     _res,
     invariantBadRequest,
+    append,
 } from './utils';
 import { db } from '../FakeDB';
 import {
@@ -20,6 +21,7 @@ import { v4 as uuid } from 'uuid';
 import { Dummies, token } from '@/fakeServer';
 import { env } from '@/vars';
 import { ClientEntities } from '@/types';
+import { socket } from '@/fakeSocket';
 
 
 
@@ -45,10 +47,10 @@ class UserRoutes {
                 ..._user,
                 incomingFriendRequests: (
                     _user.incomingFriendRequests.filter((v) => {
-                        return v.from === body.targetId;
+                        return v.from !== body.targetId;
                     })
                 ),
-                friends: [..._user.friends, body.targetId],
+                friends: append(_user.friends, body.targetId),
             }));
             invariantBadRequest(updated);
 
@@ -56,10 +58,10 @@ class UserRoutes {
                 ..._user,
                 outgoingFriendRequests: (
                     _user.outgoingFriendRequests.filter((v) => {
-                        return v.to === auth.id;
+                        return v.to !== auth.id;
                     })
                 ),
-                friends: [..._user.friends, auth.id],
+                friends: append(_user.friends, auth.id),
             }));
 
             return jsonResponse(updated);
@@ -102,13 +104,13 @@ class UserRoutes {
         async ({ body, auth }) => {
             const updated = await db.update('user', auth.id, (_user) => ({
                 ..._user,
-                friends: _user.friends.filter((id) => id === body.targetId),
+                friends: _user.friends.filter((id) => id !== body.targetId),
             }));
             invariantBadRequest(updated);
 
             await db.update('user', body.targetId, (_user) => ({
                 ..._user,
-                friends: _user.friends.filter((id) => id === auth.id),
+                friends: _user.friends.filter((id) => id !== auth.id),
             }));
 
             return jsonResponse(updated);
@@ -167,10 +169,10 @@ class UserRoutes {
         async ({ body, auth }) => {
             const updated = await db.update('user', auth.id, (_user) => ({
                 ..._user,
-                hiddenConversations: [
-                    ..._user.hiddenConversations,
+                hiddenConversations: append(
+                    _user.hiddenConversations,
                     body.conversationId,
-                ],
+                ),
             }));
             invariantBadRequest(updated);
 
@@ -183,6 +185,8 @@ class UserRoutes {
         User.Login.Response
     >(User.Login)(
         async ({ body }) => {
+            socket.ignore();
+
             const user = db.getOne('user', (item) => {
                 return (
                     item.login === body.login
@@ -295,10 +299,10 @@ class UserRoutes {
         async ({ body, auth }) => {
             const updated = await db.update('user', auth.id, (_user) => ({
                 ..._user,
-                mutedConversations: [
-                    ..._user.mutedConversations,
+                mutedConversations: append(
+                    _user.mutedConversations,
                     body.conversationId,
-                ],
+                ),
             }));
             invariantBadRequest(updated);
 
@@ -314,10 +318,10 @@ class UserRoutes {
         async ({ body, auth }) => {
             const updated = await db.update('user', auth.id, (_user) => ({
                 ..._user,
-                mutedServers: [
-                    ..._user.mutedServers,
+                mutedServers: append(
+                    _user.mutedServers,
                     body.serverId,
-                ],
+                ),
             }));
             invariantBadRequest(updated);
 
@@ -378,6 +382,8 @@ class UserRoutes {
         User.Refresh.Response
     >(User.Refresh)(
         async ({ body, auth }) => {
+            socket.ignore();
+
             const user = db.getOne('user', (item) => {
                 return item.refreshToken === body.refreshToken;
             });
@@ -410,10 +416,12 @@ class UserRoutes {
         User.Registration.Response
     >(User.Registration)(
         async ({ body, auth }) => {
+            socket.ignore();
+
             const isExist = db.getOne('user', (item) => {
                 return item.login === body.login;
             });
-            invariantBadRequest(isExist);
+            invariantBadRequest(!isExist);
 
             const id = uuid();
 
@@ -511,28 +519,42 @@ class UserRoutes {
         async ({ body, auth }) => {
             const time = Date.now();
 
-            const updated = await db.update('user', auth.id, (_user) => ({
-                ..._user,
-                outgoingFriendRequests: [
-                    ..._user.outgoingFriendRequests,
-                    {
-                        to: body.targetId,
-                        createdAt: time,
-                    },
-                ],
-            }));
+            const updated = await db.update('user', auth.id, (_user) => {
+                const isIn = _user.outgoingFriendRequests.some((v) => {
+                    return v.to === body.targetId;
+                });
+                if (isIn) return _user;
+
+                return {
+                    ..._user,
+                    outgoingFriendRequests: [
+                        ..._user.outgoingFriendRequests,
+                        {
+                            to: body.targetId,
+                            createdAt: time,
+                        },
+                    ],
+                };
+            });
             invariantBadRequest(updated);
 
-            await db.update('user', body.targetId, (_user) => ({
-                ..._user,
-                incomingFriendRequests: [
-                    ..._user.incomingFriendRequests,
-                    {
-                        createdAt: time,
-                        from: auth.id,
-                    },
-                ],
-            }));
+            await db.update('user', body.targetId, (_user) => {
+                const isIn = _user.incomingFriendRequests.some((v) => {
+                    return v.from === auth.id;
+                });
+                if (isIn) return _user;
+
+                return {
+                    ..._user,
+                    incomingFriendRequests: [
+                        ..._user.incomingFriendRequests,
+                        {
+                            createdAt: time,
+                            from: auth.id,
+                        },
+                    ],
+                };
+            });
 
             return jsonResponse(updated);
         },
@@ -612,20 +634,14 @@ class ServerRoutes {
             await db.update(
                 'server', server.id, (_server) => ({
                     ..._server,
-                    members: [
-                        ..._server.members,
-                        auth.id,
-                    ],
+                    members: append(_server.members, auth.id),
                     memberCount: _server.memberCount + 1,
                 }),
             );
 
             const updated = await db.update('user', auth.id, (_user) => ({
                 ..._user,
-                servers: [
-                    ..._user.servers,
-                    server.id,
-                ],
+                servers: append(_user.servers, server.id),
             }));
             invariantBadRequest(updated);
 
@@ -641,10 +657,7 @@ class ServerRoutes {
         async ({ body, auth }) => {
             await db.update('server', body.serverId, (_server) => ({
                 ..._server,
-                banned: [
-                    ..._server.banned,
-                    body.targetId,
-                ],
+                banned: append(_server.banned, body.targetId),
             }));
         },
     );
@@ -655,10 +668,10 @@ class ServerRoutes {
     >(Server.Create)(
         withAuth,
         async ({ body, auth }) => {
-            const server = db.getOne('server', (item) => {
+            const isExist = db.getOne('server', (item) => {
                 return item.identifier === body.identifier;
             });
-            invariantBadRequest(server);
+            invariantBadRequest(!isExist);
 
             const avatar = (
                 body.avatar
@@ -670,10 +683,7 @@ class ServerRoutes {
 
             await db.update('user', auth.id, (user) => ({
                 ...user,
-                servers: [...new Set([
-                    ...user.servers,
-                    serverId,
-                ])],
+                servers: append(user.servers, serverId),
             }));
 
             const defaultRole = await db.create('role', Dummies.role({
@@ -747,6 +757,11 @@ class ServerRoutes {
             invariantBadRequest(server);
 
             await db.delete('server', body.serverId);
+
+            await db.update('user', auth.id, (_user) => ({
+                ..._user,
+                servers: _user.servers.filter((id) => id !== body.serverId),
+            }));
 
             // omit recursive data deletion
         },
@@ -927,7 +942,7 @@ class ServerRoutes {
                     }
 
                     if (body.avatar === null) {
-                        _server.avatar = body.avatar;
+                        _server.avatar = null;
                     }
 
                     if (body.avatar) {
@@ -982,10 +997,7 @@ class ChannelRoutes {
 
             await db.update('server', body.serverId, (_server) => ({
                 ..._server,
-                channels: [
-                    ..._server.channels,
-                    channel.id,
-                ],
+                channels: append(_server.channels, channel.id),
             }));
 
             return jsonResponse(channel);
@@ -1068,6 +1080,16 @@ class ConversationRoutes {
                     textChat: textChat.id,
                 }),
             );
+
+            await db.update('user', auth.id, (_user) => ({
+                ..._user,
+                conversations: append(_user.conversations, conversationId),
+            }));
+
+            await db.update('user', body.targetId, (_user) => ({
+                ..._user,
+                conversations: append(_user.conversations, conversationId),
+            }));
 
             return jsonResponse(conversation);
         },
@@ -1251,10 +1273,7 @@ class MessageRoutes {
 
             await db.update('textChat', textChat.id, (_textChat) => ({
                 ..._textChat,
-                messages: [
-                    ..._textChat.messages,
-                    message.id,
-                ],
+                messages: append(_textChat.messages, message.id),
                 messageCount: _textChat.messageCount + 1,
             }));
 
@@ -1274,7 +1293,15 @@ class MessageRoutes {
                         return v.code === body.code;
                     });
 
-                    if (reaction) {
+                    const isAlreadyIn = reaction?.users.includes(auth.id);
+
+                    if (reaction && isAlreadyIn) {
+                        reaction.users = reaction.users.filter((id) => {
+                            return id !== auth.id;
+                        });
+                    }
+
+                    if (reaction && !isAlreadyIn) {
                         reaction.users.push(auth.id);
                     }
 

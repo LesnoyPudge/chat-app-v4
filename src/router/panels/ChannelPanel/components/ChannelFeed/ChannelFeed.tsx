@@ -11,9 +11,6 @@ export const ChannelFeed = () => {
     );
 
     return (
-        <Feed
-            key={textChatId}
-            textChatId={textChatId}
-        />
+        <Feed textChatId={textChatId}/>
     );
 };

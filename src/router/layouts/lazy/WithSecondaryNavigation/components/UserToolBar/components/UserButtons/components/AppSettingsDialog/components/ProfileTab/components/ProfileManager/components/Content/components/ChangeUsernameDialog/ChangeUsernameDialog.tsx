@@ -49,7 +49,7 @@ export const ChangeUsernameDialog = withDecorator(() => {
         },
         onSubmitSuccessMounted: closeOverlay,
         validators: {
-            onSubmit: Valibot.objectAsync({
+            onSubmit: Valibot.object({
                 name: sharedValidators.singleCommonString,
             }),
         },

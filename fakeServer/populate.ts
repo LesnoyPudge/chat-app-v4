@@ -570,6 +570,7 @@ export const populate = async ({
             ...friends,
             ...friendsWithConv,
             ...friendsWithHiddenConv,
+            ...friendsWithMutedConv,
             ...servers_members,
             ...my_servers_members,
             ...my_servers_owner,

@@ -1,6 +1,11 @@
 import { FC, memo } from 'react';
 import { ConversationListItem, ServerListItem } from './components';
-import { KeyboardNavigation, Scrollable, Separator, VirtualRender } from '@/components';
+import {
+    KeyboardNavigation,
+    Scrollable,
+    Separator,
+    VirtualRender,
+} from '@/components';
 import { useTrans } from '@/hooks';
 import { useRefManager, withDisplayName } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
@@ -112,32 +117,19 @@ export const NavigationList: FC = () => {
         conversationIds: conversationIdsToFetch,
     }, { skip: !conversationIdsToFetch.length });
 
-    const sortedServerIds = Store.useSelector(
-        Store
-            .Servers
-            .Selectors
-            .selectIdsSortedByUnreadNotificationCount,
-    );
-
-    const serverIdsWithoutNotifications = Store.useSelector(
-        Store.Servers.Selectors.selectIdsWithoutUnreadNotifications,
+    const serverIds = Store.useSelector(
+        Store.Users.Selectors.selectCurrentServerIds,
     );
 
     const serverIdsToFetch = Store.useSelector(
         Store.Servers.Selectors.selectUndefinedIdsByIds(
-            ...sortedServerIds,
-            ...serverIdsWithoutNotifications,
+            ...serverIds,
         ),
     );
 
     Store.Servers.Api.useServerGetManyDeepQuery({
         serverIds: serverIdsToFetch,
     }, { skip: !serverIdsToFetch.length });
-
-    const serverIds = [
-        ...sortedServerIds,
-        ...serverIdsWithoutNotifications,
-    ];
 
     const listsAreEmpty = !serverIds.length && !sortedConversationIds.length;
     if (listsAreEmpty) return null;

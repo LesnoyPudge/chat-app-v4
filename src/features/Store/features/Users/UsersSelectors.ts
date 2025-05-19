@@ -61,6 +61,12 @@ export const selectCurrentUserFriendIds = createSelector((query) => {
     return user.friends;
 }, `${UsersSlice.name}/selectCurrentUserFriendIds`);
 
+export const selectCurrentServerIds = createSelector((query) => {
+    const user = query(selectCurrentUser);
+
+    return user.servers;
+}, `${UsersSlice.name}/selectCurrentServerIds`);
+
 export const selectCurrentUserOnlineFriendIds = createSelector((query) => {
     const user = query(selectCurrentUser);
     const friends = query(selectByIds(...user.friends));
@@ -139,6 +145,77 @@ export const selectCurrentUserDefaultAvatar = (
 
         return user.defaultAvatar;
     }, `${UsersSlice.name}/selectCurrentUserDefaultAvatar`)
+);
+
+export const selectCurrentUserFriendIdsAndNames = (
+    createSelector((query) => {
+        const user = query(selectCurrentUser);
+
+        const friends = user.friends;
+
+        return friends.map((friendId) => {
+            const name = query(selectNameById(friendId));
+            if (!name) return;
+
+            return {
+                id: friendId,
+                name,
+            };
+        }).filter(Boolean);
+    }, `${UsersSlice.name}/selectCurrentUserFriendIdsAndNames`)
+);
+
+export const selectCurrentUserOnlineFriendIdsAndNames = (
+    createSelector((query) => {
+        const friends = query(selectCurrentUserFriendIdsAndNames);
+
+        return friends.map(({ id, name }) => {
+            const isOnline = query(selectIsNotOfflineById(id));
+            if (!isOnline) return;
+
+            return {
+                id,
+                name,
+            };
+        }).filter(Boolean);
+    }, `${UsersSlice.name}/selectCurrentUserOnlineFriendIdsAndNames`)
+);
+
+export const selectCurrentUserBlockedIdsAndNames = (
+    createSelector((query) => {
+        const blockedIds = query(selectCurrentUserBlockedIds);
+        const users = query(selectEntities);
+
+        return blockedIds.map((blockedId) => {
+            const name = users[blockedId]?.name;
+            if (!name) return;
+
+            return {
+                id: blockedId,
+                name,
+            };
+        }).filter(Boolean);
+    }, `${UsersSlice.name}/selectCurrentUserBlockedIdsAndNames`)
+);
+
+export const selectCurrentUserPendingUserIdsAndNames = (
+    createSelector((query) => {
+        const users = query(selectEntities);
+        const incomingIds = query(selectCurrentUserIncomingRequestUserIds);
+        const outgoingIds = query(selectCurrentUserOutgoingRequestUserIds);
+
+        const ids = [...incomingIds, ...outgoingIds];
+
+        return ids.map((userId) => {
+            const name = users[userId]?.name;
+            if (!name) return;
+
+            return {
+                id: userId,
+                name,
+            };
+        }).filter(Boolean);
+    }, `${UsersSlice.name}/selectCurrentUserPendingUserIdsAndNames`)
 );
 
 export const selectPresenceStatusById = (

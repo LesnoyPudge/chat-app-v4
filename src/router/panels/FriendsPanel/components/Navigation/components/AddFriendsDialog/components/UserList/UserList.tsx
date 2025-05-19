@@ -8,8 +8,8 @@ import { decorate } from '@lesnoypudge/macro';
 
 
 const styles = createStyles({
-    list: 'flex flex-col gap-2',
-    scrollable: 'h-full',
+    scrollable: 'size-full',
+    list: 'flex w-full flex-col gap-2 px-1',
 });
 
 type Props = {

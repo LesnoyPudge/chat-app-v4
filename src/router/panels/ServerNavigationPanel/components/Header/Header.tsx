@@ -7,6 +7,7 @@ import { Button, Overlay, Placeholder, Sprite } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
 import { TopBar } from '@/router/layouts/bundled';
 import { Navigator, Store } from '@/features';
+import { If } from '@lesnoypudge/react-if';
 
 
 
@@ -66,10 +67,12 @@ export const Header: FC = () => {
                 </Placeholder.With>
             </Button>
 
-            <ServerMenu
-                leaderElementOrRectRef={buttonRef}
-                controls={controls}
-            />
+            <If condition={serverName}>
+                <ServerMenu
+                    leaderElementOrRectRef={buttonRef}
+                    controls={controls}
+                />
+            </If>
         </TopBar>
     );
 };

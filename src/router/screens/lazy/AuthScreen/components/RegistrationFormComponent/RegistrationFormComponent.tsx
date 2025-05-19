@@ -1,7 +1,7 @@
 import { Button, Form, Inputs } from '@/components';
 import { Endpoints, ApiValidators } from '@/fakeShared';
 import { useTrans } from '@/hooks';
-import { Heading, ContextSelectable } from '@lesnoypudge/utils-react';
+import { Heading } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { AuthTabs } from '../../AuthScreen';

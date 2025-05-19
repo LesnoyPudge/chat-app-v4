@@ -37,7 +37,7 @@ const makeNamedSelectorWithParams = <
     const memoized = new Map();
 
     const selectorFactory = ((...args: any[]) => {
-        const key = args.join(',');
+        const key = args.map((v) => JSON.stringify(v)).join(',');
 
         if (memoized.has(key)) return memoized.get(key)!;
 

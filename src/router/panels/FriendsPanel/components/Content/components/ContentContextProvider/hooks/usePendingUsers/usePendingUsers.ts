@@ -14,12 +14,18 @@ export const usePendingUsers = (searchValue: string) => {
     const ids = [...incomingIds, ...outgoingIds];
 
     const users = Store.useSelector(
-        Store.Users.Selectors.selectByIds(...ids),
+        Store.Users.Selectors.selectCurrentUserPendingUserIdsAndNames,
     );
 
-    const filteredIds = useMemo(() => users.filter((user) => {
-        return user.name.toLowerCase().includes(searchValue.toLowerCase());
-    }).map(({ id }) => id), [users, searchValue]);
+    const filteredIds = useMemo(() => {
+        if (!searchValue) return users.map(({ id }) => id);
+
+        return users.filter((user) => {
+            return user.name.toLowerCase().includes(
+                searchValue.toLowerCase(),
+            );
+        }).map(({ id }) => id);
+    }, [users, searchValue]);
 
     return {
         filteredPendingIds: filteredIds,

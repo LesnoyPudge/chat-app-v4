@@ -6,6 +6,7 @@ import { AppearanceTab, Navigation, ProfileTab } from './components';
 import { Store } from '@/features';
 import { Endpoints } from '@/fakeShared';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { ExtendedRecord } from '@/types';
 
 
 
@@ -17,19 +18,28 @@ export const { AppSettingsDialogTabs } = Tab.createTypedTabs({
     },
 });
 
-export type AppSettingsDialogForm = T.Simplify<Required<(
-    Pick<
-        Endpoints.V1.User.ProfileUpdate.RequestBody,
-        'avatar' | 'bannerColor'
+export type AppSettingsDialogForm = T.Simplify<
+    Required<(
+        Pick<
+            Endpoints.V1.User.ProfileUpdate.RequestBody,
+            'bannerColor'
+        >
+        & NonNullable<Endpoints.V1.User.ProfileUpdate.RequestBody['settings']>
+    )>
+    & ExtendedRecord<
+        Pick<
+            Required<Endpoints.V1.User.ProfileUpdate.RequestBody>,
+            'avatar'
+        >,
+        undefined
     >
-    & NonNullable<Endpoints.V1.User.ProfileUpdate.RequestBody['settings']>
-)>>;
+>;
 
 export const {
     AppSettingsDialogForm,
 } = Form.createForm<AppSettingsDialogForm>({
     defaultValues: {
-        avatar: null,
+        avatar: undefined,
         theme: 'auto',
         messageDisplayMode: 'compact',
         bannerColor: '',
@@ -82,7 +92,7 @@ export const AppSettingsDialog = withDecorator(() => {
         onSubmitSuccess: resetShakeStacks,
         onReset: resetShakeStacks,
         defaultValues: {
-            avatar: null,
+            avatar: undefined,
             bannerColor,
             ...settings,
         },

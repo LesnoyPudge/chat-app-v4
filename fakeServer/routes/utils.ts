@@ -19,8 +19,13 @@ import { env } from '@/vars';
 import { token } from '../token';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { scenarios } from '../Scenarios';
+import { socket } from '@/fakeSocket';
 
 
+
+export const append = (list: string[], id: string) => {
+    return [...new Set([...list, id])];
+};
 
 export const _res = HttpResponse;
 
@@ -33,16 +38,23 @@ export const toError = (status: number) => {
 //     unauthorized: () => toError(HTTP_STATUS_CODES.UNAUTHORIZED),
 // };
 
+class ApiError extends Error {
+    status: number;
+
+    constructor(status: number) {
+        super();
+        this.status = status;
+    }
+}
+
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-explicit-any
 export function invariantBadRequest(condition: any): asserts condition {
-    // eslint-disable-next-line @typescript-eslint/only-throw-error
-    if (!condition) throw HTTP_STATUS_CODES.BAD_REQUEST;
+    if (!condition) throw new ApiError(HTTP_STATUS_CODES.BAD_REQUEST);
 };
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-explicit-any
 function invariantUnauthorized(condition: any): asserts condition {
-    // eslint-disable-next-line @typescript-eslint/only-throw-error
-    if (!condition) throw HTTP_STATUS_CODES.UNAUTHORIZED;
+    if (!condition) throw new ApiError(HTTP_STATUS_CODES.UNAUTHORIZED);
 };
 
 export type EndpointObject = {
@@ -119,51 +131,63 @@ export const route = <
     return (...handlers: Handler<_Request, _Response>[]) => {
         const path = `${env._PUBLIC_SERVER_URL}${endpointObject.Path}`;
 
+        const handle = async (request: StrictRequest<DefaultBodyType>) => {
+            try {
+                let result: HttpResponse = new _res();
+
+                await delay(1_500);
+
+                const auth = undefined as unknown as Auth;
+                const body = await request.json() as _Request;
+                const req = request as StrictRequest<ToRecord<_Request>>;
+                const props = {
+                    body,
+                    auth,
+                    request: req,
+                } as Parameters<Handler<_Request, _Response>>[0];
+
+                for (const [_, handler] of handlers.entries()) {
+                    const [
+                        handlerResult,
+                        error,
+                    ] = await catchErrorAsync(() => {
+                        return toPromise(handler)(props);
+                    });
+
+                    if (handlerResult === 'unhandled') continue;
+
+                    if (error) {
+                        logger.fakeServer.error('REQUEST_ERROR', error);
+
+                        if (error instanceof ApiError) {
+                            return toError(error.status);
+                        }
+
+                        return toError(500);
+                    }
+
+                    if (handlerResult) {
+                        result = handlerResult;
+                    }
+                }
+
+                return result;
+            } catch {
+                return toError(500);
+            }
+        };
+
         return http[endpointObject.Method](
             path,
             async ({ request }) => {
-                try {
-                    let result: HttpResponse = new _res();
+                socket.lock();
 
-                    await delay(1_500);
+                const response = await handle(request);
 
-                    const auth = undefined as unknown as Auth;
-                    const body = await request.json() as _Request;
-                    const req = request as StrictRequest<ToRecord<_Request>>;
-                    const props = {
-                        body,
-                        auth,
-                        request: req,
-                    } as Parameters<Handler<_Request, _Response>>[0];
+                socket.unlock();
+                socket.unignore();
 
-                    for (const [_, handler] of handlers.entries()) {
-                        const [
-                            handlerResult, error,
-                        ] = await catchErrorAsync(() => {
-                            return toPromise(handler)(props);
-                        });
-
-                        if (handlerResult === 'unhandled') continue;
-
-                        if (error) {
-                            logger.fakeServer.error(error);
-
-                            if (typeof error === 'number') {
-                                return toError(error);
-                            }
-
-                            return toError(500);
-                        }
-
-                        if (handlerResult) {
-                            result = handlerResult;
-                        }
-                    }
-
-                    return result;
-                } catch {
-                    return toError(500);
-                }
+                return response;
             },
         );
     };

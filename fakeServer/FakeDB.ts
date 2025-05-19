@@ -116,8 +116,8 @@ export class FakeDB {
 
         await this.saveStorage();
 
-        socket.sendEventAddData({
-            [capitalize(tableKey)]: [item],
+        socket.addData({
+            [capitalize(`${tableKey}s`)]: [item],
         });
 
         return item;
@@ -139,14 +139,14 @@ export class FakeDB {
         );
         if (!item) return undefined;
 
-        const updatedItem = await updater(item);
+        const updatedItem = await updater(structuredClone(item));
 
         this.storage[tableKey][id] = updatedItem;
 
         await this.saveStorage();
 
-        socket.sendEventAddData({
-            [capitalize(tableKey)]: [item],
+        socket.addData({
+            [capitalize(`${tableKey}s`)]: [updatedItem],
         });
 
         return updatedItem;
@@ -165,8 +165,8 @@ export class FakeDB {
 
         await this.saveStorage();
 
-        socket.sendEventRemoveData({
-            [capitalize(tableKey)]: [item],
+        socket.removeData({
+            [capitalize(`${tableKey}s`)]: [item],
         });
 
         return true;

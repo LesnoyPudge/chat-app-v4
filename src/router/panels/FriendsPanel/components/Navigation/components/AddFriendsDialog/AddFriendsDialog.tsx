@@ -31,7 +31,14 @@ const { withDecorator } = createWithDecorator<
 });
 
 const styles = createStyles({
-    resultWrapper: 'mt-4 flex h-[250px] items-center justify-center',
+    resultWrapper: `
+        mt-4    
+        flex 
+        h-[250px] 
+        w-full 
+        items-center 
+        justify-center
+    `,
 });
 
 decorate(withDisplayName, 'AddFriendsDialog', decorate.target);

@@ -11,9 +11,6 @@ export const ConversationFeed = () => {
     );
 
     return (
-        <Feed
-            key={textChatId}
-            textChatId={textChatId}
-        />
+        <Feed textChatId={textChatId}/>
     );
 };

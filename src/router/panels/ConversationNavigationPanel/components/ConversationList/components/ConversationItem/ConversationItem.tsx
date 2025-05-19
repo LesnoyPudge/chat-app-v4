@@ -115,7 +115,9 @@ export const ConversationItem: FC<ConversationItem.Props> = ({
     });
 
     const handleHide = useFunction(() => {
-        void hideTrigger({ conversationId });
+        void hideTrigger({ conversationId }).unwrap().then(() => {
+            navigateTo.root();
+        });
     });
 
     return (

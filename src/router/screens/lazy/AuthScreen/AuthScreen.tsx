@@ -42,7 +42,7 @@ const { animationVariants } = getAnimationVariants.custom({
         translateY: '-8%',
         scale: 1.02,
         transition: {
-            duration: 0.3,
+            duration: 0.2,
         },
     },
     visible: {
@@ -50,7 +50,7 @@ const { animationVariants } = getAnimationVariants.custom({
         translateY: '0%',
         scale: 1,
         transition: {
-            duration: 0.3,
+            duration: 0.2,
         },
     },
 });
@@ -80,40 +80,35 @@ export const AuthScreenPure: FC = () => {
     const { currentTab } = AuthTabs.useProxy();
 
     return (
-        <AuthTabs.Provider
-            label=''
-            initialTab={AuthTabs.tabNameTable.Login}
-        >
-            <Screen>
-                <Image
-                    className={styles.bg}
-                    pointer={ASSETS.IMAGES.COMMON.FANCY_BG}
-                />
+        <Screen>
+            <Image
+                className={styles.bg}
+                pointer={ASSETS.IMAGES.COMMON.FANCY_BG}
+            />
 
-                <Scrollable className={styles.scrollable}>
-                    <div className={styles.content}>
-                        <AnimatePresence mode='wait'>
-                            <Motion.div
-                                className={styles.itemWrapper}
-                                key={currentTab.identifier}
-                                variants={animationVariants}
-                                initial={animationVariants.hidden.key}
-                                animate={animationVariants.visible.key}
-                                exit={animationVariants.hidden.key}
-                                ref={containerRef}
+            <Scrollable className={styles.scrollable}>
+                <div className={styles.content}>
+                    <AnimatePresence mode='wait'>
+                        <Motion.div
+                            className={styles.itemWrapper}
+                            key={currentTab.identifier}
+                            variants={animationVariants}
+                            initial={animationVariants.hidden.key}
+                            animate={animationVariants.visible.key}
+                            exit={animationVariants.hidden.key}
+                            ref={containerRef}
+                        >
+                            <Focus.Inside
+                                isEnabled={true}
+                                containerRef={containerRef}
                             >
-                                <Focus.Inside
-                                    isEnabled={true}
-                                    containerRef={containerRef}
-                                >
-                                    {currentTab.tab}
-                                </Focus.Inside>
-                            </Motion.div>
-                        </AnimatePresence>
-                    </div>
-                </Scrollable>
-            </Screen>
-        </AuthTabs.Provider>
+                                {currentTab.tab}
+                            </Focus.Inside>
+                        </Motion.div>
+                    </AnimatePresence>
+                </div>
+            </Scrollable>
+        </Screen>
     );
 };
 

@@ -11,7 +11,7 @@ import { Trans } from 'react-i18next';
 
 
 const styles = createStyles({
-    title: 'truncate text-start text-20-24',
+    title: 'text-start text-20-24',
 });
 
 const { DeleteServerForm } = Form.createForm({

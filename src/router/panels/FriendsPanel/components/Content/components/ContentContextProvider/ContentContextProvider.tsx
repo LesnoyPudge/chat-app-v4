@@ -7,7 +7,7 @@ import {
     useOnlineFriends,
     usePendingUsers,
 } from './hooks';
-import { never } from '@lesnoypudge/utils';
+import { unhandled } from '@lesnoypudge/utils';
 
 
 
@@ -57,20 +57,20 @@ export const ContentContextProvider: FC<ContentContextProvider.Props> = ({
             }
         }
 
-        never();
+        unhandled(currentTab.identifier);
     }, [
         currentTab.identifier,
-        filteredAllIds.length,
-        filteredBlockedIds.length,
-        filteredOnlineIds.length,
-        filteredPendingIds.length,
+        filteredAllIds,
+        filteredBlockedIds,
+        filteredOnlineIds,
+        filteredPendingIds,
     ]);
 
     const shouldShowList = !!displayCount;
     const shouldShowEmptyBlock = !shouldShowList;
 
     const value: ContentContext = {
-        displayCount: 0,
+        displayCount,
         searchValue,
         shouldShowEmptyBlock,
         shouldShowList,

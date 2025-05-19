@@ -1,6 +1,5 @@
-import { ContextSelectable } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
-import { ContentContext } from '../../../ContentContext';
+import { useContentContextSelector } from '../../../ContentContext';
 import { createStyles } from '@/utils';
 import { useTrans } from '@/hooks';
 
@@ -19,15 +18,15 @@ const styles = createStyles({
 
 export const DisplayCount: FC = () => {
     const { t } = useTrans();
-    const displayCount = ContextSelectable.useSelector(
-        ContentContext,
+
+    const displayCount = useContentContextSelector(
         (v) => v.displayCount,
     );
 
     return (
         <div className={styles.count}>
             {t('FriendsPanel.DisplayCount.text', {
-                value: displayCount,
+                displayCount,
             })}
         </div>
     );

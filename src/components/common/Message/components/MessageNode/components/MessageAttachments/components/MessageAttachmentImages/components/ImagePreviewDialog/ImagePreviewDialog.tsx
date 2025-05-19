@@ -28,7 +28,11 @@ const {
 });
 
 const styles = createStyles({
-    content: 'max-h-[calc(100dvh-40px)] max-w-[calc(100dvw-40px)]',
+    content: `
+        max-h-[calc(100dvh-40px)]    
+        max-w-[calc(100dvw-40px)] 
+        p-4
+    `,
     image: 'max-h-[calc(100dvh-40px-48px)]',
     originalLink: 'text-sm',
     footer: 'h-12 justify-between gap-4 p-2',

@@ -14,7 +14,7 @@ import { formatSimpleTimestamp } from '../../utils';
 
 
 const styles = createStyles({
-    wrapper: 'flex',
+    inner: 'flex',
     firstCol: 'flex w-[48px] shrink-0 items-start justify-center',
     timestamp: {
         base: 'leading-[--message-line-height]',
@@ -26,6 +26,7 @@ const styles = createStyles({
     secondCol: 'w-full',
     username: 'inline',
     content: 'inline',
+    additions: 'px-12',
 });
 
 export const CompactMessage: FC = () => {
@@ -33,28 +34,32 @@ export const CompactMessage: FC = () => {
     const isRedactorActive = useIsMessageRedactorActive(message.id);
 
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.firstCol}>
-                <MessageCreatedTimestamp className={cn(
-                    styles.timestamp.base,
-                    !isGroupHead && styles.timestamp.headless,
-                )}>
-                    {formatSimpleTimestamp(message.createdAt)}
-                </MessageCreatedTimestamp>
+        <div>
+            <div className={styles.inner}>
+                <div className={styles.firstCol}>
+                    <MessageCreatedTimestamp className={cn(
+                        styles.timestamp.base,
+                        !isGroupHead && styles.timestamp.headless,
+                    )}>
+                        {formatSimpleTimestamp(message.createdAt)}
+                    </MessageCreatedTimestamp>
+                </div>
+
+                <If condition={!isRedactorActive}>
+                    <div className={styles.secondCol}>
+                        <MessageUsername
+                            className={styles.username}
+                            postfix={`:${WHITESPACE}`}
+                        />
+
+                        <MessageContent className={styles.content}/>
+                    </div>
+                </If>
             </div>
 
-            <If condition={!isRedactorActive}>
-                <div className={styles.secondCol}>
-                    <MessageUsername
-                        className={styles.username}
-                        postfix={`:${WHITESPACE}`}
-                    />
-
-                    <MessageContent className={styles.content}/>
-                </div>
-            </If>
-
-            <MessageAdditions/>
+            <div className={styles.additions}>
+                <MessageAdditions/>
+            </div>
         </div>
     );
 };

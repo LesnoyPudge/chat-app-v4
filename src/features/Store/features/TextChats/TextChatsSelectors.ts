@@ -121,7 +121,7 @@ export const selectUnreadMessageCountById = createSelector.withParams(
         );
 
         const foundIndex = lastSeenMessages[textChatId];
-        if (!foundIndex) return totalCount;
+        if (foundIndex === undefined) return totalCount;
 
         const diff = Math.max(0, totalCount - (foundIndex + 1));
 

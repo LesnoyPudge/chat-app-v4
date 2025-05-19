@@ -10,7 +10,7 @@ import { createStyles } from '@/utils';
 
 
 const styles = createStyles({
-    title: 'truncate text-start text-20-24',
+    title: 'text-start text-20-24',
 });
 
 const { withDecorator } = createWithDecorator<
@@ -43,7 +43,7 @@ export const LeaveServerDialog = withDecorator<Props>(({
     const serverName = Store.useSelector(
         Store.Servers.Selectors.selectNameById(serverId),
     );
-    invariant(serverName);
+    // invariant(serverName);
 
     const userId = Store.useSelector(
         Store.Users.Selectors.selectCurrentUserId,
@@ -52,7 +52,7 @@ export const LeaveServerDialog = withDecorator<Props>(({
     const ownerId = Store.useSelector(
         Store.Servers.Selectors.selectOwnerById(serverId),
     );
-    invariant(ownerId);
+    // invariant(ownerId);
 
     const [
         leaveTrigger,

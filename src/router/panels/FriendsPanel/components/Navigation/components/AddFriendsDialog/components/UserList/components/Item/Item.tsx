@@ -1,7 +1,8 @@
-import { Avatar, Button } from '@/components';
+import { Avatar, Button, KeyboardNavigation } from '@/components';
 import { Store } from '@/features';
 import { useTrans } from '@/hooks';
 import { createStyles } from '@/utils';
+import { useRefManager } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
 
 
@@ -31,6 +32,15 @@ export const Item: FC<Props> = ({
     id,
 }) => {
     const { t } = useTrans();
+    const elementRef = useRefManager<HTMLLIElement>(null);
+
+    const {
+        setId,
+        tabIndex,
+    } = KeyboardNavigation.useCommonItem({
+        elementRef,
+        itemId: id,
+    });
 
     const name = Store.useSelector(
         Store.Users.Selectors.selectNameById(id),
@@ -54,7 +64,11 @@ export const Item: FC<Props> = ({
     };
 
     return (
-        <li className={styles.item}>
+        <li
+            className={styles.item}
+            tabIndex={tabIndex}
+            ref={elementRef}
+        >
             <div className={styles.userInfo}>
                 <Avatar.User
                     className={styles.avatar}
@@ -71,7 +85,9 @@ export const Item: FC<Props> = ({
                 size='small'
                 stylingPreset='brand'
                 isLoading={sendRequestHelpers.isLoading}
+                tabIndex={tabIndex}
                 onLeftClick={handleAddFriend}
+                onAnyClick={setId}
             >
                 {t('AddFriendsDialog.item.addButton.text')}
             </Button>

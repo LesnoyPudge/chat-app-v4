@@ -155,7 +155,7 @@
     "FriendsPanel.AllFriends.deleteFriendButton.tooltip": "Удалить из друзей",
     "FriendsPanel.AllFriends.unblockButton.label": "Разблокировать пользователя",
     "FriendsPanel.AllFriends.unblockButton.tooltip": "Разблокировать",
-    "FriendsPanel.DisplayCount.text": "Показано — {{value}}",
+    "FriendsPanel.DisplayCount.text": "Показано — {{displayCount}}",
     "FriendsPanel.EmptyListBlock.noSearch": "Никто не хочет играть с Вампусом.",
     "FriendsPanel.EmptyListBlock.notFound": "Вампус внимательно искал, но не нашёл никого с таким именем.",
     "FriendsPanel.Friends.goToConversationButton.label": "Перейти к сообщениям",

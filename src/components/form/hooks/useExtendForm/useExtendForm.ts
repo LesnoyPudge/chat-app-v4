@@ -1,9 +1,9 @@
 import { t } from '@/features';
 import { FormTypes } from '../../types';
-import { HTTP_STATUS_CODES, noop } from '@lesnoypudge/utils';
+import { deepEqual, HTTP_STATUS_CODES, noop } from '@lesnoypudge/utils';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { mutate, useFunction, useIsMounted } from '@lesnoypudge/utils-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { TanStackForm } from '@/libs';
 
 
@@ -40,8 +40,8 @@ export const useExtendForm: FormTypes.useExtendForm.Fn = (
     type Validators = NonNullable<typeof options.validators>;
 
     const validators = {
-        onSubmit: options.validator ?? createdForm.options.validator,
-        onChange: options.validator ?? createdForm.options.validator,
+        onSubmitAsync: options.validator ?? createdForm.options.validator,
+        onChangeAsync: options.validator ?? createdForm.options.validator,
         ...createdForm.options.validators,
         ...options.validators,
     } satisfies Validators;
@@ -84,6 +84,11 @@ export const useExtendForm: FormTypes.useExtendForm.Fn = (
             // ignore unmounted error
             if (response.error) return;
 
+            // const { defaultValues } = options;
+            // invariant(defaultValues);
+            // console.log('reset to', value);
+            // formApi.reset(value);
+
             options?.onSubmitSuccess?.(response.data, formApi);
 
             if (!getIsMounted()) return;
@@ -103,6 +108,25 @@ export const useExtendForm: FormTypes.useExtendForm.Fn = (
             onReset();
         });
     }, [api, onReset]);
+
+
+    const prevDefaultValuesRef = useRef<T.UnknownRecord>();
+
+    useEffect(() => {
+        const defaultValues = options.defaultValues;
+        if (!defaultValues) return;
+
+        if (prevDefaultValuesRef.current === undefined) {
+            prevDefaultValuesRef.current = defaultValues;
+            return;
+        }
+
+        if (deepEqual(prevDefaultValuesRef.current, defaultValues)) return;
+
+        prevDefaultValuesRef.current = defaultValues;
+
+        api.reset(defaultValues);
+    }, [api, options.defaultValues]);
 
     return {
         form: {

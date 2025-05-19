@@ -11,6 +11,7 @@ import {
 import { BannedTab, MembersTab, Navigation, OverviewTab } from './components';
 import { Endpoints } from 'fakeShared/endpoints';
 import { T } from '@lesnoypudge/types-utils-base';
+import { ExtendedRecord } from '@/types';
 
 
 
@@ -30,15 +31,24 @@ export const { ServerSettingsDialogTabs } = Tab.createTypedTabs({
     },
 });
 
-type FormValues = T.Except<
-    Required<Endpoints.V1.Server.Update.RequestBody>,
-    'serverId'
->;
+type FormValues = T.Simplify<(
+    Pick<
+        Required<Endpoints.V1.Server.Update.RequestBody>,
+        'name'
+    >
+    & ExtendedRecord<
+        Pick<
+            Required<Endpoints.V1.Server.Update.RequestBody>,
+            'avatar'
+        >,
+        undefined
+    >
+)>;
 
 export const { ServerSettingsForm } = Form.createForm<FormValues>({
     defaultValues: {
         name: '',
-        avatar: null,
+        avatar: undefined,
     },
 }).withName('ServerSettings');
 
@@ -78,10 +88,14 @@ export const ServerSettingsDialog = withDecorator<Props>(({
     invariant(serverName);
 
     const { form } = Form.useExtendForm(ServerSettingsForm, {
-        trigger: ({ name }) => updateTrigger({ serverId, name }),
+        trigger: ({ name, avatar }) => updateTrigger({
+            serverId,
+            name,
+            avatar,
+        }),
         defaultValues: {
             name: serverName,
-            avatar: null,
+            avatar: undefined,
         },
         onSubmitSuccess: resetShakeStacks,
         onReset: resetShakeStacks,

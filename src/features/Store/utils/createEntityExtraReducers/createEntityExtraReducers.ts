@@ -5,6 +5,7 @@
 import { ReduxToolkit } from '@/libs';
 import { StoreTypes } from '@/store/types';
 import { T } from '@lesnoypudge/types-utils-base/namespace';
+import { isPlainObject } from '@lesnoypudge/utils';
 
 
 
@@ -30,19 +31,22 @@ export const createEntityExtraReducers = <
 }) => {
     const keys = Object.keys(api.endpoints);
     if (!keys.length) return;
+
     const matchers = keys.map((key) => {
         // @ts-expect-error
-        const qwe = api.endpoints[key];
-        if (!('matchFulfilled' in qwe)) return;
+        const endpoint = api.endpoints[key];
+        if (!endpoint) return;
+        if (!('matchFulfilled' in endpoint)) return;
 
-        return qwe.matchFulfilled;
-    });
+        return endpoint.matchFulfilled;
+    }).filter(Boolean);
 
 
     builder.addMatcher(
         ReduxToolkit.isAnyOf(...matchers),
 
         (state, { payload }) => {
+            if (!isPlainObject(payload)) return;
             if (!('id' in payload)) return;
 
             // assume that payload is of correct type

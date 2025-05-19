@@ -89,42 +89,42 @@ export const selectHasNotificationsById = createSelector.withParams((
     };
 }, `${ServersSlice.name}/selectHasNotificationsById`);
 
-export const selectIdsWithUnreadNotificationCount = (
-    createSelector((query) => {
-        const { servers } = query(Users.Selectors.selectCurrentUser);
+// export const selectIdsWithUnreadNotificationCount = (
+//     createSelector((query) => {
+//         const { servers } = query(Users.Selectors.selectCurrentUser);
 
-        return servers.map((serverId) => {
-            const count = query(selectNotificationCountById(serverId));
-            if (count === 0) return;
+//         return servers.map((serverId) => {
+//             const count = query(selectNotificationCountById(serverId));
+//             if (count === 0) return;
 
-            return [serverId, count] as const;
-        }).filter(Boolean);
-    }, `${ServersSlice.name}/selectIdsWithUnreadNotificationCount`)
-);
+//             return [serverId, count] as const;
+//         }).filter(Boolean);
+//     }, `${ServersSlice.name}/selectIdsWithUnreadNotificationCount`)
+// );
 
-export const selectIdsSortedByUnreadNotificationCount = (
-    createSelector((query) => {
-        const servers = query(selectIdsWithUnreadNotificationCount);
+// export const selectIdsSortedByUnreadNotificationCount = (
+//     createSelector((query) => {
+//         const servers = query(selectIdsWithUnreadNotificationCount);
 
-        return servers.sort(
-            sortFns.bigToSmall.select(([_, count]) => count),
-        ).map((v) => v[0]);
-    }, `${ServersSlice.name}/selectIdsSortedByUnreadNotificationCount`)
-);
+//         return servers.sort(
+//             sortFns.bigToSmall.select(([_, count]) => count),
+//         ).map((v) => v[0]);
+//     }, `${ServersSlice.name}/selectIdsSortedByUnreadNotificationCount`)
+// );
 
-export const selectIdsWithoutUnreadNotifications = (
-    createSelector((query) => {
-        const { servers: serverIds } = query(Users.Selectors.selectCurrentUser);
+// export const selectIdsWithoutUnreadNotifications = (
+//     createSelector((query) => {
+//         const { servers: serverIds } = query(Users.Selectors.selectCurrentUser);
 
-        return serverIds.filter((serverId) => {
-            const count = query(selectNotificationCountById(
-                serverId,
-            ));
+//         return serverIds.filter((serverId) => {
+//             const count = query(selectNotificationCountById(
+//                 serverId,
+//             ));
 
-            return count === 0;
-        });
-    }, `${ServersSlice.name}/selectIdsWithoutUnreadNotifications`)
-);
+//             return count === 0;
+//         });
+//     }, `${ServersSlice.name}/selectIdsWithoutUnreadNotifications`)
+// );
 
 export const selectUserPermissions = (() => {
     const permissionPresets = {

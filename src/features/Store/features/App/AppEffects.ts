@@ -11,7 +11,35 @@ import { ReduxToolkit } from '@/libs';
 
 
 export const AppEffects = createEffects({
-    effects: ({ dispatch }) => [
+    effects: ({ dispatch, subscribe, getState }) => [
+        (() => {
+            return subscribe(() => {
+                const state = getState();
+                const currentUserId = state.App.userId;
+                if (!currentUserId) return;
+
+                const user = state.Users.entities[currentUserId];
+                if (!user) return;
+
+                localStorageApi.set(
+                    'messageDisplayMode',
+                    user.settings.messageDisplayMode,
+                );
+                localStorageApi.set(
+                    'messageFontSize',
+                    user.settings.messageFontSize,
+                );
+                localStorageApi.set(
+                    'messageGroupSpacing',
+                    user.settings.messageGroupSpacing,
+                );
+                localStorageApi.set(
+                    'theme',
+                    user.settings.theme,
+                );
+            });
+        })(),
+
         (() => {
             const mediaQuery = window.matchMedia(MOBILE_SCREEN_QUERY);
 

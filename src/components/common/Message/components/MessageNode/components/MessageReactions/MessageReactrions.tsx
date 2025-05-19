@@ -51,7 +51,7 @@ const Item: FC<ItemProps> = ({
     });
 
     return (
-        <>
+        <li>
             <Button
                 className={cn(
                     styles.reactionButton.base,
@@ -79,7 +79,7 @@ const Item: FC<ItemProps> = ({
             >
                 {code}
             </Overlay.Tooltip>
-        </>
+        </li>
     );
 };
 
@@ -92,14 +92,18 @@ export const MessageReactions: FC<RT.PropsWithClassName> = ({
         Store.Users.Selectors.selectCurrentUserId,
     );
 
-    if (!message.reactions.length) return null;
+    const filteredReactions = message.reactions.filter((v) => {
+        return !!v.users.length;
+    });
+
+    if (!filteredReactions.length) return null;
 
     return (
         <ul
             className={cn(styles.wrapper, className)}
             aria-label={t('Message.Reactions.listLabel')}
         >
-            <Iterate items={message.reactions} getKey={(v) => v.code}>
+            <Iterate items={filteredReactions} getKey={(v) => v.code}>
                 {(reaction) => (
                     <Item
                         code={reaction.code}

@@ -4,6 +4,7 @@ import { Navigator } from '@/features';
 import { LazyLayouts } from '@/router/layouts/lazy';
 import { LazyPanels } from '@/router/panels';
 import { SuspenseWithGlobalLoader } from '../components';
+import { EntityPresenceChecker } from '@/components';
 
 
 
@@ -29,7 +30,9 @@ export const AppRoutes: FC = () => {
                     element={(
                         <Navigator.ParamsProvider>
                             <Navigator.ParamsValidator preset='conversation'>
-                                <LazyPanels.Conversation/>
+                                <EntityPresenceChecker.Conversation>
+                                    <LazyPanels.Conversation/>
+                                </EntityPresenceChecker.Conversation>
                             </Navigator.ParamsValidator>
                         </Navigator.ParamsProvider>
                     )}
@@ -41,9 +44,11 @@ export const AppRoutes: FC = () => {
                 element={(
                     <Navigator.ParamsProvider>
                         <Navigator.ParamsValidator preset='server'>
-                            <LazyLayouts.WithSecondaryNavigation>
-                                <LazyPanels.ServerNavigation/>
-                            </LazyLayouts.WithSecondaryNavigation>
+                            <EntityPresenceChecker.Server>
+                                <LazyLayouts.WithSecondaryNavigation>
+                                    <LazyPanels.ServerNavigation/>
+                                </LazyLayouts.WithSecondaryNavigation>
+                            </EntityPresenceChecker.Server>
                         </Navigator.ParamsValidator>
                     </Navigator.ParamsProvider>
                 )}
@@ -58,7 +63,9 @@ export const AppRoutes: FC = () => {
                     element={(
                         <Navigator.ParamsProvider>
                             <Navigator.ParamsValidator preset='channel'>
-                                <LazyPanels.Channel/>
+                                <EntityPresenceChecker.Channel>
+                                    <LazyPanels.Channel/>
+                                </EntityPresenceChecker.Channel>
                             </Navigator.ParamsValidator>
                         </Navigator.ParamsProvider>
                     )}

@@ -13,7 +13,7 @@ const styles = createStyles({
     inner: 'flex size-full',
     mainPanelWrapper: 'flex size-full flex-col',
     extraPanelWrapper: {
-        base: 'size-full max-w-[264px] pb-5',
+        base: 'size-full max-w-[264px] bg-primary-300 pb-5',
         wide: 'max-w-full',
     },
 });

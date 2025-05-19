@@ -29,7 +29,9 @@ export const PasswordToggleButton: FC<RT.PropsWithClassName> = ({
     const isPassword = type === 'password';
 
     const togglePasswordType = useFunction(() => {
-        setType(isPassword ? initialType : 'password');
+        if (initialType !== 'password') return;
+
+        setType(isPassword ? 'text' : 'password');
     });
 
     const label = (

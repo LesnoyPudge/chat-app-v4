@@ -5,7 +5,7 @@ import { RenderPlaceholderProps } from 'slate-react';
 
 
 const styles = createStyles({
-    base: 'translate-y-1/2',
+    base: 'translate-y-1/2 truncate',
 });
 
 export namespace RenderedPlaceholder {

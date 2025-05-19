@@ -1,8 +1,7 @@
-import { FakeDB } from '@/fakeServer';
-import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { Store } from '@/features';
 import { EntityState } from '@reduxjs/toolkit';
-import { autoBind, debounce } from '@lesnoypudge/utils';
+import { autoBind } from '@lesnoypudge/utils';
+import { logger } from '@/utils';
 
 
 
@@ -270,21 +269,43 @@ import { autoBind, debounce } from '@lesnoypudge/utils';
 
 class FakeSocket {
     private isConnected: boolean;
-    private addDataBroadcastBuffer: socket.AddedData;
-    private removeDataBroadcastBuffer: socket.RemovedData;
+    private addDataBuffer: socket.AddedData;
+    private removeDataBuffer: socket.RemovedData;
     private addDataCallback: socket.AddDataCallback | null;
     private removeDataCallback: socket.RemoveDataCallback | null;
+    private isLocked: boolean;
+    private isEmpty: boolean;
+    private isIgnored: boolean;
 
     constructor() {
         this.isConnected = false;
-        this.addDataBroadcastBuffer = this.createEmptyBuffer();
-        this.removeDataBroadcastBuffer = this.createEmptyBuffer();
+        this.addDataBuffer = this.createEmptyBuffer();
+        this.removeDataBuffer = this.createEmptyBuffer();
         this.addDataCallback = null;
         this.removeDataCallback = null;
+        this.isLocked = true;
+        this.isEmpty = true;
+        this.isIgnored = false;
 
         setInterval(() => {
-            //
-        }, 500);
+            if (!this.isConnected) return;
+            if (this.isLocked) return;
+            if (this.isEmpty) return;
+            if (!this.addDataCallback) return;
+            if (!this.removeDataCallback) return;
+
+            logger.socket.log('tick');
+            logger.socket.log(this.addDataBuffer);
+            logger.socket.log(this.removeDataBuffer);
+
+            this.isEmpty = true;
+
+            this.addDataCallback(this.addDataBuffer);
+            this.removeDataCallback(this.removeDataBuffer);
+
+            this.addDataBuffer = this.createEmptyBuffer();
+            this.removeDataBuffer = this.createEmptyBuffer();
+        }, 100);
 
         autoBind(this);
     }
@@ -310,14 +331,54 @@ class FakeSocket {
         this.isConnected = false;
     }
 
-    sendEventAddData(data: socket.AddedData) {
-        console.log('sendEventAddData', data);
-        // this.addDataCallback?.(data);
+    ignore() {
+        this.isIgnored = true;
     }
 
-    sendEventRemoveData(data: socket.RemovedData) {
-        console.log('sendEventRemoveData', data);
-        // this.removeDataCallback?.(data);
+    unignore() {
+        this.isIgnored = false;
+    }
+
+    lock() {
+        this.isLocked = true;
+    }
+
+    unlock() {
+        this.isLocked = false;
+    }
+
+    private mergeBufferWithData(
+        buffer: socket.AddedData | socket.RemovedData,
+        data: socket.AddedData | socket.RemovedData,
+    ) {
+        Object.keys<socket.AddedData>(data).forEach((dataKey) => {
+            const newData = [
+                ...(buffer[dataKey] ?? []),
+                ...(data[dataKey] ?? []),
+            ];
+
+            Object.assign(buffer, {
+                [dataKey]: newData,
+            });
+        });
+    }
+
+    addData(data: socket.AddedData) {
+        if (this.isIgnored) return;
+
+        logger.socket.log('add data', data);
+
+        this.mergeBufferWithData(this.addDataBuffer, data);
+        this.isEmpty = false;
+    }
+
+    removeData(data: socket.RemovedData) {
+        if (this.isIgnored) return;
+
+        logger.socket.log('remove data', data);
+
+        this.mergeBufferWithData(this.removeDataBuffer, data);
+        this.isEmpty = false;
     }
 
     onAddData(fn: socket.AddDataCallback) {
@@ -335,18 +396,6 @@ class FakeSocket {
     removeOnRemoveData() {
         this.removeDataCallback = null;
     }
-
-    // private addDataFromStorage(storage: FakeDB.Storage) {
-    //     this.addData(structuredClone({
-    //         Channels: Object.values(storage.channel),
-    //         Conversations: Object.values(storage.conversation),
-    //         Messages: Object.values(storage.message),
-    //         Roles: Object.values(storage.role),
-    //         Servers: Object.values(storage.server),
-    //         TextChats: Object.values(storage.textChat),
-    //         Users: Object.values(storage.user),
-    //     }));
-    // }
 }
 
 export namespace socket {

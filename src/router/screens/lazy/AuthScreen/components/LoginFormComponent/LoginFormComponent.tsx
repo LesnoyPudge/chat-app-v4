@@ -1,7 +1,7 @@
 import { Button, Form, Inputs } from '@/components';
 import { Endpoints, ApiValidators } from '@/fakeShared';
 import { useTrans } from '@/hooks';
-import { Heading, ContextSelectable } from '@lesnoypudge/utils-react';
+import { Heading } from '@lesnoypudge/utils-react';
 import { createStyles } from '@/utils';
 import { FC } from 'react';
 import { AuthTabs } from '../../AuthScreen';
@@ -40,9 +40,6 @@ export const LoginFormComponent: FC = () => {
 
     const { form } = Form.useExtendForm(LoginForm, {
         trigger: login,
-        errorTable: {
-            BAD_REQUEST: t('LoginForm.BAD_REQUEST'),
-        },
     });
 
     return (
