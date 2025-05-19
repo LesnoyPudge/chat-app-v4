@@ -185,7 +185,7 @@ export const selectCurrentUserBlockedIdsAndNames = (
     createSelector((query) => {
         const blockedIds = query(selectCurrentUserBlockedIds);
         const users = query(selectEntities);
-        console.log({ blockedIds, users });
+
         return blockedIds.map((blockedId) => {
             const name = users[blockedId]?.name;
             if (!name) return;

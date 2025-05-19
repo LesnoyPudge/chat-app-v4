@@ -25,8 +25,6 @@ export const useContextSelector = (context, selector) => {
         selected,
     ]);
     const dispatch = (payload) => {
-        console.log('dispatch', payload);
-        // debugger;
         setState((prevState) => {
             if (!payload) {
                 // early bail out when is dispatched during render
