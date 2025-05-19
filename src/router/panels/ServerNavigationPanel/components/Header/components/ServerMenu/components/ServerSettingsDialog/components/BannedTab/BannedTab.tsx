@@ -45,7 +45,6 @@ export const BannedTab: FC = () => {
     const { serverId } = useServerSettingsDialogContextProxy();
 
     const {
-        data,
         isLoading,
         isSuccess,
     } = Store.Servers.Api.useServerGetBannedUsersQuery({
@@ -53,7 +52,9 @@ export const BannedTab: FC = () => {
         limit: null,
     });
 
-    const users = data?.User;
+    const users = Store.useSelector(
+        Store.Servers.Selectors.selectBannedUsersById(serverId),
+    );
 
     const filteredUserIds = useMemo(() => {
         if (!users) return [];
@@ -92,13 +93,11 @@ export const BannedTab: FC = () => {
                         className={styles.infoPlaceholder}
                         reveal={users}
                     >
-                        {(users) => (
-                            <span>
-                                {t('ServerSettingsDialog.BannedTab.totalCount', {
-                                    totalCount: users.length,
-                                })}
-                            </span>
-                        )}
+                        <span>
+                            {t('ServerSettingsDialog.BannedTab.totalCount', {
+                                totalCount: filteredUserIds.length,
+                            })}
+                        </span>
                     </Placeholder.With>
 
                     <Placeholder.With

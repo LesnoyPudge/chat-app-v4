@@ -5,7 +5,7 @@
     "AddFriendsDialog.notFound": "Пользователи с таким именем не найдены",
     "AddFriendsDialog.searchLabel": "Поиск по имени пользователя",
     "AddFriendsDialog.searchPlaceholder": "Введите имя пользователя",
-    "AddFriendsDialog.subtitle": "Вы можете добавить друга по имени. Вводите с УчЁтОм РаСкЛаДкИ!",
+    "AddFriendsDialog.subtitle": "Вы можете добавить друга по имени.",
     "AddFriendsDialog.title": "Добавить в друзья",
     "ApiError.BAD_REQUEST": "Неверный запрос",
     "ApiError.FORBIDDEN": "Доступ запрещён",

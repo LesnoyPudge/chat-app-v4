@@ -4,6 +4,10 @@ import { useMemo } from 'react';
 
 
 export const useBlockedUsers = (searchValue: string) => {
+    const blockedIds = Store.useSelector(
+        Store.Users.Selectors.selectCurrentUserBlockedIds,
+    );
+
     const users = Store.useSelector(
         Store.Users.Selectors.selectCurrentUserBlockedIdsAndNames,
     );
@@ -20,6 +24,6 @@ export const useBlockedUsers = (searchValue: string) => {
 
     return {
         filteredBlockedIds: filteredIds,
-        blockedIds: users.map(({ id }) => id),
+        blockedIds,
     };
 };

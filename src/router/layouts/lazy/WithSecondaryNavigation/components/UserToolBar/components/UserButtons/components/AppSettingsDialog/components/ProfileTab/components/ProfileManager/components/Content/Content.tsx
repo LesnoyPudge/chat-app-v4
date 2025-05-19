@@ -12,7 +12,14 @@ const styles = createStyles({
     list: 'flex flex-col gap-6 rounded-lg bg-primary-300 p-4',
     row: 'flex w-full items-center gap-4',
     infoWrapper: 'mr-auto flex min-w-0 flex-col',
-    infoTitle: 'mb-1 text-xs font-bold uppercase text-color-secondary',
+    infoTitle: `
+        mb-1    
+        truncate 
+        text-xs 
+        font-bold 
+        uppercase 
+        text-color-secondary
+    `,
     infoValueWrapper: 'flex gap-2',
     infoValue: 'truncate text-color-primary',
     revealInfoValueButton: 'h-auto min-h-0 p-0 text-color-link',

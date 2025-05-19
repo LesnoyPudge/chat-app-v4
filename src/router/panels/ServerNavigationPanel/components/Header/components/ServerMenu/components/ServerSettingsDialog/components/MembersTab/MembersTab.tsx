@@ -45,7 +45,6 @@ export const MembersTab: FC = () => {
     const { serverId } = useServerSettingsDialogContextProxy();
 
     const {
-        data,
         isLoading,
         isSuccess,
     } = Store.Servers.Api.useServerGetMembersQuery({
@@ -53,7 +52,9 @@ export const MembersTab: FC = () => {
         limit: null,
     });
 
-    const members = data?.User;
+    const members = Store.useSelector(
+        Store.Servers.Selectors.selectMemberUsersById(serverId),
+    );
 
     const filteredMemberIds = useMemo(() => {
         if (!members) return [];
@@ -92,13 +93,11 @@ export const MembersTab: FC = () => {
                         className={styles.infoPlaceholder}
                         reveal={members}
                     >
-                        {(members) => (
-                            <span>
-                                {t('ServerSettingsDialog.MembersTab.membersTotalCount', {
-                                    membersCount: members.length,
-                                })}
-                            </span>
-                        )}
+                        <span>
+                            {t('ServerSettingsDialog.MembersTab.membersTotalCount', {
+                                membersCount: filteredMemberIds.length,
+                            })}
+                        </span>
                     </Placeholder.With>
 
                     <Placeholder.With

@@ -24,7 +24,7 @@ export namespace FLAGS {
         scenarios: true,
         selectors: true,
         selectorsTrace: false,
-        socket: true,
+        socket: false,
     } satisfies Record<string, boolean>;
 
     export type LOGGER = typeof LOGGER;

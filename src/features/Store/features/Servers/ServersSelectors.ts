@@ -200,3 +200,29 @@ export const selectOfflineMemberIdsById = (
         });
     }, `${ServersSlice.name}/selectOfflineMemberIdsById`)
 );
+
+export const selectBannedUsersById = (
+    createSelector.withParams((serverId: string) => (query) => {
+        const users = query(Users.Selectors.selectEntities);
+        const server = query(selectById(serverId));
+        if (!server) return [];
+
+        return server.banned.map((bannedId) => {
+            return users[bannedId];
+        }).filter(Boolean);
+    }, `${ServersSlice.name}/selectBannedUsersById`)
+);
+
+export const selectMemberUsersById = (
+    createSelector.withParams((serverId: string) => (query) => {
+        const users = query(Users.Selectors.selectEntities);
+        const server = query(selectById(serverId));
+        if (!server) return [];
+
+        const members = server.members.map((memberId) => {
+            return users[memberId];
+        }).filter(Boolean);
+
+        return members;
+    }, `${ServersSlice.name}/selectMemberUsersById`)
+);

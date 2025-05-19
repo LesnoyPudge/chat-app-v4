@@ -64,24 +64,6 @@ export const ServersSlice = createSlice({
         );
 
         builder.addMatcher(
-            ServersApi.endpoints.ServerGetMembers.matchFulfilled,
-            (state, { payload, meta }) => {
-                const serverId = meta.arg.originalArgs.serverId;
-                const server = state.entities[serverId];
-                if (!server) return;
-
-                const newIds = payload.User.map((v) => v.id);
-
-                adapter.updateOne(state, {
-                    id: serverId,
-                    changes: {
-                        members: [...server.members, ...newIds],
-                    },
-                });
-            },
-        );
-
-        builder.addMatcher(
             ServersApi.endpoints.ServerLeave.matchFulfilled,
             (state, { meta }) => {
                 adapter.removeOne(

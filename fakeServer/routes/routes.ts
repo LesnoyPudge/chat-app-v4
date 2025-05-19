@@ -657,7 +657,13 @@ class ServerRoutes {
         async ({ body, auth }) => {
             await db.update('server', body.serverId, (_server) => ({
                 ..._server,
+                members: _server.members.filter((id) => id !== body.targetId),
                 banned: append(_server.banned, body.targetId),
+            }));
+
+            await db.update('user', body.targetId, (_user) => ({
+                ..._user,
+                servers: _user.servers.filter((id) => id !== body.targetId),
             }));
         },
     );
