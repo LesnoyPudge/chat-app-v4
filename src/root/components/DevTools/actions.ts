@@ -95,6 +95,8 @@ export const rawActions = {
             if (!navigateToRoot) return location.reload();
 
             navigateToRoot();
+            // eslint-disable-next-line no-restricted-globals
+            location.reload();
         })();
     },
 
@@ -113,6 +115,8 @@ export const rawActions = {
         if (!navigateToRoot) return location.reload();
 
         navigateToRoot();
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
     },
 
     populateDB_Medium: () => {
@@ -124,6 +128,8 @@ export const rawActions = {
         if (!navigateToRoot) return location.reload();
 
         navigateToRoot();
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
     },
 
     populateDB_Large: () => {
@@ -135,6 +141,8 @@ export const rawActions = {
         if (!navigateToRoot) return location.reload();
 
         navigateToRoot();
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
     },
 
     setupMinimalScene: () => {
@@ -146,5 +154,7 @@ export const rawActions = {
         if (!navigateToRoot) return location.reload();
 
         navigateToRoot();
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
     },
 } satisfies Record<string, VoidFunction>;

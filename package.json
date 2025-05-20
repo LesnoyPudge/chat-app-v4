@@ -3,7 +3,7 @@
     "author": "LesnoyPudge",
     "type": "module",
     "scripts": {
-        "dev": "nodemon --config nodemon.dev.json",
+        "dev": "npm run scripts:env && nodemon --config nodemon.dev.json",
         "dev:hmr": "vite --force",
         "dev:no-build": "nodemon --config nodemon.i18n.json",
         "build:pages": "npm run scripts:clear && npm run scripts:env-pages && npm run scripts:assets && npm run scripts:i18n && npm run type:check && vite build",
