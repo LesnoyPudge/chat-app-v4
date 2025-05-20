@@ -14,7 +14,7 @@ type Locales = Record<string, Namespace>;
 const rootPath = process.cwd();
 const generatedDirPath = path.join(rootPath, 'generated');
 const i18nGeneratedPath = path.join(generatedDirPath, 'i18n.ts');
-const localesDirPath = path.join(rootPath, 'static/locales');
+const localesDirPath = path.join(rootPath, 'public/static/locales');
 
 invariant(
     fs.existsSync(localesDirPath),

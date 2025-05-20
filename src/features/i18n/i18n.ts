@@ -91,6 +91,12 @@ export const initI18n = async () => {
             import('i18next-http-backend').then((v) => v.default),
         ]);
 
+        // const { href: pathToLocales } = new URL(
+        //     `/public/static/locales`, import.meta.url,
+        // );
+
+        // console.log({ pathToLocales });
+
         const result = (
             await i18n
                 .use(HttpBackend)
@@ -108,7 +114,8 @@ export const initI18n = async () => {
                     fallbackLng: env._PUBLIC_DEFAULT_LNG,
                     defaultNS: env._PUBLIC_DEFAULT_LNG_NS,
                     backend: {
-                        loadPath: `${env.BASE_URL}static/locales/{{lng}}/{{ns}}.json`,
+                        loadPath: `/static/locales/{{lng}}/{{ns}}.json`,
+                        // loadPath: `${env.BASE_URL}public/static/locales/{{lng}}/{{ns}}.json`,
                     },
                 })
         );

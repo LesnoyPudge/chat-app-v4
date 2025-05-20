@@ -1,4 +1,4 @@
-import { isProd, FLAGS } from '@/vars';
+import { FLAGS, isDevOrPreview } from '@/vars';
 
 
 
@@ -12,7 +12,7 @@ const loggerFlagList = Object.keys<FLAGS.LOGGER>(FLAGS.LOGGER);
 const createMethods = (flagName: keyof FLAGS.LOGGER) => {
     return Object.keys(console).reduce<Console>((acc, cur) => {
         acc[cur as keyof Console] = (...data: unknown[]) => {
-            if (isProd) return;
+            if (!isDevOrPreview) return;
 
             if (!FLAGS.LOGGER[flagName]) return;
 

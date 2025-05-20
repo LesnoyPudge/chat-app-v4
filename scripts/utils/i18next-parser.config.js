@@ -34,7 +34,7 @@ invariant(
     `input files not found: ${input}`,
 );
 
-const outputDir = path.join(process.cwd(), 'static/locales');
+const outputDir = path.join(process.cwd(), 'public/static/locales');
 invariant(
     fs.existsSync(outputDir),
     'output dir not found',

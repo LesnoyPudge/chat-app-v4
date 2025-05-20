@@ -3,8 +3,8 @@
     src:
         local('Noto Sans Black'),
         local('NotoSans-Black'),
-        url('$fonts/NotoSans/NotoSans-Black.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-Black.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-Black.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-Black.woff') format('woff');
     font-weight: 900;
     font-style: normal;
     font-display: swap;
@@ -16,8 +16,8 @@
     src:
         local('Noto Sans ExtraBold'),
         local('NotoSans-ExtraBold'),
-        url('$fonts/NotoSans/NotoSans-ExtraBold.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-ExtraBold.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-ExtraBold.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-ExtraBold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -29,9 +29,9 @@
     src:
         local('Noto Sans ExtraBold Italic'),
         local('NotoSans-ExtraBoldItalic'),
-        url('$fonts/NotoSans/NotoSans-ExtraBoldItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSans-ExtraBoldItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSans-ExtraBoldItalic.woff')
+        url('/static/fonts/NotoSans/NotoSans-ExtraBoldItalic.woff')
             format('woff');
     font-weight: bold;
     font-style: italic;
@@ -44,9 +44,9 @@
     src:
         local('Noto Sans Black Italic'),
         local('NotoSans-BlackItalic'),
-        url('$fonts/NotoSans/NotoSans-BlackItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSans-BlackItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSans-BlackItalic.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-BlackItalic.woff') format('woff');
     font-weight: 900;
     font-style: italic;
     font-display: swap;
@@ -58,8 +58,8 @@
     src:
         local('Noto Sans Bold Italic'),
         local('NotoSans-BoldItalic'),
-        url('$fonts/NotoSans/NotoSans-BoldItalic.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-BoldItalic.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-BoldItalic.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-BoldItalic.woff') format('woff');
     font-weight: bold;
     font-style: italic;
     font-display: swap;
@@ -71,8 +71,8 @@
     src:
         local('Noto Sans Bold'),
         local('NotoSans-Bold'),
-        url('$fonts/NotoSans/NotoSans-Bold.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-Bold.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-Bold.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -84,8 +84,8 @@
     src:
         local('Noto Sans Light'),
         local('NotoSans-Light'),
-        url('$fonts/NotoSans/NotoSans-Light.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-Light.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-Light.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-Light.woff') format('woff');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -97,8 +97,8 @@
     src:
         local('Noto Sans Regular'),
         local('NotoSans-Regular'),
-        url('$fonts/NotoSans/NotoSans-Regular.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-Regular.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-Regular.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -110,8 +110,8 @@
     src:
         local('Noto Sans Thin Italic'),
         local('NotoSans-ThinItalic'),
-        url('$fonts/NotoSans/NotoSans-ThinItalic.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-ThinItalic.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-ThinItalic.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-ThinItalic.woff') format('woff');
     font-weight: 100;
     font-style: italic;
     font-display: swap;
@@ -123,9 +123,9 @@
     src:
         local('Noto Sans ExtraLight Italic'),
         local('NotoSans-ExtraLightItalic'),
-        url('$fonts/NotoSans/NotoSans-ExtraLightItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSans-ExtraLightItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSans-ExtraLightItalic.woff')
+        url('/static/fonts/NotoSans/NotoSans-ExtraLightItalic.woff')
             format('woff');
     font-weight: 200;
     font-style: italic;
@@ -138,8 +138,8 @@
     src:
         local('Noto Sans Thin'),
         local('NotoSans-Thin'),
-        url('$fonts/NotoSans/NotoSans-Thin.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-Thin.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-Thin.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-Thin.woff') format('woff');
     font-weight: 100;
     font-style: normal;
     font-display: swap;
@@ -151,9 +151,9 @@
     src:
         local('Noto Sans SemiBold Italic'),
         local('NotoSans-SemiBoldItalic'),
-        url('$fonts/NotoSans/NotoSans-SemiBoldItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSans-SemiBoldItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSans-SemiBoldItalic.woff')
+        url('/static/fonts/NotoSans/NotoSans-SemiBoldItalic.woff')
             format('woff');
     font-weight: 600;
     font-style: italic;
@@ -166,8 +166,8 @@
     src:
         local('Noto Sans SemiBold'),
         local('NotoSans-SemiBold'),
-        url('$fonts/NotoSans/NotoSans-SemiBold.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-SemiBold.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-SemiBold.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-SemiBold.woff') format('woff');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -179,9 +179,9 @@
     src:
         local('Noto Sans Medium Italic'),
         local('NotoSans-MediumItalic'),
-        url('$fonts/NotoSans/NotoSans-MediumItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSans-MediumItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSans-MediumItalic.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-MediumItalic.woff') format('woff');
     font-weight: 500;
     font-style: italic;
     font-display: swap;
@@ -193,8 +193,8 @@
     src:
         local('Noto Sans ExtraLight'),
         local('NotoSans-ExtraLight'),
-        url('$fonts/NotoSans/NotoSans-ExtraLight.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-ExtraLight.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-ExtraLight.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-ExtraLight.woff') format('woff');
     font-weight: 200;
     font-style: normal;
     font-display: swap;
@@ -206,8 +206,8 @@
     src:
         local('Noto Sans Medium'),
         local('NotoSans-Medium'),
-        url('$fonts/NotoSans/NotoSans-Medium.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-Medium.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-Medium.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-Medium.woff') format('woff');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -219,9 +219,9 @@
     src:
         local('Noto Sans Light Italic'),
         local('NotoSans-LightItalic'),
-        url('$fonts/NotoSans/NotoSans-LightItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSans-LightItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSans-LightItalic.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-LightItalic.woff') format('woff');
     font-weight: 300;
     font-style: italic;
     font-display: swap;
@@ -233,8 +233,8 @@
     src:
         local('Noto Sans Italic'),
         local('NotoSans-Italic'),
-        url('$fonts/NotoSans/NotoSans-Italic.woff2') format('woff2'),
-        url('$fonts/NotoSans/NotoSans-Italic.woff') format('woff');
+        url('/static/fonts/NotoSans/NotoSans-Italic.woff2') format('woff2'),
+        url('/static/fonts/NotoSans/NotoSans-Italic.woff') format('woff');
     font-weight: normal;
     font-style: italic;
     font-display: swap;
@@ -246,9 +246,9 @@
     src:
         local('Noto Sans Condensed Bold'),
         local('NotoSansCondensed-Bold'),
-        url('$fonts/NotoSans/NotoSansCondensed-Bold.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-Bold.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-Bold.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-Bold.woff')
             format('woff');
     font-weight: bold;
     font-style: normal;
@@ -261,9 +261,9 @@
     src:
         local('Noto Sans Condensed Black Italic'),
         local('NotoSansCondensed-BlackItalic'),
-        url('$fonts/NotoSans/NotoSansCondensed-BlackItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-BlackItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-BlackItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-BlackItalic.woff')
             format('woff');
     font-weight: 900;
     font-style: italic;
@@ -276,9 +276,9 @@
     src:
         local('Noto Sans Condensed Black'),
         local('NotoSansCondensed-Black'),
-        url('$fonts/NotoSans/NotoSansCondensed-Black.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-Black.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-Black.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-Black.woff')
             format('woff');
     font-weight: 900;
     font-style: normal;
@@ -291,9 +291,9 @@
     src:
         local('Noto Sans Condensed ExtraBold Italic'),
         local('NotoSansCondensed-ExtraBoldItalic'),
-        url('$fonts/NotoSans/NotoSansCondensed-ExtraBoldItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-ExtraBoldItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-ExtraBoldItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-ExtraBoldItalic.woff')
             format('woff');
     font-weight: bold;
     font-style: italic;
@@ -306,9 +306,9 @@
     src:
         local('Noto Sans Condensed ExtraBold'),
         local('NotoSansCondensed-ExtraBold'),
-        url('$fonts/NotoSans/NotoSansCondensed-ExtraBold.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-ExtraBold.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-ExtraBold.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-ExtraBold.woff')
             format('woff');
     font-weight: bold;
     font-style: normal;
@@ -321,9 +321,9 @@
     src:
         local('Noto Sans Condensed Bold Italic'),
         local('NotoSansCondensed-BoldItalic'),
-        url('$fonts/NotoSans/NotoSansCondensed-BoldItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-BoldItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-BoldItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-BoldItalic.woff')
             format('woff');
     font-weight: bold;
     font-style: italic;
@@ -336,9 +336,9 @@
     src:
         local('Noto Sans Condensed ExtraLight'),
         local('NotoSansCondensed-ExtraLight'),
-        url('$fonts/NotoSans/NotoSansCondensed-ExtraLight.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-ExtraLight.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-ExtraLight.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-ExtraLight.woff')
             format('woff');
     font-weight: 200;
     font-style: normal;
@@ -351,9 +351,9 @@
     src:
         local('Noto Sans Condensed Italic'),
         local('NotoSansCondensed-Italic'),
-        url('$fonts/NotoSans/NotoSansCondensed-Italic.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-Italic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-Italic.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-Italic.woff')
             format('woff');
     font-weight: normal;
     font-style: italic;
@@ -366,9 +366,9 @@
     src:
         local('Noto Sans Condensed Light'),
         local('NotoSansCondensed-Light'),
-        url('$fonts/NotoSans/NotoSansCondensed-Light.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-Light.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-Light.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-Light.woff')
             format('woff');
     font-weight: 300;
     font-style: normal;
@@ -381,9 +381,9 @@
     src:
         local('Noto Sans Condensed ExtraLight Italic'),
         local('NotoSansCondensed-ExtraLightItalic'),
-        url('$fonts/NotoSans/NotoSansCondensed-ExtraLightItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-ExtraLightItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-ExtraLightItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-ExtraLightItalic.woff')
             format('woff');
     font-weight: 200;
     font-style: italic;
@@ -396,9 +396,9 @@
     src:
         local('Noto Sans Condensed Medium'),
         local('NotoSansCondensed-Medium'),
-        url('$fonts/NotoSans/NotoSansCondensed-Medium.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-Medium.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-Medium.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-Medium.woff')
             format('woff');
     font-weight: 500;
     font-style: normal;
@@ -411,9 +411,9 @@
     src:
         local('Noto Sans Condensed Light Italic'),
         local('NotoSansCondensed-LightItalic'),
-        url('$fonts/NotoSans/NotoSansCondensed-LightItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansCondensed-LightItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansCondensed-LightItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansCondensed-LightItalic.woff')
             format('woff');
     font-weight: 300;
     font-style: italic;
@@ -425,9 +425,9 @@
     src:
         local('Noto Sans ExtraCondensed Black'),
         local('NotoSansExtraCondensed-Black'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-Black.woff2')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-Black.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-Black.woff')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-Black.woff')
             format('woff');
     font-weight: 900;
     font-style: normal;
@@ -440,9 +440,9 @@
     src:
         local('Noto Sans ExtraCondensed Black Italic'),
         local('NotoSansExtraCondensed-BlackItalic'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-BlackItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-BlackItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-BlackItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-BlackItalic.woff')
             format('woff');
     font-weight: 900;
     font-style: italic;
@@ -455,9 +455,9 @@
     src:
         local('Noto Sans ExtraCondensed Bold Italic'),
         local('NotoSansExtraCondensed-BoldItalic'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-BoldItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-BoldItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-BoldItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-BoldItalic.woff')
             format('woff');
     font-weight: bold;
     font-style: italic;
@@ -470,9 +470,9 @@
     src:
         local('Noto Sans ExtraCondensed Bold'),
         local('NotoSansExtraCondensed-Bold'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-Bold.woff2')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-Bold.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-Bold.woff')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-Bold.woff')
             format('woff');
     font-weight: bold;
     font-style: normal;
@@ -485,9 +485,9 @@
     src:
         local('Noto Sans ExtraCondensed ExtraLight'),
         local('NotoSansExtraCondensed-ExtraLight'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-ExtraLight.woff2')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-ExtraLight.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-ExtraLight.woff')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-ExtraLight.woff')
             format('woff');
     font-weight: 200;
     font-style: normal;
@@ -500,9 +500,9 @@
     src:
         local('Noto Sans ExtraCondensed ExtraBold Italic'),
         local('NotoSansExtraCondensed-ExtraBoldItalic'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-ExtraBoldItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-ExtraBoldItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-ExtraBoldItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-ExtraBoldItalic.woff')
             format('woff');
     font-weight: bold;
     font-style: italic;
@@ -515,9 +515,9 @@
     src:
         local('Noto Sans ExtraCondensed ExtraBold'),
         local('NotoSansExtraCondensed-ExtraBold'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-ExtraBold.woff2')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-ExtraBold.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-ExtraBold.woff')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-ExtraBold.woff')
             format('woff');
     font-weight: bold;
     font-style: normal;
@@ -530,9 +530,9 @@
     src:
         local('Noto Sans ExtraCondensed ExtraLight Italic'),
         local('NotoSansExtraCondensed-ExtraLightItalic'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-ExtraLightItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-ExtraLightItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-ExtraLightItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-ExtraLightItalic.woff')
             format('woff');
     font-weight: 200;
     font-style: italic;
@@ -545,9 +545,9 @@
     src:
         local('Noto Sans ExtraCondensed Light'),
         local('NotoSansExtraCondensed-Light'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-Light.woff2')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-Light.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-Light.woff')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-Light.woff')
             format('woff');
     font-weight: 300;
     font-style: normal;
@@ -560,9 +560,9 @@
     src:
         local('Noto Sans ExtraCondensed Italic'),
         local('NotoSansExtraCondensed-Italic'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-Italic.woff2')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-Italic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-Italic.woff')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-Italic.woff')
             format('woff');
     font-weight: normal;
     font-style: italic;
@@ -575,9 +575,9 @@
     src:
         local('Noto Sans ExtraCondensed Light Italic'),
         local('NotoSansExtraCondensed-LightItalic'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-LightItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-LightItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansExtraCondensed-LightItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansExtraCondensed-LightItalic.woff')
             format('woff');
     font-weight: 300;
     font-style: italic;
@@ -589,9 +589,9 @@
     src:
         local('Noto Sans SemiCondensed Italic'),
         local('NotoSansSemiCondensed-Italic'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Italic.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Italic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Italic.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Italic.woff')
             format('woff');
     font-weight: normal;
     font-style: italic;
@@ -604,9 +604,9 @@
     src:
         local('Noto Sans SemiCondensed ExtraLight'),
         local('NotoSansSemiCondensed-ExtraLight'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-ExtraLight.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-ExtraLight.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-ExtraLight.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-ExtraLight.woff')
             format('woff');
     font-weight: 200;
     font-style: normal;
@@ -619,9 +619,9 @@
     src:
         local('Noto Sans SemiCondensed ExtraLight Italic'),
         local('NotoSansSemiCondensed-ExtraLightItalic'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-ExtraLightItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-ExtraLightItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-ExtraLightItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-ExtraLightItalic.woff')
             format('woff');
     font-weight: 200;
     font-style: italic;
@@ -634,9 +634,9 @@
     src:
         local('Noto Sans SemiCondensed Black Italic'),
         local('NotoSansSemiCondensed-BlackItalic'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-BlackItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-BlackItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-BlackItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-BlackItalic.woff')
             format('woff');
     font-weight: 900;
     font-style: italic;
@@ -649,9 +649,9 @@
     src:
         local('Noto Sans SemiCondensed Light'),
         local('NotoSansSemiCondensed-Light'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Light.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Light.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Light.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Light.woff')
             format('woff');
     font-weight: 300;
     font-style: normal;
@@ -664,9 +664,9 @@
     src:
         local('Noto Sans SemiCondensed ExtraBold'),
         local('NotoSansSemiCondensed-ExtraBold'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-ExtraBold.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-ExtraBold.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-ExtraBold.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-ExtraBold.woff')
             format('woff');
     font-weight: bold;
     font-style: normal;
@@ -679,9 +679,9 @@
     src:
         local('Noto Sans SemiCondensed ExtraBold Italic'),
         local('NotoSansSemiCondensed-ExtraBoldItalic'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-ExtraBoldItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-ExtraBoldItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-ExtraBoldItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-ExtraBoldItalic.woff')
             format('woff');
     font-weight: bold;
     font-style: italic;
@@ -694,9 +694,9 @@
     src:
         local('Noto Sans SemiCondensed Medium'),
         local('NotoSansSemiCondensed-Medium'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Medium.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Medium.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Medium.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Medium.woff')
             format('woff');
     font-weight: 500;
     font-style: normal;
@@ -709,9 +709,9 @@
     src:
         local('Noto Sans SemiCondensed Black'),
         local('NotoSansSemiCondensed-Black'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Black.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Black.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Black.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Black.woff')
             format('woff');
     font-weight: 900;
     font-style: normal;
@@ -724,9 +724,9 @@
     src:
         local('Noto Sans SemiCondensed Bold Italic'),
         local('NotoSansSemiCondensed-BoldItalic'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-BoldItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-BoldItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-BoldItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-BoldItalic.woff')
             format('woff');
     font-weight: bold;
     font-style: italic;
@@ -739,9 +739,9 @@
     src:
         local('Noto Sans SemiCondensed Bold'),
         local('NotoSansSemiCondensed-Bold'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Bold.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Bold.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Bold.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Bold.woff')
             format('woff');
     font-weight: bold;
     font-style: normal;
@@ -754,9 +754,9 @@
     src:
         local('Noto Sans SemiCondensed Light Italic'),
         local('NotoSansSemiCondensed-LightItalic'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-LightItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-LightItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-LightItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-LightItalic.woff')
             format('woff');
     font-weight: 300;
     font-style: italic;
@@ -769,9 +769,9 @@
     src:
         local('Noto Sans SemiCondensed Regular'),
         local('NotoSansSemiCondensed-Regular'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Regular.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Regular.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-Regular.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-Regular.woff')
             format('woff');
     font-weight: normal;
     font-style: normal;
@@ -784,9 +784,9 @@
     src:
         local('Noto Sans SemiCondensed SemiBold'),
         local('NotoSansSemiCondensed-SemiBold'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-SemiBold.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-SemiBold.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-SemiBold.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-SemiBold.woff')
             format('woff');
     font-weight: 600;
     font-style: normal;
@@ -799,9 +799,9 @@
     src:
         local('Noto Sans SemiCondensed Medium Italic'),
         local('NotoSansSemiCondensed-MediumItalic'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-MediumItalic.woff2')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-MediumItalic.woff2')
             format('woff2'),
-        url('$fonts/NotoSans/NotoSansSemiCondensed-MediumItalic.woff')
+        url('/static/fonts/NotoSans/NotoSansSemiCondensed-MediumItalic.woff')
             format('woff');
     font-weight: 500;
     font-style: italic;
