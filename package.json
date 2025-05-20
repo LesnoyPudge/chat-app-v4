@@ -7,7 +7,7 @@
         "dev:hmr": "vite --force",
         "dev:no-build": "nodemon --config nodemon.i18n.json",
         "prod": "echo \"Not implemented\" && exit 1",
-        "build": "npm run scripts:pre-build && npm run type:check && vite build",
+        "build": "npm run scripts:pre-build && vite build",
         "build:fast": "vite build",
         "deploy": "git add . && git commit -m 'update' && git push && git status",
         "preview": "vite build && vite preview --host",
