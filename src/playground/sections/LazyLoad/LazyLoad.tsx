@@ -1,5 +1,5 @@
 import { Button, Scrollable } from '@/components';
-import { createSleep, lazyLoad, useBoolean } from '_@lesnoypudge/utils-react';
+import { createSleep, lazyLoad, useBoolean } from '@lesnoypudge/utils-react';
 import { FC, PropsWithChildren, Suspense, useEffect } from 'react';
 
 

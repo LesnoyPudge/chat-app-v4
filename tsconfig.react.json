@@ -119,15 +119,15 @@
             "@/store/types": [
                 "./src/features/Store/types"
             ],
-            "_@lesnoypudge/utils-react": [
-                "../@lesnoypudge-utils-react/build"
-            ],
-            "_@lesnoypudge/utils": [
-                "../@lesnoypudge-utils/build"
-            ],
-            "_@lesnoypudge/utils-web": [
-                "../@lesnoypudge-utils-web/build"
-            ],
+            // "_@lesnoypudge/utils-react": [
+            //     "../@lesnoypudge-utils-react/build"
+            // ],
+            // "_@lesnoypudge/utils": [
+            //     "../@lesnoypudge-utils/build"
+            // ],
+            // "_@lesnoypudge/utils-web": [
+            //     "../@lesnoypudge-utils-web/build"
+            // ],
             // "@lesnoypudge/types-utils-base": [
             //     "../@lesnoypudge-types-utils-base"
             // ]

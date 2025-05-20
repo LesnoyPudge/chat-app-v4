@@ -172,10 +172,6 @@ const timeoutIds = (
         }, {})
 );
 
-// might be improved by adding queue for looping sounds.
-// in order to implement fade we have to treat sounds as independent
-// form other instances of same sound.
-// should probably use passed id to all api methods.
 export const soundManager = (() => {
     const currentlyPlayingSounds = new Set<AssetNames>();
 
