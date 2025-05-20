@@ -30,12 +30,12 @@ const config: UserConfigFn = ({ mode }) => {
     const isDev = !isProd;
 
     return defineConfig({
-        base: isProd ? '/chat-app-v4/' : '/',
-        // resolve: {
-        //     alias: {
-        //         $fonts: path.resolve('./public/static/fonts'),
-        //     },
-        // },
+        base: env._PUBLIC_BASE_URL,
+        resolve: {
+            alias: {
+                '@/fonts': path.resolve(__dirname, 'public/static/fonts'),
+            },
+        },
         css: {
             preprocessorOptions: {
                 scss: {

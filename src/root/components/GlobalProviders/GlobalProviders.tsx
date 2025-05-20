@@ -12,6 +12,7 @@ import { BrowserRouter } from 'react-router';
 import { LazyModules, WithLazySVGResources } from '@/root/components';
 import { LayoutType } from '@/components';
 import { decorate } from '@lesnoypudge/macro';
+import { env } from '@/vars';
 
 
 
@@ -30,7 +31,9 @@ const {
                 <WithLazySVGResources>
                     <LazyMotion features={loadDomAnimation} strict>
                         <MotionConfig reducedMotion='user'>
-                            <BrowserRouter>
+                            <BrowserRouter
+                                basename={`${env._PUBLIC_BASE_URL}/`}
+                            >
                                 {children}
                             </BrowserRouter>
                         </MotionConfig>

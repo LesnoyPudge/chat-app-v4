@@ -31,9 +31,9 @@ class FakeServer {
 
             await worker.start({
                 quiet: !FLAGS.THIRD_PARTY_LOGS.msw,
-                // serviceWorker: {
-                //     url: ''
-                // },
+                serviceWorker: {
+                    url: `${env._PUBLIC_BASE_URL}/mockServiceWorker.js`,
+                },
                 onUnhandledRequest: (request, print) => {
                     if (!request.url.includes(env._PUBLIC_API_V1)) return;
 

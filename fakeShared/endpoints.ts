@@ -2,6 +2,7 @@ import { T } from '@lesnoypudge/types-utils-base/namespace';
 import { capitalize, HTTP_METHODS } from '@lesnoypudge/utils';
 import { ClientEntities as Entities } from '@/types';
 import { ENTITY_NAME } from './entity';
+import { env } from '@/vars';
 
 
 
@@ -24,7 +25,15 @@ const v1 = <
     entity: _Entity,
     action: _Action,
 ) => {
-    return `/api/v1/${toKebabCase(entity)}/${toKebabCase(action)}` as const;
+    return `${
+        env._PUBLIC_BASE_URL
+    }/${
+        env._PUBLIC_API_V1
+    }/${
+        toKebabCase(entity)
+    }/${
+        toKebabCase(action)
+    }` as const;
 };
 
 const namedAction = <
