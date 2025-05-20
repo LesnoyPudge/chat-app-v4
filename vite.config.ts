@@ -31,6 +31,11 @@ const config: UserConfigFn = ({ mode }) => {
 
     return defineConfig({
         base: isProd ? '/chat-app-v4/' : '/',
+        resolve: {
+            alias: {
+                $fonts: path.resolve('./static/fonts'),
+            },
+        },
         css: {
             preprocessorOptions: {
                 scss: {
@@ -60,7 +65,10 @@ const config: UserConfigFn = ({ mode }) => {
         },
         envPrefix: env._PUBLIC_SAFE_ENV_PREFIX,
         envDir,
-        assetsInclude: ['./generated/assets/**/*'],
+        assetsInclude: [
+            './generated/assets/**/*',
+            './static/**/*',
+        ],
         optimizeDeps: {
             // force: true,
             // include: [],

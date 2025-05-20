@@ -108,7 +108,7 @@ export const initI18n = async () => {
                     fallbackLng: env._PUBLIC_DEFAULT_LNG,
                     defaultNS: env._PUBLIC_DEFAULT_LNG_NS,
                     backend: {
-                        loadPath: '/locales/{{lng}}/{{ns}}.json',
+                        loadPath: `${env.BASE_URL}static/locales/{{lng}}/{{ns}}.json`,
                     },
                 })
         );

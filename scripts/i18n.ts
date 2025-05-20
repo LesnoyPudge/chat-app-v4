@@ -14,11 +14,11 @@ type Locales = Record<string, Namespace>;
 const rootPath = process.cwd();
 const generatedDirPath = path.join(rootPath, 'generated');
 const i18nGeneratedPath = path.join(generatedDirPath, 'i18n.ts');
-const localesDirPath = path.join(rootPath, 'public/locales');
+const localesDirPath = path.join(rootPath, 'static/locales');
 
 invariant(
     fs.existsSync(localesDirPath),
-    'locales in public not found',
+    'locales in static not found',
 );
 
 const localeNames = fs.readdirSync(
