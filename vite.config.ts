@@ -25,11 +25,12 @@ const config: UserConfigFn = ({ mode }) => {
 
     const isHMREnabled = false;
 
-    // const isProd = env.NODE_ENV === 'production';
-    const isProd = false;
+    const isProd = env.NODE_ENV === 'production';
+    // const isProd = false;
     const isDev = !isProd;
 
     return defineConfig({
+        base: '/chat-app-v4/',
         css: {
             preprocessorOptions: {
                 scss: {
