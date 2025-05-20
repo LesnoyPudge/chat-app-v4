@@ -172,72 +172,70 @@ const timeoutIds = (
         }, {})
 );
 
-export const soundManager = (() => {
-    const currentlyPlayingSounds = new Set<AssetNames>();
+const currentlyPlayingSounds = new Set<AssetNames>();
 
-    const stop = (item: AssetItem) => {
-        const configuredSounds = getConfiguredSounds();
-        const sound = configuredSounds[item.NAME];
-        if (!currentlyPlayingSounds.has(sound.name)) return;
+const stop = (item: AssetItem) => {
+    const configuredSounds = getConfiguredSounds();
+    const sound = configuredSounds[item.NAME];
+    if (!currentlyPlayingSounds.has(sound.name)) return;
 
-        currentlyPlayingSounds.delete(sound.name);
+    currentlyPlayingSounds.delete(sound.name);
 
-        sound.api.stop();
-        // sound.api.fade(sound.api.volume(), 0, 1_000);
+    sound.api.stop();
+    // sound.api.fade(sound.api.volume(), 0, 1_000);
 
-        if (sound.throttleDelay === null) return;
+    if (sound.throttleDelay === null) return;
 
-        const timeout = timeoutIds[item.NAME];
+    const timeout = timeoutIds[item.NAME];
 
-        clearTimeout(timeout.id);
+    clearTimeout(timeout.id);
 
-        timeout.isThrottling = true;
+    timeout.isThrottling = true;
 
-        timeout.id = setTimeout(() => {
-            timeout.isThrottling = false;
-        }, sound.throttleDelay);
-    };
+    timeout.id = setTimeout(() => {
+        timeout.isThrottling = false;
+    }, sound.throttleDelay);
+};
 
-    const play = (item: AssetItem) => {
-        const configuredSounds = getConfiguredSounds();
-        const currentSound = configuredSounds[item.NAME];
+const play = (item: AssetItem) => {
+    const configuredSounds = getConfiguredSounds();
+    const currentSound = configuredSounds[item.NAME];
 
-        if (currentlyPlayingSounds.has(currentSound.name)) return;
-        if (timeoutIds[item.NAME].isThrottling) return;
+    if (currentlyPlayingSounds.has(currentSound.name)) return;
+    if (timeoutIds[item.NAME].isThrottling) return;
 
-        const currentSounds = [
-            ...currentlyPlayingSounds.values(),
-        ].map((name) => {
-            return configuredSounds[name];
-        });
+    const currentSounds = [
+        ...currentlyPlayingSounds.values(),
+    ].map((name) => {
+        return configuredSounds[name];
+    });
 
-        const hasBlocking = currentSounds.some((sound) => sound.isBlocking);
-        if (currentSound.isBlockable && hasBlocking) return;
+    const hasBlocking = currentSounds.some((sound) => sound.isBlocking);
+    if (currentSound.isBlockable && hasBlocking) return;
 
-        const soundsToInterrupt = currentSounds.filter((sound) => {
-            return sound.interruptedBy?.includes(currentSound.name);
-        });
+    const soundsToInterrupt = currentSounds.filter((sound) => {
+        return sound.interruptedBy?.includes(currentSound.name);
+    });
 
-        soundsToInterrupt.forEach((sound) => {
-            stop(SOUNDS[sound.name]);
-        });
+    soundsToInterrupt.forEach((sound) => {
+        stop(SOUNDS[sound.name]);
+    });
 
-        currentlyPlayingSounds.add(currentSound.name);
+    currentlyPlayingSounds.add(currentSound.name);
 
-        currentSound.api.play();
+    currentSound.api.play();
 
-        currentSound.api.once('end', () => {
-            if (currentSound.api.loop()) return;
+    currentSound.api.once('end', () => {
+        if (currentSound.api.loop()) return;
 
-            stop(item);
-        });
-    };
+        stop(item);
+    });
+};
 
-    return {
-        play,
-        stop,
-    };
-})();
+export const soundManager = {
+    play,
+    stop,
+};
 
 
 
