@@ -1,6 +1,5 @@
 node_modules
 build
-package-lock.json
 ._env
 _env.d.ts
 scripts/_env.ts

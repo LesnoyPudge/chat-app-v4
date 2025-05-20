@@ -31,7 +31,7 @@
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
         "**/node_modules": true,
-        "**/package-lock.json": true,
+        "**/package-lock.json": false,
         "**/.vscode": false,
         "**/build": false,
         "**/public": false,
