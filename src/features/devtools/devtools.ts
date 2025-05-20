@@ -10,6 +10,7 @@ type DevTools = {
     reduxStore?: Store.Types.Store;
     softReset?: ReduxToolkit.ActionCreatorWithoutPayload;
     axeReact?: VoidFunction;
+    navigateToRoot?: VoidFunction;
 };
 
 export const devtools = (() => {

@@ -90,8 +90,11 @@ export const rawActions = {
 
             await db.clearStorage();
 
+            const navigateToRoot = devtools.get('navigateToRoot');
             // eslint-disable-next-line no-restricted-globals
-            location.reload();
+            if (!navigateToRoot) return location.reload();
+
+            navigateToRoot();
         })();
     },
 
@@ -104,28 +107,44 @@ export const rawActions = {
     populateDB_Small: () => {
         localStorageApi.set('setupScenario', 'populateSmall');
         localStorageApi.removeScenarioSpecificData();
+
+        const navigateToRoot = devtools.get('navigateToRoot');
         // eslint-disable-next-line no-restricted-globals
-        location.reload();
+        if (!navigateToRoot) return location.reload();
+
+        navigateToRoot();
     },
 
     populateDB_Medium: () => {
         localStorageApi.set('setupScenario', 'populateMedium');
         localStorageApi.removeScenarioSpecificData();
+
+        const navigateToRoot = devtools.get('navigateToRoot');
         // eslint-disable-next-line no-restricted-globals
-        location.reload();
+        if (!navigateToRoot) return location.reload();
+
+        navigateToRoot();
     },
 
     populateDB_Large: () => {
         localStorageApi.set('setupScenario', 'populateLarge');
         localStorageApi.removeScenarioSpecificData();
+
+        const navigateToRoot = devtools.get('navigateToRoot');
         // eslint-disable-next-line no-restricted-globals
-        location.reload();
+        if (!navigateToRoot) return location.reload();
+
+        navigateToRoot();
     },
 
     setupMinimalScene: () => {
         localStorageApi.set('setupScenario', 'minimalScene');
         localStorageApi.removeScenarioSpecificData();
+
+        const navigateToRoot = devtools.get('navigateToRoot');
         // eslint-disable-next-line no-restricted-globals
-        location.reload();
+        if (!navigateToRoot) return location.reload();
+
+        navigateToRoot();
     },
 } satisfies Record<string, VoidFunction>;

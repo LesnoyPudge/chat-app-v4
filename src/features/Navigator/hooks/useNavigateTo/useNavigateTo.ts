@@ -2,6 +2,8 @@ import { NavigateOptions } from 'react-router';
 import { ContextSelectable, useConst } from '@lesnoypudge/utils-react';
 import { navigatorDevPath, navigatorPath } from '../../vars';
 import { NavigatorContext } from '../../context';
+import { isDevOrPreview } from '@/vars';
+import { devtools } from '@/features';
 
 
 
@@ -112,6 +114,10 @@ export const useNavigateTo = () => {
             return navigate(navigatorPath.server(props), options);
         },
     }));
+
+    if (isDevOrPreview) {
+        devtools.append('navigateToRoot', navigateTo.root);
+    }
 
     const navigateToDev: NavigateToDev = useConst(() => ({
         authScreen: () => navigate(navigatorDevPath.authScreen),
