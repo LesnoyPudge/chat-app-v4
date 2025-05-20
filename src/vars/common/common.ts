@@ -6,6 +6,8 @@ export const isProd = env.PROD;
 
 export const isDev = !isProd;
 
+export const isDevOrPreview = isProd || isDev;
+
 export const MOBILE_SCREEN_QUERY = '(max-width: 1279px)';
 
 export const WHITESPACE = String.fromCodePoint(160);

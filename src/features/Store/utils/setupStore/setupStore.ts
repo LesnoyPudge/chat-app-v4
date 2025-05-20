@@ -6,7 +6,7 @@ import {
     injectedStore,
 } from '@/store/utils';
 import { ReduxToolkit, ReduxToolkitQueryReact } from '@/libs';
-import { isDev } from '@/vars';
+import { isDevOrPreview } from '@/vars';
 import { devtools } from '@/features';
 import { globalActions } from '@/store/globalActions';
 
@@ -49,7 +49,7 @@ export const setupStore = (preloadedState?: Partial<StoreTypes.State>) => {
 
     setupEffects(store);
 
-    if (isDev) {
+    if (isDevOrPreview) {
         devtools.append('reduxStore', store);
         devtools.append('softReset', globalActions.softReset);
     }

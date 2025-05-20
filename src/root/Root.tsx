@@ -4,7 +4,7 @@ import {
     Focus,
 } from '@lesnoypudge/utils-react';
 import { FLAGS, isDev } from '@/vars';
-import { GlobalLoader, GlobalProviders } from './components';
+import { GlobalLoader, GlobalProviders, DevTools } from './components';
 import { ErrorScreen } from '@/router/screens/bundled';
 import { usePreventDefault, useHTMLVars } from './hooks';
 import { Router } from '@/router';
@@ -18,12 +18,6 @@ const useDebug = (
     isDev
         ? await import('./hooks/useDebug').then((v) => v.useDebug)
         : noop as T.AnyFunction
-);
-
-const DevTools = (
-    isDev
-        ? await import('./components/DevTools').then((v) => v.DevTools)
-        : () => null
 );
 
 export const Root: FC = () => {

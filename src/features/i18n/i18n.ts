@@ -1,6 +1,6 @@
 import type { i18n, TFunction } from 'i18next';
 import type { HttpBackendOptions } from 'i18next-http-backend';
-import { env, FLAGS, isDev } from '@/vars';
+import { env, FLAGS, isDev, isDevOrPreview } from '@/vars';
 import { namespaces } from '@/generated/i18n';
 import { createPromiseLoader } from '@/utils';
 import { invariant } from '@lesnoypudge/utils';
@@ -116,9 +116,11 @@ export const initI18n = async () => {
         resolvedT = result;
         i18nInstance = i18n;
 
-        if (isDev) {
+        if (isDevOrPreview) {
             await i18n.changeLanguage(env._PUBLIC_DEFAULT_LNG);
+        }
 
+        if (isDev) {
             const translationCheck = await import('translation-check');
             i18n.use(translationCheck.i18nextPlugin);
 
