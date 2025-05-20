@@ -1,7 +1,7 @@
 import { createEffects } from '@/store/utils';
 import { globalActions } from '@/store/globalActions';
 import { MessagesSlice } from './MessagesSlice';
-import { soundManager } from '@/features';
+// import { soundManager } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 import { App } from '../App';
 import { Servers } from '../Servers';
@@ -10,7 +10,7 @@ import { Users } from '../Users';
 
 
 const playNotificationSound = () => {
-    soundManager.play(ASSETS.SOUNDS.DISCORD_NOTIFICATION);
+    // soundManager.play(ASSETS.SOUNDS.DISCORD_NOTIFICATION);
 };
 
 export const MessagesEffects = createEffects({

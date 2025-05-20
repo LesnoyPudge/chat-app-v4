@@ -4,7 +4,7 @@ import { useFunction, useRefManager } from '@lesnoypudge/utils-react';
 import { useTrans } from '@/hooks';
 import { Button, Sprite, Overlay } from '@/components';
 import { ASSETS } from '@/generated/ASSETS';
-import { soundManager, Store } from '@/features';
+import { Store } from '@/features';
 import { AppSettingsDialog } from './components';
 
 
@@ -46,7 +46,7 @@ export const UserButtons: FC = () => {
                 : ASSETS.SOUNDS.DISCORD_UNMUTE
         );
 
-        soundManager.play(sound);
+        // soundManager.play(sound);
 
         setIsMute(shouldMute);
     });
@@ -60,7 +60,7 @@ export const UserButtons: FC = () => {
                 : ASSETS.SOUNDS.DISCORD_UNDEAFEN
         );
 
-        soundManager.play(sound);
+        // soundManager.play(sound);
 
         setIsDeaf(!isDeaf);
     });

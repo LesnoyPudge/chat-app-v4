@@ -1,6 +1,6 @@
 import { Iterate, useBoolean } from '@lesnoypudge/utils-react';
 import { FC } from 'react';
-import { soundManager } from '@/features';
+// import { soundManager } from '@/features';
 import { ASSETS } from '@/generated/ASSETS';
 
 
@@ -15,11 +15,11 @@ export const Sounds: FC = () => {
             <button onClick={() => {
                 state.toggle();
 
-                (
-                    state.value
-                        ? soundManager.play(ASSETS.SOUNDS.DISCORD_MUTE)
-                        : soundManager.play(ASSETS.SOUNDS.DISCORD_UNMUTE)
-                );
+                // (
+                //     state.value
+                //         ? soundManager.play(ASSETS.SOUNDS.DISCORD_MUTE)
+                //         : soundManager.play(ASSETS.SOUNDS.DISCORD_UNMUTE)
+                // );
             }}>
                 <>toggle {String(state.value)}</>
             </button>
@@ -36,7 +36,7 @@ export const Sounds: FC = () => {
                     >
                         <button
                             onClick={() => {
-                                soundManager.play(ASSETS.SOUNDS[name]);
+                                // soundManager.play(ASSETS.SOUNDS[name]);
                             }}
                         >
                             <>sound on: {name}</>
@@ -44,7 +44,7 @@ export const Sounds: FC = () => {
 
                         <button
                             onClick={() => {
-                                soundManager.stop(ASSETS.SOUNDS[name]);
+                                // soundManager.stop(ASSETS.SOUNDS[name]);
                             }}
                         >
                             <>sound off: {name}</>
