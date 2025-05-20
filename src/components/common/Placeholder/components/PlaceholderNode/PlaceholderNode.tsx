@@ -1,6 +1,5 @@
-import { cn, logger } from '@/utils';
+import { cn, createStyles, logger } from '@/utils';
 import { CSSProperties, FC, useEffect, useLayoutEffect } from 'react';
-import './PlaceholderNode.scss';
 import { RT } from '@lesnoypudge/types-utils-react/namespace';
 import { isDev } from '@/vars';
 import { toOneLine } from '@lesnoypudge/utils';
@@ -12,6 +11,10 @@ import {
 
 
 const ZERO_WIDTH_NON_JOINER = '\u200C';
+
+const styles = createStyles({
+    base: 'w-full animate-placeholder rounded leading-none',
+});
 
 export namespace PlaceholderNode {
     export type Props = (
@@ -66,7 +69,7 @@ export const PlaceholderNode: FC<PlaceholderNode.Props> = ({
 
     return (
         <div
-            className={cn('PlaceholderNode', className)}
+            className={cn(styles.base, className)}
             style={style}
             aria-busy
             aria-live='polite'
