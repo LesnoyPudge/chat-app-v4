@@ -1,5 +1,9 @@
 import { coinFlip, noop } from '@lesnoypudge/utils';
-import { useFunction, useThrottle } from '@lesnoypudge/utils-react';
+import {
+    useFunction,
+    useThrottle,
+    useUnmountEffect,
+} from '@lesnoypudge/utils-react';
 import {
     animate,
     useMotionValue,
@@ -53,8 +57,16 @@ export const useShake = (): Return => {
                 SHAKE.MIN_STACKS,
                 shakeStackRef.current - 1,
             );
+
+            if (shakeStackRef.current === 0) {
+                clearInterval(decayTimerIdRef.current);
+            }
         }, SHAKE.DECAY_DELAY);
     };
+
+    useUnmountEffect(() => {
+        clearInterval(decayTimerIdRef.current);
+    });
 
     const triggerScreenShake = useFunction(() => {
         if (isMotionReduced) return;
