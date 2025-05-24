@@ -444,7 +444,7 @@ class UserRoutes {
 
             const user = await db.create('user', dummy);
 
-            const populatedUser = await setupScenarioIfNeeded(user.id);
+            const populatedUser = await setupScenarioIfNeeded(user.id, true);
 
             return jsonResponse({
                 userData: populatedUser,

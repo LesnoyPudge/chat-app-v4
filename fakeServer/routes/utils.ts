@@ -106,15 +106,26 @@ export const jsonResponse = <
     return result as HandlerReturn<_Response>;
 };
 
-export const setupScenarioIfNeeded = async (myId: string) => {
+export const setupScenarioIfNeeded = async (
+    myId: string,
+    force = false,
+) => {
     const setupScenario = localStorageApi.get('setupScenario');
 
-    if (setupScenario && setupScenario !== 'none') {
+    const isUserRequestedPopulate = setupScenario && setupScenario !== 'none';
+
+    if (force || isUserRequestedPopulate) {
         localStorageApi.set('setupScenario', 'none');
+
+        const variant = (
+            (setupScenario && setupScenario !== 'none')
+                ? setupScenario
+                : 'populateMedium'
+        );
 
         await scenarios.setup({
             myId,
-            variant: setupScenario,
+            variant,
         });
     }
 
