@@ -14,10 +14,11 @@ const styles = createStyles({
     scrollable: 'size-full',
     content: {
         base: `
+            ml-auto 
             w-full 
             max-w-[218px] 
             py-[60px] 
-            pl-5 
+            pl-5
             pr-1.5
         `,
         wide: 'max-w-full',
