@@ -11,7 +11,7 @@ class PublicEnv {
     _PUBLIC_ACCESS_CODE_SIZE = '6';
     _PUBLIC_BASE_URL = '';
     _PUBLIC_API_V1 = 'api/v1';
-    _PUBLIC_CLIENT_PORT = '3000';
+    _PUBLIC_CLIENT_PORT = '4000';
     _PUBLIC_CLIENT_URL = ''.concat(
         'http://localhost:',
         this._PUBLIC_CLIENT_PORT,

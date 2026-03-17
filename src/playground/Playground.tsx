@@ -7,7 +7,7 @@ import * as Sections from './sections';
 export const Playground: FC = () => {
     return (
         <Screen className='flex flex-col'>
-            <Sections.TMP/>
+            {/* <Sections.TMP/> */}
             {/* <Sections.RouterContextRerenders/> */}
             {/* <Sections.FormTest/> */}
             {/* <Sections.MessageInputBarTest/> */}
@@ -18,7 +18,7 @@ export const Playground: FC = () => {
             {/* <Sections.MotionTest/> */}
             {/* <Sections.AnimationPresetTest/> */}
             {/* <Sections.ShakeTest/> */}
-            {/* <Sections.TooltipTest/> */}
+            <Sections.TooltipTest/>
             {/* <Sections.MutationDebug/> */}
         </Screen>
     );
